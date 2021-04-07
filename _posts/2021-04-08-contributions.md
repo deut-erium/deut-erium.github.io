@@ -3,14 +3,14 @@ tags: introduction contribution
 aside:
   toc: true
 sidebar:
-  nav: layouts
+  nav: aboutnav
 author: deuterium
 excerpt_separator: <!--more-->
 key: contribution00001
 ---
 
 This is an open-sourced website hosted on github pages!  
-We aim to build an awesome cybersecurity community, and for a community we require active members and collaborators who share their knowledge!
+If you wish to contribute or have a cool idea to share or even a cool challenge which can be put up as an assignment, this is the correct page you are looking at.
 <!--more-->
 
 
