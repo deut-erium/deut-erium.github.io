@@ -32,26 +32,26 @@ sidebar:
   nav: layouts
 ---
 
-<img align="left" src="Circle-limit-IV.jpg" width="250vw" margin="50vw" margin-right="50vw" margin-left="50vw">
+<img align="right" src="Circle-limit-IV.jpg" width="250vw" margin="50vw" margin-right="50vw" margin-left="50vw">
 
 Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
-Bachelor's Of Techonolgy in Computer Science and Engineering.
+Bachelor's Of Techonolgy in Computer Science and Engineering with a major crush on cybersecurity.
 
 I have been playing a lot of [CTFs](https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html), nowadays with [zh3r0](https://ctftime.org/team/116018) 
 where I can be found doing crypto tasks. My areas of interests include Cryptography, Reverse Engineering, Binary Exploitation, SMT/SAT solvers and programming in general.
 
-In case you find some deuterium with a profile picture  , Its probably me
+In case you find some deuterium with a profile picture, with the same love for escher, [fractals](https://deut-erium.github.io/pyfractal/) and metal, its probably me.
 
-All this is about creating a tutorial which brings front the power of programming in solving ctf tasks.
-I aim to build upon an intuition with which one can solve CTF tasks with programming without overly relying on online tools and tools in general.
-The only tool we need is Python and its always amusing interpreter!
+This personal blog is aimed towards documenting my interests, research and interesting finds.
 
-## What kind of content will be there?
-Anything! although I am more inclined towards cryptography (and I want to show a point that it is beyond stupid ciphers and cracking hashes), the content would be aimed towards more or less towards general scripting/programming for CTF challenges :smile:
+## CV
+Enthusiastic employer with interest evoking challenging problems, [Hire Me]()
 
-## What if you get stuck?
+## Contact?
 Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#1689.
-Or any other convenient medium of choice.
+Or any other convenient medium of choice linked below.
 
 HACK THE PLANET :metal: :metal: :metal:
+
+## PS: [DO NOT CLICK](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
