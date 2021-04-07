@@ -48,29 +48,15 @@ sidebar:
     <p>
         In case you find some deuterium with a profile picture, with the same love for escher, <a href="https://deut-erium.github.io/pyfractal/">fractals</a>) and metal, its probably me.
     </p>
-    <p>
-      This personal blog is aimed towards documenting my interests, research and interesting finds.
-    </p>
   </div>
 </div>
-
-
-<img align="right" src="Circle-limit-IV.jpg" width="250vw" margin="50vw" margin-right="50vw" margin-left="50vw">
-
-Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
-Bachelor's Of Techonolgy in Computer Science and Engineering with a major crush on cybersecurity.
-
-I have been playing a lot of [CTFs](https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html), nowadays with [zh3r0](https://ctftime.org/team/116018) 
-where I can be found doing crypto tasks. My areas of interests include Cryptography, Reverse Engineering, Binary Exploitation, SMT/SAT solvers and programming in general.
-
-In case you find some deuterium with a profile picture, with the same love for escher, [fractals](https://deut-erium.github.io/pyfractal/) and metal, its probably me.
 
 This personal blog is aimed towards documenting my interests, research and interesting finds.
 
 ## CV
-Enthusiastic employer with interest evoking challenging problems, [Hire Me]()
+Enthusiastic employer with interest evoking challenging problems? [Hire Me]()
 
-## Contact?
+## Contact
 Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#1689.
 Or any other convenient medium of choice linked below.
 
