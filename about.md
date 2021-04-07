@@ -32,7 +32,7 @@ sidebar:
   nav: layouts
 ---
 
-<img align="left" src="Circle-limit-IV.jpg" width="200vw">
+<img align="left" src="Circle-limit-IV.jpg" width="250vw" margin="50vw">
 
 Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
 Bachelor's Of Techonolgy in Computer Science and Engineering.
