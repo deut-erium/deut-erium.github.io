@@ -32,6 +32,15 @@ sidebar:
   nav: layouts
 ---
 
+<img align="left" src="Circle-limit-IV.jpg" width="200vw">
+
+Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
+Bachelor's Of Techonolgy in Computer Science and Engineering.
+
+I have been playing a lot of [CTFs](https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html), nowadays with [zh3r0](https://ctftime.org/team/116018) 
+where I can be found doing crypto tasks. My areas of interests include Cryptography, Reverse Engineering, Binary Exploitation, SMT/SAT solvers and programming in general.
+
+In case you find some deuterium with a profile picture  , Its probably me
 
 All this is about creating a tutorial which brings front the power of programming in solving ctf tasks.
 I aim to build upon an intuition with which one can solve CTF tasks with programming without overly relying on online tools and tools in general.
