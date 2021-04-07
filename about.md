@@ -32,6 +32,24 @@ sidebar:
   nav: layouts
 ---
 
+<div class="item">
+  <div class="item__image">
+    <img class="image image--lg" src="Circle-limit-IV.jpg"/>
+  </div>
+  <div class="item__content">
+    <div class="item__header">
+      <h4>About Me</h4>
+    </div>
+    <div class="item__description">
+      <p>
+        Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
+        Bachelor's Of Techonolgy in Computer Science and Engineering with a major crush on cybersecurity especially cryptography.
+      </p>
+    </div>
+  </div>
+</div>
+
+
 <img align="right" src="Circle-limit-IV.jpg" width="250vw" margin="50vw" margin-right="50vw" margin-left="50vw">
 
 Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
