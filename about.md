@@ -29,7 +29,7 @@ key: page-about
 aside:
   toc: true
 sidebar:
-  nav: layouts
+  nav: aboutnav
 ---
 
 <div class="item">
@@ -39,7 +39,7 @@ sidebar:
   <div class="item__content">
     <p>
       Hi, I am Himanshu Sheoran (alias deuterium), I am currently a senior undergradute at Indian Institute Of Technology, Bombay pursuing
-      Bachelor's Of Techonolgy in Computer Science and Engineering with a major crush on cybersecurity.
+      Bachelor's Of Technology in Computer Science and Engineering with a major crush on cybersecurity.
     </p>
     <p>
       I have been playing a lot of <a href="https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html">CTFs</a>, nowadays with <a href="https://ctftime.org/team/116018">zh3r0</a> 
