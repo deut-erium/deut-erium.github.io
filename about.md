@@ -54,7 +54,7 @@ sidebar:
 This personal blog is aimed towards documenting my interests, research and interesting finds.
 
 ## CV
-Enthusiastic employer with interest evoking challenging problems? [Hire Me]()
+Enthusiastic employer with interest evoking challenging problems? [Hire Me](assets/resume.pdf)
 
 ## Contact
 Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#1689.
