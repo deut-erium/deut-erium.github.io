@@ -3,7 +3,7 @@ sha256hash:
   - ac4ee365e333646bbe4b73dae90dc8e86963938aefdae2b66939d3df00e4ea64
   - 4c5db009cef8181649d705e96a3f2c2bbad000b08547a9302b929f9ee700cf05
   - a1a6abb6865f7b5bc0fd027cc024638f356e1daf7b921cec6ba1b590e72383d9
-tags: introduction assignment
+tags: introduction challenges
 aside:
   toc: true
 sidebar:
@@ -13,7 +13,7 @@ author: deuterium
 key: assignment000001
 ---
 
-Assignments are the way to get quick hands on tasks and challenges.  
+Challenges are the way to get quick hands on tasks and challenges made by me.  
 There will be plenty of hands-on experience through a guided set of static challenges.  
 <!--more-->
 There will be a couple of jeopardy style tasks which you are supposed to do. On completing a task, you will recieve a flag which you can submit in the text box to verify the correctness of you solution.  
