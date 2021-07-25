@@ -23,6 +23,8 @@ which has been replaced in
 with a more non-linear initialization with an array of seeds.  
 So, given a few (very few actually) outputs from the numpy random RNG, can you 
 recover the flag?  
+
+
 Note that the seed is a 32-bit value and can be bruteforced easily, thats not 
 the goal of this challenge, the goal of the challenge is to figure out a way
 which works equivalently well for MT-19937-64 bit as 64-bit is out of the 
@@ -48,7 +50,10 @@ flag = iv+cipher.encrypt(flag)
 print(flag.hex())
 
 # output 
-# ba84b595a6c47ab8b5229df78b313fd983368f94c86e063ad9e60b53debf4cf062e0e7ee975a58ede95877add16603d089a7c01b5581278440b2fc8a25e698ae869a2c67de7b8a5ebbe47fcb6cb210237d6cb60d06dabbf7756a2364ba2fbb5b0f0c04fb4383f66ff755c7252b699c33
+# ba84b595a6c47ab8b5229df78b313fd983368f94c86e063ad9e60b53debf4cf062e0e7ee\ 
+# 975a58ede95877add16603d089a7c01b5581278440b2fc8a25e698ae869a2c67de7b8a5e\ 
+# bbe47fcb6cb210237d6cb60d06dabbf7756a2364ba2fbb5b0f0c04fb4383f66ff755c725\ 
+# 2b699c33
 ```
 
 {% assign index = 0 %}
