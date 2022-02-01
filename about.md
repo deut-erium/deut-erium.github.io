@@ -36,6 +36,7 @@ key: "ABOUTPAGE11"
 Hi I'M A Nonclassical Scholar Hereby Un-necessariy Showing Harebrained Episode of Recreationally Astounding Nuisance.  
 
 <details>
+  <summary>This should hopefully appear as heading</summary>
   Testing how it looks
 </details>
 
