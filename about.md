@@ -36,8 +36,9 @@ key: "ABOUTPAGE11"
 <details>
   <summary>Himanshu Sheoran</summary>
   <ul>
-    <li>Hi I'M A Nonclassical Scholar Hereby Un-necessariy Showing Harebrained Episode of Recreationally Astounding Nuisance.  </li>
-    <li>Hallucinating In Most Assuringly Normal Scenarios, Hopefully Uncovering Some Hidden Abbreviative Notations. </li>
+    <li>Hi I'M A Nonclassical Scholar Hereby Un-necessariy Showing Harebrained Episode Of Recreationally Astounding Nuisance.  </li>
+    <li>Hallucinating In Most Assuringly Normal Scenarios, Hopefully Uncovering Some Hidden Expressively-Obscure Redundant Abbreviative Notations. </li>
+    <li>Hey, It May Alter Narrative Sensations, Hyping Unprecendentally Sparse Harmless Emotions Occupying Rarely Adorable Nature. </li>
   </ul>
 </details>
 
