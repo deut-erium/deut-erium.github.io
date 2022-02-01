@@ -39,6 +39,7 @@ key: "ABOUTPAGE11"
     <li>Hi I'M A Nonclassical Scholar Hereby Un-necessariy Showing Harebrained Episode Of Recreationally Astounding Nuisance.  </li>
     <li>Hallucinating In Most Assuringly Normal Scenarios, Hopefully Uncovering Some Hidden Expressively-Obscure Redundant Abbreviative Notations. </li>
     <li>Hey, It May Alter Narrative Sensations, Hyping Unprecendentally Sparse Harmless Emotions Occupying Rarely Adorable Nature. </li>
+    <li>Hopefully I Maintain A Nerdy Streak, Holding Understandably Special Hunger Escaping Onto Reasonably Adequate Nirvana</li>
   </ul>
 </details>
 
