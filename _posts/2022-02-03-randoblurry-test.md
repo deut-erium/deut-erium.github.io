@@ -16,12 +16,12 @@ comments:
   provider: "gitalk"
 ---
 
-Interaction with a friend about randoblurry
-<!--more-->
+Interaction with a friend about randoblurry  
+<!--more-->  
 
 # Trying out the idea of randoblurry
 
-Excited to play the new game I created, I asked a friend of mine if it seems reasonable. Let's call her "Z" and me "D".
+Excited to play the new game I created, I asked a friend of mine if it seems reasonable. Let's call her "Z" and me "D".  
 
 Z: This doesn't appear to be much fun.  
 D: Try out giving me some 4 random words of your choice.  
@@ -50,7 +50,7 @@ Z: Probity, spurious, wily, fetter
 Z: Oh wait, hey it was flagrant!  
 D: Thats how you plant to *fetter* his *wily* responses? Him missing a spelling should no way be considered *spurious* as he can still justify his *probity* by his *flagrant* capability to include words on the fly  
 Z: I am a fan already. Go with travesty, vociferous, iconoclast, largess  
-D: A *travesty* of Sassy Tharoor, whose vocabulary is actually her *largess*, this *vociferous* lad is a born grammatical *iconoclast*  
+D: A *travesty* of Sassy Tharoor, whose vocabulary is actually her *largess*, this *vociferous* lad is a born grammatical *iconoclast*.  
 Z: Relegate, beguile, evanescent, maelstorm  
 D: Hmmmmm  
 D: He *relegates* her hard found words to *beguile* her into producing yet another set of *evanescent* words. Can she in any way stop this furious *maelstorm* growing hungry with each word fed?  
