@@ -1,7 +1,7 @@
 ---
 title: Trying out randoblurry
 author: deuterium
-tags: wordgame randoblurry testing
+tags: wordgame randoblurry testing dialogue 
 aside:
   toc: true
 sidebar:
