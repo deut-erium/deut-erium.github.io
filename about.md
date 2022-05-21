@@ -42,7 +42,7 @@ sidebar:
       I have completed my Bachelor's Of Technology in Computer Science and Engineering with majors and a crush on cybersecurity.
     </p>
     <p>
-      I have been playing a lot of <a href="https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html">CTFs</a>, nowadays with <a href="https://ctftime.org/team/169557>Project Sekai</a> and <a href="https://ctftime.org/team/116018">zh3r0</a> 
+      I have been playing a lot of <a href="https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html">CTFs</a>, nowadays with <a href="https://ctftime.org/team/169557">Project Sekai</a> and <a href="https://ctftime.org/team/116018">zh3r0</a> 
       where I can be found doing crypto tasks. My areas of interests include Cryptography, Reverse Engineering, Binary Exploitation, SMT/SAT solvers and programming in general.
     </p>
     <p>
@@ -57,7 +57,7 @@ This personal blog is aimed towards documenting my interests, research and inter
 Enthusiastic employer with interest evoking challenging problems? [Hire Me](assets/resume.pdf)
 
 ## Contact
-Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#3368. (subject to change if I get Nitro :P)
+Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#3368. (subject to change if I get Nitro :P)  
 Or any other convenient medium of choice linked below.
 
 HACK THE PLANET :metal: :metal: :metal:
