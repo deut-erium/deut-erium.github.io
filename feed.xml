@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://deut-erium.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://deut-erium.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-05-25T08:51:11+05:30</updated><id>https://deut-erium.github.io/feed.xml</id><title type="html">deuterium’s blog</title><subtitle>Himanshu Sheoran is a nerd typically writing about cryptography, Capture The Flag i.e CTF events, hacking, cybersecurity, SAT SMT solvers and  computer science in general.
+</subtitle><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><entry><title type="html">Injection</title><link href="https://deut-erium.github.io/2021/07/25/injection.html" rel="alternate" type="text/html" title="Injection" /><published>2021-07-25T00:00:00+05:30</published><updated>2021-07-25T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/07/25/injection</id><content type="html" xml:base="https://deut-erium.github.io/2021/07/25/injection.html"><![CDATA[<p>Bijections are fun to look at and amusing especially to cryptographers, can
+you spot out one here?
+<!--more--></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
+
+<span class="k">def</span> <span class="nf">nk2n</span><span class="p">(</span><span class="n">nk</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">l</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">nk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">l</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="n">nk</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span><span class="n">j</span>
+    <span class="k">return</span> <span class="n">nk2n</span><span class="p">([</span><span class="n">nk2n</span><span class="p">(</span><span class="n">nk</span><span class="p">[:</span><span class="n">l</span><span class="o">-</span><span class="n">l</span><span class="o">//</span><span class="mi">2</span><span class="p">]),</span> <span class="n">nk2n</span><span class="p">(</span><span class="n">nk</span><span class="p">[</span><span class="n">l</span><span class="o">-</span><span class="n">l</span><span class="o">//</span><span class="mi">2</span><span class="p">:])])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">nk2n</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+
+<span class="c1"># output
+# 1066464516621568650416778516260128065562999836454777449496486613730252783905\
+# 58656231590803591166516524516182041583860744711996793449978222571578932566\ 
+# 51539240517205572748689616288529831032342817805470118893063573639935906790\ 
+# 19094216260987077393364474718427466510193852
+</span></code></pre></div></div>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash0()
+	   {
+	    var plainText = document.getElementById('plainText0').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='23a3a8d369653ce0f4924c3864bdda359fbb3d2b5e21ccb4c9fe9eeabbea2669')
+	    {
+		document.getElementById('spanResult0').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult0').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText0" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash0()">Check Flag</a>
+	<br />
+	<div id="spanResult0">&nbsp;&nbsp;</div>
+</div>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="challenges" /><category term="injection" /><category term="zh3r0_ctf2" /><category term="crypto" /><summary type="html"><![CDATA[Bijections are fun to look at and amusing especially to cryptographers, can you spot out one here?]]></summary></entry><entry><title type="html">Mersenne Seed Recovery</title><link href="https://deut-erium.github.io/2021/07/25/mersenne-seed-recovery.html" rel="alternate" type="text/html" title="Mersenne Seed Recovery" /><published>2021-07-25T00:00:00+05:30</published><updated>2021-07-25T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/07/25/mersenne-seed-recovery</id><content type="html" xml:base="https://deut-erium.github.io/2021/07/25/mersenne-seed-recovery.html"><![CDATA[<p>Can array based initialization of mersenne twister which is used in current 
+libraries be reversed to get the seed (any 1-19937 bit quantity)</p>
+
+<!--more-->
+
+<p>I hope its the time to dive into the mersenne twister implementation of python
+to get a hang of <code class="language-plaintext highlighter-rouge">init_by_array</code> seed initialization. I give you the first
+32 bit outputs from the random number, you go tell me what the seed was i.e 
+your flag.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span><span class="s">'big'</span><span class="p">)</span>
+<span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">624</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+<span class="c1"># outputs
+#[1172757547, 1044540094, 162699055, 709397028, 815288684, 3151776544,
+# 3292899535, 2280665391, 2075440157, 364255372, 3054422748, 2795350205,
+# 3684219793, 2176759011, 619829823, 578262798, 2148754620, 314476941,
+# 4190032682, 2702536655, 1779772220, 162032429, 3898566969, 873781904,
+# 782287093, 1326783148, 3870263582, 1637157790, 229520369, 468135519,
+# 2858112643, 2921287993, 971504059, 3596345145, 1382799481, 3502353311,
+# 2830665067, 1509106780, 8144239, 3501020788, 3612087714, 2052815741,
+# 2732086677, 1622749541, 2003753847, 327784538, 1611044541, 1982023734,
+# 1783343355, 504193899, 2447656373, 129821754, 1642955364, 1297875531,
+# 332130065, 2145004203, 4183822956, 444058136, 1325595781, 4055168731,
+# 989496474, 2292155526, 688452644, 1305199095, 257781926, 2745680151,
+# 3136111495, 765776415, 1153615146, 1022145654, 78010372, 3816656477,
+# 4068929423, 716606854, 3269856883, 2315675431, 675068274, 1822871750,
+# 1144302971, 434628855, 3026909007, 4257344189, 1963551304, 1282357267,
+# 1738724660, 1458688787, 3794983283, 1121759764, 3030642664, 823379401,
+# 2252979969, 1284054026, 2479014973, 687380376, 1932917295, 3630252053,
+# 2921074658, 4049494058, 2289086880, 1892303261, 781666400, 1137759934,
+# 597913254, 4143758704, 4255304110, 2013429212, 2030613232, 2514929024,
+# 557818628, 2191634113, 2838506763, 1211517274, 2832133264, 2840572658,
+# 448871439, 2188558824, 1318715808, 3985103831, 3952246791, 1978497737,
+# 2106233539, 2652285180, 2607404790, 1381405975, 1517283886, 4183222467,
+# 3673471736, 2634013010, 702083904, 2662034622, 4073302660, 3733854982,
+# 3971666769, 2735006207, 2227054176, 2206699978, 3592952173, 1387757525,
+# 2632013757, 1888590603, 1746862855, 3105372754, 2098568295, 3542352586,
+# 3825790385, 3190162227, 2685715843, 1918393086, 3618995196, 984314496,
+# 1275369354, 1783651707, 548474538, 3838407969, 2413277128, 2453949551,
+# 3334175832, 1165616244, 3421796501, 2636261063, 4285750446, 829936254,
+# 2272846131, 285873031, 4132872480, 1920109191, 874209632, 3511773387,
+# 132088367, 173286123, 2557397884, 1681597466, 453927431, 1504812009,
+# 3051733584, 1527109172, 41977716, 675949076, 3927778596, 1024992786,
+# 399829635, 2169191934, 2697524979, 3962651703, 3687885045, 4272254495,
+# 3984901753, 1009601566, 3749314833, 3223985511, 3680589186, 551470529,
+# 330342290, 4287312302, 3291821371, 1132996887, 2269377911, 851803252,
+# 4208367495, 2488718913, 3888757727, 2456514820, 3205729146, 4034510357,
+# 2161654080, 176787979, 2055687990, 2450250242, 1554138826, 1877196414,
+# 271071917, 1532182335, 1905518344, 3545526566, 1770280726, 982887108,
+# 1558820354, 1762129876, 392914538, 2375938265, 3725397785, 4083224299,
+# 973755592, 3019603492, 3627676360, 4056899516, 2862385957, 3234075214,
+# 6427528, 3690961053, 4281430812, 3128145706, 2342332618, 1099908081,
+# 20797516, 2343380952, 3499827563, 1390811405, 2334422878, 3565947108,
+# 2399694755, 2743152640, 2418040377, 1001653025, 3252380420, 1867229431,
+# 3902613209, 2872224084, 2892811030, 2860455775, 617778762, 1302248492,
+# 830505522, 721371402, 3027345460, 4187204223, 2906728054, 3316037207,
+# 1132441496, 2374325407, 2297464582, 2611328263, 3097990021, 4078159307,
+# 2183593479, 2500066577, 1956467708, 1450109174, 2926064393, 725019684,
+# 624580643, 1079501557, 1380558030, 727772556, 3791175467, 3548954738,
+# 3782638637, 1360678465, 2515109871, 3719846832, 3283968154, 240847599,
+# 2133405659, 3163384257, 3424180985, 4047006150, 2675441246, 4030238595,
+# 2794094622, 1605097611, 3841798084, 1745902505, 1330737298, 3535271175,
+# 2185554997, 3353903893, 1953717685, 397863543, 1642184793, 3338561871,
+# 55312300, 2063937014, 2021269250, 3612092341, 3840340402, 2889769044,
+# 1782444810, 1977848867, 2562292775, 20309388, 516869094, 2861788580,
+# 382774588, 3761636690, 356496669, 455690478, 3251162721, 494258833,
+# 1323916781, 3306973379, 4015865033, 288998281, 345770639, 2177736152,
+# 1867670778, 342156954, 2084626106, 3736264351, 1262619142, 2621458052,
+# 3887763515, 592575338, 1456145339, 4053230983, 2674478581, 3691205444,
+# 36968742, 1563650357, 4073940337, 1779288435, 1890549947, 442574219,
+# 2398300179, 1445239342, 1217493279, 3605631960, 2111495555, 210492881,
+# 2687067162, 1965225823, 3873833073, 3703063339, 3556009091, 1123876736,
+# 1483904935, 1040972080, 1836839450, 2475197931, 341074871, 1398555798,
+# 2644995902, 827158916, 3015217825, 1560254720, 3209798141, 3275410587,
+# 418380526, 1614969721, 696359632, 1344196203, 2145108565, 1705003197,
+# 2256489390, 1545142947, 3554743631, 30894723, 3446219907, 2458874940,
+# 636604172, 66814873, 813934791, 3829264649, 1063010746, 2339528821,
+# 1325411336, 3021789018, 3495128687, 2414366727, 1493258044, 2620224639,
+# 1945303258, 766880061, 4269235606, 746428505, 1326254393, 121240768,
+# 2603794600, 1216318772, 2935870134, 1205776099, 2570111225, 4222093639,
+# 2622616190, 3227397654, 1823642282, 3179637239, 1222991616, 4154747911,
+# 397169439, 375181295, 3512853402, 743000097, 195004563, 4000557824,
+# 3332568274, 1175074355, 526910586, 996053846, 2383720119, 3275981633,
+# 839526122, 623000597, 2263907191, 2444220906, 3571181173, 818556817,
+# 631648595, 2980207393, 630037041, 3703909733, 2455808593, 3501236965,
+# 2201077547, 4254461885, 3154467124, 1522666325, 2911951569, 3087834096,
+# 1936769633, 3968888645, 2659844077, 842754039, 1405435484, 3364982771,
+# 1729907983, 343213499, 3663880432, 2704155023, 317359899, 3757897857,
+# 3876145098, 1250668810, 4030295692, 1081478876, 3550402849, 1280291681,
+# 1976698822, 2596079462, 1648605115, 2151293282, 1054895100, 1662934057,
+# 2813580327, 1274430263, 4017593576, 3320094103, 3649668327, 832172905,
+# 1968232566, 1454398914, 3682243603, 1157714526, 2995323085, 526719009,
+# 31746451, 1667213381, 2683146901, 511324757, 4254737379, 171780523,
+# 564358238, 424924120, 940689862, 1611258271, 4048656221, 3083964049,
+# 3309165038, 933597817, 821867959, 1012057250, 3334138261, 2621394832,
+# 3629884595, 1505124129, 3145961004, 980201177, 2956955808, 577288155,
+# 1234405371, 1010952708, 3349143381, 1723977374, 2498332485, 3724438233,
+# 1846854699, 1905222212, 1092922855, 4090977253, 1483494015, 1332378828,
+# 547431885, 2776676279, 3996763808, 843779775, 1792229004, 802676049,
+# 2047999673, 3147520146, 1009359840, 3035720553, 4049146668, 2636307534,
+# 67683767, 2904630802, 2231654485, 3625578257, 627694348, 2379556043,
+# 3167298239, 731521574, 403886381, 3469579628, 379318348, 3738915865,
+# 2274433150, 3568361988, 1639630437, 2967497958, 2457361786, 819385924,
+# 2896646090, 271628193, 1860866375, 4081817088, 2661264852, 2848871386,
+# 4075412583, 3956711368, 524450262, 1013945828, 4122849513, 1270725575,
+# 3478970403, 1689412203, 1879188103, 2898166797, 413096294, 787271656,
+# 681520774, 3824451061, 2689554133, 3772118788, 1733953731, 4256761144,
+# 614749407, 193311286, 1667289123, 3589136810, 3036577560, 3569335854,
+# 1312573994, 3418361058, 2729703693, 2093308801, 379720254, 2091295541,
+# 4144989881, 1671303374, 1907800178, 320644106, 1709481771, 3386055074,
+# 4219189922, 1067692138, 4244109947, 4142646918, 3641987074, 3489151344,
+# 1600148808, 89793812, 2424394480, 1605445384, 1340111297, 1013590575,
+# 351170739, 815307967, 1407766804, 26971801, 2540378839, 2571449560,
+# 2561904158, 1713530786, 2040307872, 1032294332, 140251353, 958177320,
+# 1133813274, 1493179302, 272798285, 1695566026, 1670326757, 2742287459,
+# 2602916692, 3238677290, 682473958, 833965, 3408315996, 4088483856,
+# 2320264483, 1114943487, 3706829387, 3139780460, 4288456008, 3611287938]
+#
+</span></code></pre></div></div>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash0()
+	   {
+	    var plainText = document.getElementById('plainText0').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='e50d48d74d319e4192e4d11590bf6c73a65a2e6b473deb90f68b63041318679c')
+	    {
+		document.getElementById('spanResult0').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult0').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText0" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash0()">Check Flag</a>
+	<br />
+	<div id="spanResult0">&nbsp;&nbsp;</div>
+</div>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="challenges" /><category term="mersenne_twister" /><category term="zh3r0_ctf2" /><category term="crypto" /><summary type="html"><![CDATA[Can array based initialization of mersenne twister which is used in current libraries be reversed to get the seed (any 1-19937 bit quantity)]]></summary></entry><entry><title type="html">Untwist Me</title><link href="https://deut-erium.github.io/2021/07/25/untwist-me.html" rel="alternate" type="text/html" title="Untwist Me" /><published>2021-07-25T00:00:00+05:30</published><updated>2021-07-25T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/07/25/untwist-me</id><content type="html" xml:base="https://deut-erium.github.io/2021/07/25/untwist-me.html"><![CDATA[<p>One can guess all the future outputs of a random number generator once they 
+recover the state, but how feasible is it to recover the past state of pseudo
+random number generator given its present state?
+<!--more--></p>
+
+<p>Meresnne Twister is a pseudorandom number used ubiquitously in so many pseudo
+random number generation libraries across programming languages and softwares
+alike. It uses a state of 624 32-bit integers. Each 32-bit word contributes 
+to to unique output, once the index reaches the end of the array, this array
+is “twisted” to generate a new array of state. Now, given this state, can you
+recover back the original state?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">state_len</span> <span class="o">=</span> <span class="mi">624</span><span class="o">*</span><span class="mi">4</span>
+<span class="n">right_pad</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">state_len</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+<span class="n">left_pad</span> <span class="o">=</span> <span class="n">state_len</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">-</span><span class="n">right_pad</span>
+<span class="n">state_bytes</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">left_pad</span><span class="p">)</span><span class="o">+</span><span class="n">flag</span><span class="o">+</span><span class="n">os</span><span class="p">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">right_pad</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">state_bytes</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span><span class="s">'big'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">state_len</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">random</span><span class="p">.</span><span class="n">setstate</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="n">state</span><span class="o">+</span><span class="p">(</span><span class="mi">624</span><span class="p">,),</span><span class="bp">None</span><span class="p">))</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">624</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+<span class="c1"># outputs
+#[3010212863, 1638790982, 2153727997, 800741962, 1300126498, 1008035836,
+# 1757095206, 1670433536, 3087496760, 1747385781, 2120399163, 1134629113,
+# 919775231, 3379878969, 3743636691, 4037703354, 809158834, 2188423766,
+# 895667276, 3377213573, 3894587783, 346471012, 3945760625, 1014890401,
+# 3489634126, 2274362888, 3566959444, 381269327, 3621452664, 1760615420,
+# 2482052829, 1842093601, 3135000809, 889501115, 1870391126, 721464471,
+# 1146162062, 3157702100, 1067328755, 3362963308, 2290029991, 2055264656,
+# 2800137102, 252553871, 1631088230, 58620923, 1016025333, 2676322857,
+# 4030931310, 3783089217, 2821383676, 1395746047, 1917600767, 2278459122,
+# 1434446925, 4074687527, 2498110773, 3316902826, 2958570141, 5147159,
+# 2277916584, 1311785024, 2808116680, 3897795015, 1091778004, 4044893667,
+# 3442360193, 2471121578, 3266124707, 945709239, 4254600747, 269780363,
+# 1687521986, 728060741, 3239438658, 1275400802, 3976720484, 542928488,
+# 1591685538, 801156258, 2997864916, 1334519032, 3054095657, 1519771487,
+# 1744098263, 1926575149, 3509052482, 1155668294, 948649192, 3728061600,
+# 2546291029, 834854025, 1130467450, 2269145652, 462981709, 2095530900,
+# 2829210433, 2033516625, 2094545879, 4032850882, 1534276992, 2245901424,
+# 2298906123, 2692400842, 1832625190, 1401500215, 2247699783, 2688167016,
+# 1815564529, 134150505, 1022130290, 810101229, 4102800158, 203439793,
+# 1563110047, 4122501009, 897838871, 2839458623, 4235007515, 2805467536,
+# 3669331231, 4213272249, 334116894, 1720279917, 3768575383, 3712492986,
+# 492673800, 2448994557, 2136407709, 1007047910, 2856006838, 1451254580,
+# 3752603100, 1353653315, 22030732, 1162510422, 1861605544, 52494704,
+# 4264490153, 962746860, 3803153407, 3865003091, 1963762549, 1166411853,
+# 4085109678, 1720009340, 3149090189, 997456656, 377660043, 1392682564,
+# 4111511899, 1589429762, 4189913787, 3956043196, 2524895159, 1150952959,
+# 3230524959, 1922940535, 3161766763, 1498062044, 1193570808, 3609861632,
+# 1166059038, 4013944388, 1321750226, 4270860030, 3020259258, 1888279874,
+# 3509465770, 1132931626, 3981029460, 225835700, 2398674556, 1037771691,
+# 1183027818, 3062062705, 2201412587, 4027219272, 2656813603, 2238798992,
+# 2321355543, 770644701, 3644674099, 3924455525, 599621572, 2865872023,
+# 547681040, 2504523252, 1595600675, 2770244206, 4207940231, 1034385830,
+# 3646850280, 2354492616, 1547726173, 2144551580, 3310312279, 4079068944,
+# 1052121020, 1167730938, 1859530296, 3935988096, 653145852, 3190034909,
+# 306014083, 3112209831, 1319990284, 2366174046, 2873692054, 3612521192,
+# 3474355729, 2078348431, 3093619143, 767721911, 1799487931, 3769008967,
+# 2510379156, 3997118470, 1858256570, 2511138610, 3119850305, 4123020796,
+# 1467948580, 2169662247, 1042659524, 706459993, 1279903660, 161481894,
+# 3047758921, 2128081746, 1481302067, 3572046415, 130443674, 1882613027,
+# 1949012711, 786180871, 1401546008, 3025028339, 2109417076, 2415110785,
+# 1333312666, 2808997450, 92196701, 35189050, 1628124503, 919909324,
+# 3735308735, 1672915082, 848573625, 3900913677, 4067446247, 3045201457,
+# 4262710543, 407360835, 914980841, 1201056276, 2367451149, 4012096496,
+# 3644273047, 2793106080, 4059628962, 956823679, 504646522, 1577066976,
+# 3103848478, 281560705, 3654634065, 1200837960, 2469148835, 1515087929,
+# 986675230, 1014717995, 3626085805, 3427299665, 3199504838, 1499632928,
+# 864019141, 3092221246, 3432793142, 961906091, 4087241347, 1501385695,
+# 1869078181, 1432754296, 1929269813, 20545849, 79773598, 2225667827,
+# 2803991524, 3271497, 2000244219, 2235945517, 198649159, 3130926875,
+# 2061536635, 4127935142, 2509945885, 2800177774, 122281515, 1483335934,
+# 517228772, 687237830, 699903391, 1270471004, 3950520968, 3878199844,
+# 2604191970, 1471453307, 612589164, 1337743243, 488061378, 1083836576,
+# 2385268945, 981256534, 1592250232, 3753674057, 1249785337, 176131676,
+# 1547866758, 3387578645, 1918971958, 3149508022, 225736357, 2820091446,
+# 1309599295, 801349594, 1443931329, 4141370827, 486328175, 303404609,
+# 2740073709, 1241722868, 1085359414, 4250625563, 53936008, 1526883658,
+# 81508000, 3394245176, 3523129205, 1065188556, 495179175, 1610340591,
+# 1173947008, 2581378909, 345913430, 1811845756, 299708365, 274267008,
+# 1155972508, 3069794235, 2406176022, 275597450, 1254348890, 395814304,
+# 4153790237, 3099560409, 3533186000, 2135638402, 510811973, 1415172809,
+# 451611225, 4168777378, 990982351, 3349791003, 2296538215, 2315312562,
+# 1414386168, 428503045, 3351836071, 405842630, 809372501, 3967844511,
+# 3746788355, 4102787435, 1511139290, 717968187, 1555067606, 1588912940,
+# 843054791, 3824649799, 3018771508, 3905102930, 4045409252, 3653536948,
+# 4111211541, 3524774589, 3822695255, 2242439159, 863036773, 787822092,
+# 3858607605, 2697827303, 84884878, 3116656440, 351049518, 318784403,
+# 553018425, 1265079730, 1277921250, 2775298261, 3472975923, 317887667,
+# 4272975757, 738903299, 1868393449, 475826860, 2198737207, 1785005722,
+# 3868235178, 3857360992, 1533904162, 394948937, 334461989, 2723127934,
+# 3356703544, 2541615860, 4061593776, 4252987627, 3734936262, 2164663823,
+# 3615908783, 708670146, 2725980744, 1752233272, 2043945199, 2132585334,
+# 389187774, 3190948655, 1188340687, 1824879665, 4127459778, 3493838393,
+# 2358471830, 516747657, 3944247696, 2367031994, 3819176400, 1020231474,
+# 1295927899, 1557493532, 2504559554, 355169608, 2068224633, 2158052129,
+# 3853591734, 48976763, 437527498, 200103512, 478262500, 2889753391,
+# 1580502604, 2959449602, 1157521586, 4002445978, 3347949331, 2997248270,
+# 2299459163, 1175224056, 2543436468, 2446001038, 2412693662, 1807105817,
+# 1113873459, 3747132011, 3790216955, 543944458, 1256685827, 3101958425,
+# 2408556173, 1777559571, 1594278081, 1036622339, 2667517584, 1802664264,
+# 2395732937, 2465933464, 3521205735, 2803861899, 3746620807, 706899206,
+# 1143296823, 3128028140, 2716694130, 2420134119, 3649408943, 3806142051,
+# 2412349072, 2575408306, 1642100358, 1783271826, 2674421352, 2653988508,
+# 2643495441, 1842848679, 4220332304, 4168164191, 2619268737, 2661380897,
+# 3743142783, 1663838902, 4070629703, 3371465149, 4072450405, 1381310429,
+# 3337325442, 959691182, 2249789821, 2349309328, 3918167103, 926837360,
+# 2116928637, 3831738553, 4189427640, 3449232305, 3257706763, 3116333625,
+# 7526877, 4276590659, 4238805869, 2592717756, 3374263699, 1977523723,
+# 3519377356, 4233779985, 2905650247, 1713286703, 1679927293, 2319165794,
+# 3765526325, 3518105912, 1963471116, 4210271043, 112289569, 1200491141,
+# 4054218896, 1510045663, 4221937409, 1533659251, 1746527391, 1627955838,
+# 2852075184, 3539991984, 1601441271, 3299595676, 739020629, 3508463551,
+# 1543596798, 2192302007, 4063098133, 766518400, 2933103841, 2737391081,
+# 3014416175, 3067006685, 43083155, 1955768112, 2013953097, 625393267,
+# 3754403452, 3162101151, 1158861805, 621313486, 2900452280, 708979785,
+# 1757275009, 3677576137, 3714338118, 3533758422, 1512551802, 2746196950,
+# 2024585134, 612115745, 1058450417, 3090795349, 2068644030, 3186840221,
+# 1889899349, 3527732807, 1973474012, 2217193389, 3059044320, 1341979563,
+# 440406938, 3114173896, 4244113771, 2649834470, 1123591556, 629408126,
+# 596756734, 51416208, 1914543972, 1383958459, 2273526307, 25072794,
+# 71325945, 3466520611, 3572779967, 3335604477, 3831987682, 2076185615,
+# 1715359843, 71359213, 2625736992, 3006341223, 2092810088, 716083061,
+# 772294292, 2395463157, 1777066971, 2719722784, 3668605324, 3583574126,
+# 1238971203, 1536994984, 309161525, 2444639752, 1974758564, 2344173080,
+# 2925231177, 3095359598, 742425414, 741710625, 2806953195, 3410696260]
+</span></code></pre></div></div>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash0()
+	   {
+	    var plainText = document.getElementById('plainText0').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='b2a315d5763729b040a87819e49e21044bb94b020303ff4df0838bcd254ba5ec')
+	    {
+		document.getElementById('spanResult0').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult0').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText0" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash0()">Check Flag</a>
+	<br />
+	<div id="spanResult0">&nbsp;&nbsp;</div>
+</div>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="challenges" /><category term="mersenne_twister" /><category term="zh3r0_ctf2" /><category term="crypto" /><summary type="html"><![CDATA[One can guess all the future outputs of a random number generator once they recover the state, but how feasible is it to recover the past state of pseudo random number generator given its present state?]]></summary></entry><entry><title type="html">Wiki Mersenne</title><link href="https://deut-erium.github.io/2021/07/25/wiki-mersenne.html" rel="alternate" type="text/html" title="Wiki Mersenne" /><published>2021-07-25T00:00:00+05:30</published><updated>2021-07-25T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/07/25/wiki-mersenne</id><content type="html" xml:base="https://deut-erium.github.io/2021/07/25/wiki-mersenne.html"><![CDATA[<p>Numpy uses plain old implementation of Mersenne Twister as the default pseudo
+random number generation.<br />
+<!--more-->
+Now Mersenne Twister by itself is not so bad, what’s
+bad is actually the seed initialization ( i.e. deriving the initial state of
+the random number generator from the seed ) same as explained in the 
+<a href="https://en.wikipedia.org/wiki/Mersenne_Twister#Pseudocode">Wikipedia Implementation</a> 
+which has been replaced in 
+<a href="http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/MT2002/emt19937ar.html">Improved Initialization</a> 
+with a more non-linear initialization with an array of seeds.<br />
+So, given a few (very few actually) outputs from the numpy random RNG, can you 
+recover the flag?</p>
+
+<p class="info">Note that the seed is a 32-bit value and can be bruteforced easily, thats not 
+the goal of this challenge, the goal of the challenge is to figure out a way
+which works equivalently well for MT-19937-64 bit as 64-bit is out of the 
+bounds of bruteforce for a reasonably practical CTFer :P</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="kn">from</span> <span class="nn">Crypto.Util.Padding</span> <span class="kn">import</span> <span class="n">pad</span>
+<span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
+
+<span class="k">def</span> <span class="nf">rand_32</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="s">'big'</span><span class="p">)</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="n">pad</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">rand_32</span><span class="p">())</span>
+<span class="n">iv</span><span class="p">,</span><span class="n">key</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span> <span class="n">random</span><span class="p">.</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">iv</span><span class="o">=</span><span class="n">iv</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="n">AES</span><span class="p">.</span><span class="n">MODE_CBC</span><span class="p">)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">iv</span><span class="o">+</span><span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">.</span><span class="nb">hex</span><span class="p">())</span>
+
+<span class="c1"># output 
+# ba84b595a6c47ab8b5229df78b313fd983368f94c86e063ad9e60b53debf4cf062e0e7ee\ 
+# 975a58ede95877add16603d089a7c01b5581278440b2fc8a25e698ae869a2c67de7b8a5e\ 
+# bbe47fcb6cb210237d6cb60d06dabbf7756a2364ba2fbb5b0f0c04fb4383f66ff755c725\ 
+# 2b699c33
+</span></code></pre></div></div>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash0()
+	   {
+	    var plainText = document.getElementById('plainText0').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='b672ce133b4a057a92821b13f295e6968abcd53066082562da1c6e5130f428fc')
+	    {
+		document.getElementById('spanResult0').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult0').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText0" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash0()">Check Flag</a>
+	<br />
+	<div id="spanResult0">&nbsp;&nbsp;</div>
+</div>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="challenges" /><category term="mersenne_twister" /><category term="zh3r0_ctf2" /><category term="crypto" /><summary type="html"><![CDATA[Numpy uses plain old implementation of Mersenne Twister as the default pseudo random number generation.]]></summary></entry><entry><title type="html">Challenges</title><link href="https://deut-erium.github.io/2021/04/08/challenges.html" rel="alternate" type="text/html" title="Challenges" /><published>2021-04-08T00:00:00+05:30</published><updated>2021-04-08T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/04/08/challenges</id><content type="html" xml:base="https://deut-erium.github.io/2021/04/08/challenges.html"><![CDATA[<p>Challenges are the way to get quick hands on tasks and challenges made by me.<br />
+There will be plenty of hands-on experience through a guided set of static challenges.<br />
+<!--more-->
+There will be a couple of jeopardy style tasks which you are supposed to do. On completing a task, you will recieve a flag which you can submit in the text box to verify the correctness of you solution.<br />
+If done correctly, the message <code class="language-plaintext highlighter-rouge">Absolutely correct! 🥳</code> should pop up. <code class="language-plaintext highlighter-rouge">Incorrect, try harder 🥺</code> will pop up otherwise. So be careful while submitting.<br />
+Also note that all the flags would be case sensitive.</p>
+
+<p class="info">This is a statically-hosted site, you would not get any points by solving the challenges, imagine virtual pats on completing a challenge or let me know about it on discord :smile:</p>
+
+<p>Now its time for you to check out your first task!</p>
+
+<h2 id="task1">Task1</h2>
+<p>This is just a sample task depicting the flag format i.e. what would a flag look like.<br />
+Go on and paste <code class="language-plaintext highlighter-rouge">flag{th15_15_wh47_4_54mpl3_fl46_l00k5_l1k3!!}</code> into the text box below. You should see the confirmation if you did it correctly.</p>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash0()
+	   {
+	    var plainText = document.getElementById('plainText0').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='ac4ee365e333646bbe4b73dae90dc8e86963938aefdae2b66939d3df00e4ea64')
+	    {
+		document.getElementById('spanResult0').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult0').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText0" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash0()">Check Flag</a>
+	<br />
+	<div id="spanResult0">&nbsp;&nbsp;</div>
+</div>
+
+<h2 id="task2">Task2</h2>
+<p>There can be often files associated to an assignment. They will be provided either as a <a href="https://raw.githubusercontent.com/deut-erium/ctf-tutorials/master/assigments/what%20are%20assignments/task2.txt">download link</a> or alternatively could be found at corresponding assignment in the <a href="https://github.com/deut-erium/ctf-tutorials/tree/master/assigments">github repository</a><br />
+Go on submit the second flag!</p>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash1()
+	   {
+	    var plainText = document.getElementById('plainText1').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='4c5db009cef8181649d705e96a3f2c2bbad000b08547a9302b929f9ee700cf05')
+	    {
+		document.getElementById('spanResult1').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult1').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText1" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash1()">Check Flag</a>
+	<br />
+	<div id="spanResult1">&nbsp;&nbsp;</div>
+</div>
+
+<h2 id="task3">Task3</h2>
+<p>Have you stalked me enough?<br />
+I bet you didn’t, better go to my <a href="https://github.com/deut-erium">github profile</a> to find the flag :wink:</p>
+
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
+    <script type="text/Javascript">
+	function checkHash2()
+	   {
+	    var plainText = document.getElementById('plainText2').value.trim();
+	    var md = forge.md.sha256.create();  
+	    md.start();  
+	    md.update(plainText, "utf8");  
+	    var hashText = md.digest().toHex(); 
+	    if (hashText=='a1a6abb6865f7b5bc0fd027cc024638f356e1daf7b921cec6ba1b590e72383d9')
+	    {
+		document.getElementById('spanResult2').innerHTML = "Absolutely correct! 🥳"; 
+	    }
+	    else
+	    {
+		document.getElementById('spanResult2').innerHTML = "Incorrect, try harder 🥺";
+	    }
+	}        
+	</script>
+	<strong>Enter the flag: </strong><input id="plainText2" type="text" style="color:black;" /> 
+	<a class="button button--secondary button--rounded" onclick="checkHash2()">Check Flag</a>
+	<br />
+	<div id="spanResult2">&nbsp;&nbsp;</div>
+</div>
+
+<p>We can see you rocking already!!!</p>
+<h3 id="want-to-share-your-solutions">Want to share your solutions?</h3>
+<p>We all love reading and creating writeups! You are free to create and publish writeups for the assignments to flex your cool out of the box solutions or just to teach your peers how to solve a challenge :heart:<br />
+Just drop in the link to your github repository or merely a <a href="https://gist.github.com/">gist</a> containing the solution.<br />
+Who knows one might get some prizes or cute little surprises :wink:</p>
+
+<p><strong>HACK THE PLANET</strong></p>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="introduction" /><category term="challenges" /><summary type="html"><![CDATA[Challenges are the way to get quick hands on tasks and challenges made by me. There will be plenty of hands-on experience through a guided set of static challenges.]]></summary></entry><entry><title type="html">Contributions</title><link href="https://deut-erium.github.io/2021/04/08/contributions.html" rel="alternate" type="text/html" title="Contributions" /><published>2021-04-08T00:00:00+05:30</published><updated>2021-04-08T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/04/08/contributions</id><content type="html" xml:base="https://deut-erium.github.io/2021/04/08/contributions.html"><![CDATA[<p>This is an open-sourced website hosted on github pages!<br />
+If you wish to contribute or have a cool idea to share or even a cool challenge which can be put up as an assignment, this is the correct page you are looking at.
+<!--more--></p>
+
+<h2 id="contributing-as-a-collaborator">Contributing as a collaborator</h2>
+<p>This repository uses jekyll theme <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/quick-start">TeXt</a>, check out the documentation for features and syntax.<br />
+All the posts are stored in <a href="../_posts">_posts</a> directory, creating a file <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-name.md</code> creates a url <code class="language-plaintext highlighter-rouge">/YYYY/MM/DD/name.html</code> in the github pages.<br />
+To create a new post, just create a new file of the specified format.</p>
+
+<h3 id="not-a-collaborator">Not a collaborator?</h3>
+<p>Create a fork and issue a pull request with the repository. Make sure the branch you are working on is updated with the master branch. If you feel you would be a regular contributor, just feel free to let us know so that we can add you as collaborator!</p>
+
+<h3 id="not-sure-if-you-want-to-publish-directly">Not sure if you want to publish directly?</h3>
+<p>Create the same file with specified format in <a href="../_drafts">_drafts</a> (create if directory not available)</p>
+
+<h3 id="showcase-your-work">Showcase your work</h3>
+<p>You can showcase your work by having an author badge at the bottom which can be configured to display your profile (name, bio, github, twitter, linkedin etc).
+Just navigate to <a href="_data/authors.yml">_data/authors.yml</a> and append your details (take hints from pre existing author details).</p>
+
+<blockquote>
+  <p>Note: Undesired files (not to be shown on the website) or paths should be added in the <code class="language-plaintext highlighter-rouge">exclude</code> variable in <a href="../_config.yml">_config.yml</a></p>
+</blockquote>
+
+<h2 id="front-matter"><a href="https://jekyllrb.com/docs/front-matter/">Front-matter</a></h2>
+<p>Each post page has a beginning element called frontmatter which is enclosed in <code class="language-plaintext highlighter-rouge">---</code><br />
+This yaml is configuration of the current page.<br />
+Example</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+tags: introduction assignment
+aside:
+  toc: true
+sidebar:
+  nav: layouts
+excerpt_separator: &lt;!--more--&gt;
+author: deuterium
+key: assignment000001
+---
+</code></pre></div></div>
+
+<p>Some of the tags have been explained below,</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>author</td>
+      <td>The name of the article author as defined in <a href="https://github.com/CSEA-IITB/IITBreachers-wiki/tree/master/_data/authors.yml">_data/authors.yml</a></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>tags</td>
+      <td>Space separated list of tags to categorize the page</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>aside</td>
+      <td>For providing table of contents on right side of screen, autogenerated from page contents</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>sidebar</td>
+      <td>For providing sidebar navigation to across articles, can be defined in <a href="https://github.com/CSEA-IITB/IITBreachers-wiki/tree/master/_data/navigation.yml">_data/navigation.yml</a> (needs to be defined beforehand)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>key</td>
+      <td>A unique key to the page (required for loading comments)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>excerpt_separator</td>
+      <td>An html tag <code class="language-plaintext highlighter-rouge">&lt;!--more--&gt;</code> to specify till where the text of artcle needs to be taken as the excerpt of the article</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>sha256hash</td>
+      <td>To be used in assignment tasks. Just specify the sha256 of the flag.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>mathjax</td>
+      <td><code class="language-plaintext highlighter-rouge">true</code> enables mathjax syntax</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>mathjax_autoNumber</td>
+      <td>Autonumbers the equations</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>mermaid</td>
+      <td><code class="language-plaintext highlighter-rouge">true</code> enables mermaid js (very handy for quick diagrams)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>chart</td>
+      <td><code class="language-plaintext highlighter-rouge">true</code> enables char.js on the page</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Check out other features in <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/quick-start">documentation</a></p>
+
+<h2 id="creating-an-assignment">Creating an assignment</h2>
+<p>Assignment will be just another article page, with tasks in it.<br />
+The files required for the task need to be put into <a href="assignemts">assignments</a> directory in a directory which is name of the article.<br />
+For each task, calculate the sha256 of the flag and put it in the <code class="language-plaintext highlighter-rouge">sha256hash</code> array in frontmatter.<br />
+Put the tags</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% assign index = 0 %}
+{% include checkflag.html %}
+</code></pre></div></div>
+<p>To specify index of the task and include a flag input box!<br />
+Check out <a href="https://github.com/deut-erium/ctf-tutorials/blob/master/_posts/2021-07-04-what%20are%20assignments.md">what are assignments.md</a> for an example.</p>
+
+<p>Well thats all it takes to contribute and publish your article :smile:<br />
+Expecting cool contributions! Who knows it may be your shot to learn writing and enhance your communication :wink:</p>
+
+<p>Let me know if something is missing or unclear</p>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="introduction" /><category term="contribution" /><summary type="html"><![CDATA[This is an open-sourced website hosted on github pages! If you wish to contribute or have a cool idea to share or even a cool challenge which can be put up as an assignment, this is the correct page you are looking at.]]></summary></entry><entry><title type="html">Welcome</title><link href="https://deut-erium.github.io/2021/04/08/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2021-04-08T00:00:00+05:30</published><updated>2021-04-08T00:00:00+05:30</updated><id>https://deut-erium.github.io/2021/04/08/welcome</id><content type="html" xml:base="https://deut-erium.github.io/2021/04/08/welcome.html"><![CDATA[<p>Welcome to my personal blog about cybersecurity and computers in general where I host cool challenges (aka assignments) too
+<!--more-->
+I find it fun to explore and push things to their limits, maybe there would be this kind of stuff in here.<br />
+General topics of interests include Cryptography, SAT/SMT solving, Reverse Engineering, Binary Exploitation, Python and miscellaneous Cybersecurity stuff.</p>
+
+<p>Head out to different pages to find the things of your interest, you may find something new or a challenging problem :smile:</p>
+
+<h2 id="what-if-you-get-stuck">What if you get stuck?</h2>
+<p>Always feel free to DM(direct message) on <a href="https://discord.com/new">discord</a>, Username: deuterium#1689.
+Or any other convenient medium of choice.<br />
+Not even on getting stuck, if you solve a challenge, you can brag about it or discuss the way you solved it!</p>
+
+<p>HACK THE PLANET :metal: :metal: :metal:</p>]]></content><author><name>deuterium</name><email>farziemailid69@gmail.com</email></author><category term="welcome" /><category term="introduction" /><summary type="html"><![CDATA[Welcome to my personal blog about cybersecurity and computers in general where I host cool challenges (aka assignments) too]]></summary></entry></feed>
