@@ -14,7 +14,7 @@
 {%- endif -%}
 
 {%- if site.analytics.google.ga4_id -%}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<!-- Global site tag (gtag.js) - Google 4 Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.google.ga4_id }}"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
@@ -23,7 +23,7 @@
 
 		gtag('config', '{{ site.analytics.google.tracking_id }}');
 		{% if site.analytics.google.anonymize_ip == true %}
-			gtag('config', '{{ site.analytics.google.tracking_id }}', { 'anonymize_ip': true });
+			gtag('config', '{{ site.analytics.google.ga4_id }}', { 'anonymize_ip': true });
 		{% endif %}
 	</script>
 {%- endif -%}
@@ -33,5 +33,5 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','{%- site.analytics.google.gtag_id -%}');</script>
+            })(window,document,'script','dataLayer','{{ site.analytics.google.gtag_id }}');</script>
 {%- endif -%}
