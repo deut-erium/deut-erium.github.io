@@ -16,12 +16,13 @@
 
 ## => Site Settings
 ##############################
-text_skin: "dark" # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
-highlight_theme: "tomorrow-night-bright" # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
+text_skin: "chocolate" # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
+highlight_theme: "tomorrow-night-eighties" # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : "https://deut-erium.github.io"
 baseurl : "/ramblings"
 title   : Ramblings
 description: > # this means to ignore newlines until "Language & timezone"
+  Ridiculously random ramblings residing in my mind
   
 
 
@@ -48,14 +49,14 @@ author:
   medium    : # "user_name" the last part of your profile url, e.g. https://medium.com/user_name
   zhihu     : # "user_name" the last part of your profile url, e.g. https://www.zhihu.com/people/user_name
   douban    : # "user_name" the last part of your profile url, e.g. https://www.douban.com/people/user_name
-  linkedin  : himanshu-sheoran-ab047b152 # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name
+  linkedin  : himanshu-sheoran # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name
   github    : deut-erium # "user_name" the last part of your profile url, e.g. https://github.com/user_name
   npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
 
 
 ## => GitHub Repository (if the site is hosted by GitHub)
 ##############################
-repository: deut-erium/deut-erium.github.io
+repository: deut-erium/ramblings
 repository_tree: master
 
 
@@ -156,11 +157,11 @@ pageview:
 ## => Search
 ##############################
 search:
-  provider: default # "default" (default), false, "google", "custom"
+  provider: "google" #default # "default" (default), false, "google", "custom"
 
   ## Google Custom Search Engine
   google:
-    custom_search_engine_id: # Google Custom Search Engine ID
+    custom_search_engine_id: 416a5de1e771f1814 # Google Custom Search Engine ID
 
 
 ## => Analytics
@@ -170,8 +171,10 @@ analytics:
 
   ## Google Analytics
   google:
-    tracking_id : "G-3WKEFWKQ71" # Google Analytics id for the site
+    tracking_id : "UA-161905683-1" # universal analytics
     anonymize_ip: false # Anonymize IP tracking for Analytics
+    gtag_id : "GTM-T7V49MX"
+    ga4_id : "G-G36CSBPQ7J"
 
 
 ## => Build
@@ -182,8 +185,11 @@ permalink   : date
 
 exclude:
   - LICENSE
-  - README.md
   - CONTRIBUTING.md
+  - jekyll-text-theme.gemspec
+
+include:
+  - README.md
 
 defaults:
   - scope:
@@ -207,3 +213,5 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+  - jekyll-postfiles
+  - jekyll-seo-tag
