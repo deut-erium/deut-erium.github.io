@@ -29,7 +29,7 @@ tags: introduction assignment
 aside:
   toc: true
 sidebar:
-  nav: layouts
+  nav: aboutnav
 excerpt_separator: <!--more-->
 author: deuterium
 key: assignment000001
