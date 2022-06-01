@@ -1,4 +1,5 @@
 ---
+title: "Crypto challenge - Mersenne seed recovery"
 sha256hash: 
   - e50d48d74d319e4192e4d11590bf6c73a65a2e6b473deb90f68b63041318679c
 tags: challenges mersenne_twister zh3r0_ctf2 crypto

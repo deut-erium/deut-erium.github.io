@@ -1,4 +1,5 @@
 ---
+title: "Crypto challenge - Untwist Me"
 sha256hash: 
   - b2a315d5763729b040a87819e49e21044bb94b020303ff4df0838bcd254ba5ec
 tags: challenges mersenne_twister zh3r0_ctf2 crypto
