@@ -1,4 +1,5 @@
 ---
+title: "Crypto challenge - Injection"
 sha256hash: 
   - 23a3a8d369653ce0f4924c3864bdda359fbb3d2b5e21ccb4c9fe9eeabbea2669
 tags: challenges injection zh3r0_ctf2 crypto
