@@ -38,7 +38,7 @@ sidebar:
   </div>
   <div class="item__content">
     <p>
-      Hi, I am Himanshu Sheoran (alias deuterium), I am currently an RnD engineer at VMware working on CarbonBlack.  
+      Hi, I am Himanshu Sheoran (alias deuterium), I am currently a Security and Privacy Engineer at Google. I used to be an RnD engineer at VMware CarbonBlack.  
       I have completed my Bachelor's Of Technology in Computer Science and Engineering with majors and a crush on cybersecurity.
     </p>
     <p>
@@ -54,10 +54,10 @@ sidebar:
 This personal blog is aimed towards documenting my interests, research and interesting finds.
 
 ## CV
-Enthusiastic employer with interest evoking challenging problems? [Hire Me](assets/resume.pdf)
+Enthusiastic employer with interest evoking challenging problems? [Hire Me](assets/resume_himanshu_sheoran.pdf)
 
 ## Contact
-Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deuterium#3368. (subject to change if I get Nitro :P)  
+Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deut_erium.   
 Or any other convenient medium of choice linked below.
 
 HACK THE PLANET :metal: :metal: :metal:
