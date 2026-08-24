@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" data-layout="pop-schematic">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A lightweight browser remake of The New Tetris mechanics.">
+  <title>New Tetris Web</title>
+  <script>
+    (() => {
+      const requested = new URLSearchParams(location.search).get("layout");
+      const allowed = ["pop-schematic", "warm-cartridge"];
+      document.documentElement.dataset.layout = allowed.includes(requested) ? requested : "pop-schematic";
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20260907">
+  <link rel="stylesheet" href="src/layouts/pop-schematic.css?v=20260907">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wordmark" aria-label="New Tetris Web">
+      <strong><span class="title-new">NEW</span><span class="title-tetris">TETRIS</span></strong>
+    </div>
+    <div class="topbar-actions">
+      <p>Build <b class="gold-text">gold</b> and <b class="silver-text">silver</b> 4x4, 6x6, and 8x8 squares.</p>
+      <a class="catalog-button" href="src/catalog/index.html">Browse 4x4 + 6x6 catalog</a>
+    </div>
+  </header>
+
+  <main class="machine">
+    <section class="run-console" aria-labelledby="run-title">
+      <div class="run-start">
+        <h1 id="run-title">CHOOSE A GAME</h1>
+        <label for="challenge-date">Daily date</label>
+        <input id="challenge-date" type="date" min="0001-01-01" max="9999-12-31" required>
+        <button id="start-challenge" class="daily-button" type="button">Start 1,008-piece daily</button>
+        <button id="start-casual" type="button">Start endless play</button>
+      </div>
+      <div class="run-explain">
+        <details>
+          <summary>Scoring rules</summary>
+          <div class="scoring-guide">
+            <p><strong>Both games use the same scoring rules.</strong> The daily game ends after you place 1,008 pieces, or when the blocks reach the top. Endless play has no piece limit.</p>
+            <dl>
+              <div><dt>Lines</dt><dd>1 / 2 / 3 / 4+ rows: 100 / 300 / 500 / 800</dd></div>
+              <div><dt>Spin Move</dt><dd>500 when the piece cannot move in any direction, has at least four different positions touching its blocks, has a full row through it, and did not make a square</dd></div>
+              <div><dt>4x4 square</dt><dd>1,000 to start; +1,500 for gold; +250 for each extra piece type; +0 or 1,000 based on how the pieces fit</dd></div>
+              <div><dt>6x6 square</dt><dd>2,500 to start; +3,500 for gold; +500 for each extra piece type; +0 to 2,500 based on how the pieces fit</dd></div>
+              <div><dt>8x8 square</dt><dd>10,000 silver or 20,000 gold</dd></div>
+            </dl>
+            <p>Gold uses one piece type. Silver mixes piece types. Dropping faster, clearing rows on back-to-back turns, and level do not add points.</p>
+          </div>
+        </details>
+        <a class="scoring-page-link" href="src/scoring/index.html">Full scoring guide</a>
+      </div>
+      <dl class="run-readout">
+        <div><dt>GAME</dt><dd id="challenge-status">ENDLESS</dd></div>
+        <div><dt>PROGRESS</dt><dd id="challenge-pieces">NO LIMIT</dd></div>
+      </dl>
+      <div class="run-tools">
+        <button id="copy-challenge-link" type="button">Copy daily link</button>
+        <button id="copy-result" type="button" disabled>Copy result</button>
+      </div>
+      <p id="challenge-message" class="run-message" aria-live="polite"></p>
+    </section>
+
+    <section class="game-stage">
+      <aside class="left-rail" aria-label="Game statistics">
+        <section class="score-panel" aria-labelledby="stats-title">
+          <p id="run-mode" class="panel-kicker">ENDLESS</p>
+          <h2 id="stats-title"><span id="score-label">SCORE</span></h2>
+          <strong id="score" class="score-value">0</strong>
+          <dl class="base-stats">
+            <div><dt>LINES</dt><dd id="lines">0</dd></div>
+            <div><dt>LEVEL</dt><dd id="level">1</dd></div>
+            <div><dt>PIECES</dt><dd id="pieces">0</dd></div>
+          </dl>
+        </section>
+
+        <section class="square-panel" aria-labelledby="squares-title">
+          <div class="panel-title-row">
+            <h2 id="squares-title">SQUARES</h2>
+            <span><b class="gold-text" id="gold">0</b> / <b class="silver-text" id="silver">0</b></span>
+          </div>
+          <table class="square-matrix">
+            <thead><tr><th>SIZE</th><th class="gold-text">GOLD</th><th class="silver-text">SILVER</th></tr></thead>
+            <tbody>
+              <tr><th>4x4</th><td id="gold-4">0</td><td id="silver-4">0</td></tr>
+              <tr><th>6x6</th><td id="gold-6">0</td><td id="silver-6">0</td></tr>
+              <tr><th>8x8</th><td id="gold-8">0</td><td id="silver-8">0</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="last-panel" aria-labelledby="last-square-title">
+          <h2 id="last-square-title">LAST SQUARE</h2>
+          <strong id="last-square" aria-live="polite">NONE</strong>
+          <p id="last-square-meta">Complete pieces must fit entirely inside the square.</p>
+          <strong id="square-award" class="award" aria-live="polite">-</strong>
+        </section>
+      </aside>
+
+      <section class="play-area" aria-label="Game board">
+        <canvas id="board" width="300" height="600" tabindex="0" aria-label="10 by 20 Tetris board" aria-describedby="board-help"></canvas>
+        <div id="overlay-message" class="overlay-message" aria-live="polite" aria-atomic="true"></div>
+        <div id="square-flash" class="square-flash" aria-live="polite" aria-atomic="true"></div>
+        <p id="board-help" class="sr-only">Use the keyboard controls or the buttons below the board. Square totals are shown to the left on wide screens and below the board on narrow screens.</p>
+      </section>
+
+      <aside class="right-rail" aria-label="Piece queue and controls">
+        <section class="preview-panel hold-panel">
+          <h2>HOLD</h2>
+          <canvas id="hold" width="120" height="70" aria-label="Held piece"></canvas>
+        </section>
+        <section class="preview-panel next-panel">
+          <h2>NEXT</h2>
+          <canvas id="next" width="120" height="210" aria-label="Next three pieces"></canvas>
+        </section>
+        <details class="key-panel" open>
+          <summary>KEYS</summary>
+          <p class="key-help">Choose a control, then press a key. If the key is already used, the two controls swap keys.</p>
+          <dl class="key-bindings">
+            <div><dt>MOVE LEFT</dt><dd><button id="bind-left" type="button" data-bind-action="left">Left</button></dd></div>
+            <div><dt>MOVE RIGHT</dt><dd><button id="bind-right" type="button" data-bind-action="right">Right</button></dd></div>
+            <div><dt>MOVE DOWN</dt><dd><button id="bind-softDrop" type="button" data-bind-action="softDrop">Down</button></dd></div>
+            <div><dt>TURN LEFT</dt><dd><button id="bind-rotateLeft" type="button" data-bind-action="rotateLeft">Z</button></dd></div>
+            <div><dt>TURN RIGHT</dt><dd><button id="bind-rotateRight" type="button" data-bind-action="rotateRight">X / Up</button></dd></div>
+            <div><dt>DROP NOW</dt><dd><button id="bind-hardDrop" type="button" data-bind-action="hardDrop">Space</button></dd></div>
+            <div><dt>HOLD</dt><dd><button id="bind-hold" type="button" data-bind-action="hold">C / Shift</button></dd></div>
+            <div><dt>PAUSE</dt><dd><button id="bind-pause" type="button" data-bind-action="pause">P / Esc</button></dd></div>
+            <div><dt>RESET GAME</dt><dd><button id="bind-restart" type="button" data-bind-action="restart">R</button></dd></div>
+          </dl>
+          <button id="reset-key-bindings" class="reset-key-bindings" type="button">Use default keys</button>
+          <p id="key-binding-status" class="key-binding-status" aria-live="polite">Esc cancels while choosing a key.</p>
+        </details>
+      </aside>
+
+      <section class="touch-controls" aria-label="Touch controls">
+        <button type="button" data-action="left" aria-label="Move left">LEFT</button>
+        <button type="button" data-action="right" aria-label="Move right">RIGHT</button>
+        <button type="button" data-action="softDrop" aria-label="Move down">MOVE DOWN</button>
+        <button type="button" data-action="rotateLeft" aria-label="Turn left">TURN LEFT</button>
+        <button type="button" data-action="rotateRight" aria-label="Turn right">TURN RIGHT</button>
+        <button type="button" data-action="hardDrop" aria-label="Drop immediately">DROP NOW</button>
+        <button type="button" data-action="hold" aria-label="Hold piece">HOLD</button>
+        <button type="button" data-action="pause" aria-label="Pause or resume">PAUSE</button>
+        <button type="button" data-action="restart" aria-label="Restart game">RESET</button>
+      </section>
+    </section>
+  </main>
+
+  <noscript>This game needs JavaScript enabled.</noscript>
+  <script type="module" src="src/main.js?v=20260907"></script>
+</body>
+</html>
