@@ -1,4 +1,4 @@
-import { cellsFor, kicksFor, rotatedState } from "./pieces.js?v=20260907";
+import { cellsFor, kicksFor, rotatedState } from "./pieces.js?v=20260911";
 
 function firstRotation(board, piece, direction) {
   const to = rotatedState(piece.rotation, direction);

@@ -1,17 +1,17 @@
-import { Game } from "./game.js?v=20260907";
+import { Game } from "./game.js?v=20260911";
 import {
   INPUT_ACTIONS,
   INPUT_ACTION_LABELS,
   InputController,
   keyBindingLabel,
   keyBindingsLabel,
-} from "./input.js?v=20260907";
-import { Renderer } from "./renderer.js?v=20260907";
-import { dailySeed, todayUtc } from "./challenge.js?v=20260907";
-import { verifyDailyChallengeReplay } from "./replay.js?v=20260907";
-import { selectUILayout, writeUILayoutToUrl } from "./ui-layout.js?v=20260907";
+} from "./input.js?v=20260911";
+import { Renderer } from "./renderer.js?v=20260911";
+import { dailySeed, todayUtc } from "./challenge.js?v=20260911";
+import { verifyDailyChallengeReplay } from "./replay.js?v=20260911";
+import { selectUILayout, writeUILayoutToUrl } from "./ui-layout.js?v=20260911";
 
-const SAVED_REPLAY_KEY = "new-tetris:daily-v4:last-replay";
+const SAVED_REPLAY_KEY = "new-tetris:daily-v5:last-replay";
 const SAVED_KEY_BINDINGS_KEY = "new-tetris:controls-v1";
 
 function requiredElement(id) {
@@ -198,20 +198,39 @@ function observeGameEvent(event) {
   }
 }
 
+function fireSquareFlash(message) {
+  squareFlash.textContent = message;
+  squareFlash.classList.remove("fire");
+  void squareFlash.offsetWidth;
+  squareFlash.classList.add("fire");
+}
+
 export function handleEvents(events) {
   for (const event of events) {
     if (event.type === "start") resetSquareResult();
+    if (event.type === "lineclear" && event.detail.squareAward.points > 0) {
+      const award = event.detail.squareAward;
+      const material = award.gold > 0 && award.silver > 0
+        ? "SQUARE"
+        : (award.gold > 0 ? "GOLD" : "SILVER");
+      const rows = award.rows === 1 ? "ROW" : "ROWS";
+      fields.squareAward.textContent = `+${award.points.toLocaleString("en-US")} collected`;
+      fireSquareFlash(`${material} ${rows} / +${award.points.toLocaleString("en-US")}`);
+      continue;
+    }
     if (event.type !== "square") continue;
     const scoring = event.detail.scoring;
     const kind = event.detail.kind[0].toUpperCase() + event.detail.kind.slice(1);
     fields.lastSquare.textContent = scoring.familyId;
     const typeCount = `${scoring.diversity} piece ${scoring.diversity === 1 ? "type" : "types"}`;
     fields.lastSquareMeta.textContent = `${event.detail.size}x${event.detail.size} / ${kind} / ${typeCount} / ${scoring.structureLabel}`;
-    fields.squareAward.textContent = `+${scoring.points.toLocaleString("en-US")}`;
-    squareFlash.textContent = `${kind.toUpperCase()} ${event.detail.size}x${event.detail.size} / +${scoring.points.toLocaleString("en-US")}`;
-    squareFlash.classList.remove("fire");
-    void squareFlash.offsetWidth;
-    squareFlash.classList.add("fire");
+    const lowShare = Math.min(...scoring.rowShares);
+    const highShare = Math.max(...scoring.rowShares);
+    const share = lowShare === highShare
+      ? lowShare.toLocaleString("en-US")
+      : `${lowShare.toLocaleString("en-US")}-${highShare.toLocaleString("en-US")}`;
+    fields.squareAward.textContent = `${scoring.points.toLocaleString("en-US")} pending / ${share} per row`;
+    fireSquareFlash(`${kind.toUpperCase()} ${event.detail.size}x${event.detail.size} / ${scoring.points.toLocaleString("en-US")} PENDING`);
   }
 }
 

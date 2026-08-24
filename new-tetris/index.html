@@ -12,8 +12,8 @@
       document.documentElement.dataset.layout = allowed.includes(requested) ? requested : "pop-schematic";
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260907">
-  <link rel="stylesheet" href="src/layouts/pop-schematic.css?v=20260907">
+  <link rel="stylesheet" href="styles.css?v=20260911">
+  <link rel="stylesheet" href="src/layouts/pop-schematic.css?v=20260911">
 </head>
 <body>
   <header class="topbar">
@@ -22,7 +22,7 @@
     </div>
     <div class="topbar-actions">
       <p>Build <b class="gold-text">gold</b> and <b class="silver-text">silver</b> 4x4, 6x6, and 8x8 squares.</p>
-      <a class="catalog-button" href="src/catalog/index.html">Browse 4x4 + 6x6 catalog</a>
+      <a class="catalog-button" href="src/catalog/index.html">Browse 4x4 + 6x6 + 8x8 catalog</a>
     </div>
   </header>
 
@@ -43,10 +43,11 @@
             <dl>
               <div><dt>Lines</dt><dd>1 / 2 / 3 / 4+ rows: 100 / 300 / 500 / 800</dd></div>
               <div><dt>Spin Move</dt><dd>500 when the piece cannot move in any direction, has at least four different positions touching its blocks, has a full row through it, and did not make a square</dd></div>
-              <div><dt>4x4 square</dt><dd>1,000 to start; +1,500 for gold; +250 for each extra piece type; +0 or 1,000 based on how the pieces fit</dd></div>
-              <div><dt>6x6 square</dt><dd>2,500 to start; +3,500 for gold; +500 for each extra piece type; +0 to 2,500 based on how the pieces fit</dd></div>
-              <div><dt>8x8 square</dt><dd>10,000 silver or 20,000 gold</dd></div>
+              <div><dt>4x4 square value</dt><dd>1,000 to start; +1,500 for gold; +250 for each extra piece type; +0 or 1,000 based on how the pieces fit</dd></div>
+              <div><dt>6x6 square value</dt><dd>2,500 to start; +3,500 for gold; +500 for each extra piece type; +0 to 2,500 based on how the pieces fit</dd></div>
+              <div><dt>8x8 square value</dt><dd>10,000 silver or 20,000 gold</dd></div>
             </dl>
+            <p>Building a square adds no points immediately. Its row shares add up to the exact total value. Clearing a row collects its share, and earlier shares remain if a larger square forms around it. A Spin Move destroys uncollected value when it breaks the square.</p>
             <p>Gold uses one piece type. Silver mixes piece types. Dropping faster, clearing rows on back-to-back turns, and level do not add points.</p>
           </div>
         </details>
@@ -100,10 +101,10 @@
       </aside>
 
       <section class="play-area" aria-label="Game board">
-        <canvas id="board" width="300" height="600" tabindex="0" aria-label="10 by 20 Tetris board" aria-describedby="board-help"></canvas>
+        <canvas id="board" width="300" height="660" tabindex="0" aria-label="10 by 20 Tetris board with two visible spawn rows above it" aria-describedby="board-help"></canvas>
         <div id="overlay-message" class="overlay-message" aria-live="polite" aria-atomic="true"></div>
         <div id="square-flash" class="square-flash" aria-live="polite" aria-atomic="true"></div>
-        <p id="board-help" class="sr-only">Use the keyboard controls or the buttons below the board. Square totals are shown to the left on wide screens and below the board on narrow screens.</p>
+        <p id="board-help" class="sr-only">The two faint rows above the main board show where pieces enter. Use the keyboard controls or the buttons below the board. Square totals are shown to the left on wide screens and below the board on narrow screens.</p>
       </section>
 
       <aside class="right-rail" aria-label="Piece queue and controls">
@@ -149,6 +150,6 @@
   </main>
 
   <noscript>This game needs JavaScript enabled.</noscript>
-  <script type="module" src="src/main.js?v=20260907"></script>
+  <script type="module" src="src/main.js?v=20260911"></script>
 </body>
 </html>

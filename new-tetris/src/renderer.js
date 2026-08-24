@@ -1,4 +1,4 @@
-import { cellsFor, PIECES, STARTING_ROTATIONS } from "./pieces.js?v=20260907";
+import { cellsFor, PIECES, STARTING_ROTATIONS } from "./pieces.js?v=20260911";
 
 export const PIECE_COLORS = Object.freeze({
   I: "#35c9d0",
@@ -13,6 +13,8 @@ export const PIECE_COLORS = Object.freeze({
 const DEFAULT_RENDERER_THEME = Object.freeze({
   boardBackground: "#100d10",
   gridColor: "#2d2022",
+  spawnAreaColor: "rgb(255 255 255 / 4%)",
+  spawnBoundaryColor: "#594044",
   previewBackground: "#171216",
   squareEdgeColor: "#ffffff",
   cellStyle: "bevel",
@@ -58,16 +60,17 @@ export class Renderer {
 
     ctx.fillStyle = this.theme.boardBackground;
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.fillStyle = this.theme.spawnAreaColor;
+    ctx.fillRect(0, 0, this.canvas.width, board.hiddenRows * size);
     this.drawGrid(board, size);
 
-    for (let y = board.hiddenRows; y < board.height; y += 1) {
+    for (let y = 0; y < board.height; y += 1) {
       for (let x = 0; x < board.width; x += 1) {
         const cell = board.get(x, y);
         if (!cell) continue;
-        const visibleY = y - board.hiddenRows;
         const color = cell.squareKind ? this.theme.squareColors[cell.squareKind] : this.theme.pieceColors[cell.type];
-        this.drawCell(ctx, x, visibleY, size, color);
-        if (cell.squareId !== null) this.drawSquareEdge(ctx, board, x, y, visibleY, size, cell.squareId);
+        this.drawCell(ctx, x, y, size, color);
+        if (cell.squareId !== null) this.drawSquareEdge(ctx, board, x, y, y, size, cell.squareId);
       }
     }
 
@@ -76,14 +79,14 @@ export class Renderer {
       ctx.save();
       ctx.globalAlpha = this.theme.ghostAlpha;
       for (const { x, y } of cellsFor(ghost)) {
-        if (y >= board.hiddenRows) this.drawCell(ctx, x, y - board.hiddenRows, size, this.theme.pieceColors[ghost.type], true);
+        if (y >= 0) this.drawCell(ctx, x, y, size, this.theme.pieceColors[ghost.type], true);
       }
       ctx.restore();
     }
 
     if (game.active) {
       for (const { x, y } of game.activeCells()) {
-        if (y >= board.hiddenRows) this.drawCell(ctx, x, y - board.hiddenRows, size, this.theme.pieceColors[game.active.type]);
+        if (y >= 0) this.drawCell(ctx, x, y, size, this.theme.pieceColors[game.active.type]);
       }
     }
 
@@ -101,11 +104,19 @@ export class Renderer {
       ctx.moveTo(px, 0);
       ctx.lineTo(px, this.canvas.height);
     }
-    for (let y = 1; y < board.visibleRows; y += 1) {
+    for (let y = 1; y < board.height; y += 1) {
       const py = y * size + 0.5;
       ctx.moveTo(0, py);
       ctx.lineTo(this.canvas.width, py);
     }
+    ctx.stroke();
+
+    const boundary = board.hiddenRows * size + 0.5;
+    ctx.strokeStyle = this.theme.spawnBoundaryColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, boundary);
+    ctx.lineTo(this.canvas.width, boundary);
     ctx.stroke();
   }
 

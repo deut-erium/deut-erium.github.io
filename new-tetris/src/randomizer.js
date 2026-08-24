@@ -1,4 +1,4 @@
-import { PIECE_TYPES } from "./pieces.js?v=20260907";
+import { PIECE_TYPES } from "./pieces.js?v=20260911";
 
 function seedWords(value) {
   const bytes = new TextEncoder().encode(String(value));

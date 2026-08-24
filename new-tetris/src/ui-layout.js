@@ -1,6 +1,8 @@
 const POP_SCHEMATIC_RENDERER_THEME = Object.freeze({
   boardBackground: "#123d73",
   gridColor: "#4778ad",
+  spawnAreaColor: "rgb(255 255 255 / 7%)",
+  spawnBoundaryColor: "#8cb0d4",
   previewBackground: "#fff7df",
   squareEdgeColor: "#111111",
   cellStyle: "print",

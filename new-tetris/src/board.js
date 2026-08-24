@@ -1,7 +1,11 @@
-import { cellsFor } from "./pieces.js?v=20260907";
+import { cellsFor } from "./pieces.js?v=20260911";
 
 function makeRows(width, height) {
   return Array.from({ length: height }, () => Array(width).fill(null));
+}
+
+function emptySquareAward() {
+  return { points: 0, rows: 0, silver: 0, gold: 0, details: [] };
 }
 
 export class Board {
@@ -48,6 +52,7 @@ export class Board {
         sourcePieceId: pieceId,
         squareId: null,
         squareKind: null,
+        pendingAwards: [],
       };
     }
     return cells;
@@ -62,9 +67,14 @@ export class Board {
   }
 
   clearRows(rows) {
-    if (rows.length === 0) return { count: 0, squareCells: { silver: 0, gold: 0 } };
+    if (rows.length === 0) return {
+      count: 0,
+      squareCells: { silver: 0, gold: 0 },
+      squareAward: emptySquareAward(),
+    };
     const unique = [...new Set(rows)].sort((a, b) => a - b);
     const squareCells = { silver: 0, gold: 0 };
+    const awardRows = new Map();
     const brokenPieceIds = new Set();
 
     for (const y of unique) {
@@ -72,6 +82,10 @@ export class Board {
         if (!cell) continue;
         brokenPieceIds.add(cell.pieceId);
         if (cell.squareKind) squareCells[cell.squareKind] += 1;
+        for (const award of cell.pendingAwards ?? []) {
+          const key = `${award.squareId}:${award.row}`;
+          if (!awardRows.has(key)) awardRows.set(key, award);
+        }
       }
     }
 
@@ -85,7 +99,43 @@ export class Board {
       }
     }
 
-    return { count: unique.length, squareCells };
+    const details = [...awardRows.values()];
+    const squareAward = details.reduce((result, award) => {
+      result.points += award.points;
+      result.rows += 1;
+      result[award.kind] += award.points;
+      return result;
+    }, emptySquareAward());
+    squareAward.details = details;
+    return { count: unique.length, squareCells, squareAward };
+  }
+
+  addPendingSquareAward(square, points) {
+    if (!square || !Number.isInteger(square.id) || ![4, 6, 8].includes(square.size)) {
+      throw new TypeError("Invalid square award target");
+    }
+    if (!Number.isInteger(points) || points < 0) throw new RangeError(`Invalid square award: ${points}`);
+    const base = Math.floor(points / square.size);
+    const extraRows = points % square.size;
+    const shares = [];
+    for (let row = 0; row < square.size; row += 1) {
+      const share = base + (row < extraRows ? 1 : 0);
+      shares.push(share);
+      const award = Object.freeze({
+        squareId: square.id,
+        row,
+        points: share,
+        kind: square.kind,
+        size: square.size,
+      });
+      const y = square.top + row;
+      for (let x = square.left; x < square.left + square.size; x += 1) {
+        const cell = this.grid[y][x];
+        if (!cell) throw new Error("Square award target is not full");
+        cell.pendingAwards = [...(cell.pendingAwards ?? []), award];
+      }
+    }
+    return shares;
   }
 
   findSquares(lastPieceId, sizes = [8, 6, 4]) {
@@ -292,6 +342,7 @@ export class Board {
         if (cell.squareId !== null) squareIds.add(cell.squareId);
         for (const linked of this.findPieceCells(cell.pieceId)) {
           this.grid[linked.y][linked.x].fragmented = true;
+          this.grid[linked.y][linked.x].pendingAwards = [];
         }
         cell.pieceId = this.nextFragmentId;
         this.nextFragmentId -= 1;

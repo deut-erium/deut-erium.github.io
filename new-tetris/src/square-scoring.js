@@ -1,4 +1,4 @@
-import { PIECES } from "./pieces.js?v=20260907";
+import { PIECES } from "./pieces.js?v=20260911";
 
 const TYPE_ORDER = Object.freeze(["I", "J", "L", "O", "S", "T", "Z"]);
 const SUPPORTED_SIZES = Object.freeze([4, 6, 8]);

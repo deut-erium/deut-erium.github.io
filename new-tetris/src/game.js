@@ -1,13 +1,13 @@
-import { Board } from "./board.js?v=20260907";
-import { Bag63Randomizer, SeededBag63Randomizer } from "./randomizer.js?v=20260907";
-import { cellsFor, kicksFor, rotatedState, spawnPiece } from "./pieces.js?v=20260907";
-import { scoreSquare } from "./square-scoring.js?v=20260907";
+import { Board } from "./board.js?v=20260911";
+import { Bag63Randomizer, SeededBag63Randomizer } from "./randomizer.js?v=20260911";
+import { cellsFor, kicksFor, rotatedState, spawnPiece } from "./pieces.js?v=20260911";
+import { scoreSquare } from "./square-scoring.js?v=20260911";
 import {
   CHALLENGE_RULESET,
   CHALLENGE_SPIN_POINTS,
   DAILY_PIECE_LIMIT,
   challengeLineScore,
-} from "./challenge.js?v=20260907";
+} from "./challenge.js?v=20260911";
 
 export const SQUARE_SIZES = Object.freeze([4, 6, 8]);
 
@@ -310,9 +310,8 @@ export class Game {
       const scoring = scoreSquare(square);
       this.stats[square.kind] += 1;
       this.stats.squares[square.kind][square.size] += 1;
-      this.score += scoring.points;
-      this.challengeScore += scoring.points;
-      this.emit("square", { ...square, scoring });
+      const rowShares = this.board.addPendingSquareAward(square, scoring.points);
+      this.emit("square", { ...square, scoring: { ...scoring, rowShares, pending: true } });
     }
 
     const spinMove = squares.length === 0 ? this.board.applySpinAvalanche(pieceId) : null;
@@ -329,10 +328,10 @@ export class Game {
       const base = LINE_SCORE[Math.min(clear.count, LINE_SCORE.length - 1)] ?? 0;
       const comboBonus = this.combo > 0 ? this.combo * 50 : 0;
       const squareBonus = clear.squareCells.silver * 25 + clear.squareCells.gold * 50;
-      this.score += (base + comboBonus + squareBonus) * this.level;
+      this.score += (base + comboBonus + squareBonus) * this.level + clear.squareAward.points;
       this.lines += clear.count;
       this.level = Math.floor(this.lines / this.rules.linesPerLevel) + 1;
-      this.challengeScore += challengeLineScore(clear.count);
+      this.challengeScore += challengeLineScore(clear.count) + clear.squareAward.points;
       this.emit("lineclear", { ...clear, spinMove: Boolean(spinMove), combo: this.combo });
     } else {
       this.combo = -1;

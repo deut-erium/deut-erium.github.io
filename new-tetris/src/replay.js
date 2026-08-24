@@ -1,7 +1,7 @@
-import { Game } from "./game.js?v=20260907";
-import { cellsFor } from "./pieces.js?v=20260907";
-import { isReachableLockPlacement } from "./placement-search.js?v=20260907";
-import { CHALLENGE_RULESET, DAILY_PIECE_LIMIT, dailySeed } from "./challenge.js?v=20260907";
+import { Game } from "./game.js?v=20260911";
+import { cellsFor } from "./pieces.js?v=20260911";
+import { isReachableLockPlacement } from "./placement-search.js?v=20260911";
+import { CHALLENGE_RULESET, DAILY_PIECE_LIMIT, dailySeed } from "./challenge.js?v=20260911";
 
 const MAX_SEED_LENGTH = 256;
 

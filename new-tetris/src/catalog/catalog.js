@@ -1,6 +1,9 @@
+import { EIGHT_LIST_PAGE, expandEightFamily, familyPage } from "./catalog-model.js?v=20260911";
+
 const DATA_LOADERS = Object.freeze({
-  4: () => import("./data-4.js?v=20260907"),
-  6: () => import("./data-6.js?v=20260907"),
+  4: () => import("./data-4.js?v=20260911"),
+  6: () => import("./data-6.js?v=20260911"),
+  8: () => import("./data-8.js?v=20260911"),
 });
 
 const COLORS = Object.freeze({
@@ -13,21 +16,25 @@ const COLORS = Object.freeze({
   Z: "#ff9299",
 });
 
-const TOTAL_LAYOUTS = Object.freeze({ 4: 117, 6: 178939 });
+const TOTAL_LAYOUTS = Object.freeze({ 4: 117, 6: 178939, 8: 19077209438 });
+const SHAPE_BLOCKS = "<i></i><i></i><i></i><i></i>";
 const cache = new Map();
 const params = new URLSearchParams(location.search);
-const initialSize = params.get("size") === "6" ? 6 : 4;
+const requestedSize = Number(params.get("size"));
+const initialSize = [4, 6, 8].includes(requestedSize) ? requestedSize : 4;
 let size = initialSize;
 let families = [];
 let visibleFamilies = [];
 let currentFamily = null;
 let playback = null;
 let loadGeneration = 0;
+let listStart = 0;
 
 const ui = Object.freeze({
   sizeButtons: [...document.querySelectorAll("[data-size]")],
   familyTotal: document.querySelector("#family-total"),
   layoutTotal: document.querySelector("#layout-total"),
+  layoutLabel: document.querySelector("#layout-label"),
   visibleTotal: document.querySelector("#visible-total"),
   search: document.querySelector("#search"),
   kind: document.querySelector("#kind"),
@@ -35,7 +42,12 @@ const ui = Object.freeze({
   pieceCounts: document.querySelector("#piece-counts"),
   familyList: document.querySelector("#family-list"),
   noResults: document.querySelector("#no-results"),
+  listPages: document.querySelector("#list-pages"),
+  listPrevious: document.querySelector("#list-previous"),
+  listNext: document.querySelector("#list-next"),
+  listRange: document.querySelector("#list-range"),
   detail: document.querySelector("#family-detail"),
+  drawing: document.querySelector("#drawing"),
   board: document.querySelector("#family-board"),
   pieceKey: document.querySelector("#piece-key"),
   step: document.querySelector("#step"),
@@ -43,11 +55,16 @@ const ui = Object.freeze({
   title: document.querySelector("#family-title"),
   material: document.querySelector("#material"),
   constructionScore: document.querySelector("#construction-score"),
+  scoreLabel: document.querySelector("#score-label"),
   scoreBreakdown: document.querySelector("#score-breakdown"),
+  valueNote: document.querySelector("#value-note"),
+  exampleScoreNote: document.querySelector("#example-score-note"),
   badges: document.querySelector("#badges"),
   recipe: document.querySelector("#recipe"),
   stats: document.querySelector("#family-stats"),
   order: document.querySelector("#order"),
+  orderSection: document.querySelector("#order-section"),
+  modeNote: document.querySelector("#catalog-mode-note"),
 });
 
 function buildingType(family) {
@@ -56,8 +73,7 @@ function buildingType(family) {
 
 function buildingTypeLabel(family) {
   if (family.diversity === 1) return `1 piece type, used ${family.signature[0]} times`;
-  const uses = family.signature.map((count) => `one used ${count} ${count === 1 ? "time" : "times"}`);
-  return `${family.diversity} piece types: ${uses.join(", ")}`;
+  return `${family.diversity} piece types, used ${family.signature.join(" / ")} times`;
 }
 
 function clean(value) {
@@ -90,6 +106,10 @@ function pieceStyles(family) {
       type: piece.type,
     }];
   }));
+}
+
+function pieceShape(type, color = COLORS[type]) {
+  return `<span class="piece-shape piece-shape--${type}" style="--piece-color:${color}" aria-hidden="true">${SHAPE_BLOCKS}</span>`;
 }
 
 function familyMaterial(family) {
@@ -127,11 +147,29 @@ function familyMatches(family) {
   return !ui.pieceCounts.value || buildingType(family) === ui.pieceCounts.value;
 }
 
+function renderFamilyButtons(selectedId = currentFamily?.id) {
+  const page = familyPage(visibleFamilies, selectedId, size);
+  listStart = page.start;
+  const listEnd = page.end;
+  const listed = page.families;
+  ui.familyList.innerHTML = listed.map((family) => (
+    `<button type="button" data-family="${family.id}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} total</em><span>${family.fixed.toLocaleString("en-US")} ${size === 8 ? "board arrangements" : "ways to build"} / ${buildingTypeLabel(family)}</span></button>`
+  )).join("");
+  const paged = size === 8 && visibleFamilies.length > EIGHT_LIST_PAGE;
+  ui.listPages.hidden = !paged;
+  if (paged) {
+    ui.listRange.textContent = `${(listStart + 1).toLocaleString("en-US")}-${listEnd.toLocaleString("en-US")} of ${visibleFamilies.length.toLocaleString("en-US")}`;
+    ui.listPrevious.disabled = listStart === 0;
+    ui.listNext.disabled = listEnd === visibleFamilies.length;
+  }
+}
+
 function renderFamilyList(preferredId = null) {
   visibleFamilies = families.filter(familyMatches);
   ui.visibleTotal.textContent = visibleFamilies.length.toLocaleString("en-US");
   ui.noResults.hidden = visibleFamilies.length !== 0;
   ui.detail.hidden = visibleFamilies.length === 0;
+  ui.listPages.hidden = true;
   if (visibleFamilies.length === 0) {
     ui.familyList.innerHTML = "";
     currentFamily = null;
@@ -141,14 +179,12 @@ function renderFamilyList(preferredId = null) {
   const selected = visibleFamilies.find((family) => family.id === preferredId)
     ?? visibleFamilies.find((family) => family.id === currentFamily?.id)
     ?? visibleFamilies[0];
-  ui.familyList.innerHTML = visibleFamilies.map((family) => (
-    `<button type="button" data-family="${family.id}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} pts</em><span>${family.fixed.toLocaleString("en-US")} ways to build / ${buildingTypeLabel(family)}</span></button>`
-  )).join("");
-  showFamily(selected.id, { scroll: false });
+  renderFamilyButtons(selected.id);
+  showFamily(selected.id, { scroll: false, refreshList: false });
 }
 
 function draw() {
-  if (!currentFamily) return;
+  if (!currentFamily?.pieces) return;
   const ctx = ui.board.getContext("2d");
   const boardSize = ui.board.width;
   const cell = boardSize / size;
@@ -211,38 +247,59 @@ function draw() {
   ui.stepLabel.textContent = `Step ${limit} of ${currentFamily.pieces.length}`;
 }
 
-function showFamily(id, { scroll = true } = {}) {
+function showFamily(id, { scroll = true, refreshList = true } = {}) {
   clearInterval(playback);
   currentFamily = families.find((family) => family.id === id) ?? null;
   if (!currentFamily) return;
-  const styles = pieceStyles(currentFamily);
+  const hasExample = Array.isArray(currentFamily.pieces);
+  const pieceTotal = Object.values(currentFamily.counts).reduce((sum, count) => sum + count, 0);
+  const styles = hasExample ? pieceStyles(currentFamily) : {};
+  ui.detail.classList.toggle("aggregate", !hasExample);
+  ui.drawing.hidden = !hasExample;
+  ui.orderSection.hidden = !hasExample;
   ui.title.textContent = currentFamily.id;
   ui.material.textContent = familyMaterial(currentFamily);
+  ui.scoreLabel.textContent = hasExample ? "TOTAL VALUE FOR THIS EXAMPLE" : "TOTAL 8x8 VALUE";
   ui.constructionScore.textContent = currentFamily.scoring.points.toLocaleString("en-US");
-  ui.scoreBreakdown.innerHTML = [
-    ["Starting points", currentFamily.scoring.base, false],
-    ["Gold bonus", currentFamily.scoring.material, true],
-    ["Extra piece types", currentFamily.scoring.diversity, true],
-    ["Shape bonus", currentFamily.scoring.structure, true],
-  ].map(([label, points, isBonus]) => `<div><dt>${label}</dt><dd>${isBonus ? "+" : ""}${points.toLocaleString("en-US")}</dd></div>`).join("");
+  const baseShare = Math.floor(currentFamily.scoring.points / size);
+  const extraRows = currentFamily.scoring.points % size;
+  const shareLabel = extraRows === 0
+    ? baseShare.toLocaleString("en-US")
+    : `${baseShare.toLocaleString("en-US")}-${(baseShare + 1).toLocaleString("en-US")}`;
+  ui.valueNote.textContent = `Building this square adds 0 points. Clear a row to collect its ${shareLabel}-point share. All ${size} shares add up to exactly ${currentFamily.scoring.points.toLocaleString("en-US")}.`;
+  if (hasExample) {
+    ui.scoreBreakdown.innerHTML = [
+      ["Base value", currentFamily.scoring.base, false],
+      ["Gold bonus", currentFamily.scoring.material, true],
+      ["Extra piece types", currentFamily.scoring.diversity, true],
+      ["Shape bonus", currentFamily.scoring.structure, true],
+    ].map(([label, points, isBonus]) => `<div><dt>${label}</dt><dd>${isBonus ? "+" : ""}${points.toLocaleString("en-US")}</dd></div>`).join("");
+    ui.exampleScoreNote.textContent = "The same pieces can fit together in other ways. This total is only for the example shown here. The shape bonus grows when fewer straight gaps can separate the pieces.";
+  } else {
+    ui.scoreBreakdown.innerHTML = `<div><dt>${currentFamily.kind === "gold" ? "Gold 8x8" : "Silver 8x8"}</dt><dd>${currentFamily.scoring.points.toLocaleString("en-US")}</dd></div>`;
+    ui.exampleScoreNote.textContent = "Every recognized 8x8 square has the same total for its material. Shape and piece mix do not change the 8x8 value.";
+  }
   ui.badges.innerHTML = [
     `${currentFamily.diversity} piece ${currentFamily.diversity === 1 ? "type" : "types"}`,
-    `${currentFamily.pieces.length} pieces total`,
+    `${pieceTotal} pieces total`,
   ].map((value) => `<span>${value}</span>`).join("");
   ui.recipe.innerHTML = Object.entries(currentFamily.counts).map(([type, count]) => (
-    `<li style="background:${COLORS[type]}">${type} x ${count}</li>`
+    `<li>${pieceShape(type)}<span><b>${type} piece</b><small>${count} used</small></span></li>`
   )).join("");
-  ui.stats.innerHTML = `<div><dt>Ways to build this piece mix</dt><dd>${currentFamily.fixed.toLocaleString("en-US")}</dd></div>`;
-  ui.order.innerHTML = currentFamily.order.map((pieceId) => {
-    const style = styles[pieceId];
-    return `<li><b>${pieceId}</b> / ${style.type} piece</li>`;
-  }).join("");
-  ui.pieceKey.innerHTML = currentFamily.order.map((pieceId) => {
-    const style = styles[pieceId];
-    return `<span style="background:${style.color}">${style.step + 1}: ${pieceId} / ${style.type}</span>`;
-  }).join("");
-  ui.step.max = String(currentFamily.pieces.length);
-  ui.step.value = String(currentFamily.pieces.length);
+  ui.stats.innerHTML = `<div><dt>Board arrangements with this piece mix</dt><dd>${currentFamily.fixed.toLocaleString("en-US")}</dd></div>`;
+  if (hasExample) {
+    ui.order.innerHTML = currentFamily.order.map((pieceId) => {
+      const style = styles[pieceId];
+      return `<li>${pieceShape(style.type, style.color)}<b>${style.type} piece</b></li>`;
+    }).join("");
+    ui.pieceKey.innerHTML = currentFamily.order.map((pieceId) => {
+      const style = styles[pieceId];
+      return `<span>${pieceShape(style.type, style.color)}<b>Step ${style.step + 1}</b>${style.type} piece</span>`;
+    }).join("");
+    ui.step.max = String(currentFamily.pieces.length);
+    ui.step.value = String(currentFamily.pieces.length);
+  }
+  if (refreshList && !ui.familyList.querySelector(`[data-family="${id}"]`)) renderFamilyButtons(id);
   for (const button of ui.familyList.querySelectorAll("[data-family]")) {
     button.classList.toggle("active", button.dataset.family === id);
   }
@@ -259,15 +316,20 @@ function moveFamily(delta) {
 
 async function loadSize(nextSize, preferredId = null) {
   const generation = ++loadGeneration;
-  size = nextSize;
-  ui.familyList.innerHTML = "<p>Loading families...</p>";
-  if (!cache.has(size)) cache.set(size, DATA_LOADERS[size]().then((module) => module.default));
-  const loaded = await cache.get(size);
+  ui.familyList.innerHTML = "<p>Loading piece mixes...</p>";
+  if (!cache.has(nextSize)) cache.set(nextSize, DATA_LOADERS[nextSize]().then((module) => module.default));
+  const loaded = await cache.get(nextSize);
   if (generation !== loadGeneration) return;
-  families = loaded;
+  size = nextSize;
+  families = size === 8 ? loaded.map(expandEightFamily) : loaded;
   currentFamily = null;
+  listStart = 0;
   ui.familyTotal.textContent = families.length.toLocaleString("en-US");
   ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
+  ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
+  ui.modeNote.textContent = size === 8
+    ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
+    : "A piece mix may fit together in several ways. The large diagram shows one of them.";
   for (const button of ui.sizeButtons) button.classList.toggle("active", Number(button.dataset.size) === size);
   populateFilters();
   renderFamilyList(preferredId);
@@ -282,6 +344,16 @@ for (const control of [ui.search, ui.kind, ui.typeCount, ui.pieceCounts]) {
 ui.familyList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-family]");
   if (button) showFamily(button.dataset.family);
+});
+ui.listPrevious.addEventListener("click", () => {
+  const target = Math.max(0, listStart - EIGHT_LIST_PAGE);
+  renderFamilyButtons(visibleFamilies[target]?.id);
+  showFamily(visibleFamilies[target]?.id, { scroll: false, refreshList: false });
+});
+ui.listNext.addEventListener("click", () => {
+  const target = Math.min(visibleFamilies.length - 1, listStart + EIGHT_LIST_PAGE);
+  renderFamilyButtons(visibleFamilies[target]?.id);
+  showFamily(visibleFamilies[target]?.id, { scroll: false, refreshList: false });
 });
 ui.step.addEventListener("input", draw);
 document.querySelector("#step-back").addEventListener("click", () => {

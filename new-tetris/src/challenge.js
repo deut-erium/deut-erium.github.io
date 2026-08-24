@@ -1,4 +1,4 @@
-export const CHALLENGE_RULESET = "daily-v4";
+export const CHALLENGE_RULESET = "daily-v5";
 export const DAILY_BAGS = 16;
 export const DAILY_PIECE_LIMIT = 63 * DAILY_BAGS;
 // Three visible previews plus a possible unreturned first hold can expose four
