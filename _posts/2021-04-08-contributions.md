@@ -93,7 +93,7 @@ Put the tags
 To specify index of the task and include a flag input box!  
 Check out [what are assignments.md](https://github.com/deut-erium/ctf-tutorials/blob/master/_posts/2021-07-04-what%20are%20assignments.md) for an example.  
 
-Well thats all it takes to contribute and publish your article :smile:  
-Expecting cool contributions! Who knows it may be your shot to learn writing and enhance your communication :wink:  
+Well thats all it takes to contribute and publish your article 😄  
+Expecting cool contributions! Who knows it may be your shot to learn writing and enhance your communication 😉  
 
 Let me know if something is missing or unclear

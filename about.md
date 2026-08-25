@@ -60,7 +60,7 @@ Enthusiastic employer with interest evoking challenging problems? [Hire Me](asse
 Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deut_erium.   
 Or any other convenient medium of choice linked below.
 
-HACK THE PLANET :metal: :metal: :metal:
+HACK THE PLANET 🤘 🤘 🤘
 
 ## PS: [DO NOT CLICK](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
