@@ -1,5 +1,6 @@
 ---
 title: "Crypto challenge - Wiki Mersenne"
+description: Recover a weakly initialized NumPy Mersenne Twister seed and decrypt the flag.
 sha256hash: 
   - b672ce133b4a057a92821b13f295e6968abcd53066082562da1c6e5130f428fc
 tags: challenges mersenne_twister zh3r0_ctf2 crypto

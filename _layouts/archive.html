@@ -1,39 +1,43 @@
 ---
-layout: page
-titles:
-  # @start locale config
-  en      : &EN       Archive
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  归档
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  歸檔
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       아카이브
-  ko-KR   : *KO
-  fr      : &FR       Archives
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
+layout: base
 ---
-
-<div class="layout--archive js-all">
-  {%- include tags.html -%}
-  <div class="js-result layout--archive__result d-none">
-    {%- include article-list.html articles=site.posts type='brief' show_info=true reverse=true group_by='year' -%}
+{%- assign _years = site.posts | group_by_exp: '_post', '_post.date | date: "%Y"' -%}
+<main id="content" class="archive-shell">
+  <header class="index-heading index-heading--archive">
+    <p class="eyebrow">Writing / complete index</p>
+    <h1>All field notes</h1>
+    <p>{{ site.posts | size }} articles and challenges. Filter locally by title, year, or tag.</p>
+  </header>
+  <section class="archive-tools" aria-labelledby="filter-title">
+    <div class="archive-search">
+      <label id="filter-title" for="archive-query">Filter the index</label>
+      <input id="archive-query" class="js-archive-query" type="search" autocomplete="off" placeholder="Try challenge, inputrc, mersenne...">
+      <p><span class="js-result-count">{{ site.posts | size }}</span> notes shown</p>
+    </div>
+    <nav class="quick-filters" aria-label="Common filters">
+      <a href="{{ '/archive.html' | relative_url }}" data-filter="">All</a>
+      <a href="{{ '/archive.html?tag=challenges' | relative_url }}" data-filter="challenges">Challenges</a>
+      <a href="{{ '/archive.html?tag=crypto' | relative_url }}" data-filter="crypto">Crypto</a>
+      <a href="{{ '/archive.html?tag=productivity' | relative_url }}" data-filter="productivity">Productivity</a>
+      <a href="{{ '/archive.html?tag=introduction' | relative_url }}" data-filter="introduction">Introduction</a>
+    </nav>
+    <details class="all-tags">
+      <summary>All tags <span>{{ site.tags | size }}</span></summary>
+      <div class="all-tags__grid">
+        {%- assign _tags = site.tags | sort -%}
+        {%- for _tag in _tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag[0] | url_encode }}" data-filter="{{ _tag[0] | downcase | escape }}"><span>{{ _tag[0] | replace: '_', ' ' }}</span><small>{{ _tag[1] | size }}</small></a>{%- endfor -%}
+      </div>
+    </details>
+  </section>
+  <div class="archive-groups">
+    {%- for _year in _years -%}
+    <section class="archive-year" data-year-group>
+      <header><h2>{{ _year.name }}</h2><span>{{ _year.items | size }} notes</span></header>
+      <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Topic</span><span>Type</span><span></span></div>
+      <ol class="record-list">{%- for _post in _year.items -%}{%- include root-row.html entry=_post -%}{%- endfor -%}</ol>
+    </section>
+    {%- endfor -%}
   </div>
-</div>
-
-<script>
-  {%- include scripts/archieve.js -%}
-</script>
-
-{{ content }}
+  <p class="archive-empty js-archive-empty" hidden>No note matches that filter.</p>
+</main>
+<script defer src="{{ '/assets/js/archive.js' | relative_url }}"></script>
