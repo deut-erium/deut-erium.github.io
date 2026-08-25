@@ -1,4 +1,6 @@
 ---
+title: Local cryptographic challenges
+description: Three small static challenges with a browser-local SHA-256 flag checker.
 sha256hash: 
   - ac4ee365e333646bbe4b73dae90dc8e86963938aefdae2b66939d3df00e4ea64
   - 4c5db009cef8181649d705e96a3f2c2bbad000b08547a9302b929f9ee700cf05

@@ -1,42 +1,54 @@
 ---
-layout: articles
-titles:
-  # @start locale config
-  en      : &EN       Home
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  主页
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  主頁
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       홈
-  ko-KR   : *KO
-  fr      : &FR       Accueil
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
-show_title: false
-articles:
-  data_source: paginator.posts
-  article_type: BlogPosting
-  show_cover: false
-  show_excerpt: true
-  show_readmore: true
-  show_info: true
+layout: base
 ---
-<div class="layout--home">
-  {%- include paginator.html -%}
-</div>
-<script>
-  {%- include scripts/home.js -%}
-</script>
+{%- assign _years = site.posts | group_by_exp: '_post', '_post.date | date: "%Y"' -%}
+<main id="content" class="home-shell root-home">
+  <section class="masthead root-masthead" aria-labelledby="masthead-title">
+    <div class="masthead__copy">
+      <p class="eyebrow">Himanshu Sheoran / security engineer / deuterium</p>
+      <h1 id="masthead-title">Break systems.<br><span>Document the strange parts.</span></h1>
+      <p class="masthead__lede">
+        Field notes on cryptography, CTFs, SAT/SMT solvers, reverse engineering,
+        and useful corners of computers.
+      </p>
+      <div class="masthead__actions">
+        <a class="action action--primary" href="#recent">Read recent notes</a>
+        <a class="action" href="{{ '/WriteUps/' | relative_url }}">Open CTF writeups</a>
+      </div>
+    </div>
+    <aside class="masthead__ledger" aria-label="Site statistics">
+      <div class="ledger-cell ledger-cell--verified"><span>Notes</span><strong>{{ site.posts | size }}</strong></div>
+      <div class="ledger-cell ledger-cell--contradiction"><span>Challenges</span><strong>{{ site.tags.challenges | size }}</strong></div>
+      <div class="ledger-cell ledger-cell--unstable"><span>Years</span><strong>{{ _years | size }}</strong></div>
+      <div class="ledger-cell ledger-cell--extracted"><span>Latest</span><strong>{{ site.posts.first.date | date: '%Y' }}</strong></div>
+      <p>Static pages, local challenge checks, and no analytics.</p>
+    </aside>
+  </section>
 
-{{ content }}
+  <section class="property-index" aria-labelledby="properties-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">Domain map</p><h2 id="properties-title">Projects and notebooks</h2></div>
+      <p>Separate collections, one direct route to each.</p>
+    </div>
+    <nav class="property-grid" aria-label="Projects and publications">
+      <a href="{{ '/WriteUps/' | relative_url }}"><span>01 / archive</span><strong>CTF Writeups</strong><small>Cryptography solutions and challenge files</small></a>
+      <a href="{{ '/ctf-tutorials/' | relative_url }}"><span>02 / learn</span><strong>CTF Tutorials</strong><small>Introductions and guided material</small></a>
+      <a href="{{ '/ramblings/' | relative_url }}"><span>03 / notes</span><strong>Ramblings</strong><small>Less structured technical writing</small></a>
+      <a href="{{ '/pyfractal/' | relative_url }}"><span>04 / code</span><strong>Pyfractal</strong><small>Fractal generation in Python</small></a>
+      <a href="{{ '/Mal-det-cal/' | relative_url }}"><span>05 / tool</span><strong>Mal-Det-Cal</strong><small>Malware detection experiments</small></a>
+      <a href="{{ '/hacking_tools/' | relative_url }}"><span>06 / kit</span><strong>Hacking tools</strong><small>Small utilities and experiments</small></a>
+    </nav>
+  </section>
+
+  <section id="recent" class="record-index" aria-labelledby="recent-title">
+    <header class="section-heading">
+      <div><p class="eyebrow">Writing / {{ paginator.posts | size }} entries</p><h2 id="recent-title">Recent field notes</h2></div>
+      <p>Articles and local cryptographic challenges, newest first.</p>
+    </header>
+    <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Topic</span><span>Type</span><span></span></div>
+    <ol class="record-list">
+      {%- for _post in paginator.posts -%}{%- include root-row.html entry=_post -%}{%- endfor -%}
+    </ol>
+    {%- include paginator.html -%}
+  </section>
+</main>
