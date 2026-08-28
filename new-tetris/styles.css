@@ -194,6 +194,10 @@ h2 {
   text-shadow: 2px 2px #5a2f22;
 }
 
+.print-only {
+  display: none;
+}
+
 .no-script-notice,
 .loading-notice {
   margin: 8px 0 14px;
@@ -865,5 +869,20 @@ h2 {
 
   .last-panel {
     grid-column: auto;
+  }
+}
+
+@media print {
+  #game-loading,
+  #game-machine {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+    padding: 1rem;
+    border: 2px solid #111;
+    color: #111;
+    background: #fff;
   }
 }
