@@ -10,6 +10,18 @@ module DeuteriumSite
 
     module_function
 
+    def generated_description(post)
+      title = post.data["title"].to_s.strip
+      title = File.basename(post.relative_path.to_s, File.extname(post.relative_path.to_s)).sub(/^\d{2,4}-\d{2}-\d{2}-/, "").tr("-_", " ") if title.empty?
+      publication = case post.data["section"]
+                    when "writeups" then "CTF Writeups"
+                    when "tutorials" then "Blog on CTFs"
+                    when "ramblings" then "Ramblings"
+                    else "deuterium's blog"
+                    end
+      "#{title}, published in #{publication}."
+    end
+
     def apply(post)
       relative = post.relative_path.to_s.delete_prefix("/")
       source_path = relative.sub(%r{\A_posts/}, "")
@@ -39,6 +51,18 @@ module DeuteriumSite
         slug = match[:slug].gsub(/\s+/, "-")
         post.data["permalink"] = "/#{top_level}/#{date_path}/#{slug}.html"
       end
+    end
+  end
+end
+
+class DeuteriumSectionMetadata < Jekyll::Generator
+  safe true
+  priority :highest
+
+  def generate(site)
+    site.posts.docs.each do |post|
+      DeuteriumSite::SectionMetadata.apply(post)
+      post.data["description"] ||= DeuteriumSite::SectionMetadata.generated_description(post)
     end
   end
 end
