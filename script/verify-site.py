@@ -291,6 +291,12 @@ for page in pages:
     if broken: fail(f"broken local links in {rel}: {broken[:10]}")
     if any(host in text.lower() for host in TRACKERS): fail(f"retired runtime service remains in {rel}")
     if rel.startswith("new-tetris/"):
+        if rel in {"new-tetris/index.html", "new-tetris/src/catalog/index.html", "new-tetris/src/scoring/index.html"}:
+            expected_path = "/" + rel.removesuffix("index.html")
+            if audit.description != 1 or audit.canonicals != [f"{SITE_URL}{expected_path}"]:
+                fail(f"static-app metadata drift: {rel}")
+            if text.count('property="og:title"') != 1 or text.count('property="og:url"') != 1:
+                fail(f"static-app social metadata drift: {rel}")
         continue
     if (audit.title, audit.h1, audit.main, audit.description, len(audit.canonicals)) != (1, 1, 1, 1, 1):
         fail(f"shell invariant failed: {rel}")
