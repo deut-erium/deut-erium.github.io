@@ -1,17 +1,14 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <div class="site-footer__status" aria-label="Publishing status">
-      <span><i class="state state--verified"></i> static HTML</span>
-      <span><i class="state state--unstable"></i> no tracking</span>
-      <span><i class="state state--extracted"></i> local assets</span>
-    </div>
     <p class="site-footer__note">
-      Notes by Himanshu Sheoran, usually found breaking ciphers, solvers, binaries,
-      or shell defaults. No analytics, advertising, or third-party page assets.
+      {{ site.posts | size }} posts by <a href="{{ site.author.url }}">{{ site.author.name }}</a>.
+      Static HTML, local assets, and no tracking.
     </p>
     <nav class="site-footer__links" aria-label="Footer navigation">
-      <a href="https://github.com/deut-erium">GitHub</a>
-      <a href="https://www.linkedin.com/in/himanshu-sheoran">LinkedIn</a>
+      <a href="{{ '/WriteUps/' | relative_url }}">Writeups</a>
+      <a href="{{ '/ctf-tutorials/' | relative_url }}">Tutorials</a>
+      <a href="{{ '/ramblings/' | relative_url }}">Ramblings</a>
+      <a href="https://github.com/{{ site.repository }}">Repository</a>
       <a href="{{ '/feed.xml' | relative_url }}">Atom feed</a>
     </nav>
   </div>

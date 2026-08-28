@@ -1,0 +1,27 @@
+{%- assign _record = include.record -%}
+{%- assign _parts = _record.path | split: '/' -%}
+{%- case _record.section -%}
+  {%- when 'writeups' -%}{%- assign _section = 'Writeups' -%}{%- assign _context = _parts[3] | default: 'CTF' -%}
+  {%- when 'tutorials' -%}{%- assign _section = 'Tutorials' -%}{%- assign _context = 'CTF tutorials' -%}
+  {%- when 'ramblings' -%}{%- assign _section = 'Ramblings' -%}{%- assign _context = 'Ramblings' -%}
+  {%- else -%}{%- assign _section = 'Blog' -%}{%- assign _context = 'deuterium' -%}
+{%- endcase -%}
+{%- if _record.section == 'writeups' -%}
+  {%- capture _topic -%}{%- include primitive.html tags=_record.tags -%}{%- endcapture -%}
+  {%- assign _topic = _topic | strip -%}
+{%- else -%}
+  {%- assign _topic = _record.tags.first | default: 'general' | replace: '_', ' ' -%}
+{%- endif -%}
+<li class="record-row"
+    data-record
+    data-section="{{ _record.section | escape }}"
+    data-search="{{ _record.title | downcase | escape }} {{ _context | downcase | escape }} {{ _record.tags | join: ' ' | downcase | escape }}"
+    data-tags="{{ _record.tags | join: '|' | downcase | escape }}">
+  <a class="record-row__link" href="{{ _record.url | relative_url }}">
+    <time class="record-row__date" datetime="{{ _record.date | date_to_xmlschema }}">{{ _record.date | date: '%y.%m.%d' }}</time>
+    <span class="record-row__title">{{ _record.title }}</span>
+    <span class="record-row__event">{{ _section }}</span>
+    <span class="record-row__primitive">{{ _topic }}</span>
+    <span class="record-row__arrow" aria-hidden="true">+</span>
+  </a>
+</li>
