@@ -206,3 +206,7 @@ Additional checks:
 - Clicking either an anchor or its nested label updates the query, selected state, visible count, empty state, and hidden year groups.
 - Unknown tags produce zero rows and the explicit empty message.
 - With JavaScript disabled, query parameters are ignored by the static page and all 78 posts remain visible. The filter links therefore degrade to the complete archive rather than a blank page or error.
+
+## Analytics
+
+The site has no analytics at HEAD. Optional GoatCounter support exists behind `goatcounter_site` in `_config.yml` and is reviewed in security-privacy.md. Leaving the value empty keeps generated output byte-identical to the audited builds.

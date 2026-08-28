@@ -10,6 +10,19 @@ const outputRoot = path.resolve('agent_out/unified-merge/review/current-browser'
 const pdfRoot = path.join(outputRoot, 'pdf');
 await mkdir(pdfRoot, { recursive: true });
 
+const configText = await import('node:fs/promises').then((fs) => fs.readFile('_config.yml', 'utf8'));
+const gcMatch = configText.match(/^goatcounter_site:\s*"?([\w-]+)"?\s*(?:#.*)?$/m);
+const gcSite = gcMatch ? gcMatch[1] : '';
+const isAnalyticsUrl = (url) => {
+  if (!gcSite) return false;
+  try {
+    const host = new URL(url).host;
+    return host === 'gc.zgo.at' || host === `${gcSite}.goatcounter.com`;
+  } catch {
+    return false;
+  }
+};
+
 async function filesBelow(root) {
   const found = [];
   for (const entry of await readdir(root, { withFileTypes: true })) {
@@ -82,14 +95,17 @@ const waitFor = async (expression, timeout = 6000) => {
   throw new Error(`Timed out waiting for ${expression}`);
 };
 const badEvents = () => {
+  const requestUrl = new Map(events.filter((event) => event.method === 'Network.requestWillBeSent')
+    .map((event) => [event.params.requestId, event.params.request.url]));
   const failures = events.filter((event) => event.method === 'Network.loadingFailed' && !event.params.canceled)
-    .map((event) => ({ kind: 'network', error: event.params.errorText, url: event.params.blockedReason || '' }));
+    .map((event) => ({ kind: 'network', error: event.params.errorText, url: requestUrl.get(event.params.requestId) || '' }))
+    .filter((failure) => !isAnalyticsUrl(failure.url));
   const exceptions = events.filter((event) => event.method === 'Runtime.exceptionThrown')
     .map((event) => ({ kind: 'exception', error: event.params.exceptionDetails?.exception?.description || event.params.exceptionDetails?.text }));
   const consoleErrors = events.filter((event) => event.method === 'Runtime.consoleAPICalled' && event.params.type === 'error')
     .map((event) => ({ kind: 'console', error: event.params.args?.map((arg) => arg.value || arg.description).join(' ') }));
   const external = events.filter((event) => event.method === 'Network.requestWillBeSent').map((event) => event.params.request.url)
-    .filter((url) => !url.startsWith(origin) && !url.startsWith('data:') && !url.startsWith('blob:') && url !== 'about:blank')
+    .filter((url) => !url.startsWith(origin) && !url.startsWith('data:') && !url.startsWith('blob:') && url !== 'about:blank' && !isAnalyticsUrl(url))
     .map((url) => ({ kind: 'external-request', url }));
   return [...failures, ...exceptions, ...consoleErrors, ...external];
 };
