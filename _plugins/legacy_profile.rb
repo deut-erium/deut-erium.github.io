@@ -18,6 +18,7 @@ module DeuteriumSite
       raise "legacy profile body is missing" unless body
 
       body = body.gsub(/\s+id="textbox"/, "")
+      body = body.sub(%r{</header>\s*(?:<br>){4}}, "</header>")
       body = body.gsub(/href\s*=\s*"Circle-limit-IV\.jpg"/, 'href="/Circle-limit-IV.jpg"')
       self.content = %(<div class="legacy-profile">#{body}</div>)
       self.data = {
