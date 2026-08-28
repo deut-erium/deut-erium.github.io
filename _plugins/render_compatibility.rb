@@ -97,7 +97,22 @@ module DeuteriumSite
           '<img class="image image--lg" src="Circle-limit-IV.jpg" alt="Circle Limit IV illustration" width="600" height="602" loading="lazy" />'
         )
       end
+      restore_heading_levels(document)
       enrich_images(document)
+    end
+
+    def restore_heading_levels(document)
+      return unless ["root", "tutorials"].include?(document.data["section"])
+
+      document.output = document.output.sub(/(<article\b[^>]*id="article-body"[^>]*>)(.*?)(<\/article>)/m) do
+        opening = Regexp.last_match(1)
+        closing = Regexp.last_match(3)
+        body = Regexp.last_match(2).gsub(%r{<(\/?)h([3-6])(\b[^>]*)>}) do
+          level = Regexp.last_match(2).to_i - 1
+          "<#{Regexp.last_match(1)}h#{level}#{Regexp.last_match(3)}>"
+        end
+        "#{opening}#{body}#{closing}"
+      end
     end
 
     def enrich_images(document)
