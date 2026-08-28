@@ -20,3 +20,16 @@ Six complete themes, drawn by hand from their moodboard boards. The generator-bu
 - Skins stay lazy: a rolled skin loads one stylesheet of roughly 2-3.5 KB gzip; the default page loads none.
 
 The full route matrix was not rerun for this change at the owner's direction; retained browser evidence binds to earlier trees.
+
+## Architecture pass
+
+The first cut of these skins kept theme 31's layout and only restyled components; the owner rejected it as identical. Every skin now re-places the page on the same markup at desktop width:
+
+- b03 moves article facts, actions, and related records into a sticky right marginalia rail and the home list beside a sticky index rail.
+- b11 rebuilds the masthead as a clipped diagonal splash panel, lays home rows out as a two-column panel grid with full-width splash rows every fourth card, and runs the article head as a full-bleed splash band.
+- b15 lays home rows out three-across as a card hand, centers the masthead as a marquee band between gilt rules, frames the index as a house-rules plaque, turns article facts into a four-column odds board, and grids related records as mini cards.
+- b20 turns the header into a sticky left binder rail (brand and nav stacked vertically beside the content sheet).
+- b21 narrows everything into a centered exhibit column, shrinks the header to a small centered plaque, and sets indented prose paragraphs.
+- b32 welds the header into a folder-tab strip on top of the form sheet, grids home rows into ruled ledger columns, and moves article facts into a sticky left case-file rail beside the proof.
+
+Verified programmatically: on both home and a code-bearing article, each skin differs from classic on at least three of twelve measured structural metrics (body layout mode, header geometry, main columns, list columns, row columns, row width, masthead geometry, facts position and columns, article head geometry), and no two skins share a layout signature. Horizontal overflow is zero for classic and all six skins at 1440, 800, and 375 pixels. The structural rules apply only at 900px and above; below that the skins degrade to the audited mobile layout with their decorative layer, also overflow-free.
