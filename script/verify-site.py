@@ -317,7 +317,7 @@ for rel in post_routes:
 
 pages = sorted(ROOT.rglob("*.html"))
 shell_pages = [page for page in pages if "new-tetris" not in page.relative_to(ROOT).parts]
-forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = dice_buttons = code_frames = math_expressions = 0
+forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
 challenge_pages: set[str] = set()
 article_pages: set[str] = set()
 math_pages: set[str] = set()
@@ -360,7 +360,6 @@ for page in pages:
     forms += audit.forms
     images += audit.plain_images
     brand_marks += text.count('class="site-brand__mark"')
-    dice_buttons += text.count('class="theme-toggle dice-roll"')
     challenge_scripts += text.count('/assets/js/challenge.js')
     article_scripts += text.count('/assets/js/article.js')
     theme_scripts += text.count('/assets/js/theme.js')
@@ -382,7 +381,6 @@ if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, im
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
 if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
-if dice_buttons != len(shell_pages): fail(f"dice button scoping drift: {dice_buttons} != {len(shell_pages)}")
 if len(math_pages) != 4: fail(f"math page count drift: {len(math_pages)}")
 if GOATCOUNTER:
     wired = [rel for rel, audit in page_audits.items() if not rel.startswith("new-tetris/") and not audit.refresh]
@@ -512,18 +510,6 @@ if len(brand_data) != 10_340 or hashlib.sha256(brand_data).hexdigest() != "ab1a9
 main_css = (ROOT / "assets/css/main.css").read_text(encoding="utf-8")
 if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
     fail("Circle Limit IV brand style missing")
-import re as _re
-_skin_files = sorted((ROOT / "assets/css/skins").glob("b*.css"))
-if [s.stem for s in _skin_files] != ["b03", "b11", "b15", "b20", "b21", "b32"]: fail(f"skin set drift: {[s.stem for s in _skin_files]}")
-_theme_js = (SOURCE / "assets/js/theme.js").read_text(encoding="utf-8")
-for _skin in _skin_files:
-    _body = _skin.read_text(encoding="utf-8")
-    _face = _skin.stem
-    if f'html[data-skin="{_face}"]' not in _body: fail(f"skin scope missing: {_skin.name}")
-    for _marker in (".site-header", ".site-nav", ".record-row", "[data-code-frame]", "blockquote", "@media print"):
-        if _marker not in _body: fail(f"skin {_face} missing component: {_marker}")
-    if _face[1:] not in _theme_js: fail(f"skin face missing from script: {_face}")
-if "data-dice" in main_css or "data-dice" in _theme_js: fail("retired palette dice remains")
 about_text = (ROOT / "about.html").read_text(encoding="utf-8")
 if 'class="item about-profile"' not in about_text or "M. C. Escher&#39;s Circle Limit IV" not in about_text:
     fail("Circle Limit IV About profile drift")
@@ -544,7 +530,7 @@ budgets = {
     "assets/js/article.js": 2 * 1024,
     "assets/js/archive.js": 2 * 1024,
     "assets/js/challenge.js": 2 * 1024,
-    "assets/js/theme.js": 1.5 * 1024,
+    "assets/js/theme.js": 1 * 1024,
 }
 metrics = {}
 for name, budget in budgets.items():
@@ -571,7 +557,6 @@ print(json.dumps({
     "external_runtime_resources": 0,
     "analytics": f"goatcounter:{GOATCOUNTER}" if GOATCOUNTER else "none",
     "brand_mark_references": brand_marks,
-    "dice_theme_faces": len(_skin_files),
     "artifact_files": artifact_files,
     "artifact_directories": artifact_directories,
     "metrics": metrics,
