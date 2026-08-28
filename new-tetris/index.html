@@ -23,21 +23,22 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="wordmark" aria-label="New Tetris Web">
+    <h1 class="wordmark" aria-label="New Tetris Web">
       <strong><span class="title-new">NEW</span><span class="title-tetris">TETRIS</span></strong>
-    </div>
+    </h1>
     <div class="topbar-actions">
       <p>Build <b class="gold-text">gold</b> and <b class="silver-text">silver</b> 4x4, 6x6, and 8x8 squares.</p>
       <a class="catalog-button" href="src/catalog/index.html">Browse 4x4 + 6x6 + 8x8 catalog</a>
     </div>
   </header>
 
-  <noscript><p class="no-script-notice">This game needs JavaScript enabled. The catalog and scoring guide remain available above.</p></noscript>
-  <p id="game-loading" class="loading-notice" role="status">Loading the local game controls...</p>
-  <main id="game-machine" class="machine" hidden>
+  <main id="content">
+    <noscript><p class="no-script-notice">This game needs JavaScript enabled. The catalog and scoring guide remain available above.</p></noscript>
+    <p id="game-loading" class="loading-notice" role="status">Loading the local game controls...</p>
+    <div id="game-machine" class="machine" hidden>
     <section class="run-console" aria-labelledby="run-title">
       <div class="run-start">
-        <h1 id="run-title">CHOOSE A GAME</h1>
+        <h2 id="run-title">CHOOSE A GAME</h2>
         <label for="challenge-date">Daily date</label>
         <input id="challenge-date" type="date" min="0001-01-01" max="9999-12-31" required>
         <button id="start-challenge" class="daily-button" type="button">Start 1,008-piece daily</button>
@@ -161,6 +162,7 @@
         <button type="button" data-action="restart" aria-label="Restart game">RESET</button>
       </section>
     </section>
+    </div>
   </main>
 
   <script type="module" src="src/main.js?v=20260911"></script>
