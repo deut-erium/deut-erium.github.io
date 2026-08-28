@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -19,7 +20,8 @@ async function filesBelow(root) {
   }
   return found;
 }
-const htmlFiles = (await filesBelow(siteRoot)).filter((file) => file.endsWith('.html')).sort();
+const siteFiles = (await filesBelow(siteRoot)).sort();
+const htmlFiles = siteFiles.filter((file) => file.endsWith('.html'));
 const routes = htmlFiles.map((file) => {
   const relative = path.relative(siteRoot, file).split(path.sep).join('/');
   return relative.endsWith('/index.html') ? `/${relative.slice(0, -'index.html'.length)}` : `/${relative}`;
@@ -43,6 +45,9 @@ if (process.env.RESUME === '1') {
   tasks = tasks.filter((item) => !completedKeys.has(`${item.route}\n${item.width}\n${item.javaScript}`));
 }
 const totalChecks = initialResults.length + tasks.length;
+const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const siteManifest = execFileSync('python3', ['script/artifact_manifest.py', siteRoot]);
+const siteManifestSha256 = createHash('sha256').update(siteManifest).digest('hex');
 const version = await fetch(`${cdpOrigin}/json/version`).then((response) => response.json());
 
 class Client {
@@ -189,7 +194,8 @@ await Promise.all(Array.from({ length: concurrency }, (_, index) => worker(index
 results.sort((left, right) => Number(right.javaScript) - Number(left.javaScript) || left.width - right.width || left.route.localeCompare(right.route));
 const result = {
   status: failures.length ? 'fail' : 'pass',
-  sourceCommit: '4f6909c',
+  sourceCommit,
+  siteManifestSha256,
   browser: version.Browser,
   htmlRoutes: routes.length,
   workers: concurrency,

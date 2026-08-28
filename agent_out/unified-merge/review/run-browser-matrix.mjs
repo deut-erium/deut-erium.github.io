@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const origin = 'http://127.0.0.1:4100';
@@ -24,13 +25,9 @@ const routes = htmlFiles.map((file) => {
   const relative = path.relative(siteRoot, file).split(path.sep).join('/');
   return relative.endsWith('/index.html') ? `/${relative.slice(0, -'index.html'.length)}` : `/${relative}`;
 });
-const manifestLines = [];
-for (const file of await filesBelow(siteRoot)) {
-  const data = await readFile(file);
-  manifestLines.push(`${createHash('sha256').update(data).digest('hex')}  ${path.relative(siteRoot, file).split(path.sep).join('/')}`);
-}
-manifestLines.sort();
-const siteManifestSha256 = createHash('sha256').update(`${manifestLines.join('\n')}\n`).digest('hex');
+const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const siteManifest = execFileSync('python3', ['script/artifact_manifest.py', siteRoot]);
+const siteManifestSha256 = createHash('sha256').update(siteManifest).digest('hex');
 
 const version = await fetch(`${cdpOrigin}/json/version`).then((response) => response.json());
 const tabs = await fetch(`${cdpOrigin}/json`).then((response) => response.json());
@@ -373,7 +370,7 @@ if (focusedChecks.catalogPrint.filtersDisplay !== 'none' || focusedChecks.catalo
 }
 await send('Emulation.setEmulatedMedia', { media: '', features: [] });
 
-const spacingRoutes = ['/', '/archive.html', '/2024/01/28/inputrc.html', '/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html', '/new-tetris/', '/new-tetris/src/catalog/', '/new-tetris/src/scoring/'];
+const spacingRoutes = ['/', '/about.html', '/archive.html', '/2024/01/28/inputrc.html', '/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html', '/new-tetris/', '/new-tetris/src/catalog/', '/new-tetris/src/scoring/'];
 await setViewport(320, 844);
 for (const route of process.env.SKIP_SPACING === '1' ? [] : spacingRoutes) {
   await navigate(route, route.includes('catalog') ? 300 : 100);
@@ -385,6 +382,7 @@ for (const route of process.env.SKIP_SPACING === '1' ? [] : spacingRoutes) {
 const pdfSpecs = [
   ['curvy-decryptor', '/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html'],
   ['root-home', '/'],
+  ['about', '/about.html'],
   ['writeups-home', '/WriteUps/'],
   ['inputrc', '/2024/01/28/inputrc.html'],
   ['n95', '/WriteUps/2020/HSCTF/miscellaneous/N-95/2020-06-06-HSCTF-2020-Misc-N95.html'],
@@ -436,7 +434,7 @@ for (const [name, route] of process.env.SKIP_PDFS === '1' ? [] : pdfSpecs) {
 
 const result = {
   status: failures.length ? 'fail' : 'pass',
-  sourceCommit: '4f6909c',
+  sourceCommit,
   siteManifestSha256,
   browser: version.Browser,
   protocolVersion: version['Protocol-Version'],

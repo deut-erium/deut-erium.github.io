@@ -1,16 +1,22 @@
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const origin = 'http://127.0.0.1:4100';
 const cdpOrigin = 'http://127.0.0.1:9241';
+const siteRoot = path.resolve('_site-next');
 const outputRoot = path.resolve('agent_out/unified-merge/review/current-browser');
 const pdfRoot = path.join(outputRoot, 'pdf');
 await mkdir(pdfRoot, { recursive: true });
+const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const siteManifest = execFileSync('python3', ['script/artifact_manifest.py', siteRoot]);
+const siteManifestSha256 = createHash('sha256').update(siteManifest).digest('hex');
 const version = await fetch(`${cdpOrigin}/json/version`).then((response) => response.json());
 const specs = [
   ['curvy-decryptor', '/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html'],
   ['root-home', '/'],
+  ['about', '/about.html'],
   ['writeups-home', '/WriteUps/'],
   ['inputrc', '/2024/01/28/inputrc.html'],
   ['n95', '/WriteUps/2020/HSCTF/miscellaneous/N-95/2020-06-06-HSCTF-2020-Misc-N95.html'],
@@ -103,7 +109,8 @@ for (const [name, route] of specs) {
 }
 const result = {
   status: failures.length ? 'fail' : 'pass',
-  sourceCommit: '4f6909c',
+  sourceCommit,
+  siteManifestSha256,
   browser: version.Browser,
   pageSize: 'A4',
   printBackground: false,
