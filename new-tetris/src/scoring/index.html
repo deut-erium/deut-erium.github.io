@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Complete scoring rules for New Tetris Web.">
+  <title>New Tetris Scoring Guide</title>
+  <link rel="stylesheet" href="../catalog/catalog.css?v=20260911">
+  <link rel="stylesheet" href="scoring.css?v=20260911">
+</head>
+<body>
+  <header class="catalog-head scoring-head">
+    <div class="catalog-mark"><span>SCORING</span><strong>GUIDE</strong></div>
+    <div>
+      <p>The exact rules behind line, Spin Move, and square awards.</p>
+      <nav><a href="../catalog/index.html">Square catalog</a><a href="../../index.html">Back to game</a></nav>
+    </div>
+  </header>
+
+  <main class="scoring-main">
+    <section class="lead-sheet">
+      <h1>Both game modes use the same score</h1>
+      <p>Pick the same date and the daily game gives everyone the same pieces. It stops after 1,008 pieces, or when the blocks reach the top.</p>
+      <p>Endless play keeps going until the blocks reach the top. Both games use the same scoring rules.</p>
+    </section>
+
+    <section class="rule-sheet word-guide">
+      <h2>Words used on this page</h2>
+      <dl>
+        <div><dt>Piece mix</dt><dd>The pieces used to make a square. O4 means four O pieces. I2-J2 means two I pieces and two J pieces.</dd></div>
+        <div><dt>Way to build</dt><dd>A playable arrangement shown in the 4x4 or 6x6 catalog. The same pieces may fit together in several ways.</dd></div>
+        <div><dt>Board arrangement count</dt><dd>The number of geometric tilings with a piece mix. The 8x8 counts do not claim that every arrangement is reachable or easy to play.</dd></div>
+        <div><dt>Gold square</dt><dd>Every piece has the same type.</dd></div>
+        <div><dt>Silver square</dt><dd>Two or more piece types are used.</dd></div>
+        <div><dt>Clean split</dt><dd>A gap between two rows or two columns that runs across the whole square without cutting through a piece.</dd></div>
+        <div><dt>Shape bonus</dt><dd>Extra points when the pieces are harder to separate with clean splits.</dd></div>
+      </dl>
+    </section>
+
+    <section class="award-grid" aria-label="Basic awards">
+      <article><span>LINE CLEAR</span><strong>100 / 300 / 500 / 800</strong><p>Clear one, two, three, or at least four rows at once.</p></article>
+      <article><span>SPIN MOVE</span><strong>500</strong><p>A piece lands, cannot move in any direction, and has a full row running through it.</p></article>
+      <article><span>8x8 TOTAL VALUE</span><strong>10,000 / 20,000</strong><p>Silver gets 10,000. Gold gets 20,000, paid as its rows are cleared.</p></article>
+    </section>
+
+    <section class="rule-sheet piece-type-guide">
+      <h2>The seven piece types</h2>
+      <p>The letter names below are used in piece-mix names throughout the scoring guide and catalog.</p>
+      <div class="piece-type-grid">
+        <article><span class="piece-shape piece-shape--I piece-color--I" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>I piece</b></article>
+        <article><span class="piece-shape piece-shape--J piece-color--J" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>J piece</b></article>
+        <article><span class="piece-shape piece-shape--L piece-color--L" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>L piece</b></article>
+        <article><span class="piece-shape piece-shape--O piece-color--O" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>O piece</b></article>
+        <article><span class="piece-shape piece-shape--S piece-color--S" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>S piece</b></article>
+        <article><span class="piece-shape piece-shape--T piece-color--T" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>T piece</b></article>
+        <article><span class="piece-shape piece-shape--Z piece-color--Z" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Z piece</b></article>
+      </div>
+    </section>
+
+    <section class="rule-sheet">
+      <h2>Lines and Spin Moves</h2>
+      <table>
+        <thead><tr><th>What happened</th><th>Points</th></tr></thead>
+        <tbody>
+          <tr><td>Clear 1 row</td><td>100</td></tr>
+          <tr><td>Clear 2 rows at once</td><td>300</td></tr>
+          <tr><td>Clear 3 rows at once</td><td>500</td></tr>
+          <tr><td>Clear 4 or more rows at once</td><td>800</td></tr>
+          <tr><td>Spin Move</td><td>500</td></tr>
+        </tbody>
+      </table>
+      <h3>A Spin Move scores when all of these are true:</h3>
+      <ul>
+        <li>Look one space up, down, left, and right from every block in the new piece. Ignore spaces occupied by that same piece, then count each remaining position once. Empty spaces and filled spaces count. All wall and floor touches together count as one position. The total must be at least four.</li>
+        <li>The piece cannot move one space left, right, up, or down.</li>
+        <li>A full row passes through the piece.</li>
+        <li>Placing the piece did not make a new square.</li>
+      </ul>
+      <p>Clearing a square row can collect square value alongside the line award. Dropping faster, clearing rows on back-to-back turns, and level do not add points.</p>
+    </section>
+
+    <section class="rule-sheet">
+      <h2>When a square counts</h2>
+      <ul>
+        <li>The whole 4x4, 6x6, or 8x8 area must be full.</li>
+        <li>Every piece must still have all four blocks inside that area.</li>
+        <li>The game looks for an 8x8 first, then 6x6, then 4x4.</li>
+        <li>Only one new square can be recognized when a piece lands.</li>
+        <li>If two squares of the same size are ready, the lower one wins. If they are level, the left one wins.</li>
+        <li>A 6x6 or 8x8 can grow around smaller squares you made earlier. Their uncollected value remains attached to their rows.</li>
+      </ul>
+    </section>
+
+    <section class="rule-sheet collection-rule">
+      <h2>When square points are paid</h2>
+      <p>Building a square does not add points immediately. Its total value is divided across its rows. Clear a row through the square to collect that row's share.</p>
+      <ul>
+        <li>A 4x4 value is split across 4 rows, a 6x6 across 6 rows, and an 8x8 across 8 rows.</li>
+        <li>If the value does not divide evenly, some rows carry one extra point. Clearing every row still pays the exact total.</li>
+        <li>Clearing several square rows at once collects every share in those rows.</li>
+        <li>A Spin Move that breaks a square destroys any value still attached to it.</li>
+      </ul>
+      <p>Example: a gold O4 has a total value of 2,500. Each of its four rows carries 625 points.</p>
+    </section>
+
+    <section class="rule-sheet formula-sheet">
+      <h2>4x4 total value</h2>
+      <p class="formula">Start with 1,000. Add 1,500 for gold. Add 250 for each piece type after the first. Add 1,000 when there is no clean split.</p>
+      <p>Look at every straight gap between the rows and columns. If at least one gap crosses the whole square without cutting a piece, there is no shape bonus. If every gap cuts through a piece, add 1,000.</p>
+      <div class="examples">
+        <article><b>Four O pieces with a clean split</b><strong>2,500</strong><span>1,000 to start + 1,500 for gold</span></article>
+        <article><b>Four T pieces with no clean split</b><strong>3,500</strong><span>1,000 to start + 1,500 for gold + 1,000 shape bonus</span></article>
+      </div>
+    </section>
+
+    <section class="rule-sheet formula-sheet">
+      <h2>6x6 total value</h2>
+      <p class="formula">Start with 2,500. Add 3,500 for gold. Add 500 for each piece type after the first. Then add the shape bonus below.</p>
+      <p>The game tries each gap between the rows and columns. When it finds a clean split, it splits there and repeats inside each smaller part. The largest part that cannot be split again sets the bonus.</p>
+      <p>The result can be a group of 1 to 6 pieces, or all 9 pieces. The complete 6x6 catalog has no result with a group of 7 or 8.</p>
+      <p>If all 9 stay together, the game finds the gap that cuts through the fewest pieces.</p>
+      <table>
+        <thead><tr><th>Biggest group left together</th><th>Shape bonus</th><th>Catalog example</th></tr></thead>
+        <tbody>
+          <tr><td>1 or 2 pieces</td><td>0</td><td><a href="../catalog/index.html?size=6&amp;family=I2-O7">I2-O7</a></td></tr>
+          <tr><td>3 or 4 pieces</td><td>500</td><td><a href="../catalog/index.html?size=6&amp;family=O5-T4">O5-T4</a></td></tr>
+          <tr><td>5 or 6 pieces</td><td>1,000</td><td><a href="../catalog/index.html?size=6&amp;family=O3-T4-Z2">O3-T4-Z2</a></td></tr>
+          <tr><td>All 9 stay together; the best gap cuts through 1 piece</td><td>1,500</td><td><a href="../catalog/index.html?size=6&amp;family=L6-S3">L6-S3</a></td></tr>
+          <tr><td>All 9 stay together; even the best gap cuts through 2 or more pieces</td><td>2,500</td><td><a href="../catalog/index.html?size=6&amp;family=L5-T4">L5-T4</a></td></tr>
+        </tbody>
+      </table>
+      <div class="examples">
+        <article><b>Two I pieces and seven O pieces</b><strong>3,000</strong><span>2,500 to start + 500 for using a second piece type</span></article>
+        <article><b>Nine O pieces</b><strong>6,000</strong><span>2,500 to start + 3,500 for gold</span></article>
+        <article><b>All seven piece types, with no clean split</b><strong>8,000</strong><span>2,500 to start + 3,000 for extra piece types + 2,500 shape bonus</span></article>
+      </div>
+    </section>
+
+    <section class="rule-sheet formula-sheet eight-rule">
+      <h2>8x8 total value</h2>
+      <p class="formula">Silver: 10,000. Gold: 20,000.</p>
+      <p>An 8x8 needs 16 complete pieces. It is much harder to finish than a 4x4 or 6x6, so it gets a much larger fixed value. The value is split across its eight rows.</p>
+    </section>
+
+    <section class="catalog-callout">
+      <div><h2>See piece mixes and total values</h2><p>The catalog shows one playable example for every 4x4 and 6x6 piece mix. It gives the pending value for that picture and shows where each part comes from. The 8x8 section lists all feasible mixes and their exact board-arrangement counts; every 8x8 uses the same value for its material.</p></div>
+      <a href="../catalog/index.html">Open square catalog</a>
+    </section>
+  </main>
+
+  <footer>Scoring formulas are shared by daily and endless play.</footer>
+</body>
+</html>
