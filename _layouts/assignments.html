@@ -1,0 +1,11 @@
+---
+layout: base
+---
+{%- assign _tutorials = site.posts | where: 'section', 'tutorials' -%}
+<main id="content" class="page-shell">
+  <header class="page-heading"><p class="eyebrow">CTF tutorials</p><h1>Assignments</h1></header>
+  <article class="prose page-prose">
+    {{ content }}
+    <ul>{%- for _post in _tutorials -%}{%- if _post.tags contains 'assignment' -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- endif -%}{%- endfor -%}</ul>
+  </article>
+</main>

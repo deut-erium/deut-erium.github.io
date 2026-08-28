@@ -2,9 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 
-{%- if page.layout == 'home' -%}
-  <title>{{ site.title }}</title>
-{%- elsif page.title -%}
+{%- if page.title -%}
   <title>{{ page.title }} / {{ site.title }}</title>
 {%- else -%}
   <title>{{ site.title }}</title>
@@ -12,8 +10,17 @@
 
 {%- seo title=false -%}
 {%- if page.noindex -%}<meta name="robots" content="noindex, follow">{%- endif -%}
-<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+{%- if page.redirect_to -%}<meta http-equiv="refresh" content="0; url={{ page.redirect_to | escape }}">{%- endif -%}
+
+{%- case page.section -%}
+  {%- when 'writeups' -%}{%- assign _feed_path = '/WriteUps/feed.xml' -%}
+  {%- when 'tutorials' -%}{%- assign _feed_path = '/ctf-tutorials/feed.xml' -%}
+  {%- when 'ramblings' -%}{%- assign _feed_path = '/ramblings/feed.xml' -%}
+  {%- else -%}{%- assign _feed_path = '/feed.xml' -%}
+{%- endcase -%}
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ _feed_path | relative_url }}">
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-<meta name="theme-color" content="#171914" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#090c0a" media="(prefers-color-scheme: dark)">
+{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}">{%- endif -%}
+<meta name="theme-color" content="#3847ff">

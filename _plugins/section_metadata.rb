@@ -37,6 +37,21 @@ module DeuteriumSite
   end
 end
 
+class DeuteriumTagAliases < Jekyll::Generator
+  safe true
+  priority :highest
+
+  def generate(site)
+    aliases = site.data.fetch("tag_aliases", {})
+    site.posts.docs.each do |post|
+      tags = Array(post.data["tags"])
+      canonical = tags.map { |tag| aliases.fetch(tag.to_s.downcase, tag) }
+      post.data["tags"] = canonical.uniq
+    end
+    site.instance_variable_get(:@post_attr_hash).delete("tags")
+  end
+end
+
 Jekyll::Hooks.register :posts, :post_init do |post|
   DeuteriumSite::SectionMetadata.apply(post)
 end
@@ -44,6 +59,21 @@ end
 Jekyll::Hooks.register :pages, :post_init do |page|
   relative = page.path.to_s.delete_prefix("/")
   case relative
+  when "404.md"
+    page.data["title"] = "Page not found"
+    page.data["description"] = "The requested page does not exist."
+    page.data["layout"] = "404"
+    page.data["noindex"] = true
+  when "about.md"
+    page.data["title"] = "About"
+    page.data["layout"] = "page"
+  when "WriteUps/404.md", "ramblings/404.md", "ctf-tutorials/404.md"
+    section_path = relative.split("/", 2).first
+    page.data["title"] = "Page not found"
+    page.data["description"] = "The requested page does not exist."
+    page.data["layout"] = "404"
+    page.data["permalink"] = "/#{section_path}/404.html"
+    page.data["noindex"] = true
   when "ramblings/about.md"
     page.data["title"] = "About"
     page.data["layout"] = "page"
