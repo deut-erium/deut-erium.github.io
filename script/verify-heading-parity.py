@@ -51,7 +51,16 @@ def source_headings(path: Path, section: str) -> list[tuple[int, str]]:
         if section in {"writeups", "ramblings"}:
             level = min(6, level + 1)
         headings.append((level, normalize(match.group(2))))
-    return headings
+
+    # The build keeps every heading's text and order, then clamps only levels
+    # that would skip past the next available section depth below the page H1.
+    normalized: list[tuple[int, str]] = []
+    previous = 1
+    for level, text in headings:
+        level = min(level, previous + 1)
+        normalized.append((level, text))
+        previous = level
+    return normalized
 
 
 class HeadingParser(HTMLParser):
