@@ -214,6 +214,16 @@ a:hover {
   text-decoration: none;
 }
 
+.site-brand__mark {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  background: #fff url("../images/circle-limit-iv-mark.webp") center / cover no-repeat;
+  border: 3px solid var(--navy);
+  border-radius: 50%;
+  box-shadow: 0 .22rem 0 #070914;
+}
+
 .site-brand__text {
   min-width: 0;
   display: grid;
@@ -238,7 +248,7 @@ a:hover {
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: .55rem;
+  gap: .45rem;
   justify-content: flex-end;
 }
 
@@ -266,6 +276,11 @@ a:hover {
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
+}
+
+.site-nav a,
+.site-nav .theme-toggle {
+  padding-inline: .65rem;
 }
 
 .theme-toggle {
@@ -1548,6 +1563,23 @@ a:hover {
 }
 
 /* Responsive */
+@media (max-width: 82rem) {
+  .site-brand__scope {
+    display: none;
+  }
+}
+
+@media (max-width: 72rem) {
+  .site-header__inner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .site-nav {
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 68rem) {
   .site-header__inner,
   .site-footer__inner {
@@ -1992,6 +2024,36 @@ html[data-theme="dark"] .flag-check output.is-wrong { color: #5e0a2a; }
 
 .external-embed a { color: var(--navy); font-weight: 700; }
 
+.about-profile {
+  display: grid;
+  grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.about-profile .item__image {
+  min-width: 0;
+}
+
+.prose .about-profile .item__image img {
+  width: 100%;
+  margin: 0;
+  padding: .35rem;
+  background: #fff;
+  border: 4px solid var(--navy);
+  border-radius: 50%;
+  box-shadow: .35rem .4rem 0 var(--pink);
+}
+
+.about-profile .item__content {
+  min-width: 0;
+}
+
+.about-profile .item__content > :first-child {
+  margin-top: 0;
+}
+
 .profile-figure {
   float: right;
   width: min(45%, 19rem);
@@ -2032,6 +2094,8 @@ html[data-theme="dark"] .flag-check output.is-wrong { color: #5e0a2a; }
 
 @media (max-width: 44rem) {
   .flag-check__controls { grid-template-columns: minmax(0, 1fr); }
+  .about-profile { grid-template-columns: minmax(0, 1fr); }
+  .about-profile .item__image { width: min(72vw, 13rem); margin-inline: auto; }
   .profile-figure { float: none; width: min(100%, 20rem); margin: 0 auto 1.5rem; }
   .theme-toggle { grid-column: 1 / -1; }
 }
