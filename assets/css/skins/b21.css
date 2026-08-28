@@ -233,6 +233,40 @@ html[data-skin="b21"][data-theme="dark"] body {
 html[data-skin="b21"][data-theme="dark"] [data-code-frame] { background: var(--es-paper2); }
 html[data-skin="b21"][data-theme="dark"] .action--primary { background: var(--es-accent); color: #10120f; }
 
+
+/* ARCHITECTURE: exhibit plate - centered plaque, narrow column, indented prose */
+@media (min-width: 900px) {
+  html[data-skin="b21"] .site-header {
+    max-width: 32rem;
+    margin: 1.6rem auto 0;
+    text-align: center;
+    padding: 1rem 1.4rem;
+  }
+  html[data-skin="b21"] .site-header__inner { flex-direction: column; align-items: center; gap: .6rem; }
+  html[data-skin="b21"] .site-nav { flex-wrap: wrap; justify-content: center; }
+  html[data-skin="b21"] .home-shell { max-width: 56rem; margin-inline: auto; }
+  html[data-skin="b21"] .record-page { max-width: 56rem; margin-inline: auto; }
+  html[data-skin="b21"] .masthead { text-align: center; max-width: 40rem; margin-inline: auto; }
+  html[data-skin="b21"] .masthead__lede { border: none; text-align: center; padding: 0; margin-inline: auto; }
+  html[data-skin="b21"] .article__content p { text-indent: 1.6em; }
+  html[data-skin="b21"] .article__content p:first-of-type,
+  html[data-skin="b21"] .article__content h2 + p,
+  html[data-skin="b21"] .article__content h3 + p,
+  html[data-skin="b21"] .article__content pre + p { text-indent: 0; }
+}
+
+
+/* row links wrap inside narrow tracks instead of forcing overflow */
+html[data-skin="b21"] .record-row__link { flex-wrap: wrap; gap: .25rem .8rem; min-width: 0; }
+html[data-skin="b21"] .record-row { min-width: 0; }
+
+
+/* containment: row internals shrink inside tracks and rails */
+html[data-skin="b21"] .record-list .record-row__link,
+html[data-skin="b21"] .record-list .record-row__title { max-width: 100%; min-width: 0; }
+html[data-skin="b21"] .record-list .record-row__link > * { min-width: 0; }
+html[data-skin="b21"] .record-list { overflow-x: clip; }
+
 @media print {
   html[data-skin="b21"] body, html[data-skin="b21"] body * {
     background: transparent !important;

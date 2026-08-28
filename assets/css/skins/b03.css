@@ -245,6 +245,61 @@ html[data-skin="b03"][data-theme="dark"] {
 html[data-skin="b03"][data-theme="dark"] .record-page { box-shadow: 0 0 0 4px var(--gr-paper), 0 0 0 5px var(--gr-rule); }
 html[data-skin="b03"][data-theme="dark"] .site-header { background: var(--gr-paper2); }
 
+
+/* ARCHITECTURE: manuscript with marginalia rail */
+@media (min-width: 900px) {
+  html[data-skin="b03"] .home-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17rem;
+    grid-template-areas: "mast mast" "list map";
+    column-gap: 3rem;
+    align-items: start;
+    min-width: 0;
+  }
+  html[data-skin="b03"] .masthead { grid-area: mast; text-align: center; }
+  html[data-skin="b03"] .masthead__lede { margin-inline: auto; border: none; padding: 0; }
+  html[data-skin="b03"] .masthead__ledger { justify-content: center; }
+  html[data-skin="b03"] .record-index { grid-area: list; min-width: 0; }
+  html[data-skin="b03"] .index-map { grid-area: map; position: sticky; top: 1.2rem; align-self: start; }
+  html[data-skin="b03"] .record-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-areas:
+      "head   head"
+      "tags   act"
+      "content facts"
+      "content related"
+      "end    related";
+    column-gap: 2.4rem;
+    align-items: start;
+    min-width: 0;
+  }
+  html[data-skin="b03"] .record-head { grid-area: head; }
+  html[data-skin="b03"] .tag-line { grid-area: tags; }
+  html[data-skin="b03"] article.prose { grid-area: content; min-width: 0; }
+  html[data-skin="b03"] .record-end { grid-area: end; }
+  html[data-skin="b03"] .record-actions { grid-area: act; align-self: start; position: sticky; top: 1.2rem; }
+  html[data-skin="b03"] .record-grid { grid-area: facts; margin: 0; padding: .8rem .9rem; }
+  html[data-skin="b03"] .related-records { grid-area: related; min-width: 0; }
+  html[data-skin="b03"] .record-page pre, html[data-skin="b03"] .record-page img { max-width: 100%; }
+}
+
+
+/* row links wrap inside narrow tracks instead of forcing overflow */
+html[data-skin="b03"] .record-row__link { flex-wrap: wrap; gap: .25rem .8rem; min-width: 0; }
+html[data-skin="b03"] .record-row { min-width: 0; }
+
+
+/* containment: row internals shrink inside tracks and rails */
+html[data-skin="b03"] .record-list .record-row__link,
+html[data-skin="b03"] .record-list .record-row__title { max-width: 100%; min-width: 0; }
+html[data-skin="b03"] .record-list .record-row__link > * { min-width: 0; }
+html[data-skin="b03"] .record-list { overflow-x: clip; }
+html[data-skin="b03"] .index-map { max-width: 100%; overflow: hidden; }
+html[data-skin="b03"] .index-map .section-heading, html[data-skin="b03"] .index-map .section-heading *,
+html[data-skin="b03"] .index-map .section-links, html[data-skin="b03"] .index-map .section-links * { max-width: 100%; min-width: 0; }
+html[data-skin="b03"] .index-map .section-links { flex-wrap: wrap; }
+
 @media print {
   html[data-skin="b03"] body, html[data-skin="b03"] body * {
     background: transparent !important;
