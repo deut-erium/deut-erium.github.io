@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Every feasible piece mix for 4x4, 6x6, and 8x8 New Tetris squares.">
+  <title>New Tetris Square Catalog</title>
+  <link rel="stylesheet" href="catalog.css?v=20260911">
+</head>
+<body>
+  <header class="catalog-head">
+    <div class="catalog-mark"><span>SQUARE</span><strong>CATALOG</strong></div>
+    <div>
+      <p>Every feasible piece mix: 24 at 4x4, 1,467 at 6x6, and 30,434 at 8x8.</p>
+      <nav><a href="../scoring/index.html">Scoring guide</a><a href="../../index.html">Back to game</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="size-switch" aria-label="Square size">
+      <button type="button" data-size="4">4x4 piece mixes <b>24</b></button>
+      <button type="button" data-size="6">6x6 piece mixes <b>1,467</b></button>
+      <button type="button" data-size="8">8x8 piece mixes <b>30,434</b></button>
+    </section>
+
+    <section class="catalog-summary" aria-live="polite">
+      <div><span>PIECE MIXES</span><strong id="family-total">-</strong></div>
+      <div><span id="layout-label">WAYS TO BUILD</span><strong id="layout-total">-</strong></div>
+      <div><span>MIXES SHOWN</span><strong id="visible-total">-</strong></div>
+    </section>
+
+    <div class="catalog-explain">
+      <p>Choose a piece mix from the list. Its name tells you how many of each shape it uses.</p>
+      <p><b>O4</b> means four O pieces. <b>I2-J2</b> means two I pieces and two J pieces.</p>
+      <p>The number drawn on each block is its build step. Blocks with the same number belong to the same piece.</p>
+      <p id="catalog-mode-note">A piece mix may fit together in several ways. The large diagram shows one of them.</p>
+      <p>Building a square adds no points immediately. Clear its rows to collect the total value. Earlier row shares remain after a larger square forms, but a Spin Move can destroy uncollected value.</p>
+    </div>
+
+    <section class="filters" aria-label="Catalog filters">
+      <label>Find a piece mix<input id="search" type="search" placeholder="O4 or I2 J2"></label>
+      <label>Gold or silver<select id="kind"><option value="">All squares</option><option value="gold">Gold: one piece type</option><option value="silver">Silver: mixed piece types</option><option value="spectrum">Silver: all 7 piece types</option></select></label>
+      <label>Number of piece types<select id="type-count"><option value="">All</option></select></label>
+      <label>How often each type appears<select id="piece-counts"><option value="">All</option></select></label>
+    </section>
+
+    <section class="catalog-body">
+      <aside class="family-index" aria-label="Piece mixes">
+        <div id="family-list"></div>
+        <p id="no-results" hidden>No piece mixes match these filters.</p>
+        <div id="list-pages" class="list-pages" hidden>
+          <button id="list-previous" type="button">Previous page</button>
+          <span id="list-range"></span>
+          <button id="list-next" type="button">Next page</button>
+        </div>
+      </aside>
+
+      <article class="family-detail" id="family-detail">
+        <div class="drawing" id="drawing">
+          <canvas id="family-board" width="360" height="360" aria-label="Example square"></canvas>
+          <div id="piece-key" class="piece-key"></div>
+          <div class="step-controls">
+            <button id="step-back" type="button" aria-label="Previous construction step">-</button>
+            <input id="step" type="range" min="0" max="4" value="4" aria-label="Build step">
+            <button id="step-forward" type="button" aria-label="Next construction step">+</button>
+            <button id="play" type="button">Play</button>
+          </div>
+          <p id="step-label"></p>
+        </div>
+
+        <div class="family-data">
+          <p id="material" class="material">-</p>
+          <h1 id="family-title">-</h1>
+          <section class="construction-score" aria-labelledby="score-label">
+            <span id="score-label">TOTAL VALUE FOR THIS EXAMPLE</span>
+            <strong id="construction-score">-</strong>
+            <dl id="score-breakdown"></dl>
+            <p id="value-note">The value remains pending until rows through the square are cleared.</p>
+            <p id="example-score-note">The same pieces can fit together in other ways. This total is only for the example shown here. The shape bonus grows when fewer straight gaps can separate the pieces.</p>
+          </section>
+          <div id="badges" class="badges"></div>
+          <h2>Pieces used</h2>
+          <ul id="recipe" class="recipe"></ul>
+          <dl id="family-stats"></dl>
+          <div id="order-section">
+            <h2>Drop order for this example</h2>
+            <ol id="order" class="order"></ol>
+          </div>
+          <div class="family-nav">
+            <button id="previous-family" type="button">Previous</button>
+            <button id="next-family" type="button">Next</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>4x4 has 24 piece mixes, 6x6 has 1,467, and 8x8 has 30,434. Their exact board-arrangement totals are 117, 178,939, and 19,077,209,438.</footer>
+  <script type="module" src="catalog.js?v=20260911"></script>
+</body>
+</html>
