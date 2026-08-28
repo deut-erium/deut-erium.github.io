@@ -514,7 +514,7 @@ if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
     fail("Circle Limit IV brand style missing")
 import re as _re
 _skin_files = sorted((ROOT / "assets/css/skins").glob("b*.css"))
-if len(_skin_files) != 36: fail(f"skin file drift: {len(_skin_files)}")
+if [s.stem for s in _skin_files] != ["b03", "b11", "b15", "b20", "b21", "b32"]: fail(f"skin set drift: {[s.stem for s in _skin_files]}")
 _theme_js = (SOURCE / "assets/js/theme.js").read_text(encoding="utf-8")
 for _skin in _skin_files:
     _body = _skin.read_text(encoding="utf-8")
