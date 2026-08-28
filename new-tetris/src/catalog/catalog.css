@@ -50,3 +50,58 @@
 .piece-shape--Z i:nth-child(2) { grid-area: 1 / 2; }
 .piece-shape--Z i:nth-child(3) { grid-area: 2 / 2; }
 .piece-shape--Z i:nth-child(4) { grid-area: 2 / 3; }
+
+@media print {
+  :root,
+  body {
+    color: #111;
+    background: #fff;
+  }
+
+  body {
+    width: 100%;
+    margin: 0;
+  }
+
+  .catalog-head,
+  .catalog-summary div,
+  .catalog-explain,
+  .family-detail,
+  .construction-score,
+  footer {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .catalog-head nav,
+  .size-switch,
+  .filters,
+  .family-index,
+  .step-controls,
+  .family-nav {
+    display: none !important;
+  }
+
+  .catalog-body {
+    display: block;
+  }
+
+  .family-detail {
+    min-height: 0;
+    break-inside: auto;
+  }
+
+  .arrangement-data > summary {
+    display: none;
+  }
+
+  .arrangement-data > .arrangement-scroll {
+    display: block !important;
+    overflow: visible;
+  }
+
+  .family-data h2,
+  .family-data h3 {
+    break-after: avoid-page;
+  }
+}
