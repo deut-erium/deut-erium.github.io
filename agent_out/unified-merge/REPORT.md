@@ -4,7 +4,7 @@ Date: 2026-08-28
 
 Branch: `unified-publishing`
 
-Verified source commit: `80352dbe0ae38ec0c166a74f285be90e30c45b45`
+Verified source commit: `4f6909cafb76ddac14bb4b6aa441a1a8d619fd0a`
 
 Target repository: `deut-erium.github.io`
 
@@ -53,9 +53,9 @@ The source histories are attached to the unified branch:
 
 The three history merges use unchanged-tree merge commits, so they add ancestry without replacing the verified combined files. Generated `gh-pages` histories are omitted because they duplicate build output and retain obsolete tracking or credential material.
 
-The history gate scanned 612 commits, 4,331 reachable objects, 1,876 blobs, and 26,499,677 blob bytes. It found all four required source ancestors and zero forbidden credential values or credential-bearing blob IDs.
+The history gate scanned 622 commits, 4,437 reachable objects, 1,917 blobs, and 26,987,186 blob bytes. It found all four required source ancestors and zero forbidden credential values or credential-bearing blob IDs.
 
-The heading gate compares all 420 authored ATX headings with the generated articles. Heading text is unchanged. Root and tutorial heading levels match the source. WriteUps keeps its historical one-level article offset, and Ramblings uses the same offset where needed to retain one page H1.
+The heading gate compares all 420 authored ATX headings with the generated articles. Heading text and order are unchanged. The renderer clamps 29 levels that skipped section depth, leaving every generated page with one H1 and no downward level jump.
 
 ## Tags and archives
 
@@ -82,8 +82,9 @@ The release gate checks:
 - 76 historical attachment aliases
 - root and section archives, feeds, sitemaps, robots files, and 404 pages
 - all WriteUps pages through `/WriteUps/page8/`
+- 10 restored PNG paths containing five historical tutorial screenshots at both published prefixes
 
-Section feeds contain bounded, nonempty summaries and exact newest-first windows. Section sitemaps contain the section home and every post in that section. No noindex page appears in a sitemap. The older unlinked resume remains available at its historical path but is omitted from the sitemap pending owner review.
+Section feeds contain bounded, nonempty summaries and exact newest-first windows. Section sitemaps contain the section home and every post in that section. No noindex page appears in a sitemap. The linked resume is dated November 2023, while a newer July 2024 resume remains available at the unlinked `/assets/resume.pdf` path and is omitted from the sitemap pending owner review.
 
 ## Rendering and interaction checks
 
@@ -97,7 +98,7 @@ The generated site contains:
 - 61 images with nonempty alt text and dimensions
 - zero automatic third-party resources
 
-Browser checks covered desktop, mobile, dark mode, no JavaScript, forced colors, reduced motion, print media, keyboard use, Clipboard failures, overlapping copy attempts, digest failures, and overlapping challenge submissions.
+Browser checks covered desktop, mobile, dark mode, no JavaScript, forced colors, reduced motion, print media, keyboard use, Clipboard failures, overlapping copy attempts, digest failures, and overlapping challenge submissions. A current Chrome 152 matrix checked all 138 HTML routes at 320 pixels with JavaScript enabled and disabled, plus 14 representative desktop routes. All 290 checks passed without document overflow, missing visible landmarks or H1s, unnamed visible links, duplicate IDs, heading jumps, runtime exceptions, or automatic external requests.
 
 The follow-up fixes include:
 
@@ -110,11 +111,11 @@ The follow-up fixes include:
 - Invalid stored theme values no longer block system-theme changes.
 - Archive filters are not presented as working controls without JavaScript.
 
-A 390-pixel viewport sweep covered 110 sitemap and error routes with no document-level horizontal overflow, missing H1, or missing main landmark.
+Focused checks also covered text-spacing overrides, archive and challenge fallbacks, print visibility, game and catalog accessibility trees, module-load failures, later catalog chunk failures, same-document chunk recovery, and reduced-motion changes.
 
 ## New Tetris
 
-All 29 recovered files retain provenance to root `gh-pages` commit `3747c082a1f6ce600da81050223d74b19f1b35ba`. Twenty-four files remain byte-identical. Five files have recorded local patches for accessibility or page metadata.
+All 29 recovered files retain provenance to root `gh-pages` commit `3747c082a1f6ce600da81050223d74b19f1b35ba`. Twenty-one files remain byte-identical. Eight files have recorded local patches for accessibility, failure handling, print behavior, or page metadata.
 
 The game now:
 
@@ -123,10 +124,13 @@ The game now:
 - exposes a 20 by 10 board table with active and locked cell states
 - updates board, held-piece, and queue descriptions
 - announces game events without making every movement a live update
-- suppresses the square flash under reduced motion
+- suppresses the square flash and catalog playback under reduced motion
+- exposes catalog size and family selection, 4x4 and 6x6 arrangements, and construction steps without relying on canvas pixels
+- keeps the current catalog state after a chunk failure and retries the failed size through a fresh module URL
+- supplies visible and live failure messages for entry-module, initial-data, and later-data failures
 - declares canonical, Open Graph, and favicon metadata for the game, catalog, and scoring guide
 
-A browser test confirmed 200 accessible board cells, changing board state after a hard drop, no-JavaScript control hiding, reduced-motion behavior, and successful game startup.
+Browser and adversarial checks confirmed 200 accessible board cells, changing board state after a hard drop, no-JavaScript control hiding, reduced-motion behavior, startup fallbacks, exact catalog arrangement parity, and same-document recovery to all 1,467 6x6 families.
 
 ## Privacy and history
 
@@ -176,12 +180,12 @@ Fix:
 
 ## Reproducible release gate
 
-A clean `git archive` build installed JavaScript dependencies from the lockfile, used the locked Ruby bundle, and generated two independent artifacts. Both artifacts contained 506 files and had identical per-file SHA-256 manifests.
+A clean `git archive` build installed JavaScript dependencies from the lockfile, used the locked Ruby bundle, and generated two independent artifacts. Both artifacts contained 516 files and had identical per-file SHA-256 manifests. The archived build wrapper retained executable mode and both direct invocations completed.
 
 ```text
-verified source commit: 80352dbe0ae38ec0c166a74f285be90e30c45b45
-regular-file bytes:     22,052,920
-manifest SHA-256:       4ede51db3377c1051a66d6a2bfd9e925e0de827cec6d39424f31cceaf1936f0f
+verified source commit: 4f6909cafb76ddac14bb4b6aa441a1a8d619fd0a
+regular-file bytes:     24,307,744
+manifest SHA-256:       b112715e89908066ee8d3034cb195679e770860f2d5b87c01bbcec129c2931c4
 ```
 
 Payload measurements:
@@ -189,10 +193,10 @@ Payload measurements:
 ```text
 root home:             2,890 bytes gzip
 combined archive:      8,979 bytes gzip
-root feed:             1,639 bytes gzip
+root feed:             1,638 bytes gzip
 WriteUps home:         2,554 bytes gzip
 WriteUps feed:         1,709 bytes gzip
-shared CSS:            7,021 bytes gzip
+shared CSS:            7,058 bytes gzip
 article JavaScript:    1,808 bytes gzip
 challenge JavaScript:    827 bytes gzip
 theme JavaScript:        622 bytes gzip
@@ -204,7 +208,7 @@ The checked workflow fetches the attached ancestry, runs on every push, uses fro
 
 - Review the local combined preview.
 - Revoke or rotate the old Ramblings OAuth secret.
-- Decide whether the older `/assets/resume.pdf` should remain public.
+- Decide whether the newer unlinked July 2024 resume or the linked November 2023 resume is the approved public copy, then retire the other direct route if appropriate.
 - Approve a separate GitHub Pages artifact-deployment workflow and Pages source change.
 - After a verified production cutover, disable Pages on WriteUps, Ramblings, and CTF tutorials.
-- Complete manual screen-reader and PDF review on representative long articles and the game.
+- Complete manual screen-reader review. Ten PDFs and 23 sampled page rasters passed local checks, but exhaustive human review of all 75 pages and accessible-PDF review remain incomplete.
