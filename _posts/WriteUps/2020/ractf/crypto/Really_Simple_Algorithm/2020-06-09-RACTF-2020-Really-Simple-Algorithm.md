@@ -1,8 +1,6 @@
 ---
 title: "RACTF 2020 Crypto - Really Simple Algorithm"
 tags: RACTF 2020 cryptography netcat RSA
-description: >
-    RACTF 2020 Crypto - Really Simple Algorithm writeup: cryptography, netcat, RSA
 key: keys
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Really Simple Algorithm
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="1454" height="361"}
+![](Capture.PNG)
 This is a typical [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) challenge. On netcatting the server, we get
 
 ```

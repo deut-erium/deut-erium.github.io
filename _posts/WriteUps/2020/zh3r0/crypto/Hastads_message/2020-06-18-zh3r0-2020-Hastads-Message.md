@@ -1,8 +1,6 @@
 ---
 title: "zh3r0 2020 Crypto - Hastads Message"
 tags: zh3r0 2020 cryptography RSA netcat hastad_broadcast 
-description: >
-    zh3r0 2020 Crypto - Hastads Message writeup: cryptography, RSA, netcat, hastad_broadcast
 key: zh3r02020hastadmessage
 aside:
   toc: true

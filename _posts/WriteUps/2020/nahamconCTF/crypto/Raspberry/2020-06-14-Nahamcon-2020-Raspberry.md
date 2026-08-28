@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - Raspberry"
 tags: nahamcon 2020 cryptography RSA alpertron small_factors ECM 
-description: >
-    Nahamcon 2020 Crypto - Raspberry writeup: cryptography, RSA, alpertron, small_factors, ECM
 key: nahamcon2020raspberry
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Raspberry
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="619" height="525"}
+![](Capture.PNG)
 
 We are provided with [prompt.txt](prompt.txt), the contents of which read
 ```
@@ -32,7 +30,7 @@ c = 5300731709583714451062905238531972160518525080858095184581839366680022995297
 
 Lets again head to [alpetron](https://www.alpertron.com.ar/ECM.HTM), suspecting there may be a lot of small prime factors
 
-![Alpertron factorization result](alpetron.PNG){: loading="lazy" decoding="async" width="1903" height="858"}
+![](alpetron.PNG)
 
 Which almost instantly factors the `N` using [Elliptic Curve Method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization) indicating my suspicion was true.
 

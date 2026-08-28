@@ -1,15 +1,13 @@
 ---
 title: "Cyber Apocalypse HTB 2022 Crypto - Memory Acceleration"
 tags: HTB 2022 cyber_apocalypse cryptography hashcollision z3 cryptanalysis netcat
-description: >
-    Cyber Apocalypse HTB 2022 Crypto - Memory Acceleration writeup: cyber_apocalypse, cryptography, hashcollision, z3, cryptanalysis, netcat
 key: keys
 aside:
   toc: true
 sidebar:
   nav: aboutnav
 author: deuterium
-mathjax: true
+mathjax: false
 mathjax_autoNumber: false
 mermaid: false
 chart: false
@@ -198,7 +196,7 @@ Few things to note here -
 2. `sbox` is AES sbox, so that we dont try linear/differential cryptanalysis XD  
 3. Every operation in `phash` can be roughly thought on working on 32 bit `uint`s 
 since each operation is preceded by `&m (0xffffffff)` which makes everything 
-operate mod $$2^{32}$$  
+operate mod $2^{32}$  
 4. Which means `rv1`, `rv2`, `x`, `y`, `z`, `u` are all 32bit values including 
 our keys, i.e `rv1 = 0x2423380b4d045 & m = 0x80b4d045
 5. Insted of a block, `md5(block)` is hashed, so we have little to no control 
@@ -363,7 +361,7 @@ not here just to model but to ask the solver to find the values of `key1` and
 `key2` such that this symbolic function evaluates to 0
 
 ### Calling a solver
-```python
+```
 solver = Solver()
 solver.add(h==0) #the final h we have here should be 0
 for i,v in enumerate(sbox): # the original AES sbox
@@ -431,7 +429,7 @@ message_one = "You don't have to add the z3 solver to your firmware ever \
 key1, key2 = hack_proof_of_work(message_one)
 ```
 
-> Two hours later: still no key.
+![two hours later](https://media.giphy.com/media/hNGPQK5eGDzTW/giphy.gif)
 
 Well, no key yet?  
 I know, lets discuss a few problems and workarounds  

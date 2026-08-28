@@ -1,8 +1,6 @@
 ---
 title: "Nullcon HackIM 2023 Crypto - Curvy Decryptor"
 tags: Nullcon 2023 cryptography ECC invalid_curve CRT ECDLP
-description: >
-    Nullcon HackIM 2023 Crypto - Curvy Decryptor writeup: cryptography, ECC, invalid_curve, CRT, ECDLP
 key: keysads
 aside:
   toc: true
@@ -385,24 +383,24 @@ class ECPoint(object):
                 return (self.inf and point.inf) or (self.x == point.x and self.y == point.y)
 
 ```
-Looking closely at the `ECPoint` class, one would note that on the initialization of the point with arbitrary `x, y` coordinates, it works as usual and doesnt check whether the supplied `x, y` satisfy the curve equation $$y^2 = x^3 + ax + b \mod p$$
+Looking closely at the `ECPoint` class, one would note that on the initialization of the point with arbitrary `x, y` coordinates, it works as usual and doesnt check whether the supplied `x, y` satisfy the curve equation $y^2 = x^3 + ax + b \mod p$
 
 This leads to an interesting vulnerability aka **Invalid Curve Attack**
 
 Which can be noted by the facts that
-1. The point addtion of two points $$P$$ and $$Q$$ over the curve $$y^2 = x^3 + ax + b \mod p$$if $$P \ne Q$$ is independent of both the curve parameters $$a$$ and $$b$$
-2. The point doubling i.e $$P = Q$$ is just dependent on $$P$$ and $$Q$$ and $$a$$ but not on $$b$$ again
+1. The point addtion of two points $P$ and $Q$ over the curve $y^2 = x^3 + ax + b \mod p$if $P \ne Q$ is independent of both the curve parameters $a$ and $b$
+2. The point doubling i.e $P = Q$ is just dependent on $P$ and $Q$ and $a$ but not on $b$ again
 
-This means that the group addition operation is independent of the parameter $$b$$, the number of points in the group of some point $$P$$ is just dependent on $$P$$ and $$a$$ but independent of $$b$$  
+This means that the group addition operation is independent of the parameter $b$, the number of points in the group of some point $P$ is just dependent on $P$ and $a$ but independent of $b$  
 
-So if we choose a curve $$C'$$ with parameter $$b'$$ and pick a valid point $$P'$$ on it, and run the point addition over the original curve $$C$$, the order of point $$P'$$ when used on $$C$$ will be the same as order of point $$P'$$ when used on $$C'$$
+So if we choose a curve $C'$ with parameter $b'$ and pick a valid point $P'$ on it, and run the point addition over the original curve $C$, the order of point $P'$ when used on $C$ will be the same as order of point $P'$ when used on $C'$
 
-This implies that we are not stuck with the original prime order of P-256, but we can vary $$b = -3$$ such that the order of the curve $$C'$$ has small factors. We can then easily find points $$P'$$ with those small factors as their order by using the fact that -  
-If $$G'$$ is the generator of $$C'$$ with order $$o = f_1f_2f_3...f_n$$, the point $$G' * (o/f_1)$$ will have the order $$f_1$$
+This implies that we are not stuck with the original prime order of P-256, but we can vary $b = -3$ such that the order of the curve $C'$ has small factors. We can then easily find points $P'$ with those small factors as their order by using the fact that -  
+If $G'$ is the generator of $C'$ with order $o = f_1f_2f_3...f_n$, the point $G' * (o/f_1)$ will have the order $f_1$
 
 Once we have sufficient number of small orders, we can take a chinese remainder theorem over them to recover the original private key `d_a`
 
-To find the order of curve $$C'$$ and the corresponding generators, we can utilize the greate library of sagemath
+To find the order of curve $C'$ and the corresponding generators, we can utilize the greate library of sagemath
 
 ```python
 def get_invalid_curves(a,b,n,cutoff=10**5):
@@ -434,7 +432,7 @@ def bruteforce(point, generator, order):
             return i
 ```
 
-We get the following invalid curves and we just searched over 12 values of $$b$$!
+We get the following invalid curves and we just searched over 12 values of $b$!
 ```python
 invalid_curves = {
 3: [79692280239272980873245387831874823476097665365069163558817570386218657526967,
@@ -497,13 +495,13 @@ invalid_curves = {
 ```
 
 ### Attack procedure
-1. For each $$b'$$ and $$G'$$ of order $$o'$$
-2. Send $$B = -G'$$ and $$c = G'$$ we will get back x coordinate of $$G' * (d_a + 1)$$
+1. For each $b'$ and $G'$ of order $o'$
+2. Send $B = -G'$ and $c = G'$ we will get back x coordinate of $G' * (d_a + 1)$
   >  Note that if we send 0, it will just return  `b''` so no use
-3. Lift the x coordinate **Over C'** to get $$G' * (d_a + 1)$$ But this wont help us to figure out of the two possible points. For this
-4. Send another $$B = -G'$$ and $$c = G' * 2$$ to get back x coordinate of $$G' * (d_a + 2)$$ To figure out the correct lifting of the x coordinate to get $$G' * (d_a + 1)$$
-5. Bruteforce and recover the ECDLP to get $$d_a' = (d_a + 1) \mod o'$$  
-6. Combine all $$d_a'$$ using chinese remainder theorem to get back original $$d_a$$
+3. Lift the x coordinate **Over C'** to get $G' * (d_a + 1)$ But this wont help us to figure out of the two possible points. For this
+4. Send another $B = -G'$ and $c = G' * 2$ to get back x coordinate of $G' * (d_a + 2)$ To figure out the correct lifting of the x coordinate to get $G' * (d_a + 1)$
+5. Bruteforce and recover the ECDLP to get $d_a' = (d_a + 1) \mod o'$  
+6. Combine all $d_a'$ using chinese remainder theorem to get back original $d_a$
 7. PROFIT ????
 
 ```python

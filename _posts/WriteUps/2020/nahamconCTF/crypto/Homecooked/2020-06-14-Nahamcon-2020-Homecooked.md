@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - Homecooked"
 tags: nahamcon 2020 cryptography base64 prime palindrome
-description: >
-    Nahamcon 2020 Crypto - Homecooked writeup: cryptography, base64, prime, palindrome
 key: keys
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Homecooked
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="621" height="528"}
+![](Capture.PNG)
 
 We are provided [decrypt.py](decrypt.py), the contents of which read
 

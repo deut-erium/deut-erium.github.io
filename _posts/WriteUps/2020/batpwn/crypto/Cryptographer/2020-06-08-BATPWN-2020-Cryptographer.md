@@ -1,8 +1,6 @@
 ---
 title: "BATPWN 2020 Crypto - Cryptographer"
 tags: 2020 BATPWN cryptography xor timeseed Bsides
-description: >
-    BATPWN 2020 Crypto - Cryptographer writeup: cryptography, xor, timeseed, Bsides
 key: batpwn2020cryptographer
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Cryptographer
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="619" height="576"}
+![](Capture.PNG)
 
 We are provided with [noob.txt](noob.txt) which has it contents:-
 
@@ -56,7 +54,7 @@ xorer(flag,noobda)
 noobie = base64.encodestring(xorer).strip()
 print noobie
 ```
-Hmm, python2 😞 and quite a wierd script.
+Hmm, python2 :disappointed: and quite a wierd script.
 
 Without using much of my small brain, I churned up a script quickly
 thinking I can bruteforce starting from current time backwards.  

@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - Oo la la"
 tags: nahamcon 2020 cryptography RSA alpertron ECM
-description: >
-    Nahamcon 2020 Crypto - Oo la la writeup: cryptography, RSA, alpertron, ECM
 key: nahamcon2020oolala
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Ooo-la-la
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="618" height="527"}
+![](Capture.PNG)
 
 We are provided [prompt.txt](prompt.txt), the contents of which read
 ```
@@ -31,7 +29,7 @@ c = 8776057555426699101543111092257626153215937671876570174951376666623918901210
 ```
 Seems like usual RSA, lets see if we can factor `N` over [alpetron](https://www.alpertron.com.ar/ECM.HTM) 
 
-![Alpertron factorization result](alpetron.PNG){: loading="lazy" decoding="async" width="1901" height="776"}
+![](alpetron.PNG)
 Which almost instantly factors the `N` using [Elliptic Curve Method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization)  
 
 Knowing the factors or phi, rest of the job is easy

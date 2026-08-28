@@ -1,8 +1,6 @@
 ---
 title: "RACTF 2020 Crypto - Mysterious Masquerading Message"
 tags: RACTF 2020 cryptography base64 guess
-description: >
-    RACTF 2020 Crypto - Mysterious Masquerading Message writeup: cryptography, base64, guess
 key: ractf2020mysterious
 aside:
   toc: true

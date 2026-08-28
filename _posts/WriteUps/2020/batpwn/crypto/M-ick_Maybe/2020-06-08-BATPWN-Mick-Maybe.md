@@ -1,8 +1,6 @@
 ---
 title: "BATPWN 2020 Crypto: M-ick Maybe"
 tags: BATPWN 2020 Bsides cryptography substitution quipquip 
-description: >
-    BATPWN 2020 Crypto: M-ick Maybe writeup: Bsides, cryptography, substitution, quipquip
 key: BATPWN2020mickmaybe
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # M-ick Maybe
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="618" height="515"}
+![](Capture.PNG)
 ```
 T khbtpdiv exiixlzu rbtw, fsu uzrpzsutsj tswx woz kfm-mxxn fppxrwzu woz jmtsstsj fifsuixmu gzmv cizfrfswiv. T pozmtrozu sx nfitpz wxlfmur otn, woxbjo oz ofu kzzs rdvifmdtsj ltwo nz sxw f itwwiz ts woz nfwwzm xe nv kzueziixl.
 

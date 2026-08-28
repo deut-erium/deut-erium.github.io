@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - Itsy Bitsy"
 tags: redpwn 2020 cryptography leakage xor
-description: >
-    Redpwn 2020 Crypto - Itsy Bitsy writeup: cryptography, leakage, xor
 key: redpwn2020itsybitsy
 aside:
   toc: true

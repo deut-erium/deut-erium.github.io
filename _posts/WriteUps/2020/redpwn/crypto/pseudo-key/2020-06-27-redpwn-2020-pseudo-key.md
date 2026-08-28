@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - Pseudo-key"
 tags:  redpwn 2020 cryptography vignere 
-description: >
-    Redpwn 2020 Crypto - Pseudo-key writeup: cryptography, vignere
 key: keys
 aside:
   toc: true
@@ -77,8 +75,8 @@ Treating the alphabets as numbers from `0-26`
 
 $$ciphertext_i = plaintext_i + key_i \mod 26$$  
 
-Where $$key_i$$ essentially suggests that $$key$$ is duplicated again and again to match the $$plaintext$$ length  
-And hence, if we encrypt the $$key$$ with $$key$$ itself, we get,  
+Where $$key_i$$ essentially suggests that $$key$$ is duplicated again and again to match the $plaintext$ length  
+And hence, if we encrypt the $key$ with $$key$$ itself, we get,  
 
 $$pseudoKey_i = key_i + key_i \mod 26$$  
 
