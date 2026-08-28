@@ -1,8 +1,6 @@
 ---
 title: "HSCTF 2020 Crypto - Extremely Complex Challenge"
 tags: HSCTF 2020 cryptography ECC ECDLP 
-description: >
-    HSCTF 2020 Crypto - Extremely Complex Challenge writeup: cryptography, ECC, ECDLP
 key: hsctf2020extremelycomplexchallenge
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Extremely Complex Challenge
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="677" height="819"}
+![](Capture.PNG)
 
 We are given two points on an [Elliptic Curve](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography#Theory), its order and parameter `b`.  
 Using these quantities, we can recover parameter `a`.

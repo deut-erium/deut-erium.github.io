@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - Alien Transmissions v2"
 tags: redpwn 2020 cryptography xor z3
-description: >
-    Redpwn 2020 Crypto - Alien Transmissions v2 writeup: cryptography, xor, z3
 key: redpwn2020alientransmissionsv2
 aside:
   toc: true

@@ -1,8 +1,6 @@
 ---
 title: "ACSC qualifiers 2023 Crypto - SusCipher"
 tags: cryptography 2023 ACSC cryptanalysis z3 smt SPN differential
-description: >
-    ACSC qualifiers 2023 Crypto - SusCipher writeup: cryptography, cryptanalysis, z3, smt, SPN, differential
 key: suscipher2023
 aside:
   toc: true

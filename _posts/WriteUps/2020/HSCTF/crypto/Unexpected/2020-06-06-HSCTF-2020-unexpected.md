@@ -1,8 +1,6 @@
 ---
 title: HSCTF 2020 Crypto - Unexpected
 tags: cryptography HSCTF 2020 RSA GCD
-description: >
-    HSCTF 2020 Crypto - Unexpected writeup: cryptography, RSA, GCD
 key: hsctf2020unexpected
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Unexpected
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="677" height="756"}
+![](Capture.PNG)
 
 We are given 3 N's and 3 C's and given that all three share primes
 i.e 
