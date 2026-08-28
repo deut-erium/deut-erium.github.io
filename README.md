@@ -26,6 +26,7 @@ python3 script/verify-static-app.py
 ruby script/test-code-frames.rb
 python3 script/verify-site.py _site
 python3 script/verify-code-parity.py _site
+python3 script/verify-heading-parity.py _site
 ```
 
 Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets and loads no analytics or comment runtime. Mathematics and syntax highlighting are generated before publication.
