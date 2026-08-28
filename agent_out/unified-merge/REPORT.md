@@ -4,7 +4,7 @@ Date: 2026-08-28
 
 Branch: `unified-publishing`
 
-Verified source commit: `a85fd67ed9705f68698a2f86309b575931d2916d`
+Verified source commit: `30253b8b909aa14d059ce0ba770ef53c4fc2572c`
 
 Target repository: `deut-erium.github.io`
 
@@ -53,7 +53,7 @@ The source histories are attached to the unified branch:
 
 The three history merges use unchanged-tree merge commits, so they add ancestry without replacing the verified combined files. Generated `gh-pages` histories are omitted because they duplicate build output and retain obsolete tracking or credential material.
 
-The history gate scanned 628 HEAD and ref-reachable commits, 4 local refs, 4,640 objects, 2,031 blobs, 628 commit objects, and 3 attachment merges. It found all four required source ancestors and zero forbidden credential values or credential-bearing object IDs. The gate now checks blobs, commit messages, and annotated tags across every local ref plus `HEAD`; listed unsafe objects are rejected even when unreachable. Seven fixture tests exercise shallow history, side refs, annotated tags, unreachable objects, changed merge parents, and changed merge trees.
+The history gate scanned 632 HEAD and ref-reachable commits, 4 local refs, 4,684 objects, 2,053 blobs, 632 commit objects, and 3 attachment merges. It found all four required source ancestors and zero forbidden credential values or credential-bearing object IDs. The gate checks blobs, commit messages, and annotated tags across every local ref plus `HEAD`; listed unsafe objects are rejected even when unreachable. Seven fixture tests exercise shallow history, side refs, annotated tags, unreachable objects, changed merge parents, and changed merge trees.
 
 The heading gate compares all 420 authored ATX headings with the generated articles. Heading text and order are unchanged. The renderer clamps 29 levels that skipped section depth, leaving every generated page with one H1 and no downward level jump.
 
@@ -95,10 +95,11 @@ The generated site contains:
 - 309 source-verified WriteUps code blocks across 60 code-bearing routes
 - 106 build-time KaTeX expressions on 4 articles
 - 10 browser-local challenge forms on 6 pages
-- 61 images with nonempty alt text and dimensions
+- 61 content images with nonempty alt text and dimensions
+- one shared decorative Circle Limit IV header mark
 - zero automatic third-party resources
 
-Browser checks covered desktop, mobile, dark mode, no JavaScript, forced colors, reduced motion, print media, keyboard use, Clipboard failures, overlapping copy attempts, digest failures, and overlapping challenge submissions. A Chrome 152 matrix at source commit `4f6909c` checked all 138 HTML routes at 320 pixels with JavaScript enabled and disabled, plus 14 representative desktop routes. All 290 checks passed without document overflow, missing visible landmarks or H1s, unnamed visible links, duplicate IDs, heading jumps, runtime exceptions, or automatic external requests. Later commits change only excluded review evidence and release-gate scripts. The final generated tree has the same 516 paths; only feed and sitemap timestamps differ, so no visual output changed after that matrix.
+Browser checks covered desktop, mobile, dark mode, no JavaScript, forced colors, reduced motion, print media, keyboard use, Clipboard failures, overlapping copy attempts, digest failures, and overlapping challenge submissions. A Chrome 152 matrix at visual source commit `db0368d` checked all 138 HTML routes at 320 pixels with JavaScript enabled and disabled, plus 14 representative desktop routes. All 290 checks passed without document overflow, missing visible landmarks or H1s, unnamed visible links, duplicate IDs, heading jumps, runtime exceptions, or automatic external requests. Focused interaction, failure, print, reduced-motion, and text-spacing checks also passed; the spacing set includes the About page. Browser artifacts bind both the full source commit and generated-tree manifest. Later commits change only excluded browser-evidence and verification scripts. The final generated tree has the same 517 paths; only feed and sitemap timestamps differ, so no visual output changed after the browser matrix.
 
 The follow-up fixes include:
 
@@ -112,6 +113,14 @@ The follow-up fixes include:
 - Archive filters are not presented as working controls without JavaScript.
 
 Focused checks also covered text-spacing overrides, archive and challenge fallbacks, print visibility, game and catalog accessibility trees, module-load failures, later catalog chunk failures, same-document chunk recovery, and reduced-motion changes.
+
+## Circle Limit IV
+
+The shared header restores the Circle Limit IV mark used by the older blog. A local 160 by 160 WebP keeps the repeated download to 10,340 bytes. The visible site name remains the accessible link name, so the mark is decorative.
+
+The About page keeps its imported prose and image reference unchanged. Build-time compatibility metadata adds the specific alternative, while scoped CSS restores the intended compact profile layout: image beside biography on wide screens and centered above it on narrow screens. The previous full-width 600-pixel presentation is gone.
+
+Desktop, mobile, and print captures are retained under `agent_out/unified-merge/review/escher/`.
 
 ## New Tetris
 
@@ -180,24 +189,24 @@ Fix:
 
 ## Reproducible release gate
 
-A clean `git archive` build installed JavaScript dependencies from the lockfile, used the locked Ruby bundle, and generated two independent artifacts. Both artifacts contained 516 files and 186 directories. Their 702-entry JSON Lines manifests were identical. Each entry binds path, type, and permission mode; files also bind size and SHA-256. Symbolic links and special files fail the gate. The archived build wrapper retained executable mode and both direct invocations completed.
+A clean `git archive` build installed JavaScript dependencies from the lockfile, used the locked Ruby bundle, and generated two independent artifacts. Both artifacts contained 517 files and 186 directories. Their 703-entry JSON Lines manifests were identical. Each entry binds path, type, and permission mode; files also bind size and SHA-256. Symbolic links and special files fail the gate. The archived build wrapper retained executable mode and both direct invocations completed.
 
 ```text
-verified source commit:          a85fd67ed9705f68698a2f86309b575931d2916d
-regular-file bytes:              24,307,744
-full artifact manifest SHA-256:  88b9ff3f21c15d276d71b26933c00e44ade4dc17f4093251c2bb338212e95af6
-content manifest SHA-256:        b22f81648d4843278d56ba294e94920523b14cca34ceeb7a562c597a5ca953a3
+verified source commit:          30253b8b909aa14d059ce0ba770ef53c4fc2572c
+regular-file bytes:              24,328,057
+full artifact manifest SHA-256:  9b85993eacdf0a2abe8b66bb3bede84272114bd9f6e08a89b9bb4863dfcbe924
+content manifest SHA-256:        b9fe16b0c511abd39359216df8122cdec54de71376c21a283861d5bbffd8ea95
 ```
 
 Payload measurements:
 
 ```text
-root home:             2,890 bytes gzip
-combined archive:      8,979 bytes gzip
+root home:             2,900 bytes gzip
+combined archive:      8,989 bytes gzip
 root feed:             1,639 bytes gzip
-WriteUps home:         2,554 bytes gzip
+WriteUps home:         2,561 bytes gzip
 WriteUps feed:         1,709 bytes gzip
-shared CSS:            7,058 bytes gzip
+shared CSS:            7,285 bytes gzip
 article JavaScript:    1,808 bytes gzip
 challenge JavaScript:    827 bytes gzip
 theme JavaScript:        622 bytes gzip
@@ -212,4 +221,4 @@ The checked workflow fetches the attached ancestry, runs on every push, uses fro
 - Decide whether the newer unlinked July 2024 resume or the linked November 2023 resume is the approved public copy, then retire the other direct route if appropriate.
 - Approve a separate GitHub Pages artifact-deployment workflow and Pages source change.
 - After a verified production cutover, disable Pages on WriteUps, Ramblings, and CTF tutorials.
-- Complete manual screen-reader review. Ten PDFs and 23 sampled page rasters passed local checks, but exhaustive human review of all 75 pages and accessible-PDF review remain incomplete.
+- Complete manual screen-reader review. Eleven PDFs and 25 sampled page rasters passed local checks, but exhaustive human review of all 77 pages and accessible-PDF review remain incomplete.

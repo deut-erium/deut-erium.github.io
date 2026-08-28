@@ -30,4 +30,4 @@ Generate the ten retained PDFs with a fresh browser process:
 node agent_out/unified-merge/review/generate-pdfs.mjs
 ```
 
-`current-browser/route-matrix.json` and `current-browser/pdf-manifest.json` bind their results to source commit `4f6909c`. The focused matrix is bound to `87f3de8`; the later scoring-guide print-color rule is covered by the final PDF. The release-gate changes through `a85fd67` affect only excluded audit or verification files. Comparing clean outputs found the same 516 paths, with changes only to the commit-derived timestamps in `feed.xml` and `sitemap.xml`.
+`current-browser/route-matrix.json`, `current-browser/matrix.json`, and `current-browser/pdf-manifest.json` bind their results to source commit `db0368d` and generated-tree manifest `03ecda95604043f1c8f4ac5fc6c39d79db3046735625c84a8e650e3fe663756a`. The browser tools now derive both values instead of embedding a historical commit. The later commits through `30253b8` change only excluded review and verification scripts. Their clean output has the same 517 paths, with changes only to the commit-derived timestamps in `feed.xml` and `sitemap.xml`.
