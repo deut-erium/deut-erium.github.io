@@ -26,7 +26,9 @@
     </div>
   </header>
 
-  <main class="machine">
+  <noscript><p class="no-script-notice">This game needs JavaScript enabled. The catalog and scoring guide remain available above.</p></noscript>
+  <p id="game-loading" class="loading-notice" role="status">Loading the local game controls...</p>
+  <main id="game-machine" class="machine" hidden>
     <section class="run-console" aria-labelledby="run-title">
       <div class="run-start">
         <h1 id="run-title">CHOOSE A GAME</h1>
@@ -101,10 +103,16 @@
       </aside>
 
       <section class="play-area" aria-label="Game board">
-        <canvas id="board" width="300" height="660" tabindex="0" aria-label="10 by 20 Tetris board with two visible spawn rows above it" aria-describedby="board-help"></canvas>
+        <canvas id="board" width="300" height="660" tabindex="0" aria-label="10 by 20 Tetris board with two visible spawn rows above it" aria-describedby="board-help board-state"></canvas>
         <div id="overlay-message" class="overlay-message" aria-live="polite" aria-atomic="true"></div>
         <div id="square-flash" class="square-flash" aria-live="polite" aria-atomic="true"></div>
         <p id="board-help" class="sr-only">The two faint rows above the main board show where pieces enter. Use the keyboard controls or the buttons below the board. Square totals are shown to the left on wide screens and below the board on narrow screens.</p>
+        <p id="board-state" class="sr-only">The board state is loading.</p>
+        <p id="game-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+        <table class="sr-only board-grid" aria-label="Current board cells">
+          <caption>Rows run from the top of the visible board to the bottom. Columns run from left to right.</caption>
+          <tbody id="board-grid"></tbody>
+        </table>
       </section>
 
       <aside class="right-rail" aria-label="Piece queue and controls">
@@ -149,7 +157,6 @@
     </section>
   </main>
 
-  <noscript>This game needs JavaScript enabled.</noscript>
   <script type="module" src="src/main.js?v=20260911"></script>
 </body>
 </html>
