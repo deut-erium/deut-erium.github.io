@@ -298,7 +298,7 @@ for rel in post_routes:
 
 pages = sorted(ROOT.rglob("*.html"))
 shell_pages = [page for page in pages if "new-tetris" not in page.relative_to(ROOT).parts]
-forms = challenge_scripts = article_scripts = theme_scripts = images = code_frames = math_expressions = 0
+forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
 challenge_pages: set[str] = set()
 article_pages: set[str] = set()
 math_pages: set[str] = set()
@@ -339,6 +339,7 @@ for page in pages:
         if rel.endswith("/index.html"): noindex_paths.add("/" + rel.removesuffix("index.html"))
     forms += audit.forms
     images += text.count("<img ")
+    brand_marks += text.count('class="site-brand__mark"')
     challenge_scripts += text.count('/assets/js/challenge.js')
     article_scripts += text.count('/assets/js/article.js')
     theme_scripts += text.count('/assets/js/theme.js')
@@ -359,6 +360,7 @@ if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, im
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
+if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
 if len(math_pages) != 4: fail(f"math page count drift: {len(math_pages)}")
 
 article_routes = {rel for rel in post_routes if 'itemtype="https://schema.org/Article"' in (ROOT / rel).read_text(encoding="utf-8")}
@@ -475,6 +477,17 @@ for stylesheet in ROOT.rglob("*.css"):
         if urlsplit(ref).scheme in {"http", "https"}: fail(f"external CSS resource: {stylesheet.relative_to(ROOT)}: {ref}")
         if not (stylesheet.parent / unquote(urlsplit(ref).path)).resolve().is_file(): fail(f"missing CSS resource: {stylesheet.relative_to(ROOT)}: {ref}")
 
+brand_asset = ROOT / "assets/images/circle-limit-iv-mark.webp"
+brand_data = brand_asset.read_bytes() if brand_asset.is_file() else b""
+if len(brand_data) != 10_340 or hashlib.sha256(brand_data).hexdigest() != "ab1a9318aab05b2e660aa1f90d1292c7e16fb5ed8008346cdf1e9c447d6bc7d8":
+    fail("Circle Limit IV brand asset drift")
+main_css = (ROOT / "assets/css/main.css").read_text(encoding="utf-8")
+if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
+    fail("Circle Limit IV brand style missing")
+about_text = (ROOT / "about.html").read_text(encoding="utf-8")
+if 'class="item about-profile"' not in about_text or "M. C. Escher&#39;s Circle Limit IV" not in about_text:
+    fail("Circle Limit IV About profile drift")
+
 for path in ROOT.rglob("*"):
     if path.is_file() and (path.suffix == ".map" or "sourceMappingURL=" in path.read_text(encoding="utf-8", errors="ignore")):
         fail(f"source map leak: {path.relative_to(ROOT)}")
@@ -516,6 +529,7 @@ print(json.dumps({
     "challenge_forms": forms,
     "challenge_pages": len(challenge_pages),
     "external_runtime_resources": 0,
+    "brand_mark_references": brand_marks,
     "artifact_files": artifact_files,
     "artifact_directories": artifact_directories,
     "metrics": metrics,
