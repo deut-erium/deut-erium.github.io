@@ -97,9 +97,10 @@ module DeuteriumSite
       end
 
       if document.path.to_s.end_with?("about.md") && document.url == "/about.html"
+        document.output = document.output.sub('<div class="item">', '<div class="item about-profile">')
         document.output = document.output.sub(
           '<img class="image image--lg" src="Circle-limit-IV.jpg" />',
-          '<img class="image image--lg" src="Circle-limit-IV.jpg" alt="Circle Limit IV illustration" width="600" height="602" loading="lazy" />'
+          '<img class="image image--lg" src="Circle-limit-IV.jpg" alt="M. C. Escher&#39;s Circle Limit IV, used as deuterium&#39;s profile image" width="600" height="602" loading="lazy" decoding="async" />'
         )
       end
       restore_heading_levels(document)
