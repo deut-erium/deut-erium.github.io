@@ -17,11 +17,30 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
         with:
           ruby-version: 3.3.7
           bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.19.0
+          cache: npm
+
+      - name: Install build-only JavaScript packages
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Verify imported source
+        run: |
+          python3 script/verify-imported-content.py
+          python3 script/verify-static-app.py
+          ruby script/test-code-frames.rb
+
       - name: Build twice and compare artifacts
         env:
           BUNDLE_FROZEN: "true"
@@ -35,11 +54,15 @@ jobs:
           rm -rf "$out"
           mkdir -p "$out"
           printf 'time: "%s"\n' "$(git show -s --format=%cI HEAD)" > "$out/time.yml"
+
           bundle exec jekyll build --trace --disable-disk-cache \
             --config _config.yml,"$out/time.yml" --destination "$out/a"
           bundle exec jekyll build --trace --disable-disk-cache \
             --config _config.yml,"$out/time.yml" --destination "$out/b"
+
           (cd "$out/a" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/a.sha256"
           (cd "$out/b" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/b.sha256"
           cmp "$out/a.sha256" "$out/b.sha256"
+
           python3 script/verify-site.py "$out/a"
+          python3 script/verify-code-parity.py "$out/a"

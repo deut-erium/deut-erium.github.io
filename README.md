@@ -1,13 +1,26 @@
-# deuterium / field notes
+# deuterium's blog
 
-Source for [deut-erium.github.io](https://deut-erium.github.io/): security and systems articles, project links, and browser-local cryptographic challenges.
+Source for one Jekyll site served from `deut-erium.github.io`.
+
+The repository contains four sections:
+
+- `/` - personal posts and browser-local challenges
+- `/WriteUps/` - CTF writeups and challenge attachments
+- `/ctf-tutorials/` - CTF tutorials and assignments
+- `/ramblings/` - informal posts
+
+The authored Markdown imported from the four original repositories is hash-checked by `script/verify-imported-content.py`. Historical HTML routes, WriteUps attachments, section feeds, merged tags, and the recovered `/new-tetris/` application are checked during each build.
 
 ## Build
 
 ```sh
 bundle install
+npm ci --ignore-scripts --no-audit --no-fund
 JEKYLL_ENV=production bundle exec jekyll build --destination _site
+python3 script/verify-imported-content.py
+python3 script/verify-static-app.py
 python3 script/verify-site.py _site
+python3 script/verify-code-parity.py _site
 ```
 
-The generated site uses local assets, no analytics, and no remote JavaScript. Challenge answers are checked with the browser Web Crypto API against public SHA-256 hashes.
+The production pages use local assets and contain no analytics or comment tracker. Mathematics and syntax highlighting are generated during the build.
