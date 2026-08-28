@@ -92,32 +92,33 @@
             <span><b class="gold-text" id="gold">0</b> / <b class="silver-text" id="silver">0</b></span>
           </div>
           <table class="square-matrix">
-            <thead><tr><th>SIZE</th><th class="gold-text">GOLD</th><th class="silver-text">SILVER</th></tr></thead>
+            <thead><tr><th scope="col">SIZE</th><th scope="col" class="gold-text">GOLD</th><th scope="col" class="silver-text">SILVER</th></tr></thead>
             <tbody>
-              <tr><th>4x4</th><td id="gold-4">0</td><td id="silver-4">0</td></tr>
-              <tr><th>6x6</th><td id="gold-6">0</td><td id="silver-6">0</td></tr>
-              <tr><th>8x8</th><td id="gold-8">0</td><td id="silver-8">0</td></tr>
+              <tr><th scope="row">4x4</th><td id="gold-4">0</td><td id="silver-4">0</td></tr>
+              <tr><th scope="row">6x6</th><td id="gold-6">0</td><td id="silver-6">0</td></tr>
+              <tr><th scope="row">8x8</th><td id="gold-8">0</td><td id="silver-8">0</td></tr>
             </tbody>
           </table>
         </section>
 
         <section class="last-panel" aria-labelledby="last-square-title">
           <h2 id="last-square-title">LAST SQUARE</h2>
-          <strong id="last-square" aria-live="polite">NONE</strong>
+          <strong id="last-square">NONE</strong>
           <p id="last-square-meta">Complete pieces must fit entirely inside the square.</p>
-          <strong id="square-award" class="award" aria-live="polite">-</strong>
+          <strong id="square-award" class="award">-</strong>
         </section>
       </aside>
 
       <section class="play-area" aria-label="Game board">
         <canvas id="board" width="300" height="660" tabindex="0" aria-label="10 by 20 Tetris board with two visible spawn rows above it" aria-describedby="board-help board-state"></canvas>
-        <div id="overlay-message" class="overlay-message" aria-live="polite" aria-atomic="true"></div>
-        <div id="square-flash" class="square-flash" aria-live="polite" aria-atomic="true"></div>
+        <div id="overlay-message" class="overlay-message"></div>
+        <div id="square-flash" class="square-flash"></div>
         <p id="board-help" class="sr-only">The two faint rows above the main board show where pieces enter. Use the keyboard controls or the buttons below the board. Square totals are shown to the left on wide screens and below the board on narrow screens.</p>
         <p id="board-state" class="sr-only">The board state is loading.</p>
         <p id="game-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
         <table class="sr-only board-grid" aria-label="Current board cells">
           <caption>Rows run from the top of the visible board to the bottom. Columns run from left to right.</caption>
+          <thead><tr><th scope="col">Row</th><th scope="col">Column 1</th><th scope="col">Column 2</th><th scope="col">Column 3</th><th scope="col">Column 4</th><th scope="col">Column 5</th><th scope="col">Column 6</th><th scope="col">Column 7</th><th scope="col">Column 8</th><th scope="col">Column 9</th><th scope="col">Column 10</th></tr></thead>
           <tbody id="board-grid"></tbody>
         </table>
       </section>
