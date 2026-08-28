@@ -7,8 +7,10 @@
   const filters = [...document.querySelectorAll('[data-filter]')];
   const count = document.querySelector('.js-result-count');
   const empty = document.querySelector('.js-archive-empty');
-  if (!query || !rows.length) return;
+  const tools = document.querySelector('.js-archive-tools');
+  if (!query || !rows.length || !count || !empty || !tools) return;
 
+  tools.hidden = false;
   let tag = (new URLSearchParams(location.search).get('tag') || '').toLowerCase();
 
   function apply() {

@@ -10,5 +10,5 @@ layout: base
     <a class="action action--primary" href="{{ '/' | relative_url }}">Return home</a>
     <a class="action" href="{{ '/archive.html' | relative_url }}">Search the archive</a>
   </nav>
-  {{ content }}
+  {%- if content != empty -%}<div class="prose error-shell__content">{{ content }}</div>{%- endif -%}
 </main>

@@ -8,11 +8,11 @@ layout: base
     <h1>Archive</h1>
     <p>{{ site.posts | size }} posts across {{ _years | size }} years and {{ site.tags | size }} merged tags.</p>
   </header>
-  <section class="archive-tools" aria-labelledby="filter-title">
+  <section class="archive-tools js-archive-tools" aria-labelledby="filter-title" hidden>
     <div class="archive-search">
       <label id="filter-title" for="archive-query">Filter posts</label>
       <input id="archive-query" class="js-archive-query" type="search" autocomplete="off" placeholder="Title, section, topic, or tag">
-      <p><span class="js-result-count">{{ site.posts | size }}</span> posts shown</p>
+      <p aria-live="polite"><span class="js-result-count">{{ site.posts | size }}</span> posts shown</p>
     </div>
     <nav class="quick-filters js-archive-filters" aria-label="Section filters">
       <a href="{{ '/archive.html' | relative_url }}" data-filter="">All</a>
@@ -29,6 +29,7 @@ layout: base
       </div>
     </details>
   </section>
+  <noscript><p class="archive-static-note">Filtering needs JavaScript. The complete archive is shown below.</p></noscript>
   <div class="archive-groups js-archive-groups">
     {%- for _year in _years -%}
     <section class="archive-year" data-year-group>
