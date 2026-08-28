@@ -341,31 +341,50 @@ function moveFamily(delta) {
 
 async function loadSize(nextSize, preferredId = null) {
   const generation = ++loadGeneration;
-  ui.familyList.innerHTML = "<p>Loading piece mixes...</p>";
-  if (!cache.has(nextSize)) cache.set(nextSize, DATA_LOADERS[nextSize]().then((module) => module.default));
-  const loaded = await cache.get(nextSize);
-  if (generation !== loadGeneration) return;
-  size = nextSize;
-  families = size === 8 ? loaded.map(expandEightFamily) : loaded;
-  currentFamily = null;
-  listStart = 0;
-  ui.familyTotal.textContent = families.length.toLocaleString("en-US");
-  ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
-  ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
-  ui.modeNote.textContent = size === 8
-    ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
-    : "A piece mix may fit together in several ways. The large diagram shows one of them.";
-  for (const button of ui.sizeButtons) {
-    const selected = Number(button.dataset.size) === size;
-    button.classList.toggle("active", selected);
-    button.setAttribute("aria-pressed", String(selected));
+  ui.familyList.setAttribute("aria-busy", "true");
+  try {
+    if (!cache.has(nextSize)) cache.set(nextSize, DATA_LOADERS[nextSize]().then((module) => module.default));
+    let loaded;
+    try {
+      loaded = await cache.get(nextSize);
+    } catch (error) {
+      cache.delete(nextSize);
+      throw error;
+    }
+    if (generation !== loadGeneration) return false;
+    size = nextSize;
+    families = size === 8 ? loaded.map(expandEightFamily) : loaded;
+    currentFamily = null;
+    listStart = 0;
+    ui.familyTotal.textContent = families.length.toLocaleString("en-US");
+    ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
+    ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
+    ui.modeNote.textContent = size === 8
+      ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
+      : "A piece mix may fit together in several ways. The large diagram shows one of them.";
+    for (const button of ui.sizeButtons) {
+      const selected = Number(button.dataset.size) === size;
+      button.classList.toggle("active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    }
+    populateFilters();
+    renderFamilyList(preferredId);
+    return true;
+  } catch (error) {
+    if (generation === loadGeneration) {
+      ui.status.textContent = `The ${nextSize} by ${nextSize} piece mixes could not load. The current catalog remains available.`;
+    }
+    console.error(error);
+    return false;
+  } finally {
+    if (generation === loadGeneration) ui.familyList.removeAttribute("aria-busy");
   }
-  populateFilters();
-  renderFamilyList(preferredId);
 }
 
 for (const button of ui.sizeButtons) {
-  button.addEventListener("click", () => loadSize(Number(button.dataset.size)));
+  button.addEventListener("click", async () => {
+    await loadSize(Number(button.dataset.size));
+  });
 }
 for (const control of [ui.search, ui.kind, ui.typeCount, ui.pieceCounts]) {
   control.addEventListener(control === ui.search ? "input" : "change", () => renderFamilyList());
@@ -420,11 +439,10 @@ reducedMotion.addEventListener("change", (event) => {
 document.querySelector("#previous-family").addEventListener("click", () => moveFamily(-1));
 document.querySelector("#next-family").addEventListener("click", () => moveFamily(1));
 
-try {
-  await loadSize(initialSize, params.get("family"));
+const initialized = await loadSize(initialSize, params.get("family"));
+if (initialized) {
   ui.machine.hidden = false;
   ui.loading.hidden = true;
-} catch (error) {
+} else {
   ui.loading.textContent = "The local square catalog could not start. The scoring guide and game links remain available above.";
-  console.error(error);
 }

@@ -117,6 +117,19 @@
   </main>
 
   <footer>4x4 has 24 piece mixes, 6x6 has 1,467, and 8x8 has 30,434. Their exact board-arrangement totals are 117, 178,939, and 19,077,209,438.</footer>
-  <script type="module" src="catalog.js?v=20260911"></script>
+  <script id="catalog-module" type="module" src="catalog.js?v=20260911"></script>
+  <script>
+    (() => {
+      const module = document.querySelector("#catalog-module");
+      const loading = document.querySelector("#catalog-loading");
+      const reportFailure = () => {
+        if (document.querySelector("#catalog-machine").hidden && !loading.hidden) {
+          loading.textContent = "The local square catalog could not start. The scoring guide and game links remain available above.";
+        }
+      };
+      module.addEventListener("error", reportFailure, { once: true });
+      setTimeout(reportFailure, 10000);
+    })();
+  </script>
 </body>
 </html>
