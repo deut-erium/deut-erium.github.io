@@ -35,6 +35,9 @@ TRACKERS = (
 )
 ATOM = "{http://www.w3.org/2005/Atom}"
 SITEMAP = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+_gc = re.search(r'(?m)^goatcounter_site:\s*"?([\w-]+)"?\s*(?:#.*)?$', (SOURCE / "_config.yml").read_text(encoding="utf-8"))
+GOATCOUNTER = _gc.group(1) if _gc else ""
+ANALYTICS_SCRIPT = "https://gc.zgo.at/count.js"
 
 
 def fail(message: str) -> None:
@@ -80,6 +83,8 @@ class Audit(HTMLParser):
         self.ids: list[str] = []
         self.local: list[str] = []
         self.external_resources: list[str] = []
+        self.analytics: list[str] = []
+        self.plain_images = 0
         self.dangerous_refs: list[str] = []
         self.handlers: list[str] = []
         self.bad_images: list[str] = []
@@ -94,6 +99,13 @@ class Audit(HTMLParser):
         self._flag_submit_disabled = False
         self._flag_form_depth = 0
 
+    def _is_analytics_ref(self, ref: str) -> bool:
+        split = urlsplit(ref)
+        host = split.netloc.lower()
+        if host == "gc.zgo.at" and split.path == "/count.js":
+            return True
+        return bool(GOATCOUNTER) and host == f"{GOATCOUNTER}.goatcounter.com" and split.path.split("?")[0] == "/count"
+
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = dict(attrs)
         if tag == "title": self.title += 1
@@ -107,8 +119,13 @@ class Audit(HTMLParser):
         if tag == "link" and "canonical" in (data.get("rel") or "").split(): self.canonicals.append(data.get("href") or "")
         if data.get("id"): self.ids.append(data.get("id") or "")
         self.handlers.extend(name for name in data if name.lower().startswith("on"))
-        if tag == "img" and (not data.get("src") or not data.get("alt") or not data.get("width") or not data.get("height")):
-            self.bad_images.append(data.get("src") or "<missing>")
+        if tag == "img":
+            if self._is_analytics_ref(data.get("src") or ""):
+                pass
+            else:
+                if not data.get("src") or not data.get("alt") or not data.get("width") or not data.get("height"):
+                    self.bad_images.append(data.get("src") or "<missing>")
+                self.plain_images += 1
         if tag == "a":
             self._anchor = {
                 "href": data.get("href") or "<missing>",
@@ -154,6 +171,8 @@ class Audit(HTMLParser):
             elif scheme in {"http", "https"}:
                 if split.netloc == SITE_HOST:
                     self.local.append(ref)
+                elif self._is_analytics_ref(ref):
+                    self.analytics.append(ref)
                 elif automatic:
                     self.external_resources.append(ref)
             elif scheme not in {"mailto", "tel"} and not ref.startswith("#"):
@@ -312,6 +331,7 @@ for page in pages:
     audit = Audit(); audit.feed(text); audit.close(); page_audits[rel] = audit
     if not text.lower().lstrip().startswith("<!doctype html>"): fail(f"doctype missing: {rel}")
     if audit.external_resources: fail(f"third-party resource in {rel}: {audit.external_resources}")
+    if audit.analytics and (not GOATCOUNTER or audit.refresh): fail(f"third-party resource in {rel}: {audit.analytics}")
     if audit.dangerous_refs: fail(f"dangerous reference in {rel}: {audit.dangerous_refs[:5]}")
     if audit.handlers: fail(f"inline handler in {rel}: {audit.handlers}")
     if audit.unnamed_links: fail(f"unnamed link in {rel}: {audit.unnamed_links[:5]}")
@@ -338,7 +358,7 @@ for page in pages:
         noindex_paths.add(output_url)
         if rel.endswith("/index.html"): noindex_paths.add("/" + rel.removesuffix("index.html"))
     forms += audit.forms
-    images += text.count("<img ")
+    images += audit.plain_images
     brand_marks += text.count('class="site-brand__mark"')
     challenge_scripts += text.count('/assets/js/challenge.js')
     article_scripts += text.count('/assets/js/article.js')
@@ -362,6 +382,12 @@ if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
 if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
 if len(math_pages) != 4: fail(f"math page count drift: {len(math_pages)}")
+if GOATCOUNTER:
+    wired = [rel for rel, audit in page_audits.items() if not rel.startswith("new-tetris/") and not audit.refresh]
+    missing_script = [rel for rel in wired if page_audits[rel].analytics.count(ANALYTICS_SCRIPT) != 1]
+    missing_pixel = [rel for rel in wired if len([r for r in page_audits[rel].analytics if r != ANALYTICS_SCRIPT and urlsplit(r).netloc == f"{GOATCOUNTER}.goatcounter.com"]) != 1]
+    if missing_script: fail(f"goatcounter script missing in {missing_script[:5]}")
+    if missing_pixel: fail(f"goatcounter pixel missing in {missing_pixel[:5]}")
 
 article_routes = {rel for rel in post_routes if 'itemtype="https://schema.org/Article"' in (ROOT / rel).read_text(encoding="utf-8")}
 if article_routes != set(post_routes): fail(f"article schema route drift: {sorted(set(post_routes) - article_routes)[:10]}")
@@ -529,6 +555,7 @@ print(json.dumps({
     "challenge_forms": forms,
     "challenge_pages": len(challenge_pages),
     "external_runtime_resources": 0,
+    "analytics": f"goatcounter:{GOATCOUNTER}" if GOATCOUNTER else "none",
     "brand_mark_references": brand_marks,
     "artifact_files": artifact_files,
     "artifact_directories": artifact_directories,
