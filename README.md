@@ -24,6 +24,7 @@ script/build-site.sh _site
 python3 script/verify-imported-content.py
 python3 script/verify-static-app.py
 python3 script/verify-history-sanitization.py
+python3 script/test-history-sanitization.py
 ruby script/test-code-frames.rb
 python3 script/verify-site.py _site
 python3 script/verify-code-parity.py _site

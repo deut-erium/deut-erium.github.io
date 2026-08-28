@@ -64,4 +64,8 @@ git gc --prune=now
 git fsck --full --no-reflogs --unreachable --dangling
 ```
 
-Only the sanitized local branch tips were fetched into the unified repository. Each history was attached with an unchanged-tree merge. `script/verify-history-sanitization.py` checks required ancestors, rejects the original unsafe tips and credential-bearing blob IDs, and scans every reachable blob for hashed forbidden values.
+Only the sanitized local branch tips were fetched into the unified repository. Each history was attached with an unchanged-tree merge.
+
+`script/verify-history-sanitization.py` requires a complete repository and checks that every required source tip and attachment merge is an ancestor of `HEAD`. Each attachment must have the recorded source tip as its second parent and the same tree as its first parent. The verifier rejects the original unsafe tips and credential-bearing blobs even when those objects are unreachable, then scans blobs, commit messages, and annotated tags reachable from every local ref plus `HEAD` for hashed forbidden values. It never stores or prints the raw values.
+
+`script/test-history-sanitization.py` builds isolated Git fixtures and confirms that the gate rejects shallow history, a forbidden value in a side-ref commit message, an unreachable forbidden object, and a changed attachment parent.
