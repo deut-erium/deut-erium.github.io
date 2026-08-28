@@ -1,26 +1,31 @@
 # deuterium's blog
 
-Source for one Jekyll site served from `deut-erium.github.io`.
+This repository builds the site served from `deut-erium.github.io`.
 
-The repository contains four sections:
+Sections:
 
 - `/` - personal posts and browser-local challenges
 - `/WriteUps/` - CTF writeups and challenge attachments
 - `/ctf-tutorials/` - CTF tutorials and assignments
 - `/ramblings/` - informal posts
+- `/new-tetris/` - the published game, catalog, and scoring guide
 
-The authored Markdown imported from the four original repositories is hash-checked by `script/verify-imported-content.py`. Historical HTML routes, WriteUps attachments, section feeds, merged tags, and the recovered `/new-tetris/` application are checked during each build.
+The imported source is recorded in `script/imported-content-manifest.json`. It includes the public WriteUps source plus eight newer local files. Historical routes, attachment bytes, feeds, sitemaps, tags, and the recovered game are checked after each build.
 
 ## Build
 
+Ruby 3.3.7 and Node 24.19.0 are the supported versions.
+
 ```sh
+bundle config set --local frozen true
 bundle install
 npm ci --ignore-scripts --no-audit --no-fund
-JEKYLL_ENV=production bundle exec jekyll build --destination _site
+script/build-site.sh _site
 python3 script/verify-imported-content.py
 python3 script/verify-static-app.py
+ruby script/test-code-frames.rb
 python3 script/verify-site.py _site
 python3 script/verify-code-parity.py _site
 ```
 
-The production pages use local assets and contain no analytics or comment tracker. Mathematics and syntax highlighting are generated during the build.
+Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets and loads no analytics or comment runtime. Mathematics and syntax highlighting are generated before publication.
