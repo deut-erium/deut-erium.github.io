@@ -11,6 +11,19 @@ const concurrency = Number(process.env.CONCURRENCY || (process.env.RESUME === '1
 if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 12) throw new Error('invalid CONCURRENCY');
 await mkdir(outputRoot, { recursive: true });
 
+const configText = await readFile('_config.yml', 'utf8');
+const gcMatch = configText.match(/^goatcounter_site:\s*"?([\w-]+)"?\s*(?:#.*)?$/m);
+const gcSite = gcMatch ? gcMatch[1] : '';
+const isAnalyticsUrl = (url) => {
+  if (!gcSite) return false;
+  try {
+    const host = new URL(url).host;
+    return host === 'gc.zgo.at' || host === `${gcSite}.goatcounter.com`;
+  } catch {
+    return false;
+  }
+};
+
 async function filesBelow(root) {
   const found = [];
   for (const entry of await readdir(root, { withFileTypes: true })) {
@@ -173,7 +186,7 @@ async function worker(number) {
           .map((event) => event.params.args?.map((arg) => arg.value || arg.description).join(' '));
         const external = client.events.filter((event) => event.method === 'Network.requestWillBeSent')
           .map((event) => event.params.request.url)
-          .filter((url) => !url.startsWith(origin) && !url.startsWith('data:') && !url.startsWith('blob:') && url !== 'about:blank');
+          .filter((url) => !url.startsWith(origin) && !url.startsWith('data:') && !url.startsWith('blob:') && url !== 'about:blank' && !isAnalyticsUrl(url));
         errors.push(...eventErrors.map((error) => `exception: ${error}`), ...consoleErrors.map((error) => `console: ${error}`), ...external.map((url) => `external request: ${url}`));
         results.push({ ...task, finalPath: state.path, status: errors.length ? 'fail' : 'pass' });
       } else {
