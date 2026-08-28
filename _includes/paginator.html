@@ -1,5 +1,5 @@
 {%- if paginator.total_pages > 1 -%}
-<nav class="pagination" aria-label="Writeup pages">
+<nav class="pagination" aria-label="Post pages">
   <div class="pagination__position">
     <span>Page</span>
     <strong>{{ paginator.page | prepend: '0' | slice: -2, 2 }} / {{ paginator.total_pages | prepend: '0' | slice: -2, 2 }}</strong>
@@ -10,7 +10,7 @@
     {%- else -%}
       <span aria-disabled="true">Previous</span>
     {%- endif -%}
-    <a href="{{ '/archive.html' | relative_url }}">All writeups</a>
+    <a href="{{ '/archive.html' | relative_url }}">All posts</a>
     {%- if paginator.next_page -%}
       <a rel="next" href="{{ paginator.next_page_path | relative_url }}">Next</a>
     {%- else -%}

@@ -46,9 +46,10 @@ module DeuteriumSite
     end
 
     class AliasPage < Jekyll::PageWithoutAFile
-      def initialize(site, path, target, target_document)
+      def initialize(site, path, target_document)
         super(site, site.source, File.dirname(path), File.basename(path))
-        destination = LegacyPaths.public_url(site, target)
+        target_path = target_document.url.delete_prefix("/")
+        destination = LegacyPaths.public_url(site, target_path)
         self.content = ""
         self.data = {
           "layout" => "redirect",
@@ -56,7 +57,7 @@ module DeuteriumSite
           "description" => "This historical URL now points to #{target_document.data["title"]}.",
           "target_title" => target_document.data["title"],
           "redirect_to" => destination,
-          "canonical_url" => LegacyPaths.canonical_url(site, target),
+          "canonical_url" => LegacyPaths.canonical_url(site, target_path),
           "noindex" => true,
           "sitemap" => false,
           "legacy_alias" => true,
@@ -112,7 +113,7 @@ module DeuteriumSite
 
           destination = site.in_dest_dir(site.dest, path)
           reserve!(occupied, destination, path)
-          site.pages << AliasPage.new(site, path, target, target_document)
+          site.pages << AliasPage.new(site, path, target_document)
         end
 
         attachments.sort_by { |row| row.fetch("path") }.each do |row|

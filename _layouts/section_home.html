@@ -19,8 +19,9 @@ layout: base
     <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Section</span><span>Topic</span><span></span></div>
     <ol class="record-list">{%- for _post in _posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
     {%- if page.section == 'writeups' -%}
+    {%- assign _writeup_pages = _all_posts.size | plus: 7 | divided_by: 8 -%}
     <nav class="pagination" aria-label="Writeups pages"><div class="pagination__links">
-      {%- for _number in (1..8) -%}
+      {%- for _number in (1.._writeup_pages) -%}
         {%- if _number == 1 -%}{%- assign _page_url = '/WriteUps/' -%}{%- else -%}{%- capture _page_url -%}/WriteUps/page{{ _number }}/{%- endcapture -%}{%- endif -%}
         <a href="{{ _page_url | relative_url }}"{% if page.page_number == _number %} aria-current="page"{% endif %}>{{ _number }}</a>
       {%- endfor -%}
