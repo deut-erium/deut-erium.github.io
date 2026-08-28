@@ -12,14 +12,15 @@ MANIFEST = Path(__file__).with_name("imported-content-manifest.json")
 
 manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
 expected = {item["path"]: item for item in manifest["files"]}
-actual = {
+actual_posts = {
     path.relative_to(ROOT).as_posix()
     for path in (ROOT / "_posts").rglob("*")
     if path.is_file()
 }
+expected_posts = {path for path in expected if path.startswith("_posts/")}
 
-missing = sorted(set(expected) - actual)
-added = sorted(actual - set(expected))
+missing = sorted(path for path in expected if not (ROOT / path).is_file())
+added = sorted(actual_posts - expected_posts)
 changed = []
 for rel, item in expected.items():
     path = ROOT / rel
