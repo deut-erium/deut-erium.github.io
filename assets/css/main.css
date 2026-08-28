@@ -725,12 +725,18 @@ a:hover {
   font-size: 1rem;
 }
 
-.archive-empty {
+.archive-empty,
+.archive-static-note {
   padding: 1rem;
   color: var(--navy);
   background: var(--yellow);
   border: 4px solid var(--navy);
   font-weight: 700;
+}
+
+.archive-static-note {
+  max-width: 64rem;
+  margin: 0 auto 1rem;
 }
 
 /* Article */
@@ -1496,6 +1502,17 @@ a:hover {
   margin-top: 1.5rem;
 }
 
+.error-shell__content {
+  max-width: 64rem;
+  margin: 2rem auto 0;
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--paper);
+  border: 5px solid var(--navy);
+  border-radius: .6rem;
+}
+
 .site-footer {
   margin-bottom: 1rem;
   color: #fff;
@@ -1740,6 +1757,7 @@ a:hover {
   .archive-tools,
   .archive-groups,
   .page-prose,
+  .error-shell__content,
   .article__content,
   .record-end,
   .record-grid > .record-index,
@@ -1822,6 +1840,7 @@ a:hover {
   .index-map,
   .archive-groups,
   .page-prose,
+  .error-shell__content,
   .article__content,
   .record-end,
   .code-frame {
@@ -1840,6 +1859,11 @@ a:hover {
   .prose a[href]::after {
     content: " (" attr(href) ")";
     overflow-wrap: anywhere;
+  }
+
+  .code-frame__viewport {
+    display: block;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .prose .code-frame pre,
@@ -1927,6 +1951,12 @@ a:hover {
 .flag-check button:hover,
 .flag-check button:focus-visible {
   background: var(--pink);
+}
+
+.flag-check button:disabled {
+  cursor: not-allowed;
+  opacity: .62;
+  box-shadow: none;
 }
 
 .flag-check output {

@@ -4,9 +4,14 @@
   const root = document.documentElement;
   const key = 'writeups-theme';
   const system = matchMedia('(prefers-color-scheme: dark)');
+  const valid = (theme) => theme === 'dark' || theme === 'light';
   let saved = null;
   try {
     saved = localStorage.getItem(key);
+    if (!valid(saved)) {
+      localStorage.removeItem(key);
+      saved = null;
+    }
   } catch (_) {
     saved = null;
   }
@@ -22,7 +27,7 @@
     button.textContent = dark ? 'Light' : 'Dark';
   };
 
-  apply(saved === 'dark' || saved === 'light' ? saved : system.matches ? 'dark' : 'light');
+  apply(valid(saved) ? saved : system.matches ? 'dark' : 'light');
 
   addEventListener('DOMContentLoaded', () => {
     apply(root.dataset.theme || 'light');
@@ -46,6 +51,6 @@
     } catch (_) {
       explicit = null;
     }
-    if (!explicit) apply(event.matches ? 'dark' : 'light');
+    if (!valid(explicit)) apply(event.matches ? 'dark' : 'light');
   });
 })();
