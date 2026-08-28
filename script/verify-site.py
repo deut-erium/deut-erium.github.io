@@ -513,12 +513,17 @@ main_css = (ROOT / "assets/css/main.css").read_text(encoding="utf-8")
 if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
     fail("Circle Limit IV brand style missing")
 import re as _re
-_dice_faces = _re.findall(r'html\[data-dice="(b\d\d)"\]', main_css)
-if len(_dice_faces) != 36 or len(set(_dice_faces)) != 36: fail(f"dice theme block drift: {len(_dice_faces)} faces")
-if len(_re.findall(r'html\[data-theme="dark"\]\[data-dice="b\d\d"\]', main_css)) != 36: fail("dice dark-mode block drift")
+_skin_files = sorted((ROOT / "assets/css/skins").glob("b*.css"))
+if len(_skin_files) != 36: fail(f"skin file drift: {len(_skin_files)}")
 _theme_js = (SOURCE / "assets/js/theme.js").read_text(encoding="utf-8")
-for face in _dice_faces:
-    if face[1:] not in _theme_js: fail(f"dice face missing from script: {face}")
+for _skin in _skin_files:
+    _body = _skin.read_text(encoding="utf-8")
+    _face = _skin.stem
+    if f'html[data-skin="{_face}"]' not in _body: fail(f"skin scope missing: {_skin.name}")
+    for _marker in (".site-header", ".site-nav", ".record-row", "[data-code-frame]", "blockquote", "@media print"):
+        if _marker not in _body: fail(f"skin {_face} missing component: {_marker}")
+    if _face[1:] not in _theme_js: fail(f"skin face missing from script: {_face}")
+if "data-dice" in main_css or "data-dice" in _theme_js: fail("retired palette dice remains")
 about_text = (ROOT / "about.html").read_text(encoding="utf-8")
 if 'class="item about-profile"' not in about_text or "M. C. Escher&#39;s Circle Limit IV" not in about_text:
     fail("Circle Limit IV About profile drift")
@@ -566,7 +571,7 @@ print(json.dumps({
     "external_runtime_resources": 0,
     "analytics": f"goatcounter:{GOATCOUNTER}" if GOATCOUNTER else "none",
     "brand_mark_references": brand_marks,
-    "dice_theme_faces": len(_dice_faces),
+    "dice_theme_faces": len(_skin_files),
     "artifact_files": artifact_files,
     "artifact_directories": artifact_directories,
     "metrics": metrics,

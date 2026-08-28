@@ -3,24 +3,24 @@
 
   const root = document.documentElement;
   const key = 'writeups-theme';
-  const diceKey = 'writeups-dice';
-  const faces = ('01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24' +
+  const skinKey = 'writeups-skin';
+  const skins = ('01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24' +
     ' 25 26 27 28 29 30 32 33 34 35 36 37').split(' ');
-  const diceId = (value) => (/^b\d{2}$/.test(value || '') && faces.includes(value.slice(1)) ? value : null);
+  const validSkin = (value) => (/^b\d{2}$/.test(value || '') && skins.includes(value.slice(1)) ? value : null);
   const system = matchMedia('(prefers-color-scheme: dark)');
   const valid = (theme) => theme === 'dark' || theme === 'light';
   let saved = null;
-  let savedDice = null;
+  let savedSkin = null;
   try {
     saved = localStorage.getItem(key);
     if (!valid(saved)) {
       localStorage.removeItem(key);
       saved = null;
     }
-    savedDice = diceId(localStorage.getItem(diceKey));
+    savedSkin = validSkin(localStorage.getItem(skinKey));
   } catch (_) {
     saved = null;
-    savedDice = null;
+    savedSkin = null;
   }
 
   const apply = (theme) => {
@@ -34,26 +34,38 @@
     button.textContent = dark ? 'Light' : 'Dark';
   };
 
-  const applyDice = (face) => {
-    if (face) root.dataset.dice = face;
-    else root.removeAttribute('data-dice');
+  let skinLink = null;
+  const applySkin = (skin) => {
+    if (skinLink) {
+      skinLink.remove();
+      skinLink = null;
+    }
+    if (skin) {
+      skinLink = document.createElement('link');
+      skinLink.rel = 'stylesheet';
+      skinLink.dataset.skin = skin;
+      skinLink.href = `/assets/css/skins/${skin}.css`;
+      document.head.appendChild(skinLink);
+    }
+    if (skin) root.dataset.skin = skin;
+    else root.removeAttribute('data-skin');
   };
 
   apply(valid(saved) ? saved : system.matches ? 'dark' : 'light');
-  applyDice(savedDice);
+  applySkin(savedSkin);
 
   const rollDice = () => {
-    const options = [null, ...faces.map((n) => `b${n}`)];
+    const options = [null, ...skins.map((n) => `b${n}`)];
     let next = options[Math.floor(Math.random() * options.length)];
-    if (next === (root.dataset.dice || null)) {
+    if (next === (root.dataset.skin || null)) {
       next = options[Math.floor(Math.random() * options.length)];
     }
-    applyDice(next);
+    applySkin(next);
     try {
-      if (next) localStorage.setItem(diceKey, next);
-      else localStorage.removeItem(diceKey);
+      if (next) localStorage.setItem(skinKey, next);
+      else localStorage.removeItem(skinKey);
     } catch (_) {
-      // The rolled face still applies for this page view.
+      // The rolled skin still applies for this page view.
     }
     const diceButton = document.querySelector('.dice-roll');
     if (diceButton) diceButton.title = next ? `Theme ${next}` : 'Default theme';
@@ -61,9 +73,11 @@
 
   addEventListener('DOMContentLoaded', () => {
     apply(root.dataset.theme || 'light');
-    if (savedDice) {
-      const diceButton = document.querySelector('.dice-roll');
-      if (diceButton) { diceButton.hidden = false; diceButton.title = `Theme ${savedDice}`; }
+    const diceButton = document.querySelector('.dice-roll');
+    if (diceButton) {
+      diceButton.hidden = false;
+      if (savedSkin) diceButton.title = `Theme ${savedSkin}`;
+      diceButton.addEventListener('click', rollDice);
     }
     const button = document.querySelector('.theme-toggle:not(.dice-roll)');
     if (button) {
@@ -76,11 +90,6 @@
         }
         apply(theme);
       });
-    }
-    const diceButton = document.querySelector('.dice-roll');
-    if (diceButton) {
-      diceButton.hidden = false;
-      diceButton.addEventListener('click', rollDice);
     }
   });
 
