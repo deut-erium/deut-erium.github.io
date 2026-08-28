@@ -260,6 +260,7 @@ export function handleEvents(events) {
       const rows = award.rows === 1 ? "ROW" : "ROWS";
       fields.squareAward.textContent = `+${award.points.toLocaleString("en-US")} collected`;
       fireSquareFlash(`${material} ${rows} / +${award.points.toLocaleString("en-US")}`);
+      announcements.push(`${material.toLowerCase()} ${rows.toLowerCase()}, ${award.points.toLocaleString("en-US")} points collected.`);
       continue;
     }
     if (event.type !== "square") continue;
@@ -275,7 +276,7 @@ export function handleEvents(events) {
       : `${lowShare.toLocaleString("en-US")}-${highShare.toLocaleString("en-US")}`;
     fields.squareAward.textContent = `${scoring.points.toLocaleString("en-US")} pending / ${share} per row`;
     fireSquareFlash(`${kind.toUpperCase()} ${event.detail.size}x${event.detail.size} / ${scoring.points.toLocaleString("en-US")} PENDING`);
-    announcements.push(`${kind} ${event.detail.size} by ${event.detail.size} square completed.`);
+    announcements.push(`${kind} ${event.detail.size} by ${event.detail.size} square completed with ${scoring.points.toLocaleString("en-US")} points pending.`);
   }
   if (announcements.length > 0) gameAnnouncement.textContent = announcements.join(" ");
 }
