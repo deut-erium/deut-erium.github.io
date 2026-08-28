@@ -13,6 +13,8 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 
+from artifact_manifest import ManifestError, manifest_entries
+
 ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else "_site").resolve()
 SOURCE = Path(__file__).resolve().parents[1]
 SITE_URL = "https://deut-erium.github.io"
@@ -271,6 +273,12 @@ def parse_sitemap(path: Path) -> set[str]:
 
 
 if not ROOT.is_dir(): fail(f"missing build directory: {ROOT}")
+try:
+    artifact_entries = list(manifest_entries(ROOT))
+except (ManifestError, OSError) as error:
+    fail(str(error))
+artifact_files = sum(entry["type"] == "file" for entry in artifact_entries)
+artifact_directories = sum(entry["type"] == "directory" for entry in artifact_entries)
 
 required = {
     "index.html", "archive.html", "about.html", "404.html", "feed.xml", "sitemap.xml", "robots.txt", "favicon.ico",
@@ -508,5 +516,7 @@ print(json.dumps({
     "challenge_forms": forms,
     "challenge_pages": len(challenge_pages),
     "external_runtime_resources": 0,
+    "artifact_files": artifact_files,
+    "artifact_directories": artifact_directories,
     "metrics": metrics,
 }, indent=2))

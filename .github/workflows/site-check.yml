@@ -51,6 +51,7 @@ jobs:
           python3 script/verify-static-app.py
           python3 script/verify-history-sanitization.py
           python3 script/test-history-sanitization.py
+          python3 script/test-artifact-manifest.py
           ruby script/test-code-frames.rb
           npm run sync-katex-assets
           git diff --exit-code -- Gemfile.lock package-lock.json assets/katex
@@ -66,9 +67,9 @@ jobs:
           script/build-site.sh "$out/a"
           script/build-site.sh "$out/b"
 
-          (cd "$out/a" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/a.sha256"
-          (cd "$out/b" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/b.sha256"
-          cmp "$out/a.sha256" "$out/b.sha256"
+          python3 script/artifact_manifest.py "$out/a" > "$out/a.manifest.jsonl"
+          python3 script/artifact_manifest.py "$out/b" > "$out/b.manifest.jsonl"
+          cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
 
           python3 script/verify-site.py "$out/a"
           python3 script/verify-code-parity.py "$out/a"
