@@ -45,10 +45,10 @@ def hash_regular_file(path: Path, expected: os.stat_result) -> str:
 def manifest_entries(root: Path) -> Iterator[dict[str, object]]:
     root = root.absolute()
     root_stat = root.lstat()
-    if not stat.S_ISDIR(root_stat.st_mode):
-        raise ManifestError(f"artifact root is not a directory: {root}")
     if stat.S_ISLNK(root_stat.st_mode):
         raise ManifestError(f"artifact root is a symbolic link: {root}")
+    if not stat.S_ISDIR(root_stat.st_mode):
+        raise ManifestError(f"artifact root is not a directory: {root}")
 
     def visit(directory: Path, relative: Path) -> Iterator[dict[str, object]]:
         directory_stat = directory.lstat()

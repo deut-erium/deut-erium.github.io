@@ -220,6 +220,14 @@ def verify(repo: Path, manifest_path: Path) -> dict[str, object]:
         if isinstance(item, dict)
     }
     counts, byte_counts, matches = scan_forbidden_values(repo, object_ids, forbidden_values)
+    refs = git(repo, "for-each-ref", "--format=%(refname)").stdout.splitlines()
+    commit_count = int(git(repo, "rev-list", "--count", "HEAD").stdout.strip())
+    all_commit_count = int(git(repo, "rev-list", "--count", "--all", "HEAD").stdout.strip())
+    if counts["commit"] != all_commit_count:
+        raise SystemExit(
+            "history object scan was incomplete: "
+            f"expected_commits={all_commit_count} scanned_commits={counts['commit']}"
+        )
     if matches:
         locations = [{"oid": oid, "type": kind} for oid, kind in sorted(set(matches))]
         raise SystemExit(
@@ -227,9 +235,6 @@ def verify(repo: Path, manifest_path: Path) -> dict[str, object]:
             + json.dumps(locations, sort_keys=True)
         )
 
-    refs = git(repo, "for-each-ref", "--format=%(refname)").stdout.splitlines()
-    commit_count = int(git(repo, "rev-list", "--count", "HEAD").stdout.strip())
-    all_commit_count = int(git(repo, "rev-list", "--count", "--all", "HEAD").stdout.strip())
     return {
         "status": "pass",
         "commits": commit_count,

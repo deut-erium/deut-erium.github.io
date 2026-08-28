@@ -66,6 +66,22 @@ class ArtifactManifestTests(unittest.TestCase):
         self.assertEqual(after.returncode, 0, after.stderr)
         self.assertNotEqual(before.stdout, after.stdout)
 
+    def test_directory_mode_change_changes_manifest(self) -> None:
+        before = self.run_manifest()
+        self.assertEqual(before.returncode, 0, before.stderr)
+        os.chmod(self.root / "empty", 0o700)
+        after = self.run_manifest()
+        self.assertEqual(after.returncode, 0, after.stderr)
+        self.assertNotEqual(before.stdout, after.stdout)
+
+    def test_symbolic_link_root_fails(self) -> None:
+        real_root = self.root.with_name("site-real")
+        self.root.rename(real_root)
+        self.root.symlink_to(real_root, target_is_directory=True)
+        result = self.run_manifest()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("root is a symbolic link", result.stderr)
+
     def test_symbolic_link_fails(self) -> None:
         (self.root / "alias").symlink_to("index.html")
         result = self.run_manifest()

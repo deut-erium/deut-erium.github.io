@@ -144,6 +144,21 @@ class HistorySanitizationTests(unittest.TestCase):
         self.assertIn("ref-reachable objects", result.stderr)
         self.assertIn('"type": "commit"', result.stderr)
 
+    def test_forbidden_value_in_annotated_tag_fails(self) -> None:
+        token = b"fixture_tag_value_123456"
+        git(self.repo, "tag", "-a", "unsafe-tag", "-m", token.decode("ascii"), self.merge_commit)
+        self.manifest["forbidden_value_hashes"] = [{
+            "bytes": len(token),
+            "sha256": hashlib.sha256(token).hexdigest(),
+            "source": "fixture",
+        }]
+        self.write_manifest()
+
+        result = self.verify()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("ref-reachable objects", result.stderr)
+        self.assertIn('"type": "tag"', result.stderr)
+
     def test_unreachable_forbidden_object_id_fails(self) -> None:
         tree = git(self.repo, "rev-parse", "HEAD^{tree}")
         detached = commit_tree(self.repo, tree, self.merge_commit, message="Detached unsafe tip")
@@ -153,6 +168,26 @@ class HistorySanitizationTests(unittest.TestCase):
         result = self.verify()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("forbidden_objects", result.stderr)
+
+    def test_attachment_tree_change_fails(self) -> None:
+        (self.repo / "changed.txt").write_text("changed\n", encoding="utf-8")
+        git(self.repo, "add", "changed.txt")
+        changed_tree = git(self.repo, "write-tree")
+        git(self.repo, "reset", "--hard", self.merge_commit)
+        changed_merge = commit_tree(
+            self.repo,
+            changed_tree,
+            self.root_commit,
+            self.imported_commit,
+            message="Changed attachment tree",
+        )
+        git(self.repo, "update-ref", "refs/heads/main", changed_merge)
+        self.manifest["attachment_merges"]["imported"]["commit"] = changed_merge
+        self.write_manifest()
+
+        result = self.verify()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("merge changed the first-parent tree", result.stderr)
 
     def test_wrong_attachment_second_parent_fails(self) -> None:
         self.manifest["attachment_merges"]["imported"]["second_parent"] = "root"
