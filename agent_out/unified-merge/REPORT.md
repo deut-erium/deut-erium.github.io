@@ -4,7 +4,7 @@ Date: 2026-08-28
 
 Branch: `unified-publishing`
 
-Verified source commit: `b93a15dbbca9c72ef13006e8cd14e3a7d1341076`
+Verified source commit: `80352dbe0ae38ec0c166a74f285be90e30c45b45`
 
 Target repository: `deut-erium.github.io`
 
@@ -43,6 +43,17 @@ WriteUps uses a mixed provenance record:
 The public WriteUps articles, images, About page, and 404 page were restored after the first combined build was found to contain earlier editorial replacements. Generated descriptions, image dimensions, emoji rendering, math delimiters, and link repairs now happen during the build instead of changing the source Markdown.
 
 The root profile at `/assets/index.html` is generated from the original profile body. Its old tracker markup is not part of the generated page. The original root posts, pages, contribution guide, favicon, assignments, and selected static files match their recorded public source.
+
+The source histories are attached to the unified branch:
+
+- the complete root `master` history
+- the complete WriteUps `master` history
+- a CTF tutorial history with the credential-bearing imported `docs/` tree removed from every snapshot
+- a Ramblings history with comment-provider credentials removed from every affected `_config.yml` snapshot
+
+The three history merges use unchanged-tree merge commits, so they add ancestry without replacing the verified combined files. Generated `gh-pages` histories are omitted because they duplicate build output and retain obsolete tracking or credential material.
+
+The history gate scanned 612 commits, 4,331 reachable objects, 1,876 blobs, and 26,499,677 blob bytes. It found all four required source ancestors and zero forbidden credential values or credential-bearing blob IDs.
 
 The heading gate compares all 420 authored ATX headings with the generated articles. Heading text is unchanged. Root and tutorial heading levels match the source. WriteUps keeps its historical one-level article offset, and Ramblings uses the same offset where needed to retain one page H1.
 
@@ -121,7 +132,27 @@ A browser test confirmed 200 accessible board cells, changing board state after 
 
 The production artifact contains no analytics, comment runtime, tracker, external automatic resource, source map, inline event handler, or unsafe blank-target link. The known Ramblings OAuth values do not occur in any Git blob reachable from this unified repository.
 
-Historical root commits still contain old analytics identifiers and templates. They do not execute in the current site. Four archival challenge answers also remain in the public source; this affects exercise secrecy, not site or account security.
+Historical root and WriteUps commits still contain old analytics identifiers and templates. They do not execute in the current site. Four archival challenge answers also remain in the public source; this affects exercise secrecy, not site or account security.
+
+[CTF tutorial vendor documentation](https://github.com/deut-erium/ctf-tutorials/blob/45c87e2e3135778b46fba8fa2c77695ea1e42de5/docs/_config.yml#L123-L179): an imported theme configuration contains concrete Gitalk and LeanCloud values. Summary: 1 affected historical path class, 1 sanitized history checked.
+
+Affected:
+
+- [Imported documentation configuration](https://github.com/deut-erium/ctf-tutorials/blob/45c87e2e3135778b46fba8fa2c77695ea1e42de5/docs/_config.yml#L123-L179): stores a Gitalk OAuth secret and LeanCloud client values in nine historical snapshots.
+
+Checked:
+
+- The sanitized tutorial ancestry removes the imported `docs/` tree from every snapshot. The original unsafe tip and three credential-bearing blob IDs are not reachable from the unified branch.
+
+Impact:
+
+- Attaching the public tutorial history directly would copy provider credentials into the unified object graph.
+
+Fix:
+
+- Keep the sanitized tutorial ancestry.
+- Do not attach the original tutorial or generated Pages refs.
+- Confirm provider ownership and revoke values that were not already retired upstream.
 
 [Ramblings Gitalk configuration](https://github.com/deut-erium/ramblings/blob/fd78c8215cb774ab17b4daec4cd342fb858e4e0a/_config.yml#L121-L132): the old repository contains a concrete OAuth secret. Summary: 1 affected configuration, 1 unified history checked.
 
@@ -140,7 +171,7 @@ Impact:
 Fix:
 
 - Revoke or rotate the OAuth secret before cutover.
-- Do not import the unsanitized Ramblings history.
+- Keep only the sanitized Ramblings ancestry attached to the unified branch.
 - Keep comments disabled unless they receive a separate privacy review.
 
 ## Reproducible release gate
@@ -148,9 +179,9 @@ Fix:
 A clean `git archive` build installed JavaScript dependencies from the lockfile, used the locked Ruby bundle, and generated two independent artifacts. Both artifacts contained 506 files and had identical per-file SHA-256 manifests.
 
 ```text
-verified source commit: b93a15dbbca9c72ef13006e8cd14e3a7d1341076
+verified source commit: 80352dbe0ae38ec0c166a74f285be90e30c45b45
 regular-file bytes:     22,052,920
-manifest SHA-256:       ee1d6755e85b4974118dd9a2f1b77ecdf3840b9f89a98a685120e4b1e66ae2c8
+manifest SHA-256:       4ede51db3377c1051a66d6a2bfd9e925e0de827cec6d39424f31cceaf1936f0f
 ```
 
 Payload measurements:
@@ -167,7 +198,7 @@ challenge JavaScript:    827 bytes gzip
 theme JavaScript:        622 bytes gzip
 ```
 
-The checked workflow runs on every push, uses frozen dependencies, disables persisted checkout credentials, has a job timeout, performs two builds, compares every output hash, and runs the source, route, code, heading, application, feed, sitemap, privacy, and payload gates. It does not deploy.
+The checked workflow fetches the attached ancestry, runs on every push, uses frozen dependencies, disables persisted checkout credentials, has a job timeout, performs two builds, compares every output hash, and runs the source, history, route, code, heading, application, feed, sitemap, privacy, and payload gates. It does not deploy.
 
 ## Owner actions before cutover
 
