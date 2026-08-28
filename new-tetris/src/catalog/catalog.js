@@ -1,9 +1,9 @@
 import { EIGHT_LIST_PAGE, expandEightFamily, familyPage } from "./catalog-model.js?v=20260911";
 
-const DATA_LOADERS = Object.freeze({
-  4: () => import("./data-4.js?v=20260911"),
-  6: () => import("./data-6.js?v=20260911"),
-  8: () => import("./data-8.js?v=20260911"),
+const DATA_URLS = Object.freeze({
+  4: "./data-4.js?v=20260911",
+  6: "./data-6.js?v=20260911",
+  8: "./data-8.js?v=20260911",
 });
 
 const COLORS = Object.freeze({
@@ -19,6 +19,7 @@ const COLORS = Object.freeze({
 const TOTAL_LAYOUTS = Object.freeze({ 4: 117, 6: 178939, 8: 19077209438 });
 const SHAPE_BLOCKS = "<i></i><i></i><i></i><i></i>";
 const cache = new Map();
+const loadAttempts = new Map();
 const params = new URLSearchParams(location.search);
 const requestedSize = Number(params.get("size"));
 const initialSize = [4, 6, 8].includes(requestedSize) ? requestedSize : 4;
@@ -33,6 +34,7 @@ let listStart = 0;
 const ui = Object.freeze({
   machine: document.querySelector("#catalog-machine"),
   loading: document.querySelector("#catalog-loading"),
+  error: document.querySelector("#catalog-error"),
   sizeButtons: [...document.querySelectorAll("[data-size]")],
   familyTotal: document.querySelector("#family-total"),
   layoutTotal: document.querySelector("#layout-total"),
@@ -342,13 +344,23 @@ function moveFamily(delta) {
 async function loadSize(nextSize, preferredId = null) {
   const generation = ++loadGeneration;
   ui.familyList.setAttribute("aria-busy", "true");
+  ui.error.hidden = true;
+  ui.error.textContent = "";
   try {
-    if (!cache.has(nextSize)) cache.set(nextSize, DATA_LOADERS[nextSize]().then((module) => module.default));
+    if (!cache.has(nextSize)) {
+      const retry = loadAttempts.get(nextSize) ?? 0;
+      const url = `${DATA_URLS[nextSize]}${retry > 0 ? `&retry=${retry}` : ""}`;
+      cache.set(nextSize, import(url).then((module) => module.default));
+    }
+    const request = cache.get(nextSize);
     let loaded;
     try {
-      loaded = await cache.get(nextSize);
+      loaded = await request;
     } catch (error) {
-      cache.delete(nextSize);
+      if (cache.get(nextSize) === request) {
+        cache.delete(nextSize);
+        loadAttempts.set(nextSize, (loadAttempts.get(nextSize) ?? 0) + 1);
+      }
       throw error;
     }
     if (generation !== loadGeneration) return false;
@@ -372,7 +384,12 @@ async function loadSize(nextSize, preferredId = null) {
     return true;
   } catch (error) {
     if (generation === loadGeneration) {
-      ui.status.textContent = `The ${nextSize} by ${nextSize} piece mixes could not load. The current catalog remains available.`;
+      const message = `The ${nextSize} by ${nextSize} piece mixes could not load. The current catalog remains available; try this size again.`;
+      ui.status.textContent = message;
+      if (!ui.machine.hidden) {
+        ui.error.textContent = message;
+        ui.error.hidden = false;
+      }
     }
     console.error(error);
     return false;
