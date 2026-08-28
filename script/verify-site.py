@@ -20,6 +20,7 @@ SITE_HOST = urlsplit(SITE_URL).netloc
 HISTORICAL = json.loads(Path(__file__).with_name("historical-html-paths.json").read_text(encoding="utf-8"))
 CONTENT = json.loads(Path(__file__).with_name("imported-content-manifest.json").read_text(encoding="utf-8"))
 STATIC_APP = json.loads(Path(__file__).with_name("static-app-manifest.json").read_text(encoding="utf-8"))
+ARCHIVED = json.loads(Path(__file__).with_name("archived-assets.json").read_text(encoding="utf-8"))
 LEGACY = json.loads((SOURCE / "_data/legacy_paths.json").read_text(encoding="utf-8"))
 DATE_POST = re.compile(r"^(?P<year>\d{4}|\d{2})-(?P<month>\d{2})-(?P<day>\d{2})-(?P<slug>.+)\.(?:md|markdown)$", re.I)
 EXTERNAL_PROJECT_PATHS = ("/pyfractal",)
@@ -81,6 +82,9 @@ class Audit(HTMLParser):
         self.handlers: list[str] = []
         self.bad_images: list[str] = []
         self.body_classes: set[str] = set()
+        self.heading_levels: list[int] = []
+        self.unnamed_links: list[str] = []
+        self._anchor: dict[str, str] | None = None
         self.forms = 0
         self.unsafe_flag_forms: list[str] = []
         self._flag_form = False
@@ -92,6 +96,7 @@ class Audit(HTMLParser):
         data = dict(attrs)
         if tag == "title": self.title += 1
         if tag == "h1": self.h1 += 1
+        if re.fullmatch(r"h[1-6]", tag): self.heading_levels.append(int(tag[1]))
         if tag == "main": self.main += 1
         if tag == "body": self.body_classes.update((data.get("class") or "").split())
         if tag == "meta" and data.get("name") == "description": self.description += 1
@@ -102,8 +107,15 @@ class Audit(HTMLParser):
         self.handlers.extend(name for name in data if name.lower().startswith("on"))
         if tag == "img" and (not data.get("src") or not data.get("alt") or not data.get("width") or not data.get("height")):
             self.bad_images.append(data.get("src") or "<missing>")
-        if tag == "a" and data.get("target") == "_blank" and "noopener" not in (data.get("rel") or "").split():
-            self.dangerous_refs.append(data.get("href") or "<blank target>")
+        if tag == "a":
+            self._anchor = {
+                "href": data.get("href") or "<missing>",
+                "name": data.get("aria-label") or data.get("title") or "",
+            }
+            if data.get("target") == "_blank" and "noopener" not in (data.get("rel") or "").split():
+                self.dangerous_refs.append(data.get("href") or "<blank target>")
+        elif tag == "img" and self._anchor is not None:
+            self._anchor["name"] += data.get("alt") or ""
 
         if tag == "form" and "data-flag-check" in data:
             self.forms += 1
@@ -145,15 +157,22 @@ class Audit(HTMLParser):
             elif scheme not in {"mailto", "tel"} and not ref.startswith("#"):
                 self.local.append(ref)
 
+    def handle_data(self, data: str) -> None:
+        if self._anchor is not None:
+            self._anchor["name"] += data
+
     def handle_endtag(self, tag: str) -> None:
-        if not self._flag_form:
-            return
-        self._flag_form_depth -= 1
-        if tag == "form" or self._flag_form_depth <= 0:
-            if self._flag_input_named: self.unsafe_flag_forms.append("named input")
-            if not self._flag_submit_disabled: self.unsafe_flag_forms.append("enabled submit")
-            self._flag_form = False
-            self._flag_form_depth = 0
+        if tag == "a" and self._anchor is not None:
+            if not self._anchor["name"].strip():
+                self.unnamed_links.append(self._anchor["href"])
+            self._anchor = None
+        if self._flag_form:
+            self._flag_form_depth -= 1
+            if tag == "form" or self._flag_form_depth <= 0:
+                if self._flag_input_named: self.unsafe_flag_forms.append("named input")
+                if not self._flag_submit_disabled: self.unsafe_flag_forms.append("enabled submit")
+                self._flag_form = False
+                self._flag_form_depth = 0
 
 
 class FrameParser(HTMLParser):
@@ -287,6 +306,9 @@ for page in pages:
     if audit.external_resources: fail(f"third-party resource in {rel}: {audit.external_resources}")
     if audit.dangerous_refs: fail(f"dangerous reference in {rel}: {audit.dangerous_refs[:5]}")
     if audit.handlers: fail(f"inline handler in {rel}: {audit.handlers}")
+    if audit.unnamed_links: fail(f"unnamed link in {rel}: {audit.unnamed_links[:5]}")
+    jumps = [(left, right) for left, right in zip(audit.heading_levels, audit.heading_levels[1:]) if right > left + 1]
+    if jumps: fail(f"heading level jump in {rel}: {jumps[:5]}")
     broken = [ref for ref in audit.local if not resolves(page, ref)]
     if broken: fail(f"broken local links in {rel}: {broken[:10]}")
     if any(host in text.lower() for host in TRACKERS): fail(f"retired runtime service remains in {rel}")
@@ -427,6 +449,16 @@ for item in STATIC_APP["files"]:
     data = path.read_bytes()
     if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]: fail(f"static app file drift: {item['path']}")
 
+archived_asset_paths = 0
+for item in ARCHIVED["files"]:
+    for rel in item["paths"]:
+        path = ROOT / rel
+        if not path.is_file(): fail(f"archived asset missing: {rel}")
+        data = path.read_bytes()
+        if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
+            fail(f"archived asset drift: {rel}")
+        archived_asset_paths += 1
+
 for stylesheet in ROOT.rglob("*.css"):
     text = stylesheet.read_text(encoding="utf-8")
     if re.search(r"@import\s+(?:url\()?['\"]?https?://", text, re.I): fail(f"external CSS import: {stylesheet.relative_to(ROOT)}")
@@ -470,6 +502,7 @@ print(json.dumps({
     "current_postfiles": current_postfiles,
     "legacy_attachment_aliases": len(LEGACY["attachments"]),
     "legacy_html_aliases": len(LEGACY["aliases"]),
+    "archived_asset_paths": archived_asset_paths,
     "code_frames": code_frames,
     "math_expressions": math_expressions,
     "challenge_forms": forms,

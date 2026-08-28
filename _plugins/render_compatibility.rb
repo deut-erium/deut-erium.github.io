@@ -89,6 +89,11 @@ module DeuteriumSite
           /<img\b[^>]*\bsrc\s*=\s*["']#{Regexp.escape(MEMORY_GIF)}["'][^>]*>/i,
           '<p><a href="https://media.giphy.com/media/hNGPQK5eGDzTW/giphy.gif">Two hours later</a> (external animation).</p>'
         )
+      elsif document.path.to_s.end_with?("2022-07-04-Google-CTF-22-Maybe-Someday.md")
+        document.output = document.output.sub(
+          '<a href="https://cryptopals.com/sets/6/challenges/47"></a>',
+          '<a href="https://cryptopals.com/sets/6/challenges/47">Cryptopals RSA padding oracle challenge</a>'
+        )
       end
 
       if document.path.to_s.end_with?("about.md") && document.url == "/about.html"
@@ -98,6 +103,7 @@ module DeuteriumSite
         )
       end
       restore_heading_levels(document)
+      normalize_heading_outline(document)
       enrich_images(document)
     end
 
@@ -110,6 +116,29 @@ module DeuteriumSite
         body = Regexp.last_match(2).gsub(%r{<(\/?)h([3-6])(\b[^>]*)>}) do
           level = Regexp.last_match(2).to_i - 1
           "<#{Regexp.last_match(1)}h#{level}#{Regexp.last_match(3)}>"
+        end
+        "#{opening}#{body}#{closing}"
+      end
+    end
+
+    def normalize_heading_outline(document)
+      document.output = document.output.sub(/(<main\b[^>]*>)(.*)(<\/main>)/m) do
+        opening = Regexp.last_match(1)
+        closing = Regexp.last_match(3)
+        previous = 1
+        current = nil
+        body = Regexp.last_match(2).gsub(%r{<(\/?)h([1-6])(\b[^>]*)>}) do |tag|
+          closing_tag = Regexp.last_match(1) == "/"
+          source_level = Regexp.last_match(2).to_i
+          if closing_tag
+            level = current || source_level
+            current = nil
+          else
+            level = [source_level, previous + 1].min
+            previous = level
+            current = level
+          end
+          tag.sub(/h#{source_level}/, "h#{level}")
         end
         "#{opening}#{body}#{closing}"
       end
