@@ -27,16 +27,21 @@ feed:
 markdown: kramdown
 kramdown:
   input: GFM
+  math_engine: mathjax
   header_offset: 1
 highlighter: rouge
 permalink: date
 
 exclude:
   - vendor
+  - _legacy_blobs
+  - node_modules
   - node_modules
   - script
   - Gemfile
   - Gemfile.lock
+  - package.json
+  - package-lock.json
   - LICENSE
   - README.md
   - CONTRIBUTING.md
@@ -54,5 +59,6 @@ defaults:
 plugins:
   - jekyll-feed
   - jekyll-paginate
+  - jekyll-postfiles
   - jekyll-seo-tag
   - jekyll-sitemap

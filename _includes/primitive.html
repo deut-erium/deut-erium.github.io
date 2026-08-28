@@ -1,0 +1,16 @@
+{%- assign _primitive_tags = include.tags | join: ' ' | downcase | prepend: ' ' | append: ' ' -%}
+{%- if _primitive_tags contains ' ecc ' or _primitive_tags contains ' ecdlp ' or _primitive_tags contains ' elliptic ' -%}
+ECC
+{%- elsif _primitive_tags contains ' rsa ' or _primitive_tags contains ' coppersmith ' or _primitive_tags contains ' hastad_broadcast ' or _primitive_tags contains ' small_e ' -%}
+RSA
+{%- elsif _primitive_tags contains ' z3 ' or _primitive_tags contains ' smt ' or _primitive_tags contains ' sat ' -%}
+Solver
+{%- elsif _primitive_tags contains ' aes ' or _primitive_tags contains ' des ' or _primitive_tags contains ' rc4 ' or _primitive_tags contains ' gcm ' or _primitive_tags contains ' blowfish ' -%}
+Symmetric
+{%- elsif _primitive_tags contains ' classical ' or _primitive_tags contains ' substitution ' or _primitive_tags contains ' vignere ' or _primitive_tags contains ' railfence ' or _primitive_tags contains ' transposition ' -%}
+Classical
+{%- elsif _primitive_tags contains ' encoding ' or _primitive_tags contains ' base64 ' or _primitive_tags contains ' morse ' -%}
+Encoding
+{%- else -%}
+Crypto
+{%- endif -%}
