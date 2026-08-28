@@ -45,6 +45,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   width: min(100% - 16px, 920px);
   margin: 0 auto 28px;
@@ -188,6 +192,16 @@ h2 {
   color: var(--accent);
   font-size: 2.1rem;
   text-shadow: 2px 2px #5a2f22;
+}
+
+.no-script-notice,
+.loading-notice {
+  margin: 8px 0 14px;
+  padding: 12px;
+  border: 2px solid var(--accent);
+  color: var(--text);
+  background: var(--panel);
+  font-weight: 700;
 }
 
 .machine {
@@ -671,6 +685,17 @@ h2 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:active {
+    transform: none;
+  }
+
+  .square-flash.fire {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 @media (hover: none), (pointer: coarse) {
