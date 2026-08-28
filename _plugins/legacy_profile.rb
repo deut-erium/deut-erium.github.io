@@ -4,8 +4,8 @@ require "digest"
 
 module DeuteriumSite
   class LegacyProfilePage < Jekyll::PageWithoutAFile
-    SOURCE = "_legacy_authored/root-assets-index.html"
-    EXPECTED_SHA256 = "012fbad06e13a8114f080221629a096114e1fc1e515a8832c55cdedf17dd953e"
+    SOURCE = "_legacy_authored/root-assets-body.html"
+    EXPECTED_SHA256 = "be52460ccb6a9df1f6c0e0d7278878a2aca3c2c1718886ac93972e6ca81679d0"
 
     def initialize(site)
       super(site, site.source, "assets", "index.html")
@@ -14,9 +14,7 @@ module DeuteriumSite
       actual = Digest::SHA256.hexdigest(source)
       raise "legacy profile source drift: #{actual}" unless actual == EXPECTED_SHA256
 
-      body = source.force_encoding(Encoding::UTF_8)[/<body>(.*)<\/body>/m, 1]
-      raise "legacy profile body is missing" unless body
-
+      body = source.force_encoding(Encoding::UTF_8)
       body = body.gsub(/\s+id="textbox"/, "")
       body = body.sub(%r{</header>\s*(?:<br>){4}}, "</header>")
       body = body.gsub(/href\s*=\s*"Circle-limit-IV\.jpg"/, 'href="/Circle-limit-IV.jpg"')
