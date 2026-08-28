@@ -1,45 +1,69 @@
 ---
-title: About the register
-description: How the CTF writeups, challenge files, and solve scripts are organized.
+title: "About WriteUps"
 tags: writeups usage
-key: writeups-about
-layout: page
+key: writeupsasdfasdf
+aside:
+  toc: true
+sidebar:
+  nav: aboutnav
+author: deuterium
+layout: article
+full_width: false
 mathjax: false
+mathjax_autoNumber: false
+mermaid: false
+chart: false
 show_edit_on_github: true
 comment: false
+show_author_profile: true
+excerpt_separator: <!--more-->
 ---
 
-This site is a public notebook for CTF challenges, with an emphasis on cryptography. A writeup should preserve enough evidence for another person to repeat the solve: the challenge statement, the failed assumptions that mattered, the derivation, and the final script.
+<!--more-->
 
-# Repository
+This page is concerned about explaining how to use the writeups
 
-The complete source is in the [WriteUps repository](https://github.com/deut-erium/WriteUps). Corrections are welcome as issues or pull requests.
+## [GitHub Repo](https://github.com/deut-erium/WriteUps)
+I try to make all my writeups with love, if you loved them too, I would be
+glad if you left some stars :D
 
-Articles and their supporting files live together under [`_posts`](https://github.com/deut-erium/WriteUps/tree/master/_posts). The directory structure is part of the public URL:
 
-```text
-year/
-  ctf_name/
-    category/
-      challenge_name/
-        description.md
-        DATE-challenge_name.md
-        solve.py
-        challenge files
-```
+All the blogs (and after a lot of pain, links too!) here are in-sync with the 
+### [GitHub repo _posts](https://github.com/deut-erium/WriteUps/tree/master/_posts)
 
-A corresponding article is published at:
+The content is organised in the hierarchy
+- year (2020, 2021 etc)
+    - ctf_name (e.g. cyber_apocalypse)
+      - category (e.g. crypto)
+        - challenge_name
+          - description.md
+          - DATE-challenge_name.md
+          - solve.py (mostly or whatever solve code)
+          - source files
 
-```text
-https://deut-erium.github.io/WriteUps/year/ctf_name/category/challenge_name/DATE-challenge_name
-```
+And so will be a path to writeup  
+`https://deut-erium.github.io/WriteUps/year/ctf_name/category/challenge_name/link`  
 
-# Reproducing a solve
+I will try to make all the solve scripts and challenge files downloadable  
+by clicking in the links on the writeup so as to ease setup and testing the  
+solution scripts!  
 
-Linked scripts, source files, ciphertexts, and other challenge material are served beside each article. File names and letter case are preserved because many old writeups refer to those exact paths.
+### [GitHub repo _drafts](https://github.com/deut-erium/WriteUps/tree/master/_drafts)  
+Should contain the same hierarchy as the writeups post. This path should  
+contain all the files I worked with in a CTF, including solved an unsolved  
+challenges.
 
-Treat every script as CTF research code rather than a maintained package. Read it before running it, use an isolated environment, and expect challenge-specific dependencies.
+If you are in luck, you can definitely find my dirty scripts and solutions  
+which I wanted to but felt too lazy writing up!
 
-# Rendering policy
+- year (2020, 2021 etc)
+    - ctf_name (e.g. cyber_apocalypse)
+      - category (e.g. crypto)
+        - challenge_name
+          - description.md
+          - DATE-challenge_name.md (most probably not)
+          - solve.py (typically trash script)
+          - source files
 
-The site ships static HTML and local assets. It uses no analytics or comment tracker. Syntax highlighting and mathematics are generated during the build; math styles are sent only on the five records that contain formulas.
+
+
