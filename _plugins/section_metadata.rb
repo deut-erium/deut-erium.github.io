@@ -85,6 +85,9 @@ Jekyll::Hooks.register :pages, :post_init do |page|
     page.data["title"] = "About"
     page.data["layout"] = "page"
     page.data["section"] = "ramblings"
+  when "WriteUps/about.md"
+    page.data["layout"] = "page"
+    page.data["section"] = "writeups"
   when %r{\AWriteUps/}
     page.data["section"] = "writeups"
   when %r{\Actf-tutorials/}
