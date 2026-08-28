@@ -196,13 +196,13 @@ Fix:
 
 - Keep permissions read-only, set checkout `persist-credentials: false`, add a timeout, and ensure the eventual publishing path is separately reviewed with the minimum `pages` and `id-token` permissions. Do not combine untrusted pull-request execution with deployment credentials.
 
-## GoatCounter analytics support (added, not enabled)
+## GoatCounter analytics support (enabled)
 
 The unified site supports optional visitor counting through GoatCounter. The owner approved trying it after the cleanup removed every runtime tracker.
 
-- `_includes/goatcounter.html` renders one async script (`https://gc.zgo.at/count.js`) plus a no-JS counting pixel, only when `_config.yml` sets `goatcounter_site`. The value is empty at HEAD, so generated output contains no third-party request and the verifier reports `analytics: none`.
+- `_includes/goatcounter.html` renders one async script (`https://gc.zgo.at/count.js`) plus a no-JS counting pixel, only when `_config.yml` sets `goatcounter_site`. The value is `deuterium` at HEAD (https://deuterium.goatcounter.com), so every regular page carries exactly one counting script and pixel, and the verifier reports `analytics: goatcounter:deuterium`. Setting the value back to an empty string removes all analytics references and returns the site to zero third-party requests.
 - Redirect pages (the 24 historical aliases) never load analytics; New Tetris pages are standalone and have none. Every other Jekyll page gets exactly one script and one pixel when enabled.
 - `script/verify-site.py` enforces both states: disabled means zero occurrences of `gc.zgo.at` or `*.goatcounter.com` anywhere; enabled means exactly one script and one pixel on every regular page, no analytics on redirect pages, and any other external resource still fails the build. The image metadata gate exempts only the counting pixel.
 - The browser matrix tolerates `gc.zgo.at` and the configured `*.goatcounter.com` host only when the config enables them. The sandbox resolver maps external hosts to 0.0.0.0, so those requests fail harmlessly during local runs.
-- Enabling requires the owner to register the site at goatcounter.com and commit the site code. GoatCounter sets no cookies and does not fingerprint; the free tier requires non-commercial use, which fits this blog. The snippet adds roughly 400 raw bytes per page, well inside every payload budget.
+- The owner registered the site and provided the site code. Confirm the domain inside the GoatCounter dashboard after the production cutover, because GoatCounter validates the reporting site. GoatCounter sets no cookies and does not fingerprint; the free tier requires non-commercial use, which fits this blog. The snippet adds roughly 400 raw bytes per page, well inside every payload budget.
 - Old dashboards (Google Analytics for the root blog, LeanCloud counters) remain the only source of historical visitor numbers. Revoking the leaked credentials does not delete that history.

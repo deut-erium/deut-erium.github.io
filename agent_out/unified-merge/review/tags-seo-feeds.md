@@ -209,4 +209,4 @@ Additional checks:
 
 ## Analytics
 
-The site has no analytics at HEAD. Optional GoatCounter support exists behind `goatcounter_site` in `_config.yml` and is reviewed in security-privacy.md. Leaving the value empty keeps generated output byte-identical to the audited builds.
+GoatCounter analytics are enabled at HEAD through `goatcounter_site: "deuterium"` in `_config.yml`; the privacy analysis is in security-privacy.md. The counter is a single async script plus a no-JS pixel and does not affect content, metadata, or crawlability.
