@@ -13,7 +13,8 @@
     <id>{{ _post.url | absolute_url }}</id>
     <published>{{ _post.date | date_to_xmlschema }}</published>
     <updated>{{ _post.date | date_to_xmlschema }}</updated>
-    <summary type="html">{{ _post.excerpt | markdownify | strip | xml_escape }}</summary>
+    {%- assign _summary = _post.description | default: _post.excerpt | strip_html | normalize_whitespace | truncate: 320 -%}
+    <summary type="text">{{ _summary | xml_escape }}</summary>
   </entry>
   {%- endfor %}
 </feed>
