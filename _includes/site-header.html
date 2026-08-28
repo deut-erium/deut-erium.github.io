@@ -1,17 +1,20 @@
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} home">
-      <span class="site-brand__signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <span class="site-brand__name">Deuterium</span>
-      <span class="site-brand__scope">field notes</span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">{{ site.tagline }}</small>
+      </span>
     </a>
+
     <nav class="site-nav" aria-label="Primary navigation">
-      <a href="{{ '/' | relative_url }}"{% if page.layout == 'home' %} aria-current="page"{% endif %}>Home</a>
-      <a href="{{ '/archive.html' | relative_url }}"{% if page.layout == 'archive' %} aria-current="page"{% endif %}>Writing</a>
-      <a href="{{ '/archive.html?tag=challenges' | relative_url }}">Challenges</a>
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+      <a href="{{ '/archive.html' | relative_url }}"{% if page.url == '/archive.html' %} aria-current="page"{% endif %}>Archive</a>
+      <a href="{{ '/WriteUps/' | relative_url }}"{% if page.section == 'writeups' %} aria-current="page"{% endif %}>Writeups</a>
+      <a href="{{ '/ctf-tutorials/' | relative_url }}"{% if page.section == 'tutorials' %} aria-current="page"{% endif %}>Tutorials</a>
+      <a href="{{ '/ramblings/' | relative_url }}"{% if page.section == 'ramblings' %} aria-current="page"{% endif %}>Ramblings</a>
       <a href="{{ '/about.html' | relative_url }}"{% if page.url == '/about.html' %} aria-current="page"{% endif %}>About</a>
-      <a href="{{ '/WriteUps/' | relative_url }}">Writeups</a>
-      <a href="https://github.com/deut-erium">GitHub</a>
+      <button class="theme-toggle" type="button" aria-pressed="false" hidden>Dark</button>
     </nav>
   </div>
 </header>

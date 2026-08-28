@@ -1,0 +1,30 @@
+---
+layout: base
+---
+{%- assign _all_posts = site.posts | where: 'section', page.section -%}
+{%- if page.page_limit -%}
+  {%- assign _offset = page.page_offset | default: 0 -%}
+  {%- assign _posts = _all_posts | slice: _offset, page.page_limit -%}
+{%- else -%}
+  {%- assign _posts = _all_posts -%}
+{%- endif -%}
+<main id="content" class="home-shell section-home">
+  <header class="index-heading">
+    <p class="eyebrow">{{ page.section }}</p>
+    <h1>{{ page.title }}</h1>
+    {%- if page.description -%}<p>{{ page.description }}</p>{%- endif -%}
+  </header>
+  <section class="record-index" aria-labelledby="section-posts-title">
+    <header class="section-heading"><div><p class="eyebrow">{{ _all_posts | size }} posts</p><h2 id="section-posts-title">{{ page.list_title | default: page.title }}</h2></div><p>Newest first.</p></header>
+    <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Section</span><span>Topic</span><span></span></div>
+    <ol class="record-list">{%- for _post in _posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
+    {%- if page.section == 'writeups' -%}
+    <nav class="pagination" aria-label="Writeups pages"><div class="pagination__links">
+      {%- for _number in (1..8) -%}
+        {%- if _number == 1 -%}{%- assign _page_url = '/WriteUps/' -%}{%- else -%}{%- capture _page_url -%}/WriteUps/page{{ _number }}/{%- endcapture -%}{%- endif -%}
+        <a href="{{ _page_url | relative_url }}"{% if page.page_number == _number %} aria-current="page"{% endif %}>{{ _number }}</a>
+      {%- endfor -%}
+    </div></nav>
+    {%- endif -%}
+  </section>
+</main>

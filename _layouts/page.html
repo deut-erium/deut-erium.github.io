@@ -3,9 +3,10 @@ layout: base
 ---
 <main id="content" class="page-shell">
   <header class="page-heading">
-    <p class="eyebrow">Page / {{ page.title | default: site.title }}</p>
+    <p class="eyebrow">{{ page.section | default: site.title }}</p>
     <h1>{{ page.title | default: site.title }}</h1>
     {%- if page.description -%}<p>{{ page.description }}</p>{%- endif -%}
   </header>
   <article class="prose page-prose">{{ content }}</article>
 </main>
+{%- if content contains 'highlighter-rouge' -%}<script defer src="{{ '/assets/js/article.js' | relative_url }}"></script>{%- endif -%}
