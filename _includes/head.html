@@ -3,7 +3,7 @@
 <meta name="color-scheme" content="light dark">
 
 {%- if page.title -%}
-  <title>{{ page.title }} / {{ site.title }}</title>
+  <title>{{ page.title }}{% if page.page_number and page.page_number > 1 %}, page {{ page.page_number }}{% endif %} / {{ site.title }}</title>
 {%- else -%}
   <title>{{ site.title }}</title>
 {%- endif -%}
@@ -19,6 +19,20 @@
   {%- else -%}{%- assign _feed_path = '/feed.xml' -%}
 {%- endcase -%}
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ _feed_path | relative_url }}">
+{%- if page.section == 'writeups' and page.page_number -%}
+  {%- assign _writeup_count = site.posts | where: 'section', 'writeups' | size -%}
+  {%- assign _writeup_pages = _writeup_count | plus: 7 | divided_by: 8 -%}
+  {%- if page.page_number > 1 -%}
+    {%- assign _previous_number = page.page_number | minus: 1 -%}
+    {%- if _previous_number == 1 -%}{%- assign _previous_path = '/WriteUps/' -%}{%- else -%}{%- capture _previous_path -%}/WriteUps/page{{ _previous_number }}/{%- endcapture -%}{%- endif -%}
+<link rel="prev" href="{{ _previous_path | relative_url }}">
+  {%- endif -%}
+  {%- if page.page_number < _writeup_pages -%}
+    {%- assign _next_number = page.page_number | plus: 1 -%}
+    {%- capture _next_path -%}/WriteUps/page{{ _next_number }}/{%- endcapture -%}
+<link rel="next" href="{{ _next_path | relative_url }}">
+  {%- endif -%}
+{%- endif -%}
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
 <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
