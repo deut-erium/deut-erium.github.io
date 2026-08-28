@@ -1,12 +1,22 @@
-# Moodboard skins
+# Dice skins, first batch of six
 
-Thirty-six complete skins, one per moodboard board (01-30, 32-37), drawn from scratch by `agent_out/skin-engine/build_skins.py`. No code is reused from the five earlier full-theme prototypes. The calculator theme stays the default; board 31 is excluded and absent from the roll.
+Six complete themes, drawn by hand from their moodboard boards. The generator-built set of 36 combinatorial skins was rejected and removed; nothing here is template recombination. The calculator theme remains the default and board 31 stays out of the roll.
 
-Each skin restyles the unified markup itself - header archetype (bar, plate, banner, stack, split, box, tiles), navigation language (pills, underline, brackets, tiles, numbered index), home row treatment (rows, cards, stack, ledger, grid, spines), article chrome (single, framed, margin note), code frame (block, card, sheet, terminal), quotation style, typography stacks, background patterns, and one bespoke signature rule set per board. Palettes seed from the contrast-fitted dice validation so every shipped text pair keeps at least 4.5:1.
+## The six
 
-- Skins load lazily: the rolled skin's stylesheet (`assets/css/skins/bNN.css`, max 1.3 KB gzip each) is injected on roll and persisted under `writeups-skin`. The default page ships none of them; `main.css` returned to 7,296 gzip bytes and `theme.js` is 1,218 against its 1,536 budget.
-- Each file carries dark-mode overrides and its own `@media print` reset, so print output stays ink-on-paper under every skin.
-- `script/verify-site.py` fails the build unless exactly 36 skin files exist, each scoped, each containing header, nav, row, code-frame, quotation, and print rules, each listed in `theme.js`, and no retired palette dice remains anywhere.
-- Browser sweep: all 36 skins on a code-bearing article at 375 and 1440 pixels - zero horizontal overflow, code frames visible, and every skin measurably changes the computed header and body background against the classic reference. Screenshots of the default and six representative skins are retained here.
+- `b03` The Exploit Grimoire (board 03): parchment and poisoned jewel tones, small-caps serif, rubricated drop caps, roman-numeral chapter ledger, gilded code as dark scripture, marginalia quotations.
+- `b11` The Hash Crash! (board 11): halftone newsprint, Comic Sans body with Impact headlines, ink-bordered panels with hard offset shadows, speech-bubble quotations with tails, hazard-striped code headers.
+- `b15` The House Always Seeds (board 15): dark-first velvet and gold, card-grid home rows with suit pips and chip badges, placard article head, dealer terminal code on felt, gilt pill navigation.
+- `b20` Mutant Mathematics (board 20): khaki graph-grid stock, mono stencil type, hazard-striped header, numbered ITEM ledger, CAUTION quotations, phosphor-green terminal code.
+- `b21` The Impossible Proof (board 21): Escher engraving, hatched monochrome with one cobalt accent, engraved figure numbers, stair-stepped rows, recursive nested article frames, centered epigraph quotes.
+- `b32` The Undecidable Register (board 32): bureaucratic typewriter forms, manila folder header with a DEPARTMENT tab, numbered docket index, rotated red THEOREM stamps, CERTIFIED COPY quotations, green-bar line-printer code listings.
+
+## Verification
+
+- Each skin restyles the unified markup only: header, nav, buttons, masthead, home rows, article chrome, prose, quotations, code frames, tables, pagination, footer, plus its own dark variant and print reset. No images, no web fonts, no external resources.
+- `script/verify-site.py` requires exactly these six files, each scoped to its `html[data-skin]`, each containing header, nav, row, code-frame, quotation, and print rules, and each listed in `theme.js`.
+- Browser sweep on a code-bearing article at 375 and 1440 pixels: zero horizontal overflow under every skin and classic, and every skin has a distinct identity tuple (header background, page background, body and heading fonts) from classic and from each other at both widths.
+- Screenshots of all six in light mode, plus grimoire, casino, and cryptoon in dark, are retained here.
+- Skins stay lazy: a rolled skin loads one stylesheet of roughly 2-3.5 KB gzip; the default page loads none.
 
 The full route matrix was not rerun for this change at the owner's direction; retained browser evidence binds to earlier trees.
