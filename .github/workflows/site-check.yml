@@ -2,7 +2,6 @@ name: Site checks
 
 on:
   push:
-    branches: [master]
   pull_request:
   workflow_dispatch:
 
@@ -13,12 +12,21 @@ concurrency:
   group: site-check-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  BUNDLE_FROZEN: "true"
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
+  TZ: Asia/Kolkata
+
 jobs:
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - name: Check out source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
@@ -35,30 +43,25 @@ jobs:
       - name: Install build-only JavaScript packages
         run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: Verify imported source
+      - name: Verify source and generated dependencies
         run: |
+          set -euo pipefail
           python3 script/verify-imported-content.py
           python3 script/verify-static-app.py
           ruby script/test-code-frames.rb
+          npm run sync-katex-assets
+          git diff --exit-code -- Gemfile.lock package-lock.json assets/katex
 
       - name: Build twice and compare artifacts
-        env:
-          BUNDLE_FROZEN: "true"
-          JEKYLL_ENV: production
-          LANG: C.UTF-8
-          LC_ALL: C.UTF-8
-          TZ: Asia/Kolkata
         run: |
           set -euo pipefail
           out="${RUNNER_TEMP}/site-check"
           rm -rf "$out"
           mkdir -p "$out"
-          printf 'time: "%s"\n' "$(git show -s --format=%cI HEAD)" > "$out/time.yml"
+          export BUILD_TIME="$(git show -s --format=%cI HEAD)"
 
-          bundle exec jekyll build --trace --disable-disk-cache \
-            --config _config.yml,"$out/time.yml" --destination "$out/a"
-          bundle exec jekyll build --trace --disable-disk-cache \
-            --config _config.yml,"$out/time.yml" --destination "$out/b"
+          script/build-site.sh "$out/a"
+          script/build-site.sh "$out/b"
 
           (cd "$out/a" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/a.sha256"
           (cd "$out/b" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$out/b.sha256"
