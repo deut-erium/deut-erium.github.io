@@ -1,8 +1,6 @@
 ---
 title: "SDCTF 2022 Crypto - Tasty Crypto Roll"
 tags: SDCTF 2022 cryptography AES z3 substitution permutation
-description: >
-    SDCTF 2022 Crypto - Tasty Crypto Roll writeup: cryptography, AES, z3, substitution, permutation
 key: keys
 aside:
   toc: true

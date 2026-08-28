@@ -1,8 +1,6 @@
 ---
 title: "zh3r0 2020 Crypto - We are related"
 tags: zh3r0 2020 cryptography netcat RSA sagemath small_e
-description: >
-    zh3r0 2020 Crypto - We are related writeup: cryptography, netcat, RSA, sagemath, small_e
 key: zh3r02020wearerelated
 aside:
   toc: true
@@ -117,7 +115,7 @@ print(data.decode())
 C1, C2 = map(int, re.findall(b'(\d+)\n',data))
 ```
 This part of the calculation I did it in sage
-```python
+```
 diff = ord('a')
 R.<X> = Zmod(n)[]
 f1 = X^3 - C1

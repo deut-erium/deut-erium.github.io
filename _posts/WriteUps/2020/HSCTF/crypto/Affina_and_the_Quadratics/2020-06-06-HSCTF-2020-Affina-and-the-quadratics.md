@@ -1,8 +1,6 @@
 ---
 title: "HSCTF 2020 Crypto - Affina and the quadratics"
 tags: HSCTF 2020 cryptography affine classical substitution
-description: >
-    HSCTF 2020 Crypto - Affina and the quadratics writeup: cryptography, affine, classical, substitution
 key: hsctf2020affinaandquadratics
 aside:
   toc: true
@@ -21,11 +19,11 @@ excerpt_separator: <!--more-->
 
 # Affina and the Quadratics
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="677" height="782"}
+![](Capture.PNG)
 
 We are given this image, and hinted towards the name [Affina](https://en.wikipedia.org/wiki/Affine_cipher).
 
-![Affine cipher worksheet](affffinaaaa-page-001.jpg){: loading="lazy" decoding="async" width="2550" height="3300"}
+![](affffinaaaa-page-001.jpg)
 With a description reading
 ```
 Affina was struggling with her graphing quadratics homework. Bored, she decided to cheat by using Desmos to graph the given quadratic, and then realized that she could use it to send messages to her best friend without anyone noticing!
@@ -61,5 +59,5 @@ pt = [ chr((9*c + 8)%26 + 97) for c in ct26 ]
 putting it in places, we get
 `7ff4n6_4s_4nt6re8tin2`
 
-Now why GUESS that number are encoded with the same affine cipher modulo when you can easily GUESS the flag is `4ff1n3_1s_1nt3re5tin6` 😄
+Now why GUESS that number are encoded with the same affine cipher modulo when you can easily GUESS the flag is `4ff1n3_1s_1nt3re5tin6` :smile:
 

@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - Twinning"
 tags: nahamcon 2020 netcat twin_prime RSA
-description: >
-    Nahamcon 2020 Crypto - Twinning writeup: netcat, twin_prime, RSA
 key: nahamcon2020twinning
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Twinning
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="620" height="503"}
+![](Capture.PNG)
 
 The name of the challenge is a subtle hint towards [Twin primes](https://en.wikipedia.org/wiki/Twin_prime), i.e. the RSA primes `p` and `q` being twin primes, at a difference of two.  
 

@@ -1,8 +1,6 @@
 ---
 title: "rgbCTF 2020 Crypto - Adequate Encryption Standard"
 tags: rgbCTF 2020 cryptography AES substitution permutation bruteforce
-description: >
-    rgbCTF 2020 Crypto - Adequate Encryption Standard writeup: cryptography, AES, substitution, permutation, bruteforce
 key: keys
 aside:
   toc: true

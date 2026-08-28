@@ -1,8 +1,6 @@
 ---
 title: "HSCTF 2020 Crypto - Randomization 1"
 tags: HSCTF 2020 cryptography reversing LCG 
-description: >
-    HSCTF 2020 Crypto - Randomization 1 writeup: cryptography, reversing, LCG
 key: keys
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Randomization 1
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="677" height="748"}
+![](Capture.PNG)
 
 We are provided a binary [rand1](rand1) which supposedly runs on the server. We have to figure out how would capture the flag
 

@@ -1,8 +1,6 @@
 ---
 title: "RACTF 2020 Crypto - Its as easy as access=0000"
 tags: RACTF 2020 cryptography netcat AES CBC bit_flipping
-description: >
-    RACTF 2020 Crypto - Its as easy as access=0000 writeup: cryptography, netcat, AES, CBC, bit_flipping
 key: ractf2020access0000
 aside:
   toc: true
@@ -132,7 +130,7 @@ def get_flag(token, iv):
   * if `access=0000` appears somewhere in message, it must be an admin and returs the flag
   * Says FO otherwise
 
-Reading through the above stuff, one could realise what must be done to read the flag 😉  
+Reading through the above stuff, one could realise what must be done to read the flag :wink:  
 We need to make the server generate a token for `access=9999` and somehow change it to `access=0000` and fool it into believing that we are admin, and hence the name of the challenge.
 
 This is an instance of all time classic [bit flipping attack](https://en.wikipedia.org/wiki/Bit-flipping_attack).
@@ -140,7 +138,7 @@ This is an instance of all time classic [bit flipping attack](https://en.wikiped
 We can modify the IV such that the decryption at server would read `access=0000` at server instead of `access=9999`
 
 Lets see how CBC mode works, just focus on decryption of first block
-![CBC mode diagram](CBC_MODE.png){: loading="lazy" decoding="async" width="900" height="362"}
+![](CBC_MODE.png)
 
 The output of Block cipher decryption of AES is XORed with the IV to give the plaintext.  
 But hey, It is us who are providing IV, So we must be able to "control" the plaintext with our IV, and hence can make server read whatever we wish. 
@@ -189,5 +187,5 @@ print(REM.recvlines(4))
 ```
 
 ### How to make the challenge more difficult
-The challenge would be more ~difficult~ interesting if timestamps were modified, and we have to modify the timestamps too to get access 😉.  
+The challenge would be more ~difficult~ interesting if timestamps were modified, and we have to modify the timestamps too to get access :wink:.  
 Nevertheless, awesome work ReallyAwesomeCTF

@@ -27,8 +27,6 @@ nc pwnable.org 10001
 - [ring.tar.gz](ring_1f0f741fcfdfc52519d7b09b78c97b43.tar.gz)
   - [release/task.py](./release/task.py)
 
-<!--more-->
-
 task.py reads (trimming most part)
 ```python
 #!/usr/bin/python2

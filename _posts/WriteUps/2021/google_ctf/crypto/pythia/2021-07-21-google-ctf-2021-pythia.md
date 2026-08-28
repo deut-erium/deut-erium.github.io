@@ -1,8 +1,6 @@
 ---
 title: "Google CTF 2021 Crypto - Pythia"
 tags: googlectf 2021 cryptography AES GCM polynomialring oracle
-description: >
-    Google CTF 2021 Crypto - Pythia writeup: googlectf, cryptography, AES, GCM, polynomialring, oracle
 key: googlectf2021pythia
 aside:
   toc: true
@@ -117,7 +115,7 @@ for query in range(max_queries):
 ## Recon
 
 Taking a look at the source, we have a few observations
-- The server generates 3 passwords of 3 lower case ASCII each and uses Scrypt (a [Password based key derivation function](https://en.wikipedia.org/wiki/Key_derivation_function)) on it to derive a 16 byte encryption key from each of the 3 byte passwords, which can be treated as deriving 3 16-byte keys from a set of $$26^3 = 17576$$ known randomly generated keys.
+- The server generates 3 passwords of 3 lower case ASCII each and uses Scrypt (a [Password based key derivation function](https://en.wikipedia.org/wiki/Key_derivation_function)) on it to derive a 16 byte encryption key from each of the 3 byte passwords, which can be treated as deriving 3 16-byte keys from a set of $26^3 = 17576$ known randomly generated keys.
 - It provides us 3 options to work with. Option 1 to set 1 of the 3 unknown randomly generated keys
 - Option 3 provides as a decryption oracle, allowing us to check whether any arbitrary ciphertext of our choice decrypts successfully. (Why would it fail? more details in [How decryption works](#how-decryption-works))
 - Option 2 is the option we dig, give the server all three passwords (hence keys) correctly, it gives back the flag.
@@ -126,21 +124,21 @@ Taking a look at the source, we have a few observations
 ## Thinking Methodology/ Ideas to reject
 ### 1. Bruteforcing/ luck
 Since the number of keys is quite small, one might be tempted to bruteforce the keys and be optimistic that he/she gets all three keys in 150 attempts.  
-But the fact that guessing 3 keys consecutively within 150 attempts has probability as low as $$\approx 10^{-7}$$ which is already out of practical server-bruteforcing further enforced by 10 s delay between each guess taking 25 mins for each bruteforce, its clearly crossed out.
+But the fact that guessing 3 keys consecutively within 150 attempts has probability as low as $\approx 10^{-7}$ which is already out of practical server-bruteforcing further enforced by 10 s delay between each guess taking 25 mins for each bruteforce, its clearly crossed out.
 ### 2. The challenge is not about Scrypt
 Again, one would be tempted to think that it could be some weakness of Scrypt or the given configuration, or some relation between the derived keys which renders GCM ez. This hypothesis can also countered easily looking at the amount of stuff going inside Scrypt :P  
 ### 3. Famous attacks on AES-GCM
 Again, someone sees AESGCM, they get cryptopals [set 8](https://toadstyle.org/cryptopals/) flashbacks.  
 63. Key recovery attacks on repeated nonces
-        - Again this is possible if the server *encrypts* stuff, not check its decryption. What the attacker recovers is $$E(0,K)$$ not the key itself, but since keyspace is small, they could recover it through. Although again, this is definitely not the challenge.  
+        - Again this is possible if the server *encrypts* stuff, not check its decryption. What the attacker recovers is $E(0,K)$ not the key itself, but since keyspace is small, they could recover it through. Although again, this is definitely not the challenge.  
 64. Key recovery attacks on truncated mac
         - Clearly, I cant see any sort of truncation. So its out.
 
 ### Possible approach
-The only information we can extract from the oracle is whether the provided ciphertext forms the given tag under the key of the server. How would this help us reduce the number of queries required from $$26^3$$ to say 50. If it was possible to get it in one shot, the challenge authors would not give a slack of 50 :P  
+The only information we can extract from the oracle is whether the provided ciphertext forms the given tag under the key of the server. How would this help us reduce the number of queries required from $26^3$ to say 50. If it was possible to get it in one shot, the challenge authors would not give a slack of 50 :P  
 How about there exists a (ciphertext, tag) which decrypts successfully for more than one key?  
 This would reduce the number of queries by half! We will just need to keep on asking ciphertexts for a 2 pair till the key of server happens to lie in that pair.  
-That's all, if we can get a (ciphertext, tag) which is valid for $$n$$ keys, we can reduce the search to a binary search, requiring $$log_{2}(26^3) \approx 14.1 = 15$$ queries at max making 45 queries in total. Then again why 150 and not 50?  
+That's all, if we can get a (ciphertext, tag) which is valid for $n$ keys, we can reduce the search to a binary search, requiring $log_{2}(26^3) \approx 14.1 = 15$ queries at max making 45 queries in total. Then again why 150 and not 50?  
 More on it [later](#performance-considerations)...
 
 
@@ -158,9 +156,9 @@ If the computation of tag on the ciphertext fails, the server would reject the p
 ### How AES-GCM works?
 AES-GCM is, put simply, an authentication mechanism built upon AES in [CTR mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) (a stream cipher not necessary for our discussion), such that encrypted blocks of the ciphertext, additional authentication data, and lengths of those two put together in a GCM mac. This is whats all we will need to consider.
 Here comes the mandatory picture from Wikipedia. Just follow the components used in the `Auth tag` generation.  
-<img src="gcm_mode_diagram.png" width="600" height="660" alt="GCM (Galois/Counter Mode) encryption diagram, from Wikimedia Commons" loading="lazy" decoding="async">
-GCM is simply a polynomial (in $$GF(2^{128})$$) constructed using the blocks of authentication data, ciphertext, and two additional blocks, one constructed using the lengths of data and ciphertext and one using the encryption of 96 bit nonce $$N$$ appended with 31 bits of 0 and a single bit 1. i.e. $$s = E(N||0^{31}1,K)$$  
-This polynomial is evaluated at $$h = E(0,K)$$ to compute the `Auth tag`  
+<img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/GCM-Galois_Counter_Mode_with_IV.svg/1000px-GCM-Galois_Counter_Mode_with_IV.svg.png" width="600">  
+GCM is simply a polynomial (in $GF(2^{128})$) constructed using the blocks of authentication data, ciphertext, and two additional blocks, one constructed using the lengths of data and ciphertext and one using the encryption of 96 bit nonce $N$ appended with 31 bits of 0 and a single bit 1. i.e. $s = E(N||0^{31}1,K)$  
+This polynomial is evaluated at $h = E(0,K)$ to compute the `Auth tag`  
 $$T = ((((((h*A_0) \oplus A_1)*h ...  \oplus  A_m)*h  \oplus  C_0)*h ...  \oplus  C_{n-1})*h \oplus L)*h  \oplus  s$$  
 Since there's no additional data in the challenge, we get  
 $$T = ((((h*C_0) \oplus C_1)*h ...  \oplus  C_{n-1})*h  \oplus L)*h  \oplus  s$$ or  
@@ -170,12 +168,12 @@ $$T = C_0*h^{n+1} \oplus C_1*h^{n+1} ...  \oplus  C_{n-1}*h^{2}  \oplus  L*h  \o
 Continuing and exploring the idea [above](#possible-approach) one would come across a recent paper titled [Partitioning Oracle Attack](https://eprint.iacr.org/2020/1491.pdf) and what's cherry on the top is that a quick CTRL+F for github in the paper reveals the [POC demo](https://github.com/julialen/key_multicollision) of the same making it a lot easier to implement.
 
 ### Construction
-Continuing from the expression of tag, the terms dependent on key for calculation of tag are $$\textbf{h, s}$$ only.  
+Continuing from the expression of tag, the terms dependent on key for calculation of tag are $\textbf{h, s}$ only.  
 $$T = C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2}  \oplus  L*\textbf{h}  \oplus  \textbf{s}$$  
 $$C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2} = T \oplus L*\textbf{h}  \oplus  \textbf{s}$$  
 $$C_0*\textbf{h}^{n-1} \oplus C_1*\textbf{h}^{n-2} ...  \oplus  C_{n-1} = (T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$  
 writing 
-$$(T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$ as a key dependent quantity $$\textbf{B}$$ we can write  it for $$n$$ keys $$K_0...K_{n-1}$$ , we get  
+$$(T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$ as a key dependent quantity $$\textbf{B}$$ we can write  it for $n$ keys $$K_0...K_{n-1}$$ , we get  
 $$C_0*\textbf{h}^{n-1}_{0} \oplus C_1*\textbf{h}^{n-2}_{0} ...  \oplus  C_{n-1} = \textbf{B}_{0}$$  
 $$C_0*\textbf{h}^{n-1}_{1} \oplus C_1*\textbf{h}^{n-2}_{1} ...  \oplus  C_{n-1} = \textbf{B}_{1}$$  
 $$\vdots \qquad \qquad \vdots \qquad \qquad \vdots \qquad \qquad \vdots$$  
@@ -201,14 +199,14 @@ C_{n-2}  \\
 \end{bmatrix}
 $$
 
-Now that we have all the required equations set up, we can find $$C_{0}, C_{1} \ldots, C_{n-1}$$ through [lagrange interpolation](https://en.wikipedia.org/wiki/Lagrange_polynomial) in $$O(n^2)$$ time and $$O(n)$$ space.
+Now that we have all the required equations set up, we can find $C_{0}, C_{1} \ldots, C_{n-1}$ through [lagrange interpolation](https://en.wikipedia.org/wiki/Lagrange_polynomial) in $O(n^2)$ time and $O(n)$ space.
 
 ### Performance considerations
 Theoretically 15 searches would be enough to find the key, but it would require a multicollision for ~8000 keys.  
 What we can do is to first check for a few groups of smaller sizes, then proceeding with binary search on a given group.  
-If we form groups of size $$k$$, the total number of calls should be roughly (for worst case number of calls)
-$$17576/k + \lceil log_{2}k \rceil= 49 \implies k\approx 367$$
-Time taken to find a multicollision for $$k=367$$ keys,
+If we form groups of size $k$, the total number of calls should be roughly (for worst case number of calls)
+$17576/k + \lceil log_{2}k \rceil= 49 \implies k\approx 367$
+Time taken to find a multicollision for $k=367$ keys,
 ```python
 import time
 import statistics

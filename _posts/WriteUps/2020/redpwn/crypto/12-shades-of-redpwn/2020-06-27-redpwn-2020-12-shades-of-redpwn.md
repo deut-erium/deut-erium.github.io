@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - 12 Shades of Redpwn"
 tags: 2020 redpwn cryptography known_plaintext guess base12
-description: >
-    Redpwn 2020 Crypto - 12 Shades of Redpwn writeup: cryptography, known_plaintext, guess, base12
 key: redpwn202012shadesofredpwn
 aside:
   toc: true
@@ -32,19 +30,19 @@ I don't even know where to start, the wheel looks more like a clock than a ciphe
 
 - [color-wheel.jpg](color-wheel.jpg)
 
-![Color wheel](color-wheel.jpg){: loading="lazy" decoding="async" width="436" height="436"}
+![](color-wheel.jpg)
 
 - [ciphertext.jpg](ciphertext.jpg) "Text" XD
 
-![Ciphertext image](ciphertext.jpg){: loading="lazy" decoding="async" width="8000" height="329"}
+![](ciphertext.jpg)
 
 Lets think like a clock, and start numbering colors from `0-11` 
 
-![Color wheel](color-wheel2.gif){: loading="lazy" decoding="async" width="436" height="436"}
+![](color-wheel2.gif)
 
 And if we map the corresponding numbers, we get  
 
-![Extracted ciphertext image](ciphertext-extracted.jpg){: loading="lazy" decoding="async" width="8000" height="329"}
+![](ciphertext-extracted.jpg)
 
 ```
 86 90 81 87 a3 49 99 43 97 97 41 92 49 7b 41 97 7b 44 92 7b 44 96 98 a5

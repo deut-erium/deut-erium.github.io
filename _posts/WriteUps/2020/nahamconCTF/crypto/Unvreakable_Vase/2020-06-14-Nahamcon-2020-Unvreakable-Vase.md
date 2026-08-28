@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - Unvreakable Vase"
 tags: nahamcon 2020 cryptography base64
-description: >
-    Nahamcon 2020 Crypto - Unvreakable Vase writeup: cryptography, base64
 key: nahamcon2020unvreakablevase
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Unvreakable Vase
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="619" height="555"}
+![](Capture.PNG)
 
 We are provided with [prompt.txt](prompt.txt), which reads
 ```
@@ -49,7 +47,7 @@ print(m1)
 Seems to be it, now our flag begins with `fla`.  
 All we need to do is keep capitalizing the letters of `data` such that base64 decoding results in a ASCII string which is readable.
 
-One can do this by hand. NOT ME 😛
+One can do this by hand. NOT ME :stuck_out_tongue:
 
 To automate this shit, lets take a look at how base64 actually works.  
 In base64, we have 64 possible characters, which means each base64 letter can hold 6 bits.  

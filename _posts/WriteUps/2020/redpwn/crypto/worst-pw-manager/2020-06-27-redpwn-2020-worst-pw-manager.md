@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - worst_pw_manager"
 tags: redpwn 2020 cryptography xor rc4
-description: >
-    Redpwn 2020 Crypto - worst_pw_manager writeup: cryptography, xor, rc4
 key: keys
 aside:
   toc: true

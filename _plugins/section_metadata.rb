@@ -21,6 +21,12 @@ module DeuteriumSite
       post.data["source_path"] = relative
 
       if top_level == "WriteUps"
+        writeup_path = source_path.delete_prefix("WriteUps/")
+        descriptions = post.site.data.fetch("post_descriptions", {})
+        post.data["description"] ||= descriptions[writeup_path]
+        if writeup_path == "2022/cyber_apocalypse/crypto/memory_acceleration/2022-05-21-HTB-Cyber-Apcalypse-2022-Memory-Acceleration.md"
+          post.data["mathjax"] = true
+        end
         output_path = source_path.sub(/\.(?:md|markdown)\z/i, ".html")
         post.data["permalink"] = "/#{output_path}"
       elsif top_level == "ramblings" || top_level == "ctf-tutorials"
@@ -53,6 +59,10 @@ class DeuteriumTagAliases < Jekyll::Generator
 end
 
 Jekyll::Hooks.register :posts, :post_init do |post|
+  DeuteriumSite::SectionMetadata.apply(post)
+end
+
+Jekyll::Hooks.register :posts, :pre_render do |post|
   DeuteriumSite::SectionMetadata.apply(post)
 end
 

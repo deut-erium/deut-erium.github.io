@@ -1,8 +1,6 @@
 ---
 title: "RACTF 2020 Crypto - Really Speedy Algirithm"
 tags: RACTF 2020 cryptography RSA netcat 
-description: >
-    RACTF 2020 Crypto - Really Speedy Algirithm writeup: cryptography, RSA, netcat
 key: ractf2020reallyspeedy
 aside:
   toc: true
@@ -175,6 +173,6 @@ while True:
     send(rec)
 ```
 
-Having bad connection with high latency, I requested one of the admins to run the script and got flag in return 😄
+Having bad connection with high latency, I requested one of the admins to run the script and got flag in return :smile:
 
 #### ractf{F45t35tCryp70gr4ph3rAr0und}

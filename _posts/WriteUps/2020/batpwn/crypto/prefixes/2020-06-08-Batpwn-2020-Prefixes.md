@@ -1,8 +1,6 @@
 ---
 title: "BATPWN 2020 Crypto - Prefixes"
 tags: BATPWN 2020 Bsides cryptography golang
-description: >
-    BATPWN 2020 Crypto - Prefixes writeup: Bsides, cryptography, golang
 key: batpwn2020prefixes
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Prefixes
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="621" height="547"}
+![](Capture.PNG)
 
 ```
 package main

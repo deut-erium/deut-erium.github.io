@@ -1,8 +1,6 @@
 ---
 title: "RACTF 2020 Crypto - Really Secret Algorithm"
 tags: RACTF 2020 cryptography RSA python_walrus
-description: >
-    RACTF 2020 Crypto - Really Secret Algorithm writeup: cryptography, RSA, python_walrus
 key: ractf2020reallysecret
 aside:
   toc: true

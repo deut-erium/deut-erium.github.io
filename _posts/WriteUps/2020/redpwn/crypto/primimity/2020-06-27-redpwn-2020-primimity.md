@@ -1,8 +1,6 @@
 ---
 title: "Redpwn 2020 Crypto - primimity"
 tags: redpwn 2020 cryptography rsa close_primes
-description: >
-    Redpwn 2020 Crypto - primimity writeup: cryptography, rsa, close_primes
 key: keys
 aside:
   toc: true

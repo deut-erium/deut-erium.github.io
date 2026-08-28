@@ -1,8 +1,6 @@
 ---
 title: "Nahamcon 2020 Crypto - December"
 tags: nahamcon 2020 cryptography DES weak_keys 
-description: >
-    Nahamcon 2020 Crypto - December writeup: cryptography, DES, weak_keys
 key: keys
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # December
 
-![Challenge screenshot](Capture.PNG){: loading="lazy" decoding="async" width="619" height="529"}
+![](Capture.PNG)
 
 We are provided with [source.py](./source.py), which reads
 ```python
@@ -89,6 +87,6 @@ b'These are my snow covered dreams\nThis is me pretending\nflag{this_is_all_i_ne
 
 ## How to solve the challenge if not aware of weak keys?
 
-![Ctftime1](ctftime1.PNG){: loading="lazy" decoding="async" width="1821" height="955"}
+![](ctftime1.PNG)
 
-![Ctftime2](ctftime2.PNG){: loading="lazy" decoding="async" width="1835" height="914"}
+![](ctftime2.PNG)

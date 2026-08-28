@@ -1,8 +1,6 @@
 ---
 title: "HSCTF 2020 Crypto - Randomization 2"
 tags: HSCTF 2020 cryptography LCG reversing
-description: >
-    HSCTF 2020 Crypto - Randomization 2 writeup: cryptography, LCG, reversing
 key: HSCTF2020randomization2
 aside:
   toc: true
@@ -21,7 +19,7 @@ excerpt_separator: <!--more-->
 
 # Randomization 2
 
-![Screenshot](Capture.png){: loading="lazy" decoding="async" width="479" height="437"}
+![Screenshot](Capture.png)
 
 Again, we are provided a binary [rand2](rand2) which runs on the server. On connecting to the server, we're provided with 2 numbers and then we're asked to guess the next numbers several(10) times.
 
@@ -153,4 +151,4 @@ Guess my number: Guess my number: Guess my number: Guess my number: Guess my num
 Have a flag: flag{1n53cur3_r4nd0m_46b8861b}
 ```
 
-Easy huh, turns out java.util.Random uses almost the same PRNG, DON'T USE THIS FOR CRYPTO lol 😤
+Easy huh, turns out java.util.Random uses almost the same PRNG, DON'T USE THIS FOR CRYPTO lol :triumph:
