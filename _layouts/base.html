@@ -3,8 +3,10 @@
 <!doctype html>
 <html lang="{{ site.lang | default: 'en' }}">
   <head>{%- include head.html -%}</head>
-  <body class="layout-{{ page.layout | default: 'page' }} section-{{ page.section | default: 'root' }}">
+  <body class="layout-{{ page.layout | default: 'page' }} section-{{ page.section | default: 'root' }}" data-layout="{{ page.layout | default: 'page' }}">
     <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme"><span aria-hidden="true"></span></button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>Dark</button>
     {%- include site-header.html -%}
     {{ content }}
     {%- include site-footer.html -%}

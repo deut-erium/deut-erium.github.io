@@ -9,13 +9,23 @@
     </a>
 
     <nav class="site-nav" aria-label="Primary navigation">
-      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
-      <a href="{{ '/archive.html' | relative_url }}"{% if page.url == '/archive.html' %} aria-current="page"{% endif %}>Archive</a>
-      <a href="{{ '/WriteUps/' | relative_url }}"{% if page.section == 'writeups' %} aria-current="page"{% endif %}>Writeups</a>
-      <a href="{{ '/ctf-tutorials/' | relative_url }}"{% if page.section == 'tutorials' %} aria-current="page"{% endif %}>Tutorials</a>
-      <a href="{{ '/ramblings/' | relative_url }}"{% if page.section == 'ramblings' %} aria-current="page"{% endif %}>Ramblings</a>
-      <a href="{{ '/about.html' | relative_url }}"{% if page.url == '/about.html' %} aria-current="page"{% endif %}>About</a>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>Dark</button>
+      <a data-route="home" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+      <a data-route="archive" href="{{ '/archive.html' | relative_url }}"{% if page.url == '/archive.html' %} aria-current="page"{% endif %}>Archive</a>
+      <a data-route="writeups" href="{{ '/WriteUps/' | relative_url }}"{% if page.section == 'writeups' %} aria-current="page"{% endif %}>Writeups</a>
+      <a data-route="tutorials" href="{{ '/ctf-tutorials/' | relative_url }}"{% if page.section == 'tutorials' %} aria-current="page"{% endif %}>Tutorials</a>
+      <a data-route="ramblings" href="{{ '/ramblings/' | relative_url }}"{% if page.section == 'ramblings' %} aria-current="page"{% endif %}>Ramblings</a>
+      <a data-route="about" href="{{ '/about.html' | relative_url }}"{% if page.url == '/about.html' %} aria-current="page"{% endif %}>About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            {% for theme in site.data.themes %}
+              <option value="{{ theme.id }}">{{ theme.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
