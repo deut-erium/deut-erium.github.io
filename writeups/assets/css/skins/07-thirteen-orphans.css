@@ -1,0 +1,4197 @@
+/* 07: Thirteen Orphans. Generated as an isolated production skin. */
+/* Keep routes and controls semantic; style only beneath html[data-skin="thirteen-orphans"]. */
+
+html[data-skin="thirteen-orphans"] {
+  color-scheme: light;
+  --felt: #185d4c;
+  --felt-deep: #103f35;
+  --felt-light: #277461;
+  --vermilion: #b42c2a;
+  --vermilion-dark: #7e201f;
+  --ivory: #ebdfbd;
+  --tile: #fff7df;
+  --tile-low: #e7d9b7;
+  --gold: #f6c84c;
+  --ink: #1c382f;
+  --muted: #52675b;
+  --rule: #8b9b80;
+  --bench: var(--felt-deep);
+  --shell: var(--ivory);
+  --shell-high: #f7edcf;
+  --shell-low: #d2c399;
+  --navy: var(--ink);
+  --navy-soft: #426458;
+  --lcd: var(--gold);
+  --lcd-high: #ffe597;
+  --lcd-low: #dcae35;
+  --lcd-ink: var(--ink);
+  --paper: var(--tile);
+  --paper-low: var(--tile-low);
+  --pink: var(--vermilion);
+  --orange: var(--gold);
+  --yellow: var(--gold);
+  --cyan: var(--felt-light);
+  --link: #8c2423;
+  --inline-code: #f2e5c1;
+  --inline-rule: #b8a77e;
+  --quote: #d8eadc;
+  --quote-high: #edf7e9;
+  --quote-low: #a9c9b1;
+  --quote-ink: var(--ink);
+  --quote-link: #6f1e1e;
+  --page: 96rem;
+  --reading: 68rem;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --display: "Moodboard Unbounded", "Arial Black", sans-serif;
+  --keys: "Moodboard Doto", "Silkscreen", ui-monospace, monospace;
+  --mono: "Moodboard Doto", "SFMono-Regular", Consolas, monospace;
+  background: var(--bench);
+}
+
+html[data-skin="thirteen-orphans"] body {
+  color: var(--ink);
+  background-color: var(--bench);
+  background-image:
+    radial-gradient(circle at 1px 1px, #f6c84c25 1px, transparent 1.2px),
+    linear-gradient(90deg, #ffffff08 1px, transparent 1px),
+    linear-gradient(#ffffff08 1px, transparent 1px);
+  background-size: 12px 12px, 48px 48px, 48px 48px;
+  background-attachment: fixed;
+  font-family: var(--body);
+}
+
+html[data-skin="thirteen-orphans"] a {
+  color: var(--link);
+  text-decoration-color: var(--vermilion);
+  text-decoration-thickness: .1em;
+  text-underline-offset: .16em;
+}
+
+html[data-skin="thirteen-orphans"] a:hover {
+  color: var(--felt-deep);
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: .16em;
+}
+
+html[data-skin="thirteen-orphans"] :focus-visible {
+  outline: 4px solid var(--gold);
+  outline-offset: 4px;
+}
+
+html[data-skin="thirteen-orphans"] ::selection {
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .skip-link {
+  color: var(--tile);
+  background: var(--vermilion);
+  border: 3px solid var(--gold);
+  border-radius: .15rem;
+  box-shadow: .35rem .35rem 0 var(--ink);
+  font-family: var(--keys);
+  font-size: .8rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-header,
+html[data-skin="thirteen-orphans"] .site-footer,
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .record-page,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
+  width: min(calc(100% - 2.5rem), var(--page));
+  border: 6px solid var(--vermilion);
+  border-radius: .25rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-header {
+  position: relative;
+  margin-top: 1.4rem;
+  overflow: visible;
+  color: var(--ink);
+  background-color: var(--ivory);
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, var(--felt) 1rem 1.3rem, transparent 1.3rem calc(100% - 1.3rem), var(--felt) calc(100% - 1.3rem) calc(100% - 1rem), transparent calc(100% - 1rem)),
+    linear-gradient(90deg, #185d4c20 1px, transparent 1px),
+    linear-gradient(#185d4c20 1px, transparent 1px);
+  background-size: auto, 2.4rem 2.4rem, 2.4rem 2.4rem;
+  box-shadow: .65rem .7rem 0 var(--ink), inset 0 0 0 3px var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-header::before,
+html[data-skin="thirteen-orphans"] .site-footer::before {
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  content: "";
+  border: 1px solid #fff7dfaa;
+}
+
+html[data-skin="thirteen-orphans"] .site-header__inner {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1fr) minmax(0, 2.25fr);
+  gap: 0;
+  padding: 0;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand {
+  min-height: 7.9rem;
+  padding: 1.25rem 2.2rem;
+  color: var(--ink);
+  border-right: 5px solid var(--vermilion);
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__text {
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__name {
+  max-width: 10ch;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(1.28rem, 2.25vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -.09em;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__scope {
+  max-width: 28ch;
+  color: var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .055em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav {
+  align-content: center;
+  gap: .5rem;
+  justify-content: flex-end;
+  padding: .85rem 1.25rem .85rem 2.1rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav a,
+html[data-skin="thirteen-orphans"] .skin-menu summary,
+html[data-skin="thirteen-orphans"] .skin-randomizer,
+html[data-skin="thirteen-orphans"] .skin-menu select,
+html[data-skin="thirteen-orphans"] .action,
+html[data-skin="thirteen-orphans"] .record-actions a,
+html[data-skin="thirteen-orphans"] .tag-line a,
+html[data-skin="thirteen-orphans"] .quick-filters a,
+html[data-skin="thirteen-orphans"] .pagination a,
+html[data-skin="thirteen-orphans"] .pagination span,
+html[data-skin="thirteen-orphans"] .site-footer__links a {
+  min-height: 2.65rem;
+  padding: .5rem .65rem;
+  color: var(--ink);
+  background: var(--tile);
+  border: 3px solid var(--ink);
+  border-radius: .25rem;
+  box-shadow: 0 .25rem 0 #aa9b77;
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .045em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary {
+  display: inline-flex;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary::after {
+  color: var(--vermilion);
+  font-size: 1.2em;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel {
+  width: min(21rem, calc(100vw - 2rem));
+  gap: .7rem;
+  margin-top: .7rem;
+  padding: 1rem;
+  color: var(--ink);
+  background-color: var(--ivory);
+  background-image: linear-gradient(90deg, #185d4c18 1px, transparent 1px), linear-gradient(#185d4c18 1px, transparent 1px);
+  background-size: 1.5rem 1.5rem;
+  border: 5px solid var(--vermilion);
+  border-radius: .2rem;
+  box-shadow: .55rem .6rem 0 var(--ink), inset 0 0 0 2px var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel label,
+html[data-skin="thirteen-orphans"] .eyebrow,
+html[data-skin="thirteen-orphans"] .record-head__key,
+html[data-skin="thirteen-orphans"] .record-facts dt,
+html[data-skin="thirteen-orphans"] .archive-search label,
+html[data-skin="thirteen-orphans"] .archive-year > header span,
+html[data-skin="thirteen-orphans"] .pagination__position,
+html[data-skin="thirteen-orphans"] .record-end nav span {
+  font-family: var(--keys);
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu select {
+  width: 100%;
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--ink);
+  box-shadow: none;
+  text-transform: none;
+}
+
+html[data-skin="thirteen-orphans"] .skin-randomizer {
+  width: 100%;
+  color: var(--tile);
+  background: var(--vermilion);
+  border-color: var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav a:hover,
+html[data-skin="thirteen-orphans"] .site-nav a:focus-visible,
+html[data-skin="thirteen-orphans"] .skin-menu summary:hover,
+html[data-skin="thirteen-orphans"] .skin-menu summary:focus-visible,
+html[data-skin="thirteen-orphans"] .skin-randomizer:hover,
+html[data-skin="thirteen-orphans"] .skin-randomizer:focus-visible,
+html[data-skin="thirteen-orphans"] .action:hover,
+html[data-skin="thirteen-orphans"] .action:focus-visible,
+html[data-skin="thirteen-orphans"] .record-actions a:hover,
+html[data-skin="thirteen-orphans"] .record-actions a:focus-visible,
+html[data-skin="thirteen-orphans"] .tag-line a:hover,
+html[data-skin="thirteen-orphans"] .tag-line a:focus-visible,
+html[data-skin="thirteen-orphans"] .quick-filters a:hover,
+html[data-skin="thirteen-orphans"] .quick-filters a:focus-visible,
+html[data-skin="thirteen-orphans"] .pagination a:hover,
+html[data-skin="thirteen-orphans"] .pagination a:focus-visible,
+html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
+html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
+  color: var(--tile);
+  background: var(--felt);
+  border-color: var(--ink);
+  box-shadow: 0 .25rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav a[aria-current="page"],
+html[data-skin="thirteen-orphans"] .quick-filters a[aria-current="true"] {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .record-page,
+html[data-skin="thirteen-orphans"] .page-shell {
+  padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--felt);
+  background-image:
+    linear-gradient(90deg, #fff7df18 2px, transparent 2px),
+    linear-gradient(#fff7df18 2px, transparent 2px),
+    radial-gradient(circle at 1px 1px, #f6c84c22 1px, transparent 1.2px);
+  background-size: 48px 48px, 48px 48px, 12px 12px;
+  box-shadow: .7rem .8rem 0 var(--ink), inset 0 0 0 4px var(--ivory);
+}
+
+html[data-skin="thirteen-orphans"] .masthead {
+  gap: 0;
+  overflow: hidden;
+  background: var(--ivory);
+  border: 6px solid var(--vermilion);
+  border-radius: .2rem;
+  box-shadow: .5rem .55rem 0 var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .masthead__copy,
+html[data-skin="thirteen-orphans"] .index-heading,
+html[data-skin="thirteen-orphans"] .page-heading,
+html[data-skin="thirteen-orphans"] .record-head {
+  color: var(--ink);
+  background-color: var(--tile);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.1rem, var(--vermilion) 1.1rem 1.45rem, transparent 1.45rem),
+    linear-gradient(90deg, #185d4c13 1px, transparent 1px),
+    linear-gradient(#185d4c13 1px, transparent 1px);
+  background-size: auto, 2.4rem 2.4rem, 2.4rem 2.4rem;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__copy {
+  display: grid;
+  align-content: space-between;
+  min-height: 29rem;
+  padding: clamp(1.7rem, 4.5vw, 4.4rem);
+  padding-left: clamp(2.1rem, 5vw, 5.1rem);
+}
+
+html[data-skin="thirteen-orphans"] .eyebrow,
+html[data-skin="thirteen-orphans"] .record-head__key {
+  color: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .masthead h1,
+html[data-skin="thirteen-orphans"] .index-heading h1,
+html[data-skin="thirteen-orphans"] .page-heading h1,
+html[data-skin="thirteen-orphans"] .record-head h1,
+html[data-skin="thirteen-orphans"] .error-shell h1 {
+  max-width: 12ch;
+  margin: .3rem 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 6.1vw, 6.25rem);
+  font-weight: 900;
+  letter-spacing: -.12em;
+  line-height: .87;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .masthead h1 {
+  text-shadow: 4px 4px 0 var(--gold), 8px 8px 0 #185d4c33;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__lede,
+html[data-skin="thirteen-orphans"] .index-heading > p:last-child,
+html[data-skin="thirteen-orphans"] .page-heading > p:last-child,
+html[data-skin="thirteen-orphans"] .record-head__abstract {
+  max-width: 58ch;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.58;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__actions,
+html[data-skin="thirteen-orphans"] .record-actions,
+html[data-skin="thirteen-orphans"] .tag-line {
+  gap: .55rem;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__actions .action--primary {
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"] .archive-tools,
+html[data-skin="thirteen-orphans"] .archive-groups,
+html[data-skin="thirteen-orphans"] .page-prose,
+html[data-skin="thirteen-orphans"] .article__content,
+html[data-skin="thirteen-orphans"] .record-end {
+  color: var(--ink);
+  background-color: var(--tile);
+  background-image: linear-gradient(90deg, transparent 0 1rem, #185d4c12 1rem 1.13rem, transparent 1.13rem);
+  border: 5px solid var(--ink);
+  border-radius: .25rem;
+  box-shadow: .45rem .5rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"] .archive-tools,
+html[data-skin="thirteen-orphans"] .archive-groups,
+html[data-skin="thirteen-orphans"] .page-prose,
+html[data-skin="thirteen-orphans"] .record-end {
+  padding: clamp(1.15rem, 2.5vw, 2.4rem);
+}
+
+html[data-skin="thirteen-orphans"] .section-heading {
+  align-items: end;
+  margin-bottom: 0;
+  padding-bottom: 1rem;
+  border-bottom: 5px double var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .section-heading h2,
+html[data-skin="thirteen-orphans"] .archive-year h2,
+html[data-skin="thirteen-orphans"] .related-records h2 {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3.4vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -.1em;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .section-heading > p,
+html[data-skin="thirteen-orphans"] .archive-year > header span {
+  color: var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .record-row {
+  border-bottom: 2px solid var(--rule);
+}
+
+html[data-skin="thirteen-orphans"] .record-row:nth-child(even) {
+  background: #ebdfbd7a;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link {
+  padding: 1rem .8rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link:hover,
+html[data-skin="thirteen-orphans"] .record-row__link:focus-visible {
+  color: var(--ink);
+  background: var(--gold);
+  box-shadow: inset .55rem 0 0 var(--vermilion), inset -.35rem 0 0 var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .record-row__date,
+html[data-skin="thirteen-orphans"] .record-row__primitive,
+html[data-skin="thirteen-orphans"] .record-row__event {
+  color: var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .71rem;
+  font-weight: 900;
+  letter-spacing: .035em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__title {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid {
+  gap: .6rem;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a {
+  min-height: 4.35rem;
+  color: var(--ink);
+  background: var(--tile);
+  border: 4px solid var(--ink);
+  border-radius: .3rem;
+  box-shadow: 0 .32rem 0 #aa9b77;
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:nth-child(3n + 1) {
+  color: var(--tile);
+  background: var(--felt);
+  border-color: var(--ink);
+  box-shadow: 0 .32rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:nth-child(3n + 2) {
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:hover,
+html[data-skin="thirteen-orphans"] .all-tags__grid a:focus-visible {
+  color: var(--tile);
+  background: var(--vermilion);
+  border-color: var(--ink);
+  box-shadow: 0 .32rem 0 var(--felt-deep);
+}
+
+html[data-skin="thirteen-orphans"] .pagination {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 4px solid var(--rule);
+}
+
+html[data-skin="thirteen-orphans"] .pagination__position strong {
+  color: var(--vermilion);
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -.1em;
+  line-height: .9;
+}
+
+html[data-skin="thirteen-orphans"] .index-heading,
+html[data-skin="thirteen-orphans"] .page-heading,
+html[data-skin="thirteen-orphans"] .record-head {
+  padding: clamp(1.7rem, 4.3vw, 4.25rem);
+  padding-left: clamp(2.1rem, 5vw, 5rem);
+  border: 5px solid var(--ink);
+  box-shadow: .5rem .55rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .index-heading .eyebrow,
+html[data-skin="thirteen-orphans"] .page-heading .eyebrow,
+html[data-skin="thirteen-orphans"] .record-head__key {
+  color: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .index-heading h1,
+html[data-skin="thirteen-orphans"] .page-heading h1,
+html[data-skin="thirteen-orphans"] .record-head h1 {
+  max-width: 13ch;
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools {
+  display: grid;
+  gap: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search {
+  padding-bottom: 1rem;
+  border-bottom: 4px double var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .archive-search label,
+html[data-skin="thirteen-orphans"] .all-tags summary,
+html[data-skin="thirteen-orphans"] .record-toc summary {
+  color: var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input {
+  color: var(--ink);
+  background: var(--ivory);
+  border: 4px solid var(--ink);
+  border-radius: .2rem;
+  box-shadow: inset .55rem 0 0 var(--gold);
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input:focus-visible {
+  background: var(--tile);
+}
+
+html[data-skin="thirteen-orphans"] .quick-filters {
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags {
+  border-top: 3px solid var(--rule);
+}
+
+html[data-skin="thirteen-orphans"] .archive-year + .archive-year {
+  margin-top: 2.5rem;
+  padding-top: 1.15rem;
+  border-top: 5px double var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .archive-year > header {
+  margin-bottom: .85rem;
+}
+
+html[data-skin="thirteen-orphans"] .archive-empty {
+  color: var(--ink);
+  background: var(--gold);
+  border: 5px solid var(--ink);
+  border-radius: .25rem;
+  box-shadow: .4rem .45rem 0 var(--vermilion);
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .record-head__key {
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1.3rem;
+}
+
+html[data-skin="thirteen-orphans"] .record-head__key span {
+  padding: .4rem .55rem;
+  color: var(--tile);
+  background: var(--felt-deep);
+  border: 2px solid var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .record-head__abstract {
+  max-width: 62ch;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts {
+  gap: .55rem;
+  padding: .7rem;
+  background: var(--felt-deep);
+  border: 4px solid var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .record-facts > div {
+  min-height: 5.5rem;
+  padding: .7rem;
+  color: var(--ink);
+  background: var(--tile);
+  border: 2px solid var(--ink);
+  border-radius: .18rem;
+  box-shadow: 0 .2rem 0 #0b2922;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts > div:nth-child(2n) {
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-facts dt {
+  color: var(--vermilion);
+  font-size: .66rem;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts dd {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="thirteen-orphans"] .tag-line a:nth-child(odd),
+html[data-skin="thirteen-orphans"] .record-actions a:last-child {
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .record-grid {
+  gap: 1.75rem;
+}
+
+html[data-skin="thirteen-orphans"] .article__content,
+html[data-skin="thirteen-orphans"] .page-prose {
+  max-width: var(--reading);
+  padding: clamp(1.3rem, 3.5vw, 3.4rem);
+  border-left: .95rem solid var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .prose {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: clamp(1.1rem, 1.32vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.76;
+}
+
+html[data-skin="thirteen-orphans"] .prose > p:first-of-type::first-letter {
+  float: left;
+  margin: .07em .12em 0 0;
+  padding: .11em .14em .1em;
+  color: var(--tile);
+  background: var(--vermilion);
+  border: 3px solid var(--ink);
+  border-radius: .1rem;
+  font-family: var(--display);
+  font-size: 3.05em;
+  font-weight: 900;
+  letter-spacing: -.13em;
+  line-height: .65;
+}
+
+html[data-skin="thirteen-orphans"] .prose h1,
+html[data-skin="thirteen-orphans"] .prose h2,
+html[data-skin="thirteen-orphans"] .prose h3,
+html[data-skin="thirteen-orphans"] .prose h4,
+html[data-skin="thirteen-orphans"] .prose h5,
+html[data-skin="thirteen-orphans"] .prose h6 {
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.09em;
+  line-height: .95;
+}
+
+html[data-skin="thirteen-orphans"] .prose h2 {
+  padding: .65rem 0 .3rem;
+  border-top: 5px double var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .prose h2::before {
+  display: inline-grid;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: .24em;
+  place-items: center;
+  vertical-align: -.12em;
+  content: "";
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  border-radius: .12em;
+  box-shadow: .1em .1em 0 var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .prose h3 {
+  color: var(--vermilion-dark);
+}
+
+html[data-skin="thirteen-orphans"] .heading-anchor {
+  color: var(--vermilion);
+  font-family: var(--keys);
+}
+
+html[data-skin="thirteen-orphans"] .prose hr {
+  height: 7px;
+  background: repeating-linear-gradient(90deg, var(--vermilion) 0 1.3rem, var(--gold) 1.3rem 2.6rem, var(--felt) 2.6rem 3.9rem);
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] .prose .info {
+  color: var(--ink);
+  background: var(--gold);
+  border: 4px solid var(--ink);
+  border-left: .9rem solid var(--vermilion);
+  border-radius: .2rem;
+  box-shadow: .35rem .4rem 0 var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .prose blockquote {
+  color: var(--quote-ink);
+  background-color: var(--quote);
+  background-image: linear-gradient(90deg, #185d4c16 1px, transparent 1px), linear-gradient(#185d4c16 1px, transparent 1px);
+  background-size: 1.3rem 1.3rem;
+  border: 4px solid var(--ink);
+  border-left: .9rem solid var(--felt);
+  border-radius: .2rem;
+  box-shadow: .35rem .4rem 0 var(--vermilion);
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .prose blockquote a,
+html[data-skin="thirteen-orphans"] .prose blockquote code {
+  color: var(--quote-link);
+}
+
+html[data-skin="thirteen-orphans"] .prose ul:not(.code-frame__gutter) > li::marker {
+  color: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .prose ul:not(.code-frame__gutter) ul > li::marker {
+  color: var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .prose code {
+  color: var(--ink);
+  background: var(--inline-code);
+  border-color: var(--inline-rule);
+  border-radius: .1rem;
+  font-family: var(--mono);
+  font-size: .84em;
+  font-weight: 900;
+}
+
+html[data-skin="thirteen-orphans"] .prose th,
+html[data-skin="thirteen-orphans"] .prose td {
+  border-color: var(--rule);
+}
+
+html[data-skin="thirteen-orphans"] .prose th {
+  color: var(--tile);
+  background: var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .74rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .prose tr:nth-child(even) td {
+  background: var(--paper-low);
+}
+
+html[data-skin="thirteen-orphans"] .prose img:not(.emoji) {
+  border: 5px solid var(--ink);
+  box-shadow: .4rem .45rem 0 var(--vermilion), .8rem .9rem 0 var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame {
+  color: var(--tile);
+  background: #102e27;
+  border: 6px solid var(--ink);
+  border-radius: .2rem;
+  box-shadow: .45rem .5rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__bar {
+  color: var(--ink);
+  background: var(--gold);
+  border-bottom: 5px solid var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__label strong {
+  font-family: var(--keys);
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button {
+  color: var(--tile);
+  background: var(--vermilion);
+  border: 3px solid var(--ink);
+  border-radius: .18rem;
+  box-shadow: 0 .2rem 0 var(--felt-deep);
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 900;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button:last-child {
+  color: var(--ink);
+  background: var(--tile);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button:hover,
+html[data-skin="thirteen-orphans"] .code-frame__actions button:focus-visible {
+  color: var(--tile);
+  background: var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame__gutter {
+  color: var(--gold);
+  background: #0a211c;
+  border-right-color: var(--vermilion);
+  font-family: var(--mono);
+  font-size: .8rem;
+  font-weight: 900;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__status {
+  color: var(--ink);
+  background: var(--tile);
+  border-top-color: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__fallback {
+  color: var(--ink);
+  background: var(--tile);
+  border-color: var(--gold);
+  border-radius: .15rem;
+}
+
+html[data-skin="thirteen-orphans"] .prose .katex-display {
+  color: var(--ink);
+  background: var(--ivory);
+  border: 4px solid var(--ink);
+  border-radius: .2rem;
+  box-shadow: .35rem .4rem 0 var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+  color: var(--tile);
+  background-color: var(--felt-deep);
+  background-image: linear-gradient(90deg, #fff7df16 1px, transparent 1px), linear-gradient(#fff7df16 1px, transparent 1px);
+  background-size: 1.8rem 1.8rem;
+  border: 6px solid var(--ink);
+  border-radius: .2rem;
+  box-shadow: .45rem .5rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .record-toc {
+  border-bottom-color: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-toc summary {
+  color: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-toc li,
+html[data-skin="thirteen-orphans"] .related-records li {
+  border-top-color: #fff7df44;
+}
+
+html[data-skin="thirteen-orphans"] .record-toc a,
+html[data-skin="thirteen-orphans"] .related-records a {
+  color: var(--tile);
+}
+
+html[data-skin="thirteen-orphans"] .record-toc a:hover,
+html[data-skin="thirteen-orphans"] .record-toc a:focus-visible,
+html[data-skin="thirteen-orphans"] .related-records a:hover,
+html[data-skin="thirteen-orphans"] .related-records a:focus-visible {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .toc-fallback {
+  color: #d8e6d4;
+}
+
+html[data-skin="thirteen-orphans"] .related-records h2 {
+  color: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav a {
+  color: var(--ink);
+  background: var(--gold);
+  border: 4px solid var(--ink);
+  border-radius: .2rem;
+  box-shadow: .3rem .35rem 0 var(--felt);
+  font-family: var(--body);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav a:hover,
+html[data-skin="thirteen-orphans"] .record-end nav a:focus-visible {
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .error-shell {
+  min-height: 65vh;
+  color: var(--tile);
+  background-color: var(--felt-deep);
+  background-image: linear-gradient(90deg, #fff7df18 2px, transparent 2px), linear-gradient(#fff7df18 2px, transparent 2px);
+  background-size: 3rem 3rem;
+  box-shadow: .7rem .8rem 0 var(--ink), inset 0 0 0 4px var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .error-code {
+  color: var(--gold);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.14em;
+  text-shadow: 4px 4px 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .error-code i {
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .error-shell h1 {
+  color: var(--tile);
+  text-shadow: 4px 4px 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer {
+  position: relative;
+  margin-bottom: 1.4rem;
+  color: var(--tile);
+  background-color: var(--felt-deep);
+  background-image: linear-gradient(90deg, #fff7df16 1px, transparent 1px), linear-gradient(#fff7df16 1px, transparent 1px);
+  background-size: 2rem 2rem;
+  border-top-color: var(--gold);
+  box-shadow: .65rem .7rem 0 var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__inner {
+  padding: 1.1rem 1.4rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__note {
+  font-family: var(--body);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer a {
+  color: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links a {
+  color: var(--ink);
+  background: var(--tile);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
+html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] {
+  color-scheme: dark;
+  --felt: #164f42;
+  --felt-deep: #091e1a;
+  --felt-light: #357e6a;
+  --vermilion: #df5a4e;
+  --vermilion-dark: #ff9f8a;
+  --ivory: #202c27;
+  --tile: #18231f;
+  --tile-low: #26362f;
+  --gold: #f6c84c;
+  --ink: #fff7df;
+  --muted: #c7d2c2;
+  --rule: #789383;
+  --bench: #071512;
+  --shell: var(--ivory);
+  --shell-high: #2d3d35;
+  --shell-low: #111a17;
+  --navy: var(--ink);
+  --navy-soft: #c4d5c9;
+  --lcd: var(--gold);
+  --lcd-high: #ffe59a;
+  --lcd-low: #c9942c;
+  --lcd-ink: #17201c;
+  --paper: var(--tile);
+  --paper-low: var(--tile-low);
+  --pink: var(--vermilion);
+  --orange: var(--gold);
+  --yellow: var(--gold);
+  --cyan: var(--felt-light);
+  --link: #ffd76e;
+  --inline-code: #2d4037;
+  --inline-rule: #799486;
+  --quote: #213c32;
+  --quote-high: #2d5143;
+  --quote-low: #13271f;
+  --quote-ink: var(--ink);
+  --quote-link: #ffe190;
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] body {
+  background-image:
+    radial-gradient(circle at 1px 1px, #f6c84c20 1px, transparent 1.2px),
+    linear-gradient(90deg, #fff7df0a 1px, transparent 1px),
+    linear-gradient(#fff7df0a 1px, transparent 1px);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-header {
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, var(--felt) 1rem 1.3rem, transparent 1.3rem calc(100% - 1.3rem), var(--felt) calc(100% - 1.3rem) calc(100% - 1rem), transparent calc(100% - 1rem)),
+    linear-gradient(90deg, #fff7df11 1px, transparent 1px),
+    linear-gradient(#fff7df11 1px, transparent 1px);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .home-shell,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-shell,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-page,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .page-shell {
+  background-image:
+    linear-gradient(90deg, #fff7df12 2px, transparent 2px),
+    linear-gradient(#fff7df12 2px, transparent 2px),
+    radial-gradient(circle at 1px 1px, #f6c84c1c 1px, transparent 1.2px);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .masthead__copy,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .index-heading,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .page-heading,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-head {
+  background-image:
+    linear-gradient(90deg, transparent 0 1.1rem, var(--vermilion) 1.1rem 1.45rem, transparent 1.45rem),
+    linear-gradient(90deg, #fff7df0d 1px, transparent 1px),
+    linear-gradient(#fff7df0d 1px, transparent 1px);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-tools,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-groups,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .page-prose,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .article__content,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-end {
+  background-image: linear-gradient(90deg, transparent 0 1rem, #fff7df12 1rem 1.13rem, transparent 1.13rem);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-brand,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-brand__name,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .masthead h1,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .index-heading h1,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .page-heading h1,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-head h1,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .section-heading h2,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-year h2,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h1,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h2,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h4,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h5,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h6,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row__link,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row__title,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-search label,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .all-tags summary {
+  color: var(--ink);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-brand__scope,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .section-heading > p,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-year > header span,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row__date,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row__primitive,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row__event {
+  color: #cfe0d4;
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose h3,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .index-heading .eyebrow,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .page-heading .eyebrow,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-head__key {
+  color: #ffb2a0;
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-row:nth-child(even) {
+  background: #26362f;
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .archive-search input {
+  color: var(--ink);
+  background: var(--paper-low);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose tr:nth-child(even) td {
+  background: var(--paper-low);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .prose code {
+  color: var(--ink);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-nav a:hover,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .site-nav a:focus-visible,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .skin-menu summary:hover,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .skin-menu summary:focus-visible,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .skin-randomizer:hover,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .skin-randomizer:focus-visible,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .all-tags__grid a:nth-child(3n + 1),
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-end nav a:hover,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .record-end nav a:focus-visible,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions button:hover,
+html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions button:focus-visible {
+  color: var(--ink);
+}
+
+@media (min-width: 76rem) {
+  html[data-skin="thirteen-orphans"] .record-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
+    align-items: start;
+    justify-content: stretch;
+  }
+
+  html[data-skin="thirteen-orphans"] .article__content {
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    position: sticky;
+    top: 1rem;
+    width: auto;
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 68rem) {
+  html[data-skin="thirteen-orphans"] .site-header__inner {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-brand {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 5px solid var(--vermilion);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav {
+    justify-content: flex-start;
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead__copy {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="thirteen-orphans"] .site-header,
+  html[data-skin="thirteen-orphans"] .site-footer,
+  html[data-skin="thirteen-orphans"] .home-shell,
+  html[data-skin="thirteen-orphans"] .archive-shell,
+  html[data-skin="thirteen-orphans"] .record-page,
+  html[data-skin="thirteen-orphans"] .page-shell,
+  html[data-skin="thirteen-orphans"] .error-shell {
+    width: 100%;
+    margin-inline: 0;
+    border-width: 4px;
+    box-shadow: none;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-header {
+    margin-top: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer {
+    margin-bottom: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-header__inner {
+    display: block;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-brand {
+    padding: 1rem 1.25rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: .65rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav a,
+  html[data-skin="thirteen-orphans"] .skin-menu summary {
+    width: 100%;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > .skin-menu {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="thirteen-orphans"] .skin-menu summary {
+    justify-content: center;
+  }
+
+  html[data-skin="thirteen-orphans"] .skin-menu__panel {
+    right: auto;
+    left: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .home-shell,
+  html[data-skin="thirteen-orphans"] .archive-shell,
+  html[data-skin="thirteen-orphans"] .record-page,
+  html[data-skin="thirteen-orphans"] .page-shell,
+  html[data-skin="thirteen-orphans"] .error-shell {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: .85rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead__copy,
+  html[data-skin="thirteen-orphans"] .index-heading,
+  html[data-skin="thirteen-orphans"] .page-heading,
+  html[data-skin="thirteen-orphans"] .record-head,
+  html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+  html[data-skin="thirteen-orphans"] .archive-tools,
+  html[data-skin="thirteen-orphans"] .archive-groups,
+  html[data-skin="thirteen-orphans"] .page-prose,
+  html[data-skin="thirteen-orphans"] .article__content,
+  html[data-skin="thirteen-orphans"] .record-end {
+    padding: 1rem;
+    border-width: 4px;
+    box-shadow: .3rem .35rem 0 var(--vermilion);
+  }
+
+  html[data-skin="thirteen-orphans"] .article__content,
+  html[data-skin="thirteen-orphans"] .page-prose {
+    border-left-width: .62rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead h1,
+  html[data-skin="thirteen-orphans"] .index-heading h1,
+  html[data-skin="thirteen-orphans"] .page-heading h1,
+  html[data-skin="thirteen-orphans"] .record-head h1 {
+    font-size: clamp(2.2rem, 12.5vw, 3.55rem);
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead h1 {
+    text-shadow: 3px 3px 0 var(--gold);
+  }
+
+  html[data-skin="thirteen-orphans"] .masthead__copy {
+    padding-left: 2rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .section-heading,
+  html[data-skin="thirteen-orphans"] .archive-year > header {
+    display: block;
+  }
+
+  html[data-skin="thirteen-orphans"] .section-heading > p,
+  html[data-skin="thirteen-orphans"] .archive-year > header span {
+    display: block;
+    margin-top: .5rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .3rem .65rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-row__date,
+  html[data-skin="thirteen-orphans"] .record-row__title,
+  html[data-skin="thirteen-orphans"] .record-row__event,
+  html[data-skin="thirteen-orphans"] .record-row__primitive {
+    grid-column: 1;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-search {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-search label,
+  html[data-skin="thirteen-orphans"] .archive-search p {
+    grid-column: 1;
+  }
+
+  html[data-skin="thirteen-orphans"] .pagination {
+    display: grid;
+  }
+
+  html[data-skin="thirteen-orphans"] .pagination__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] .pagination__links > :nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  html[data-skin="thirteen-orphans"] .prose {
+    font-size: 1.14rem;
+    line-height: 1.72;
+  }
+
+  html[data-skin="thirteen-orphans"] .prose h2::before {
+    width: .84em;
+    height: .84em;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    border-width: 4px;
+  }
+}
+
+@media (max-width: 23rem) {
+  html[data-skin="thirteen-orphans"] .site-nav,
+  html[data-skin="thirteen-orphans"] .pagination__links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > .skin-menu,
+  html[data-skin="thirteen-orphans"] .pagination__links > :nth-child(2) {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="thirteen-orphans"] *,
+  html[data-skin="thirteen-orphans"] *::before,
+  html[data-skin="thirteen-orphans"] *::after {
+    scroll-behavior: auto;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="thirteen-orphans"] .site-header,
+  html[data-skin="thirteen-orphans"] .site-footer,
+  html[data-skin="thirteen-orphans"] .home-shell,
+  html[data-skin="thirteen-orphans"] .archive-shell,
+  html[data-skin="thirteen-orphans"] .record-page,
+  html[data-skin="thirteen-orphans"] .page-shell,
+  html[data-skin="thirteen-orphans"] .error-shell,
+  html[data-skin="thirteen-orphans"] .masthead,
+  html[data-skin="thirteen-orphans"] .masthead__copy,
+  html[data-skin="thirteen-orphans"] .index-heading,
+  html[data-skin="thirteen-orphans"] .page-heading,
+  html[data-skin="thirteen-orphans"] .record-head,
+  html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+  html[data-skin="thirteen-orphans"] .archive-tools,
+  html[data-skin="thirteen-orphans"] .archive-groups,
+  html[data-skin="thirteen-orphans"] .page-prose,
+  html[data-skin="thirteen-orphans"] .article__content,
+  html[data-skin="thirteen-orphans"] .record-end,
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index,
+  html[data-skin="thirteen-orphans"] .prose .code-frame {
+    forced-color-adjust: auto;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav a,
+  html[data-skin="thirteen-orphans"] .skin-menu summary,
+  html[data-skin="thirteen-orphans"] .skin-randomizer,
+  html[data-skin="thirteen-orphans"] .action,
+  html[data-skin="thirteen-orphans"] .record-actions a,
+  html[data-skin="thirteen-orphans"] .tag-line a,
+  html[data-skin="thirteen-orphans"] .quick-filters a,
+  html[data-skin="thirteen-orphans"] .pagination a,
+  html[data-skin="thirteen-orphans"] .site-footer__links a,
+  html[data-skin="thirteen-orphans"] .record-end nav a,
+  html[data-skin="thirteen-orphans"] .code-frame__actions button {
+    forced-color-adjust: auto;
+    box-shadow: none;
+  }
+}
+
+/* Site topology */
+html[data-skin="thirteen-orphans"] .site-header__inner {
+  grid-template-columns: minmax(15rem, .78fr) minmax(0, 2.22fr);
+}
+
+html[data-skin="thirteen-orphans"] .site-brand {
+  display: grid;
+  align-content: center;
+  min-height: 10.75rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav {
+  display: grid;
+  align-items: stretch;
+  gap: .45rem;
+  padding: .75rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route] {
+  display: grid;
+  width: 100%;
+  min-height: 3.05rem;
+  place-items: center;
+  border-width: 3px 3px 5px;
+  box-shadow: 0 .22rem 0 var(--felt-deep);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="home"] {
+  grid-area: home;
+  color: var(--tile);
+  background: var(--felt);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="archive"] {
+  grid-area: archive;
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="about"] {
+  grid-area: about;
+  background: var(--ivory);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="feed"] {
+  grid-area: feed;
+  color: var(--tile);
+  background: var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="source"] {
+  grid-area: source;
+  background: var(--tile-low);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route][aria-current="page"] {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--vermilion);
+  box-shadow: inset 0 .26rem 0 var(--vermilion), 0 .22rem 0 var(--felt-deep);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route]:hover,
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route]:focus-visible {
+  color: var(--tile);
+  background: var(--felt-deep);
+  border-color: var(--gold);
+  box-shadow: 0 .22rem 0 var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu {
+  position: relative;
+  grid-area: skins;
+  min-width: 0;
+  align-self: stretch;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  min-height: 3.2rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  color: var(--tile);
+  background: var(--felt-deep);
+  border-color: var(--ink);
+  box-shadow: 0 .22rem 0 var(--vermilion);
+  text-align: left;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu[open] summary {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + .55rem);
+  right: 0;
+  display: grid;
+  width: min(24rem, calc(100vw - 2rem));
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel label,
+html[data-skin="thirteen-orphans"] .skin-menu__panel select {
+  grid-column: 1 / -1;
+}
+
+html[data-skin="thirteen-orphans"] .skin-randomizer {
+  grid-column: 1 / -1;
+  width: auto;
+  min-height: 2.75rem;
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .record-index {
+  min-width: 0;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell {
+  display: grid;
+  grid-template-areas:
+    "heading heading"
+    "tools groups"
+    "empty groups";
+  grid-template-columns: minmax(16rem, .58fr) minmax(0, 1.42fr);
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell > .index-heading--archive {
+  grid-area: heading;
+  min-width: 0;
+  margin: 0;
+  padding-bottom: 2.5rem;
+  border-bottom: .75rem solid var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell > .archive-tools {
+  position: sticky;
+  z-index: 1;
+  top: 1rem;
+  grid-area: tools;
+  min-width: 0;
+  margin: 0;
+  align-content: start;
+  background-color: var(--ivory);
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools .archive-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .65rem;
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools .all-tags summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+  padding: .6rem .2rem;
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools .all-tags__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: .75rem;
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell > .archive-groups {
+  grid-area: groups;
+  min-width: 0;
+  margin: 0;
+  background-color: var(--felt-deep);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  column-gap: 1rem;
+  margin: 0;
+  padding: 1.25rem 0;
+  border-top: 4px solid var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year + .archive-year {
+  margin-top: 0;
+  padding-top: 1.25rem;
+  border-top: 4px solid var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header {
+  display: flex;
+  grid-row: 1 / span 3;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 16rem;
+  margin: 0;
+  padding: .65rem .35rem;
+  color: var(--ink);
+  background: var(--gold);
+  border: 3px solid var(--ink);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header h2 {
+  writing-mode: vertical-rl;
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header span {
+  color: var(--ink);
+  writing-mode: vertical-rl;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > .record-columns,
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > .record-list {
+  grid-column: 2;
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell > .archive-empty {
+  grid-area: empty;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-page {
+  display: grid;
+  grid-template-areas:
+    "head record-grid"
+    "head record-end";
+  grid-template-columns: minmax(17rem, .7fr) minmax(0, 1.3fr);
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head {
+  position: sticky;
+  top: 1rem;
+  grid-area: head;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1.3rem, 2.8vw, 2.5rem);
+  border-left: .8rem solid var(--vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head h1 {
+  font-size: clamp(2.25rem, 4.3vw, 4.6rem);
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head .record-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-grid {
+  display: grid;
+  grid-area: record-grid;
+  grid-template-areas: "article index";
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
+  gap: clamp(1rem, 2vw, 1.8rem);
+  min-width: 0;
+  margin: 0;
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .record-grid > .article__content {
+  grid-area: article;
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+  position: sticky;
+  top: 1rem;
+  grid-area: index;
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-end {
+  grid-area: record-end;
+  min-width: 0;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(19rem, .8fr);
+  gap: 1rem 2rem;
+  align-items: center;
+  padding: 1.2rem 1.4rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__note {
+  margin: 0;
+  padding: .9rem 1rem;
+  border-left: .55rem solid var(--gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links a {
+  display: grid;
+  min-height: 4.4rem;
+  place-items: center;
+  padding: .55rem;
+}
+
+@media (max-width: 70rem) {
+  html[data-skin="thirteen-orphans"] .archive-shell {
+    grid-template-areas:
+      "heading"
+      "tools"
+      "groups"
+      "empty";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-shell > .archive-tools,
+  html[data-skin="thirteen-orphans"] .record-page > .record-head,
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    position: static;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-page {
+    grid-template-areas:
+      "head"
+      "record-grid"
+      "record-end";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 52rem) {
+  html[data-skin="thirteen-orphans"] .home-shell > .masthead .masthead__copy {
+    min-height: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-page > .record-grid {
+    grid-template-areas:
+      "article"
+      "index";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: .7rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header {
+    grid-row: auto;
+    flex-direction: row;
+    min-height: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header h2,
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header span {
+    writing-mode: horizontal-tb;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year > .record-list {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="thirteen-orphans"] .site-nav {
+    grid-template-areas:
+      "home archive"
+      "about feed"
+      "source source"
+      "skins skins";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > a[data-route],
+  html[data-skin="thirteen-orphans"] .skin-menu summary {
+    min-height: 3.15rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer__links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer__links a {
+    min-height: 3.2rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  html[data-skin="thirteen-orphans"] .site-nav {
+    grid-template-areas:
+      "home"
+      "archive"
+      "about"
+      "feed"
+      "source"
+      "skins";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .skin-menu__panel {
+    right: auto;
+    left: 0;
+    width: min(100%, calc(100vw - 1.5rem));
+  }
+
+  html[data-skin="thirteen-orphans"] .record-page > .record-head .record-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Final remediation: Thirteen Orphans */
+html[data-skin="thirteen-orphans"] {
+  color-scheme: light;
+  --to-paper: #fffaf0;
+  --to-paper-low: #f2e6ca;
+  --to-fg: #19342f;
+  --to-muted: #36574b;
+  --to-link: #8b2028;
+  --to-line: #47685a;
+  --to-felt: #145744;
+  --to-deep: #0d3b33;
+  --to-vermilion: #8d2630;
+  --to-gold: #f0c550;
+  --to-on-felt: #fffaf0;
+  --to-on-gold: #14251f;
+  --to-current: #8d2630;
+  --to-current-fg: #fffaf0;
+  --to-focus: #0b4b40;
+  --to-focus-inverse: #fffaf0;
+  --to-focus-deep: #fffaf0;
+  --to-focus-gold: #14251f;
+  --to-list-surface: #0d3b33;
+  --to-list-row: #174b40;
+  --to-list-row-alt: #123f36;
+  --to-list-fg: #fffaf0;
+  --to-list-meta: #f7d56b;
+  --to-code-bg: #102a24;
+  --to-code-fg: #fff7e6;
+  --to-code-gutter: #071b17;
+  --to-inline: #f2e5c4;
+  --to-inline-line: #8d7b56;
+  --to-syntax-comment: #b6c9be;
+  --to-syntax-error: #fff7e6;
+  --to-syntax-error-bg: #8d2630;
+  --to-syntax-keyword: #79e0c4;
+  --to-syntax-operator: #f7d56b;
+  --to-syntax-name: #fff7e6;
+  --to-syntax-function: #ffb0a5;
+  --to-syntax-string: #f7d56b;
+  --to-syntax-number: #ffbc74;
+  --to-syntax-delete: #ffb0a5;
+  --to-syntax-insert: #79e0c4;
+  --to-syntax-heading: #9bc8ff;
+  --bench: var(--to-felt);
+  --shell: var(--to-felt);
+  --shell-high: var(--to-felt);
+  --shell-low: var(--to-deep);
+  --navy: var(--to-fg);
+  --navy-soft: var(--to-muted);
+  --lcd: var(--to-gold);
+  --lcd-high: var(--to-gold);
+  --lcd-low: var(--to-gold);
+  --lcd-ink: var(--to-on-gold);
+  --paper: var(--to-paper);
+  --paper-low: var(--to-paper-low);
+  --ink: var(--to-fg);
+  --muted: var(--to-muted);
+  --rule: var(--to-line);
+  --link: var(--to-link);
+  --inline-code: var(--to-inline);
+  --inline-rule: var(--to-inline-line);
+  --quote: #e1eee2;
+  --quote-high: #e1eee2;
+  --quote-low: #c4d9c8;
+  --quote-ink: var(--to-fg);
+  --quote-link: var(--to-link);
+  --pink: var(--to-vermilion);
+  --orange: var(--to-gold);
+  --yellow: var(--to-gold);
+  --cyan: #21705d;
+  --page: 96rem;
+  --reading: 75ch;
+  background: var(--to-felt);
+}
+
+html[data-skin="thirteen-orphans"][data-theme="dark"] {
+  color-scheme: dark;
+  --to-paper: #14251f;
+  --to-paper-low: #20372f;
+  --to-fg: #fff7e6;
+  --to-muted: #c8d8cc;
+  --to-link: #ffd166;
+  --to-line: #86a897;
+  --to-felt: #123f35;
+  --to-deep: #091e1a;
+  --to-vermilion: #ad3935;
+  --to-gold: #f0c550;
+  --to-on-felt: #fff7e6;
+  --to-on-gold: #14251f;
+  --to-current: #f0c550;
+  --to-current-fg: #14251f;
+  --to-focus: #ffd166;
+  --to-focus-inverse: #14251f;
+  --to-focus-deep: #fff7e6;
+  --to-focus-gold: #14251f;
+  --to-list-surface: #102a24;
+  --to-list-row: #173a31;
+  --to-list-row-alt: #123129;
+  --to-list-fg: #fff7e6;
+  --to-list-meta: #ffd166;
+  --to-code-bg: #071b17;
+  --to-code-fg: #fff7e6;
+  --to-code-gutter: #04110e;
+  --to-inline: #29443a;
+  --to-inline-line: #89aa98;
+  --to-syntax-comment: #bed1c5;
+  --to-syntax-error: #fff7e6;
+  --to-syntax-error-bg: #a33a36;
+  --to-syntax-keyword: #8be6ca;
+  --to-syntax-operator: #ffd166;
+  --to-syntax-name: #fff7e6;
+  --to-syntax-function: #ffb6ab;
+  --to-syntax-string: #ffd166;
+  --to-syntax-number: #ffc887;
+  --to-syntax-delete: #ffb6ab;
+  --to-syntax-insert: #8be6ca;
+  --to-syntax-heading: #a9ceff;
+  --quote: #203b31;
+  --quote-high: #29483d;
+  --quote-low: #142b24;
+}
+
+html[data-skin="thirteen-orphans"] body {
+  min-width: 0;
+  color: var(--to-fg);
+  background-color: var(--to-felt);
+  background-image:
+    radial-gradient(circle at 1px 1px, #f0c55033 1px, transparent 1.2px),
+    linear-gradient(90deg, #fffaf00d 1px, transparent 1px),
+    linear-gradient(#fffaf00d 1px, transparent 1px);
+  background-size: 12px 12px, 48px 48px, 48px 48px;
+  font-size: max(18px, 1.125rem);
+}
+
+html[data-skin="thirteen-orphans"] :is(a, button, input, select, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html[data-skin="thirteen-orphans"] a {
+  color: var(--to-link);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: .1em;
+  text-underline-offset: .16em;
+}
+
+html[data-skin="thirteen-orphans"] a:hover {
+  color: var(--to-felt);
+  text-decoration-thickness: .16em;
+}
+
+html[data-skin="thirteen-orphans"] ::selection {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] :focus-visible {
+  outline: 3px solid var(--to-focus) !important;
+  outline-offset: 4px;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav a[aria-current="page"],
+  .quick-filters a[aria-current="true"],
+  .skin-menu[open] summary,
+  .code-frame__actions button[aria-pressed="true"]
+):focus-visible {
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="home"]:focus-visible {
+  outline-color: var(--to-focus-deep) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route="feed"],
+  .skin-randomizer,
+  .masthead__actions .action--primary,
+  .record-actions a:last-child,
+  .tag-line a:nth-child(odd),
+  .code-frame__actions button:not(:last-child)
+):focus-visible {
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .record-toc summary,
+  .site-footer__note a
+):focus-visible {
+  outline-color: var(--to-focus-deep) !important;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button:not(:last-child):hover:focus-visible {
+  outline-color: var(--to-focus-deep) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route="archive"],
+  .code-frame__actions button:last-child,
+  .site-footer__links a,
+  .record-end nav a
+):focus-visible {
+  outline-color: var(--to-focus-gold) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route],
+  .skin-menu summary,
+  .skin-randomizer,
+  .action,
+  .record-actions a,
+  .tag-line a,
+  .quick-filters a,
+  .pagination a,
+  .site-footer__links a,
+  .record-end nav a
+):hover:focus-visible {
+  outline-color: var(--to-focus-deep) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route][aria-current="page"],
+  .quick-filters a[aria-current="true"],
+  .skin-menu[open] summary,
+  .code-frame__actions button[aria-pressed="true"],
+  .site-footer__links a,
+  .record-end nav a
+):hover:focus-visible {
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="archive"]:hover:focus-visible,
+html[data-skin="thirteen-orphans"] .code-frame__actions button:last-child:hover:focus-visible {
+  outline-color: var(--to-focus-deep) !important;
+}
+
+html[data-skin="thirteen-orphans"] .skip-link {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border: 3px solid var(--to-current-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-header,
+  .site-footer,
+  .home-shell,
+  .archive-shell,
+  .record-page,
+  .page-shell,
+  .error-shell
+) {
+  width: min(calc(100% - 2rem), var(--page));
+  min-width: 0;
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Dealer rail */
+html[data-skin="thirteen-orphans"] .site-header {
+  margin-top: 1rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  overflow: visible;
+}
+
+html[data-skin="thirteen-orphans"] .site-header::before,
+html[data-skin="thirteen-orphans"] .site-footer::before {
+  display: none;
+}
+
+html[data-skin="thirteen-orphans"] .site-header__inner {
+  display: grid;
+  grid-template-columns: minmax(13rem, .7fr) minmax(0, 2.3fr);
+  gap: 0;
+  align-items: stretch;
+  padding: 0;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  min-height: 8.5rem;
+  padding: 1rem 1.25rem;
+  color: var(--to-fg);
+  background: var(--to-paper-low);
+  border-right: 3px solid var(--to-fg);
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__text {
+  display: grid;
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__name {
+  max-width: 12ch;
+  color: var(--to-fg);
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: .95;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-brand__scope {
+  color: var(--to-muted);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(12rem, 1.45fr);
+  gap: .45rem;
+  align-items: start;
+  min-width: 0;
+  padding: .6rem;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route],
+  .skin-menu summary,
+  .skin-randomizer,
+  .action,
+  .record-actions a,
+  .tag-line a,
+  .quick-filters a,
+  .pagination a,
+  .pagination span,
+  .site-footer__links a
+) {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem .7rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route] {
+  width: 100%;
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="home"] {
+  color: var(--to-on-felt);
+  background: var(--to-felt);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="archive"] {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="about"],
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="source"] {
+  color: var(--to-fg);
+  background: var(--to-paper-low);
+}
+
+html[data-skin="thirteen-orphans"] .site-nav > a[data-route="feed"] {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu {
+  position: static;
+  min-width: 0;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  text-align: left;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu summary::after {
+  margin-left: .5rem;
+  color: currentColor;
+  content: "+";
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu[open] summary::after {
+  content: "-";
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel {
+  position: static;
+  z-index: auto;
+  display: grid;
+  width: 100%;
+  gap: .65rem;
+  margin: .45rem 0 0;
+  padding: .75rem;
+  color: var(--to-fg);
+  background: var(--to-paper-low);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu__panel label {
+  color: var(--to-fg);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu select {
+  width: 100%;
+  min-height: 3rem;
+  padding: .55rem .7rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .skin-randomizer {
+  width: 100%;
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  cursor: pointer;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route],
+  .skin-menu summary,
+  .skin-randomizer,
+  .action,
+  .record-actions a,
+  .tag-line a,
+  .quick-filters a,
+  .pagination a,
+  .site-footer__links a
+):hover {
+  color: var(--to-on-felt);
+  background: var(--to-felt);
+  border-color: var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route][aria-current="page"],
+  .quick-filters a[aria-current="true"],
+  .skin-menu[open] summary,
+  .code-frame__actions button[aria-pressed="true"]
+) {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border-color: var(--to-fg);
+  box-shadow: inset 0 0 0 3px var(--to-paper);
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .site-nav > a[data-route][aria-current="page"],
+  .quick-filters a[aria-current="true"],
+  .skin-menu[open] summary,
+  .code-frame__actions button[aria-pressed="true"]
+):hover {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu:focus-within summary {
+  border-color: var(--to-focus);
+}
+
+/* Shared table surface */
+html[data-skin="thirteen-orphans"] :is(
+  .home-shell,
+  .archive-shell,
+  .record-page,
+  .page-shell,
+  .error-shell
+) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: clamp(.85rem, 2vw, 1.5rem);
+  color: var(--to-fg);
+  background-color: var(--to-felt);
+  background-image:
+    linear-gradient(90deg, #fffaf017 1px, transparent 1px),
+    linear-gradient(#fffaf017 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .masthead__copy,
+  .index-heading,
+  .page-heading,
+  .record-head,
+  .home-shell > .record-index,
+  .archive-tools,
+  .page-prose,
+  .article__content,
+  .record-end
+) {
+  min-width: 0;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .masthead h1,
+  .index-heading h1,
+  .page-heading h1,
+  .record-head h1,
+  .error-shell h1
+) {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--to-fg);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: .96;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .eyebrow,
+  .record-head__key,
+  .section-heading > p,
+  .archive-search label,
+  .archive-search p,
+  .archive-year > header span,
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive,
+  .all-tags summary,
+  .record-toc summary,
+  .record-end nav span,
+  .code-frame__label strong,
+  .code-frame__label small,
+  .code-frame__status,
+  .site-footer__note
+) {
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .masthead__lede,
+  .index-heading > p:last-child,
+  .page-heading > p:last-child,
+  .record-head__abstract
+) {
+  max-width: 65ch;
+  color: var(--to-fg);
+  font-size: max(18px, 1.125rem);
+  line-height: 1.6;
+}
+
+html[data-skin="thirteen-orphans"] .eyebrow,
+html[data-skin="thirteen-orphans"] .record-head__key {
+  margin: 0 0 .65rem;
+  color: var(--to-vermilion);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+/* Home: dealer strip, continuous hand, compact topic rack */
+html[data-skin="thirteen-orphans"] .home-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.7vw, 1.5rem);
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .masthead {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  min-width: 0;
+  overflow: visible;
+  background: var(--to-paper);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__copy {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+  min-height: 0;
+  padding: clamp(1rem, 2.2vw, 2rem);
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__copy .eyebrow {
+  color: var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .masthead h1 {
+  text-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] :is(.masthead__actions, .record-actions, .tag-line) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: .25rem;
+}
+
+html[data-skin="thirteen-orphans"] .masthead__actions .action--primary,
+html[data-skin="thirteen-orphans"] .record-actions a:last-child,
+html[data-skin="thirteen-orphans"] .tag-line a:nth-child(odd) {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .record-index {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem);
+}
+
+html[data-skin="thirteen-orphans"] .section-heading {
+  display: flex;
+  gap: .75rem 1.5rem;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 3px solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .section-heading h2,
+  .archive-year h2,
+  .related-records h2
+) {
+  margin: 0;
+  color: var(--to-fg);
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .section-heading > p {
+  margin: 0;
+  color: var(--to-muted);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link {
+  display: grid;
+  grid-template-columns: 6.4rem minmax(12rem, 1fr) minmax(7rem, 10rem) minmax(6.5rem, 8rem);
+  gap: .7rem;
+  align-items: center;
+  min-width: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-row {
+  min-width: 0;
+  background: var(--to-paper);
+  border-bottom: 2px solid var(--to-line);
+}
+
+html[data-skin="thirteen-orphans"] .record-row:nth-child(even) {
+  background: var(--to-paper-low);
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link {
+  min-height: 4.75rem;
+  padding: .8rem .75rem;
+  color: var(--to-fg);
+  background: transparent;
+  border-left: .45rem solid var(--to-felt);
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link:hover,
+html[data-skin="thirteen-orphans"] .record-row__link:focus-visible {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border-left-color: var(--to-gold);
+  box-shadow: inset .35rem 0 0 var(--to-current-fg);
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+) {
+  min-width: 0;
+  color: var(--to-muted);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__title {
+  min-width: 0;
+  color: currentColor;
+  font-family: var(--body);
+  font-size: max(18px, 1.125rem);
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__primitive::before {
+  display: inline-block;
+  width: .75rem;
+  height: .75rem;
+  margin-right: .4rem;
+  content: "";
+  background: var(--to-vermilion);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+html[data-skin="thirteen-orphans"] .primitive--rsa .record-row__primitive::before { background: var(--to-vermilion); }
+html[data-skin="thirteen-orphans"] .primitive--ecc .record-row__primitive::before { background: var(--to-felt); }
+html[data-skin="thirteen-orphans"] .primitive--solver .record-row__primitive::before { background: var(--to-gold); }
+html[data-skin="thirteen-orphans"] .primitive--symmetric .record-row__primitive::before { background: #4867a3; }
+html[data-skin="thirteen-orphans"] .primitive--classical .record-row__primitive::before { background: #8d5b32; }
+html[data-skin="thirteen-orphans"] .primitive--encoding .record-row__primitive::before { background: #7d4a87; }
+
+html[data-skin="thirteen-orphans"] .record-row__link:hover :is(
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+),
+html[data-skin="thirteen-orphans"] .record-row__link:focus-visible :is(
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+) {
+  color: var(--to-current-fg);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a {
+  display: grid;
+  min-width: 0;
+  min-height: 4.75rem;
+  gap: .3rem;
+  align-content: space-between;
+  padding: .65rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.25;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:nth-child(3n + 1) {
+  color: var(--to-on-felt);
+  background: var(--to-felt);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:nth-child(3n + 2) {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:hover,
+html[data-skin="thirteen-orphans"] .all-tags__grid a:focus-visible {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border-color: var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:focus-visible {
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a:nth-child(3n + 2):focus-visible {
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] .pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--to-line);
+}
+
+html[data-skin="thirteen-orphans"] .pagination__position {
+  display: grid;
+  color: var(--to-muted);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .pagination__position strong {
+  color: var(--to-vermilion);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+
+html[data-skin="thirteen-orphans"] .pagination__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+html[data-skin="thirteen-orphans"] .pagination span[aria-disabled="true"] {
+  color: var(--to-muted);
+  background: var(--to-paper-low);
+  border-color: var(--to-line);
+  opacity: 1;
+}
+
+/* Archive: chronological rounds on the felt table */
+html[data-skin="thirteen-orphans"] .archive-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.7vw, 1.5rem);
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .archive-shell > .index-heading--archive {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(1rem, 2.2vw, 1.8rem);
+  border-left: .65rem solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .index-heading > .eyebrow,
+html[data-skin="thirteen-orphans"] .page-heading > .eyebrow {
+  color: var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .archive-tools {
+  position: sticky;
+  top: 1rem;
+  grid-column: 1 / span 3;
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 1rem;
+  background: var(--to-paper-low);
+}
+
+html[data-skin="thirteen-orphans"] .archive-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .55rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .archive-search label,
+html[data-skin="thirteen-orphans"] .archive-search p {
+  margin: 0;
+  color: var(--to-fg);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input {
+  min-width: 0;
+  min-height: 3rem;
+  width: 100%;
+  padding: .6rem .7rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: inset .4rem 0 0 var(--to-gold);
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input::placeholder {
+  color: var(--to-muted);
+  opacity: 1;
+}
+
+html[data-skin="thirteen-orphans"] .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .quick-filters a {
+  width: 100%;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags {
+  border-top: 2px solid var(--to-line);
+}
+
+html[data-skin="thirteen-orphans"] .all-tags summary {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--to-fg);
+  cursor: pointer;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags summary span,
+html[data-skin="thirteen-orphans"] .all-tags__grid small {
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid {
+  margin-top: .5rem;
+  padding-bottom: .25rem;
+}
+
+html[data-skin="thirteen-orphans"] .all-tags__grid a {
+  min-height: 3.5rem;
+  align-content: center;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups {
+  grid-column: 4 / -1;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(.85rem, 1.6vw, 1.25rem);
+  color: var(--to-list-fg);
+  background: var(--to-list-surface);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year,
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year + .archive-year {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 3px solid var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0 0 .7rem;
+  padding: .65rem .75rem;
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  border: 2px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header h2,
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header span {
+  color: var(--to-on-gold);
+  writing-mode: horizontal-tb;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header span {
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row,
+html[data-skin="thirteen-orphans"] .archive-groups .record-row:nth-child(even) {
+  background: var(--to-list-row);
+  border-bottom-color: var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row:nth-child(even) {
+  background: var(--to-list-row-alt);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link {
+  color: var(--to-list-fg);
+  background: transparent;
+  border-left-color: var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__title {
+  color: var(--to-list-fg);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups :is(
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+) {
+  color: var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__primitive::before {
+  border-color: var(--to-list-fg);
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:hover,
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:focus-visible {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border-left-color: var(--to-list-meta);
+  outline-color: var(--to-focus-inverse) !important;
+}
+
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:hover :is(
+  .record-row__title,
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+),
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:focus-visible :is(
+  .record-row__title,
+  .record-row__date,
+  .record-row__event,
+  .record-row__primitive
+) {
+  color: var(--to-current-fg);
+}
+
+html[data-skin="thirteen-orphans"] .archive-empty {
+  grid-column: 1 / span 3;
+  margin: 0;
+  padding: 1rem;
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Article scorebook and about leaf */
+html[data-skin="thirteen-orphans"] .record-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.7vw, 1.5rem);
+  align-items: start;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head {
+  position: static;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: .85rem 1.25rem;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  border-left: .7rem solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .record-head__key {
+  grid-column: 1 / span 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  align-content: start;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-head__key span {
+  padding: .4rem .5rem;
+  color: var(--to-on-felt);
+  background: var(--to-felt);
+  border: 2px solid var(--to-fg);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head h1 {
+  grid-column: 4 / -1;
+  max-width: 17ch;
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+}
+
+html[data-skin="thirteen-orphans"] .record-head__abstract {
+  grid-column: 4 / -1;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts {
+  grid-column: 1 / span 3;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+  margin: 0;
+  padding: .5rem;
+  background: var(--to-deep);
+  border: 2px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .record-facts > div,
+html[data-skin="thirteen-orphans"] .record-facts > div:nth-child(2n) {
+  min-width: 0;
+  min-height: 5.25rem;
+  padding: .6rem;
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts > div:nth-child(2n) {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .record-facts dt {
+  color: currentColor;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts dd {
+  margin: .4rem 0 0;
+  color: currentColor;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head .tag-line,
+html[data-skin="thirteen-orphans"] .record-page > .record-head .record-actions {
+  grid-column: 4 / -1;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.7vw, 1.5rem);
+  min-width: 0;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-grid > .article__content {
+  grid-column: 2 / span 8;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
+  border-left: .7rem solid var(--to-vermilion);
+  overflow: visible;
+}
+
+html[data-skin="thirteen-orphans"] .article__content > * {
+  max-width: 75ch;
+}
+
+html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+  position: sticky;
+  top: 1rem;
+  grid-column: 10 / -1;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 1rem;
+  color: var(--to-list-fg);
+  background: var(--to-list-surface);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-toc {
+  border-bottom: 2px solid var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] .record-toc summary {
+  min-height: 3rem;
+  color: var(--to-list-meta);
+  cursor: pointer;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] :is(.record-toc ol, .related-records ul) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html[data-skin="thirteen-orphans"] :is(.record-toc li, .related-records li) {
+  border-top: 1px solid var(--to-line);
+}
+
+html[data-skin="thirteen-orphans"] :is(.record-toc a, .related-records a) {
+  display: block;
+  padding: .65rem 0;
+  color: var(--to-list-fg);
+  font-size: 1rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="thirteen-orphans"] :is(.record-toc a, .related-records a):hover,
+html[data-skin="thirteen-orphans"] :is(.record-toc a, .related-records a):focus-visible {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  outline-color: var(--to-focus-gold) !important;
+}
+
+html[data-skin="thirteen-orphans"] .toc-fallback {
+  color: var(--to-list-fg);
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .related-records {
+  margin-top: 1.25rem;
+}
+
+html[data-skin="thirteen-orphans"] .related-records h2 {
+  color: var(--to-list-meta);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-end {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 0;
+  padding: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .record-end > p {
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+  margin-top: .75rem;
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav a {
+  min-width: 0;
+  display: grid;
+  gap: .25rem;
+  padding: .75rem;
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav a:hover,
+html[data-skin="thirteen-orphans"] .record-end nav a:focus-visible {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] .record-end nav span {
+  color: currentColor;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .page-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .page-heading {
+  margin: 0;
+  padding: clamp(1rem, 2.2vw, 1.8rem);
+  border-left: .7rem solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .page-prose {
+  width: min(100%, var(--reading));
+  max-width: var(--reading);
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
+  border-left: .7rem solid var(--to-vermilion);
+}
+
+/* Reading leaf */
+html[data-skin="thirteen-orphans"] .prose {
+  min-width: 0;
+  color: var(--to-fg);
+  font-family: var(--body);
+  font-size: max(18px, 1.125rem);
+  line-height: 1.72;
+  overflow-wrap: break-word;
+}
+
+html[data-skin="thirteen-orphans"] .prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--to-fg);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1.08;
+}
+
+html[data-skin="thirteen-orphans"] .prose h1 { font-size: clamp(2.25rem, 4.5vw, 4.5rem); }
+html[data-skin="thirteen-orphans"] .prose h2 { font-size: clamp(1.5rem, 2.5vw, 2.5rem); }
+html[data-skin="thirteen-orphans"] .prose h3 { color: var(--to-vermilion); font-size: clamp(1.25rem, 1.7vw, 1.75rem); }
+html[data-skin="thirteen-orphans"] .prose h4 { font-size: 1.25rem; }
+html[data-skin="thirteen-orphans"] .prose :is(h5, h6) { font-size: 1.125rem; }
+
+html[data-skin="thirteen-orphans"] .prose h2 {
+  padding-top: .8rem;
+  border-top: 3px solid var(--to-vermilion);
+}
+
+html[data-skin="thirteen-orphans"] .prose h2::before {
+  display: inline-block;
+  width: .7em;
+  height: .7em;
+  margin-right: .35em;
+  content: "";
+  background: var(--to-gold);
+  border: 2px solid var(--to-fg);
+  box-shadow: .12em .12em 0 var(--to-felt);
+}
+
+html[data-skin="thirteen-orphans"] .heading-anchor {
+  color: var(--to-link);
+  font-family: var(--mono);
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .prose hr {
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--to-vermilion) 0 1.25rem, var(--to-gold) 1.25rem 2.5rem, var(--to-felt) 2.5rem 3.75rem);
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] .prose .info {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  border: 3px solid var(--to-fg);
+  border-left: .7rem solid var(--to-vermilion);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .prose blockquote {
+  color: var(--to-fg);
+  background: var(--quote);
+  border: 3px solid var(--to-fg);
+  border-left: .7rem solid var(--to-felt);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--body);
+  font-size: 1em;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .prose blockquote :is(a, code) {
+  color: var(--to-link);
+}
+
+html[data-skin="thirteen-orphans"] .prose code:not(.code-frame code) {
+  color: var(--to-fg);
+  background: var(--to-inline);
+  border-color: var(--to-inline-line);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: max(1rem, 1em) !important;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .prose :is(th, td) {
+  min-width: 7rem;
+  color: var(--to-fg);
+  border-color: var(--to-line);
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .prose th {
+  color: var(--to-list-fg);
+  background: var(--to-list-surface);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+html[data-skin="thirteen-orphans"] .prose tr:nth-child(even) td {
+  background: var(--to-paper-low);
+}
+
+html[data-skin="thirteen-orphans"] .prose img:not(.emoji) {
+  border: 3px solid var(--to-fg);
+  box-shadow: .35rem .35rem 0 var(--to-vermilion);
+}
+
+/* Code and math keep their own readable surfaces. */
+html[data-skin="thirteen-orphans"] .prose :is(pre, .highlight) {
+  color: var(--to-code-fg);
+  background: var(--to-code-bg);
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame {
+  max-width: 100%;
+  overflow: visible;
+  color: var(--to-code-fg);
+  background: var(--to-code-bg);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__bar {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+  border-bottom: 3px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__label :is(strong, small) {
+  color: var(--to-on-gold);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__label strong {
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button {
+  min-height: 2.75rem;
+  padding: .45rem .6rem;
+  color: var(--to-current-fg);
+  background: var(--to-current);
+  border: 2px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button:last-child {
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button:hover,
+html[data-skin="thirteen-orphans"] .code-frame__actions button:focus-visible {
+  color: var(--to-on-felt);
+  background: var(--to-felt);
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__actions button[aria-pressed="true"],
+html[data-skin="thirteen-orphans"] .code-frame__actions button[aria-pressed="true"]:hover {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame__gutter {
+  color: var(--to-list-meta);
+  background: var(--to-code-gutter);
+  border-right: 2px solid var(--to-line);
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame :is(pre, .highlight) {
+  color: var(--to-code-fg);
+  background: var(--to-code-bg);
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame > .highlight,
+html[data-skin="thirteen-orphans"] .prose .code-frame__viewport > .highlight {
+  overflow: visible;
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame pre {
+  overflow: auto;
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .prose .code-frame pre:focus-visible {
+  outline-offset: 3px;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__status {
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border-top: 3px solid var(--to-vermilion);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="thirteen-orphans"] .code-frame__fallback {
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border-color: var(--to-gold);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .highlight .c,
+html[data-skin="thirteen-orphans"] .highlight .c1,
+html[data-skin="thirteen-orphans"] .highlight .cm,
+html[data-skin="thirteen-orphans"] .highlight .cp,
+html[data-skin="thirteen-orphans"] .highlight .cs { color: var(--to-syntax-comment); }
+html[data-skin="thirteen-orphans"] .highlight .err { color: var(--to-syntax-error); background: var(--to-syntax-error-bg); }
+html[data-skin="thirteen-orphans"] .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .kt) { color: var(--to-syntax-keyword); }
+html[data-skin="thirteen-orphans"] .highlight :is(.o, .ow) { color: var(--to-syntax-operator); }
+html[data-skin="thirteen-orphans"] .highlight :is(.n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .no, .nt, .nv) { color: var(--to-syntax-name); }
+html[data-skin="thirteen-orphans"] .highlight :is(.nc, .nf) { color: var(--to-syntax-function); }
+html[data-skin="thirteen-orphans"] .highlight :is(.s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx) { color: var(--to-syntax-string); }
+html[data-skin="thirteen-orphans"] .highlight :is(.m, .mb, .mf, .mh, .mi, .mo, .il) { color: var(--to-syntax-number); }
+html[data-skin="thirteen-orphans"] .highlight .gd { color: var(--to-syntax-delete); }
+html[data-skin="thirteen-orphans"] .highlight .gi { color: var(--to-syntax-insert); }
+html[data-skin="thirteen-orphans"] .highlight :is(.gh, .gu) { color: var(--to-syntax-heading); }
+
+html[data-skin="thirteen-orphans"] .prose .katex {
+  color: var(--to-fg);
+  font-size: max(1rem, 1em) !important;
+}
+
+html[data-skin="thirteen-orphans"] .prose .katex-display {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  color: var(--to-fg);
+  background: var(--to-paper-low);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: max(1rem, 1em) !important;
+}
+
+/* 404 and closing rail */
+html[data-skin="thirteen-orphans"] .error-shell {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-height: min(65vh, 44rem);
+  gap: 1rem;
+  overflow: visible;
+  color: var(--to-list-fg);
+  background: var(--to-deep);
+}
+
+html[data-skin="thirteen-orphans"] .error-code {
+  position: absolute;
+  z-index: 0;
+  right: clamp(.75rem, 5vw, 4rem);
+  bottom: clamp(.75rem, 5vw, 3rem);
+  color: color-mix(in srgb, var(--to-gold) 35%, transparent);
+  font-family: var(--display);
+  font-size: clamp(4rem, 18vw, 11rem);
+  line-height: .8;
+  pointer-events: none;
+}
+
+html[data-skin="thirteen-orphans"] .error-code i {
+  background: currentColor;
+}
+
+html[data-skin="thirteen-orphans"] .error-shell > :not(.error-code) {
+  position: relative;
+  z-index: 1;
+  max-width: 60ch;
+  margin: 0;
+}
+
+html[data-skin="thirteen-orphans"] .error-shell :is(.eyebrow, h1, p) {
+  color: var(--to-list-fg);
+}
+
+html[data-skin="thirteen-orphans"] .error-shell h1 {
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+}
+
+html[data-skin="thirteen-orphans"] .error-shell > p:not(.eyebrow) {
+  font-size: max(18px, 1.125rem);
+}
+
+html[data-skin="thirteen-orphans"] .error-shell nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer {
+  margin-bottom: 1rem;
+  color: var(--to-list-fg);
+  background: var(--to-deep);
+  overflow: visible;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__note {
+  margin: 0;
+  padding-left: .75rem;
+  color: var(--to-list-fg);
+  border-left: .5rem solid var(--to-gold);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__note a {
+  color: var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links a {
+  min-height: 3.5rem;
+  color: var(--to-on-gold);
+  background: var(--to-gold);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
+html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
+  color: var(--to-current-fg);
+  background: var(--to-current);
+}
+
+@media (max-width: 70rem) {
+  html[data-skin="thirteen-orphans"] .site-header__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-brand {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 3px solid var(--to-fg);
+  }
+
+  html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+  html[data-skin="thirteen-orphans"] .archive-tools,
+  html[data-skin="thirteen-orphans"] .archive-groups,
+  html[data-skin="thirteen-orphans"] .archive-empty {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-tools,
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    position: static;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-grid > .article__content {
+    grid-column: 1 / span 9;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    grid-column: 10 / -1;
+  }
+}
+
+@media (max-width: 52rem) {
+  html[data-skin="thirteen-orphans"] .site-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] .skin-menu {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="thirteen-orphans"] .home-shell > .masthead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .record-page > .record-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-head__key,
+    .record-page > .record-head h1,
+    .record-head__abstract,
+    .record-facts,
+    .record-page > .record-head .tag-line,
+    .record-page > .record-head .record-actions
+  ) {
+    grid-column: 1;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-page > .record-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-grid > .article__content,
+    .record-grid > .record-index
+  ) {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="thirteen-orphans"] :is(
+    .site-header,
+    .site-footer,
+    .home-shell,
+    .archive-shell,
+    .record-page,
+    .page-shell,
+    .error-shell
+  ) {
+    width: 100%;
+    margin-inline: 0;
+    border-width: 3px;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-header {
+    margin-top: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer {
+    margin-bottom: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .home-shell,
+    .archive-shell,
+    .record-page,
+    .page-shell,
+    .error-shell
+  ) {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: .75rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > a[data-route],
+  html[data-skin="thirteen-orphans"] .skin-menu summary {
+    min-height: 3.15rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > a[data-route="source"] {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="thirteen-orphans"] .section-heading {
+    display: block;
+  }
+
+  html[data-skin="thirteen-orphans"] .section-heading > p {
+    display: block;
+    margin-top: .45rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .4rem .6rem;
+    min-height: 0;
+    padding: .9rem .75rem;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-row__date,
+    .record-row__title,
+    .record-row__event,
+    .record-row__primitive
+  ) {
+    grid-column: 1;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-row__date,
+    .record-row__event,
+    .record-row__primitive
+  )::before {
+    display: inline-block;
+    min-width: 4.5rem;
+    margin-right: .45rem;
+    color: currentColor;
+    font-family: var(--keys);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .025em;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-row__date::before { content: "Date"; }
+  html[data-skin="thirteen-orphans"] .record-row__event::before { content: "Event"; }
+  html[data-skin="thirteen-orphans"] .record-row__primitive::before {
+    width: auto;
+    height: auto;
+    margin: 0 .45rem 0 0;
+    content: "Topic";
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .archive-year > header {
+    align-items: baseline;
+  }
+
+  html[data-skin="thirteen-orphans"] .archive-groups .record-row__link {
+    border-left-color: var(--to-list-meta);
+  }
+
+  html[data-skin="thirteen-orphans"] .record-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] .record-end nav,
+  html[data-skin="thirteen-orphans"] .site-footer__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer__links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-footer__links a {
+    min-height: 3.15rem;
+  }
+
+  html[data-skin="thirteen-orphans"] .error-code {
+    right: .5rem;
+    bottom: 1rem;
+    font-size: clamp(4rem, 28vw, 7rem);
+  }
+}
+
+@media (max-width: 28rem) {
+  html[data-skin="thirteen-orphans"] .site-nav,
+  html[data-skin="thirteen-orphans"] .quick-filters,
+  html[data-skin="thirteen-orphans"] .all-tags__grid,
+  html[data-skin="thirteen-orphans"] .record-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .site-nav > a[data-route="source"],
+  html[data-skin="thirteen-orphans"] .skin-menu {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="thirteen-orphans"],
+  html[data-skin="thirteen-orphans"] * {
+    scroll-behavior: auto !important;
+  }
+
+  html[data-skin="thirteen-orphans"] *,
+  html[data-skin="thirteen-orphans"] *::before,
+  html[data-skin="thirteen-orphans"] *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="thirteen-orphans"] :is(
+    .site-header,
+    .site-footer,
+    .home-shell,
+    .archive-shell,
+    .record-page,
+    .page-shell,
+    .error-shell,
+    .masthead,
+    .masthead__copy,
+    .index-heading,
+    .page-heading,
+    .record-head,
+    .home-shell > .record-index,
+    .archive-tools,
+    .archive-groups,
+    .page-prose,
+    .article__content,
+    .record-end,
+    .record-grid > .record-index,
+    .record-row,
+    .prose .code-frame,
+    .prose .code-frame :is(pre, .highlight),
+    .prose .katex-display
+  ) {
+    color: CanvasText;
+    background: Canvas;
+    background-image: none;
+    border-color: CanvasText;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .site-nav > a[data-route],
+    .skin-menu summary,
+    .skin-menu select,
+    .skin-randomizer,
+    .action,
+    .record-actions a,
+    .tag-line a,
+    .quick-filters a,
+    .pagination a,
+    .pagination span,
+    .site-footer__links a,
+    .code-frame__actions button,
+    .record-end nav a
+  ) {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .site-nav > a[data-route][aria-current="page"],
+    .quick-filters a[aria-current="true"],
+    .skin-menu[open] summary,
+    .code-frame__actions button[aria-pressed="true"]
+  ) {
+    color: HighlightText;
+    background: Highlight;
+    border-color: HighlightText;
+  }
+
+  html[data-skin="thirteen-orphans"] :focus-visible {
+    outline: 3px solid Highlight !important;
+    outline-offset: 3px;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-row__link,
+    .record-toc a,
+    .related-records a,
+    .site-footer__note a
+  ) {
+    color: LinkText;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight span {
+    color: CanvasText !important;
+    background: transparent !important;
+  }
+}
+
+/* Cycle two corrective pass: Thirteen Orphans */
+html[data-skin="thirteen-orphans"] .site-nav {
+  grid-template-areas: "home archive about feed source skins";
+}
+
+html[data-skin="thirteen-orphans"] .skin-menu {
+  align-self: start;
+  block-size: auto;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .masthead h1,
+  .index-heading h1,
+  .page-heading h1,
+  .error-shell h1
+) {
+  font-size: clamp(2rem, 3.6vw, 3.75rem);
+  line-height: 1;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head h1,
+html[data-skin="thirteen-orphans"] .prose h1 {
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  line-height: 1;
+}
+
+html[data-skin="thirteen-orphans"] .prose h2 { font-size: clamp(1.5rem, 2.25vw, 2rem); }
+html[data-skin="thirteen-orphans"] .prose h3 { font-size: clamp(1.375rem, 1.7vw, 1.625rem); }
+html[data-skin="thirteen-orphans"] .prose h4 { font-size: 1.25rem; }
+html[data-skin="thirteen-orphans"] .prose h5 { font-size: 1.125rem; }
+html[data-skin="thirteen-orphans"] .prose h6 { font-size: 1rem; }
+
+html[data-skin="thirteen-orphans"] .record-row__link,
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link {
+  border-left: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-row__link:hover,
+html[data-skin="thirteen-orphans"] .record-row__link:focus-visible,
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:hover,
+html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:focus-visible {
+  border-left: 0;
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .archive-shell > .index-heading--archive,
+  .record-page > .record-head,
+  .record-grid > .article__content,
+  .page-heading,
+  .page-prose,
+  .prose .info,
+  .prose blockquote,
+  .site-footer__note
+) {
+  border-left: 0;
+}
+
+html[data-skin="thirteen-orphans"] .archive-search input {
+  box-shadow: none;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .home-shell,
+  .archive-shell,
+  .record-page,
+  .page-shell,
+  .error-shell
+) {
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] .error-shell {
+  min-height: 0;
+}
+
+html[data-skin="thirteen-orphans"] .home-shell > .masthead {
+  gap: .75rem;
+  padding-block: .75rem;
+  background: transparent;
+  border: 0;
+  border-block: 3px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .masthead__copy {
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .archive-shell > .index-heading--archive,
+  .record-page > .record-head,
+  .page-heading
+) {
+  border: 0;
+  border-block: 3px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] :is(
+  .home-shell > .record-index,
+  .archive-tools,
+  .archive-groups,
+  .record-grid > .article__content,
+  .page-prose
+) {
+  border: 0;
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-end {
+  border: 0;
+  border-top: 3px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] :is(.prose .info, .prose blockquote) {
+  border: 0;
+  border-top: 3px solid var(--to-fg);
+}
+
+html[data-skin="thirteen-orphans"] .site-footer__note {
+  padding: .75rem 0 0;
+  border: 0;
+  border-top: 2px solid var(--to-list-meta);
+}
+
+html[data-skin="thirteen-orphans"] :is(.archive-tools, .record-grid > .record-index) {
+  max-block-size: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: .5rem;
+}
+
+html[data-skin="thirteen-orphans"] .record-facts {
+  grid-column: 1 / span 4;
+  grid-template-columns: repeat(2, minmax(9rem, 1fr));
+}
+
+html[data-skin="thirteen-orphans"] .record-page > .record-head :is(h1, .record-head__abstract, .tag-line, .record-actions) {
+  grid-column: 5 / -1;
+}
+
+@media (min-width: 44.01rem) and (max-width: 70rem) {
+  html[data-skin="thirteen-orphans"] .site-footer__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 70.01rem) and (max-width: 84rem) {
+  html[data-skin="thirteen-orphans"] :is(
+    .archive-tools .quick-filters,
+    .archive-tools .all-tags__grid
+  ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 70rem) {
+  html[data-skin="thirteen-orphans"] .record-facts {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(9rem, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] :is(
+    .record-grid > .article__content,
+    .record-grid > .record-index
+  ) {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="thirteen-orphans"] :is(.archive-tools, .record-grid > .record-index) {
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+    position: static;
+  }
+}
+
+@media (max-width: 52rem) {
+  html[data-skin="thirteen-orphans"] .site-nav {
+    grid-template-areas:
+      "home archive"
+      "about feed"
+      "source source"
+      "skins skins";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="thirteen-orphans"] .skin-menu {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 28rem) {
+  html[data-skin="thirteen-orphans"] .site-nav {
+    grid-template-areas:
+      "home"
+      "archive"
+      "about"
+      "feed"
+      "source"
+      "skins";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="thirteen-orphans"] .record-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="thirteen-orphans"] .highlight span {
+    color: revert !important;
+    background: transparent !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight :is(.c, .c1, .cm, .cp, .cs) {
+    color: GrayText !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight .err {
+    color: HighlightText !important;
+    background: Highlight !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow) {
+    color: LinkText !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight :is(.n, .na, .nb, .nd, .ne, .ni, .nl, .nn, .no, .nt, .nv) {
+    color: CanvasText !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight :is(.nc, .nf, .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .m, .mb, .mf, .mh, .mi, .mo, .il, .gi, .gh, .gu) {
+    color: LinkText !important;
+  }
+
+  html[data-skin="thirteen-orphans"] .highlight .gd {
+    color: HighlightText !important;
+  }
+}
