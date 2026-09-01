@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>rgbCTF 2020 Crypto - Adequate Encryption Standard / CTF Writeups</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="rgbCTF 2020 Crypto - Adequate Encryption Standard" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="rgbCTF 2020 Crypto - Adequate Encryption Standard writeup: cryptography, AES, substitution, permutation, bruteforce" />
+<meta name="twitter:description" property="og:description" content="rgbCTF 2020 Crypto - Adequate Encryption Standard writeup: cryptography, AES, substitution, permutation, bruteforce" />
+<link rel="canonical" href="https://deut-erium.github.io/writeups/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard" />
+<meta property="og:url" content="https://deut-erium.github.io/writeups/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard" />
+<meta property="og:site_name" content="CTF Writeups" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-13T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-07-13T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="rgbCTF 2020 Crypto - Adequate Encryption Standard" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-07-13T00:00:00+05:30","datePublished":"2020-07-13T00:00:00+05:30","description":"rgbCTF 2020 Crypto - Adequate Encryption Standard writeup: cryptography, AES, substitution, permutation, bruteforce","headline":"rgbCTF 2020 Crypto - Adequate Encryption Standard","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/writeups/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard"},"url":"https://deut-erium.github.io/writeups/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="CTF Writeups" href="/writeups/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/writeups/assets/favicon.svg">
+<link rel="stylesheet" href="/writeups/assets/css/main.css">
+<link rel="stylesheet" href="/writeups/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/writeups/assets/css/skins/" disabled>
+<script src="/writeups/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/writeups/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-article" data-layout="article">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/writeups/" aria-label="CTF Writeups home">
+      <span class="site-brand__text">
+        <strong class="site-brand__name">CTF Writeups</strong>
+        <small class="site-brand__scope">Cryptography, CTFs, and reproducible solve notes</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/writeups/">Home</a>
+      <a data-route="archive" href="/writeups/archive.html">Archive</a>
+      <a data-route="about" href="/writeups/about.html">About</a>
+      <a data-route="feed" href="/writeups/feed.xml">RSS</a>
+      <a data-route="source" href="https://github.com/deut-erium/WriteUps/tree/master/_posts">Source</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--symmetric" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.07.13</span>
+      <span>rgbctf</span>
+    </div>
+    <h1 itemprop="headline">rgbCTF 2020 Crypto - Adequate Encryption Standard</h1><p class="record-head__abstract" itemprop="description">rgbCTF 2020 Crypto - Adequate Encryption Standard writeup: cryptography, AES, substitution, permutation, bruteforce
+</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>rgbctf</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Symmetric</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-07-13T00:00:00+05:30">2020-07-13</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/writeups/archive.html?tag=rgbCTF">rgbCTF</a><a href="/writeups/archive.html?tag=2020">2020</a><a href="/writeups/archive.html?tag=cryptography">cryptography</a><a href="/writeups/archive.html?tag=AES">AES</a><a href="/writeups/archive.html?tag=substitution">substitution</a><a href="/writeups/archive.html?tag=permutation">permutation</a><a href="/writeups/archive.html?tag=bruteforce">bruteforce</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/WriteUps/tree/master/_posts/2020/rgbctf/crypto/Adequate_Encryption_Standard">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="aedquate-encryption-standard">Aedquate Encryption Standard</h2>
+
+<h3 id="description">Description</h3>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="6" data-source-sha256="77512c60a3744d5403d78577a05af5463f09aee51c6b20c4ef8849625e50bb0f" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Plain text</strong><small>6 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>I wrote my own AES! Can you break it?
+
+hQWYogqLXUO+rePyWkNlBlaAX47/2dCeLFMLrmPKcYRLYZgFuqRC7EtwX4DRtG31XY4az+yOvJJ/pwWR0/J9gg==
+
+
+~qpwoeirut#5057
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<h3 id="files">Files</h3>
+<ul>
+  <li><a href="./adequate_encryption_standard.py">adequate_encryption_standard.py</a></li>
+</ul>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="64" data-source-sha256="0eb44f0a1804d85c334e904c8236e57a57f30a38701b83e6e8f01d30e05055b9" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Python</strong><small>64 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">ROUNDS</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="n">sbox</span> <span class="o">=</span> <span class="p">[</span><span class="mi">111</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">237</span><span class="p">,</span> <span class="mi">169</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span> <span class="mi">183</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">244</span><span class="p">,</span> <span class="mi">163</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">229</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">231</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">247</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">186</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">243</span><span class="p">,</span> <span class="mi">219</span><span class="p">,</span> <span class="mi">203</span><span class="p">,</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">178</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">253</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">206</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">133</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">225</span><span class="p">,</span> <span class="mi">209</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">241</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">170</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">142</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">216</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">222</span><span class="p">,</span> <span class="mi">226</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">197</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">148</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">236</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">166</span><span class="p">,</span> <span class="mi">221</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">149</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">153</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">248</span><span class="p">,</span> <span class="mi">246</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">227</span><span class="p">,</span> <span class="mi">207</span><span class="p">,</span> <span class="mi">254</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">174</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">177</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">245</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">213</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">217</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">249</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">185</span><span class="p">,</span> <span class="mi">172</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">159</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">214</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">199</span><span class="p">,</span> <span class="mi">167</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">239</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">98</span><span class="p">]</span>
+<span class="n">pbox</span> <span class="o">=</span> <span class="p">[</span><span class="mi">39</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">pad</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">block</span> <span class="o">+</span> <span class="nf">chr</span><span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">block</span><span class="p">)).</span><span class="nf">encode</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">block</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">to_blocks</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">in_bytes</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">BLOCK_SIZE</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">),</span> <span class="n">BLOCK_SIZE</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">enc_sub</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">([</span><span class="n">sbox</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">in_bytes</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">enc_perm</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="nf">from_bytes</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">binary</span> <span class="o">=</span> <span class="nf">bin</span><span class="p">(</span><span class="n">num</span><span class="p">)[</span><span class="mi">2</span><span class="p">:].</span><span class="nf">rjust</span><span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">permuted</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="n">binary</span><span class="p">[</span><span class="n">pbox</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">([</span><span class="nf">int</span><span class="p">(</span><span class="n">permuted</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">def</span> <span class="nf">expand_key</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">expanded</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="p">(</span><span class="n">cur</span> <span class="o">+</span> <span class="n">byte</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">expanded</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">key_len</span><span class="p">)]:</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+        <span class="n">expanded</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">plain</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="nf">to_blocks</span><span class="p">(</span><span class="n">plain</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nf">expand_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="nf">pad</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nf">len</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="o">==</span> <span class="n">BLOCK_SIZE</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">ROUNDS</span><span class="p">):</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">enc_sub</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">enc_perm</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">block</span><span class="p">)):</span>
+                <span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^=</span> <span class="n">key</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">flag</span><span class="sh">"</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">flag_file</span><span class="p">:</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">flag_file</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">key</span><span class="sh">"</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">key_file</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key_file</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">b64encode</span><span class="p">(</span><span class="nf">encrypt</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="n">key</span><span class="p">)).</span><span class="nf">decode</span><span class="p">())</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>This seems like a custom AES implementation. Note that we are not provided a decryption routine, so lets simply write one.<br />
+Implementing one is not too complicated, one just need to reverse the <code class="language-plaintext highlighter-rouge">encrypt</code> function step by step.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="13" data-source-sha256="ecfbad0c0f1ded283695a003b03b9f20144eb6fb1d3341294070d6e28b52577a" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>13 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">cipher</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span><span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="nf">to_blocks</span><span class="p">(</span><span class="n">cipher</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nf">expand_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">ROUNDS</span><span class="p">):</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">block</span><span class="p">)):</span>
+                <span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^=</span> <span class="n">key</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">dec_perm</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="nf">dec_sub</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Its essentially the encrypt function in reverse, in <code class="language-plaintext highlighter-rouge">encrypt</code>, key is xored at last in the for loop, we do it first.<br />
+Then we do reverse of permutation <code class="language-plaintext highlighter-rouge">dec_perm</code> and reverse of substitution <code class="language-plaintext highlighter-rouge">dec_sub</code> in the following functions.</p>
+
+<p>For reversing <code class="language-plaintext highlighter-rouge">enc_sub</code>, we just need to find the index of corresponding byte in the <code class="language-plaintext highlighter-rouge">sbox</code></p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="5" data-source-sha256="96f225a00a0644b80ecdaeeece353100b416f4684dcf102d4f3ca2b1ea95b603" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Python</strong><small>5 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">enc_sub</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">([</span><span class="n">sbox</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">in_bytes</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">dec_sub</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nf">bytes</span><span class="p">([</span><span class="n">sbox</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">in_bytes</span> <span class="p">])</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>To reverse the permutation,</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="15" data-source-sha256="7e84c34aa6f3b5646da9d71c951ddeac04b64a07ccca90fe1a28dbed74a7a26d" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Python</strong><small>15 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">enc_perm</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="nf">from_bytes</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">binary</span> <span class="o">=</span> <span class="nf">bin</span><span class="p">(</span><span class="n">num</span><span class="p">)[</span><span class="mi">2</span><span class="p">:].</span><span class="nf">rjust</span><span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">permuted</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="n">binary</span><span class="p">[</span><span class="n">pbox</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">([</span><span class="nf">int</span><span class="p">(</span><span class="n">permuted</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+ <span class="mi">8</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="k">def</span> <span class="nf">dec_perm</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+    <span class="n">permuted</span> <span class="o">=</span> <span class="nf">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">.</span><span class="nf">from_bytes</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">))[</span><span class="mi">2</span><span class="p">:].</span><span class="nf">zfill</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="c1">#just converting to binary
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">64</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">pbox</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nf">ord</span><span class="p">(</span><span class="n">permuted</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># should be ones and zeros but using ord as bytearrays are directly convertible to int
+</span>    <span class="n">out_bytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="nf">to_bytes</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="mi">8</span><span class="p">,</span><span class="n">byteorder</span><span class="o">=</span><span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span> <span class="c1">#converting to bytes again
+</span>    <span class="k">return</span> <span class="n">out_bytes</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Once we have decryption function set up, we can start exploring the challenge :)</p>
+
+<p>The devil at work here is the <code class="language-plaintext highlighter-rouge">expand_key</code> function. One could easily verify that without using much brain  :)</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="23" data-source-sha256="f6b23e81f7766eb1823c28f66085801fa8dafa9ab3db1a2e3f814c65eb3955bd" aria-labelledby="code-frame-label-6">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-6"><strong>Python</strong><small>23 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 6" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 6" aria-describedby="code-frame-status-6" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">expand_key</span><span class="p">(</span><span class="nf">bytes</span><span class="p">([</span><span class="n">i</span><span class="p">]),</span><span class="mi">8</span><span class="p">))</span>
+<span class="c1"># 8 since we know the flag is 8*BLOCK_LENGTH bytes
+#b'\x00\x01\x01\x01\x01\x01\x01\x01\x01'
+#b'\x01\x01\x01\x01\x01\x01\x01\x01\x01'
+#b'\x02\x10\x00\x00\x00\x00\x00\x00\x00'
+#b'\x03\xd9\xd1\xe1A\x81\x01\x01\x01'
+#b'\x04\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x05\xf9\xf1a\xc1\x81\x01\x01\x01'
+#b'\x06\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x07QaA\x81\x01\x01\x01\x01'
+#b'\x08\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\t\xd1\xa1A\x81\x01\x01\x01\x01'
+#b'\n\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x0b\xe9\xb1!\xc1\x81\x01\x01\x01'
+#b'\x0c\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\r\t\x11\xa1A\x81\x01\x01\x01'
+#b'\x0e\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x0f!\xc1\x81\x01\x01\x01\x01\x01'
+#b'\x10\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x11!A\x81\x01\x01\x01\x01\x01'
+#b'\x12\x00\x00\x00\x00\x00\x00\x00\x00'
+#b'\x13y\x91aA\x81\x01\x01\x01'
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-6" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Without even looking at the key_expansion, one could say the keys it expands to are quite bad and possibly quite repetitive.<br />
+Voila, lets try randomly decrypting with a key.</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="5" data-source-sha256="70527f2e830411e1e9120a1787aea452d73d492d07b6a05d8be577f1ed5a0de1" aria-labelledby="code-frame-label-7">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-7"><strong>Python</strong><small>5 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 7" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 7" aria-describedby="code-frame-status-7" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">flag_enc</span> <span class="o">=</span> <span class="nf">b64decode</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">hQWYogqLXUO+rePyWkNlBlaAX47/2dCeLFMLrmPKcYRLYZgFuqRC7EtwX4DRtG31XY4az+yOvJJ/pwWR0/J9gg==</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">decyrpt</span><span class="p">(</span><span class="n">flag_enc</span><span class="p">,</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x00</span><span class="sh">'</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">decyrpt</span><span class="p">(</span><span class="n">flag_enc</span><span class="p">,</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x01</span><span class="sh">'</span><span class="p">))</span>
+<span class="c1">#b'\xe2\xaa/\xb8}\xb2\xe1\x9d\xbe\xf0\xad\x1c\xe4)\xa77c3_is_4LW4YS_th3_4nsw3r(but_with_0ptimiz4ti0ns)}'
+#b'\x15\xa84N\xff\x83\x00{\xbe\xf0\xad\x1c\xe4)\xa77c3_is_4LW4YS_th3_4nsw3r(but_with_0ptimiz4ti0ns)}'
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-7" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>One could aready read a lot of the flag! We only lack the first two blocks of the flag.<br />
+Why can we read the rest of the flag by decrypting with some non-sense key?<br />
+Since in <code class="language-plaintext highlighter-rouge">encrypt</code> function each block is xored with the key byte at the corresponding position, we luckily end up encrypting it with byte <code class="language-plaintext highlighter-rouge">b'\x01'</code> for the last 6 bytes.<br />
+And xoring with <code class="language-plaintext highlighter-rouge">b'\x01'</code> would be the same byte again hehe.<br />
+But wouldnt it be lost amidst all the permutation and substitution??<br />
+No, since we are exactly reversing the permutation and substitution since the xor part dies out!</p>
+
+<p>Why do we have so many 0’s and 1’s in the expanded key?<br />
+It is evident from this part</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="3" data-source-sha256="3070c3da7a1bce9c81325ff59cf3573618c8c0530fd46097aa9cfecd7b4cb814" aria-labelledby="code-frame-label-8">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-8"><strong>Python</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 8" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 8" aria-describedby="code-frame-status-8" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">key_len</span><span class="p">)]:</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+    <span class="n">expanded</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-8" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>As <code class="language-plaintext highlighter-rouge">cur</code> is repeteadly raised to the power <code class="language-plaintext highlighter-rouge">num</code>, once <code class="language-plaintext highlighter-rouge">cur</code> hits 0 or 1, it will stay 0 or 1 out of its misery.<br />
+So all we need to figure out is the first two bytes, which should be quite easy!</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="4" data-source-sha256="c6ffbc3800ad2bc2ed8ded774c8735233088e6b03b32a0436e3115582f6ad2a6" aria-labelledby="code-frame-label-9">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-9"><strong>Python</strong><small>4 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 9" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 9" aria-describedby="code-frame-status-9" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">65536</span><span class="p">):</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nf">long_to_bytes</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">a</span> <span class="p">:</span><span class="o">=</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">flag_enc</span><span class="p">,</span> <span class="n">key</span><span class="p">)).</span><span class="nf">startswith</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">rgbCTF</span><span class="sh">'</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-9" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Ugly solution in <a href="./solve.py">solve.py</a></p>
+
+<p>And boom! we have our flag</p>
+<h4 id="rgbctfbrut3_f0rc3_is_4lw4ys_th3_4nsw3rbut_with_0ptimiz4ti0ns">rgbCTF{brut3_f0rc3_is_4LW4YS_th3_4nsw3r(but_with_0ptimiz4ti0ns)}</h4>
+
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/writeups/2020/rgbctf/crypto/N-AES/2020-07-13-rgbCTF-2020-N-AES">rgbCTF 2020 Crypto - N-AES</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/rgbctf/crypto/Adequate_Encryption_Standard/2020-07-13-rgbctf-2020-Adequate-Encryption_standard.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/writeups/2020/tctf/crypto/babyring/2020-06-30-TCTF-2020-Quals-babyring"><span>Previous</span>0CTF/TCTF 2020 Crypto - babyring</a><a rel="next" href="/writeups/2020/rgbctf/crypto/N-AES/2020-07-13-rgbCTF-2020-N-AES"><span>Next</span>rgbCTF 2020 Crypto - N-AES</a></nav>
+  </footer>
+</main>
+
+<script defer src="/writeups/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      61 public writeups by
+      <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="https://deut-erium.github.io/">Domain root</a>
+      <a href="https://github.com/deut-erium/WriteUps">Repository</a>
+      <a href="/writeups/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

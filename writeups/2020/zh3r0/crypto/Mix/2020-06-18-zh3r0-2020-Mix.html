@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>zh3r0 2020 Crypto - Mix / CTF Writeups</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="zh3r0 2020 Crypto - Mix" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="zh3r0 2020 Crypto - Mix writeup: cryptography, encoding, guess" />
+<meta name="twitter:description" property="og:description" content="zh3r0 2020 Crypto - Mix writeup: cryptography, encoding, guess" />
+<link rel="canonical" href="https://deut-erium.github.io/writeups/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix" />
+<meta property="og:url" content="https://deut-erium.github.io/writeups/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix" />
+<meta property="og:site_name" content="CTF Writeups" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-18T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-18T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="zh3r0 2020 Crypto - Mix" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-18T00:00:00+05:30","datePublished":"2020-06-18T00:00:00+05:30","description":"zh3r0 2020 Crypto - Mix writeup: cryptography, encoding, guess","headline":"zh3r0 2020 Crypto - Mix","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/writeups/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix"},"url":"https://deut-erium.github.io/writeups/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="CTF Writeups" href="/writeups/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/writeups/assets/favicon.svg">
+<link rel="stylesheet" href="/writeups/assets/css/main.css">
+<link rel="stylesheet" href="/writeups/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/writeups/assets/css/skins/" disabled>
+<script src="/writeups/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/writeups/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-article" data-layout="article">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/writeups/" aria-label="CTF Writeups home">
+      <span class="site-brand__text">
+        <strong class="site-brand__name">CTF Writeups</strong>
+        <small class="site-brand__scope">Cryptography, CTFs, and reproducible solve notes</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/writeups/">Home</a>
+      <a data-route="archive" href="/writeups/archive.html">Archive</a>
+      <a data-route="about" href="/writeups/about.html">About</a>
+      <a data-route="feed" href="/writeups/feed.xml">RSS</a>
+      <a data-route="source" href="https://github.com/deut-erium/WriteUps/tree/master/_posts">Source</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--encoding" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.18</span>
+      <span>zh3r0</span>
+    </div>
+    <h1 itemprop="headline">zh3r0 2020 Crypto - Mix</h1><p class="record-head__abstract" itemprop="description">zh3r0 2020 Crypto - Mix writeup: cryptography, encoding, guess
+</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>zh3r0</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Encoding</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-18T00:00:00+05:30">2020-06-18</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/writeups/archive.html?tag=zh3r0">zh3r0</a><a href="/writeups/archive.html?tag=2020">2020</a><a href="/writeups/archive.html?tag=cryptography">cryptography</a><a href="/writeups/archive.html?tag=encoding">encoding</a><a href="/writeups/archive.html?tag=guess">guess</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/WriteUps/tree/master/_posts/2020/zh3r0/crypto/Mix">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="mix">Mix</h2>
+
+<h3 id="description">Description</h3>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="473667680b593cc1a6dc2620b042c4491a4fad63a30fe4f6a7c5908ed99d1c53" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>At the BASEment no. 65536, A man is irritated with SHIFT key in his KEYBOARD as it's a sticky key, A kid is having chocolate icecream with a SPOON.
+
+Author : Whit3_D3vi1
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<h3 id="challenge-files">Challenge Files</h3>
+<ul>
+  <li><a href="Mix.zip">Mix.zip</a>
+    <ul>
+      <li><a href="Mix/chall_encrypted.txt">Mix/chall_encrypted.txt</a></li>
+      <li><a href="Mix/flag.txt">Mix/flag.txt</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><a href="Mix/flag.txt">flag.txt</a> reads</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="1" data-source-sha256="26c2bbe61803ec4730230959c136e0d31c3a013b492bbf7c95bfa1c8cfbaf757" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Plain text</strong><small>1 line / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>If you opened this then you are a n00b
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>HAHA VERY FUNNY</p>
+
+<p><a href="Mix/chall_encrypted.txt">chall_encrypted.txt</a> contains some seemingly chinese.<br />
+since BASE65536 is a <strong>BIG</strong> hint to <a href="https://pypi.org/project/base65536/">base 65536</a>, We do stuff.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="8" data-source-sha256="ad6c8066eb747b6f16ecca7f70888e28c1290db4b16f11cb17b8ed0ad3b0c2ba" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>8 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">import</span> <span class="n">base65536</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">chall_encrypted.txt</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">chall_enc</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">chall_enc</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="n">data1</span> <span class="o">=</span> <span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="mi">256</span><span class="p">)</span><span class="o">+</span><span class="nf">chr</span><span class="p">(</span><span class="nf">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">//</span><span class="mi">256</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span> <span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">base65536</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="nf">decode</span><span class="p">())</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Which prints out some neat stuff</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="8" data-source-sha256="c9b9a0d454357c78259b83b74a466c9c99bbf949e7e58deb978c4b5529a1fcbd" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Plain text</strong><small>8 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>flag 1:
+Yjod od s lrunpstf djogy vo[jrtyrcy jrtr od upi g;sh xj4t-}U-i+dit4+
+
+flag 2:
+3030313130313030203031313130303130203030313130303131203031303131313131203030313130313030203031313130313131203030313130303131203031313130303131203030313130303030203031313031313031203030313130303131203031303131313131203031313130313131203031313031303031203030313130313131203031313031303030
+
+flag 3:
+MTExMTExMTExMTAwMTAwMDEwMTAxMDExMTAxMDExMTExMTEwMTAxMTExMTExMTExMDExMDExMDExMDExMDAwMDAxMTAxMDAxMDAxMDAxMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAxMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMDAwMDAwMDAwMTAxMDAwMTAxMDAxMDAwMTAxMDAxMTExMTExMTAwMTAxMDAxMDExMTExMTExMTAwMTAxMDAxMTAwMDAwMDAwMDAwMDAwMTAxMDAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDExMTExMTExMTExMTExMTExMTExMDAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMDAwMDAwMDAxMDEwMDExMDAwMDAwMDAxMDEwMDAxMDEwMTExMTAwMTAxMDAxMDExMTExMTExMTExMTExMTExMTExMDAxMDEwMDExMDExMDExMTExMTExMTExMTAwMTAxMA==
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Now we have 3 parts, lets work with hints as usual.
+So the first part must be KEYBOARD SHIFT cipher<br />
+At this point, I am wondering why is <a href="https://www.dcode.fr/keyboard-shift-cipher">dcode.fr</a> <strong><em>S0 GOOD</em></strong>.<br />
+<img src="keyboard_shift.PNG" alt="Keyboard shift diagram" loading="lazy" decoding="async" width="1215" height="922" /></p>
+
+<p>And we get the first part as <code class="language-plaintext highlighter-rouge">This is a keyboard shift ciphertext here is you flag zh3r0{Y0u_sur3_</code></p>
+
+<p>Now moving to second part, we dont even need a hint,</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="7" data-source-sha256="0fa72c22591a36051120f242cce4e8709f3d0de116ca9b86b1076e35092d8c98" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Python</strong><small>7 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">f2</span> <span class="o">=</span> <span class="sh">"</span><span class="s">3030313130313030203031313130303130203030313130303131203031303131313131203030313130313030203031313130313131203030313130303131203031313130303131203030313130303030203031313031313031203030313130303131203031303131313131203031313130313131203031313031303031203030313130313131203031313031303030</span><span class="sh">"</span>
+<span class="nf">print</span><span class="p">(</span><span class="nb">bytes</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="n">f2</span><span class="p">))</span>
+
+<span class="c1"># b'00110100 01110010 00110011 01011111 00110100 01110111 00110011 01110011 00110000 01101101 00110011 01011111 01110111 01101001 00110111 01101000'
+</span>
+<span class="n">flag2</span> <span class="o">=</span> <span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">bytes</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="n">f2</span><span class="p">).</span><span class="nf">split</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">flag2</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>And just like that, we have <code class="language-plaintext highlighter-rouge">4r3_4w3s0m3_wi7h</code> as second part of flag</p>
+
+<p>Coming to third part, it seemingly is base64 encoding,</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="4" data-source-sha256="4457e186732588f6451cbd25058dbfa59a79eadb9e887e822daecd25fb479ce0" aria-labelledby="code-frame-label-6">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-6"><strong>Python</strong><small>4 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 6" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 6" aria-describedby="code-frame-status-6" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="sh">'</span><span class="s">MTExMTExMTExMTAwMTAwMDEwMTAxMDExMTAxMDExMTExMTEwMTAxMTExMTExMTExMDExMDExMDExMDExMDAwMDAxMTAxMDAxMDAxMDAxMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAxMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDAwMDAwMDAwMDAwMTAxMDAwMTAxMDAxMDAwMTAxMDAxMTExMTExMTAwMTAxMDAxMDExMTExMTExMTAwMTAxMDAxMTAwMDAwMDAwMDAwMDAwMTAxMDAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAxMDExMTExMTExMTExMTExMTExMTExMDAxMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDEwMDAwMDAwMDAxMDEwMDExMDAwMDAwMDAxMDEwMDAxMDEwMTExMTAwMTAxMDAxMDExMTExMTExMTExMTExMTExMTExMDAxMDEwMDExMDExMDExMTExMTExMTExMTAwMTAxMA==</span><span class="sh">'</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="nf">b64decode</span><span class="p">(</span><span class="n">f3</span><span class="p">))</span>
+
+<span class="c1"># b'1111111111001000101010111010111111101011111111110110110110110000011010010010010000000000000000001010011000000000000000000000000000000000000000000000000000000001010000000000001010001010010001010011111111001010010111111111001010011000000000000001010010000000000000000000000000000001010111111111111111111110010100000000000000000000000000010100000000010100110000000010100010101111001010010111111111111111111110010100110110111111111111001010'
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-6" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Which turns out to be some sort of binary, lets take third hint SPOON to our help and hey, never to forget <a href="https://www.dcode.fr/spoon-language">dcode.fr</a></p>
+
+<p><img src="spoon.PNG" alt="Spoon cipher reference" loading="lazy" decoding="async" width="1218" height="897" /></p>
+
+<p>We get the third part of flag <code class="language-plaintext highlighter-rouge">_411_7h3_ski115}</code></p>
+
+<h4 id="zh3r0y0u_sur3_4r3_4w3s0m3_wi7h_411_7h3_ski115">zh3r0{Y0u_sur3_4r3_4w3s0m3_wi7h_411_7h3_ski115}</h4>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/writeups/2020/zh3r0/crypto/gboad_maddy/2020-06-19-zh3r0-2020-gboad-maddy">zh3r0 2020 Crypto - gboad maddy</a></li><li><a href="/writeups/2020/zh3r0/crypto/We_are_related/2020-06-18-zh3r0-2020-We-Are-Related">zh3r0 2020 Crypto - We are related</a></li><li><a href="/writeups/2020/zh3r0/crypto/Uncipher_me/2020-06-18-zh3r0-2020-Uncipher-Me">zh3r0 2020 Crypto - Uncipher Me</a></li><li><a href="/writeups/2020/zh3r0/crypto/RSA-Warmup/2020-06-18-zh3r0-2020-RSA-warmup">zh3r0 2020 Crypto - RSA warmup</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/zh3r0/crypto/Mix/2020-06-18-zh3r0-2020-Mix.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/writeups/2020/zh3r0/crypto/Hastads_message/2020-06-18-zh3r0-2020-Hastads-Message"><span>Previous</span>zh3r0 2020 Crypto - Hastads Message</a><a rel="next" href="/writeups/2020/zh3r0/crypto/RSA-Warmup/2020-06-18-zh3r0-2020-RSA-warmup"><span>Next</span>zh3r0 2020 Crypto - RSA warmup</a></nav>
+  </footer>
+</main>
+
+<script defer src="/writeups/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      61 public writeups by
+      <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="https://deut-erium.github.io/">Domain root</a>
+      <a href="https://github.com/deut-erium/WriteUps">Repository</a>
+      <a href="/writeups/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
