@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>RACTF 2020 Crypto - B007L36 CRYP70 A641N / CTF Writeups</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="RACTF 2020 Crypto - B007L36 CRYP70 A641N" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="RACTF 2020 Crypto - B007L36 CRYP70 A641N writeup: cryptography, bootleg, netcat, choosen_plaintext" />
+<meta name="twitter:description" property="og:description" content="RACTF 2020 Crypto - B007L36 CRYP70 A641N writeup: cryptography, bootleg, netcat, choosen_plaintext" />
+<link rel="canonical" href="https://deut-erium.github.io/writeups/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N" />
+<meta property="og:url" content="https://deut-erium.github.io/writeups/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N" />
+<meta property="og:site_name" content="CTF Writeups" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-09T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-09T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="RACTF 2020 Crypto - B007L36 CRYP70 A641N" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-09T00:00:00+05:30","datePublished":"2020-06-09T00:00:00+05:30","description":"RACTF 2020 Crypto - B007L36 CRYP70 A641N writeup: cryptography, bootleg, netcat, choosen_plaintext","headline":"RACTF 2020 Crypto - B007L36 CRYP70 A641N","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/writeups/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N"},"url":"https://deut-erium.github.io/writeups/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="CTF Writeups" href="/writeups/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/writeups/assets/favicon.svg">
+<link rel="stylesheet" href="/writeups/assets/css/main.css">
+<link rel="stylesheet" href="/writeups/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/writeups/assets/css/skins/" disabled>
+<script src="/writeups/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/writeups/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-article" data-layout="article">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/writeups/" aria-label="CTF Writeups home">
+      <span class="site-brand__text">
+        <strong class="site-brand__name">CTF Writeups</strong>
+        <small class="site-brand__scope">Cryptography, CTFs, and reproducible solve notes</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/writeups/">Home</a>
+      <a data-route="archive" href="/writeups/archive.html">Archive</a>
+      <a data-route="about" href="/writeups/about.html">About</a>
+      <a data-route="feed" href="/writeups/feed.xml">RSS</a>
+      <a data-route="source" href="https://github.com/deut-erium/WriteUps/tree/master/_posts">Source</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--crypto" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.09</span>
+      <span>ractf</span>
+    </div>
+    <h1 itemprop="headline">RACTF 2020 Crypto - B007L36 CRYP70 A641N</h1><p class="record-head__abstract" itemprop="description">RACTF 2020 Crypto - B007L36 CRYP70 A641N writeup: cryptography, bootleg, netcat, choosen_plaintext
+</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>ractf</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Crypto</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-09T00:00:00+05:30">2020-06-09</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/writeups/archive.html?tag=RACTF">RACTF</a><a href="/writeups/archive.html?tag=2020">2020</a><a href="/writeups/archive.html?tag=cryptography">cryptography</a><a href="/writeups/archive.html?tag=bootleg">bootleg</a><a href="/writeups/archive.html?tag=netcat">netcat</a><a href="/writeups/archive.html?tag=choosen_plaintext">choosen plaintext</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/WriteUps/tree/master/_posts/2020/ractf/crypto/B007L36_CRYP70_4641N">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="b007l36-cryp70-4641n">B007L36 CRYP70… 4641N</h2>
+
+<p>After finally solving <a href="https://github.com/deut-erium/WriteUps/tree/master/_posts/2020/ractf/crypto/BOO7l3G_CRYP70">B007l3G CRYP70</a>, we are again presented with another variant. The description reads as follows:-</p>
+
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="5" data-source-sha256="3394eab67bba2f0006a71ed2f5d83f898fb737bd792f3d370b3acae88bdd5d03" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Plain text</strong><small>5 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>As you continue your pentest of MEGACORP, you make your way to an 
+admin-only subnet of the network. There, you find yet another custom
+crypto implementation. You also previously found this zip file on a 
+user's desktop. Solving this may be the last step to gaining full 
+access to the company's network
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>And <a href="encryption_service.zip">encryption_service.zip</a>, the contents of which are :-</p>
+
+<p><a href="ciphertext.txt">ciphertext.txt</a></p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="6" data-source-sha256="85ce7f9a4d1a1cf8ec2a505fc37d40d9142b8105c1a49d229bf64dcacfe7bd1f" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Plain text</strong><small>6 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>w4bDkMKDw6jDi8Ouw6JQw6jDh8OZwojCmMONw4nDnsKtwqnDk8OiwqLDosKdw6XDhsOVw6
+rDj8Oew5NcwpTDhMOiw4vCpcOYw5bDoFTCrcOHw6LCpsKUw6PDm8ONw4jClMOdw6TDosKY
+wpTDmMOjw53CpX/DicObwqHCqcOAw6fCrMKUw6bDpcOUw5jDmcOKwpvDocKVw5fDkcOZw5
+xTw4rDi8OlVMKaw43DnVPDmcOrw6XDlsOVw5nChsOvw5bCkcOof8Odw5xTw5HDi8OfwqnC
+pcOTw6xTw53Dq8KSw5XDi8OZwobDnsOXwqDDnMOEw6bDnMKYw5fDmsKawqjCscOTwpnCmc
+Odw6nDl8KP
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p><a href="plaintext.txt">plaintext.txt</a></p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="2" data-source-sha256="ddae641bb56be4eca575549f848fed5d304cb01797c3ffe3cb87e8ef0d42e5e5" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Plain text</strong><small>2 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>To test the encryption service, encrypt this file with your company 
+issued secret key and ensure that it results in the ciphertext.txt file.
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Aand a <a href="password.txt">password.txt</a></p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="1" data-source-sha256="59432ea3eb27e4ac8efc7021737b28e09b9df18eb42fa441c9494c10e7e779ec" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Plain text</strong><small>1 line / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>w6TDgsOGw6jDjMO2w5RgwqTDi8OTw5Vmwr7CncOjZcKcwpLDmGjDnMKxw5/ClMOCwqTDlMOaw5tjw7E=
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Lets first begin with by checking some stuff like we did in <a href="">B007l3G CRYP70</a> with the encryption service</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="7" data-source-sha256="e58d699c12e303c73a168e76935768708992b703e2f38f1df524fc84f500ef03" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Plain text</strong><small>7 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>Please enter the secret key to encrypt the data with: a
+Please enter the data that you would like to encrypt: a
+Your encrypted message is: w4I=
+
+Please enter the secret key to encrypt the data with: b
+Please enter the data that you would like to encrypt: a
+Your encrypted message is: w4M=
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Notice the encrypted message appears to be base64 encoded.<br />
+Lets check the decoded values</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="5" data-source-sha256="ee91e986749f3c8d8a4d9097b6ddcf2c4f781e25e0b0267932332f28e46bd43a" aria-labelledby="code-frame-label-6">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-6"><strong>Python</strong><small>5 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 6" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 6" aria-describedby="code-frame-status-6" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">base64</span> <span class="kn">import</span> <span class="n">b64decode</span> <span class="k">as</span> <span class="n">d64</span>
+<span class="nf">d64</span><span class="p">(</span><span class="sh">'</span><span class="s">w4M=</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># b'\xc3\x83'
+</span><span class="nf">d64</span><span class="p">(</span><span class="sh">'</span><span class="s">w4I=</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># b'\xc3\x82'
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-6" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>EWW, looks odd probably because of <a href="https://en.wikipedia.org/wiki/Unicode">unicode</a>. Lets deal with string-objects instead of byte-objects by simply calling <code class="language-plaintext highlighter-rouge">decode()</code></p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="9" data-source-sha256="1c279fb4d766a56227f72f6ad9515d68802d0304a5e4cc04f69860af8926c4b4" aria-labelledby="code-frame-label-7">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-7"><strong>Python</strong><small>9 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 7" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 7" aria-describedby="code-frame-status-7" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">base64</span> <span class="kn">import</span> <span class="n">b64decode</span> <span class="k">as</span> <span class="n">d64</span>
+<span class="nf">d64</span><span class="p">(</span><span class="sh">'</span><span class="s">w4M=</span><span class="sh">'</span><span class="p">).</span><span class="nf">decode</span><span class="p">()</span>
+<span class="c1"># 'Ã'
+</span><span class="nf">d64</span><span class="p">(</span><span class="sh">'</span><span class="s">w4I=</span><span class="sh">'</span><span class="p">).</span><span class="nf">decode</span><span class="p">()</span>
+<span class="c1"># 'Â'
+</span><span class="nf">ord</span><span class="p">(</span><span class="sh">'</span><span class="s">Ã</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># 195
+</span><span class="nf">ord</span><span class="p">(</span><span class="sh">'</span><span class="s">Â</span><span class="sh">'</span><span class="p">)</span>
+<span class="c1"># 194
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-7" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Hehe, we start getting a hint already, changing the key by 1, encryption changes by 1. There is probably something <em>Very Linear</em> about the encryption.</p>
+
+<p>To help with encryption process, I created a small helper function <code class="language-plaintext highlighter-rouge">encrypt</code>which calls encrypt on the server and return the <code class="language-plaintext highlighter-rouge">ord</code> values of base64 decoded string.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="26" data-source-sha256="16deb68c3c7498b42b709d40337ca33bb1e294e94c40140a7f22551cb2c7b047" aria-labelledby="code-frame-label-8">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-8"><strong>Python</strong><small>26 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 8" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 8" aria-describedby="code-frame-status-8" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">pwn</span> <span class="kn">import</span> <span class="n">remote</span>
+<span class="kn">from</span> <span class="n">base64</span> <span class="kn">import</span> <span class="n">b64decode</span> <span class="k">as</span> <span class="n">d64</span>
+<span class="kn">from</span> <span class="n">base64</span> <span class="kn">import</span> <span class="n">b64encode</span> <span class="k">as</span> <span class="n">e64</span>
+
+<span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="sh">"</span><span class="s">95.216.233.106</span><span class="sh">"</span><span class="p">,</span> <span class="mi">60246</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">password.txt</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">password_file</span><span class="p">:</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="nf">d64</span><span class="p">(</span><span class="n">password_file</span><span class="p">.</span><span class="nf">read</span><span class="p">().</span><span class="nf">strip</span><span class="p">()).</span><span class="nf">decode</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">ciphertext.txt</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">ciphertext_file</span><span class="p">:</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="nf">d64</span><span class="p">(</span><span class="n">ciphertext_file</span><span class="p">.</span><span class="nf">read</span><span class="p">().</span><span class="nf">strip</span><span class="p">()).</span><span class="nf">decode</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">plaintext.txt</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">plaintext_file</span><span class="p">:</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">plaintext_file</span><span class="p">.</span><span class="nf">read</span><span class="p">().</span><span class="nf">strip</span><span class="p">()</span>
+
+<span class="n">REM</span> <span class="o">=</span> <span class="nf">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">REM</span><span class="p">.</span><span class="nf">recvline</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">REM</span><span class="p">.</span><span class="nf">recvline</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">REM</span><span class="p">.</span><span class="nf">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">data with:</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">REM</span><span class="p">.</span><span class="nf">sendline</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">REM</span><span class="p">.</span><span class="nf">sendline</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">REM</span><span class="p">.</span><span class="nf">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="se">\n\n</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">encrypted</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">message is: </span><span class="sh">'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="nf">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nf">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">d64</span><span class="p">(</span><span class="n">encrypted</span><span class="p">).</span><span class="nf">decode</span><span class="p">()]</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-8" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Lets play around a little bit more…</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="8" data-source-sha256="bae36230601471213a07e688783cf32670a63e2d9ddfa4dc19da3697ee6835ce" aria-labelledby="code-frame-label-9">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-9"><strong>Python</strong><small>8 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 9" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 9" aria-describedby="code-frame-status-9" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="o">&gt;&gt;&gt;</span> <span class="nf">encrypt</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">aaaa</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">194</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">194</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">encrypt</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">aaaa</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">ab</span><span class="sh">'</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">194</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">195</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">encrypt</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">aaaa</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">abcd</span><span class="sh">'</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">194</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">197</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">encrypt</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">abcd</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">aaaa</span><span class="sh">'</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">194</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">197</span><span class="p">]</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-9" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>We can make the following observations :-</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">key</code> is repeated if <code class="language-plaintext highlighter-rouge">plaintext</code> is longer than the <code class="language-plaintext highlighter-rouge">key</code></li>
+  <li>The encryption is changed only by 1 on varying either <code class="language-plaintext highlighter-rouge">key</code> or <code class="language-plaintext highlighter-rouge">plaintext</code> by 1</li>
+  <li>The <code class="language-plaintext highlighter-rouge">key</code>, <code class="language-plaintext highlighter-rouge">plaintext</code> and <code class="language-plaintext highlighter-rouge">ciphertext</code> are related just by an addition modulo 256</li>
+</ul>
+
+<p>So, all we need to do now is to figure out what the provided files mean.<br />
+Let us try checking the key with which <a href="ciphertext.txt">ciphertext.txt</a> and <a href="plaintext.txt">plaintext.txt</a> are related.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="4" data-source-sha256="dfcb49fed2bc78b6ca0a609d5a2f48bcad835b8ac33fccca6e90b0a6f7af0836" aria-labelledby="code-frame-label-10">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-10"><strong>Python</strong><small>4 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 10" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 10" aria-describedby="code-frame-status-10" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">ct_arr</span> <span class="o">=</span> <span class="p">[</span><span class="nf">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ct</span><span class="p">]</span>
+<span class="n">pt_arr</span> <span class="o">=</span> <span class="p">[</span><span class="nf">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">]</span>
+<span class="n">diff_arr</span> <span class="o">=</span> <span class="p">[</span><span class="n">ct_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">pt_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">ct_arr</span><span class="p">))]</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">diff_arr</span><span class="p">))</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-10" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p><code class="language-plaintext highlighter-rouge">ractf{n0t_th3_fl49_y3t}ractf{n0t_th3_fl49_y3t}ractf{n0t_th3_fl49_y3t}ractf{n0t_th3_fl49_y3t}ractf{n0t_th3_fl49_y3t}ractf{n0t_th3_fl49_y3t}ra</code></p>
+
+<p>YES, it indeed verifies all our hypothesis and we now know the <code class="language-plaintext highlighter-rouge">company issued secret key</code> is <code class="language-plaintext highlighter-rouge">ractf{n0t_th3_fl49_y3t}</code></p>
+
+<p>Lets quickly decrypt the contents of <a href="password.txt">password.txt</a> with the key</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="3" data-source-sha256="a82d953a7459e602c7ea4fc3fad50ce37c87542da613b04a0025515f45ce3701" aria-labelledby="code-frame-label-11">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-11"><strong>Python</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 11" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 11" aria-describedby="code-frame-status-11" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">key</span> <span class="o">=</span> <span class="sh">"</span><span class="s">ractf{n0t_th3_fl49_y3t}</span><span class="sh">"</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">ord</span><span class="p">(</span><span class="n">password</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="nf">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">password</span><span class="p">))</span> <span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-11" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>And we finally get our flag <code class="language-plaintext highlighter-rouge">ractf{f00l_m3_7w1c3_5h4m3_0n_m3}</code><br />
+CHEERS YOU ALL!</p>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/writeups/2020/ractf/crypto/Really_Speedy_Algorithm/2020-06-09-RACTF-2020-Really-Speedy-Algorithm">RACTF 2020 Crypto - Really Speedy Algirithm</a></li><li><a href="/writeups/2020/ractf/crypto/Really_Small_Algorithm/2020-06-09-RACTF-2020-Really-Small-Algorithm">RACTF 2020 Crypto - Really Small Algorithm</a></li><li><a href="/writeups/2020/ractf/crypto/Really_Simple_Algorithm/2020-06-09-RACTF-2020-Really-Simple-Algorithm">RACTF 2020 Crypto - Really Simple Algorithm</a></li><li><a href="/writeups/2020/ractf/crypto/Really_Secret_Algorithm/2020-06-09-RACTF-2020-Really-Secret-Algorithm">RACTF 2020 Crypto - Really Secret Algorithm</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/WriteUps/blob/master/_posts/2020/ractf/crypto/B007L36_CRYP70_4641N/2020-06-09-RACTF-2020-B007L36-CRYP70-4641N.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/writeups/2020/ractf/crypto/06/2020-06-09-RACTF-2020-06"><span>Previous</span>RACTF 2020 Crypto - 06</a><a rel="next" href="/writeups/2020/ractf/crypto/BOO7l3G_CRYP70/2020-06-09-RACTF-2020-BOO7l3G-CRYP70"><span>Next</span>RACTF 2020 Crypto - BOO7l3G CRYP70</a></nav>
+  </footer>
+</main>
+
+<script defer src="/writeups/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      61 public writeups by
+      <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="https://deut-erium.github.io/">Domain root</a>
+      <a href="https://github.com/deut-erium/WriteUps">Repository</a>
+      <a href="/writeups/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
