@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>HSCTF 2020 Crypto - Unexpected / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="HSCTF 2020 Crypto - Unexpected" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="HSCTF 2020 Crypto - Unexpected writeup: cryptography, RSA, GCD" />
+<meta name="twitter:description" property="og:description" content="HSCTF 2020 Crypto - Unexpected writeup: cryptography, RSA, GCD" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-06T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-06T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="HSCTF 2020 Crypto - Unexpected" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-06T00:00:00+05:30","datePublished":"2020-06-06T00:00:00+05:30","description":"HSCTF 2020 Crypto - Unexpected writeup: cryptography, RSA, GCD","headline":"HSCTF 2020 Crypto - Unexpected","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.html"},"url":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--rsa" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.06</span>
+      <span>HSCTF</span>
+    </div>
+    <h1 itemprop="headline">HSCTF 2020 Crypto - Unexpected</h1><p class="record-head__abstract" itemprop="description">HSCTF 2020 Crypto - Unexpected writeup: cryptography, RSA, GCD</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>HSCTF</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>RSA</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-06T00:00:00+05:30">2020-06-06</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=HSCTF">HSCTF</a><a href="/archive.html?tag=2020">2020</a><a href="/archive.html?tag=RSA">RSA</a><a href="/archive.html?tag=GCD">GCD</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/HSCTF/crypto/Unexpected">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="unexpected">Unexpected</h2>
+
+<p><img src="Capture.PNG" alt="Unexpected challenge asks for three plaintexts from RSA keys N=PQ, QR, and PR, using 1024-bit primes and e=65537." decoding="async" height="756" loading="lazy" width="677"></p>
+
+<p>We are given 3 N’s and 3 C’s and given that all three share primes
+i.e</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="f4a53e282b8ee2488a8d4bc6bf1a5a35a97abe4f90c1eb5bbf3bee59814231ad" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight"><code>N1 = p*q
+N2 = q*r
+N3 = r*p
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>This is a problem of classic <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a> with a small twist.<br />
+Now, we know factoring N into their factors is hard. However this can be don easily considering we have a common factor between pairs of N
+i.e q is a common factor of N1 and N2, r is a common factor of N2 and N3
+and p is a common factor of N3 and N1.</p>
+
+<p>Once we get p, q and r, we can easily calculate <a href="https://en.wikipedia.org/wiki/Euler%27s_totient_function">Euler Totien phi</a> and the modular inverse of E with respect to respective phis.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="35" data-source-sha256="8d8926851c9279aab5245c27062bb2d0dadd665d6a0e8e4dce47926702360ed6" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Python</strong><small>35 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="c1">#python3
+</span><span class="kn">import</span> <span class="n">gmpy2</span>  <span class="c1">#Cool asf library
+</span><span class="n">N1</span> <span class="o">=</span> <span class="mi">3895738302299059518129198422310169628530536557191890566210939781698372336257482186582163630847612416277492034959243510457939210010336159061758606919109259916143600981918456942199762738624796190838889500238780675229383463267807384154074134251073572174392024892486431125499446924573006208711810847272390619510395812856188247531815920797526102562723333957594242603466996229335924848954210939152042149332307810693239925149256224795031982752752336401872520016106145667479144091130160998875256860809091721275069193773739370057334041922519998813268278574260846083883264261920589114740823464192397850923545998904365370408113</span>
+
+<span class="n">N2</span> <span class="o">=</span> <span class="mi">3036683903819675505741091164945461947189004916494633766372176282409409694958701211748277050499101511956962003835932755555293255586827283990400451317444723234406968971873530093281591689832798646915816609347861047534121792409030834659241904646743453387504496246791081682741245482378149293399372654558929658582070853972454887854658545741800574343930155288517185535533201220281739954820271979667081052363406511938025061398551356675540358212449132781674832812796443378476387659729623581274433769056775163718782871879747276327458473970177451591251859530403032170215968101310739004163533767679394201611410832974546802038041</span>
+
+<span class="n">N3</span> <span class="o">=</span> <span class="mi">4793455677299549137382284585015750073239112414361680529255951318217960300841340399094743130287927996565298160174555422185410320841942637374406558835150138631140265626020072464652973386772727192540062051929655235552439145036105501434801984612127808829810146844869487529177642676245549299371487478280457673839725488195812744535928488844735950540356920273038857127652414836352483913807655170699520816765863272825856765769043174406026964068017257738085400965661973681558654658747878342173984592411085018242201038877382766239487564503728442821348064764166024851080258629751476765613997512620274759264076272801682962144457</span>
+
+<span class="n">E</span> <span class="o">=</span> <span class="mi">65537</span>
+
+<span class="n">C1</span> <span class="o">=</span> <span class="mi">396708474546125804352894757436683688457291028695044217325853929491171136935487190613513217479209066321213697066977005912522338337419604329864854419961723570625025089500459612736934675744115710978556346050350466970024450696226499749911198313775828281699871502987873199226066403667788132060336882800770615332190939846610876881382430101512212915247532319827304296610854802037475047119525110795533529161852951539770153761419387662527094415537933400873451490021233979268224054475360645920086811082803271848565851436058022797610887635287190533293980480191482625531855511415716253479184799509403767653927424232672209598509</span>
+
+<span class="n">C2</span> <span class="o">=</span> <span class="mi">355006513750551550798931713354683491263062473879176656452255051848683497534660576981575518851351256702360823676609578259232763677292692743319345273559085724516350773319337226043634439282120083618718026203533033564167432280901197175559735572797382863132012675404876908914335941746393221402727788260354881773319480220225939283398326940847106630716629330817737251316474369640273632208347751866683363389016722969822345738247486942531821199790024647950924227337611907877819668593060172268197128413003269501597578146759488894526193598933152416894414296396043283131502951693668167550687432080480619240585408701379144341703</span>
+
+<span class="n">C3</span> <span class="o">=</span> <span class="mi">924835278307680480966328618545268895077532556525413716080960421925985654497130329688156219485942736928562517552888163928270855659413958949301590302010862666331053838345196518237383846281768395909801043955047640003147798786793258813501366000503338638933238548605016169865688228297750780710248359326295693845663887055907900967535999885217905972006140096240831305484619796964713673839223632057905454213937054336962510051529266336629730913756688411854427999570223208667606703681762027957427028839409594591627448224813082072169775916331655060221445546199171668136050686471357710989346885039441000083764142021784018773006</span>
+
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">gcd</span><span class="p">(</span><span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span> <span class="c1"># taking q as greatest common divisor of N1 and N2
+</span><span class="n">r</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">gcd</span><span class="p">(</span><span class="n">N2</span><span class="p">,</span> <span class="n">N3</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">gcd</span><span class="p">(</span><span class="n">N3</span><span class="p">,</span> <span class="n">N1</span><span class="p">)</span>
+
+<span class="n">phi1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># calculation of phi
+</span><span class="n">phi2</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">phi3</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">d1</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">invert</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">phi1</span><span class="p">)</span> <span class="c1"># taking inverse of E modulo phi1
+</span><span class="n">d2</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">invert</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">phi2</span><span class="p">)</span>
+<span class="n">d3</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">invert</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">phi3</span><span class="p">)</span>
+
+<span class="n">m1</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">N1</span><span class="p">)</span> <span class="c1"># decrypting ciphertexts with corresponding keys
+</span><span class="n">m2</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">C2</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
+<span class="n">m3</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">C3</span><span class="p">,</span> <span class="n">d3</span><span class="p">,</span> <span class="n">N3</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nb">bytes</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="nf">hex</span><span class="p">(</span><span class="n">m1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="nf">hex</span><span class="p">(</span><span class="n">m2</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="nf">hex</span><span class="p">(</span><span class="n">m3</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]).</span><span class="nf">decode</span><span class="p">())</span>
+<span class="c1"># flag{n0_0n3_3xp3ct5_th3_sp4nish_inquisiti0n!} I wasnt expecting that either
+</span></code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2020/HSCTF/miscellaneous/N-95/2020-06-06-HSCTF-2020-Misc-N95.html">HSCTF 2020 Misc - N95</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/xkcd_com_2247_v2/2020-06-06-HSCTF-2020-xkcd-2247-v2.html">HSCTF 2020 Crypto - XKCD 2247 v2</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/XORed/2020-06-06-HSCTF-2020-XORed.html">HSCTF 2020 Crypto - XORed</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/Smol_E/2020-06-06-HSCTF-2020-Smol-E.html">HSCTF 2020 Crypto - Smol E</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/WriteUps/2020/HSCTF/crypto/Smol_E/2020-06-06-HSCTF-2020-Smol-E.html"><span>Previous</span>HSCTF 2020 Crypto - Smol E</a><a rel="next" href="/WriteUps/2020/HSCTF/crypto/XORed/2020-06-06-HSCTF-2020-XORed.html"><span>Next</span>HSCTF 2020 Crypto - XORed</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2020%2FHSCTF%2Fcrypto%2FUnexpected%2F2020-06-06-HSCTF-2020-unexpected.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

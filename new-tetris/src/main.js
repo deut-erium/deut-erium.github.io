@@ -7,6 +7,7 @@ import {
   keyBindingsLabel,
 } from "./input.js?v=20260911";
 import { Renderer } from "./renderer.js?v=20260911";
+import { cellsFor } from "./pieces.js?v=20260911";
 import { dailySeed, todayUtc } from "./challenge.js?v=20260911";
 import { verifyDailyChallengeReplay } from "./replay.js?v=20260911";
 import { selectUILayout, writeUILayoutToUrl } from "./ui-layout.js?v=20260911";
@@ -24,9 +25,14 @@ const uiLayout = selectUILayout({
   search: window.location.search,
   roots: [document.documentElement, document.body],
 });
+const gameMachine = requiredElement("game-machine");
+const gameLoading = requiredElement("game-loading");
 const boardCanvas = requiredElement("board");
 const nextCanvas = requiredElement("next");
 const holdCanvas = requiredElement("hold");
+const boardState = requiredElement("board-state");
+const boardGrid = requiredElement("board-grid");
+const gameAnnouncement = requiredElement("game-announcement");
 const overlay = requiredElement("overlay-message");
 const squareFlash = requiredElement("square-flash");
 const challengeDate = requiredElement("challenge-date");
@@ -149,6 +155,25 @@ resetKeyBindingsButton.addEventListener("click", () => input.resetBindings());
 renderKeyBindings(input.getBindings());
 let lastTime = performance.now();
 let replayVerificationGeneration = 0;
+let accessibleBoardSignature = "";
+const accessibleCells = [];
+
+for (let row = 0; row < game.board.visibleRows; row += 1) {
+  const tr = document.createElement("tr");
+  const heading = document.createElement("th");
+  heading.scope = "row";
+  heading.textContent = `Row ${row + 1}`;
+  tr.append(heading);
+  const cells = [];
+  for (let column = 0; column < game.board.width; column += 1) {
+    const cell = document.createElement("td");
+    cell.textContent = "empty";
+    tr.append(cell);
+    cells.push(cell);
+  }
+  boardGrid.append(tr);
+  accessibleCells.push(cells);
+}
 
 function resetSquareResult() {
   fields.lastSquare.textContent = "NONE";
@@ -206,8 +231,27 @@ function fireSquareFlash(message) {
 }
 
 export function handleEvents(events) {
+  const announcements = [];
   for (const event of events) {
-    if (event.type === "start") resetSquareResult();
+    if (event.type === "start") {
+      resetSquareResult();
+      announcements.push("Game started.");
+    } else if (event.type === "spawn") {
+      announcements.push(`New ${event.detail.type} piece.`);
+    } else if (event.type === "hold") {
+      announcements.push(`Held ${event.detail.held}. Active piece is ${event.detail.active}.`);
+    } else if (event.type === "pause") {
+      announcements.push("Game paused.");
+    } else if (event.type === "resume") {
+      announcements.push("Game resumed.");
+    } else if (event.type === "gameover") {
+      announcements.push("Game over.");
+    } else if (event.type === "challengecomplete") {
+      announcements.push("Daily game complete.");
+    } else if (event.type === "lineclear") {
+      const count = event.detail.count;
+      announcements.push(`${count} ${count === 1 ? "line" : "lines"} cleared.`);
+    }
     if (event.type === "lineclear" && event.detail.squareAward.points > 0) {
       const award = event.detail.squareAward;
       const material = award.gold > 0 && award.silver > 0
@@ -216,6 +260,7 @@ export function handleEvents(events) {
       const rows = award.rows === 1 ? "ROW" : "ROWS";
       fields.squareAward.textContent = `+${award.points.toLocaleString("en-US")} collected`;
       fireSquareFlash(`${material} ${rows} / +${award.points.toLocaleString("en-US")}`);
+      announcements.push(`${material.toLowerCase()} ${rows.toLowerCase()}, ${award.points.toLocaleString("en-US")} points collected.`);
       continue;
     }
     if (event.type !== "square") continue;
@@ -231,7 +276,9 @@ export function handleEvents(events) {
       : `${lowShare.toLocaleString("en-US")}-${highShare.toLocaleString("en-US")}`;
     fields.squareAward.textContent = `${scoring.points.toLocaleString("en-US")} pending / ${share} per row`;
     fireSquareFlash(`${kind.toUpperCase()} ${event.detail.size}x${event.detail.size} / ${scoring.points.toLocaleString("en-US")} PENDING`);
+    announcements.push(`${kind} ${event.detail.size} by ${event.detail.size} square completed with ${scoring.points.toLocaleString("en-US")} points pending.`);
   }
+  if (announcements.length > 0) gameAnnouncement.textContent = announcements.join(" ");
 }
 
 function setOverlay(message) {
@@ -239,7 +286,54 @@ function setOverlay(message) {
   overlay.classList.toggle("visible", message.length > 0);
 }
 
+function renderAccessibleState() {
+  const active = new Map();
+  if (game.active) {
+    for (const cell of cellsFor(game.active)) {
+      if (cell.y < game.board.hiddenRows || cell.y >= game.board.height) continue;
+      active.set(`${cell.x},${cell.y}`, game.active.type);
+    }
+  }
+
+  const labels = [];
+  let lockedCount = 0;
+  for (let row = 0; row < game.board.visibleRows; row += 1) {
+    const y = row + game.board.hiddenRows;
+    for (let column = 0; column < game.board.width; column += 1) {
+      const activeType = active.get(`${column},${y}`);
+      const locked = game.board.get(column, y);
+      if (locked) lockedCount += 1;
+      labels.push(activeType ? `${activeType} active` : (locked ? `${locked.type} locked` : "empty"));
+    }
+  }
+  const held = game.heldType ?? "none";
+  const next = game.queue.slice(0, game.rules.previewCount);
+  let activeSummary = "none";
+  if (game.active) {
+    const visibleRow = game.active.y - game.board.hiddenRows + 1;
+    const rowLabel = visibleRow > 0 ? `row ${visibleRow}` : `spawn row ${visibleRow + game.board.hiddenRows}`;
+    activeSummary = `${game.active.type}, rotation ${game.active.rotation}, origin column ${game.active.x + 1}, ${rowLabel}`;
+  }
+  const signature = [game.status, held, ...next, ...labels].join("|");
+  if (signature === accessibleBoardSignature) return;
+  accessibleBoardSignature = signature;
+
+  let index = 0;
+  for (const row of accessibleCells) {
+    for (const cell of row) {
+      cell.textContent = labels[index];
+      index += 1;
+    }
+  }
+  const queueSummary = next.length > 0 ? next.join(", ") : "none";
+  boardState.textContent = `Status ${game.status}. Active piece ${activeSummary}. Held piece ${held}. Next pieces ${queueSummary}. ${lockedCount} locked cells.`;
+  boardCanvas.setAttribute("aria-label", `10 by 20 Tetris board. Active piece ${activeSummary}. ${lockedCount} locked cells.`);
+  holdCanvas.setAttribute("aria-label", `Held piece: ${held}.`);
+  nextCanvas.setAttribute("aria-label", `Next pieces: ${queueSummary}.`);
+}
+
 export function updateHud() {
+  renderAccessibleState();
   const isDaily = Boolean(game.challenge);
   fields.runMode.textContent = isDaily ? `DAILY / ${dateFromSeed(game.challenge.seed) ?? "CUSTOM"}` : "ENDLESS";
   fields.scoreLabel.textContent = "SCORE";
@@ -420,4 +514,6 @@ handleEvents(game.drainEvents());
 renderer.draw(game);
 updateHud();
 if (initialError) challengeMessage.textContent = initialError;
+gameMachine.hidden = false;
+gameLoading.hidden = true;
 requestAnimationFrame(frame);

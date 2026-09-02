@@ -4,12 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Every feasible piece mix for 4x4, 6x6, and 8x8 New Tetris squares.">
+  <link rel="canonical" href="https://deut-erium.github.io/new-tetris/src/catalog/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="New Tetris Square Catalog">
+  <meta property="og:description" content="Every feasible piece mix for 4x4, 6x6, and 8x8 New Tetris squares.">
+  <meta property="og:url" content="https://deut-erium.github.io/new-tetris/src/catalog/">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <title>New Tetris Square Catalog</title>
   <link rel="stylesheet" href="catalog.css?v=20260911">
 </head>
 <body>
   <header class="catalog-head">
-    <div class="catalog-mark"><span>SQUARE</span><strong>CATALOG</strong></div>
+    <h1 class="catalog-mark"><span>SQUARE</span><strong>CATALOG</strong></h1>
     <div>
       <p>Every feasible piece mix: 24 at 4x4, 1,467 at 6x6, and 30,434 at 8x8.</p>
       <nav><a href="../scoring/index.html">Scoring guide</a><a href="../../index.html">Back to game</a></nav>
@@ -17,10 +23,14 @@
   </header>
 
   <main>
+    <noscript><p class="catalog-notice">The interactive catalog needs JavaScript. The scoring guide and game links remain available above.</p></noscript>
+    <p id="catalog-loading" class="catalog-notice" role="status">Loading the local square catalog...</p>
+    <div id="catalog-machine" hidden>
+    <p id="catalog-error" class="catalog-notice" role="status" hidden></p>
     <section class="size-switch" aria-label="Square size">
-      <button type="button" data-size="4">4x4 piece mixes <b>24</b></button>
-      <button type="button" data-size="6">6x6 piece mixes <b>1,467</b></button>
-      <button type="button" data-size="8">8x8 piece mixes <b>30,434</b></button>
+      <button type="button" data-size="4" aria-pressed="false">4x4 piece mixes <b>24</b></button>
+      <button type="button" data-size="6" aria-pressed="false">6x6 piece mixes <b>1,467</b></button>
+      <button type="button" data-size="8" aria-pressed="false">8x8 piece mixes <b>30,434</b></button>
     </section>
 
     <section class="catalog-summary" aria-live="polite">
@@ -58,6 +68,16 @@
       <article class="family-detail" id="family-detail">
         <div class="drawing" id="drawing">
           <canvas id="family-board" width="360" height="360" aria-label="Example square"></canvas>
+          <details class="arrangement-data">
+            <summary>Text arrangement for this step</summary>
+            <div class="arrangement-scroll">
+              <table id="family-grid">
+                <caption id="family-grid-caption">The example arrangement is loading.</caption>
+                <thead><tr id="family-grid-columns"><th scope="col">Row</th></tr></thead>
+                <tbody id="family-grid-body"></tbody>
+              </table>
+            </div>
+          </details>
           <div id="piece-key" class="piece-key"></div>
           <div class="step-controls">
             <button id="step-back" type="button" aria-label="Previous construction step">-</button>
@@ -70,7 +90,8 @@
 
         <div class="family-data">
           <p id="material" class="material">-</p>
-          <h1 id="family-title">-</h1>
+          <h2 id="family-title" class="family-title">-</h2>
+          <p id="catalog-status" class="sr-only" role="status" aria-live="polite"></p>
           <section class="construction-score" aria-labelledby="score-label">
             <span id="score-label">TOTAL VALUE FOR THIS EXAMPLE</span>
             <strong id="construction-score">-</strong>
@@ -79,11 +100,11 @@
             <p id="example-score-note">The same pieces can fit together in other ways. This total is only for the example shown here. The shape bonus grows when fewer straight gaps can separate the pieces.</p>
           </section>
           <div id="badges" class="badges"></div>
-          <h2>Pieces used</h2>
+          <h3>Pieces used</h3>
           <ul id="recipe" class="recipe"></ul>
           <dl id="family-stats"></dl>
           <div id="order-section">
-            <h2>Drop order for this example</h2>
+            <h3>Drop order for this example</h3>
             <ol id="order" class="order"></ol>
           </div>
           <div class="family-nav">
@@ -93,9 +114,23 @@
         </div>
       </article>
     </section>
+    </div>
   </main>
 
   <footer>4x4 has 24 piece mixes, 6x6 has 1,467, and 8x8 has 30,434. Their exact board-arrangement totals are 117, 178,939, and 19,077,209,438.</footer>
-  <script type="module" src="catalog.js?v=20260911"></script>
+  <script id="catalog-module" type="module" src="catalog.js?v=20260911"></script>
+  <script>
+    (() => {
+      const module = document.querySelector("#catalog-module");
+      const loading = document.querySelector("#catalog-loading");
+      const reportFailure = () => {
+        if (document.querySelector("#catalog-machine").hidden && !loading.hidden) {
+          loading.textContent = "The local square catalog could not start. The scoring guide and game links remain available above.";
+        }
+      };
+      module.addEventListener("error", reportFailure, { once: true });
+      setTimeout(reportFailure, 10000);
+    })();
+  </script>
 </body>
 </html>

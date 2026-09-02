@@ -1,9 +1,9 @@
 import { EIGHT_LIST_PAGE, expandEightFamily, familyPage } from "./catalog-model.js?v=20260911";
 
-const DATA_LOADERS = Object.freeze({
-  4: () => import("./data-4.js?v=20260911"),
-  6: () => import("./data-6.js?v=20260911"),
-  8: () => import("./data-8.js?v=20260911"),
+const DATA_URLS = Object.freeze({
+  4: "./data-4.js?v=20260911",
+  6: "./data-6.js?v=20260911",
+  8: "./data-8.js?v=20260911",
 });
 
 const COLORS = Object.freeze({
@@ -19,6 +19,7 @@ const COLORS = Object.freeze({
 const TOTAL_LAYOUTS = Object.freeze({ 4: 117, 6: 178939, 8: 19077209438 });
 const SHAPE_BLOCKS = "<i></i><i></i><i></i><i></i>";
 const cache = new Map();
+const loadAttempts = new Map();
 const params = new URLSearchParams(location.search);
 const requestedSize = Number(params.get("size"));
 const initialSize = [4, 6, 8].includes(requestedSize) ? requestedSize : 4;
@@ -31,6 +32,9 @@ let loadGeneration = 0;
 let listStart = 0;
 
 const ui = Object.freeze({
+  machine: document.querySelector("#catalog-machine"),
+  loading: document.querySelector("#catalog-loading"),
+  error: document.querySelector("#catalog-error"),
   sizeButtons: [...document.querySelectorAll("[data-size]")],
   familyTotal: document.querySelector("#family-total"),
   layoutTotal: document.querySelector("#layout-total"),
@@ -49,10 +53,14 @@ const ui = Object.freeze({
   detail: document.querySelector("#family-detail"),
   drawing: document.querySelector("#drawing"),
   board: document.querySelector("#family-board"),
+  gridCaption: document.querySelector("#family-grid-caption"),
+  gridColumns: document.querySelector("#family-grid-columns"),
+  gridBody: document.querySelector("#family-grid-body"),
   pieceKey: document.querySelector("#piece-key"),
   step: document.querySelector("#step"),
   stepLabel: document.querySelector("#step-label"),
   title: document.querySelector("#family-title"),
+  status: document.querySelector("#catalog-status"),
   material: document.querySelector("#material"),
   constructionScore: document.querySelector("#construction-score"),
   scoreLabel: document.querySelector("#score-label"),
@@ -65,7 +73,9 @@ const ui = Object.freeze({
   order: document.querySelector("#order"),
   orderSection: document.querySelector("#order-section"),
   modeNote: document.querySelector("#catalog-mode-note"),
+  play: document.querySelector("#play"),
 });
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
 function buildingType(family) {
   return `D${family.diversity}-${family.signature.join("+")}`;
@@ -153,7 +163,7 @@ function renderFamilyButtons(selectedId = currentFamily?.id) {
   const listEnd = page.end;
   const listed = page.families;
   ui.familyList.innerHTML = listed.map((family) => (
-    `<button type="button" data-family="${family.id}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} total</em><span>${family.fixed.toLocaleString("en-US")} ${size === 8 ? "board arrangements" : "ways to build"} / ${buildingTypeLabel(family)}</span></button>`
+    `<button type="button" data-family="${family.id}" aria-pressed="${family.id === selectedId}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} total</em><span>${family.fixed.toLocaleString("en-US")} ${size === 8 ? "board arrangements" : "ways to build"} / ${buildingTypeLabel(family)}</span></button>`
   )).join("");
   const paged = size === 8 && visibleFamilies.length > EIGHT_LIST_PAGE;
   ui.listPages.hidden = !paged;
@@ -244,7 +254,21 @@ function draw() {
     }
     ctx.stroke();
   }
-  ui.stepLabel.textContent = `Step ${limit} of ${currentFamily.pieces.length}`;
+
+  ui.gridColumns.innerHTML = `<th scope="col">Row</th>${Array.from({ length: size }, (_, column) => `<th scope="col">${column + 1}</th>`).join("")}`;
+  ui.gridBody.innerHTML = Array.from({ length: size }, (_, row) => {
+    const cells = Array.from({ length: size }, (_, column) => {
+      const pieceId = owner[row * size + column];
+      const style = pieceId ? styles[pieceId] : null;
+      const label = style && style.step < limit ? `${style.type} piece, step ${style.step + 1}` : "Empty";
+      return `<td>${label}</td>`;
+    }).join("");
+    return `<tr><th scope="row">${row + 1}</th>${cells}</tr>`;
+  }).join("");
+  const stepText = `Step ${limit} of ${currentFamily.pieces.length}`;
+  ui.stepLabel.textContent = stepText;
+  ui.gridCaption.textContent = `${currentFamily.id} ${size} by ${size} arrangement at ${stepText.toLowerCase()}. Cells with the same step belong to one piece.`;
+  ui.board.setAttribute("aria-label", `${currentFamily.id} ${size} by ${size} example square at ${stepText.toLowerCase()}`);
 }
 
 function showFamily(id, { scroll = true, refreshList = true } = {}) {
@@ -301,8 +325,11 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   }
   if (refreshList && !ui.familyList.querySelector(`[data-family="${id}"]`)) renderFamilyButtons(id);
   for (const button of ui.familyList.querySelectorAll("[data-family]")) {
-    button.classList.toggle("active", button.dataset.family === id);
+    const selected = button.dataset.family === id;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-pressed", String(selected));
   }
+  ui.status.textContent = `Selected ${size} by ${size} piece mix ${currentFamily.id}.`;
   if (scroll) ui.familyList.querySelector(`[data-family="${id}"]`)?.scrollIntoView({ block: "nearest" });
   draw();
   updateUrl();
@@ -316,27 +343,65 @@ function moveFamily(delta) {
 
 async function loadSize(nextSize, preferredId = null) {
   const generation = ++loadGeneration;
-  ui.familyList.innerHTML = "<p>Loading piece mixes...</p>";
-  if (!cache.has(nextSize)) cache.set(nextSize, DATA_LOADERS[nextSize]().then((module) => module.default));
-  const loaded = await cache.get(nextSize);
-  if (generation !== loadGeneration) return;
-  size = nextSize;
-  families = size === 8 ? loaded.map(expandEightFamily) : loaded;
-  currentFamily = null;
-  listStart = 0;
-  ui.familyTotal.textContent = families.length.toLocaleString("en-US");
-  ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
-  ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
-  ui.modeNote.textContent = size === 8
-    ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
-    : "A piece mix may fit together in several ways. The large diagram shows one of them.";
-  for (const button of ui.sizeButtons) button.classList.toggle("active", Number(button.dataset.size) === size);
-  populateFilters();
-  renderFamilyList(preferredId);
+  ui.familyList.setAttribute("aria-busy", "true");
+  ui.error.hidden = true;
+  ui.error.textContent = "";
+  try {
+    if (!cache.has(nextSize)) {
+      const retry = loadAttempts.get(nextSize) ?? 0;
+      const url = `${DATA_URLS[nextSize]}${retry > 0 ? `&retry=${retry}` : ""}`;
+      cache.set(nextSize, import(url).then((module) => module.default));
+    }
+    const request = cache.get(nextSize);
+    let loaded;
+    try {
+      loaded = await request;
+    } catch (error) {
+      if (cache.get(nextSize) === request) {
+        cache.delete(nextSize);
+        loadAttempts.set(nextSize, (loadAttempts.get(nextSize) ?? 0) + 1);
+      }
+      throw error;
+    }
+    if (generation !== loadGeneration) return false;
+    size = nextSize;
+    families = size === 8 ? loaded.map(expandEightFamily) : loaded;
+    currentFamily = null;
+    listStart = 0;
+    ui.familyTotal.textContent = families.length.toLocaleString("en-US");
+    ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
+    ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
+    ui.modeNote.textContent = size === 8
+      ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
+      : "A piece mix may fit together in several ways. The large diagram shows one of them.";
+    for (const button of ui.sizeButtons) {
+      const selected = Number(button.dataset.size) === size;
+      button.classList.toggle("active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    }
+    populateFilters();
+    renderFamilyList(preferredId);
+    return true;
+  } catch (error) {
+    if (generation === loadGeneration) {
+      const message = `The ${nextSize} by ${nextSize} piece mixes could not load. The current catalog remains available; try this size again.`;
+      ui.status.textContent = message;
+      if (!ui.machine.hidden) {
+        ui.error.textContent = message;
+        ui.error.hidden = false;
+      }
+    }
+    console.error(error);
+    return false;
+  } finally {
+    if (generation === loadGeneration) ui.familyList.removeAttribute("aria-busy");
+  }
 }
 
 for (const button of ui.sizeButtons) {
-  button.addEventListener("click", () => loadSize(Number(button.dataset.size)));
+  button.addEventListener("click", async () => {
+    await loadSize(Number(button.dataset.size));
+  });
 }
 for (const control of [ui.search, ui.kind, ui.typeCount, ui.pieceCounts]) {
   control.addEventListener(control === ui.search ? "input" : "change", () => renderFamilyList());
@@ -364,8 +429,14 @@ document.querySelector("#step-forward").addEventListener("click", () => {
   ui.step.value = String(Math.min(Number(ui.step.max), Number(ui.step.value) + 1));
   draw();
 });
-document.querySelector("#play").addEventListener("click", () => {
+ui.play.addEventListener("click", () => {
   clearInterval(playback);
+  if (reducedMotion.matches) {
+    ui.step.value = ui.step.max;
+    draw();
+    ui.status.textContent = "Animation skipped because reduced motion is requested. The complete arrangement is shown.";
+    return;
+  }
   ui.step.value = "0";
   draw();
   playback = setInterval(() => {
@@ -374,7 +445,21 @@ document.querySelector("#play").addEventListener("click", () => {
     if (Number(ui.step.value) >= Number(ui.step.max)) clearInterval(playback);
   }, 350);
 });
+reducedMotion.addEventListener("change", (event) => {
+  if (!event.matches || !playback) return;
+  clearInterval(playback);
+  playback = null;
+  ui.step.value = ui.step.max;
+  draw();
+  ui.status.textContent = "Animation stopped because reduced motion is requested. The complete arrangement is shown.";
+});
 document.querySelector("#previous-family").addEventListener("click", () => moveFamily(-1));
 document.querySelector("#next-family").addEventListener("click", () => moveFamily(1));
 
-loadSize(initialSize, params.get("family"));
+const initialized = await loadSize(initialSize, params.get("family"));
+if (initialized) {
+  ui.machine.hidden = false;
+  ui.loading.hidden = true;
+} else {
+  ui.loading.textContent = "The local square catalog could not start. The scoring guide and game links remain available above.";
+}

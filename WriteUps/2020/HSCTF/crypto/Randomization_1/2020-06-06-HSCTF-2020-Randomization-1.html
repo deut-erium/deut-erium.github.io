@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>HSCTF 2020 Crypto - Randomization 1 / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="HSCTF 2020 Crypto - Randomization 1" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="HSCTF 2020 Crypto - Randomization 1 writeup: cryptography, reversing, LCG" />
+<meta name="twitter:description" property="og:description" content="HSCTF 2020 Crypto - Randomization 1 writeup: cryptography, reversing, LCG" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-06T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-06T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="HSCTF 2020 Crypto - Randomization 1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-06T00:00:00+05:30","datePublished":"2020-06-06T00:00:00+05:30","description":"HSCTF 2020 Crypto - Randomization 1 writeup: cryptography, reversing, LCG","headline":"HSCTF 2020 Crypto - Randomization 1","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.html"},"url":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--crypto" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.06</span>
+      <span>HSCTF</span>
+    </div>
+    <h1 itemprop="headline">HSCTF 2020 Crypto - Randomization 1</h1><p class="record-head__abstract" itemprop="description">HSCTF 2020 Crypto - Randomization 1 writeup: cryptography, reversing, LCG</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>HSCTF</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Crypto</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-06T00:00:00+05:30">2020-06-06</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=HSCTF">HSCTF</a><a href="/archive.html?tag=2020">2020</a><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=reversing">reversing</a><a href="/archive.html?tag=LCG">LCG</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/HSCTF/crypto/Randomization_1">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="randomization-1">Randomization 1</h2>
+
+<p><img src="Capture.PNG" alt="Randomization 1, a 100-point beginner crypto and reversing challenge about guessing pseudorandom numbers." decoding="async" height="748" loading="lazy" width="677"></p>
+
+<p>We are provided a binary <a href="rand1">rand1</a> which supposedly runs on the server. We have to figure out how would capture the flag</p>
+
+<p>Lets decompile the binary quickly in <a href="https://ghidra-sre.org/">Ghidra</a>.<br />
+Seeing the output of <code class="language-plaintext highlighter-rouge">main</code> function we get</p>
+<figure class="code-frame language-c highlighter-rouge" data-code-frame data-language="c" data-lines="39" data-source-sha256="2bbbaa8311e53be4d9c616cb0132f1edfa1c2d0894b6f51a3b473924d906f4a3" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>C</strong><small>39 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap C code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy C code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="C code; horizontally scrollable"><code><span class="n">undefined8</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">uint</span> <span class="n">uVar1</span><span class="p">;</span>
+  <span class="n">undefined8</span> <span class="n">uVar2</span><span class="p">;</span>
+  <span class="kt">long</span> <span class="n">in_FS_OFFSET</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">local_1c</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">local_18</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">local_14</span><span class="p">;</span>
+  <span class="kt">long</span> <span class="n">local_10</span><span class="p">;</span>
+  
+  <span class="n">local_10</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)(</span><span class="n">in_FS_OFFSET</span> <span class="o">+</span> <span class="mh">0x28</span><span class="p">);</span>
+  <span class="n">initRandom</span><span class="p">();</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">"I heard LCGs were cool so I made my own"</span><span class="p">);</span>
+  <span class="n">uVar1</span> <span class="o">=</span> <span class="n">next</span><span class="p">();</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Since I</span><span class="se">\'</span><span class="s">m so generous you get a free number: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,(</span><span class="n">ulong</span><span class="p">)</span><span class="n">uVar1</span><span class="p">);</span>
+  <span class="n">local_18</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// local_18 works as in iterator from 0 to 9</span>
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="mi">9</span> <span class="o">&lt;</span> <span class="n">local_18</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">win</span><span class="p">();</span>
+      <span class="n">uVar2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nl">LAB_0010132e:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">local_10</span> <span class="o">!=</span> <span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)(</span><span class="n">in_FS_OFFSET</span> <span class="o">+</span> <span class="mh">0x28</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="cm">/* WARNING: Subroutine does not return */</span>
+        <span class="n">__stack_chk_fail</span><span class="p">();</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="n">uVar2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Guess my number: "</span><span class="p">);</span>
+    <span class="n">__isoc99_scanf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DAT_00102093</span><span class="p">,</span><span class="o">&amp;</span><span class="n">local_1c</span><span class="p">);</span>
+    <span class="n">local_14</span> <span class="o">=</span> <span class="n">next</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">!=</span> <span class="n">local_1c</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">puts</span><span class="p">(</span><span class="s">"Wrong!"</span><span class="p">);</span>
+      <span class="n">uVar2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">goto</span> <span class="n">LAB_0010132e</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">local_18</span> <span class="o">=</span> <span class="n">local_18</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>As a quick overview, one could tell there is a loop which runs 10 times and after running 10 times successfully, it should spit out the flag.<br />
+It asks for input 10 times, and each time it compares the value with return value of the function next().<br />
+Taking a quick look of decompilaton of next</p>
+
+<figure class="code-frame language-c highlighter-rouge" data-code-frame data-language="c" data-lines="7" data-source-sha256="1eb77a18d72f66d19afbe0c9cdba1460493401517512a9fd84fa554921eccebe" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>C</strong><small>7 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap C code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy C code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="C code; horizontally scrollable"><code><span class="n">ulong</span> <span class="nf">next</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span> <span class="o">*</span> <span class="sc">'%'</span> <span class="o">+</span> <span class="mh">0x41</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">ulong</span><span class="p">)</span><span class="n">curr</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>We see its a simple linear function, but the decompiled value seems off, it should actually be taking <code class="language-plaintext highlighter-rouge">curr</code> which is actually <code class="language-plaintext highlighter-rouge">local_14</code> and returning a <code class="language-plaintext highlighter-rouge">char</code> type.</p>
+
+<p>As the start value is printed out before beginning the loop, we can predict all the values by writing a simple function</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="4" data-source-sha256="936039a98f6ded47614a1e44ecbbc4e0c726122bc0ab782c13278cdbf395f766" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>4 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">next_10</span><span class="p">(</span><span class="n">curr</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+		<span class="n">curr</span> <span class="o">=</span> <span class="p">(</span><span class="n">curr</span> <span class="o">*</span> <span class="mh">0x25</span> <span class="o">+</span> <span class="mh">0x41</span><span class="p">)</span><span class="o">%</span><span class="mi">256</span>
+		<span class="nf">print</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span> 
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>We dont need to bother about automating nc, just input all 10 values in one go as timing is not really an issue</p>
+
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="13" data-source-sha256="93e5a0a8de284fbdc21b50e1d6ed14ad28fc2bf5265035aa7dba1eb478e93df3" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Plain text</strong><small>13 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>I heard LCGs were cool so I made my own
+Since I'm so generous you get a free number: 184
+Guess my number: 217
+158
+23
+148
+165
+26
+3
+176
+177
+214Guess my number: Guess my number: Guess my number: Guess my number: Guess my number: Guess my number: Guess my number: Guess my number: Guess my number:
+flag{l1n34r_c0n6ru3n714l_63n3r470r_f41lur3_4b3bcd43}
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>BRAVO we did it</p>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2020/HSCTF/miscellaneous/N-95/2020-06-06-HSCTF-2020-Misc-N95.html">HSCTF 2020 Misc - N95</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/xkcd_com_2247_v2/2020-06-06-HSCTF-2020-xkcd-2247-v2.html">HSCTF 2020 Crypto - XKCD 2247 v2</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/XORed/2020-06-06-HSCTF-2020-XORed.html">HSCTF 2020 Crypto - XORed</a></li><li><a href="/WriteUps/2020/HSCTF/crypto/Unexpected/2020-06-06-HSCTF-2020-unexpected.html">HSCTF 2020 Crypto - Unexpected</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/HSCTF/crypto/Randomization_1/2020-06-06-HSCTF-2020-Randomization-1.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/WriteUps/2020/HSCTF/crypto/Morbid/2020-06-06-HSCTF-2020-Morbid.html"><span>Previous</span>HSCTF 2020 Crypto - Morbid</a><a rel="next" href="/WriteUps/2020/HSCTF/crypto/Randomization_2/2020-06-06-HSCTF-2020-Crypto-Randomization-2.html"><span>Next</span>HSCTF 2020 Crypto - Randomization 2</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2020%2FHSCTF%2Fcrypto%2FRandomization_1%2F2020-06-06-HSCTF-2020-Randomization-1.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

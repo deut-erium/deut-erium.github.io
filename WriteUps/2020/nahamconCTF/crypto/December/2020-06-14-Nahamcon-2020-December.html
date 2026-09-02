@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Nahamcon 2020 Crypto - December / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Nahamcon 2020 Crypto - December" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Nahamcon 2020 Crypto - December writeup: cryptography, DES, weak_keys" />
+<meta name="twitter:description" property="og:description" content="Nahamcon 2020 Crypto - December writeup: cryptography, DES, weak_keys" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-14T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-14T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Nahamcon 2020 Crypto - December" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-14T00:00:00+05:30","datePublished":"2020-06-14T00:00:00+05:30","description":"Nahamcon 2020 Crypto - December writeup: cryptography, DES, weak_keys","headline":"Nahamcon 2020 Crypto - December","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.html"},"url":"https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--symmetric" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.14</span>
+      <span>nahamconCTF</span>
+    </div>
+    <h1 itemprop="headline">Nahamcon 2020 Crypto - December</h1><p class="record-head__abstract" itemprop="description">Nahamcon 2020 Crypto - December writeup: cryptography, DES, weak_keys</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>nahamconCTF</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Symmetric</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-14T00:00:00+05:30">2020-06-14</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=nahamcon">nahamcon</a><a href="/archive.html?tag=2020">2020</a><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=DES">DES</a><a href="/archive.html?tag=weak_keys">weak keys</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/nahamconCTF/crypto/December">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="december">December</h2>
+
+<p><img src="Capture.PNG" alt="December challenge page: 125 points, with source.py and ciphertext downloads." decoding="async" height="529" loading="lazy" width="619"></p>
+
+<p>We are provided with <a href="./source.py">source.py</a>, which reads</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="19" data-source-sha256="96bf4dbd2253cf6b1c6c304eb5c8d12be09591f5ad44142dfddf455c30d88f0f" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Python</strong><small>19 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="n">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">DES</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">flag.txt</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">handle</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="n">padding_size</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="p">(</span> <span class="nf">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="p">))</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="p">.</span><span class="nf">ljust</span><span class="p">(</span><span class="n">padding_size</span><span class="p">,</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">key</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">handle</span><span class="p">.</span><span class="nf">read</span><span class="p">().</span><span class="nf">strip</span><span class="p">()</span>
+
+<span class="n">iv</span> <span class="o">=</span> <span class="sh">"</span><span class="s">13371337</span><span class="sh">"</span>
+<span class="n">des</span> <span class="o">=</span> <span class="n">DES</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">DES</span><span class="p">.</span><span class="n">MODE_OFB</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="n">des</span><span class="p">.</span><span class="nf">encrypt</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">ciphertext</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">wb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">handle</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>And a binary <a href="ciphertext">ciphertext</a></p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="5" data-source-sha256="82de7aa3de82386b10cf89bc794a7ed2bc902258a5cf9c336238710d99f097dc" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Plain text</strong><small>5 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>00000000: d6a2 6fe5 c75c 22e0 5413 5e4e 1140 5d58  ..o..\".T.^N.@]X
+00000010: f5ea 69f9 d419 31f7 5513 5745 5452 5e44  ..i...1.U.WETR^D
+00000020: 889e 62ff d15c 2ae1 115e 5617 4141 5643  ..b..\*..^V.AAVC
+00000030: e7a4 6eff cc1b 49f4 5d52 544c 455b 5a44  ..n...I.]RTLE[ZD
+00000040: dda3 79c9 c310 2fcd 586c 5d52 5457 4e37  ..y.../.Xl]RTWN7
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Which is quite unusual in the sense that most of it is readable in unusual sizes of <code class="language-plaintext highlighter-rouge">8</code>.<br />
+This could be another instance of <a href="https://en.wikipedia.org/wiki/Weak_key#Weak_keys_in_DES">Weak keys</a><br />
+Lets quickly run through the 4 weak keys</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="17" data-source-sha256="77c582ad6fd42a6335c3f1d3f81b1ea062725db9b4e5eaec2df6753fd5512ff8" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>17 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code>
+<span class="n">m</span> <span class="n">Crypto</span><span class="p">.</span><span class="n">Cipher</span> <span class="kn">import</span> <span class="n">DES</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">ciphertext</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">ct_file</span><span class="p">:</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="n">ct_file</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="n">weak_keys</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">b</span><span class="sh">'</span><span class="se">\x01\x01\x01\x01\x01\x01\x01\x01</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sa">b</span><span class="sh">'</span><span class="se">\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sa">b</span><span class="sh">'</span><span class="se">\xE0\xE0\xE0\xE0\xF1\xF1\xF1\xF1</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sa">b</span><span class="sh">'</span><span class="se">\x1F\x1F\x1F\x1F\x0E\x0E\x0E\x0E</span><span class="sh">'</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">weak_keys</span><span class="p">:</span>
+    <span class="n">iv</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">13371337</span><span class="sh">"</span>
+    <span class="n">des</span> <span class="o">=</span> <span class="n">DES</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">DES</span><span class="p">.</span><span class="n">MODE_OFB</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">des</span><span class="p">.</span><span class="nf">decrypt</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Which produces the plaintexts</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="4" data-source-sha256="f011bd6a62ff3d1c2fbfdf7f4610bfc83c4081611f8deda86dfa18e6eba8c028" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Python</strong><small>4 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="sa">b</span><span class="sh">'</span><span class="se">\xaf\xe0\xda\x8c</span><span class="s">=</span><span class="se">\xed</span><span class="s">G</span><span class="se">\xe4</span><span class="s">e my sno</span><span class="se">\x8c\xa8\xdc\x90</span><span class="s">.</span><span class="se">\xa8</span><span class="s">T</span><span class="se">\xf3</span><span class="s">d dreams</span><span class="se">\xf1\xdc\xd7\x96</span><span class="s">+</span><span class="se">\xed</span><span class="s">O</span><span class="se">\xe5</span><span class="s"> me pret</span><span class="se">\x9e\xe6\xdb\x96</span><span class="s">6</span><span class="se">\xaa</span><span class="s">,</span><span class="se">\xf0</span><span class="s">lag{this</span><span class="se">\xa4\xe1\xcc\xa0</span><span class="s">9</span><span class="se">\xa1</span><span class="s">J</span><span class="se">\xc9</span><span class="s">i_need}</span><span class="se">\x00</span><span class="sh">'</span>
+<span class="sa">b</span><span class="sh">'</span><span class="se">\xb8</span><span class="s">(</span><span class="se">\xff\x82\xb0</span><span class="s">)</span><span class="se">\x06</span><span class="s">$e my sno</span><span class="se">\x9b</span><span class="s">`</span><span class="se">\xf9\x9e\xa3</span><span class="s">l</span><span class="se">\x15</span><span class="s">3d dreams</span><span class="se">\xe6\x14\xf2\x98\xa6</span><span class="s">)</span><span class="se">\x0e</span><span class="s">% me pret</span><span class="se">\x89</span><span class="s">.</span><span class="se">\xfe\x98\xbb</span><span class="s">nm0lag{this</span><span class="se">\xb3</span><span class="s">)</span><span class="se">\xe9\xae\xb4</span><span class="s">e</span><span class="se">\x0b\t</span><span class="s">i_need}</span><span class="se">\x00</span><span class="sh">'</span>
+<span class="sa">b</span><span class="sh">'</span><span class="s">c</span><span class="se">\xad\xc7\x9d</span><span class="s">VR$</span><span class="se">\xb2</span><span class="s">e my sno@</span><span class="se">\xe5\xc1\x81</span><span class="s">E</span><span class="se">\x17</span><span class="s">7</span><span class="se">\xa5</span><span class="s">d dreams=</span><span class="se">\x91\xca\x87</span><span class="s">@R,</span><span class="se">\xb3</span><span class="s"> me pretR</span><span class="se">\xab\xc6\x87</span><span class="s">]</span><span class="se">\x15</span><span class="s">O</span><span class="se">\xa6</span><span class="s">lag{thish</span><span class="se">\xac\xd1\xb1</span><span class="s">R</span><span class="se">\x1e</span><span class="s">)</span><span class="se">\x9f</span><span class="s">i_need}</span><span class="se">\x00</span><span class="sh">'</span>
+<span class="sa">b</span><span class="sh">'</span><span class="s">These are my snow covered dreams</span><span class="se">\n</span><span class="s">This is me pretending</span><span class="se">\n</span><span class="s">flag{this_is_all_i_need}</span><span class="se">\x00</span><span class="sh">'</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<h3 id="flagthis_is_all_i_need">flag{this_is_all_i_need}</h3>
+
+<h3 id="how-to-solve-the-challenge-if-not-aware-of-weak-keys">How to solve the challenge if not aware of weak keys?</h3>
+
+<p><img src="ctftime1.PNG" alt="CTFtime task search filtered by DES and OFB, including the Boston Key Party 2016 des ofb challenge." decoding="async" height="955" loading="lazy" width="1821"></p>
+
+<p><img src="ctftime2.PNG" alt="CTFtime page for the des ofb challenge, listing six community writeups." decoding="async" height="914" loading="lazy" width="1835"></p>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2020/nahamconCTF/crypto/elsa4/2020-06-14-Nahamcon-2020-elsa4.html">Nahamcon 2020 Crypto - elsa4</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Unvreakable_Vase/2020-06-14-Nahamcon-2020-Unvreakable-Vase.html">Nahamcon 2020 Crypto - Unvreakable Vase</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Twinning/2020-06-14-Nahamcon-2020-twinning.html">Nahamcon 2020 Crypto - Twinning</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Raspberry/2020-06-14-Nahamcon-2020-Raspberry.html">Nahamcon 2020 Crypto - Raspberry</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/nahamconCTF/crypto/December/2020-06-14-Nahamcon-2020-December.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/WriteUps/2020/ractf/crypto/Really_Speedy_Algorithm/2020-06-09-RACTF-2020-Really-Speedy-Algorithm.html"><span>Previous</span>RACTF 2020 Crypto - Really Speedy Algirithm</a><a rel="next" href="/WriteUps/2020/nahamconCTF/crypto/Docxor/2020-06-14-Nahamcon-2020-Docxor.html"><span>Next</span>Nahamcon 2020 Crypto - Docxor</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2020%2FnahamconCTF%2Fcrypto%2FDecember%2F2020-06-14-Nahamcon-2020-December.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

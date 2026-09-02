@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Nahamcon 2020 Crypto - Homecooked / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Nahamcon 2020 Crypto - Homecooked" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Nahamcon 2020 Crypto - Homecooked writeup: cryptography, base64, prime, palindrome" />
+<meta name="twitter:description" property="og:description" content="Nahamcon 2020 Crypto - Homecooked writeup: cryptography, base64, prime, palindrome" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-14T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-14T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Nahamcon 2020 Crypto - Homecooked" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-14T00:00:00+05:30","datePublished":"2020-06-14T00:00:00+05:30","description":"Nahamcon 2020 Crypto - Homecooked writeup: cryptography, base64, prime, palindrome","headline":"Nahamcon 2020 Crypto - Homecooked","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.html"},"url":"https://deut-erium.github.io/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--encoding" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.14</span>
+      <span>nahamconCTF</span>
+    </div>
+    <h1 itemprop="headline">Nahamcon 2020 Crypto - Homecooked</h1><p class="record-head__abstract" itemprop="description">Nahamcon 2020 Crypto - Homecooked writeup: cryptography, base64, prime, palindrome</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>nahamconCTF</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Encoding</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-14T00:00:00+05:30">2020-06-14</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=nahamcon">nahamcon</a><a href="/archive.html?tag=2020">2020</a><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=base64">base64</a><a href="/archive.html?tag=prime">prime</a><a href="/archive.html?tag=palindrome">palindrome</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/nahamconCTF/crypto/Homecooked">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="homecooked">Homecooked</h2>
+
+<p><img src="Capture.PNG" alt="Homecooked challenge page: 100 points, 401 solves, prompt &#39;I cannot get this to decrypt!&#39;, and a decrypt.py download." decoding="async" height="528" loading="lazy" width="621"></p>
+
+<p>We are provided <a href="decrypt.py">decrypt.py</a>, the contents of which read</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="40" data-source-sha256="f651649e56ce18c73e9a327da0cbcda5bc63c68103ac6d4c090097eac0ac9cb5" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Python</strong><small>40 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">import</span> <span class="n">base64</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cipher_b64</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">MTAwLDExMSwxMDAsOTYsMTEyLDIxLDIwOSwxNjYsMjE2LDE0MCwzMzAsMzE4LDMyMSw3MDIyMSw3MDQxNCw3MDU0NCw3MTQxNCw3MTgxMCw3MjIxMSw3MjgyNyw3MzAwMCw3MzMxOSw3MzcyMiw3NDA4OCw3NDY0Myw3NTU0MiwxMDAyOTAzLDEwMDgwOTQsMTAyMjA4OSwxMDI4MTA0LDEwMzUzMzcsMTA0MzQ0OCwxMDU1NTg3LDEwNjI1NDEsMTA2NTcxNSwxMDc0NzQ5LDEwODI4NDQsMTA4NTY5NiwxMDkyOTY2LDEwOTQwMDA=</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">my_str</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">rev_str</span> <span class="o">=</span> <span class="nf">reversed</span><span class="p">(</span><span class="n">my_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">list</span><span class="p">(</span><span class="n">my_str</span><span class="p">)</span> <span class="o">==</span> <span class="nf">list</span><span class="p">(</span><span class="n">rev_str</span><span class="p">):</span>
+       <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">return</span> <span class="bp">False</span>
+
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="nf">b64decode</span><span class="p">(</span><span class="n">cipher_b64</span><span class="p">).</span><span class="nf">decode</span><span class="p">().</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">,</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">while</span><span class="p">(</span><span class="n">count</span> <span class="o">&lt;</span> <span class="nf">len</span><span class="p">(</span><span class="n">cipher</span><span class="p">)):</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">a</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span>
+        <span class="nf">if </span><span class="p">(</span><span class="nf">b</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">cipher</span><span class="p">[</span><span class="n">count</span><span class="p">])</span> <span class="o">^</span> <span class="n">num</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="sh">''</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">13</span><span class="p">):</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">50000</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">26</span><span class="p">):</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">500000</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+
+<span class="nf">print</span><span class="p">()</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Here two functions <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code> are of primary focus,</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="9" data-source-sha256="f9f57beca4d764341d803f202964cc6d299c5229fa2755d9266e14254e9eddf5" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Python</strong><small>9 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>  <span class="c1">#From all numbers from 2 to num - 1
+</span>            <span class="nf">if </span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#check if the number i divides num
+</span>                <span class="k">return</span> <span class="bp">False</span>    <span class="c1">#if it divides, then its composite
+</span>                <span class="k">break</span>
+        <span class="k">return</span> <span class="bp">True</span>  <span class="c1"># No such number found hence prime
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Seems like, its looping over all possible numbers to check if the provided number <code class="language-plaintext highlighter-rouge">num</code> is a prime or not</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="7" data-source-sha256="53445a63cac84bca035ea22cf588c11a3c7b0f1ce99efe97eeb5470eed791e13" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>7 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">my_str</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># string representation of number
+</span>    <span class="n">rev_str</span> <span class="o">=</span> <span class="nf">reversed</span><span class="p">(</span><span class="n">my_str</span><span class="p">)</span>  <span class="c1"># reverse the string
+</span>    <span class="k">if</span> <span class="nf">list</span><span class="p">(</span><span class="n">my_str</span><span class="p">)</span> <span class="o">==</span> <span class="nf">list</span><span class="p">(</span><span class="n">rev_str</span><span class="p">):</span> <span class="c1"># check if both equal
+</span>       <span class="k">return</span> <span class="bp">True</span>  <span class="c1"># the input is a palindrome
+</span>    <span class="k">else</span><span class="p">:</span>
+       <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>This function just checks if <code class="language-plaintext highlighter-rouge">num</code> is a <a href="https://en.wikipedia.org/wiki/Palindrome">palindrome</a></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">cipher_b64</code> is simply a base64 encoding of a comma separated list of numbers</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="1" data-source-sha256="cada0190b311d115b2e961bdb12ad4f5ee3d69325c588491c21d5b266b05c222" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Plain text</strong><small>1 line / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>100,111,100,96,112,21,209,166,216,140,330,318,321,70221,70414,70544,71414,71810,72211,72827,73000,73319,73722,74088,74643,75542,1002903,1008094,1022089,1028104,1035337,1043448,1055587,1062541,1065715,1074749,1082844,1085696,1092966,1094000
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>It is simply taking number from the list and xoring with next prime-palindrome to give the character in sets of 13. Lets simply run the <code class="language-plaintext highlighter-rouge">decrypt.py</code> to see what happens</p>
+
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="2" data-source-sha256="ecb7caaf05a46f17ef4dc820376f6369430bca2bf8e35552a22bf95c59ee8a20" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Plain text</strong><small>2 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>python3 decrypt.py
+flag{pR1m3s_4re_co0ler_Wh3
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Hmm, seems stuck. What’s the issue?<br />
+The issue is with function <code class="language-plaintext highlighter-rouge">a</code> which checks for prime by dividing it by all numbers.<br />
+This can be done pretty efficiently by better <a href="https://en.wikipedia.org/wiki/Primality_test">primality tests</a>.<br />
+One could simply use <code class="language-plaintext highlighter-rouge">is_prime</code> from <code class="language-plaintext highlighter-rouge">gmpy2</code> library of python and replace the function <code class="language-plaintext highlighter-rouge">a</code></p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="29" data-source-sha256="65b9364af16b71cf311735639efc9088e53307d91b0d67f98afd87901ad4bb2c" aria-labelledby="code-frame-label-6">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-6"><strong>Python</strong><small>29 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 6" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 6" aria-describedby="code-frame-status-6" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">import</span> <span class="n">base64</span>
+<span class="kn">import</span> <span class="n">gmpy2</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cipher_b64</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">MTAwLDExMSwxMDAsOTYsMTEyLDIxLDIwOSwxNjYsMjE2LDE0MCwzMzAsMzE4LDMyMSw3MDIyMSw3MDQxNCw3MDU0NCw3MTQxNCw3MTgxMCw3MjIxMSw3MjgyNyw3MzAwMCw3MzMxOSw3MzcyMiw3NDA4OCw3NDY0Myw3NTU0MiwxMDAyOTAzLDEwMDgwOTQsMTAyMjA4OSwxMDI4MTA0LDEwMzUzMzcsMTA0MzQ0OCwxMDU1NTg3LDEwNjI1NDEsMTA2NTcxNSwxMDc0NzQ5LDEwODI4NDQsMTA4NTY5NiwxMDkyOTY2LDEwOTQwMDA=</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">gmpy2</span><span class="p">.</span><span class="nf">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nf">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="nf">str</span><span class="p">(</span><span class="n">num</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="nf">b64decode</span><span class="p">(</span><span class="n">cipher_b64</span><span class="p">).</span><span class="nf">decode</span><span class="p">().</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">,</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">while</span><span class="p">(</span><span class="n">count</span> <span class="o">&lt;</span> <span class="nf">len</span><span class="p">(</span><span class="n">cipher</span><span class="p">)):</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">a</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span>
+        <span class="nf">if </span><span class="p">(</span><span class="nf">b</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">cipher</span><span class="p">[</span><span class="n">count</span><span class="p">])</span> <span class="o">^</span> <span class="n">num</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="sh">''</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">13</span><span class="p">):</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">50000</span>
+            <span class="nf">if </span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">26</span><span class="p">):</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">500000</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+
+<span class="nf">print</span><span class="p">()</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-6" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Now running <a href="./solve.py">solve.py</a> spews the flag instantly</p>
+
+<h3 id="flagpr1m3s_4re_co0ler_wh3n_pal1ndr0mic">flag{pR1m3s_4re_co0ler_Wh3n_pal1nDr0miC}</h3>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2020/nahamconCTF/crypto/elsa4/2020-06-14-Nahamcon-2020-elsa4.html">Nahamcon 2020 Crypto - elsa4</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Unvreakable_Vase/2020-06-14-Nahamcon-2020-Unvreakable-Vase.html">Nahamcon 2020 Crypto - Unvreakable Vase</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Twinning/2020-06-14-Nahamcon-2020-twinning.html">Nahamcon 2020 Crypto - Twinning</a></li><li><a href="/WriteUps/2020/nahamconCTF/crypto/Raspberry/2020-06-14-Nahamcon-2020-Raspberry.html">Nahamcon 2020 Crypto - Raspberry</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/nahamconCTF/crypto/Homecooked/2020-06-14-Nahamcon-2020-Homecooked.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/WriteUps/2020/nahamconCTF/crypto/Docxor/2020-06-14-Nahamcon-2020-Docxor.html"><span>Previous</span>Nahamcon 2020 Crypto - Docxor</a><a rel="next" href="/WriteUps/2020/nahamconCTF/crypto/Ooo-la-la/2020-06-14-Nahamcon-2020-Ooo-la-la.html"><span>Next</span>Nahamcon 2020 Crypto - Oo la la</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2020%2FnahamconCTF%2Fcrypto%2FHomecooked%2F2020-06-14-Nahamcon-2020-Homecooked.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

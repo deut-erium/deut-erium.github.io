@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Google CTF 2022 Crypto - Maybe Someday / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Google CTF 2022 Crypto - Maybe Someday" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Google CTF 2022 cryptography writeup maybe someday paillier cryptosystem homomorphic padding oracle" />
+<meta name="twitter:description" property="og:description" content="Google CTF 2022 cryptography writeup maybe someday paillier cryptosystem homomorphic padding oracle" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-04T00:00:00+05:30" />
+<meta property="article:modified_time" content="2022-07-04T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Google CTF 2022 Crypto - Maybe Someday" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2022-07-04T00:00:00+05:30","datePublished":"2022-07-04T00:00:00+05:30","description":"Google CTF 2022 cryptography writeup maybe someday paillier cryptosystem homomorphic padding oracle","headline":"Google CTF 2022 Crypto - Maybe Someday","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.html"},"url":"https://deut-erium.github.io/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--crypto" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2022.07.04</span>
+      <span>google ctf</span>
+    </div>
+    <h1 itemprop="headline">Google CTF 2022 Crypto - Maybe Someday</h1><p class="record-head__abstract" itemprop="description">Google CTF 2022 cryptography writeup maybe someday paillier cryptosystem homomorphic padding oracle
+</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>google ctf</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Crypto</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2022-07-04T00:00:00+05:30">2022-07-04</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=googlectf">googlectf</a><a href="/archive.html?tag=2022">2022</a><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=paillier">paillier</a><a href="/archive.html?tag=padding">padding</a><a href="/archive.html?tag=oracle">oracle</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2022/google_ctf/crypto/maybe_someday">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <p>TLDR; Leaking 20 bits of information from custom padding oracle using
+homomorphic properties of paillier cryptosystem</p>
+
+<!--more-->
+
+<h2 id="challenge-description">Challenge Description</h2>
+<h3 id="maybe-someday-240-points-solved-by-35">Maybe Someday [240 points] (solved by 35)</h3>
+<blockquote>
+  <p>Leave me your ciphertexts. I will talk to you later.<br />
+<code class="language-plaintext highlighter-rouge">maybe-someday.2022.ctfcompetition.com 1337</code><br />
+<a href="https://storage.googleapis.com/gctf-2022-attachments-project/73c2725dabd614c5fdd6e6a347493e177428a2a80744bd4225490480dd894ecc2607068a8f07bf96f6c7d540869dc36ba3f4d60bf510812ec86649a1bc306dd0">attachment</a></p>
+</blockquote>
+
+<h3 id="files">Files</h3>
+<blockquote>
+  <p><a href="./attachment.zip">attachment.zip</a></p>
+  <ul>
+    <li><a href="./chall.py">chall.py</a></li>
+  </ul>
+</blockquote>
+
+<h4 id="not-included">Not Included</h4>
+<blockquote>
+  <p><a href="./flag.txt">/flag.txt</a></p>
+</blockquote>
+
+<h3 id="server-source">Server Source</h3>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="153" data-source-sha256="ab07a082603b281f18b2ab04e226a89fd821acbfb568f0f890fdde16308f6ae4" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Python</strong><small>153 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">Crypto.Util.number</span> <span class="kn">import</span> <span class="n">getPrime</span> <span class="k">as</span> <span class="n">get_prime</span>
+<span class="kn">import</span> <span class="n">math</span>
+<span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">hashlib</span>
+
+<span class="c1"># Suppose gcd(p, q) = 1. Find x such that
+#   1. 0 &lt;= x &lt; p * q, and
+#   2. x = a (mod p), and
+#   3. x = b (mod q).
+</span><span class="k">def</span> <span class="nf">crt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="nf">return </span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="nf">pow</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">q</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="nf">pow</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">q</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">L</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="nf">return </span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">n</span>
+
+<span class="k">class</span> <span class="nc">Paillier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nf">get_prime</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="nf">get_prime</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>
+        <span class="n">λ</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">math</span><span class="p">.</span><span class="nf">gcd</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># lcm(p-1, q-1)
+</span>        <span class="n">g</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">µ</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="nc">L</span><span class="p">(</span><span class="nf">pow</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">λ</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">n</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">λ</span> <span class="o">=</span> <span class="n">λ</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">g</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">µ</span> <span class="o">=</span> <span class="n">µ</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span>
+
+    <span class="c1"># https://www.rfc-editor.org/rfc/rfc3447#section-7.2.1
+</span>    <span class="k">def</span> <span class="nf">pad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="n">padding_size</span> <span class="o">=</span> <span class="mi">2048</span><span class="o">//</span><span class="mi">8</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">-</span> <span class="nf">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">padding_size</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">Exception</span><span class="p">(</span><span class="sh">'</span><span class="s">message too long</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="n">random_padding</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\0</span><span class="sh">'</span> <span class="o">*</span> <span class="n">padding_size</span>
+        <span class="k">while</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\0</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">random_padding</span><span class="p">:</span>
+            <span class="n">random_padding</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="nf">urandom</span><span class="p">(</span><span class="n">padding_size</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x00\x02</span><span class="sh">'</span> <span class="o">+</span> <span class="n">random_padding</span> <span class="o">+</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x00</span><span class="sh">'</span> <span class="o">+</span> <span class="n">m</span>
+
+    <span class="k">def</span> <span class="nf">unpad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">m</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="sh">'</span><span class="se">\x00\x02</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">Exception</span><span class="p">(</span><span class="sh">'</span><span class="s">decryption error</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="n">random_padding</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">:].</span><span class="nf">split</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="se">\x00</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">random_padding</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">Exception</span><span class="p">(</span><span class="sh">'</span><span class="s">decryption error</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">m</span>
+
+    <span class="k">def</span> <span class="nf">public_key</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">return </span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">secret_key</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">return </span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">λ</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">µ</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">g</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">n</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">pad</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="nf">from_bytes</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nf">pow</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">c</span>
+
+    <span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="n">λ</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">λ</span>
+        <span class="n">µ</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">µ</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">n</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="nc">L</span><span class="p">(</span><span class="nf">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">λ</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">µ</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">to_bytes</span><span class="p">(</span><span class="mi">2048</span><span class="o">//</span><span class="mi">8</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">unpad</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fast_decrypt</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="n">λ</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">λ</span>
+        <span class="n">µ</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">µ</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">n</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">p</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">q</span>
+
+        <span class="n">rp</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">λ</span><span class="p">,</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">rq</span> <span class="o">=</span> <span class="nf">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">λ</span><span class="p">,</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="nf">crt</span><span class="p">(</span><span class="n">rp</span><span class="p">,</span> <span class="n">rq</span><span class="p">,</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nc">L</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">µ</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">to_bytes</span><span class="p">(</span><span class="mi">2048</span><span class="o">//</span><span class="mi">8</span><span class="p">,</span> <span class="sh">'</span><span class="s">big</span><span class="sh">'</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">unpad</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">challenge</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="nf">urandom</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="nf">sha512</span><span class="p">(</span><span class="n">secret</span><span class="p">).</span><span class="nf">hexdigest</span><span class="p">().</span><span class="nf">encode</span><span class="p">()</span>
+
+    <span class="n">c0</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="nf">encrypt</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">c0</span> <span class="o">=</span> <span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="c1"># # The secret has 16 bits of entropy.
+</span>    <span class="c1"># # Hence 16 oracle calls should be sufficient, isn't it?
+</span>    <span class="c1"># for _ in range(16):
+</span>    <span class="c1">#     c = int(input())
+</span>    <span class="c1">#     try:
+</span>    <span class="c1">#         p.decrypt(c)
+</span>    <span class="c1">#         print('😀')
+</span>    <span class="c1">#     except:
+</span>    <span class="c1">#         print('😡')
+</span>
+    <span class="c1"># I decided to make it non-interactive to make this harder.
+</span>    <span class="c1"># Good news: I'll give you 25% more oracle calls to compensate, anyways.
+</span>    <span class="n">cs</span> <span class="o">=</span> <span class="p">[</span><span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">.</span><span class="nf">fast_decrypt</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">😀</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">😡</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">guess</span> <span class="o">=</span> <span class="nf">input</span><span class="p">().</span><span class="nf">encode</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">guess</span> <span class="o">!=</span> <span class="n">secret</span><span class="p">:</span> <span class="k">raise</span> <span class="nc">Exception</span><span class="p">(</span><span class="sh">'</span><span class="s">incorrect guess!</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">flag.txt</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">flag</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="nc">Paillier</span><span class="p">()</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="nf">public_key</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">n</span> <span class="o">=</span> <span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">g</span> <span class="o">=</span> <span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Once is happenstance. Twice is coincidence...
+</span>        <span class="c1"># Sixteen times is a recovery of the pseudorandom number generator.
+</span>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+            <span class="nf">challenge</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">💡</span><span class="sh">'</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">🏁 </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">👋</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
+    <span class="nf">main</span><span class="p">()</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p class="info">DISCLAIMER: This writeup is attempted to be written in a way such that a naive
+reader who is yet to see or attempt the challenge can make sense out of the writeup.<br />
+Feel free to skip any sections which you understand already</p>
+
+<h3 id="understanding-the-challenge">Understanding the challenge</h3>
+<ul>
+  <li>The challenge server deploys the <a href="https://en.wikipedia.org/wiki/Paillier_cryptosystem">Paillier Cryptosystem</a></li>
+  <li>A single instance <code class="language-plaintext highlighter-rouge">p</code> of <code class="language-plaintext highlighter-rouge">Paillier</code> is used throught the connection and public key 
+<code class="language-plaintext highlighter-rouge">(n, g)</code> is provided</li>
+  <li>We are required to solve <code class="language-plaintext highlighter-rouge">challenge(p)</code> 16 times successfully to get the flag</li>
+</ul>
+
+<h4 id="challengep"><code class="language-plaintext highlighter-rouge">challenge(p)</code></h4>
+<ul>
+  <li>A two-byte <code class="language-plaintext highlighter-rouge">secret</code> is selected randomly which is then hashed to its 
+sha512 hexdigest byte-string of length 128 hexadecimal characters
+    <ul>
+      <li>if selected secret = <code class="language-plaintext highlighter-rouge">b'\x00\x00'</code>,</li>
+      <li><code class="language-plaintext highlighter-rouge">hashlib.sha512(secret).hexdigest().encode()</code> = <code class="language-plaintext highlighter-rouge">b'5ea71dc6d0b4f57bf39aadd07c208c35f06cd2bac5fde210397f70de11d439c62ec1cdf3183758865fd387fcea0bada2f6c37a4a17851dd1d78fefe6f204ee54'</code></li>
+      <li>20 integer inputs taken together after which the server returns 20 outputs 
+whether decryption succeeded for each of the inputs <code class="language-plaintext highlighter-rouge">'😀'</code> for success and <code class="language-plaintext highlighter-rouge">'😡'</code> for failure</li>
+      <li>After 20 inputs, it requests for a <code class="language-plaintext highlighter-rouge">guess</code> for <code class="language-plaintext highlighter-rouge">secret</code> if the guess matches, we are good to go</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="understanding-decryption">Understanding Decryption</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fast_decrypt(c)</code> is same as <code class="language-plaintext highlighter-rouge">decrypt(c)</code>. The only difference being the way 
+<code class="language-plaintext highlighter-rouge">r = pow(c, λ, n**2)</code> is calculated using <a href="https://en.wikipedia.org/wiki/Chinese_remainder_theorem">Chinese Remainder Theorem</a> (just for speed considerations and no effect on the workings of the challenge)</li>
+  <li>All steps will proceed in decryption of arbitrary integer <code class="language-plaintext highlighter-rouge">c</code>, just the last
+<code class="language-plaintext highlighter-rouge">self.unpad(m)</code> which will fail if <code class="language-plaintext highlighter-rouge">m</code> is not in desired padding format.</li>
+</ul>
+
+<h4 id="understanding-paddingunpadding">Understanding Padding/Unpadding</h4>
+<h5 id="valid-padding-structure">Valid Padding Structure</h5>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="8c189a0ec3ca44a25fb53c4a60d1d95302a153d1d409cde7b0f255444d6e35e5" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>+----------+---------------------+------+---------+
+| \x00\x02 | RANDOM_NONNULL_DATA | \x00 | message |
++----------+---------------------+------+---------+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Where</p>
+<ul>
+  <li>The first two bytes are 0 and 2 respectively</li>
+  <li><code class="language-plaintext highlighter-rouge">RANDOM_NONNULL_DATA</code> is a random string constructed form bytes <code class="language-plaintext highlighter-rouge">[1,255]</code>
+of length <code class="language-plaintext highlighter-rouge">2048//8 - 3 (for \x00\x02 and \x00) - len(message)</code> = <code class="language-plaintext highlighter-rouge">253 - len(message)</code> &gt;= 8
+i.e. from <code class="language-plaintext highlighter-rouge">[8,253]</code> (funnily enough message can be null)</li>
+  <li>A null byte spearating <code class="language-plaintext highlighter-rouge">RANDOM_NONNULL_DATA</code> from our <code class="language-plaintext highlighter-rouge">message</code></li>
+  <li>Our <code class="language-plaintext highlighter-rouge">message</code> of length <code class="language-plaintext highlighter-rouge">[0,245]</code> from restriction on size of padding</li>
+</ul>
+
+<p>While unpadding, the server just checks if these conditions are satisfied 
+and raises exception otherwise.</p>
+
+<h4 id="homomorphic-properties-of-paillier-cryptosystem">Homomorphic properties of Paillier cryptosystem</h4>
+
+<h4 id="rsa-padding-oracle-attack">RSA padding oracle attack?</h4>
+<p><a href="https://cryptopals.com/sets/6/challenges/47">Cryptopals RSA padding oracle challenge</a></p>
+
+<h3 id="solution-ideas">Solution Ideas</h3>
+<p>To solve the challenge, we would like to build a differentiator which would cut
+the secret space in half on each query (ideally).<br />
+i.e We can create a ciphertext <code class="language-plaintext highlighter-rouge">c1</code> from <code class="language-plaintext highlighter-rouge">c0</code> utilizing multiplications and
+additions (or subtractions)</p>
+
+<h4 id="idea-1">Idea 1</h4>
+<h5 id="adding-a-number-to-plaintext">Adding a number to plaintext</h5>
+<p>We can differentiate numbers utilizing the addition property, i.e if we add a 
+big enough number, the resulting decrypted number &gt; <code class="language-plaintext highlighter-rouge">2**1024</code> thus overflowing the
+null padding byte and resulting in invalid decryption.</p>
+
+<p>We can effectively cut the secret space to half using this. 
+Sorting the secrets, picking the middle secret <code class="language-plaintext highlighter-rouge">s_32768</code> and finding the value <code class="language-plaintext highlighter-rouge">v</code>
+such that <code class="language-plaintext highlighter-rouge">s_32768 + v &gt; 2**1024</code> which will fail for all numbers &gt; <code class="language-plaintext highlighter-rouge">s_32768</code> and
+pass otherwise.</p>
+
+<p>This would enable a binary search over the possible secrets and we would be able
+to get the secret in 16 queries!</p>
+
+<h5 id="but">BUT</h5>
+<p>That requires us to adapt our queries based on the outcomes of previous queries.
+Here we are given 20 queries and the results are provided all together.</p>
+
+<h4 id="idea-2">Idea 2</h4>
+
+<p>Making the default as failure and forming <code class="language-plaintext highlighter-rouge">\x00</code> inside the message<br />
+i.e filling the padding byte by adding <code class="language-plaintext highlighter-rouge">[1,255]*2**1024</code> to the message and 
+subtracting the first <code class="language-plaintext highlighter-rouge">'0'</code> byte i.e <code class="language-plaintext highlighter-rouge">48*2**1016</code> from it.<br />
+This way all the messages having the byte <code class="language-plaintext highlighter-rouge">'0'</code> as the MSB, would result in valid
+decryption and all others would fail.</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="f7b6313405045ac17643c82020174f29290a9187d4ea45e79771be9d7d2ee653" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>+----------+---------------------+----------------+----------+------+----------+
+| \x00\x02 | RANDOM_NONNULL_DATA | NON_NULL_BYTE  | message1 | \x00 | message2 |
++----------+---------------------+----------------+----------+------+----------+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<h5 id="example">Example</h5>
+<p>suppose the message is <code class="language-plaintext highlighter-rouge">5ea71dc6d0b4f57bf39aadd07c208c35f06cd2bac5fde210397f70de11d439c62ec1cdf3183758865fd387fcea0bada2f6c37a4a17851dd1d78fefe6f204ee54</code><br />
+Then the padded message would look like</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="e7794d7b36675f6ae5946317aeab6dfb62a5652982dc1006832804f36be91dc3" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>+----------+---------------------+-------+---------+
+| \x00\x02 | RANDOM_NONNULL_DATA | \x00  | 5ea71.. |
++----------+---------------------+-------+---------+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p><code class="language-plaintext highlighter-rouge">b'\x00\x02XX...XXXX\x005YY...YY'</code><br />
+where <code class="language-plaintext highlighter-rouge">RANDOM_NONNULL_DATA</code> is placeholder for 256-3-128 = 125 random non-null bytes <br />
+adding <code class="language-plaintext highlighter-rouge">2**1024</code> to the message it would look something like</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="4933c78faa1e00315ef671d3998ab433e058905d63470b61e6a00699e6ce8142" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>+----------+---------------------+-------+---------+
+| \x00\x02 | RANDOM_NONNULL_DATA | \x01  | 5ea71.. |
++----------+---------------------+-------+---------+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Resulting in no null bytes, hence an invalid message<br />
+Now subtracting <code class="language-plaintext highlighter-rouge">ord("5")*2**(1024-8)</code> from the 
+message we would get something like,</p>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="3" data-source-sha256="93222f41dc22c6fa075f63364942ebe8df13f7f767ba85fa041796915f6fccd2" aria-labelledby="code-frame-label-6">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-6"><strong>Plain text</strong><small>3 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 6" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 6" aria-describedby="code-frame-status-6" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>+----------+---------------------+-------+------+--------+
+| \x00\x02 | RANDOM_NONNULL_DATA | \x01  | \x00 | ea71.. |
++----------+---------------------+-------+------+--------+
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-6" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Which the server would believe to be a padding for the message <code class="language-plaintext highlighter-rouge">ea71dc6d0b4f57bf39aadd07c208c35f06cd2bac5fde210397f70de11d439c62ec1cdf3183758865fd387fcea0bada2f6c37a4a17851dd1d78fefe6f204ee54</code>
+and 125+1 = 126 random non-null bytes</p>
+
+<h5 id="interesting-observation">Interesting Observation</h5>
+<p>If the first byte was anything less than the value <code class="language-plaintext highlighter-rouge">53</code>, it would have carried back<br />
+1 from a previous byte thus making it <code class="language-plaintext highlighter-rouge">\x00</code> again hence making it a valid value again<br />
+This would help us differentiate half the values if we subtract <code class="language-plaintext highlighter-rouge">ord("8")</code> = 56</p>
+
+<h3 id="solve-scripts">Solve Scripts</h3>
+
+<p>The full attack is implemented in the attached scripts:</p>
+
+<ul>
+  <li><a href="solve.py">solve.py</a> — end-to-end solver: sha512 secret space, padding-oracle
+queries against the Paillier homomorphic blinding, and a decision-tree
+classifier (with simulated annealing) to pick maximally-distinguishing
+query positions</li>
+  <li><a href="build_classifier.py">build_classifier.py</a> — builds the classifier used to
+narrow candidate secrets</li>
+  <li><a href="chall.py">chall.py</a> — the challenge server for local testing</li>
+</ul>
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2021/google_ctf/crypto/pythia/2021-07-21-google-ctf-2021-pythia.html">Google CTF 2021 Crypto - Pythia</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2022/google_ctf/crypto/maybe_someday/2022-07-04-Google-CTF-22-Maybe-Someday.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/ramblings/2022/07/01/what-is-ai.html"><span>Previous</span>What does the term "AI" actually stand for?</a><a rel="next" href="/WriteUps/2023/ACSC/crypto/SusCipher/2023-03-01-ACSC-SusCipher.html"><span>Next</span>ACSC qualifiers 2023 Crypto - SusCipher</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2022%2Fgoogle_ctf%2Fcrypto%2Fmaybe_someday%2F2022-07-04-Google-CTF-22-Maybe-Someday.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

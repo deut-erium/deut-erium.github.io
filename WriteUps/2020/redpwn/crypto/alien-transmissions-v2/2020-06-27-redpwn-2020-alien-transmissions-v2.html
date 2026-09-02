@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Redpwn 2020 Crypto - Alien Transmissions v2 / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Redpwn 2020 Crypto - Alien Transmissions v2" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Redpwn 2020 Crypto - Alien Transmissions v2 writeup: cryptography, xor, z3" />
+<meta name="twitter:description" property="og:description" content="Redpwn 2020 Crypto - Alien Transmissions v2 writeup: cryptography, xor, z3" />
+<link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.html" />
+<meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.html" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-27T00:00:00+05:30" />
+<meta property="article:modified_time" content="2020-06-27T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Redpwn 2020 Crypto - Alien Transmissions v2" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-27T00:00:00+05:30","datePublished":"2020-06-27T00:00:00+05:30","description":"Redpwn 2020 Crypto - Alien Transmissions v2 writeup: cryptography, xor, z3","headline":"Redpwn 2020 Crypto - Alien Transmissions v2","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.html"},"url":"https://deut-erium.github.io/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/skins/fonts.css">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="/assets/css/skins/" disabled>
+<script src="/assets/js/theme.js"></script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css"><meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-writeup section-writeups" data-layout="writeup">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="deuterium's blog home">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/" aria-current="page">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<main id="content" class="record-page primitive--solver" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>2020.06.27</span>
+      <span>redpwn</span>
+    </div>
+    <h1 itemprop="headline">Redpwn 2020 Crypto - Alien Transmissions v2</h1><p class="record-head__abstract" itemprop="description">Redpwn 2020 Crypto - Alien Transmissions v2 writeup: cryptography, xor, z3</p><dl class="record-facts">
+      <div><dt>Event</dt><dd>redpwn</dd></div>
+      <div><dt>Category</dt><dd>crypto</dd></div>
+      <div><dt>Topic</dt><dd>Solver</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="2020-06-27T00:00:00+05:30">2020-06-27</time></dd></div>
+    </dl><nav class="tag-line" aria-label="Article tags"><a href="/archive.html?tag=redpwn">redpwn</a><a href="/archive.html?tag=2020">2020</a><a href="/archive.html?tag=cryptography">cryptography</a><a href="/archive.html?tag=xor">xor</a><a href="/archive.html?tag=z3">z3</a></nav><div class="record-actions">
+      <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.md">Markdown source</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/redpwn/crypto/alien-transmissions-v2">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="deuterium">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      <h2 id="alien-transmissions-v2">Alien-transmissions-v2</h2>
+
+<h3 id="description">Description</h3>
+<figure class="code-frame language-plaintext highlighter-rouge" data-code-frame data-language="plaintext" data-lines="6" data-source-sha256="7933a8c10f18c726aea3142a3483cf00709831f8fd7939163a116d64048c7b9d" aria-labelledby="code-frame-label-1">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-1"><strong>Plain text</strong><small>6 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Plain text code frame 1" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Plain text code frame 1" aria-describedby="code-frame-status-1" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Plain text code; horizontally scrollable"><code>The aliens are at it again! We've discovered that their communications are in base 512 and have transcribed them in base 10. However, it seems like they used XOR encryption twice with two different keys! We do have some information:
+  *  This alien language consists of words delimitated by the character represented as 481
+  *  The two keys appear to be of length 21 and 19
+  *  The value of each character in these keys does not exceed 255
+
+Find these two keys for me; concatenate their ASCII encodings and wrap it in the flag format.
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-1" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<h3 id="files">Files</h3>
+<ul>
+  <li><a href="./encrypted.txt">encrypted.txt</a>  (HUGE number of characters)</li>
+</ul>
+
+<h3 id="observations">Observations</h3>
+<ul>
+  <li>Hint 1, the delimitated character in plaintext is represented as 481. How does it help? Because in any language delimiter of words (space in our case) is the most frequent character (although we cant be sure about the aliens, what if they have really long words??), we can assume that the plaintext character 481 is the most frequent.</li>
+  <li>Hint 2 states that it is XORed twice, once with the key of length 21 and again by length of key 19. If one ponders more, the two keys would act as a combined key of length of LCM of the two lengths 19 and 21, which is 21x19 = 399. And given the huge number of words (1100151), we can recover the key atleast pretty accurately.</li>
+</ul>
+
+<h3 id="combined-xor-key-recovery">Combined XOR key recovery</h3>
+<p>The plaintexts at a difference of keylength are always encrypted by the same key letter, so splitting the ciphertext in keylength number of chunks, we can get a whole chunk, which has been encrypted by the same key byte. And since the character frequency of each chunk would resemble the character frequency distribution of the whole text owing to the huge size of ciphertext.</p>
+
+<p>Just find the character with maximum frequency in each chunk, that would be 481 XOR key, XOR it with 481, to get the corresponding compound key character</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="10" data-source-sha256="48b7ba45849f2ff4ea26609c0c8660261ae6e0b12e5be1a1039f3e84f3a7fc80" aria-labelledby="code-frame-label-2">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-2"><strong>Python</strong><small>10 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 2" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 2" aria-describedby="code-frame-status-2" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">encrypted.txt</span><span class="sh">'</span><span class="p">,</span><span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">encrypted</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">encrypted</span><span class="p">.</span><span class="nf">readlines</span><span class="p">()))</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">21</span><span class="o">*</span><span class="mi">19</span><span class="p">):</span>
+    <span class="n">data_slice</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">21</span><span class="o">*</span><span class="mi">19</span><span class="p">]</span>
+    <span class="n">key_char_val</span> <span class="o">=</span> <span class="mi">481</span> <span class="o">^</span> <span class="nf">max</span><span class="p">(</span><span class="n">data_slice</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">data_slice</span><span class="p">.</span><span class="n">count</span><span class="p">)</span>
+    <span class="n">key</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">key_char_val</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-2" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>It takes a couple of seconds to find the compound key</p>
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="1" data-source-sha256="59b0604a082a2a32404b7ae356f29cca184054b80046ae3dca9791fc304ffffe" aria-labelledby="code-frame-label-3">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-3"><strong>Python</strong><small>1 line / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 3" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 3" aria-describedby="code-frame-status-3" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">key</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">7G</span><span class="se">\x1a\x00</span><span class="s">x</span><span class="se">\x00</span><span class="s">l</span><span class="se">\x17</span><span class="s">X];9</span><span class="se">\x00</span><span class="s">Gj</span><span class="se">\x00</span><span class="s">7Y</span><span class="se">\x01</span><span class="s">3</span><span class="se">\x12\x00\x00</span><span class="s">-</span><span class="se">\x06\x14</span><span class="s">Vo</span><span class="se">\x1a\x0c</span><span class="s">lnSn</span><span class="se">\x06</span><span class="s">]Ej7@</span><span class="se">\x04</span><span class="s">U7</span><span class="se">\x06</span><span class="s">AP</span><span class="se">\x17</span><span class="s">[;+Y</span><span class="se">\x06\x00\x12</span><span class="s">YC</span><span class="se">\x00</span><span class="s">++</span><span class="se">\x00\x07</span><span class="s">3S[PB]CjnA7G7W</span><span class="se">\x04</span><span class="s">-A</span><span class="se">\x1c</span><span class="s">l7</span><span class="se">\x01</span><span class="s">_</span><span class="se">\x05</span><span class="s">X]</span><span class="se">\x16</span><span class="s">l</span><span class="se">\x16\x00\x00\x00\x00\x02</span><span class="s">j9E</span><span class="se">\x1a\x06</span><span class="s">+j[W</span><span class="se">\\\x08\x0c</span><span class="s">lC</span><span class="se">\x06</span><span class="s">xA7E]l+</span><span class="se">\x0e\x02</span><span class="s">-</span><span class="se">\x00</span><span class="s">G&lt;XZ</span><span class="se">\x08</span><span class="s">9Y</span><span class="se">\x06</span><span class="s">-GO</span><span class="se">\x04</span><span class="s">j+</span><span class="se">\x1c</span><span class="s">[l9</span><span class="se">\x04</span><span class="s">AVD1</span><span class="se">\x0c</span><span class="s">k]S7G</span><span class="se">\x1a\x02\x12</span><span class="s">j+</span><span class="se">\x1c</span><span class="s">[ljURB[</span><span class="se">\x10\x00</span><span class="s">Y</span><span class="se">\x01</span><span class="s">3</span><span class="se">\x12\x00\x02</span><span class="s">GlS]l+]</span><span class="se">\x00</span><span class="s">&lt;V_</span><span class="se">\x16</span><span class="s">jEj7@</span><span class="se">\x04</span><span class="s">W]l</span><span class="se">\x06</span><span class="s">[</span><span class="se">\x14</span><span class="s">jjG</span><span class="se">\x0b\x03</span><span class="s">1</span><span class="se">\x02</span><span class="s">nC</span><span class="se">\x00</span><span class="s">++</span><span class="se">\x00\x05</span><span class="s">Y9</span><span class="se">\x1c</span><span class="s">[Al</span><span class="se">\x12\x06</span><span class="s">&lt;D</span><span class="se">\x06</span><span class="s">W</span><span class="se">\x00</span><span class="s">W</span><span class="se">\x04</span><span class="s">-A</span><span class="se">\x1c</span><span class="s">n]k</span><span class="se">\x18\x0e</span><span class="s">[lG</span><span class="se">\x00</span><span class="s">D</span><span class="se">\x05</span><span class="s">1</span><span class="se">\x10</span><span class="s">7</span><span class="se">\x02</span><span class="s">j9E</span><span class="se">\x1a\x04</span><span class="s">A</span><span class="se">\x00\x1c\\</span><span class="s">_9]</span><span class="se">\x00\x11\x03</span><span class="s">IQ</span><span class="se">\x00</span><span class="s">E]l+</span><span class="se">\x0e\x00</span><span class="s">Gj</span><span class="se">\x00</span><span class="s">7[kYU</span><span class="se">\x0b\x03\x1c</span><span class="s">Wx</span><span class="se">\x04</span><span class="s">j+</span><span class="se">\x1c</span><span class="s">[nSn</span><span class="se">\x06</span><span class="s">]G</span><span class="se">\x00</span><span class="s">]</span><span class="se">\x07\x0f</span><span class="s">V</span><span class="se">\x06</span><span class="s">W-</span><span class="se">\x02\x12</span><span class="s">j+</span><span class="se">\x1c</span><span class="s">Y</span><span class="se">\x06\x00\x12</span><span class="s">YAjAl</span><span class="se">\x0b\x04\x02\x02</span><span class="s">7</span><span class="se">\x02</span><span class="s">GlS]nA7G7UnG</span><span class="se">\x06\x17</span><span class="s">o</span><span class="se">\x06</span><span class="s">P3W]l</span><span class="se">\x06</span><span class="s">[</span><span class="se">\x16\x00\x00\x00\x00\x00\x00</span><span class="s">S</span><span class="se">\x02\x11\x05\x1a</span><span class="s">;7</span><span class="se">\x05</span><span class="s">Y9</span><span class="se">\x1c</span><span class="s">[C</span><span class="se">\x06</span><span class="s">xA7G7</span><span class="se">\x06</span><span class="s">l</span><span class="se">\x05\x01\x1c</span><span class="s">Q+n]k</span><span class="se">\x18\x0e</span><span class="s">Y</span><span class="se">\x06</span><span class="s">-GO</span><span class="se">\x06\x00</span><span class="s">A[Po</span><span class="se">\x08</span><span class="s">U-</span><span class="se">\x04</span><span class="s">A</span><span class="se">\x00\x1c\\</span><span class="s">]S</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-3" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>Now, we have the XOR of key1 and key2, we need to recover key1 and key2 from it. We have all possible bytes, of key1 XORed with key2 and vice-versa.</p>
+
+<p>First thought, <a href="https://github.com/Z3Prover/z3">Z3</a> go brrrrrr….</p>
+
+<p>Although Z3 produces a feasible solution(model), a quick <a href="https://stackoverflow.com/questions/11867611/z3py-checking-all-solutions-for-equation">stackOverflow</a> post gave me the implementation of finding n models.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="24" data-source-sha256="70e532ac4c92be49644b3277efe1577880ac9d46eba8d7402dd9390a19a030b5" aria-labelledby="code-frame-label-4">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-4"><strong>Python</strong><small>24 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="kn">from</span> <span class="n">z3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">def</span> <span class="nf">get_models</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Returns a list of M models (if possible) from the list of constraints F
+    </span><span class="sh">"""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nc">Solver</span><span class="p">()</span>
+    <span class="n">s</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">M</span> <span class="ow">and</span> <span class="n">s</span><span class="p">.</span><span class="nf">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="nf">model</span><span class="p">()</span>
+        <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="c1"># Create a new constraint the blocks the current model
+</span>        <span class="n">block</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+            <span class="c1"># d is a declaration
+</span>            <span class="k">if</span> <span class="n">d</span><span class="p">.</span><span class="nf">arity</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="nc">Z3Exception</span><span class="p">(</span><span class="sh">"</span><span class="s">uninterpreted functions are not supported</span><span class="sh">"</span><span class="p">)</span>
+            <span class="c1"># create a constant from declaration
+</span>            <span class="n">c</span> <span class="o">=</span> <span class="nf">d</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nf">is_array</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">or</span> <span class="n">c</span><span class="p">.</span><span class="nf">sort</span><span class="p">().</span><span class="nf">kind</span><span class="p">()</span> <span class="o">==</span> <span class="n">Z3_UNINTERPRETED_SORT</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="nc">Z3Exception</span><span class="p">(</span><span class="sh">"</span><span class="s">arrays and uninterpreted sorts are not supported</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">block</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">c</span> <span class="o">!=</span> <span class="n">m</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+        <span class="n">s</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Or</span><span class="p">(</span><span class="n">block</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+
+<p>All we need to do is to form constraints and checking if the generated model produces ASCII printable strings.</p>
+
+<figure class="code-frame language-python highlighter-rouge" data-code-frame data-language="python" data-lines="15" data-source-sha256="c7fab4f49875fe8e3642ea33b75ed85b7c39fa2593302f8a45f898ae4aab49cf" aria-labelledby="code-frame-label-5">
+  <figcaption class="code-frame__bar">
+    <span class="code-frame__label" id="code-frame-label-5"><strong>Python</strong><small>15 lines / static highlight</small></span>
+    <span class="code-frame__actions">
+      <button type="button" data-wrap-code aria-label="Wrap Python code frame 5" aria-pressed="false" disabled hidden>Wrap</button>
+      <button type="button" data-copy-code aria-label="Copy Python code frame 5" aria-describedby="code-frame-status-5" disabled hidden>Copy</button>
+    </span>
+  </figcaption>
+  <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Python code; horizontally scrollable"><code><span class="n">key1</span> <span class="o">=</span> <span class="p">[</span><span class="n">z3</span><span class="p">.</span><span class="nc">BitVec</span><span class="p">(</span><span class="sh">"</span><span class="s">k1{}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="mi">8</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">21</span><span class="p">)]</span>
+<span class="n">key2</span> <span class="o">=</span> <span class="p">[</span><span class="n">z3</span><span class="p">.</span><span class="nc">BitVec</span><span class="p">(</span><span class="sh">"</span><span class="s">k2{}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="mi">8</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">19</span><span class="p">)]</span>
+<span class="n">F</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">19</span><span class="o">*</span><span class="mi">21</span><span class="p">):</span>
+    <span class="n">F</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">key1</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="mi">21</span><span class="p">]</span><span class="o">^</span><span class="n">key2</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="mi">19</span><span class="p">]</span><span class="o">==</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="c1"># Valid flag characters
+</span><span class="n">VALID_CHARS</span> <span class="o">=</span> <span class="n">string</span><span class="p">.</span><span class="n">printable</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">62</span><span class="p">]</span><span class="o">+</span><span class="sh">"</span><span class="s">_,.</span><span class="sh">'</span><span class="s">?!@$&lt;&gt;*:-]*</span><span class="se">\\</span><span class="sh">"</span>
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="nf">get_models</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">256</span><span class="p">):</span>
+    <span class="c1"># 256 models to get all possible relative strings
+</span>    <span class="n">KEY1</span> <span class="o">=</span> <span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="nf">chr</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">key1</span><span class="p">[</span><span class="n">i</span><span class="p">]].</span><span class="nf">as_long</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">21</span><span class="p">))</span>
+    <span class="n">KEY2</span> <span class="o">=</span> <span class="sh">""</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="nf">chr</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">key2</span><span class="p">[</span><span class="n">i</span><span class="p">]].</span><span class="nf">as_long</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">19</span><span class="p">))</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="n">KEY1</span><span class="o">+</span><span class="n">KEY2</span>
+    <span class="k">if</span> <span class="nf">all</span><span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">VALID_CHARS</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</code></pre></div>
+  <p class="code-frame__status" id="code-frame-status-5" role="status" aria-live="polite" aria-atomic="true"></p>
+</figure>
+<p>Turns out there was only one model with all characters printable and which is our flag</p>
+
+<h4 id="flagh3r35_th3_f1r5t_h4lf_th3_53c0nd_15_th15">flag{h3r3’5_th3_f1r5t_h4lf_th3_53c0nd_15_th15}</h4>
+
+
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul><li><a href="/WriteUps/2020/redpwn/crypto/worst-pw-manager/2020-06-27-redpwn-2020-worst-pw-manager.html">Redpwn 2020 Crypto - worst_pw_manager</a></li><li><a href="/WriteUps/2020/redpwn/crypto/pseudo-key/2020-06-27-redpwn-2020-pseudo-key.html">Redpwn 2020 Crypto - Pseudo-key</a></li><li><a href="/WriteUps/2020/redpwn/crypto/primimity/2020-06-27-redpwn-2020-primimity.html">Redpwn 2020 Crypto - primimity</a></li><li><a href="/WriteUps/2020/redpwn/crypto/itsy-bitsy/2020-06-27-redpwn-2020-Itsy-Bitsy.html">Redpwn 2020 Crypto - Itsy Bitsy</a></li></ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/redpwn/crypto/alien-transmissions-v2/2020-06-27-redpwn-2020-alien-transmissions-v2.md">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles"><a rel="prev" href="/WriteUps/2020/redpwn/crypto/4k-rsa/2020-06-27-redpwn-2020-4k-rsa.html"><span>Previous</span>Redpwn 2020 Crypto - 4k-rsa</a><a rel="next" href="/WriteUps/2020/redpwn/crypto/base646464/2020-06-27-redpwn-2020-base646464.html"><span>Next</span>Redpwn 2020 Crypto - base646464</a></nav>
+  </footer>
+</main>
+
+<script defer src="/assets/js/article.js"></script>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      78 posts by <a href="https://deut-erium.github.io/">deuterium</a>.
+      Static HTML, local assets, and no tracking.
+    </p>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a href="/WriteUps/">Writeups</a>
+      <a href="/ctf-tutorials/">Tutorials</a>
+      <a href="/ramblings/">Ramblings</a>
+      <a href="https://github.com/deut-erium/deut-erium.github.io">Repository</a>
+      <a href="/feed.xml">Atom feed</a>
+    </nav>
+  </div>
+</footer>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2FWriteUps%2F2020%2Fredpwn%2Fcrypto%2Falien-transmissions-v2%2F2020-06-27-redpwn-2020-alien-transmissions-v2.html" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript></body>
+</html>

@@ -45,6 +45,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   width: min(100% - 16px, 920px);
   margin: 0 auto 28px;
@@ -190,6 +194,20 @@ h2 {
   text-shadow: 2px 2px #5a2f22;
 }
 
+.print-only {
+  display: none;
+}
+
+.no-script-notice,
+.loading-notice {
+  margin: 8px 0 14px;
+  padding: 12px;
+  border: 2px solid var(--accent);
+  color: var(--text);
+  background: var(--panel);
+  font-weight: 700;
+}
+
 .machine {
   padding-top: 12px;
 }
@@ -212,7 +230,7 @@ h2 {
   align-items: end;
 }
 
-.run-start h1 {
+.run-start h2 {
   grid-column: 1 / -1;
 }
 
@@ -673,6 +691,22 @@ h2 {
   border: 0;
 }
 
+/* Native table layout can exceed the clipped one-pixel box on narrow screens. */
+.board-grid {
+  left: -10000px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:active {
+    transform: none;
+  }
+
+  .square-flash.fire {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 @media (hover: none), (pointer: coarse) {
   .touch-controls {
     display: grid;
@@ -806,7 +840,7 @@ h2 {
     grid-template-columns: auto 1fr;
   }
 
-  .run-start h1 {
+  .run-start h2 {
     grid-column: 1 / -1;
   }
 
@@ -835,5 +869,20 @@ h2 {
 
   .last-panel {
     grid-column: auto;
+  }
+}
+
+@media print {
+  #game-loading,
+  #game-machine {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+    padding: 1rem;
+    border: 2px solid #111;
+    color: #111;
+    background: #fff;
   }
 }

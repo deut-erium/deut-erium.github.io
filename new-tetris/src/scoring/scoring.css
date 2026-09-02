@@ -50,3 +50,29 @@
 @media(max-width:430px) {
   .piece-type-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+@media print {
+  .formula,
+  .award-grid article:nth-child(3),
+  .catalog-callout a,
+  .examples article strong,
+  .rule-sheet td a {
+    color: #111;
+    background: #fff;
+  }
+
+  .lead-sheet,
+  .rule-sheet,
+  .catalog-callout,
+  .award-grid article,
+  .examples article {
+    box-shadow: none;
+    break-inside: avoid-page;
+  }
+
+  .rule-sheet h2,
+  .rule-sheet h3,
+  .catalog-callout h2 {
+    break-after: avoid-page;
+  }
+}
