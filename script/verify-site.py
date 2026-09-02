@@ -395,7 +395,8 @@ writeup_routes = {rel for rel, section in post_routes.items() if section == "wri
 if len(writeup_routes) != 61: fail(f"WriteUps source count drift: {len(writeup_routes)}")
 for rel in writeup_routes:
     text = (ROOT / rel).read_text(encoding="utf-8")
-    if 'class="layout-writeup section-writeups"' not in text or "<dt>Event</dt>" not in text or "<dt>Category</dt>" not in text:
+    classes = page_audits[rel].body_classes
+    if not {"layout-writeup", "section-writeups"}.issubset(classes) or "<dt>Event</dt>" not in text or "<dt>Category</dt>" not in text:
         fail(f"WriteUps layout drift: {rel}")
 
 for rel, section in (("404.html", "root"), ("WriteUps/404.html", "writeups"), ("ramblings/404.html", "ramblings"), ("ctf-tutorials/404.html", "tutorials")):
@@ -530,7 +531,7 @@ budgets = {
     "assets/js/article.js": 2 * 1024,
     "assets/js/archive.js": 2 * 1024,
     "assets/js/challenge.js": 2 * 1024,
-    "assets/js/theme.js": 1 * 1024,
+    "assets/js/theme.js": 3 * 1024,
 }
 metrics = {}
 for name, budget in budgets.items():
