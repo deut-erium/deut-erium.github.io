@@ -34,7 +34,6 @@ layout: base
     {%- for _year in _years -%}
     <section class="archive-year" data-year-group>
       <header><h2>{{ _year.name }}</h2><span>{{ _year.items | size }} posts</span></header>
-      <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Section</span><span>Topic</span><span></span></div>
       <ol class="record-list">{%- for _post in _year.items -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
     </section>
     {%- endfor -%}

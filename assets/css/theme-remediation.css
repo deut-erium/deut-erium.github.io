@@ -83,74 +83,126 @@ html[data-skin] .skin-menu__panel {
   box-sizing: border-box;
 }
 
+/* The unified header carries more routes than the writeup register did, so
+   skin nav grids sized for six items would overlap. On wide screens every
+   skin gets a wrapping flex nav instead of a fixed grid. */
+@media (min-width: 68rem) {
+  html[data-skin] .site-nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    grid-auto-flow: row !important;
+    justify-content: flex-end !important;
+  }
+
+  html[data-skin] .site-nav > :is(a, details, .skin-menu) {
+    grid-area: auto !important;
+    width: auto !important;
+    min-width: 7rem !important;
+    max-width: none !important;
+  }
+}
+
 /* Theme choice is an unobtrusive dice in the upper-right corner. Appearance
-   lives separately in a lower-right dock, outside every theme header. */
+   lives separately in a lower-right dock, outside every theme header. Both
+   controls are quiet glass buttons that adapt to light and dark. */
 .skin-dice,
 .theme-toggle {
   position: fixed !important;
   z-index: 90;
   display: grid !important;
-  width: 2.75rem;
-  min-width: 2.75rem;
-  height: 2.75rem;
-  min-height: 2.75rem !important;
+  width: 2.6rem !important;
+  min-width: 2.6rem !important;
+  height: 2.6rem !important;
+  min-height: 2.6rem !important;
+  max-width: 2.6rem !important;
+  max-height: 2.6rem !important;
   place-items: center;
   padding: 0 !important;
-  color: #111827 !important;
-  border: 3px solid #111827 !important;
-  border-radius: .45rem !important;
-  box-shadow: .18rem .2rem 0 #111827;
+  color: CanvasText !important;
+  background: color-mix(in srgb, Canvas 72%, transparent) !important;
+  border: 1px solid color-mix(in srgb, CanvasText 55%, transparent) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 .12rem .4rem color-mix(in srgb, CanvasText 22%, transparent);
   font: 700 1rem/1 system-ui, sans-serif !important;
   cursor: pointer;
+  backdrop-filter: blur(.35rem);
+  -webkit-backdrop-filter: blur(.35rem);
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
 }
 
 .skin-dice {
-  top: .75rem;
-  right: .75rem;
-  background: linear-gradient(135deg, #ffe45c 0 50%, #ff79b8 50% 100%) !important;
+  top: auto !important;
+  left: auto !important;
+  right: .8rem !important;
+  bottom: 3.9rem !important;
+  border-radius: 28% !important;
 }
-
-.skin-dice span,
-.skin-dice span::before,
-.skin-dice span::after {
-  display: block;
-  width: .42rem;
-  height: .42rem;
-  content: "";
-  background: #111827;
-  border-radius: 50%;
-  box-shadow: .82rem .82rem #111827;
-}
-
-.skin-dice span::before { transform: translate(.82rem, 0); }
-.skin-dice span::after { transform: translate(0, -.82rem); }
 
 .theme-toggle {
-  right: .75rem;
-  bottom: .75rem;
-  color: #f8fafc !important;
-  background: #111827 !important;
+  top: auto !important;
+  left: auto !important;
+  right: .8rem !important;
+  bottom: .8rem !important;
+}
+
+.skin-dice__face {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.theme-toggle__icon {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.theme-toggle .theme-toggle__icon--moon {
+  display: block;
+}
+
+.theme-toggle .theme-toggle__icon--sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-toggle__icon--moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-toggle__icon--sun {
+  display: block;
+}
+
+@keyframes skin-dice-roll {
+  0% { transform: rotate(0deg) scale(1); }
+  45% { transform: rotate(210deg) scale(.8); }
+  80% { transform: rotate(335deg) scale(1.08); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.skin-dice.is-rolling .skin-dice__face {
+  animation: skin-dice-roll .55s cubic-bezier(.3, .7, .3, 1);
 }
 
 .skin-dice:hover,
 .skin-dice:focus-visible,
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
-  transform: translate(-.08rem, -.08rem);
-  box-shadow: .3rem .32rem 0 #111827;
+  transform: translateY(-.1rem);
+  border-color: color-mix(in srgb, CanvasText 85%, transparent) !important;
+  box-shadow: 0 .22rem .65rem color-mix(in srgb, CanvasText 30%, transparent);
+}
+
+.skin-dice:active,
+.theme-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 .08rem .25rem color-mix(in srgb, CanvasText 24%, transparent);
 }
 
 /* A desktop article reserves a readable prose track. Narrow screens stack the
    navigation rail and let code scroll inside its own frame, not the page. */
 @media (min-width: 70rem) {
-  html[data-skin] .record-page .record-grid {
-    grid-template-columns: minmax(80ch, 1fr) minmax(16rem, 22rem) !important;
-    gap: clamp(1.5rem, 3vw, 3rem) !important;
-  }
-
   html[data-skin] .record-page .article__content {
-    width: 100% !important;
-    max-width: none !important;
     min-width: 0;
   }
 }
@@ -208,5 +260,9 @@ html[data-skin] .prose .katex-display > .katex {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .skin-dice.is-rolling .skin-dice__face {
+    animation: none;
   }
 }
