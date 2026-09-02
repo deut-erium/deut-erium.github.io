@@ -20,18 +20,11 @@ Ruby 3.3.7 and Node 24.19.0 are the supported versions.
 bundle config set --local frozen true
 bundle install
 npm ci --ignore-scripts --no-audit --no-fund
-script/build-site.sh _site
-python3 script/verify-imported-content.py
-python3 script/verify-static-app.py
-python3 script/verify-history-sanitization.py
-python3 script/test-history-sanitization.py
-python3 script/test-artifact-manifest.py
-ruby script/test-code-frames.rb
-python3 script/verify-site.py _site
-python3 script/verify-code-parity.py _site
-python3 script/verify-heading-parity.py _site
+script/build-release.sh agent_out/release/site
 ```
 
-Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets and loads no analytics or comment runtime. Mathematics and syntax highlighting are generated before publication.
+The release command performs one Jekyll build for the root blog, WriteUps, tutorials, and ramblings. It also copies `/new-tetris/` unchanged, adds `.nojekyll`, runs the content and route checks, and writes `agent_out/release/site.manifest.jsonl`.
 
-CI builds twice and compares JSON Lines manifests that cover every file and directory, file bytes, sizes, and permission modes. Symbolic links and special files fail the artifact gate.
+Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets. Mathematics and syntax highlighting are generated before publication.
+
+The lowercase `/writeups/` deployment workaround is intentionally retired; `/WriteUps/` is the canonical integrated section. CI builds twice and compares JSON Lines manifests that cover every file and directory, file bytes, sizes, and permission modes. Symbolic links and special files fail the artifact gate.
