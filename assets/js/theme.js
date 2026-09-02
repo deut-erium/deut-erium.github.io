@@ -95,6 +95,14 @@
     return option ? option.textContent : 'RPN Garden';
   };
 
+  const urlSkin = () => {
+    try {
+      return new URLSearchParams(location.search).get('skin');
+    } catch (_) {
+      return null;
+    }
+  };
+
   const applyColor = (theme) => {
     root.dataset.theme = theme;
     const button = document.querySelector('.theme-toggle');
@@ -102,8 +110,7 @@
     const dark = theme === 'dark';
     button.hidden = false;
     button.setAttribute('aria-pressed', String(dark));
-    button.setAttribute('aria-label', dark ? 'Use light theme' : 'Use dark theme');
-    button.textContent = dark ? 'Light' : 'Dark';
+    button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
   };
 
   const loadSkin = (skin) => {
@@ -136,7 +143,13 @@
 
   const savedColor = stored(colorKey);
   applyColor(savedColor === 'dark' || savedColor === 'light' ? savedColor : system.matches ? 'dark' : 'light');
-  applySkin(skins.has(stored(skinKey)) ? stored(skinKey) : defaultSkin);
+  const requestedSkin = urlSkin();
+  if (requestedSkin && skins.has(requestedSkin)) {
+    save(skinKey, requestedSkin);
+    applySkin(requestedSkin);
+  } else {
+    applySkin(skins.has(stored(skinKey)) ? stored(skinKey) : defaultSkin);
+  }
 
   addEventListener('DOMContentLoaded', () => {
     applyColor(root.dataset.theme || 'light');
@@ -167,7 +180,10 @@
         const id = choices[Math.floor(Math.random() * choices.length)] || defaultSkin;
         save(skinKey, id);
         applySkin(id);
+        randomizer.classList.remove('is-rolling');
+        requestAnimationFrame(() => randomizer.classList.add('is-rolling'));
       });
+      randomizer.addEventListener('animationend', () => randomizer.classList.remove('is-rolling'));
     }
   });
 

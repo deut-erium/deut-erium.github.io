@@ -470,8 +470,7 @@ html[data-skin="crowd-signal"] .masthead::after {
   opacity: 0.86;
 }
 
-html[data-skin="crowd-signal"] .masthead__copy,
-html[data-skin="crowd-signal"] .masthead__ledger {
+html[data-skin="crowd-signal"] .masthead__copy {
   position: relative;
   z-index: 1;
 }
@@ -522,7 +521,6 @@ html[data-skin="crowd-signal"] .record-toc summary,
 html[data-skin="crowd-signal"] .section-heading > p,
 html[data-skin="crowd-signal"] .archive-year > header span,
 html[data-skin="crowd-signal"] .pagination__position,
-html[data-skin="crowd-signal"] .record-columns,
 html[data-skin="crowd-signal"] .record-row__date,
 html[data-skin="crowd-signal"] .record-row__event,
 html[data-skin="crowd-signal"] .record-row__primitive {
@@ -578,79 +576,7 @@ html[data-skin="crowd-signal"] .tag-line {
   gap: 0.38rem;
 }
 
-html[data-skin="crowd-signal"] .masthead__ledger {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: stretch;
-  gap: 1px;
-  padding: clamp(1.2rem, 2.4vw, 2.6rem);
-  background: rgb(255 231 211 / 12%);
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div {
-  position: relative;
-  min-width: 0;
-  min-height: 8.4rem;
-  display: grid;
-  place-content: center;
-  padding: 0.8rem;
-  overflow: hidden;
-  color: #f8e8d9;
-  background: #1c121a;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  text-align: center;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div::before {
-  position: absolute;
-  top: -5rem;
-  left: 50%;
-  width: 10rem;
-  height: 12rem;
-  content: "";
-  background: radial-gradient(ellipse at 50% 0, rgb(255 212 156 / 34%) 0 0.3rem, rgb(255 212 156 / 9%) 0.5rem 35%, transparent 70%);
-  transform: translateX(-50%);
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div:nth-child(2),
-html[data-skin="crowd-signal"] .masthead__ledger > div:nth-child(3) {
-  color: #fff0df;
-  background: #4a1d26;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div:nth-child(2)::before,
-html[data-skin="crowd-signal"] .masthead__ledger > div:nth-child(3)::before {
-  background: radial-gradient(ellipse at 50% 0, rgb(226 88 69 / 44%) 0 0.3rem, rgb(226 88 69 / 13%) 0.5rem 35%, transparent 70%);
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger dt,
-html[data-skin="crowd-signal"] .masthead__ledger dd {
-  position: relative;
-  z-index: 1;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger dt {
-  font-family: var(--keys);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger dd {
-  margin: 0.35rem 0 0;
-  color: var(--signal-amber);
-  font-family: var(--display);
-  font-size: clamp(1.8rem, 3.1vw, 2.8rem);
-  font-weight: 800;
-  letter-spacing: -0.09em;
-  line-height: 0.92;
-}
-
 html[data-skin="crowd-signal"] .home-shell > .record-index,
-html[data-skin="crowd-signal"] .index-map,
 html[data-skin="crowd-signal"] .archive-tools,
 html[data-skin="crowd-signal"] .archive-groups,
 html[data-skin="crowd-signal"] .page-prose,
@@ -698,17 +624,6 @@ html[data-skin="crowd-signal"] .section-heading > p {
   color: var(--muted);
 }
 
-html[data-skin="crowd-signal"] .record-columns {
-  grid-template-columns: 4.8rem minmax(14rem, 1fr) minmax(7rem, 10rem) minmax(6.5rem, 9rem) 1.55rem;
-  gap: 0.7rem;
-  margin-top: 1.3rem;
-  padding: 0.72rem 0.75rem;
-  color: #f7e7db;
-  background:
-    linear-gradient(108deg, transparent 0 54%, rgb(255 212 156 / 16%) 54.15% 54.35%, transparent 54.55% 72%, rgb(226 88 69 / 24%) 72.15% 72.35%, transparent 72.55%),
-    var(--arena);
-}
-
 html[data-skin="crowd-signal"] .record-list {
   position: relative;
   padding: 0;
@@ -739,8 +654,12 @@ html[data-skin="crowd-signal"] .record-row:nth-child(3n + 2)::before {
 }
 
 html[data-skin="crowd-signal"] .record-row__link {
-  grid-template-columns: 4.8rem minmax(14rem, 1fr) minmax(7rem, 10rem) minmax(6.5rem, 9rem) 1.55rem;
-  gap: 0.7rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "date event"
+    "title primitive";
+  gap: 0.3rem 1.1rem;
+  align-items: baseline;
   padding: 1rem 0.75rem 1rem 1.05rem;
   color: var(--ink);
   transition: background-color 140ms ease, color 140ms ease, padding-left 140ms ease;
@@ -766,55 +685,12 @@ html[data-skin="crowd-signal"] .record-row__title {
   line-height: 1.18;
 }
 
-html[data-skin="crowd-signal"] .record-row__arrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #fff1e1;
-  background: var(--signal-ember-deep);
-  border: 1px solid var(--signal-ember);
-  border-radius: 50%;
-  font-size: 1rem;
-}
-
-html[data-skin="crowd-signal"] .index-map {
-  overflow: hidden;
-  padding: clamp(1.35rem, 3.2vw, 3.2rem);
-  color: #f4e4d6;
-  background:
-    radial-gradient(ellipse at 18% 0, rgb(255 212 156 / 18%) 0 0.35rem, transparent 8rem),
-    linear-gradient(107deg, transparent 0 19%, rgb(255 212 156 / 13%) 19.15% 19.35%, transparent 19.55% 52%, rgb(226 88 69 / 20%) 52.15% 52.35%, transparent 52.55%),
-    var(--arena);
-  border-color: #766067;
-  border-top-color: var(--signal-ember);
-}
-
-html[data-skin="crowd-signal"] .index-map .section-heading {
-  border-bottom-color: #6c5960;
-}
-
-html[data-skin="crowd-signal"] .index-map .section-heading h2,
-html[data-skin="crowd-signal"] .index-map .section-heading > p,
-html[data-skin="crowd-signal"] .index-map .eyebrow {
-  color: inherit;
-}
-
-html[data-skin="crowd-signal"] .index-map .eyebrow {
-  color: var(--signal-amber);
-}
-
-html[data-skin="crowd-signal"] .index-map__links,
 html[data-skin="crowd-signal"] .all-tags__grid {
   gap: 1px;
   border-top: 1px solid #79646b;
   border-left: 1px solid #79646b;
 }
 
-html[data-skin="crowd-signal"] .index-map__links {
-  position: relative;
-  background: rgb(255 245 232 / 8%);
-}
-
-html[data-skin="crowd-signal"] .index-map__links a,
 html[data-skin="crowd-signal"] .all-tags__grid a {
   min-width: 0;
   min-height: 5.3rem;
@@ -838,14 +714,12 @@ html[data-skin="crowd-signal"] .all-tags__grid a {
   transition: color 140ms ease, background-color 140ms ease, transform 140ms ease;
 }
 
-html[data-skin="crowd-signal"] .index-map__links a:nth-child(3n + 2),
 html[data-skin="crowd-signal"] .all-tags__grid a:nth-child(3n + 2) {
   background:
     radial-gradient(ellipse at 50% -15%, rgb(226 88 69 / 31%) 0 0.3rem, transparent 70%),
     #3e1921;
 }
 
-html[data-skin="crowd-signal"] .index-map__links a:nth-child(3n),
 html[data-skin="crowd-signal"] .all-tags__grid a:nth-child(3n) {
   color: #26171b;
   background:
@@ -853,21 +727,12 @@ html[data-skin="crowd-signal"] .all-tags__grid a:nth-child(3n) {
     var(--signal-haze);
 }
 
-html[data-skin="crowd-signal"] .index-map__links a:hover,
-html[data-skin="crowd-signal"] .index-map__links a:focus-visible,
 html[data-skin="crowd-signal"] .all-tags__grid a:hover,
 html[data-skin="crowd-signal"] .all-tags__grid a:focus-visible {
   color: #251519;
   background: var(--signal-amber);
   text-decoration: none;
   transform: translateY(-0.12rem);
-}
-
-html[data-skin="crowd-signal"] .index-map__links strong {
-  font-family: var(--display);
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: -0.09em;
 }
 
 html[data-skin="crowd-signal"] .pagination {
@@ -1533,7 +1398,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] .error-shell {
 }
 
 html[data-skin="crowd-signal"][data-theme="dark"] .home-shell > .record-index,
-html[data-skin="crowd-signal"][data-theme="dark"] .index-map,
 html[data-skin="crowd-signal"][data-theme="dark"] .archive-groups,
 html[data-skin="crowd-signal"][data-theme="dark"] .page-prose,
 html[data-skin="crowd-signal"][data-theme="dark"] .article__content,
@@ -1577,19 +1441,15 @@ html[data-skin="crowd-signal"][data-theme="dark"] .archive-search input::placeho
   color: #cdbab1;
 }
 
-html[data-skin="crowd-signal"][data-theme="dark"] .index-map__links a,
 html[data-skin="crowd-signal"][data-theme="dark"] .all-tags__grid a {
   border-color: #705a62;
 }
 
-html[data-skin="crowd-signal"][data-theme="dark"] .index-map__links a:nth-child(3n),
 html[data-skin="crowd-signal"][data-theme="dark"] .all-tags__grid a:nth-child(3n) {
   color: #25161b;
   background: var(--signal-haze);
 }
 
-html[data-skin="crowd-signal"][data-theme="dark"] .index-map__links a:hover,
-html[data-skin="crowd-signal"][data-theme="dark"] .index-map__links a:focus-visible,
 html[data-skin="crowd-signal"][data-theme="dark"] .all-tags__grid a:hover,
 html[data-skin="crowd-signal"][data-theme="dark"] .all-tags__grid a:focus-visible,
 html[data-skin="crowd-signal"][data-theme="dark"] .record-end nav a:hover,
@@ -1659,14 +1519,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] .code-frame__status {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="crowd-signal"] .masthead__ledger {
-    padding: 1px;
-  }
-
-  html[data-skin="crowd-signal"] .masthead__ledger > div {
-    min-height: 6.9rem;
-  }
-
   html[data-skin="crowd-signal"] .home-shell,
   html[data-skin="crowd-signal"] .archive-shell,
   html[data-skin="crowd-signal"] .record-page,
@@ -1681,7 +1533,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] .code-frame__status {
   html[data-skin="crowd-signal"] .page-heading,
   html[data-skin="crowd-signal"] .record-head,
   html[data-skin="crowd-signal"] .home-shell > .record-index,
-  html[data-skin="crowd-signal"] .index-map,
   html[data-skin="crowd-signal"] .archive-tools,
   html[data-skin="crowd-signal"] .archive-groups,
   html[data-skin="crowd-signal"] .page-prose,
@@ -1697,18 +1548,19 @@ html[data-skin="crowd-signal"][data-theme="dark"] .code-frame__status {
     font-size: clamp(2.3rem, 12vw, 3.65rem);
   }
 
-  html[data-skin="crowd-signal"] .record-columns {
-    display: none;
-  }
-
   html[data-skin="crowd-signal"] .record-row::before {
     top: 1.12rem;
     left: 0.18rem;
   }
 
   html[data-skin="crowd-signal"] .record-row__link {
-    grid-template-columns: minmax(0, 1fr) 1.5rem;
-    gap: 0.2rem 0.55rem;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "date"
+      "title"
+      "event"
+      "primitive";
+    gap: 0.3rem;
     padding-block: 0.85rem;
     padding-left: 1.05rem;
   }
@@ -1716,22 +1568,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] .code-frame__status {
   html[data-skin="crowd-signal"] .record-row__link:hover,
   html[data-skin="crowd-signal"] .record-row__link:focus-visible {
     padding-left: 1.18rem;
-  }
-
-  html[data-skin="crowd-signal"] .record-row__date,
-  html[data-skin="crowd-signal"] .record-row__title,
-  html[data-skin="crowd-signal"] .record-row__event,
-  html[data-skin="crowd-signal"] .record-row__primitive {
-    grid-column: 1;
-  }
-
-  html[data-skin="crowd-signal"] .record-row__arrow {
-    grid-column: 2;
-    grid-row: 1 / 3;
-  }
-
-  html[data-skin="crowd-signal"] .index-map__links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   html[data-skin="crowd-signal"] .record-facts > div {
@@ -1770,11 +1606,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] .code-frame__status {
 
   html[data-skin="crowd-signal"] .site-nav a:last-child {
     grid-column: 1;
-  }
-
-  html[data-skin="crowd-signal"] .masthead__ledger,
-  html[data-skin="crowd-signal"] .index-map__links {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1940,8 +1771,6 @@ html[data-skin="crowd-signal"] .site-nav a[data-route]:focus-visible {
 }
 
 html[data-skin="crowd-signal"] .theme-toggle {
-  grid-column: 1 / 5;
-  grid-row: 2;
   min-width: 0;
   color: #f9eadc;
   background: #181017;
@@ -2045,7 +1874,7 @@ html[data-skin="crowd-signal"] .home-shell {
 html[data-skin="crowd-signal"] .home-shell > .masthead {
   grid-column: 1 / -1;
   min-height: clamp(21rem, 38vw, 31rem);
-  grid-template-columns: minmax(0, 1.32fr) minmax(18rem, 0.68fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
 html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__copy {
@@ -2055,32 +1884,6 @@ html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__copy {
   background:
     linear-gradient(90deg, rgb(5 4 5 / 86%), rgb(5 4 5 / 52%) 58%, transparent),
     linear-gradient(134deg, transparent 0 32%, rgb(255 212 156 / 13%) 32.15% 32.4%, transparent 32.65% 63%, rgb(226 88 69 / 22%) 63.15% 63.4%, transparent 63.65%);
-}
-
-html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger {
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  gap: 2px;
-  padding: 2px;
-  background: rgb(255 231 211 / 26%);
-}
-
-html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger > div {
-  min-height: 0;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  padding: 0.8rem 1rem;
-  text-align: left;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger dt {
-  grid-column: 1;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger dd {
-  grid-column: 2;
-  margin: 0;
-  text-align: right;
 }
 
 html[data-skin="crowd-signal"] .home-shell > .record-index {
@@ -2104,52 +1907,6 @@ html[data-skin="crowd-signal"] .home-shell > .record-index .pagination {
   grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
   gap: 1rem;
   align-items: end;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  align-self: start;
-  margin-top: 0;
-  padding: 0;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 2%, rgb(255 212 156 / 21%) 0 0.3rem, transparent 11rem),
-    linear-gradient(180deg, #24161e, #09070a 82%);
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .section-heading {
-  display: block;
-  padding: 1.4rem 1.3rem 1.15rem;
-  border-bottom: 1px solid #735d64;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .section-heading h2 {
-  max-width: 8ch;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .index-map__links {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1px;
-  padding: 1px;
-  border: 0;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .index-map__links a {
-  min-height: 5.75rem;
-  padding: 1rem 1.15rem;
-  border: 0;
-  border-left: 0.38rem solid var(--signal-ember);
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .index-map__links a:nth-child(3n + 2) {
-  border-left-color: var(--signal-amber);
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map .index-map__links a:nth-child(3n) {
-  border-left-color: var(--signal-haze);
 }
 
 html[data-skin="crowd-signal"] .archive-shell {
@@ -2238,13 +1995,8 @@ html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > 
   line-height: 1.25;
 }
 
-html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > .record-columns,
 html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > .record-list {
   grid-column: 2;
-}
-
-html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > .record-columns {
-  margin-top: 0;
 }
 
 html[data-skin="crowd-signal"] .record-page {
@@ -2416,7 +2168,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="crowd-signal"] .site-nav a[data-route],
-  html[data-skin="crowd-signal"] .theme-toggle,
   html[data-skin="crowd-signal"] .skin-menu {
     grid-column: 1;
     grid-row: auto;
@@ -2438,7 +2189,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:focus-visible {
 
   html[data-skin="crowd-signal"] .home-shell > .masthead,
   html[data-skin="crowd-signal"] .home-shell > .record-index,
-  html[data-skin="crowd-signal"] .home-shell > .index-map,
   html[data-skin="crowd-signal"] .archive-shell > .index-heading,
   html[data-skin="crowd-signal"] .archive-shell > .archive-tools,
   html[data-skin="crowd-signal"] .archive-shell > .archive-groups,
@@ -2453,12 +2203,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:focus-visible {
     min-height: 0;
   }
 
-  html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="crowd-signal"] .home-shell > .index-map,
   html[data-skin="crowd-signal"] .archive-shell > .archive-tools,
   html[data-skin="crowd-signal"] .record-page > .record-grid > .record-index {
     position: static;
@@ -2470,7 +2214,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > header,
-  html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > .record-columns,
   html[data-skin="crowd-signal"] .archive-shell > .archive-groups .archive-year > .record-list {
     grid-column: 1;
     grid-row: auto;
@@ -2534,21 +2277,9 @@ html[data-skin="crowd-signal"] .site-footer__links a:focus-visible {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="crowd-signal"] .home-shell > .masthead .masthead__ledger {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: repeat(4, minmax(0, 1fr));
-  }
-
   html[data-skin="crowd-signal"] .home-shell > .record-index .section-heading,
   html[data-skin="crowd-signal"] .home-shell > .record-index .pagination {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="crowd-signal"] .record-columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.25rem 0.55rem;
-    font-size: 0.82rem;
   }
 
   html[data-skin="crowd-signal"] .record-page > .record-head .record-facts > div {
@@ -2700,7 +2431,7 @@ html[data-skin="crowd-signal"] :focus-visible {
   box-shadow: 0 0 0 5px var(--cs-paper);
 }
 
-html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .index-map, .archive-tools, .record-grid > .record-index, .error-shell, .code-frame) :focus-visible {
+html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .archive-tools, .record-grid > .record-index, .error-shell, .code-frame) :focus-visible {
   outline-color: var(--cs-focus-dark);
   box-shadow: 0 0 0 5px var(--cs-rail);
 }
@@ -2709,7 +2440,6 @@ html[data-skin="crowd-signal"] :is(
   .site-nav a[aria-current="page"],
   .theme-toggle[aria-pressed="true"],
   .quick-filters a[aria-current="true"],
-  .index-map__links a[aria-current="true"],
   .all-tags__grid a[aria-current="true"],
   .code-frame__actions button[aria-pressed="true"]
 ):focus-visible {
@@ -2744,7 +2474,6 @@ html[data-skin="crowd-signal"] :is(
   .masthead,
   .index-heading,
   .record-head,
-  .index-map,
   .archive-tools,
   .archive-groups,
   .article__content,
@@ -2871,8 +2600,6 @@ html[data-skin="crowd-signal"] .site-nav a[data-route="feed"] { grid-column: 7 /
 html[data-skin="crowd-signal"] .site-nav a[data-route="source"] { grid-column: 8 / 10; }
 
 html[data-skin="crowd-signal"] .theme-toggle {
-  grid-column: 1 / 4;
-  grid-row: 2;
   cursor: pointer;
 }
 
@@ -3037,14 +2764,14 @@ html[data-skin="crowd-signal"] .masthead::after {
 }
 
 html[data-skin="crowd-signal"] .masthead__copy {
-  grid-column: 2 / 9;
+  grid-column: 2 / 11;
   min-width: 0;
   min-height: 0;
   padding: clamp(1.25rem, 3vw, 2.75rem);
   background: linear-gradient(90deg, rgb(8 6 9 / 30%), transparent);
 }
 
-html[data-skin="crowd-signal"] :is(.eyebrow, .record-head__key, .record-facts dt, .archive-search label, .all-tags summary, .record-toc summary, .section-heading > p, .archive-year > header span, .record-columns, .record-row__date, .record-row__event, .record-row__primitive, .record-end nav span) {
+html[data-skin="crowd-signal"] :is(.eyebrow, .record-head__key, .record-facts dt, .archive-search label, .all-tags summary, .record-toc summary, .section-heading > p, .archive-year > header span, .record-row__date, .record-row__event, .record-row__primitive, .record-end nav span) {
   font-family: var(--keys);
   font-size: var(--cs-ui-size);
   font-weight: 700;
@@ -3072,62 +2799,6 @@ html[data-skin="crowd-signal"] :is(.masthead__lede, .index-heading > p:last-chil
   color: inherit;
   font-size: var(--cs-copy-size);
   line-height: 1.6;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger {
-  display: grid;
-  grid-column: 9 / 13;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: repeat(4, minmax(0, auto));
-  gap: 1px;
-  min-width: 0;
-  padding: 1px;
-  background: var(--cs-rule);
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-  min-width: 0;
-  min-height: 0;
-  padding: 0.9rem 1rem;
-  overflow: visible;
-  color: var(--cs-rail-ink);
-  background: #171016;
-  text-align: left;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div:nth-child(even) {
-  background: #331b22;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger > div::before {
-  content: "";
-  pointer-events: none;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger dt {
-  min-width: 0;
-  color: var(--cs-rail-muted);
-  font-family: var(--keys);
-  font-size: var(--cs-ui-size);
-  font-weight: 700;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-  text-transform: uppercase;
-}
-
-html[data-skin="crowd-signal"] .masthead__ledger dd {
-  margin: 0;
-  color: var(--cs-selected-bg);
-  font-family: var(--display);
-  font-size: clamp(1.5rem, 2.5vw, 2.2rem) !important;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  overflow-wrap: anywhere;
-  text-align: right;
 }
 
 html[data-skin="crowd-signal"] :is(.masthead__actions, .record-actions, .tag-line) {
@@ -3209,17 +2880,6 @@ html[data-skin="crowd-signal"] .archive-year > header span {
   color: var(--cs-muted);
 }
 
-html[data-skin="crowd-signal"] .record-columns {
-  display: grid;
-  grid-template-columns: 5.4rem minmax(12rem, 1fr) minmax(8rem, 0.45fr) minmax(8rem, 0.4fr) 2rem;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  padding: 0.7rem 0.8rem;
-  color: var(--cs-rail-ink);
-  background: var(--cs-rail);
-  border-left: 0.25rem solid var(--cs-ember);
-}
-
 html[data-skin="crowd-signal"] .record-list {
   padding: 0;
 }
@@ -3249,8 +2909,12 @@ html[data-skin="crowd-signal"] .record-row:nth-child(3n + 2)::before {
 
 html[data-skin="crowd-signal"] .record-row__link {
   display: grid;
-  grid-template-columns: 5.4rem minmax(12rem, 1fr) minmax(8rem, 0.45fr) minmax(8rem, 0.4fr) 2rem;
-  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "date event"
+    "title primitive";
+  gap: 0.3rem 1.1rem;
+  align-items: baseline;
   min-width: 0;
   padding: 1rem 0.8rem 1rem 1.2rem;
   color: var(--cs-ink);
@@ -3283,63 +2947,18 @@ html[data-skin="crowd-signal"] .record-row__title {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="crowd-signal"] .record-row__arrow {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  color: var(--cs-selected-ink);
-  background: var(--cs-selected-bg);
-  border: 1px solid var(--cs-selected-ink);
-  border-radius: 50%;
-  font-size: var(--cs-ui-size);
-  line-height: 1;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map,
 html[data-skin="crowd-signal"] .record-page > .record-grid > .record-index,
 html[data-skin="crowd-signal"] .site-nav a[data-route] {
   overflow: visible;
 }
 
-html[data-skin="crowd-signal"] .index-map {
-  grid-column: 9 / 13;
-  align-self: start;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1rem, 2vw, 1.5rem);
-  color: var(--cs-rail-ink);
-  background:
-    linear-gradient(112deg, transparent 0 35%, rgb(255 212 156 / 9%) 35.15% 35.3%, transparent 35.45% 65%, rgb(217 79 69 / 14%) 65.15% 65.3%, transparent 65.45%),
-    var(--cs-rail);
-  border: 1px solid var(--cs-rule);
-  border-top: 0.3rem solid var(--cs-ember);
-  box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 24%);
-}
-
-html[data-skin="crowd-signal"] .index-map .section-heading {
-  border-bottom-color: var(--cs-rule);
-}
-
-html[data-skin="crowd-signal"] .index-map :is(.section-heading h2, .section-heading > p) {
-  color: var(--cs-rail-ink);
-}
-
-html[data-skin="crowd-signal"] .index-map .eyebrow {
-  color: var(--cs-selected-bg);
-}
-
-html[data-skin="crowd-signal"] :is(.index-map__links, .all-tags__grid) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid) {
   display: grid;
   gap: 0.4rem;
   margin-top: 1rem;
 }
 
-html[data-skin="crowd-signal"] .index-map__links {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid a) {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.75rem;
@@ -3363,7 +2982,7 @@ html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a) {
   transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease, text-decoration-thickness 140ms ease;
 }
 
-html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a):is(:hover, :focus-visible, [aria-current="true"]) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid a):is(:hover, :focus-visible, [aria-current="true"]) {
   color: var(--cs-selected-ink);
   background: var(--cs-selected-bg);
   border-color: var(--cs-selected-ink);
@@ -3372,7 +2991,7 @@ html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a):is(:h
   transform: none;
 }
 
-html[data-skin="crowd-signal"] :is(.index-map__links strong, .all-tags__grid small) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid small) {
   color: inherit;
   font-family: var(--display);
   font-size: var(--cs-ui-size);
@@ -3548,7 +3167,7 @@ html[data-skin="crowd-signal"] .archive-year > header h2 {
   font-size: clamp(1.85rem, 3vw, 2.75rem);
 }
 
-html[data-skin="crowd-signal"] :is(.archive-year > .record-columns, .archive-year > .record-list) {
+html[data-skin="crowd-signal"] :is(.archive-year > .record-list) {
   grid-column: 2;
 }
 
@@ -4136,7 +3755,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] :is(
   .index-heading,
   .page-heading,
   .record-head,
-  .index-map,
   .archive-tools,
   .record-grid > .record-index,
   .error-shell
@@ -4248,7 +3866,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
   html[data-skin="crowd-signal"] :is(
     .home-shell > .masthead,
     .home-shell > .record-index,
-    .home-shell > .index-map,
     .archive-shell > .index-heading,
     .archive-shell > .archive-tools,
     .archive-shell > .archive-groups,
@@ -4262,20 +3879,13 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="crowd-signal"] .masthead {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="crowd-signal"] .masthead__copy {
     grid-column: 1 / -1;
   }
 
-  html[data-skin="crowd-signal"] .masthead__ledger {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, auto));
-  }
-
-  html[data-skin="crowd-signal"] .home-shell > .index-map,
   html[data-skin="crowd-signal"] .archive-shell > .archive-tools,
   html[data-skin="crowd-signal"] .record-page > .record-grid > .record-index {
     position: static;
@@ -4287,7 +3897,7 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="crowd-signal"] .archive-year > header,
-  html[data-skin="crowd-signal"] :is(.archive-year > .record-columns, .archive-year > .record-list) {
+  html[data-skin="crowd-signal"] .archive-year > .record-list {
     grid-column: 1;
     grid-row: auto;
   }
@@ -4343,7 +3953,6 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="crowd-signal"] .site-nav a[data-route],
-  html[data-skin="crowd-signal"] .theme-toggle,
   html[data-skin="crowd-signal"] .skin-menu {
     grid-column: 1;
     grid-row: auto;
@@ -4357,27 +3966,15 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="crowd-signal"] .masthead__ledger {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="crowd-signal"] .record-columns {
-    display: none;
-  }
-
   html[data-skin="crowd-signal"] .record-row__link {
-    grid-template-columns: minmax(0, 1fr) 2rem;
-    gap: 0.4rem 0.65rem;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "date"
+      "title"
+      "event"
+      "primitive";
+    gap: 0.3rem;
     padding-left: 1.1rem;
-  }
-
-  html[data-skin="crowd-signal"] :is(.record-row__date, .record-row__title, .record-row__event, .record-row__primitive) {
-    grid-column: 1;
-  }
-
-  html[data-skin="crowd-signal"] .record-row__arrow {
-    grid-column: 2;
-    grid-row: 1 / span 4;
   }
 
   html[data-skin="crowd-signal"] .record-facts > div {
@@ -4422,7 +4019,7 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="crowd-signal"] body,
-  html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .index-map, .archive-tools, .archive-groups, .article__content, .page-prose, .record-grid > .record-index, .record-end, .error-shell, .prose :is(pre, .highlight, .code-frame, .katex-display, .info)) {
+  html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .archive-tools, .archive-groups, .article__content, .page-prose, .record-grid > .record-index, .record-end, .error-shell, .prose :is(pre, .highlight, .code-frame, .katex-display, .info)) {
     color: CanvasText !important;
     background: Canvas !important;
     background-image: none !important;
@@ -4434,20 +4031,20 @@ html[data-skin="crowd-signal"] .site-footer__links a:nth-child(3) {
     color: LinkText !important;
   }
 
-  html[data-skin="crowd-signal"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .index-map__links a, .all-tags__grid a, .code-frame__actions button, .site-footer__links a) {
+  html[data-skin="crowd-signal"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .all-tags__grid a, .code-frame__actions button, .site-footer__links a) {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
   }
 
-  html[data-skin="crowd-signal"] :is(.site-nav a[aria-current="page"], .theme-toggle[aria-pressed="true"], .quick-filters a[aria-current="true"], .index-map__links a[aria-current="true"], .all-tags__grid a[aria-current="true"], .code-frame__actions button[aria-pressed="true"], .skin-menu[open] summary) {
+  html[data-skin="crowd-signal"] :is(.site-nav a[aria-current="page"], .theme-toggle[aria-pressed="true"], .quick-filters a[aria-current="true"], .all-tags__grid a[aria-current="true"], .code-frame__actions button[aria-pressed="true"], .skin-menu[open] summary) {
     color: HighlightText !important;
     background: Highlight !important;
     border-color: HighlightText !important;
   }
 
   html[data-skin="crowd-signal"] :focus-visible,
-  html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .index-map, .archive-tools, .record-grid > .record-index, .error-shell, .code-frame) :focus-visible {
+  html[data-skin="crowd-signal"] :is(.site-header, .site-footer, .masthead, .index-heading, .record-head, .archive-tools, .record-grid > .record-index, .error-shell, .code-frame) :focus-visible {
     outline: 3px solid Highlight !important;
     outline-offset: 3px;
     box-shadow: none !important;
@@ -4473,7 +4070,6 @@ html[data-skin="crowd-signal"] :is(
 html[data-skin="crowd-signal"] :is(
   .site-brand__scope,
   .skin-menu__panel label,
-  .masthead__ledger dt,
   .action,
   .record-actions a,
   .tag-line a,
@@ -4484,11 +4080,8 @@ html[data-skin="crowd-signal"] :is(
   .archive-search label,
   .archive-search p,
   .all-tags summary,
-  .index-map__links a,
-  .index-map__links strong,
   .all-tags__grid a,
   .all-tags__grid small,
-  .record-columns,
   .record-row__date,
   .record-row__event,
   .record-row__primitive,
@@ -4510,7 +4103,6 @@ html[data-skin="crowd-signal"] :is(
 ) {
   font-size: var(--cs-ui-size) !important; }
 html[data-skin="crowd-signal"] :is(
-  .index-map__links a,
   .all-tags__grid a,
   .site-footer__links a
 ) {
@@ -4548,10 +4140,6 @@ html[data-skin="crowd-signal"] body .prose .highlight :is(.gh, .gu) { color: #e6
 html[data-skin="crowd-signal"] .site-brand {
   background: #171016;
   border-bottom: 0.2rem solid var(--cs-ember); }
-html[data-skin="crowd-signal"] .record-columns {
-  border: 1px solid var(--cs-rule);
-  border-bottom: 0.2rem solid var(--cs-ember);
-}
 html[data-skin="crowd-signal"] .record-row__link {
   padding-left: 0.8rem;
   border-left: 0;
@@ -4559,13 +4147,13 @@ html[data-skin="crowd-signal"] .record-row__link {
 html[data-skin="crowd-signal"] .record-row__link:is(:hover, :focus-visible) {
   border-left: 0;
 }
-html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid a) {
   min-height: 2.75rem;
   color: var(--cs-ink);
   background: transparent;
   border: 1px solid var(--cs-rule);
 }
-html[data-skin="crowd-signal"] :is(.index-map__links a, .all-tags__grid a):is(:hover, :focus-visible, [aria-current="true"]) {
+html[data-skin="crowd-signal"] :is(.all-tags__grid a):is(:hover, :focus-visible, [aria-current="true"]) {
   color: var(--cs-selected-ink);
   background: var(--cs-selected-bg);
   border-color: var(--cs-selected-ink);
@@ -4580,7 +4168,7 @@ html[data-skin="crowd-signal"] .archive-year {
   row-gap: 0.75rem;
 }
 html[data-skin="crowd-signal"] .archive-year > header,
-html[data-skin="crowd-signal"] :is(.archive-year > .record-columns, .archive-year > .record-list) {
+html[data-skin="crowd-signal"] .archive-year > .record-list {
   grid-column: 1;
   grid-row: auto;
 }
@@ -4642,19 +4230,6 @@ html[data-skin="crowd-signal"] .page-heading {
   border-bottom: 1px solid var(--cs-rule);
   box-shadow: none;
 }
-html[data-skin="crowd-signal"] .home-shell > .index-map {
-  color: var(--cs-ink);
-  background: var(--cs-surface);
-  border: 0;
-  border-top: 1px solid var(--cs-rule);
-  box-shadow: none;
-}
-html[data-skin="crowd-signal"] .index-map :is(.section-heading h2, .section-heading > p) {
-  color: var(--cs-heading);
-}
-html[data-skin="crowd-signal"] .index-map .eyebrow {
-  color: var(--cs-link);
-}
 html[data-skin="crowd-signal"] .archive-shell > .archive-tools {
   position: static;
   color: var(--cs-ink);
@@ -4707,7 +4282,6 @@ html[data-skin="crowd-signal"][data-theme="dark"] :is(
 }
 html[data-skin="crowd-signal"][data-theme="dark"] :is(
   .page-heading,
-  .home-shell > .index-map,
   .archive-shell > .archive-tools,
   .record-page > .record-grid > .record-index,
   .record-end,
@@ -4764,7 +4338,6 @@ html[data-skin="crowd-signal"] :is(
   .record-row__title,
   .record-row__event,
   .record-row__primitive,
-  .index-map :is(.section-heading h2, .section-heading > p, .index-map__links a),
   .site-footer__note,
   .site-footer__links a
 ) {
@@ -4809,7 +4382,7 @@ html[data-skin="crowd-signal"] .site-nav .skin-menu summary {
 
 html[data-skin="crowd-signal"] .home-shell {
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "home-heading" "records" "topics";
+  grid-template-areas: "home-heading" "records";
   align-items: start;
 }
 
@@ -4823,22 +4396,6 @@ html[data-skin="crowd-signal"] .home-shell > .record-index {
   grid-area: records;
   grid-column: auto;
   min-inline-size: 0;
-}
-
-html[data-skin="crowd-signal"] .home-shell > .index-map {
-  grid-area: topics;
-  grid-column: auto;
-  min-inline-size: 0;
-}
-
-html[data-skin="crowd-signal"] .index-map__links {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-}
-
-html[data-skin="crowd-signal"] .index-map__links a {
-  min-inline-size: 0;
-  overflow-wrap: normal;
-  word-break: normal;
 }
 
 html[data-skin="crowd-signal"] .record-page > .record-head,
@@ -4859,11 +4416,6 @@ html[data-skin="crowd-signal"] .site-footer__links a {
 }
 
 @media (min-width: 72.0625rem) {
-  html[data-skin="crowd-signal"] .home-shell:has(> .index-map) {
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.58fr);
-    grid-template-areas: "home-heading home-heading" "records topics";
-  }
-
   html[data-skin="crowd-signal"] .record-page > .record-head {
     grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.58fr);
     grid-template-areas: "key facts" "title facts" "abstract facts" "tags facts" "actions facts";
@@ -4884,8 +4436,8 @@ html[data-skin="crowd-signal"] .site-footer__links a {
 }
 
 @media (min-width: 48.0625rem) and (max-width: 64rem) {
-  html[data-skin="crowd-signal"] :is(.record-columns, .record-row__link) {
-    grid-template-columns: 5.4rem minmax(12rem, 1fr) minmax(7rem, 0.4fr) minmax(7rem, 0.4fr) 2rem;
+  html[data-skin="crowd-signal"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
@@ -4902,5 +4454,71 @@ html[data-skin="crowd-signal"] .site-footer__links a {
 @media (max-width: 48rem) {
   html[data-skin="crowd-signal"] .site-nav > :is(a[data-route], .skin-menu) {
     flex-basis: 100%;
+  }
+}
+
+/* Signal-fit pass: Crowd Signal */
+
+/* Title stays bold but sits below the shared 4.5rem ceiling, with calmer
+   tracking, so it reads as a broadcast header, not a poster. */
+html[data-skin="crowd-signal"] body .masthead h1 {
+  font-size: clamp(2.1rem, 4.4vw, 3.9rem) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.045em;
+}
+
+/* Record rows read as log entries: date stamp above the title on the left,
+   event and primitive tags right-aligned, no ledger columns. */
+html[data-skin="crowd-signal"] .record-row__link {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "date event"
+    "title primitive";
+  gap: 0.3rem 1.1rem;
+  align-items: baseline;
+}
+
+html[data-skin="crowd-signal"] .record-row__date {
+  grid-area: date;
+}
+
+html[data-skin="crowd-signal"] .record-row__title {
+  grid-area: title;
+}
+
+html[data-skin="crowd-signal"] .record-row__event {
+  grid-area: event;
+  justify-self: end;
+  text-align: right;
+}
+
+html[data-skin="crowd-signal"] .record-row__link .record-row__primitive {
+  grid-area: primitive;
+  justify-self: end;
+  min-width: 4rem;
+  padding: 0.1rem 0.55rem;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-rule);
+  text-align: center;
+}
+
+html[data-skin="crowd-signal"] .record-row__link:is(:hover, :focus-visible) .record-row__primitive {
+  border-color: var(--cs-focus-light);
+}
+
+@media (max-width: 48rem) {
+  html[data-skin="crowd-signal"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "date"
+      "title"
+      "event"
+      "primitive";
+  }
+
+  html[data-skin="crowd-signal"] .record-row__event,
+  html[data-skin="crowd-signal"] .record-row__primitive {
+    justify-self: start;
+    text-align: left;
   }
 }

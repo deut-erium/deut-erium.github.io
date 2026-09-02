@@ -15,8 +15,7 @@ layout: base
     {%- if page.description -%}<p>{{ page.description }}</p>{%- endif -%}
   </header>
   <section class="record-index" aria-labelledby="section-posts-title">
-    <header class="section-heading"><div><p class="eyebrow">{{ _all_posts | size }} posts</p><h2 id="section-posts-title">{{ page.list_title | default: page.title }}</h2></div><p>Newest first.</p></header>
-    <div class="record-columns" aria-hidden="true"><span>Date</span><span>Title</span><span>Section</span><span>Topic</span><span></span></div>
+    <header class="section-heading"><div><h2 id="section-posts-title">{{ page.list_title | default: page.title }}</h2></div></header>
     <ol class="record-list">{%- for _post in _posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
     {%- if page.section == 'writeups' -%}
     {%- assign _writeup_pages = _all_posts.size | plus: 7 | divided_by: 8 -%}

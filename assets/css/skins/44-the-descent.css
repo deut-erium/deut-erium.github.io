@@ -264,7 +264,6 @@ html[data-skin="the-descent"] .site-footer__links {
 }
 
 html[data-skin="the-descent"] .site-nav a,
-html[data-skin="the-descent"] .theme-toggle,
 html[data-skin="the-descent"] .skin-menu summary,
 html[data-skin="the-descent"] .skin-randomizer,
 html[data-skin="the-descent"] .skin-menu select,
@@ -293,7 +292,6 @@ html[data-skin="the-descent"] .site-footer__links a {
   transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
 
-html[data-skin="the-descent"] .theme-toggle,
 html[data-skin="the-descent"] .skin-randomizer,
 html[data-skin="the-descent"] .skin-menu summary {
   cursor: pointer;
@@ -313,7 +311,6 @@ html[data-skin="the-descent"] .skin-menu summary::after {
 }
 
 html[data-skin="the-descent"] .site-nav a[aria-current="page"],
-html[data-skin="the-descent"] .theme-toggle[aria-pressed="true"],
 html[data-skin="the-descent"] .quick-filters a[aria-current="true"],
 html[data-skin="the-descent"] .action--primary,
 html[data-skin="the-descent"] .masthead__actions .action--primary,
@@ -325,8 +322,6 @@ html[data-skin="the-descent"] .record-actions a:last-child {
 
 html[data-skin="the-descent"] .site-nav a:hover,
 html[data-skin="the-descent"] .site-nav a:focus-visible,
-html[data-skin="the-descent"] .theme-toggle:hover,
-html[data-skin="the-descent"] .theme-toggle:focus-visible,
 html[data-skin="the-descent"] .skin-menu summary:hover,
 html[data-skin="the-descent"] .skin-menu summary:focus-visible,
 html[data-skin="the-descent"] .skin-randomizer:hover,
@@ -464,8 +459,7 @@ html[data-skin="the-descent"] .masthead::after {
   opacity: 0.86;
 }
 
-html[data-skin="the-descent"] .masthead__copy,
-html[data-skin="the-descent"] .masthead__ledger {
+html[data-skin="the-descent"] .masthead__copy {
   position: relative;
   z-index: 1;
 }
@@ -515,7 +509,6 @@ html[data-skin="the-descent"] .record-toc summary,
 html[data-skin="the-descent"] .section-heading > p,
 html[data-skin="the-descent"] .archive-year > header span,
 html[data-skin="the-descent"] .pagination__position,
-html[data-skin="the-descent"] .record-columns,
 html[data-skin="the-descent"] .record-row__date,
 html[data-skin="the-descent"] .record-row__event,
 html[data-skin="the-descent"] .record-row__primitive {
@@ -571,69 +564,7 @@ html[data-skin="the-descent"] .tag-line {
   gap: 0.38rem;
 }
 
-html[data-skin="the-descent"] .masthead__ledger {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: center;
-  gap: 0;
-  padding: clamp(1.25rem, 2.5vw, 2.8rem);
-}
-
-html[data-skin="the-descent"] .masthead__ledger > div {
-  position: relative;
-  min-width: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.8rem;
-  align-items: baseline;
-  min-height: 0;
-  padding: 0.85rem 0;
-  color: #ead8c4;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #745948;
-  border-radius: 0;
-  box-shadow: none;
-  text-align: left;
-}
-
-html[data-skin="the-descent"] .masthead__ledger > div::before {
-  width: 0.55rem;
-  height: 0.55rem;
-  content: "";
-  background: var(--descent-ember);
-  border: 2px solid var(--descent-amber);
-  border-radius: 50%;
-  transform: translateX(-1.55rem);
-}
-
-html[data-skin="the-descent"] .masthead__ledger > div:first-child,
-html[data-skin="the-descent"] .masthead__ledger > div:nth-child(2) {
-  color: #ead8c4;
-  background: transparent;
-  border-color: #745948;
-}
-
-html[data-skin="the-descent"] .masthead__ledger dt {
-  font-family: var(--keys);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-html[data-skin="the-descent"] .masthead__ledger dd {
-  margin: 0;
-  color: var(--descent-amber);
-  font-family: var(--display);
-  font-size: clamp(2rem, 3.3vw, 3rem);
-  font-weight: 400;
-  letter-spacing: -0.07em;
-  line-height: 0.8;
-}
-
 html[data-skin="the-descent"] .home-shell > .record-index,
-html[data-skin="the-descent"] .index-map,
 html[data-skin="the-descent"] .archive-tools,
 html[data-skin="the-descent"] .archive-groups,
 html[data-skin="the-descent"] .page-prose,
@@ -679,16 +610,6 @@ html[data-skin="the-descent"] .related-records h2 {
 
 html[data-skin="the-descent"] .section-heading > p {
   color: var(--muted);
-}
-
-html[data-skin="the-descent"] .record-columns {
-  grid-template-columns: 4.8rem minmax(14rem, 1fr) minmax(7rem, 10rem) minmax(6.5rem, 9rem) 1.55rem;
-  gap: 0.7rem;
-  margin-top: 1.3rem;
-  padding: 0.7rem 0.75rem;
-  color: #f7e7d2;
-  background: var(--descent-void);
-  border-left: 0.35rem solid var(--descent-ember);
 }
 
 html[data-skin="the-descent"] .record-list {
@@ -757,31 +678,12 @@ html[data-skin="the-descent"] .record-row__title {
   line-height: 1.18;
 }
 
-html[data-skin="the-descent"] .record-row__arrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #fff1db;
-  background: var(--descent-ember);
-  border: 1px solid #682418;
-  border-radius: 50%;
-  font-size: 1rem;
-}
-
-html[data-skin="the-descent"] .index-map {
-  padding: clamp(1.35rem, 3.2vw, 3.2rem);
-  background:
-    linear-gradient(90deg, var(--descent-paper) 0 8%, transparent 8.1% 8.35%, var(--descent-paper) 8.45%),
-    var(--descent-paper);
-}
-
-html[data-skin="the-descent"] .index-map__links,
 html[data-skin="the-descent"] .all-tags__grid {
   gap: 0;
   border-top: 1px solid var(--descent-ink);
   border-left: 1px solid var(--descent-ink);
 }
 
-html[data-skin="the-descent"] .index-map__links a,
 html[data-skin="the-descent"] .all-tags__grid a {
   min-width: 0;
   min-height: 5rem;
@@ -803,33 +705,22 @@ html[data-skin="the-descent"] .all-tags__grid a {
   transition: color 140ms ease, background-color 140ms ease, transform 140ms ease;
 }
 
-html[data-skin="the-descent"] .index-map__links a:nth-child(4n + 2),
 html[data-skin="the-descent"] .all-tags__grid a:nth-child(4n + 2) {
   color: #f9e9d5;
   background: var(--descent-void);
 }
 
-html[data-skin="the-descent"] .index-map__links a:nth-child(4n + 3),
 html[data-skin="the-descent"] .all-tags__grid a:nth-child(4n + 3) {
   color: #fff1dd;
   background: var(--descent-ember);
 }
 
-html[data-skin="the-descent"] .index-map__links a:hover,
-html[data-skin="the-descent"] .index-map__links a:focus-visible,
 html[data-skin="the-descent"] .all-tags__grid a:hover,
 html[data-skin="the-descent"] .all-tags__grid a:focus-visible {
   color: #1d100a;
   background: var(--descent-amber);
   text-decoration: none;
   transform: translateY(-0.12rem);
-}
-
-html[data-skin="the-descent"] .index-map__links strong {
-  font-family: var(--display);
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.07em;
 }
 
 html[data-skin="the-descent"] .pagination {
@@ -1476,7 +1367,6 @@ html[data-skin="the-descent"][data-theme="dark"] .site-footer {
 }
 
 html[data-skin="the-descent"][data-theme="dark"] .home-shell > .record-index,
-html[data-skin="the-descent"][data-theme="dark"] .index-map,
 html[data-skin="the-descent"][data-theme="dark"] .archive-groups,
 html[data-skin="the-descent"][data-theme="dark"] .page-prose,
 html[data-skin="the-descent"][data-theme="dark"] .article__content,
@@ -1523,33 +1413,22 @@ html[data-skin="the-descent"][data-theme="dark"] .archive-search input::placehol
   color: #c7b5a0;
 }
 
-html[data-skin="the-descent"][data-theme="dark"] .index-map {
-  background:
-    linear-gradient(90deg, var(--descent-paper) 0 8%, transparent 8.1% 8.35%, var(--descent-paper) 8.45%),
-    var(--descent-paper);
-}
-
-html[data-skin="the-descent"][data-theme="dark"] .index-map__links a,
 html[data-skin="the-descent"][data-theme="dark"] .all-tags__grid a {
   color: var(--ink);
   background: #30241f;
   border-color: #6c584b;
 }
 
-html[data-skin="the-descent"][data-theme="dark"] .index-map__links a:nth-child(4n + 2),
 html[data-skin="the-descent"][data-theme="dark"] .all-tags__grid a:nth-child(4n + 2) {
   color: #fff1df;
   background: var(--descent-void);
 }
 
-html[data-skin="the-descent"][data-theme="dark"] .index-map__links a:nth-child(4n + 3),
 html[data-skin="the-descent"][data-theme="dark"] .all-tags__grid a:nth-child(4n + 3) {
   color: #fff1df;
   background: #873823;
 }
 
-html[data-skin="the-descent"][data-theme="dark"] .index-map__links a:hover,
-html[data-skin="the-descent"][data-theme="dark"] .index-map__links a:focus-visible,
 html[data-skin="the-descent"][data-theme="dark"] .all-tags__grid a:hover,
 html[data-skin="the-descent"][data-theme="dark"] .all-tags__grid a:focus-visible,
 html[data-skin="the-descent"][data-theme="dark"] .record-end nav a:hover,
@@ -1596,7 +1475,6 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
   }
 
   html[data-skin="the-descent"] .site-nav a,
-  html[data-skin="the-descent"] .theme-toggle,
   html[data-skin="the-descent"] .skin-menu summary,
   html[data-skin="the-descent"] .skin-randomizer,
   html[data-skin="the-descent"] .skin-menu select,
@@ -1622,14 +1500,6 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
     height: 18rem;
   }
 
-  html[data-skin="the-descent"] .masthead__ledger {
-    padding: 0 1.2rem 1.4rem 2.1rem;
-  }
-
-  html[data-skin="the-descent"] .masthead__ledger > div::before {
-    transform: translateX(-1.2rem);
-  }
-
   html[data-skin="the-descent"] .index-heading::after,
   html[data-skin="the-descent"] .page-heading::after,
   html[data-skin="the-descent"] .record-head::after {
@@ -1650,7 +1520,6 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
   html[data-skin="the-descent"] .page-heading,
   html[data-skin="the-descent"] .record-head,
   html[data-skin="the-descent"] .home-shell > .record-index,
-  html[data-skin="the-descent"] .index-map,
   html[data-skin="the-descent"] .archive-tools,
   html[data-skin="the-descent"] .archive-groups,
   html[data-skin="the-descent"] .page-prose,
@@ -1664,10 +1533,6 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
   html[data-skin="the-descent"] .page-heading h1,
   html[data-skin="the-descent"] .record-head h1 {
     font-size: clamp(2.7rem, 15vw, 4.5rem);
-  }
-
-  html[data-skin="the-descent"] .record-columns {
-    display: none;
   }
 
   html[data-skin="the-descent"] .record-list {
@@ -1687,17 +1552,8 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
     grid-column: 1;
   }
 
-  html[data-skin="the-descent"] .record-row__arrow {
-    grid-column: 2;
-    grid-row: 1 / 3;
-  }
-
   html[data-skin="the-descent"] .record-row::before {
     left: -1.42rem;
-  }
-
-  html[data-skin="the-descent"] .index-map__links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   html[data-skin="the-descent"] .record-facts > div {
@@ -1730,8 +1586,7 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__status {
 
 @media (max-width: 27rem) {
   html[data-skin="the-descent"] .site-nav,
-  html[data-skin="the-descent"] .site-footer__links,
-  html[data-skin="the-descent"] .index-map__links {
+  html[data-skin="the-descent"] .site-footer__links {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1861,15 +1716,6 @@ html[data-skin="the-descent"] .site-nav > a[data-route][aria-current="page"]::be
   color: #6d2a1b;
 }
 
-html[data-skin="the-descent"] .theme-toggle {
-  grid-area: theme;
-  width: 100%;
-  justify-self: stretch;
-  color: #201209;
-  background: var(--descent-amber);
-  border-color: #f0ca91;
-}
-
 html[data-skin="the-descent"] .skin-menu {
   position: relative;
   z-index: 3;
@@ -1943,39 +1789,9 @@ html[data-skin="the-descent"] .home-shell > .record-index::before {
   background: linear-gradient(var(--descent-amber), var(--descent-ember) 17%, var(--descent-ash) 86%, transparent);
 }
 
-html[data-skin="the-descent"] .home-shell > .index-map {
-  position: sticky;
-  top: 1rem;
-  grid-area: map;
-  align-self: start;
-  margin: clamp(3rem, 12vw, 11rem) 0 0;
-  border-top-color: var(--descent-amber);
-}
-
-html[data-skin="the-descent"] .home-shell > .index-map .section-heading {
-  display: block;
-}
-
-html[data-skin="the-descent"] .home-shell > .index-map .section-heading h2 {
-  max-width: 7ch;
-}
-
-html[data-skin="the-descent"] .home-shell > .index-map .index-map__links {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="the-descent"] .home-shell > .index-map .index-map__links a {
-  min-height: 4.4rem;
-}
-
 html[data-skin="the-descent"] .masthead__copy {
   display: grid;
   align-content: center;
-}
-
-html[data-skin="the-descent"] .masthead__ledger {
-  align-content: end;
-  padding-bottom: 2rem;
 }
 
 html[data-skin="the-descent"] .archive-shell {
@@ -2173,18 +1989,9 @@ html[data-skin="the-descent"] .site-footer__links a {
       "empty";
   }
 
-  html[data-skin="the-descent"] .home-shell > .index-map,
   html[data-skin="the-descent"] .archive-shell > .archive-tools {
     position: static;
     margin-top: 0;
-  }
-
-  html[data-skin="the-descent"] .home-shell > .index-map .section-heading h2 {
-    max-width: none;
-  }
-
-  html[data-skin="the-descent"] .home-shell > .index-map .index-map__links {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   html[data-skin="the-descent"] .record-page > .record-grid {
@@ -2248,10 +2055,6 @@ html[data-skin="the-descent"] .site-footer__links a {
     min-height: 0;
   }
 
-  html[data-skin="the-descent"] .home-shell > .index-map .index-map__links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   html[data-skin="the-descent"] .record-page > .record-head {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2303,7 +2106,6 @@ html[data-skin="the-descent"] .site-footer__links a {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-descent"] .home-shell > .index-map .index-map__links,
   html[data-skin="the-descent"] .archive-tools .quick-filters,
   html[data-skin="the-descent"] .record-head > .record-facts,
   html[data-skin="the-descent"] .site-footer__links {
@@ -2454,21 +2256,7 @@ html[data-skin="the-descent"] ::selection {
   background: var(--d-accent);
 }
 
-html[data-skin="the-descent"] :is(
-  .site-nav > a[data-route], .theme-toggle, .skin-menu summary,
-  .skin-menu__panel label, .skin-menu select, .skin-randomizer, .action,
-  .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span),
-  .archive-search input, .archive-empty, .site-brand__scope, .eyebrow,
-  .record-head__key, .record-facts :is(dt, dd), .record-columns,
-  .record-row__date, .record-row__event, .record-row__primitive,
-  .archive-search :is(label, p), .all-tags summary, .all-tags__grid :is(a, small),
-  .record-toc :is(summary, a), .toc-fallback, .pagination__position,
-  .record-end nav span, .site-footer__note, .site-footer__links a,
-  .prose :is(code, pre, .highlight, .code-frame, .code-frame__bar,
-  .code-frame__label strong, .code-frame__label small, .code-frame__actions button,
-  .code-frame__gutter, .code-frame__status, .code-frame__fallback),
-  .katex, .katex-display
-) {
+html[data-skin="the-descent"] :is(.site-nav > a[data-route], .skin-menu summary, .skin-menu__panel label, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .archive-search input, .archive-empty, .site-brand__scope, .eyebrow, .record-head__key, .record-facts :is(dt, dd), .record-row__date, .record-row__event, .record-row__primitive, .archive-search :is(label, p), .all-tags summary, .all-tags__grid :is(a, small), .record-toc :is(summary, a), .toc-fallback, .pagination__position, .record-end nav span, .site-footer__note, .site-footer__links a, .prose :is(code, pre, .highlight, .code-frame, .code-frame__bar, .code-frame__label strong, .code-frame__label small, .code-frame__actions button, .code-frame__gutter, .code-frame__status, .code-frame__fallback), .katex, .katex-display) {
   font-size: max(1rem, 16px) !important;
 }
 
@@ -2563,7 +2351,6 @@ html[data-skin="the-descent"] .site-nav {
 }
 
 html[data-skin="the-descent"] .site-nav > a[data-route],
-html[data-skin="the-descent"] .theme-toggle,
 html[data-skin="the-descent"] .skin-menu summary,
 html[data-skin="the-descent"] .skin-randomizer,
 html[data-skin="the-descent"] .skin-menu select,
@@ -2610,7 +2397,6 @@ html[data-skin="the-descent"] .site-nav > a[data-route="feed"] { grid-area: feed
 html[data-skin="the-descent"] .site-nav > a[data-route="source"] { grid-area: source; }
 
 html[data-skin="the-descent"] .site-nav > a[data-route]:is(:hover, :focus-visible),
-html[data-skin="the-descent"] .theme-toggle:is(:hover, :focus-visible),
 html[data-skin="the-descent"] .skin-menu summary:is(:hover, :focus-visible),
 html[data-skin="the-descent"] .skin-randomizer:is(:hover, :focus-visible),
 html[data-skin="the-descent"] .action:is(:hover, :focus-visible),
@@ -2626,15 +2412,7 @@ html[data-skin="the-descent"] .site-footer__links a:is(:hover, :focus-visible) {
   transform: none;
 }
 
-html[data-skin="the-descent"] :is(
-  .site-nav > a[data-route][aria-current="page"],
-  .theme-toggle[aria-pressed="true"],
-  .quick-filters a[aria-current="true"],
-  .action--primary,
-  .masthead__actions .action--primary,
-  .record-actions a:last-child,
-  .code-frame__actions button[aria-pressed="true"]
-) {
+html[data-skin="the-descent"] :is(.site-nav > a[data-route][aria-current="page"], .quick-filters a[aria-current="true"], .action--primary, .masthead__actions .action--primary, .record-actions a:last-child, .code-frame__actions button[aria-pressed="true"]) {
   --d-focus-ring: var(--d-focus-accent);
   color: var(--d-accent-ink);
   background: var(--d-accent);
@@ -2643,12 +2421,6 @@ html[data-skin="the-descent"] :is(
 
 html[data-skin="the-descent"] .site-nav > a[data-route][aria-current="page"]::before {
   color: var(--d-accent-ink);
-}
-
-html[data-skin="the-descent"] .theme-toggle {
-  grid-area: theme;
-  width: 100%;
-  cursor: pointer;
 }
 
 html[data-skin="the-descent"] .skin-menu {
@@ -2738,32 +2510,19 @@ html[data-skin="the-descent"] .skin-menu__panel .skin-randomizer {
   border-color: var(--d-accent);
 }
 
-html[data-skin="the-descent"][data-theme="dark"] :is(
-  .site-nav > a[data-route], .theme-toggle, .skin-menu summary, .action,
-  .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span),
-  .site-footer__links a
-) {
+html[data-skin="the-descent"][data-theme="dark"] :is(.site-nav > a[data-route], .skin-menu summary, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a) {
   color: var(--d-inverse-text);
   background: var(--d-void);
   border-color: var(--d-rule);
 }
 
-html[data-skin="the-descent"][data-theme="dark"] :is(
-  .site-nav > a[data-route][aria-current="page"], .theme-toggle[aria-pressed="true"],
-  .quick-filters a[aria-current="true"], .action--primary,
-  .masthead__actions .action--primary, .record-actions a:last-child,
-  .skin-menu[open] summary, .skin-randomizer, .skin-menu__panel .skin-randomizer
-) {
+html[data-skin="the-descent"][data-theme="dark"] :is(.site-nav > a[data-route][aria-current="page"], .quick-filters a[aria-current="true"], .action--primary, .masthead__actions .action--primary, .record-actions a:last-child, .skin-menu[open] summary, .skin-randomizer, .skin-menu__panel .skin-randomizer) {
   color: var(--d-accent-ink);
   background: var(--d-accent);
   border-color: var(--d-accent);
 }
 
-html[data-skin="the-descent"][data-theme="dark"] :is(
-  .site-nav > a[data-route], .theme-toggle, .skin-menu summary, .skin-randomizer,
-  .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a,
-  .site-footer__links a
-):is(:hover, :focus-visible) {
+html[data-skin="the-descent"][data-theme="dark"] :is(.site-nav > a[data-route], .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):is(:hover, :focus-visible) {
   color: var(--d-accent-ink);
   background: var(--d-accent);
   border-color: var(--d-accent);
@@ -2853,7 +2612,7 @@ html[data-skin="the-descent"] :is(.eyebrow, .record-head__key) {
   text-transform: uppercase;
 }
 
-html[data-skin="the-descent"] :is(.home-shell > .record-index, .index-map, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
+html[data-skin="the-descent"] :is(.home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
   position: relative;
   min-width: 0;
   padding: clamp(1.15rem, 2.4vw, 2.25rem);
@@ -2940,64 +2699,6 @@ html[data-skin="the-descent"] .masthead__copy {
   padding: clamp(1.5rem, 4vw, 3.75rem);
 }
 
-html[data-skin="the-descent"] .masthead__ledger {
-  z-index: 1;
-  grid-column: 9 / -1;
-  display: grid;
-  align-content: stretch;
-  gap: 0;
-  padding: clamp(1.25rem, 2.8vw, 2.25rem) 1.25rem;
-}
-
-html[data-skin="the-descent"] .masthead__ledger > div {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-  align-items: baseline;
-  padding: 0.85rem 0 0.85rem 1rem;
-  color: var(--d-inverse-text);
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--d-rule);
-  box-shadow: none;
-}
-
-html[data-skin="the-descent"] .masthead__ledger > div::before {
-  position: absolute;
-  top: 50%;
-  left: -0.35rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  content: "";
-  pointer-events: none;
-  background: var(--d-accent);
-  border: 2px solid var(--d-focus-accent);
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-
-html[data-skin="the-descent"] .masthead__ledger :is(dt, dd) {
-  margin: 0;
-}
-
-html[data-skin="the-descent"] .masthead__ledger dt {
-  color: var(--d-inverse-text);
-  font-family: var(--keys);
-  font-size: max(1rem, 16px);
-  font-weight: 700;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-html[data-skin="the-descent"] .masthead__ledger dd {
-  color: var(--d-focus-accent);
-  font-family: var(--display);
-  font-size: clamp(1.7rem, 3vw, 2.8rem);
-  font-weight: 400;
-  line-height: 1;
-}
-
 html[data-skin="the-descent"] .home-shell > .record-index {
   grid-column: 1 / span 9;
   margin: 0;
@@ -3015,23 +2716,9 @@ html[data-skin="the-descent"] .home-shell > .record-index::before {
   background: linear-gradient(var(--d-focus-accent), var(--d-accent) 18%, var(--d-rule) 80%, transparent);
 }
 
-html[data-skin="the-descent"] .record-columns,
 html[data-skin="the-descent"] .record-row__link {
   grid-template-columns: 5.1rem minmax(12rem, 1fr) minmax(7rem, 10rem) minmax(6.5rem, 9rem) 1.6rem;
   gap: 0.7rem;
-}
-
-html[data-skin="the-descent"] .record-columns {
-  display: grid;
-  margin-top: 1.2rem;
-  padding: 0.65rem 0.75rem;
-  color: var(--d-inverse-text);
-  background: var(--d-void);
-  border-left: 0.25rem solid var(--d-accent);
-  font-family: var(--keys);
-  font-weight: 700;
-  line-height: 1.3;
-  text-transform: uppercase;
 }
 
 html[data-skin="the-descent"] .record-list {
@@ -3107,30 +2794,6 @@ html[data-skin="the-descent"] .record-row__title {
   line-height: 1.25;
 }
 
-html[data-skin="the-descent"] .record-row__arrow {
-  display: grid;
-  width: 1.55rem;
-  height: 1.55rem;
-  place-items: center;
-  color: var(--d-accent-ink);
-  background: var(--d-accent);
-  border: 1px solid var(--d-accent);
-  border-radius: 50%;
-  font-family: var(--mono);
-  font-size: max(1rem, 16px);
-  line-height: 1;
-}
-
-html[data-skin="the-descent"] .index-map {
-  grid-column: 10 / -1;
-  margin: 0;
-  padding: 1.25rem;
-  color: var(--d-text);
-  background: var(--d-paper);
-  border-top: 0.35rem solid var(--d-focus);
-}
-
-html[data-skin="the-descent"] .index-map__links,
 html[data-skin="the-descent"] .all-tags__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -3139,7 +2802,7 @@ html[data-skin="the-descent"] .all-tags__grid {
   border-left: 0;
 }
 
-html[data-skin="the-descent"] :is(.index-map__links a, .all-tags__grid a) {
+html[data-skin="the-descent"] :is(.all-tags__grid a) {
   display: flex;
   min-width: 0;
   min-height: 3.25rem;
@@ -3161,24 +2824,12 @@ html[data-skin="the-descent"] :is(.index-map__links a, .all-tags__grid a) {
   text-transform: uppercase;
 }
 
-html[data-skin="the-descent"] :is(.index-map__links a, .all-tags__grid a):is(:hover, :focus-visible) {
+html[data-skin="the-descent"] :is(.all-tags__grid a):is(:hover, :focus-visible) {
   color: var(--d-accent-ink);
   background: var(--d-accent);
   border-color: var(--d-accent);
   text-decoration: none;
   transform: none;
-}
-
-html[data-skin="the-descent"] .index-map__links strong {
-  color: var(--d-accent);
-  font-family: var(--display);
-  font-size: 1.75rem;
-  font-weight: 400;
-  line-height: 1;
-}
-
-html[data-skin="the-descent"] .index-map__links a:is(:hover, :focus-visible) strong {
-  color: var(--d-accent-ink);
 }
 
 /* Archive: equipment shelf and year rail */
@@ -3923,7 +3574,7 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-descent"] .home-shell > :is(.masthead, .record-index, .index-map),
+  html[data-skin="the-descent"] .home-shell > :is(.masthead, .record-index),
   html[data-skin="the-descent"] .archive-shell > :is(.index-heading--archive, .archive-tools, .archive-groups, .archive-empty),
   html[data-skin="the-descent"] .record-page > :is(.record-head, .record-grid, .record-end),
   html[data-skin="the-descent"] :is(.page-heading, .page-prose) {
@@ -3934,17 +3585,10 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-descent"] .masthead__copy,
-  html[data-skin="the-descent"] .masthead__ledger {
+  html[data-skin="the-descent"] .masthead__copy {
     grid-column: 1;
   }
 
-  html[data-skin="the-descent"] .masthead__ledger {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 1rem;
-  }
-
-  html[data-skin="the-descent"] .home-shell > .index-map,
   html[data-skin="the-descent"] .archive-shell > .archive-tools {
     position: static;
   }
@@ -3991,7 +3635,7 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
       "theme picker";
   }
 
-  html[data-skin="the-descent"] :is(.masthead__copy, .masthead__ledger, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .index-map, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
+  html[data-skin="the-descent"] :is(.masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
     padding: 1.1rem;
   }
 
@@ -3999,26 +3643,11 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     font-size: clamp(2.35rem, 13vw, 4rem);
   }
 
-  html[data-skin="the-descent"] .record-columns,
   html[data-skin="the-descent"] .record-row__link {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.35rem 0.65rem;
   }
 
-  html[data-skin="the-descent"] .record-columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="the-descent"] .record-row__link > :not(.record-row__arrow) {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-descent"] .record-row__arrow {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-  }
-
-  html[data-skin="the-descent"] .index-map__links,
   html[data-skin="the-descent"] .quick-filters,
   html[data-skin="the-descent"] .record-facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4081,17 +3710,12 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
       "picker";
   }
 
-  html[data-skin="the-descent"] .masthead__ledger,
-  html[data-skin="the-descent"] :is(.index-map__links, .quick-filters, .record-facts, .site-footer__links) {
+  html[data-skin="the-descent"] :is(.quick-filters, .record-facts, .site-footer__links) {
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="the-descent"] :is(.masthead__actions, .record-actions, .tag-line) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-descent"] .record-columns {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -4109,12 +3733,7 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     animation: none !important;
   }
 
-  html[data-skin="the-descent"] :is(
-    .site-nav > a[data-route], .theme-toggle, .skin-menu summary, .skin-randomizer,
-    .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a,
-    .record-row__link, .index-map__links a, .all-tags__grid a, .record-end nav a,
-    .site-footer__links a, .code-frame__actions button
-  ):is(:hover, :focus-visible) {
+  html[data-skin="the-descent"] :is(.site-nav > a[data-route], .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .record-row__link, .all-tags__grid a, .record-end nav a, .site-footer__links a, .code-frame__actions button):is(:hover, :focus-visible) {
     transform: none !important;
   }
 }
@@ -4133,7 +3752,7 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     border-color: CanvasText;
   }
 
-  html[data-skin="the-descent"] :is(.home-shell > .record-index, .index-map, .archive-groups, .page-prose, .article__content, .record-end, .skin-menu__panel, .prose .info, .prose .katex-display) {
+  html[data-skin="the-descent"] :is(.home-shell > .record-index, .archive-groups, .page-prose, .article__content, .record-end, .skin-menu__panel, .prose .info, .prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4144,14 +3763,14 @@ html[data-skin="the-descent"][data-theme="dark"] .code-frame__actions button[ari
     color: LinkText;
   }
 
-  html[data-skin="the-descent"] :is(.site-nav > a[data-route], .theme-toggle, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a, .code-frame__actions button) {
+  html[data-skin="the-descent"] :is(.site-nav > a[data-route], .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a, .code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
     box-shadow: none;
   }
 
-  html[data-skin="the-descent"] :is(.site-nav > a[data-route][aria-current="page"], .theme-toggle[aria-pressed="true"], .quick-filters a[aria-current="true"], .action--primary, .record-actions a:last-child, .skin-menu[open] summary, .skin-randomizer, .code-frame__actions button[aria-pressed="true"]) {
+  html[data-skin="the-descent"] :is(.site-nav > a[data-route][aria-current="page"], .quick-filters a[aria-current="true"], .action--primary, .record-actions a:last-child, .skin-menu[open] summary, .skin-randomizer, .code-frame__actions button[aria-pressed="true"]) {
     color: HighlightText;
     background: Highlight;
     border-color: Highlight;
@@ -4174,14 +3793,6 @@ html[data-skin="the-descent"][data-theme="dark"] {
   --d-focus-accent: var(--d-focus);
 }
 
-html[data-skin="the-descent"] .masthead__ledger dt {
-  font-size: max(1rem, 16px) !important;
-}
-
-html[data-skin="the-descent"] .masthead__ledger dd {
-  font-size: clamp(1.7rem, 3vw, 2.8rem) !important;
-}
-
 html[data-skin="the-descent"] :is(h1, h2, h3, h4, h5, h6) {
   overflow-wrap: break-word;
   word-break: normal;
@@ -4196,29 +3807,8 @@ html[data-skin="the-descent"] body :focus-visible {
 }
 
 /* Remove decorative rails; labels, rules, and state fills carry orientation. */
-html[data-skin="the-descent"] :is(
-  .site-brand__text,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .masthead,
-  .index-heading,
-  .page-heading,
-  .record-head,
-  .home-shell > .record-index,
-  .record-list,
-  .archive-groups .archive-year,
-  .record-page > .record-grid,
-  .record-grid > .record-index,
-  .error-shell
-)::before,
-html[data-skin="the-descent"] :is(
-  .masthead,
-  .index-heading,
-  .page-heading,
-  .record-head
-)::after,
+html[data-skin="the-descent"] :is(.site-brand__text, .home-shell, .archive-shell, .record-page, .page-shell, .masthead, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .record-list, .archive-groups .archive-year, .record-page > .record-grid, .record-grid > .record-index, .error-shell)::before,
+html[data-skin="the-descent"] :is(.masthead, .index-heading, .page-heading, .record-head)::after,
 html[data-skin="the-descent"] .record-row::before {
   content: none;
   display: none;
@@ -4232,10 +3822,6 @@ html[data-skin="the-descent"] .site-brand {
 }
 
 html[data-skin="the-descent"] .home-shell > .record-index {
-  border-left: 0;
-}
-
-html[data-skin="the-descent"] .record-columns {
   border-left: 0;
 }
 
@@ -4302,20 +3888,7 @@ html[data-skin="the-descent"] .site-footer__note {
   border-left: 0;
 }
 
-html[data-skin="the-descent"] :is(
-  .site-nav > a[data-route],
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-randomizer,
-  .skin-menu select,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination :is(a, span),
-  .site-footer__links a,
-  .code-frame__actions button
-) {
+html[data-skin="the-descent"] :is(.site-nav > a[data-route], .skin-menu summary, .skin-randomizer, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a, .code-frame__actions button) {
   align-self: start;
 }
 
@@ -4329,20 +3902,8 @@ html[data-skin="the-descent"] :is(.quick-filters, .site-footer__links) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-descent"] .archive-shell > :is(
-    .index-heading--archive,
-    .archive-tools,
-    .archive-groups,
-    .archive-empty
-  ),
-  html[data-skin="the-descent"] .record-head > :is(
-    .record-head__key,
-    h1,
-    .record-head__abstract,
-    .record-facts,
-    .tag-line,
-    .record-actions
-  ) {
+  html[data-skin="the-descent"] .archive-shell > :is(.index-heading--archive, .archive-tools, .archive-groups, .archive-empty),
+  html[data-skin="the-descent"] .record-head > :is(.record-head__key, h1, .record-head__abstract, .record-facts, .tag-line, .record-actions) {
     grid-column: 1;
     grid-row: auto;
   }
@@ -4373,14 +3934,7 @@ html[data-skin="the-descent"] :is(.quick-filters, .site-footer__links) {
 }
 
 @media (forced-colors: active) {
-  html[data-skin="the-descent"] :is(
-    .archive-shell > .archive-tools,
-    .record-facts,
-    .record-grid > .record-index,
-    .page-prose,
-    .prose blockquote,
-    .site-footer__note
-  ) {
+  html[data-skin="the-descent"] :is(.archive-shell > .archive-tools, .record-facts, .record-grid > .record-index, .page-prose, .prose blockquote, .site-footer__note) {
     border-color: CanvasText;
   }
 
@@ -4409,13 +3963,6 @@ html[data-skin="the-descent"] .home-shell > .record-index {
   min-inline-size: 0;
 }
 
-html[data-skin="the-descent"] .home-shell > .index-map {
-  grid-area: topics;
-  min-inline-size: 0;
-  max-inline-size: 100%;
-  align-self: start;
-}
-
 html[data-skin="the-descent"] .home-shell > .masthead .masthead__copy > :is(.eyebrow, h1) {
   max-inline-size: 100%;
   overflow-wrap: normal;
@@ -4438,7 +3985,7 @@ html[data-skin="the-descent"] .site-nav {
   grid-auto-rows: max-content;
 }
 
-html[data-skin="the-descent"] .site-nav > :is(a, .theme-toggle, .skin-menu),
+html[data-skin="the-descent"] .site-nav > :is(a, .skin-menu),
 html[data-skin="the-descent"] .site-nav .skin-menu[open] {
   min-inline-size: 0;
   align-self: start;
@@ -4519,10 +4066,6 @@ html[data-skin="the-descent"] .record-head > .record-facts :is(dt, dd) {
       "topics";
   }
 
-  html[data-skin="the-descent"] .home-shell > .index-map {
-    position: static;
-  }
-
   html[data-skin="the-descent"] .record-page > .record-head {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
@@ -4532,5 +4075,111 @@ html[data-skin="the-descent"] .record-head > .record-facts :is(dt, dd) {
       "facts"
       "tags"
       "actions";
+  }
+}
+
+/* Structure correction: the dead topic-map panel and masthead stat column are
+   gone, so the home grid collapses to its two live rows and the masthead copy
+   spans the full slab. Record rows become a stacked survey log: station date
+   in a left tab, title on top, event and topic sharing one metadata line. */
+html[data-skin="the-descent"] .home-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "masthead"
+    "records";
+  gap: clamp(1.2rem, 3vw, 3rem);
+}
+
+html[data-skin="the-descent"] .masthead__copy {
+  grid-column: 1 / -1;
+  padding: clamp(1.5rem, 4vw, 3.75rem) clamp(2.4rem, 5.5vw, 4.75rem);
+  color: var(--d-inverse-text);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Depth gauge: a right-edge tick strip keeps the descent motif on the slab. */
+html[data-skin="the-descent"] .masthead::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 1.2rem;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 0.85rem;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, var(--d-rule) 0 2px, transparent 2px 1.45rem);
+  border-right: 3px solid var(--d-focus-accent);
+}
+
+html[data-skin="the-descent"] .record-row__link {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "date title title"
+    "date event topic";
+  align-items: baseline;
+  column-gap: 1.1rem;
+  row-gap: 0.12rem;
+  padding: 0.95rem 0.55rem 0.95rem 0.3rem;
+  transition: color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+}
+
+html[data-skin="the-descent"] .record-row__link:is(:hover, :focus-visible) {
+  box-shadow: inset 0.22rem 0 0 var(--d-accent);
+}
+
+html[data-skin="the-descent"] .record-row__date {
+  grid-area: date;
+  color: var(--d-accent);
+  font-family: var(--mono);
+  letter-spacing: 0.01em;
+}
+
+html[data-skin="the-descent"] .record-row__title {
+  grid-area: title;
+}
+
+html[data-skin="the-descent"] .record-row__event {
+  grid-area: event;
+}
+
+html[data-skin="the-descent"] .record-row__primitive {
+  grid-area: topic;
+  justify-self: end;
+  min-width: 4.25rem;
+  text-align: right;
+}
+
+html[data-skin="the-descent"] .record-row__primitive::before {
+  content: "// ";
+  color: var(--d-accent);
+}
+
+@media (max-width: 46rem) {
+  html[data-skin="the-descent"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "date"
+      "title"
+      "event"
+      "topic";
+    row-gap: 0.18rem;
+    padding: 0.85rem 0.35rem;
+  }
+
+  html[data-skin="the-descent"] .record-row__date {
+    justify-self: start;
+  }
+
+  html[data-skin="the-descent"] .record-row__primitive {
+    justify-self: start;
+    min-width: 4.25rem;
+    text-align: left;
+  }
+
+  html[data-skin="the-descent"] .masthead::after {
+    display: none;
   }
 }
