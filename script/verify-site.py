@@ -316,7 +316,12 @@ for rel in post_routes:
     if not (ROOT / rel).is_file(): fail(f"post route missing: {rel}")
 
 pages = sorted(ROOT.rglob("*.html"))
-shell_pages = [page for page in pages if "new-tetris" not in page.relative_to(ROOT).parts]
+VERIFICATION_HTML = {"google98b86655786074b6.html", "yandex_0a37c4f8df609655.html"}
+shell_pages = [
+    page for page in pages
+    if "new-tetris" not in page.relative_to(ROOT).parts
+    and page.relative_to(ROOT).as_posix() not in VERIFICATION_HTML
+]
 forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
 challenge_pages: set[str] = set()
 article_pages: set[str] = set()
@@ -329,6 +334,8 @@ for page in pages:
     rel = page.relative_to(ROOT).as_posix()
     text = page.read_text(encoding="utf-8")
     audit = Audit(); audit.feed(text); audit.close(); page_audits[rel] = audit
+    if rel in VERIFICATION_HTML:
+        continue
     if not text.lower().lstrip().startswith("<!doctype html>"): fail(f"doctype missing: {rel}")
     if audit.external_resources: fail(f"third-party resource in {rel}: {audit.external_resources}")
     if audit.analytics and (not GOATCOUNTER or audit.refresh): fail(f"third-party resource in {rel}: {audit.analytics}")
@@ -375,7 +382,7 @@ for page in pages:
         if attributes.get("data-source-sha256") != digest: fail(f"code hash drift: {rel}")
         if attributes.get("data-lines") != str(source_lines(source)): fail(f"code line-count drift: {rel}")
 
-if len(pages) != 137 or len(shell_pages) != 134: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
+if len(pages) != 139 or len(shell_pages) != 134: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
 if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 79, 327, 106, 61):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
@@ -383,7 +390,7 @@ if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_
 if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
 if len(math_pages) != 4: fail(f"math page count drift: {len(math_pages)}")
 if GOATCOUNTER:
-    wired = [rel for rel, audit in page_audits.items() if not rel.startswith("new-tetris/") and not audit.refresh]
+    wired = [rel for rel, audit in page_audits.items() if rel not in VERIFICATION_HTML and not rel.startswith("new-tetris/") and not audit.refresh]
     missing_script = [rel for rel in wired if page_audits[rel].analytics.count(ANALYTICS_SCRIPT) != 1]
     missing_pixel = [rel for rel in wired if len([r for r in page_audits[rel].analytics if r != ANALYTICS_SCRIPT and urlsplit(r).netloc == f"{GOATCOUNTER}.goatcounter.com"]) != 1]
     if missing_script: fail(f"goatcounter script missing in {missing_script[:5]}")
