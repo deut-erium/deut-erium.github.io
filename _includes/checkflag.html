@@ -1,26 +1,10 @@
-<div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.all.min.js"></script>
-    <script type="text/Javascript">
-	function checkHash{{index}}()
-	   {
-	    var plainText = document.getElementById('plainText{{index}}').value.trim();
-	    var md = forge.md.sha256.create();  
-	    md.start();  
-	    md.update(plainText, "utf8");  
-	    var hashText = md.digest().toHex(); 
-	    if (hashText=='{{page.sha256hash[index]}}')
-	    {
-		document.getElementById('spanResult{{index}}').innerHTML = "Absolutely correct! 🥳"; 
-	    }
-	    else
-	    {
-		document.getElementById('spanResult{{index}}').innerHTML = "Incorrect, try harder 🥺";
-	    }
-	}        
-	</script>
-	<strong>Enter the flag: </strong><input id='plainText{{index}}' type='text' style="color:black;" /> 
-	<a class="button button--secondary button--rounded" onclick="checkHash{{index}}()">Check Flag</a>
-	<br>
-	<div id="spanResult{{index}}">&nbsp;&nbsp;</div>
-</div>
+{%- assign _checker_id = page.key | append: '-' | append: index -%}
+<form class="flag-check" data-flag-check data-sha256="{{ page.sha256hash[index] }}">
+  <label for="flag-{{ _checker_id }}">Enter the flag</label>
+  <div class="flag-check__controls">
+    <input id="flag-{{ _checker_id }}" data-flag-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <button type="submit" disabled>Check flag</button>
+  </div>
+  <output for="flag-{{ _checker_id }}" aria-live="polite">The check runs locally in your browser.</output>
+  <noscript>The local SHA-256 checker requires JavaScript. The challenge itself does not.</noscript>
+</form>

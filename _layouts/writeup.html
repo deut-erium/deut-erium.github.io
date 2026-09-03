@@ -1,0 +1,88 @@
+---
+layout: base
+type: writeup
+---
+{%- assign _parts = page.path | split: '/' -%}
+{%- assign _event = _parts[3] | default: 'field-note' -%}
+{%- assign _category = _parts[4] | default: 'article' -%}
+{%- capture _primitive -%}{%- include primitive.html tags=page.tags -%}{%- endcapture -%}
+{%- assign _primitive = _primitive | strip -%}
+{%- assign _primitive_slug = _primitive | downcase -%}
+{%- assign _source_path = page.path | replace: ' ', '%20' -%}
+
+<main id="content" class="record-page primitive--{{ _primitive_slug }}" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key">
+      <span>{{ page.date | date: '%Y.%m.%d' }}</span>
+      <span>{{ _event | replace: '_', ' ' }}</span>
+    </div>
+    <h1 itemprop="headline">{{ page.title }}</h1>
+    {%- if page.description -%}
+      <p class="record-head__abstract" itemprop="description">{{ page.description }}</p>
+    {%- endif -%}
+    <dl class="record-facts">
+      <div><dt>Event</dt><dd>{{ _event | replace: '_', ' ' }}</dd></div>
+      <div><dt>Category</dt><dd>{{ _category | replace: '_', ' ' }}</dd></div>
+      <div><dt>Topic</dt><dd>{{ _primitive }}</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+    </dl>
+    {%- if page.tags and page.tags.size > 0 -%}
+    <nav class="tag-line" aria-label="Article tags">
+      {%- for _tag in page.tags -%}
+        <a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>
+      {%- endfor -%}
+    </nav>
+    {%- endif -%}
+    <div class="record-actions">
+      <a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a>
+      <a href="https://github.com/{{ site.repository }}/tree/{{ site.repository_tree }}/{{ page.path | split: '/' | pop | join: '/' }}">Attached files</a>
+      <a href="#article-body">Read article</a>
+    </div>
+    <meta itemprop="author" content="{{ site.author.name }}">
+  </header>
+
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">
+      {{ content }}
+    </article>
+
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open>
+        <summary>Contents</summary>
+        <nav class="js-toc-root" aria-label="Table of contents">
+          <p class="toc-fallback">Section links require the local article script.</p>
+        </nav>
+      </details>
+
+      <section class="related-records">
+        <h2>More from this event</h2>
+        <ul>
+          {%- assign _related_count = 0 -%}
+          {%- for _post in site.posts -%}
+            {%- assign _post_parts = _post.path | split: '/' -%}
+            {%- if _post.section == 'writeups' and _post_parts[3] == _event and _post.url != page.url -%}
+              <li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>
+              {%- assign _related_count = _related_count | plus: 1 -%}
+              {%- if _related_count >= 4 -%}{%- break -%}{%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if _related_count == 0 -%}
+            {%- for _post in site.posts limit: 4 -%}
+              {%- if _post.url != page.url -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="record-end">
+    <p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p>
+    <nav aria-label="Adjacent articles">
+      {%- if page.previous -%}<a rel="prev" href="{{ page.previous.url | relative_url }}"><span>Previous</span>{{ page.previous.title }}</a>{%- endif -%}
+      {%- if page.next -%}<a rel="next" href="{{ page.next.url | relative_url }}"><span>Next</span>{{ page.next.title }}</a>{%- endif -%}
+    </nav>
+  </footer>
+</main>
+
+<script defer src="{{ '/assets/js/article.js' | relative_url }}"></script>

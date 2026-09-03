@@ -1,0 +1,12 @@
+{%- comment -%}
+  Optional privacy-friendly analytics via GoatCounter (https://www.goatcounter.com).
+  Enable by setting `goatcounter_site` in _config.yml to your site code, e.g. "example"
+  for https://example.goatcounter.com. Empty keeps the site free of third-party requests.
+  script/verify-site.py and the browser matrix enforce whichever state is configured.
+  Note: Liquid treats an empty string as truthy, so compare the captured value against "".
+{%- endcomment -%}
+{%- capture _gc_site -%}{{ site.goatcounter_site }}{%- endcapture -%}
+{%- if _gc_site != "" -%}{%- unless page.redirect_to -%}
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://{{ _gc_site }}.goatcounter.com/count" async></script>
+<noscript><img src="https://{{ _gc_site }}.goatcounter.com/count?p={{ page.url | url_encode }}" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript>
+{%- endunless -%}{%- endif -%}

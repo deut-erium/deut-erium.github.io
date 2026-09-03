@@ -1,0 +1,575 @@
+html[data-layout="pop-schematic"] {
+  color-scheme: light;
+  background: #123d73;
+}
+
+html[data-layout="pop-schematic"] body {
+  width: min(100% - 20px, 960px);
+  color: #111;
+  background-color: #1759a6;
+  background-image: radial-gradient(rgb(255 255 255 / 18%) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  --screen: #123d73;
+  --panel: #fff7df;
+  --line: #111;
+  --bright-line: #111;
+  --text: #111;
+  --dim: #37424c;
+  --accent: #bd1e2b;
+  --accent-2: #1759a6;
+  --gold: #936000;
+  --silver: #4d5965;
+}
+
+html[data-layout="pop-schematic"] body button {
+  border: 3px solid #111;
+  color: #111;
+  background: #ffe447;
+  box-shadow: 4px 4px #111;
+}
+
+html[data-layout="pop-schematic"] body button:hover {
+  color: #fff;
+  background: #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px #111;
+}
+
+html[data-layout="pop-schematic"] body button:disabled {
+  color: #5d6267;
+  border-color: #5d6267;
+  background: #d5d5cd;
+  box-shadow: 3px 3px #5d6267;
+}
+
+html[data-layout="pop-schematic"] body button:focus-visible,
+html[data-layout="pop-schematic"] body input:focus-visible,
+html[data-layout="pop-schematic"] body summary:focus-visible,
+html[data-layout="pop-schematic"] body #board:focus-visible {
+  outline: 4px solid #ffe447;
+  outline-offset: 3px;
+}
+
+html[data-layout="pop-schematic"] body h1,
+html[data-layout="pop-schematic"] body h2 {
+  color: #111;
+  letter-spacing: 0.025em;
+}
+
+html[data-layout="pop-schematic"] body .topbar {
+  min-height: 92px;
+  margin-top: 10px;
+  padding: 12px 18px;
+  border: 5px solid #111;
+  color: #111;
+  background: #ffe447;
+  box-shadow: 8px 8px #bd1e2b;
+  transform: rotate(-0.35deg);
+}
+
+html[data-layout="pop-schematic"] body .topbar-actions {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+html[data-layout="pop-schematic"] body .topbar p {
+  max-width: 440px;
+  margin: 0;
+  color: #111;
+  font-weight: 700;
+}
+
+html[data-layout="pop-schematic"] body .topbar .gold-text {
+  color: #7b4f00;
+}
+
+html[data-layout="pop-schematic"] body .topbar .silver-text {
+  color: #46515d;
+}
+
+html[data-layout="pop-schematic"] body .catalog-button {
+  padding: 6px 10px;
+  border: 3px solid #111;
+  color: #fff;
+  background: #1759a6;
+  box-shadow: 3px 3px #111;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-layout="pop-schematic"] body .catalog-button:hover {
+  background: #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body .wordmark {
+  position: relative;
+  min-width: 250px;
+  color: #111;
+  transform: skew(-4deg) rotate(-2deg);
+}
+
+html[data-layout="pop-schematic"] body .wordmark strong {
+  display: flex;
+  align-items: center;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+}
+
+html[data-layout="pop-schematic"] body .title-new {
+  z-index: 1;
+  padding: 7px 9px 5px;
+  border: 4px solid #111;
+  color: #fff;
+  background: #bd1e2b;
+  box-shadow: 4px 4px #111;
+  font-size: 1.15rem;
+  letter-spacing: 0;
+  transform: rotate(-6deg);
+}
+
+html[data-layout="pop-schematic"] body .title-tetris {
+  margin-left: -4px;
+  color: #1759a6;
+  font-size: 3rem;
+  letter-spacing: -0.08em;
+  text-shadow: 3px 3px #fff, 6px 6px #111;
+  -webkit-text-stroke: 2px #111;
+}
+
+html[data-layout="pop-schematic"] body .machine {
+  padding-top: 24px;
+}
+
+html[data-layout="pop-schematic"] body .run-console {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 14px 2px 16px;
+  border-top: 4px solid #111;
+  border-bottom: 4px solid #111;
+  background: #fff7df;
+  box-shadow: 0 7px #111;
+}
+
+html[data-layout="pop-schematic"] body #challenge-date {
+  border: 3px solid #111;
+  color: #111;
+  background: #fff;
+  box-shadow: 3px 3px #111;
+}
+
+html[data-layout="pop-schematic"] body .daily-button {
+  color: #fff;
+  background: #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body .run-explain,
+html[data-layout="pop-schematic"] body .run-start label {
+  color: #37424c;
+}
+
+html[data-layout="pop-schematic"] body .run-explain strong,
+html[data-layout="pop-schematic"] body .run-explain summary {
+  color: #111;
+}
+
+html[data-layout="pop-schematic"] body .run-explain summary,
+html[data-layout="pop-schematic"] body .scoring-page-link {
+  color: #111;
+  text-decoration: underline 3px #bd1e2b;
+  text-underline-offset: 2px;
+}
+
+html[data-layout="pop-schematic"] body .run-explain .scoring-guide {
+  border: 4px solid #111;
+  color: #111;
+  background: #fff7df;
+  box-shadow: 6px 6px #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body .scoring-guide dl div {
+  border-color: #111;
+}
+
+html[data-layout="pop-schematic"] body .run-readout div {
+  border: 3px solid #111;
+  background: #fff;
+  box-shadow: 3px 3px #111;
+}
+
+html[data-layout="pop-schematic"] body .run-readout dt {
+  color: #37424c;
+}
+
+html[data-layout="pop-schematic"] body .run-readout dd {
+  color: #1759a6;
+}
+
+html[data-layout="pop-schematic"] body .run-message {
+  color: #921925;
+  font-weight: 700;
+}
+
+html[data-layout="pop-schematic"] body .game-stage {
+  grid-template-columns: 310px 210px 150px;
+  gap: 16px;
+  padding: 8px 0 18px;
+}
+
+html[data-layout="pop-schematic"] body .play-area {
+  grid-column: 1;
+  grid-row: 1;
+  width: 310px;
+  overflow: visible;
+  border: 5px solid #111;
+  background: #123d73;
+  box-shadow: 9px 10px #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body #board {
+  width: 300px;
+  height: 660px;
+  background: #123d73;
+}
+
+html[data-layout="pop-schematic"] body .left-rail {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  gap: 13px;
+}
+
+html[data-layout="pop-schematic"] body .right-rail {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  gap: 13px;
+}
+
+html[data-layout="pop-schematic"] body .score-panel,
+html[data-layout="pop-schematic"] body .square-panel,
+html[data-layout="pop-schematic"] body .last-panel,
+html[data-layout="pop-schematic"] body .preview-panel,
+html[data-layout="pop-schematic"] body .key-panel {
+  position: relative;
+  padding: 11px;
+  border: 4px solid #111;
+  color: #111;
+  background: #fff7df;
+  box-shadow: 6px 6px #111;
+}
+
+html[data-layout="pop-schematic"] body .score-panel {
+  color: #111;
+  background: #ffe447;
+  box-shadow: 7px 7px #bd1e2b;
+  transform: rotate(0.6deg);
+}
+
+html[data-layout="pop-schematic"] body .panel-kicker {
+  color: #921925;
+}
+
+html[data-layout="pop-schematic"] body .score-value {
+  color: #111;
+  font-size: 2.35rem;
+  text-shadow: 3px 3px #fff;
+  -webkit-text-stroke: 1px #111;
+}
+
+html[data-layout="pop-schematic"] body .base-stats div,
+html[data-layout="pop-schematic"] body .key-panel dl div {
+  border-top: 2px dotted #111;
+}
+
+html[data-layout="pop-schematic"] body .base-stats dt,
+html[data-layout="pop-schematic"] body .key-panel dt {
+  color: #37424c;
+}
+
+html[data-layout="pop-schematic"] body .base-stats dd,
+html[data-layout="pop-schematic"] body .key-panel dd {
+  color: #111;
+}
+
+html[data-layout="pop-schematic"] body .square-panel {
+  background-color: #fff;
+  background-image: radial-gradient(rgb(23 89 166 / 20%) 1.3px, transparent 1.3px);
+  background-size: 7px 7px;
+}
+
+html[data-layout="pop-schematic"] body .square-matrix th,
+html[data-layout="pop-schematic"] body .square-matrix td {
+  border: 2px solid #111;
+  color: #111;
+  background: #fff7df;
+}
+
+html[data-layout="pop-schematic"] body .square-matrix thead th {
+  color: #111;
+  background: #ffe447;
+}
+
+html[data-layout="pop-schematic"] body .square-panel .gold-text {
+  color: #805300;
+}
+
+html[data-layout="pop-schematic"] body .square-panel .silver-text {
+  color: #46515d;
+}
+
+html[data-layout="pop-schematic"] body .last-panel {
+  border-color: #111;
+  background: #fff;
+  transform: rotate(-0.5deg);
+}
+
+html[data-layout="pop-schematic"] body .last-panel #last-square,
+html[data-layout="pop-schematic"] body #last-square-meta {
+  color: #111;
+}
+
+html[data-layout="pop-schematic"] body .award {
+  display: inline-block;
+  padding: 3px 7px;
+  color: #fff;
+  background: #bd1e2b;
+  transform: rotate(2deg);
+}
+
+html[data-layout="pop-schematic"] body .preview-panel {
+  background: #fff;
+}
+
+html[data-layout="pop-schematic"] body #hold,
+html[data-layout="pop-schematic"] body #next {
+  border: 3px solid #111;
+  background: #fff7df;
+}
+
+html[data-layout="pop-schematic"] body .key-panel {
+  background: #ffe447;
+}
+
+html[data-layout="pop-schematic"] body .key-panel summary {
+  color: #111;
+  text-decoration: underline 3px #bd1e2b;
+  text-underline-offset: 3px;
+}
+
+html[data-layout="pop-schematic"] body .key-bindings button,
+html[data-layout="pop-schematic"] body .reset-key-bindings {
+  border-width: 2px;
+  background: #fff;
+  box-shadow: 2px 2px #111;
+}
+
+html[data-layout="pop-schematic"] body .key-bindings button.listening {
+  color: #fff;
+  background: #bd1e2b;
+}
+
+html[data-layout="pop-schematic"] body .overlay-message {
+  border: 5px solid #111;
+  color: #111;
+  background: #ffe447;
+  box-shadow: 6px 6px #bd1e2b;
+  transform: rotate(-1deg);
+}
+
+html[data-layout="pop-schematic"] body .square-flash {
+  left: 10%;
+  top: 32%;
+  width: 80%;
+  padding: 18px 12px;
+  border: 5px solid #111;
+  border-radius: 50%;
+  color: #fff;
+  background: #bd1e2b;
+  box-shadow: 7px 7px #111;
+  text-shadow: none;
+  transform: rotate(4deg);
+}
+
+html[data-layout="pop-schematic"] body .square-flash::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: -24px;
+  border: 14px solid transparent;
+  border-top-color: #111;
+  transform: rotate(-18deg);
+}
+
+html[data-layout="pop-schematic"] body .square-flash.fire {
+  animation: pop-square-flash 1.8s steps(2, end) forwards;
+}
+
+@keyframes pop-square-flash {
+  0% { opacity: 0; transform: rotate(4deg) scale(0.75); }
+  12%, 70% { opacity: 1; transform: rotate(4deg) scale(1); }
+  100% { opacity: 0; transform: rotate(4deg) scale(1.05); }
+}
+
+html[data-layout="pop-schematic"] body .touch-controls button {
+  background: #fff7df;
+}
+
+html[data-layout="pop-schematic"] body .touch-controls button[data-action="hardDrop"] {
+  color: #fff;
+  background: #bd1e2b;
+}
+
+@media (max-width: 780px) {
+  html[data-layout="pop-schematic"] body {
+    width: min(100% - 8px, 500px);
+  }
+
+  html[data-layout="pop-schematic"] body .topbar {
+    min-height: 72px;
+    margin-inline: 3px;
+    padding: 8px 11px;
+    box-shadow: 5px 5px #bd1e2b;
+  }
+
+  html[data-layout="pop-schematic"] body .wordmark strong {
+    font-size: 2rem;
+  }
+
+  html[data-layout="pop-schematic"] body .run-console {
+    margin-inline: 3px;
+  }
+
+  html[data-layout="pop-schematic"] body .game-stage {
+    grid-template-columns: minmax(0, 300px) 110px;
+    gap: 9px;
+    padding-inline: 4px;
+  }
+
+  html[data-layout="pop-schematic"] body .play-area {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    border-width: 4px;
+    box-shadow: 6px 7px #bd1e2b;
+  }
+
+  html[data-layout="pop-schematic"] body #board {
+    width: 100%;
+    height: auto;
+  }
+
+  html[data-layout="pop-schematic"] body .right-rail {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 8px;
+  }
+
+  html[data-layout="pop-schematic"] body .key-panel {
+    padding-inline: 5px;
+    border-width: 3px;
+    box-shadow: 4px 4px #111;
+  }
+
+  html[data-layout="pop-schematic"] body .key-panel summary {
+    background: #ffe447;
+  }
+
+  html[data-layout="pop-schematic"] body .left-rail {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-layout="pop-schematic"] body .last-panel {
+    grid-column: 1 / -1;
+  }
+
+  html[data-layout="pop-schematic"] body .touch-controls {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 420px) {
+  html[data-layout="pop-schematic"] body .topbar {
+    gap: 8px;
+  }
+
+  html[data-layout="pop-schematic"] body .topbar p {
+    display: none;
+  }
+
+  html[data-layout="pop-schematic"] body .wordmark {
+    min-width: 0;
+  }
+
+  html[data-layout="pop-schematic"] body .title-new {
+    padding: 5px 6px 4px;
+    border-width: 3px;
+    font-size: 0.78rem;
+  }
+
+  html[data-layout="pop-schematic"] body .title-tetris {
+    font-size: 2rem;
+    text-shadow: 2px 2px #fff, 4px 4px #111;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  html[data-layout="pop-schematic"] body .catalog-button {
+    max-width: 104px;
+    padding: 4px 5px;
+    font-size: 0.65rem;
+    text-align: center;
+  }
+
+  html[data-layout="pop-schematic"] body .game-stage {
+    grid-template-columns: minmax(0, 1fr) 88px;
+    gap: 7px;
+  }
+
+  html[data-layout="pop-schematic"] body .left-rail {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-layout="pop-schematic"] body .last-panel {
+    grid-column: auto;
+  }
+
+  html[data-layout="pop-schematic"] body .score-panel,
+  html[data-layout="pop-schematic"] body .square-panel,
+  html[data-layout="pop-schematic"] body .last-panel,
+  html[data-layout="pop-schematic"] body .preview-panel {
+    padding: 7px;
+    border-width: 3px;
+    box-shadow: 4px 4px #111;
+  }
+}
+
+html[data-layout="pop-schematic"] body .layout-decoration {
+  display: block;
+}
+
+html[data-layout="pop-schematic"] body .touch-controls {
+  margin-top: 10px;
+}
+
+html[data-layout="pop-schematic"] body .touch-controls button {
+  min-height: 46px;
+}
+
+html[data-layout="pop-schematic"] body .touch-controls {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+@media (max-width: 780px) {
+  html[data-layout="pop-schematic"] body .touch-controls {
+    grid-column: 1 / -1;
+  }
+}

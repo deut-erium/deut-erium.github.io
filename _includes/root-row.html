@@ -1,0 +1,14 @@
+{%- assign _entry = include.entry -%}
+{%- assign _entry_tags = _entry.tags | join: ' ' | downcase | prepend: ' ' | append: ' ' -%}
+{%- if _entry_tags contains ' challenges ' -%}{%- assign _entry_kind = 'Challenge' -%}{%- else -%}{%- assign _entry_kind = 'Note' -%}{%- endif -%}
+<li class="record-row entry--{{ _entry_kind | downcase }}"
+    data-record
+    data-search="{{ _entry.title | downcase | escape }} {{ _entry.tags | join: ' ' | downcase | escape }}"
+    data-tags="{{ _entry.tags | join: '|' | downcase | escape }}">
+  <a class="record-row__link" href="{{ _entry.url | relative_url }}">
+    <time class="record-row__date" datetime="{{ _entry.date | date_to_xmlschema }}">{{ _entry.date | date: '%y.%m.%d' }}</time>
+    <span class="record-row__title">{{ _entry.title }}</span>
+    <span class="record-row__event">{{ _entry.tags.first | default: 'field note' | replace: '_', ' ' }}</span>
+    <span class="record-row__primitive">{{ _entry_kind }}</span>
+  </a>
+</li>
