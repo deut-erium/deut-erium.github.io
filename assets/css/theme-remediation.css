@@ -266,3 +266,205 @@ html[data-skin] .prose .katex-display > .katex {
     animation: none;
   }
 }
+
+/* Unified content geometry
+   ------------------------
+   Skins may paint these blocks, but they must not move shared content into
+   implicit grid tracks or outside the viewport. Keep this contract complete:
+   overriding a template without overriding its child placements caused the
+   earlier article collisions. */
+html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+  box-sizing: border-box !important;
+  width: min(calc(100% - 2rem), 96rem) !important;
+  max-width: 96rem !important;
+  margin-inline: auto !important;
+  overflow-x: clip !important;
+}
+
+html[data-skin] :is(.home-shell, .archive-shell, .record-page) {
+  display: block !important;
+  grid-template: none !important;
+}
+
+html[data-skin] :is(
+  .home-shell > .masthead,
+  .home-shell > .record-index,
+  .archive-shell > .index-heading,
+  .archive-shell > .archive-tools,
+  .archive-shell > .archive-groups,
+  .archive-shell > .record-end,
+  .record-page > .record-head,
+  .record-page > .record-grid,
+  .record-page > .record-end
+) {
+  position: relative !important;
+  inset: auto !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+  transform: none !important;
+  overflow-x: clip !important;
+  grid-area: auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+html[data-skin] .record-page > .record-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem) !important;
+  grid-template-areas:
+    "key facts"
+    "title facts"
+    "abstract facts"
+    "tags tags"
+    "actions actions" !important;
+  gap: clamp(.75rem, 1.5vw, 1.25rem) clamp(1rem, 2.5vw, 2rem) !important;
+  align-items: start !important;
+}
+
+html[data-skin] .record-head > .record-head__key { grid-area: key !important; }
+html[data-skin] .record-head > h1 { grid-area: title !important; }
+html[data-skin] .record-head > .record-head__abstract { grid-area: abstract !important; }
+html[data-skin] .record-head > .record-facts { grid-area: facts !important; }
+html[data-skin] .record-head > .tag-line { grid-area: tags !important; }
+html[data-skin] .record-head > .record-actions { grid-area: actions !important; }
+
+html[data-skin] .record-page > .record-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem) !important;
+  grid-template-areas: "article rail" !important;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem) !important;
+  align-items: start !important;
+}
+
+html[data-skin] .record-grid > .article__content {
+  grid-area: article !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-inline: 0 !important;
+  transform: none !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+}
+
+html[data-skin] .record-grid > .record-index {
+  grid-area: rail !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-inline: 0 !important;
+  transform: none !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+}
+
+html[data-skin] :is(.site-brand__name, .masthead h1, .index-heading h1, .page-heading h1, .record-head h1) {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+@media (max-width: 54rem) {
+  html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+    width: 100% !important;
+  }
+
+  html[data-skin] .record-page > .record-head {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "key"
+      "title"
+      "abstract"
+      "facts"
+      "tags"
+      "actions" !important;
+  }
+
+  html[data-skin] .record-page > .record-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "article" "rail" !important;
+  }
+
+  html[data-skin] .record-row__link {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "date" "title" "event" "primitive" !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  html[data-skin] .record-row__date { grid-area: date !important; }
+  html[data-skin] .record-row__title { grid-area: title !important; }
+  html[data-skin] .record-row__event { grid-area: event !important; }
+  html[data-skin] .record-row__primitive { grid-area: primitive !important; }
+
+  html[data-skin] .record-row__link > :is(.record-row__date, .record-row__title, .record-row__event, .record-row__primitive) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin-inline: 0 !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+}
+
+/* Keyboard-only skip link. Skin rules must not leave it covering the masthead. */
+html[data-skin] .skip-link {
+  position: fixed !important;
+  z-index: 200 !important;
+  top: 0 !important;
+  left: 1rem !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translateY(calc(-100% - 1rem)) !important;
+}
+
+html[data-skin] .skip-link:focus-visible {
+  transform: translateY(.75rem) !important;
+}
+
+html[data-skin] .article__content :is(h1, h2, h3, h4, h5, h6) {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+html[data-skin] .record-row__date {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+@media (max-width: 54rem) {
+  /* On narrow screens the controls occupy a reserved top strip and scroll
+     away with the document instead of covering article text. */
+  html[data-skin] body {
+    position: relative;
+    padding-top: 3.35rem !important;
+  }
+
+  html[data-skin] :is(.skin-dice, .theme-toggle) {
+    position: absolute !important;
+    top: .4rem !important;
+    bottom: auto !important;
+  }
+
+  html[data-skin] .skin-dice {
+    right: 3.65rem !important;
+  }
+
+  html[data-skin] .theme-toggle {
+    right: .6rem !important;
+  }
+}
