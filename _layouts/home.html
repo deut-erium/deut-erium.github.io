@@ -1,42 +1,33 @@
 ---
-layout: articles
-titles:
-  # @start locale config
-  en      : &EN       Home
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  主页
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  主頁
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       홈
-  ko-KR   : *KO
-  fr      : &FR       Accueil
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
-show_title: false
-articles:
-  data_source: paginator.posts
-  article_type: BlogPosting
-  show_cover: false
-  show_excerpt: true
-  show_readmore: true
-  show_info: true
+layout: base
 ---
-<div class="layout--home">
-  {%- include paginator.html -%}
-</div>
-<script>
-  {%- include scripts/home.js -%}
-</script>
+{%- assign _home_posts = paginator.posts | default: site.posts -%}
+<main id="content" class="home-shell">
+  <section class="masthead" aria-labelledby="masthead-title">
+    <div class="masthead__copy">
+      <p class="eyebrow">deut-erium.github.io</p>
+      <h1 id="masthead-title">{{ site.title }}</h1>
+      <p class="masthead__lede">{{ site.tagline }}</p>
+      <div class="masthead__actions">
+        <a class="action action--primary" href="#records">Latest posts</a>
+        <a class="action" href="{{ '/archive.html' | relative_url }}">Archive</a>
+      </div>
+    </div>
+  </section>
 
-{{ content }}
+  <section class="record-index section-cards" aria-labelledby="sections-title">
+    <div class="section-heading"><div><h2 id="sections-title">Publications</h2></div></div>
+    <nav class="section-links index-map__links" aria-label="Site sections">
+      <a href="{{ '/WriteUps/' | relative_url }}"><span>CTF Writeups</span><strong>{{ site.posts | where: 'section', 'writeups' | size }}</strong></a>
+      <a href="{{ '/ctf-tutorials/' | relative_url }}"><span>Blog on CTFs</span><strong>{{ site.posts | where: 'section', 'tutorials' | size }}</strong></a>
+      <a href="{{ '/ramblings/' | relative_url }}"><span>Ramblings</span><strong>{{ site.posts | where: 'section', 'ramblings' | size }}</strong></a>
+      <a href="{{ '/archive.html' | relative_url }}"><span>All posts</span><strong>{{ site.posts | size }}</strong></a>
+    </nav>
+  </section>
+
+  <section id="records" class="record-index" aria-labelledby="records-title">
+    <header class="section-heading"><div><h2 id="records-title">Latest posts</h2></div></header>
+    <ol class="record-list">{%- for _post in _home_posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
+    {%- if paginator -%}{%- include paginator.html -%}{%- endif -%}
+  </section>
+</main>

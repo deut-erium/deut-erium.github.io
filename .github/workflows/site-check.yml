@@ -1,0 +1,76 @@
+name: Site checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-check-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUNDLE_FROZEN: "true"
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
+  TZ: Asia/Kolkata
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        with:
+          ruby-version: 3.3.7
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.19.0
+          cache: npm
+
+      - name: Install build-only JavaScript packages
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Verify source and generated dependencies
+        run: |
+          set -euo pipefail
+          python3 script/verify-imported-content.py
+          python3 script/verify-static-app.py
+          python3 script/verify-history-sanitization.py
+          python3 script/test-history-sanitization.py
+          python3 script/test-artifact-manifest.py
+          ruby script/test-code-frames.rb
+          npm run sync-katex-assets
+          git diff --exit-code -- Gemfile.lock package-lock.json assets/katex
+
+      - name: Build twice and compare artifacts
+        run: |
+          set -euo pipefail
+          out="${RUNNER_TEMP}/site-check"
+          rm -rf "$out"
+          mkdir -p "$out"
+          export BUILD_TIME="$(git show -s --format=%cI HEAD)"
+
+          script/build-site.sh "$out/a"
+          script/build-site.sh "$out/b"
+
+          python3 script/artifact_manifest.py "$out/a" > "$out/a.manifest.jsonl"
+          python3 script/artifact_manifest.py "$out/b" > "$out/b.manifest.jsonl"
+          cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
+
+          python3 script/verify-site.py "$out/a"
+          python3 script/verify-code-parity.py "$out/a"
+          python3 script/verify-heading-parity.py "$out/a"

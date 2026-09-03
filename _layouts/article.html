@@ -1,29 +1,36 @@
 ---
-layout: page
-type: article
+layout: base
 ---
+{%- case page.section -%}
+  {%- when 'ramblings' -%}{%- assign _section_title = 'Ramblings' -%}
+  {%- when 'tutorials' -%}{%- assign _section_title = 'Blog on CTFs' -%}
+  {%- else -%}{%- assign _section_title = site.title -%}
+{%- endcase -%}
+{%- assign _source_path = page.source_path | default: page.path | replace: ' ', '%20' -%}
+<main id="content" class="record-page section-record" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key"><span>{{ page.date | date: '%Y.%m.%d' }}</span><span>{{ _section_title }}</span></div>
+    <h1 itemprop="headline">{{ page.title }}</h1>
+    {%- if page.description -%}<p class="record-head__abstract" itemprop="description">{{ page.description }}</p>{%- endif -%}
+    <dl class="record-facts">
+      <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+      <div><dt>Tags</dt><dd>{{ page.tags | size }}</dd></div>
+    </dl>
+    {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
+    <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>
+    <meta itemprop="author" content="{{ site.author.name }}">
+  </header>
 
-{%- include snippets/assign.html
-  target = site.data.variables.default.page.sharing
-  source0=layout.sharing source1=page.sharing -%}
-{%- assign _sharing = __return -%}
-
-<div class="layout--article">
-  {%- include article/top/custom.html -%}
-
-  <div class="article__content" itemprop="articleBody">{{ content }}</div>
-
-  {%- if _sharing -%}
-    <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
-  {%- endif -%}
-
-  <div class="d-print-none">
-    {%- include article-footer.html -%}
-    {%- include article-section-navigator.html -%}
+  <div class="record-grid">
+    <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">{{ content }}</article>
+    <aside class="record-index" aria-label="Article navigation">
+      <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" aria-label="Table of contents"><p class="toc-fallback">Section links require the local article script.</p></nav></details>
+      <section class="related-records"><h2>{{ _section_title }}</h2><ul>{%- assign _count = 0 -%}{%- for _post in site.posts -%}{%- if _post.section == page.section and _post.url != page.url and _count < 4 -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- assign _count = _count | plus: 1 -%}{%- endif -%}{%- endfor -%}</ul></section>
+    </aside>
   </div>
 
-</div>
-
-<script>
-  {%- include scripts/article.js -%}
-</script>
+  <footer class="record-end"><p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p></footer>
+</main>
+<script defer src="{{ '/assets/js/article.js' | relative_url }}"></script>
+{%- if page.sha256hash -%}<script defer src="{{ '/assets/js/challenge.js' | relative_url }}"></script>{%- endif -%}

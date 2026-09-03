@@ -1,24 +1,43 @@
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 
-{%- include snippets/get-article-title.html article=page -%}
-<title>{%- if __return -%}{{ __return }} - {{ site.title }}{%- else -%}{{ site.title }}{%- endif -%}</title>
+{%- if page.title -%}
+  <title>{{ page.title }}{% if page.page_number and page.page_number > 1 %}, page {{ page.page_number }}{% endif %} / {{ site.title }}</title>
+{%- else -%}
+  <title>{{ site.title }}</title>
+{%- endif -%}
 
-<meta name="description" content="{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | strip | truncate: 160 }}{%- else -%}{{ site.description }}{%- endif -%}">
-<link rel="canonical" href="{%- include snippets/page-url.html -%}">
+{%- seo title=false -%}
+{%- if page.noindex -%}<meta name="robots" content="noindex, follow">{%- endif -%}
+{%- if page.redirect_to -%}<meta http-equiv="refresh" content="0; url={{ page.redirect_to | escape }}">{%- endif -%}
 
-{%- assign _paths_rss = site.paths.rss | default: site.data.variables.default.paths.rss -%}
-{%- include snippets/get-nav-url.html path=_paths_rss -%}
-<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ __return }}">
-
-{%- include head/favicon.html -%}
-
-{%- include snippets/prepend-baseurl.html path='/assets/css/main.css' -%}
-<link rel="stylesheet" href="{{ __return }}">
-
-{%- include snippets/get-sources.html -%}
-{%- assign _sources = __return -%}
-<link rel="stylesheet" href="{{ _sources.font_awesome }}" >
-
-{%- include head/custom.html -%}
+{%- case page.section -%}
+  {%- when 'writeups' -%}{%- assign _feed_path = '/WriteUps/feed.xml' -%}
+  {%- when 'tutorials' -%}{%- assign _feed_path = '/ctf-tutorials/feed.xml' -%}
+  {%- when 'ramblings' -%}{%- assign _feed_path = '/ramblings/feed.xml' -%}
+  {%- else -%}{%- assign _feed_path = '/feed.xml' -%}
+{%- endcase -%}
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ _feed_path | relative_url }}">
+{%- if page.section == 'writeups' and page.page_number -%}
+  {%- assign _writeup_count = site.posts | where: 'section', 'writeups' | size -%}
+  {%- assign _writeup_pages = _writeup_count | plus: 7 | divided_by: 8 -%}
+  {%- if page.page_number > 1 -%}
+    {%- assign _previous_number = page.page_number | minus: 1 -%}
+    {%- if _previous_number == 1 -%}{%- assign _previous_path = '/WriteUps/' -%}{%- else -%}{%- capture _previous_path -%}/WriteUps/page{{ _previous_number }}/{%- endcapture -%}{%- endif -%}
+<link rel="prev" href="{{ _previous_path | relative_url }}">
+  {%- endif -%}
+  {%- if page.page_number < _writeup_pages -%}
+    {%- assign _next_number = page.page_number | plus: 1 -%}
+    {%- capture _next_path -%}/WriteUps/page{{ _next_number }}/{%- endcapture -%}
+<link rel="next" href="{{ _next_path | relative_url }}">
+  {%- endif -%}
+{%- endif -%}
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/skins/fonts.css' | relative_url }}">
+<link id="skin-stylesheet" rel="stylesheet" data-skin-base="{{ '/assets/css/skins/' | relative_url }}" disabled>
+<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}">
+{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}">{%- endif -%}
+<meta name="theme-color" content="#3847ff">

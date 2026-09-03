@@ -1,0 +1,4684 @@
+/* 35: The Clause Exchange. Generated as an isolated production skin. */
+/* Keep routes and controls semantic; style only beneath html[data-skin="the-clause-exchange"]. */
+
+html[data-skin="the-clause-exchange"] {
+  color-scheme: light;
+  --clause-paper: #f8f1cd;
+  --clause-paper-high: #fffbe9;
+  --clause-paper-low: #ded0ad;
+  --clause-ink: #18201e;
+  --clause-ink-soft: #52605b;
+  --clause-blue: #50a36c;
+  --clause-blue-high: #8fd4a4;
+  --clause-red: #bb3e32;
+  --clause-red-high: #ed8f82;
+  --clause-sage: #d19a35;
+  --clause-sage-high: #f3ce77;
+  --clause-bench: #a9ada0;
+  --clause-rule: #7f8677;
+  --clause-link: #286b5b;
+  --clause-code: #e8edd3;
+  --clause-code-rule: #609176;
+  --clause-void: #18201e;
+  --bench: var(--clause-bench);
+  --shell: var(--clause-paper);
+  --shell-high: var(--clause-paper-high);
+  --shell-low: var(--clause-paper-low);
+  --navy: var(--clause-ink);
+  --navy-soft: var(--clause-ink-soft);
+  --lcd: var(--clause-sage);
+  --lcd-high: var(--clause-sage-high);
+  --lcd-low: #7e9277;
+  --lcd-ink: var(--clause-ink);
+  --paper: var(--clause-paper);
+  --paper-low: var(--clause-paper-low);
+  --ink: var(--clause-ink);
+  --muted: #566171;
+  --pink: var(--clause-red);
+  --orange: var(--clause-red);
+  --yellow: var(--clause-sage-high);
+  --cyan: var(--clause-blue-high);
+  --rule: var(--clause-rule);
+  --link: var(--clause-link);
+  --inline-code: var(--clause-code);
+  --inline-rule: var(--clause-code-rule);
+  --reading: 66rem;
+  --page: 94rem;
+  --body: "Moodboard Computer Modern", Georgia, serif;
+  --display: "Moodboard Unbounded", "Arial Black", sans-serif;
+  --formal: "Moodboard Euler Fraktur", Georgia, serif;
+  --keys: "Moodboard Doto", "Courier New", monospace;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  background: var(--clause-bench);
+}
+
+html[data-skin="the-clause-exchange"] body {
+  color: var(--clause-ink);
+  background-color: var(--clause-bench);
+  background-image:
+    linear-gradient(90deg, transparent 0 6.2vw, rgb(187 62 50 / 37%) 6.2vw calc(6.2vw + 2px), transparent calc(6.2vw + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 6.2vw - 2px), rgb(80 163 108 / 32%) calc(100% - 6.2vw - 2px) calc(100% - 6.2vw), transparent calc(100% - 6.2vw)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(80 163 108 / 13%) 2.35rem calc(2.35rem + 1px));
+  font-family: var(--body);
+  font-size: 1.14rem;
+  line-height: 1.7;
+}
+
+html[data-skin="the-clause-exchange"] a {
+  color: var(--clause-link);
+  text-decoration-color: rgb(187 62 50 / 76%);
+  text-decoration-thickness: .075em;
+  text-underline-offset: .17em;
+}
+
+html[data-skin="the-clause-exchange"] a:hover {
+  color: var(--clause-red);
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: .14em;
+}
+
+html[data-skin="the-clause-exchange"] ::selection {
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] :focus-visible {
+  outline: 4px solid var(--clause-red);
+  outline-offset: 4px;
+}
+
+html[data-skin="the-clause-exchange"] .skip-link {
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  border: 3px solid var(--clause-sage-high);
+  border-radius: 0;
+  box-shadow: .28rem .32rem 0 var(--clause-red);
+  font-family: var(--keys);
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer {
+  position: relative;
+  isolation: isolate;
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 5.5%, rgb(248 241 205 / 15%) 5.5% calc(5.5% + 1px), transparent calc(5.5% + 1px)),
+    linear-gradient(90deg, transparent calc(100% - 5.5% - 1px), rgb(248 241 205 / 15%) calc(100% - 5.5% - 1px) calc(100% - 5.5%), transparent calc(100% - 5.5%)),
+    repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(248 241 205 / 7%) 1.2rem calc(1.2rem + 1px));
+  border: 5px solid var(--clause-ink);
+  border-top: .72rem solid var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .56rem .64rem 0 rgb(24 32 30 / 34%);
+}
+
+html[data-skin="the-clause-exchange"] .site-header {
+  margin-top: 1.5rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer {
+  margin-bottom: 1.5rem;
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-header::before,
+html[data-skin="the-clause-exchange"] .site-footer::before {
+  position: absolute;
+  z-index: -1;
+  top: -.72rem;
+  left: clamp(1.1rem, 9vw, 8rem);
+  width: clamp(5.4rem, 13vw, 11rem);
+  height: .72rem;
+  content: "";
+  background: repeating-linear-gradient(90deg, var(--clause-sage-high) 0 .65rem, var(--clause-paper-high) .65rem .78rem);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer::before {
+  background: repeating-linear-gradient(90deg, var(--clause-blue-high) 0 .65rem, var(--clause-paper-high) .65rem .78rem);
+}
+
+html[data-skin="the-clause-exchange"] .site-header__inner,
+html[data-skin="the-clause-exchange"] .site-footer__inner {
+  position: relative;
+  z-index: 1;
+  gap: 1rem 2rem;
+  padding: 1rem 1.25rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand {
+  color: var(--clause-paper-high);
+  text-decoration: none;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__name {
+  color: var(--clause-paper-high);
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2.65vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -.07em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__scope {
+  margin-top: .3rem;
+  color: var(--clause-sage-high);
+  font-family: var(--keys);
+  font-size: .64rem;
+  font-weight: 900;
+  letter-spacing: .075em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav {
+  position: relative;
+  z-index: 3;
+  gap: .38rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav a,
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-randomizer,
+html[data-skin="the-clause-exchange"] .action,
+html[data-skin="the-clause-exchange"] .record-actions a,
+html[data-skin="the-clause-exchange"] .tag-line a,
+html[data-skin="the-clause-exchange"] .quick-filters a,
+html[data-skin="the-clause-exchange"] .pagination a,
+html[data-skin="the-clause-exchange"] .pagination span,
+html[data-skin="the-clause-exchange"] .site-footer__links a {
+  min-height: 2.55rem;
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  border: 2px solid var(--clause-paper-high);
+  border-bottom-width: 4px;
+  border-radius: 0;
+  box-shadow: .14rem .18rem 0 var(--clause-blue);
+  font-family: var(--keys);
+  font-size: .67rem;
+  font-weight: 900;
+  letter-spacing: .045em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-randomizer {
+  cursor: pointer;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary {
+  list-style: none;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary::after {
+  color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav a[aria-current="page"],
+html[data-skin="the-clause-exchange"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-clause-exchange"] .quick-filters a[aria-current="true"],
+html[data-skin="the-clause-exchange"] .action--primary,
+html[data-skin="the-clause-exchange"] .masthead__actions .action--primary,
+html[data-skin="the-clause-exchange"] .record-actions a:last-child,
+html[data-skin="the-clause-exchange"] .tag-line a:nth-child(odd) {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  box-shadow: .14rem .18rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav a:hover,
+html[data-skin="the-clause-exchange"] .site-nav a:focus-visible,
+html[data-skin="the-clause-exchange"] .theme-toggle:hover,
+html[data-skin="the-clause-exchange"] .theme-toggle:focus-visible,
+html[data-skin="the-clause-exchange"] .skin-menu summary:hover,
+html[data-skin="the-clause-exchange"] .skin-menu summary:focus-visible,
+html[data-skin="the-clause-exchange"] .skin-randomizer:hover,
+html[data-skin="the-clause-exchange"] .skin-randomizer:focus-visible,
+html[data-skin="the-clause-exchange"] .action:hover,
+html[data-skin="the-clause-exchange"] .action:focus-visible,
+html[data-skin="the-clause-exchange"] .record-actions a:hover,
+html[data-skin="the-clause-exchange"] .record-actions a:focus-visible,
+html[data-skin="the-clause-exchange"] .tag-line a:hover,
+html[data-skin="the-clause-exchange"] .tag-line a:focus-visible,
+html[data-skin="the-clause-exchange"] .quick-filters a:hover,
+html[data-skin="the-clause-exchange"] .quick-filters a:focus-visible,
+html[data-skin="the-clause-exchange"] .pagination a:hover,
+html[data-skin="the-clause-exchange"] .pagination a:focus-visible,
+html[data-skin="the-clause-exchange"] .site-footer__links a:hover,
+html[data-skin="the-clause-exchange"] .site-footer__links a:focus-visible {
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+  border-color: var(--clause-paper-high);
+  box-shadow: .14rem .18rem 0 var(--clause-blue-high);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel {
+  z-index: 30;
+  width: min(21rem, calc(100vw - 1.5rem));
+  padding: .9rem;
+  color: var(--clause-ink);
+  background-color: var(--clause-paper-high);
+  background-image: repeating-linear-gradient(0deg, transparent 0 1.8rem, rgb(80 163 108 / 15%) 1.8rem calc(1.8rem + 1px));
+  border: 5px double var(--clause-ink);
+  border-top-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .42rem .48rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel label,
+html[data-skin="the-clause-exchange"] .skin-menu select {
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu select {
+  min-height: 2.65rem;
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 3px double var(--clause-ink);
+  border-radius: 0;
+  box-shadow: inset .2rem .2rem 0 rgb(255 255 255 / 35%);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu select:focus-visible {
+  background: var(--clause-paper-high);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel .skin-randomizer {
+  width: 100%;
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+  border-color: var(--clause-ink);
+  box-shadow: .14rem .18rem 0 var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(1.1rem, 3vw, 2.7rem);
+  background-color: var(--clause-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.1rem, rgb(187 62 50 / 43%) 2.1rem calc(2.1rem + 2px), transparent calc(2.1rem + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 1.1rem), rgb(80 163 108 / 56%) calc(100% - 1.1rem) calc(100% - .95rem), transparent calc(100% - .95rem)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(80 163 108 / 14%) 2.35rem calc(2.35rem + 1px));
+  border: 5px solid var(--clause-ink);
+  border-top-width: .65rem;
+  border-top-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .62rem .7rem 0 rgb(24 32 30 / 27%);
+}
+
+html[data-skin="the-clause-exchange"] .masthead,
+html[data-skin="the-clause-exchange"] .record-grid {
+  gap: clamp(1.15rem, 3vw, 2.7rem);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2.7rem);
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.25rem, rgb(248 241 205 / 14%) 1.25rem calc(1.25rem + 1px), transparent calc(1.25rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(248 241 205 / 8%) 2.25rem calc(2.25rem + 1px));
+  border: 5px solid var(--clause-ink);
+  border-top-color: var(--clause-red);
+  border-right-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .43rem .5rem 0 rgb(24 32 30 / 31%);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy::before,
+html[data-skin="the-clause-exchange"] .index-heading::before,
+html[data-skin="the-clause-exchange"] .page-heading::before,
+html[data-skin="the-clause-exchange"] .record-head::before {
+  position: absolute;
+  z-index: -1;
+  top: .7rem;
+  right: .9rem;
+  padding: .22rem .42rem;
+  color: var(--clause-ink);
+  content: "PATCH BAY 35 / CIRCUIT LIVE";
+  background: var(--clause-sage-high);
+  font-family: var(--keys);
+  font-size: .48rem;
+  font-weight: 900;
+  letter-spacing: .07em;
+  transform: rotate(3deg);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy::after,
+html[data-skin="the-clause-exchange"] .index-heading::after,
+html[data-skin="the-clause-exchange"] .page-heading::after,
+html[data-skin="the-clause-exchange"] .record-head::after {
+  position: absolute;
+  z-index: -1;
+  right: -3.2rem;
+  bottom: -3.2rem;
+  width: 10rem;
+  aspect-ratio: 1;
+  content: "";
+  border: .55rem double var(--clause-red);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 .2rem var(--clause-ink), inset 0 0 0 .34rem var(--clause-blue);
+  opacity: .72;
+  transform: rotate(-14deg);
+}
+
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading {
+  border-top-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .eyebrow,
+html[data-skin="the-clause-exchange"] .record-head__key,
+html[data-skin="the-clause-exchange"] .archive-search label,
+html[data-skin="the-clause-exchange"] .all-tags summary,
+html[data-skin="the-clause-exchange"] .record-toc summary,
+html[data-skin="the-clause-exchange"] .record-facts dt,
+html[data-skin="the-clause-exchange"] .archive-year > header span,
+html[data-skin="the-clause-exchange"] .record-end nav span {
+  color: var(--clause-sage-high);
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1,
+html[data-skin="the-clause-exchange"] .error-shell h1,
+html[data-skin="the-clause-exchange"] .section-heading h2,
+html[data-skin="the-clause-exchange"] .archive-year h2,
+html[data-skin="the-clause-exchange"] .related-records h2 {
+  color: var(--clause-paper-high);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.08em;
+  line-height: .95;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1 {
+  text-shadow: 3px 3px 0 var(--clause-blue), 6px 6px 0 rgb(187 62 50 / 82%);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__lede,
+html[data-skin="the-clause-exchange"] .index-heading > p:last-child,
+html[data-skin="the-clause-exchange"] .page-heading > p:last-child,
+html[data-skin="the-clause-exchange"] .record-head__abstract {
+  color: var(--clause-paper-high);
+  font-family: var(--body);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__actions,
+html[data-skin="the-clause-exchange"] .record-actions,
+html[data-skin="the-clause-exchange"] .tag-line {
+  gap: .48rem;
+  padding-top: .9rem;
+  border-top: 1px solid rgb(248 241 205 / 37%);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-groups,
+html[data-skin="the-clause-exchange"] .page-prose,
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .record-end {
+  color: var(--clause-ink);
+  background-color: var(--clause-paper-high);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.35rem, rgb(187 62 50 / 38%) 2.35rem calc(2.35rem + 2px), transparent calc(2.35rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(80 163 108 / 13%) 2.2rem calc(2.2rem + 1px));
+  border: 5px double var(--clause-ink);
+  border-top-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .36rem .43rem 0 rgb(24 32 30 / 24%);
+}
+
+html[data-skin="the-clause-exchange"] .section-heading {
+  align-items: end;
+  padding-bottom: .85rem;
+  border-bottom: 4px double var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .section-heading h2,
+html[data-skin="the-clause-exchange"] .archive-year h2 {
+  color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .section-heading > p,
+html[data-skin="the-clause-exchange"] .archive-year > header span {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .record-row {
+  border-bottom: 1px solid var(--clause-rule);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(even) {
+  background: rgb(222 208 173 / 56%);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link {
+  color: var(--clause-ink);
+  border-left: .38rem solid transparent;
+  text-decoration: none;
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(4n + 1) .record-row__link {
+  border-left-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(4n + 2) .record-row__link {
+  border-left-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(4n + 3) .record-row__link {
+  border-left-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__primitive {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__primitive {
+  font-family: var(--mono);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__title {
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__primitive {
+  color: var(--clause-sage-high);
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a {
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image: repeating-linear-gradient(0deg, transparent 0 1.15rem, rgb(248 241 205 / 12%) 1.15rem calc(1.15rem + 1px));
+  border: 3px solid var(--clause-ink);
+  border-bottom: .48rem solid var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .2rem .25rem 0 var(--clause-red);
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:nth-child(4n + 1) {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-bottom-color: var(--clause-red);
+  box-shadow: .2rem .25rem 0 var(--clause-blue);
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:nth-child(4n + 2) {
+  background: var(--clause-blue);
+  border-bottom-color: var(--clause-sage-high);
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:hover,
+html[data-skin="the-clause-exchange"] .all-tags__grid a:focus-visible {
+  color: var(--clause-ink);
+  background: var(--clause-paper-high);
+  border-color: var(--clause-red);
+  box-shadow: .2rem .25rem 0 var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .pagination__position {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .pagination__position strong {
+  color: var(--clause-red);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: -.08em;
+}
+
+html[data-skin="the-clause-exchange"] .archive-search input {
+  color: var(--clause-ink);
+  background: var(--clause-paper-high);
+  border: 4px double var(--clause-ink);
+  border-left-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: inset .2rem .2rem 0 rgb(80 163 108 / 12%);
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .archive-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+html[data-skin="the-clause-exchange"] .archive-search input:focus-visible {
+  background: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .all-tags {
+  border-top-color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .archive-empty {
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+  border: 4px double var(--clause-ink);
+  border-radius: 0;
+  box-shadow: .25rem .3rem 0 var(--clause-blue);
+  font-family: var(--keys);
+  font-weight: 900;
+}
+
+html[data-skin="the-clause-exchange"] .archive-year + .archive-year {
+  border-top-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .record-head {
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-head__key {
+  justify-content: flex-start;
+  gap: .5rem 1.5rem;
+  padding-bottom: .78rem;
+  border-bottom: 3px double rgb(248 241 205 / 62%);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts {
+  gap: .65rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgb(248 241 205 / 48%);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts > div {
+  min-height: 5.9rem;
+  padding: .65rem;
+  color: var(--clause-paper-high);
+  background: var(--clause-blue);
+  border: 3px solid var(--clause-paper-high);
+  border-bottom-color: var(--clause-sage-high);
+  border-radius: 0;
+  box-shadow: .14rem .18rem 0 var(--clause-red);
+  text-align: center;
+}
+
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(2) {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  border-bottom-color: var(--clause-red);
+  box-shadow: .14rem .18rem 0 var(--clause-blue-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(3) {
+  background: var(--clause-red);
+  border-bottom-color: var(--clause-paper-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(4) {
+  background: var(--clause-ink);
+  border-bottom-color: var(--clause-blue-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts dt {
+  color: inherit;
+  font-size: .61rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-facts dd {
+  color: inherit;
+  font-family: var(--body);
+  font-size: .97rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .page-prose {
+  border-left: .72rem solid var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose {
+  color: var(--clause-ink);
+  font-family: var(--body);
+  font-size: 1.19rem;
+  line-height: 1.78;
+}
+
+html[data-skin="the-clause-exchange"] .prose h1,
+html[data-skin="the-clause-exchange"] .prose h2,
+html[data-skin="the-clause-exchange"] .prose h3,
+html[data-skin="the-clause-exchange"] .prose h4,
+html[data-skin="the-clause-exchange"] .prose h5,
+html[data-skin="the-clause-exchange"] .prose h6 {
+  color: var(--clause-ink);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.06em;
+  line-height: 1.05;
+}
+
+html[data-skin="the-clause-exchange"] .prose h2 {
+  position: relative;
+  padding: .6rem .6rem .38rem 1rem;
+  background: linear-gradient(90deg, rgb(209 154 53 / 48%), transparent 78%);
+  border-top: 3px double var(--clause-ink);
+  border-left: .36rem solid var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .prose h2::before {
+  display: inline-block;
+  margin-right: .48rem;
+  color: var(--clause-red);
+  content: "//";
+  font-family: var(--formal);
+  font-size: 1.2em;
+  font-weight: 400;
+  line-height: .6;
+  vertical-align: .08em;
+}
+
+html[data-skin="the-clause-exchange"] .prose h3 {
+  color: var(--clause-blue);
+  font-family: var(--keys);
+  font-size: 1.03rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .prose a,
+html[data-skin="the-clause-exchange"] .record-end > p a {
+  color: var(--clause-link);
+  font-weight: 700;
+  text-decoration-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose a:hover,
+html[data-skin="the-clause-exchange"] .prose a:focus-visible,
+html[data-skin="the-clause-exchange"] .record-end > p a:hover,
+html[data-skin="the-clause-exchange"] .record-end > p a:focus-visible {
+  color: var(--clause-red);
+  text-decoration-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .heading-anchor {
+  color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose hr {
+  height: 5px;
+  background: repeating-linear-gradient(90deg, var(--clause-ink) 0 .9rem, var(--clause-blue) .9rem 1.8rem, var(--clause-red) 1.8rem 2rem, transparent 2rem 2.4rem);
+  border: 0;
+}
+
+html[data-skin="the-clause-exchange"] .prose .info {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 4px double var(--clause-ink);
+  border-left: .55rem solid var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .2rem .25rem 0 rgb(80 163 108 / 30%);
+}
+
+html[data-skin="the-clause-exchange"] .prose blockquote {
+  color: var(--clause-ink);
+  background: var(--clause-paper-low);
+  border: 4px double var(--clause-ink);
+  border-left: .6rem solid var(--clause-red);
+  border-radius: 0;
+  box-shadow: inset .32rem 0 0 rgb(80 163 108 / 23%);
+  font-family: var(--body);
+  font-style: italic;
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .prose blockquote a,
+html[data-skin="the-clause-exchange"] .prose blockquote code {
+  color: var(--clause-link);
+}
+
+html[data-skin="the-clause-exchange"] .prose ul:not(.code-frame__gutter) {
+  list-style-type: square;
+}
+
+html[data-skin="the-clause-exchange"] .prose ul:not(.code-frame__gutter) > li::marker {
+  color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose ul:not(.code-frame__gutter) ul > li::marker {
+  color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .prose code {
+  color: var(--clause-ink);
+  background: var(--clause-code);
+  border-color: var(--clause-code-rule);
+  border-radius: 0;
+}
+
+html[data-skin="the-clause-exchange"] .prose th,
+html[data-skin="the-clause-exchange"] .prose td {
+  border-color: var(--clause-rule);
+}
+
+html[data-skin="the-clause-exchange"] .prose th {
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .prose tr:nth-child(even) td {
+  background: var(--clause-paper-low);
+}
+
+html[data-skin="the-clause-exchange"] .prose img:not(.emoji) {
+  border: 4px double var(--clause-ink);
+  box-shadow: .32rem .38rem 0 var(--clause-blue), .55rem .62rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose .katex-display {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 4px double var(--clause-ink);
+  border-left-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame {
+  color: #f8f1cd;
+  background: #172723;
+  border: 5px double var(--clause-paper-high);
+  border-top-color: var(--clause-blue-high);
+  border-radius: 0;
+  box-shadow: .38rem .45rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__bar {
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  border-bottom: 3px solid var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__label strong,
+html[data-skin="the-clause-exchange"] .code-frame__label small {
+  font-family: var(--keys);
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__actions button {
+  min-height: 2.2rem;
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 2px solid var(--clause-paper-high);
+  border-bottom-width: 4px;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: .65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__actions button:last-child {
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--clause-paper-high);
+  background: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame__gutter {
+  color: #b9c6b8;
+  background: #0b100f;
+  border-right-color: #32745d;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__status {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__fallback {
+  color: var(--clause-ink);
+  background: var(--clause-paper-high);
+  border-color: var(--clause-red);
+  border-radius: 0;
+}
+
+html[data-skin="the-clause-exchange"] .highlight .c,
+html[data-skin="the-clause-exchange"] .highlight .c1,
+html[data-skin="the-clause-exchange"] .highlight .cm,
+html[data-skin="the-clause-exchange"] .highlight .cp,
+html[data-skin="the-clause-exchange"] .highlight .cs { color: #c3d1bc; }
+
+html[data-skin="the-clause-exchange"] .highlight .err { color: #fff8dd; background: #8f2823; }
+
+html[data-skin="the-clause-exchange"] .highlight .k,
+html[data-skin="the-clause-exchange"] .highlight .kc,
+html[data-skin="the-clause-exchange"] .highlight .kd,
+html[data-skin="the-clause-exchange"] .highlight .kn,
+html[data-skin="the-clause-exchange"] .highlight .kp,
+html[data-skin="the-clause-exchange"] .highlight .kr,
+html[data-skin="the-clause-exchange"] .highlight .kt { color: #8fd4a4; font-weight: 700; }
+
+html[data-skin="the-clause-exchange"] .highlight .o,
+html[data-skin="the-clause-exchange"] .highlight .ow { color: #edc96f; }
+
+html[data-skin="the-clause-exchange"] .highlight .n,
+html[data-skin="the-clause-exchange"] .highlight .na,
+html[data-skin="the-clause-exchange"] .highlight .nb,
+html[data-skin="the-clause-exchange"] .highlight .nc,
+html[data-skin="the-clause-exchange"] .highlight .nd,
+html[data-skin="the-clause-exchange"] .highlight .ne,
+html[data-skin="the-clause-exchange"] .highlight .nf,
+html[data-skin="the-clause-exchange"] .highlight .ni,
+html[data-skin="the-clause-exchange"] .highlight .nl,
+html[data-skin="the-clause-exchange"] .highlight .nn,
+html[data-skin="the-clause-exchange"] .highlight .no,
+html[data-skin="the-clause-exchange"] .highlight .nt,
+html[data-skin="the-clause-exchange"] .highlight .nv { color: #f8f1cd; }
+
+html[data-skin="the-clause-exchange"] .highlight .nc,
+html[data-skin="the-clause-exchange"] .highlight .nf { color: #e9a095; }
+
+html[data-skin="the-clause-exchange"] .highlight .s,
+html[data-skin="the-clause-exchange"] .highlight .s1,
+html[data-skin="the-clause-exchange"] .highlight .s2,
+html[data-skin="the-clause-exchange"] .highlight .sa,
+html[data-skin="the-clause-exchange"] .highlight .sb,
+html[data-skin="the-clause-exchange"] .highlight .sc,
+html[data-skin="the-clause-exchange"] .highlight .sd,
+html[data-skin="the-clause-exchange"] .highlight .se,
+html[data-skin="the-clause-exchange"] .highlight .sh,
+html[data-skin="the-clause-exchange"] .highlight .si,
+html[data-skin="the-clause-exchange"] .highlight .sr,
+html[data-skin="the-clause-exchange"] .highlight .ss,
+html[data-skin="the-clause-exchange"] .highlight .sx { color: #d6df9d; }
+
+html[data-skin="the-clause-exchange"] .highlight .m,
+html[data-skin="the-clause-exchange"] .highlight .mb,
+html[data-skin="the-clause-exchange"] .highlight .mf,
+html[data-skin="the-clause-exchange"] .highlight .mh,
+html[data-skin="the-clause-exchange"] .highlight .mi,
+html[data-skin="the-clause-exchange"] .highlight .mo,
+html[data-skin="the-clause-exchange"] .highlight .il { color: #f0d281; }
+
+html[data-skin="the-clause-exchange"] .highlight .gd { color: #ed998c; }
+html[data-skin="the-clause-exchange"] .highlight .gi { color: #b8e4bd; }
+html[data-skin="the-clause-exchange"] .highlight .gh,
+html[data-skin="the-clause-exchange"] .highlight .gu { color: #d8eee1; font-weight: 700; }
+
+html[data-skin="the-clause-exchange"] .record-grid > .record-index {
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, rgb(80 163 108 / 48%) 1rem calc(1rem + 2px), transparent calc(1rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.1rem, rgb(248 241 205 / 11%) 2.1rem calc(2.1rem + 1px));
+  border: 5px double var(--clause-paper-high);
+  border-top-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .36rem .43rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc {
+  border-bottom-color: rgb(248 241 205 / 42%);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc summary {
+  color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc li,
+html[data-skin="the-clause-exchange"] .related-records li {
+  border-top-color: rgb(248 241 205 / 28%);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc a,
+html[data-skin="the-clause-exchange"] .related-records a {
+  color: var(--clause-paper-high);
+  font-family: var(--body);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc a:hover,
+html[data-skin="the-clause-exchange"] .record-toc a:focus-visible,
+html[data-skin="the-clause-exchange"] .related-records a:hover,
+html[data-skin="the-clause-exchange"] .related-records a:focus-visible {
+  color: var(--clause-sage-high);
+  text-decoration-color: var(--clause-red-high);
+}
+
+html[data-skin="the-clause-exchange"] .toc-fallback {
+  color: #c2d0c2;
+}
+
+html[data-skin="the-clause-exchange"] .related-records h2 {
+  color: var(--clause-paper-high);
+  font-size: 1.8rem;
+  text-shadow: 2px 2px 0 var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav a {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 4px double var(--clause-ink);
+  border-left-color: var(--clause-blue);
+  box-shadow: .18rem .22rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav a:hover,
+html[data-skin="the-clause-exchange"] .record-end nav a:focus-visible {
+  color: var(--clause-paper-high);
+  background: var(--clause-red);
+  border-color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav span {
+  color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell {
+  min-height: 65vh;
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image:
+    radial-gradient(circle at 50% 48%, transparent 0 3.3rem, var(--clause-red) 3.35rem 3.55rem, transparent 3.6rem 6.4rem, var(--clause-blue) 6.45rem 6.6rem, transparent 6.65rem),
+    repeating-linear-gradient(0deg, transparent 0 2.1rem, rgb(248 241 205 / 9%) 2.1rem calc(2.1rem + 1px));
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .error-code {
+  color: var(--clause-sage-high);
+  font-family: var(--display);
+}
+
+html[data-skin="the-clause-exchange"] .error-code i {
+  background: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell h1,
+html[data-skin="the-clause-exchange"] .error-shell > p {
+  color: var(--clause-paper-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note,
+html[data-skin="the-clause-exchange"] .site-footer a {
+  color: var(--clause-paper-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note a {
+  color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] {
+  color-scheme: dark;
+  --clause-paper: #172723;
+  --clause-paper-high: #f8f1cd;
+  --clause-paper-low: #20332e;
+  --clause-ink: #f8f1cd;
+  --clause-ink-soft: #d3ded2;
+  --clause-blue: #8fd4a4;
+  --clause-blue-high: #d5f3da;
+  --clause-red: #e9887d;
+  --clause-red-high: #f5b3a9;
+  --clause-sage: #659476;
+  --clause-sage-high: #d8e5ad;
+  --clause-bench: #0b100f;
+  --clause-rule: #658477;
+  --clause-link: #b7ddc9;
+  --clause-code: #243e35;
+  --clause-code-rule: #527b68;
+  --clause-void: #0d1211;
+  --bench: var(--clause-bench);
+  --shell: var(--clause-paper);
+  --shell-high: #223a32;
+  --shell-low: #091512;
+  --navy: var(--clause-ink);
+  --navy-soft: var(--clause-ink-soft);
+  --lcd: var(--clause-sage);
+  --lcd-high: var(--clause-sage-high);
+  --lcd-low: #567158;
+  --lcd-ink: #111b18;
+  --paper: var(--clause-paper);
+  --paper-low: var(--clause-paper-low);
+  --ink: var(--clause-ink);
+  --muted: #d3ded2;
+  --pink: var(--clause-red);
+  --orange: var(--clause-red);
+  --yellow: var(--clause-sage-high);
+  --cyan: var(--clause-blue-high);
+  --rule: var(--clause-rule);
+  --link: var(--clause-link);
+  --inline-code: var(--clause-code);
+  --inline-rule: var(--clause-code-rule);
+  background: var(--clause-bench);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] body {
+  color: var(--clause-ink);
+  background-color: var(--clause-bench);
+  background-image:
+    linear-gradient(90deg, transparent 0 6.2vw, rgb(233 136 125 / 28%) 6.2vw calc(6.2vw + 2px), transparent calc(6.2vw + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 6.2vw - 2px), rgb(143 212 164 / 26%) calc(100% - 6.2vw - 2px) calc(100% - 6.2vw), transparent calc(100% - 6.2vw)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(248 241 205 / 8%) 2.35rem calc(2.35rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-grid > .record-index,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .error-shell {
+  background-color: var(--clause-void);
+  box-shadow: .56rem .64rem 0 rgb(0 0 0 / 56%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+  border-color: var(--clause-void);
+  border-top-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-page,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-shell {
+  background-color: #162822;
+  border-color: var(--clause-ink);
+  border-top-color: var(--clause-blue);
+  box-shadow: .62rem .7rem 0 rgb(0 0 0 / 52%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-tools,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-groups,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-prose,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .article__content,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
+  color: var(--clause-ink);
+  background-color: #29453a;
+  border-color: var(--clause-ink);
+  border-top-color: var(--clause-blue);
+  box-shadow: .36rem .43rem 0 rgb(0 0 0 / 48%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-tools,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-groups,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-prose,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .article__content,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
+  background-image:
+    linear-gradient(90deg, transparent 0 2.35rem, rgb(233 136 125 / 49%) 2.35rem calc(2.35rem + 2px), transparent calc(2.35rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(143 212 164 / 16%) 2.2rem calc(2.2rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading h2,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-year h2,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h2,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h3,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h4,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h5,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h6,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .related-records h2 {
+  color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row:nth-child(even) {
+  background: rgb(32 51 43 / 72%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link {
+  color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible {
+  color: #172723;
+  background: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__primitive {
+  color: #234b3b;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__primitive,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading > p,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-year > header span,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .pagination__position {
+  color: var(--clause-ink-soft);
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .all-tags__grid a:nth-child(4n + 1),
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end nav a,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose tr:nth-child(even) td,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose .katex-display,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose blockquote {
+  color: var(--clause-ink);
+  background: #355d4a;
+  border-color: var(--clause-ink);
+  border-bottom-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input::placeholder {
+  color: var(--clause-ink-soft);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose code {
+  color: var(--clause-ink);
+  background: var(--clause-code);
+  border-color: var(--clause-code-rule);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose a,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end > p a {
+  color: var(--clause-link);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
+  color: var(--clause-ink);
+  background: var(--clause-void);
+  border-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose hr,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h2,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-facts,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading {
+  border-color: var(--clause-blue);
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-clause-exchange"] .site-header,
+  html[data-skin="the-clause-exchange"] .site-footer {
+    margin-inline: 0;
+    box-shadow: none;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-header {
+    margin-top: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-footer {
+    margin-bottom: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-header::before,
+  html[data-skin="the-clause-exchange"] .site-footer::before {
+    left: 1rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-brand__scope {
+    display: block;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav a,
+  html[data-skin="the-clause-exchange"] .theme-toggle,
+  html[data-skin="the-clause-exchange"] .skin-menu,
+  html[data-skin="the-clause-exchange"] .skin-menu summary {
+    width: 100%;
+  }
+
+  html[data-skin="the-clause-exchange"] .skin-menu {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="the-clause-exchange"] .skin-menu__panel {
+    right: auto;
+    left: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .page-shell,
+  html[data-skin="the-clause-exchange"] .error-shell {
+    border-width: 4px;
+    border-top-width: .48rem;
+    box-shadow: none;
+  }
+
+  html[data-skin="the-clause-exchange"] .masthead__copy,
+  html[data-skin="the-clause-exchange"] .index-heading,
+  html[data-skin="the-clause-exchange"] .page-heading,
+  html[data-skin="the-clause-exchange"] .record-head,
+  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+  html[data-skin="the-clause-exchange"] .archive-tools,
+  html[data-skin="the-clause-exchange"] .archive-groups,
+  html[data-skin="the-clause-exchange"] .page-prose,
+  html[data-skin="the-clause-exchange"] .article__content,
+  html[data-skin="the-clause-exchange"] .record-grid > .record-index,
+  html[data-skin="the-clause-exchange"] .record-end {
+    box-shadow: none;
+  }
+
+  html[data-skin="the-clause-exchange"] .masthead__copy::after,
+  html[data-skin="the-clause-exchange"] .index-heading::after,
+  html[data-skin="the-clause-exchange"] .page-heading::after,
+  html[data-skin="the-clause-exchange"] .record-head::after {
+    width: 7rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__event,
+  html[data-skin="the-clause-exchange"] .record-row__primitive,
+  html[data-skin="the-clause-exchange"] .record-row__date {
+    font-size: .67rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .article__content,
+  html[data-skin="the-clause-exchange"] .page-prose {
+    background-image:
+      linear-gradient(90deg, transparent 0 1.65rem, rgb(187 62 50 / 38%) 1.65rem calc(1.65rem + 2px), transparent calc(1.65rem + 2px)),
+      repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(80 163 108 / 13%) 2.2rem calc(2.2rem + 1px));
+  }
+
+  html[data-skin="the-clause-exchange"][data-theme="dark"] .article__content,
+  html[data-skin="the-clause-exchange"][data-theme="dark"] .page-prose {
+    background-image:
+      linear-gradient(90deg, transparent 0 1.65rem, rgb(233 136 125 / 49%) 1.65rem calc(1.65rem + 2px), transparent calc(1.65rem + 2px)),
+      repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(143 212 164 / 16%) 2.2rem calc(2.2rem + 1px));
+  }
+}
+
+@media (max-width: 23rem) {
+  html[data-skin="the-clause-exchange"] .site-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .skin-menu {
+    grid-column: 1;
+  }
+}
+
+/* Patch-bay geometry: patch cords, jack lamps, and clause labels. */
+html[data-skin="the-clause-exchange"] {
+  --body: "Moodboard Computer Modern", Georgia, serif;
+  --display: "Moodboard Glitch", "Moodboard Unbounded", sans-serif;
+  --formal: "Moodboard Glitch", "Moodboard Unbounded", sans-serif;
+}
+
+html[data-skin="the-clause-exchange"] body {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(5rem - 1px), rgb(24 32 30 / 9%) calc(5rem - 1px) 5rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.35rem - 1px), rgb(80 163 108 / 10%) calc(2.35rem - 1px) 2.35rem),
+    linear-gradient(135deg, rgb(255 255 255 / 38%), transparent 42%);
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer {
+  background-image:
+    linear-gradient(90deg, transparent 0 7%, rgb(209 154 53 / 92%) 7% calc(7% + .5rem), transparent calc(7% + .5rem) 89%, rgb(80 163 108 / 75%) 89% calc(89% + 2px), transparent calc(89% + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(248 241 205 / 8%) 1.2rem calc(1.2rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .site-header::before,
+html[data-skin="the-clause-exchange"] .site-footer::before {
+  width: clamp(7rem, 20vw, 15rem);
+  background: repeating-linear-gradient(90deg, var(--clause-sage) 0 .72rem, var(--clause-paper-high) .72rem .85rem, var(--clause-blue) .85rem 1rem);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head {
+  background-image:
+    linear-gradient(90deg, transparent 0 1.1rem, rgb(80 163 108 / 76%) 1.1rem calc(1.1rem + 2px), transparent calc(1.1rem + 2px)),
+    linear-gradient(25deg, transparent 0 56%, rgb(187 62 50 / 66%) 56% calc(56% + 2px), transparent calc(56% + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(248 241 205 / 9%) 2.25rem calc(2.25rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy::before,
+html[data-skin="the-clause-exchange"] .index-heading::before,
+html[data-skin="the-clause-exchange"] .page-heading::before,
+html[data-skin="the-clause-exchange"] .record-head::before {
+  content: "PATCH BAY 35 / CIRCUIT LIVE";
+  border: 1px solid var(--clause-ink);
+  box-shadow: .16rem .18rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1 {
+  letter-spacing: -.035em;
+  text-shadow: 3px 3px 0 var(--clause-red), 6px 6px 0 var(--clause-blue);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div {
+  position: relative;
+  overflow: hidden;
+}
+html[data-skin="the-clause-exchange"] .record-facts > div::after {
+  position: absolute;
+  top: .42rem;
+  right: .42rem;
+  width: .52rem;
+  height: .52rem;
+  content: "";
+  background: var(--clause-sage-high);
+  border: 2px solid var(--clause-ink);
+  border-radius: 50%;
+  box-shadow: 0 0 .65rem var(--clause-sage-high);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(3)::after {
+  background: var(--clause-red-high);
+  box-shadow: 0 0 .65rem var(--clause-red-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link {
+  transition: background-color .14s ease, color .14s ease, padding-left .14s ease;
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+  padding-left: 1.15rem;
+}
+
+html[data-skin="the-clause-exchange"] .prose h2 {
+  background: linear-gradient(90deg, rgb(209 154 53 / 56%), transparent 78%);
+  border-left-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .prose h2::before {
+  color: var(--clause-blue);
+  content: "//";
+  font-family: var(--keys);
+  font-size: .84em;
+  font-weight: 900;
+}
+
+html[data-skin="the-clause-exchange"] .prose .info {
+  background-image: linear-gradient(90deg, transparent 0 1rem, rgb(80 163 108 / 26%) 1rem calc(1rem + 2px), transparent calc(1rem + 2px));
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame {
+  border-top-color: var(--clause-blue);
+  box-shadow: .38rem .45rem 0 var(--clause-red), .58rem .66rem 0 rgb(24 32 30 / 28%);
+}
+
+html[data-skin="the-clause-exchange"] .record-grid > .record-index {
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, rgb(80 163 108 / 62%) 1rem calc(1rem + 2px), transparent calc(1rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.1rem, rgb(248 241 205 / 10%) 2.1rem calc(2.1rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] body {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(5rem - 1px), rgb(143 212 164 / 10%) calc(5rem - 1px) 5rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.35rem - 1px), rgb(248 241 205 / 7%) calc(2.35rem - 1px) 2.35rem),
+    linear-gradient(135deg, #18201e, #0b100f 68%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-nav a[aria-current="page"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .quick-filters a[aria-current="true"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .action--primary,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__actions .action--primary,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-actions a:last-child,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .tag-line a:nth-child(odd),
+html[data-skin="the-clause-exchange"][data-theme="dark"] .skin-menu select:focus-visible,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input:focus-visible {
+  color: #18201e;
+  background: var(--clause-sage-high);
+  border-color: #18201e;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head {
+  background-image:
+    linear-gradient(90deg, transparent 0 1.1rem, rgb(143 212 164 / 82%) 1.1rem calc(1.1rem + 2px), transparent calc(1.1rem + 2px)),
+    linear-gradient(25deg, transparent 0 56%, rgb(233 136 125 / 72%) 56% calc(56% + 2px), transparent calc(56% + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(248 241 205 / 9%) 2.25rem calc(2.25rem + 1px));
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-clause-exchange"] .site-header,
+  html[data-skin="the-clause-exchange"] .site-footer {
+    border-left-width: 3px;
+    border-right-width: 3px;
+  }
+
+  html[data-skin="the-clause-exchange"] .masthead h1,
+  html[data-skin="the-clause-exchange"] .index-heading h1,
+  html[data-skin="the-clause-exchange"] .page-heading h1,
+  html[data-skin="the-clause-exchange"] .record-head h1 {
+    font-size: clamp(2.15rem, 12vw, 3.75rem);
+    line-height: .88;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__link:hover,
+  html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+    padding-left: .8rem;
+  }
+}
+
+/* Patch-bay geometry: brass jacks, crossing cords, and stamped clause slips. */
+html[data-skin="the-clause-exchange"] {
+  --body: "Moodboard Computer Modern", Georgia, serif;
+  --display: "Moodboard Glitch", "Moodboard Unbounded", sans-serif;
+  --formal: "Moodboard Euler Fraktur", Georgia, serif;
+  --keys: "Moodboard Pixelify", "Courier New", monospace;
+}
+
+html[data-skin="the-clause-exchange"] body {
+  background-image:
+    radial-gradient(circle at 6.2vw 3.2rem, rgb(209 154 53 / 30%) 0 .18rem, transparent .21rem),
+    radial-gradient(circle at calc(100% - 6.2vw) 3.2rem, rgb(209 154 53 / 30%) 0 .18rem, transparent .21rem),
+    repeating-linear-gradient(90deg, transparent 0 calc(5.8rem - 1px), rgb(24 32 30 / 8%) calc(5.8rem - 1px) 5.8rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.35rem - 1px), rgb(80 163 108 / 10%) calc(2.35rem - 1px) 2.35rem),
+    linear-gradient(112deg, #c4c5b8, var(--clause-bench));
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer {
+  border: 6px double var(--clause-paper-high);
+  border-top: .58rem solid var(--clause-sage);
+  border-radius: .18rem;
+  box-shadow: .48rem .56rem 0 rgb(24 32 30 / 36%), inset 0 0 0 .22rem rgb(209 154 53 / 18%);
+  background-image:
+    radial-gradient(circle at 1.25rem 50%, var(--clause-sage) 0 .15rem, transparent .18rem),
+    radial-gradient(circle at calc(100% - 1.25rem) 50%, var(--clause-sage) 0 .15rem, transparent .18rem),
+    repeating-linear-gradient(90deg, transparent 0 2.7rem, rgb(248 241 205 / 8%) 2.7rem calc(2.7rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(248 241 205 / 7%) 1.2rem calc(1.2rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .site-footer {
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-header::before,
+html[data-skin="the-clause-exchange"] .site-footer::before {
+  width: clamp(7rem, 20vw, 15rem);
+  background: repeating-linear-gradient(90deg, var(--clause-sage) 0 .55rem, var(--clause-paper-high) .55rem .68rem, var(--clause-blue) .68rem .9rem, var(--clause-paper-high) .9rem 1.03rem);
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__name {
+  letter-spacing: .015em;
+  text-shadow: 2px 2px 0 var(--clause-red), 4px 4px 0 rgb(80 163 108 / 72%);
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__scope,
+html[data-skin="the-clause-exchange"] .eyebrow,
+html[data-skin="the-clause-exchange"] .record-head__key,
+html[data-skin="the-clause-exchange"] .archive-search label,
+html[data-skin="the-clause-exchange"] .all-tags summary,
+html[data-skin="the-clause-exchange"] .record-toc summary,
+html[data-skin="the-clause-exchange"] .record-facts dt,
+html[data-skin="the-clause-exchange"] .archive-year > header span,
+html[data-skin="the-clause-exchange"] .record-end nav span {
+  font-family: var(--keys);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head {
+  border: 6px double var(--clause-paper-high);
+  border-top-color: var(--clause-sage);
+  border-right-color: var(--clause-blue);
+  border-radius: .18rem;
+  background-image:
+    radial-gradient(circle at calc(100% - 1.5rem) 1.25rem, rgb(209 154 53 / 72%) 0 .18rem, transparent .21rem),
+    linear-gradient(145deg, transparent 0 63%, rgb(187 62 50 / 56%) 63% calc(63% + 2px), transparent calc(63% + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(248 241 205 / 8%) 2.25rem calc(2.25rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy::before,
+html[data-skin="the-clause-exchange"] .index-heading::before,
+html[data-skin="the-clause-exchange"] .page-heading::before,
+html[data-skin="the-clause-exchange"] .record-head::before {
+  content: "PATCH BAY 35 / CLAUSE LIVE";
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  box-shadow: .16rem .18rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1 {
+  letter-spacing: .005em;
+  text-shadow: 3px 3px 0 var(--clause-red), 6px 6px 0 var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
+  border: 6px double var(--clause-ink);
+  border-top-color: var(--clause-sage);
+  border-radius: .18rem;
+  background-image:
+    linear-gradient(90deg, transparent 0 2.1rem, rgb(187 62 50 / 41%) 2.1rem calc(2.1rem + 2px), transparent calc(2.1rem + 2px)),
+    radial-gradient(circle at calc(100% - 1.1rem) 1.1rem, rgb(80 163 108 / 58%) 0 .16rem, transparent .19rem),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(80 163 108 / 11%) 2.35rem calc(2.35rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-groups,
+html[data-skin="the-clause-exchange"] .page-prose,
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .record-end {
+  border: 5px double var(--clause-ink);
+  border-top-color: var(--clause-sage);
+  border-left: .72rem solid var(--clause-red);
+  border-radius: .15rem;
+  background-image:
+    linear-gradient(90deg, transparent 0 2.35rem, rgb(187 62 50 / 35%) 2.35rem calc(2.35rem + 2px), transparent calc(2.35rem + 2px)),
+    radial-gradient(circle at calc(100% - 1rem) 1rem, rgb(209 154 53 / 48%) 0 .15rem, transparent .18rem),
+    repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(80 163 108 / 11%) 2.2rem calc(2.2rem + 1px));
+}
+html[data-skin="the-clause-exchange"] .record-facts > div {
+  border-style: double;
+  border-radius: 50% 50% .2rem .2rem;
+  box-shadow: inset 0 0 0 .2rem rgb(24 32 30 / 18%), .24rem .3rem 0 var(--clause-red);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div::after {
+  width: .68rem;
+  height: .68rem;
+  border: 3px double var(--clause-ink);
+  box-shadow: 0 0 .7rem var(--clause-sage-high), inset 0 0 0 .1rem var(--clause-paper-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+  padding-left: 1.15rem;
+  background-image: linear-gradient(90deg, var(--clause-ink), rgb(24 32 30 / 86%)), radial-gradient(circle at calc(100% - 1.2rem) 50%, var(--clause-sage) 0 .22rem, transparent .25rem);
+}
+
+html[data-skin="the-clause-exchange"] .prose h2 {
+  border-left-color: var(--clause-red);
+  background: linear-gradient(90deg, rgb(209 154 53 / 43%), transparent 78%);
+}
+
+html[data-skin="the-clause-exchange"] .prose h2::before {
+  color: var(--clause-blue);
+  content: "C/";
+  font-family: var(--keys);
+  font-size: .8em;
+  font-weight: 900;
+}
+
+html[data-skin="the-clause-exchange"] .prose .info,
+html[data-skin="the-clause-exchange"] .prose blockquote,
+html[data-skin="the-clause-exchange"] .prose .katex-display {
+  border-radius: .2rem;
+  background-image: radial-gradient(circle at 1rem 1rem, rgb(209 154 53 / 45%) 0 .12rem, transparent .15rem);
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame,
+html[data-skin="the-clause-exchange"] .record-grid > .record-index {
+  border-radius: .18rem;
+  box-shadow: .38rem .45rem 0 var(--clause-red), .58rem .66rem 0 rgb(24 32 30 / 28%);
+}
+
+html[data-skin="the-clause-exchange"] .record-grid > .record-index {
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, rgb(80 163 108 / 55%) 1rem calc(1rem + 2px), transparent calc(1rem + 2px)),
+    radial-gradient(circle at calc(100% - 1rem) 1rem, rgb(209 154 53 / 65%) 0 .15rem, transparent .18rem),
+    repeating-linear-gradient(0deg, transparent 0 2.1rem, rgb(248 241 205 / 10%) 2.1rem calc(2.1rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] body {
+  background-image:
+    radial-gradient(circle at 6.2vw 3.2rem, rgb(209 154 53 / 30%) 0 .18rem, transparent .21rem),
+    radial-gradient(circle at calc(100% - 6.2vw) 3.2rem, rgb(209 154 53 / 30%) 0 .18rem, transparent .21rem),
+    repeating-linear-gradient(90deg, transparent 0 calc(5.8rem - 1px), rgb(143 212 164 / 9%) calc(5.8rem - 1px) 5.8rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.35rem - 1px), rgb(248 241 205 / 7%) calc(2.35rem - 1px) 2.35rem),
+    linear-gradient(112deg, #172723, #0b100f 68%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-grid > .record-index {
+  border-color: var(--clause-ink);
+  border-top-color: var(--clause-sage);
+  background-color: var(--clause-void);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-page,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-shell {
+  background-color: #162822;
+  border-color: var(--clause-ink);
+  border-top-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-tools,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-groups,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-prose,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .article__content,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
+  color: var(--clause-ink);
+  background-color: #29453a;
+  border-color: var(--clause-ink);
+  border-top-color: var(--clause-sage);
+  border-left-color: var(--clause-red);
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-clause-exchange"] .site-header,
+  html[data-skin="the-clause-exchange"] .site-footer,
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .page-shell,
+  html[data-skin="the-clause-exchange"] .error-shell {
+    border-left-width: 4px;
+    border-right-width: 4px;
+  }
+
+  html[data-skin="the-clause-exchange"] .masthead__copy,
+  html[data-skin="the-clause-exchange"] .index-heading,
+  html[data-skin="the-clause-exchange"] .page-heading,
+  html[data-skin="the-clause-exchange"] .record-head {
+    border-width: 4px;
+    border-top-width: .48rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__link:hover,
+  html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+    padding-left: .8rem;
+  }
+}
+
+/* Site topology */
+html[data-skin="the-clause-exchange"] {
+  --clause-bay-gap: clamp(.8rem, 1.35vw, 1.45rem);
+  --clause-bay-border: color-mix(in srgb, var(--clause-paper-high) 74%, transparent);
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer,
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page {
+  width: min(calc(100% - 2rem), 106rem);
+}
+
+html[data-skin="the-clause-exchange"] .site-header {
+  padding: .45rem;
+  background-color: var(--clause-void);
+  border: 5px solid var(--clause-ink);
+  border-top-color: var(--clause-sage);
+  box-shadow: .6rem .65rem 0 rgb(24 32 30 / 36%), inset 0 0 0 .25rem rgb(209 154 53 / 22%);
+}
+
+html[data-skin="the-clause-exchange"] .site-header__inner {
+  display: grid;
+  grid-template-columns: minmax(13rem, .82fr) minmax(0, 2.18fr);
+  gap: var(--clause-bay-gap);
+  align-items: stretch;
+  padding: .6rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand {
+  display: grid;
+  grid-row: 1 / span 2;
+  align-content: space-between;
+  min-height: 8.7rem;
+  padding: 1rem;
+  color: var(--clause-paper-high);
+  background:
+    radial-gradient(circle at 1rem 1rem, var(--clause-sage-high) 0 .18rem, transparent .21rem),
+    linear-gradient(135deg, rgb(80 163 108 / 31%), transparent 46%),
+    var(--clause-ink);
+  border: 3px solid var(--clause-paper-high);
+  border-left: .7rem solid var(--clause-red);
+  box-shadow: inset 0 0 0 3px rgb(80 163 108 / 36%);
+}
+
+html[data-skin="the-clause-exchange"] .site-brand::after {
+  align-self: end;
+  color: var(--clause-sage-high);
+  content: "ROUTE PATCH / 35";
+  font-family: var(--keys);
+  font-size: .56rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__scope {
+  max-width: 24ch;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: minmax(3rem, auto) minmax(3rem, auto);
+  gap: .45rem;
+  align-content: stretch;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a,
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route] {
+  position: relative;
+  min-width: 0;
+  min-height: 3rem;
+  padding: .55rem .45rem .48rem;
+  border: 2px solid var(--clause-bay-border);
+  border-bottom: .42rem solid var(--clause-blue);
+  box-shadow: inset 0 -2px 0 rgb(24 32 30 / 35%);
+  font-size: .59rem;
+  letter-spacing: .075em;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route]::before {
+  display: block;
+  margin-bottom: .18rem;
+  color: var(--clause-sage-high);
+  content: "PATCH";
+  font-family: var(--mono);
+  font-size: .48rem;
+  letter-spacing: .11em;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="home" i],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(1) {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+  border-bottom-color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="archive" i],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(2) {
+  grid-column: 4 / span 3;
+  grid-row: 1;
+  border-bottom-color: var(--clause-blue-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="about" i],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(3) {
+  grid-column: 7 / span 2;
+  grid-row: 1;
+  border-bottom-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="rss" i],
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="feed" i],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(4) {
+  grid-column: 9 / span 2;
+  grid-row: 1;
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  border-bottom-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route="source" i],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(5) {
+  grid-column: 11 / -1;
+  grid-row: 1;
+  border-bottom-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[aria-current="page"] {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  border-bottom-color: var(--clause-red);
+  box-shadow: inset 0 -2px 0 rgb(255 255 255 / 42%);
+}
+
+html[data-skin="the-clause-exchange"] .theme-toggle {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 3rem;
+  padding: .45rem;
+  color: var(--clause-paper-high);
+  background:
+    radial-gradient(circle at 1rem 50%, var(--clause-sage-high) 0 .26rem, transparent .3rem),
+    var(--clause-ink);
+  border: 2px solid var(--clause-bay-border);
+  border-left: .52rem solid var(--clause-blue);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px rgb(80 163 108 / 30%);
+  font-size: .58rem;
+  letter-spacing: .055em;
+}
+
+html[data-skin="the-clause-exchange"] .theme-toggle[aria-pressed="true"] {
+  color: var(--clause-ink);
+  background:
+    radial-gradient(circle at 1rem 50%, var(--clause-red) 0 .26rem, transparent .3rem),
+    var(--clause-sage-high);
+  border-color: var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu {
+  grid-column: 4 / -1;
+  grid-row: 2;
+  display: grid;
+  min-width: 0;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  justify-content: space-between;
+  padding: .45rem .7rem;
+  color: var(--clause-paper-high);
+  background: linear-gradient(90deg, var(--clause-red) 0 .48rem, var(--clause-ink) .48rem 100%);
+  border: 2px solid var(--clause-bay-border);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px rgb(187 62 50 / 26%);
+  font-size: .59rem;
+  letter-spacing: .06em;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary::before {
+  color: var(--clause-sage-high);
+  content: "ROUTE BOARD";
+  font-family: var(--mono);
+  font-size: .53rem;
+  letter-spacing: .08em;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel {
+  right: 0;
+  left: 0;
+  width: auto;
+  margin-top: .45rem;
+  padding: .85rem;
+  border: 3px solid var(--clause-ink);
+  border-top: .55rem solid var(--clause-blue);
+  box-shadow: .35rem .4rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel label {
+  color: var(--clause-ink-soft);
+}
+
+html[data-skin="the-clause-exchange"] .skin-randomizer {
+  display: flex;
+  width: 100%;
+  min-height: 2.8rem;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem;
+  color: var(--clause-paper-high);
+  background: linear-gradient(90deg, var(--clause-red), #8d2f29);
+  border: 2px solid var(--clause-ink);
+  border-bottom: .4rem solid var(--clause-ink);
+  border-radius: 0;
+  box-shadow: .16rem .2rem 0 var(--clause-blue);
+  font-family: var(--keys);
+  font-size: .63rem;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .theme-toggle:hover,
+html[data-skin="the-clause-exchange"] .theme-toggle:focus-visible,
+html[data-skin="the-clause-exchange"] .skin-menu summary:hover,
+html[data-skin="the-clause-exchange"] .skin-menu summary:focus-visible,
+html[data-skin="the-clause-exchange"] .skin-randomizer:hover,
+html[data-skin="the-clause-exchange"] .skin-randomizer:focus-visible,
+html[data-skin="the-clause-exchange"] .site-nav > a:hover,
+html[data-skin="the-clause-exchange"] .site-nav > a:focus-visible {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  box-shadow: .14rem .18rem 0 var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--clause-bay-gap);
+  padding: clamp(1rem, 1.8vw, 1.7rem);
+  background-color: #293b35;
+  background-image:
+    radial-gradient(circle at 1rem 1rem, rgb(209 154 53 / 65%) 0 .13rem, transparent .16rem),
+    repeating-linear-gradient(90deg, transparent 0 calc(4.85rem - 1px), rgb(248 241 205 / 10%) calc(4.85rem - 1px) 4.85rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.2rem - 1px), rgb(248 241 205 / 9%) calc(2.2rem - 1px) 2.2rem);
+  border-top-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .masthead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(21rem, 7fr);
+  gap: var(--clause-bay-gap);
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell .masthead__copy {
+  display: grid;
+  align-content: start;
+  min-height: 18.25rem;
+  margin: 0;
+  border-left: .8rem solid var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell .masthead__actions {
+  align-self: end;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index {
+  grid-column: 1 / span 8;
+  align-self: start;
+  margin: 0;
+  padding: clamp(1rem, 1.7vw, 1.55rem);
+  background-color: var(--clause-paper-high);
+  border-top-color: var(--clause-blue);
+  border-right: .58rem solid var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index .section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .7rem;
+  align-items: end;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index .record-row__link,
+html[data-skin="the-clause-exchange"] .archive-groups .record-row__link {
+  grid-template-columns: 5.5rem minmax(9rem, 1fr) minmax(5.5rem, 8rem) minmax(4.5rem, 6rem) 1.8rem;
+  gap: .42rem;
+  padding: .7rem .55rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--clause-bay-gap);
+  padding: clamp(1rem, 1.8vw, 1.7rem);
+  background-color: #293b35;
+  background-image:
+    linear-gradient(90deg, transparent 0 8%, rgb(187 62 50 / 45%) 8% calc(8% + 2px), transparent calc(8% + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.2rem - 1px), rgb(248 241 205 / 9%) calc(2.2rem - 1px) 2.2rem);
+  border-top-color: var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell > .index-heading {
+  grid-column: 1 / span 4;
+  display: grid;
+  align-content: space-between;
+  min-height: 23rem;
+  margin: 0;
+  border-top-color: var(--clause-red);
+  border-right-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-tools {
+  grid-column: 5 / -1;
+  align-self: stretch;
+  margin: 0;
+  padding: clamp(1rem, 1.9vw, 1.6rem);
+  background-color: var(--clause-paper-high);
+  border-top-color: var(--clause-sage);
+  border-left: .75rem solid var(--clause-blue);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .55rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 4px double var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search label {
+  color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search p {
+  align-self: center;
+  padding: .55rem .65rem;
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  font-family: var(--keys);
+  font-size: .63rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .42rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .quick-filters a {
+  min-width: 0;
+  min-height: 2.45rem;
+  padding: .35rem;
+  font-size: .57rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .all-tags {
+  padding-top: .2rem;
+  border-top: 3px dotted var(--clause-rule);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--clause-bay-gap);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year {
+  min-width: 0;
+  padding: 1rem;
+  color: var(--clause-ink);
+  background-color: var(--clause-paper-high);
+  background-image: repeating-linear-gradient(0deg, transparent 0 2.15rem, rgb(80 163 108 / 12%) 2.15rem calc(2.15rem + 1px));
+  border: 5px double var(--clause-ink);
+  border-top: .62rem solid var(--clause-blue);
+  box-shadow: .32rem .38rem 0 rgb(24 32 30 / 28%);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year + .archive-year {
+  margin-top: 0;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year:nth-child(2n) {
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header {
+  margin-bottom: .65rem;
+  padding-bottom: .55rem;
+  border-bottom: 3px solid var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header h2 {
+  display: flex;
+  min-width: 3.5ch;
+  min-height: 3.5ch;
+  align-items: center;
+  justify-content: center;
+  color: var(--clause-paper-high);
+  background: var(--clause-ink);
+  border-radius: 50%;
+  font-size: clamp(1.5rem, 3vw, 2.7rem);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header span {
+  padding: .28rem .45rem;
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border: 2px solid var(--clause-ink);
+}
+
+html[data-skin="the-clause-exchange"] .record-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--clause-bay-gap);
+  padding: clamp(1rem, 1.8vw, 1.7rem);
+  background-color: #293b35;
+  background-image:
+    radial-gradient(circle at 1.1rem 1.1rem, rgb(209 154 53 / 62%) 0 .14rem, transparent .17rem),
+    repeating-linear-gradient(90deg, transparent 0 calc(5rem - 1px), rgb(248 241 205 / 8%) calc(5rem - 1px) 5rem),
+    repeating-linear-gradient(0deg, transparent 0 calc(2.2rem - 1px), rgb(248 241 205 / 9%) calc(2.2rem - 1px) 2.2rem);
+  border-top-color: var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-head {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: .9rem var(--clause-bay-gap);
+  margin: 0;
+  padding: clamp(1.25rem, 2.4vw, 2.2rem);
+  border-left: .8rem solid var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head__key {
+  grid-column: 1 / span 8;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head h1 {
+  grid-column: 1 / span 8;
+  max-width: 14ch;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head__abstract {
+  grid-column: 1 / span 8;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-facts {
+  grid-column: 9 / -1;
+  grid-row: 1 / span 3;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: stretch;
+  margin: 0;
+  padding: .55rem;
+  border: 3px solid rgb(248 241 205 / 52%);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-facts > div {
+  min-height: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .tag-line {
+  grid-column: 1 / span 8;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-actions {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: .75rem;
+  border-top: 3px double rgb(248 241 205 / 58%);
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--clause-bay-gap);
+  justify-content: stretch;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .article__content {
+  grid-column: 1 / span 8;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1.15rem, 2.25vw, 2.1rem);
+  border-left: .75rem solid var(--clause-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
+  grid-column: 9 / -1;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  align-self: start;
+  margin: 0;
+  padding: 1rem;
+  border-top-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-toc summary {
+  padding-top: 0;
+  color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .related-records {
+  margin-top: 1.2rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .related-records h2 {
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-end {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(12rem, .8fr) minmax(0, 2.2fr);
+  gap: var(--clause-bay-gap);
+  align-items: center;
+  margin: 0;
+  padding: 1rem;
+  border-top-color: var(--clause-sage);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-end > p {
+  margin: 0;
+  font-family: var(--keys);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-end nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-end nav a {
+  min-width: 0;
+  min-height: 5rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer {
+  padding: .45rem;
+  background-color: var(--clause-void);
+  border: 5px solid var(--clause-ink);
+  border-top-color: var(--clause-red);
+  box-shadow: .55rem .62rem 0 rgb(24 32 30 / 36%), inset 0 0 0 .22rem rgb(209 154 53 / 20%);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(20rem, 1fr);
+  gap: var(--clause-bay-gap);
+  align-items: stretch;
+  padding: .6rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note {
+  display: grid;
+  align-content: center;
+  min-height: 5.75rem;
+  margin: 0;
+  padding: .8rem 1rem;
+  color: var(--clause-paper-high);
+  background: linear-gradient(90deg, var(--clause-red) 0 .52rem, var(--clause-ink) .52rem 100%);
+  border: 2px solid var(--clause-bay-border);
+  font-size: .86rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  justify-content: stretch;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links a {
+  min-width: 0;
+  min-height: 5.75rem;
+  padding: .55rem .4rem;
+  border: 2px solid var(--clause-bay-border);
+  border-bottom: .48rem solid var(--clause-blue);
+  box-shadow: inset 0 0 0 2px rgb(80 163 108 / 22%);
+  font-size: .58rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(2) {
+  border-bottom-color: var(--clause-sage-high);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(3) {
+  color: var(--clause-ink);
+  background: var(--clause-sage-high);
+  border-color: var(--clause-ink);
+  border-bottom-color: var(--clause-red);
+}
+
+@media (max-width: 58rem) {
+  html[data-skin="the-clause-exchange"] .site-header__inner,
+  html[data-skin="the-clause-exchange"] .site-footer__inner,
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .record-page > .record-head,
+  html[data-skin="the-clause-exchange"] .record-page > .record-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .site-brand,
+  html[data-skin="the-clause-exchange"] .site-nav,
+  html[data-skin="the-clause-exchange"] .home-shell > .masthead,
+  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
+  html[data-skin="the-clause-exchange"] .archive-shell > .archive-tools,
+  html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups,
+  html[data-skin="the-clause-exchange"] .record-page > .record-head,
+  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
+  html[data-skin="the-clause-exchange"] .record-page > .record-end,
+  html[data-skin="the-clause-exchange"] .record-page .article__content,
+  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-brand {
+    grid-row: auto;
+    min-height: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav > a[data-route],
+  html[data-skin="the-clause-exchange"] .site-nav > a,
+  html[data-skin="the-clause-exchange"] .theme-toggle,
+  html[data-skin="the-clause-exchange"] .skin-menu {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  html[data-skin="the-clause-exchange"] .home-shell > .masthead,
+  html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups,
+  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
+  html[data-skin="the-clause-exchange"] .record-page > .record-end {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading {
+    min-height: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .archive-shell .quick-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page .record-head__key,
+  html[data-skin="the-clause-exchange"] .record-page .record-head h1,
+  html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
+  html[data-skin="the-clause-exchange"] .record-page .record-facts,
+  html[data-skin="the-clause-exchange"] .record-page .tag-line,
+  html[data-skin="the-clause-exchange"] .record-page .record-actions {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page .record-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="the-clause-exchange"] .site-footer__links,
+  html[data-skin="the-clause-exchange"] .record-page .record-end nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 30rem) {
+  html[data-skin="the-clause-exchange"] .record-page .record-facts,
+  html[data-skin="the-clause-exchange"] .archive-shell .quick-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Final remediation: The Clause Exchange */
+html[data-skin="the-clause-exchange"] {
+  color-scheme: light;
+  --cx-paper: #f7f1e3;
+  --cx-paper-low: #e1e9d4;
+  --cx-surface: #172521;
+  --cx-void: #10131d;
+  --cx-text: #17211f;
+  --cx-heading: #17211f;
+  --cx-code: #14221f;
+  --cx-code-text: #f7f1e3;
+  --cx-inline: #e1e9d4;
+  --cx-link: #075d52;
+  --cx-selected: #e6f0be;
+  --cx-selected-text: #17211f;
+  --cx-muted: #465551;
+  --cx-muted-on-dark: #d3ded2;
+  --cx-rule: #52625d;
+  --cx-signal-green: #327a5d;
+  --cx-signal-red: #7a241e;
+  --cx-signal-yellow: #a36d18;
+  --cx-focus-outer: #7a241e;
+  --cx-focus-inner: #ffffff;
+  --body: "Moodboard Computer Modern", Georgia, serif;
+  --display: "Moodboard Unbounded", "Arial Black", sans-serif;
+  --formal: "Moodboard Euler Fraktur", Georgia, serif;
+  --keys: "Moodboard Pixelify", "Courier New", monospace;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --reading: 68ch;
+  --page: 106rem;
+  --bench: #bec4bb;
+  --shell: var(--cx-surface);
+  --shell-high: var(--cx-surface);
+  --shell-low: var(--cx-void);
+  --navy: var(--cx-void);
+  --navy-soft: var(--cx-surface);
+  --paper: var(--cx-paper);
+  --paper-low: var(--cx-paper-low);
+  --ink: var(--cx-text);
+  --muted: var(--cx-muted);
+  --rule: var(--cx-rule);
+  --link: var(--cx-link);
+  --inline-code: var(--cx-inline);
+  --inline-rule: var(--cx-rule);
+  --yellow: var(--cx-selected);
+  background: var(--bench);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] {
+  color-scheme: dark;
+  --cx-paper: #172521;
+  --cx-paper-low: #253a32;
+  --cx-surface: #172521;
+  --cx-void: #10131d;
+  --cx-text: #f7f1e3;
+  --cx-heading: #fff8e8;
+  --cx-code: #10131d;
+  --cx-code-text: #f7f1e3;
+  --cx-inline: #253a32;
+  --cx-link: #9fe3d0;
+  --cx-selected: #dde9af;
+  --cx-selected-text: #17211f;
+  --cx-muted: #d3ded2;
+  --cx-muted-on-dark: #d3ded2;
+  --cx-rule: #9db2a8;
+  --cx-signal-green: #68c79a;
+  --cx-signal-red: #f08a7e;
+  --cx-signal-yellow: #f4c542;
+  --cx-focus-outer: #f4c542;
+  --cx-focus-inner: #10131d;
+  background: var(--cx-void);
+}
+
+html[data-skin="the-clause-exchange"] body {
+  min-width: 0;
+  color: var(--cx-text);
+  background: var(--bench);
+  background-image: linear-gradient(90deg, transparent 0 calc(50% - 1px), rgb(23 33 31 / 9%) calc(50% - 1px) 50%, transparent 50%), repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(23 33 31 / 8%) 2.5rem calc(2.5rem + 1px));
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] body {
+  color: var(--cx-text);
+  background-color: var(--cx-void);
+  background-image: linear-gradient(90deg, transparent 0 calc(50% - 1px), rgb(247 241 227 / 10%) calc(50% - 1px) 50%, transparent 50%), repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(247 241 227 / 7%) 2.5rem calc(2.5rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] a {
+  color: var(--cx-link);
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: .1em;
+  text-underline-offset: .16em;
+}
+
+html[data-skin="the-clause-exchange"] a:hover {
+  color: var(--cx-signal-red);
+  text-decoration-thickness: .15em;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] a:hover {
+  color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] ::selection {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+}
+
+html[data-skin="the-clause-exchange"] :focus-visible {
+  outline: 3px solid var(--cx-focus-inner);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--cx-focus-outer) !important;
+}
+
+html[data-skin="the-clause-exchange"] .skip-link,
+html[data-skin="the-clause-exchange"] .site-brand__scope,
+html[data-skin="the-clause-exchange"] .site-nav > a,
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-menu__panel label,
+html[data-skin="the-clause-exchange"] .skin-menu select,
+html[data-skin="the-clause-exchange"] .skin-randomizer,
+html[data-skin="the-clause-exchange"] .action,
+html[data-skin="the-clause-exchange"] .record-actions a,
+html[data-skin="the-clause-exchange"] .tag-line a,
+html[data-skin="the-clause-exchange"] .quick-filters a,
+html[data-skin="the-clause-exchange"] .pagination,
+html[data-skin="the-clause-exchange"] .pagination a,
+html[data-skin="the-clause-exchange"] .pagination span,
+html[data-skin="the-clause-exchange"] .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__primitive,
+html[data-skin="the-clause-exchange"] .record-facts dt,
+html[data-skin="the-clause-exchange"] .record-facts dd,
+html[data-skin="the-clause-exchange"] .all-tags__grid a small,
+html[data-skin="the-clause-exchange"] .prose th,
+html[data-skin="the-clause-exchange"] .prose td,
+html[data-skin="the-clause-exchange"] .code-frame__label strong,
+html[data-skin="the-clause-exchange"] .code-frame__label small,
+html[data-skin="the-clause-exchange"] .code-frame__actions button,
+html[data-skin="the-clause-exchange"] .code-frame__gutter,
+html[data-skin="the-clause-exchange"] .code-frame pre,
+html[data-skin="the-clause-exchange"] .code-frame__status,
+html[data-skin="the-clause-exchange"] .record-end,
+html[data-skin="the-clause-exchange"] .site-footer__note,
+html[data-skin="the-clause-exchange"] .site-footer__links a,
+html[data-skin="the-clause-exchange"] .heading-anchor {
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy::before,
+html[data-skin="the-clause-exchange"] .index-heading::before,
+html[data-skin="the-clause-exchange"] .page-heading::before,
+html[data-skin="the-clause-exchange"] .record-head::before,
+html[data-skin="the-clause-exchange"] .site-brand::after,
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route]::before,
+html[data-skin="the-clause-exchange"] .skin-menu summary::before,
+html[data-skin="the-clause-exchange"] .prose h2::before {
+  display: none;
+  content: none;
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer,
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
+  width: min(calc(100% - 2rem), var(--page));
+  min-width: 0;
+  margin: 1rem auto;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  color: var(--cx-code-text);
+  background: var(--cx-surface);
+  background-image: none;
+  border: 2px solid var(--cx-void);
+  border-top: .5rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: .45rem .45rem 0 rgb(16 19 29 / 30%);
+  overflow: visible;
+}
+
+html[data-skin="the-clause-exchange"] .site-header,
+html[data-skin="the-clause-exchange"] .site-footer {
+  padding: .5rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-void);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer {
+  border-top-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .site-header::before,
+html[data-skin="the-clause-exchange"] .site-footer::before,
+html[data-skin="the-clause-exchange"] .masthead__copy::after,
+html[data-skin="the-clause-exchange"] .index-heading::after,
+html[data-skin="the-clause-exchange"] .page-heading::after,
+html[data-skin="the-clause-exchange"] .record-head::after {
+  display: none;
+  content: none;
+}
+
+html[data-skin="the-clause-exchange"] .site-header__inner,
+html[data-skin="the-clause-exchange"] .site-footer__inner {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(.75rem, 1.3vw, 1.3rem);
+  align-items: stretch;
+  padding: 0;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand {
+  grid-column: 1 / span 6;
+  grid-row: auto;
+  display: grid;
+  min-width: 0;
+  min-height: 6rem;
+  align-content: center;
+  padding: 1rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border: 2px solid var(--cx-selected-text);
+  border-left: .6rem solid var(--cx-signal-red);
+  box-shadow: none;
+  text-decoration: none;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__text {
+  min-width: 0;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__name {
+  color: var(--cx-selected-text);
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand__scope {
+  display: block;
+  margin-top: .35rem;
+  color: var(--cx-selected-text);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.35;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav {
+  grid-column: 7 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-template-rows: none;
+  gap: .45rem;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a,
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-randomizer,
+html[data-skin="the-clause-exchange"] .action,
+html[data-skin="the-clause-exchange"] .record-actions a,
+html[data-skin="the-clause-exchange"] .tag-line a,
+html[data-skin="the-clause-exchange"] .quick-filters a,
+html[data-skin="the-clause-exchange"] .pagination a,
+html[data-skin="the-clause-exchange"] .pagination span,
+html[data-skin="the-clause-exchange"] .record-end nav a,
+html[data-skin="the-clause-exchange"] .site-footer__links a {
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: .55rem .65rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border: 2px solid var(--cx-code-text);
+  border-bottom: .35rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-randomizer {
+  cursor: pointer;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu {
+  position: static;
+  min-width: 0;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu summary::after {
+  margin-left: .4rem;
+  color: currentcolor;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel {
+  position: static;
+  z-index: auto;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: .65rem;
+  margin-top: .45rem;
+  padding: .85rem;
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  background-image: none;
+  border: 2px solid var(--cx-text);
+  border-top: .4rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel label {
+  color: var(--cx-text);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: .45rem .55rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border: 2px solid var(--cx-selected-text);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-clause-exchange"] .skin-menu__panel .skin-randomizer {
+  color: var(--cx-code-text);
+  background: var(--cx-signal-red);
+  border-color: var(--cx-code-text);
+  border-bottom-color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a:hover,
+html[data-skin="the-clause-exchange"] .site-nav > a:focus-visible,
+html[data-skin="the-clause-exchange"] .theme-toggle:hover,
+html[data-skin="the-clause-exchange"] .theme-toggle:focus-visible,
+html[data-skin="the-clause-exchange"] .skin-menu summary:hover,
+html[data-skin="the-clause-exchange"] .skin-menu summary:focus-visible,
+html[data-skin="the-clause-exchange"] .action:hover,
+html[data-skin="the-clause-exchange"] .action:focus-visible,
+html[data-skin="the-clause-exchange"] .record-actions a:hover,
+html[data-skin="the-clause-exchange"] .record-actions a:focus-visible,
+html[data-skin="the-clause-exchange"] .tag-line a:hover,
+html[data-skin="the-clause-exchange"] .tag-line a:focus-visible,
+html[data-skin="the-clause-exchange"] .quick-filters a:hover,
+html[data-skin="the-clause-exchange"] .quick-filters a:focus-visible,
+html[data-skin="the-clause-exchange"] .pagination a:hover,
+html[data-skin="the-clause-exchange"] .pagination a:focus-visible,
+html[data-skin="the-clause-exchange"] .record-end nav a:hover,
+html[data-skin="the-clause-exchange"] .record-end nav a:focus-visible,
+html[data-skin="the-clause-exchange"] .site-footer__links a:hover,
+html[data-skin="the-clause-exchange"] .site-footer__links a:focus-visible {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-color: var(--cx-selected-text);
+  border-bottom-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .skin-randomizer:hover,
+html[data-skin="the-clause-exchange"] .skin-randomizer:focus-visible {
+  color: var(--cx-code-text);
+  background: var(--cx-signal-red);
+  border-color: var(--cx-code-text);
+  border-bottom-color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[aria-current="page"],
+html[data-skin="the-clause-exchange"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-clause-exchange"] .skin-menu[open] summary,
+html[data-skin="the-clause-exchange"] .quick-filters a[aria-current="true"],
+html[data-skin="the-clause-exchange"] .action--primary,
+html[data-skin="the-clause-exchange"] .masthead__actions .action--primary,
+html[data-skin="the-clause-exchange"] .record-actions a:last-child,
+html[data-skin="the-clause-exchange"] .tag-line a:nth-child(odd),
+html[data-skin="the-clause-exchange"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-color: var(--cx-selected-text);
+  border-bottom-color: var(--cx-signal-red);
+  box-shadow: inset 0 0 0 2px var(--cx-selected-text);
+  text-decoration: underline;
+}
+
+html[data-skin="the-clause-exchange"] .pagination span[aria-disabled="true"] {
+  color: var(--cx-muted-on-dark);
+  background: var(--cx-void);
+  border-color: var(--cx-muted-on-dark);
+  border-bottom-color: var(--cx-muted-on-dark);
+  box-shadow: none;
+  opacity: 1;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.4vw, 1.4rem);
+  align-items: start;
+}
+
+html[data-skin="the-clause-exchange"] .masthead,
+html[data-skin="the-clause-exchange"] .record-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.4vw, 1.4rem);
+  min-width: 0;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head {
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(1.15rem, 2.4vw, 2.2rem);
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  background-image: none;
+  border: 2px solid var(--cx-text);
+  border-left: .6rem solid var(--cx-signal-red);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .eyebrow,
+html[data-skin="the-clause-exchange"] .record-head__key,
+html[data-skin="the-clause-exchange"] .archive-search label,
+html[data-skin="the-clause-exchange"] .all-tags summary,
+html[data-skin="the-clause-exchange"] .record-toc summary,
+html[data-skin="the-clause-exchange"] .record-facts dt,
+html[data-skin="the-clause-exchange"] .archive-year > header span,
+html[data-skin="the-clause-exchange"] .record-end nav span {
+  color: var(--cx-signal-red);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1,
+html[data-skin="the-clause-exchange"] .error-shell h1 {
+  max-width: 16ch;
+  margin: .25rem 0 .75rem;
+  color: var(--cx-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 3.8vw, 3.75rem);
+  font-weight: 900;
+  letter-spacing: -.055em;
+  line-height: .98;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__lede,
+html[data-skin="the-clause-exchange"] .index-heading > p:last-child,
+html[data-skin="the-clause-exchange"] .page-heading > p:last-child,
+html[data-skin="the-clause-exchange"] .record-head__abstract {
+  color: var(--cx-text);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .masthead__actions,
+html[data-skin="the-clause-exchange"] .record-actions,
+html[data-skin="the-clause-exchange"] .tag-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1rem;
+  padding-top: .85rem;
+  border-top: 1px solid var(--cx-rule);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 1rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border: 0;
+  border-right: 1px solid var(--cx-code-text);
+  border-bottom: .35rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+html[data-skin="the-clause-exchange"] .record-facts > div:last-child {
+  border-right: 0;
+}
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(even) {
+  border-bottom-color: var(--cx-signal-red);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div::after {
+  position: absolute;
+  top: .55rem;
+  right: .55rem;
+  width: .55rem;
+  height: .55rem;
+  content: "";
+  background: var(--cx-signal-green);
+  border: 1px solid var(--cx-code-text);
+  border-radius: 50%;
+  box-shadow: none;
+}
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(even)::after {
+  background: var(--cx-signal-red);
+}
+html[data-skin="the-clause-exchange"] .record-facts dt {
+  color: var(--cx-muted-on-dark);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-groups,
+html[data-skin="the-clause-exchange"] .page-prose,
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .record-end {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  border: 2px solid var(--cx-text);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index {
+  grid-column: 1 / -1;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  align-items: end;
+  justify-content: space-between;
+  margin: 0 0 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid currentcolor;
+}
+
+html[data-skin="the-clause-exchange"] .section-heading h2,
+html[data-skin="the-clause-exchange"] .archive-year h2,
+html[data-skin="the-clause-exchange"] .related-records h2 {
+  margin: 0;
+  color: currentcolor;
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .section-heading > p,
+html[data-skin="the-clause-exchange"] .pagination__position {
+  color: var(--cx-muted-on-dark);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+html[data-skin="the-clause-exchange"] .record-row__link {
+  display: grid;
+  grid-template-columns: minmax(5.25rem, .85fr) minmax(0, 3fr) minmax(5rem, 1.25fr) minmax(4.5rem, 1fr) 1.75rem;
+  gap: .5rem;
+  min-width: 0;
+  align-items: center;
+}
+
+html[data-skin="the-clause-exchange"] .record-row {
+  min-width: 0;
+  background: transparent;
+  border-bottom: 1px solid rgb(247 241 227 / 45%);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(even) {
+  background: rgb(247 241 227 / 7%);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link {
+  min-height: 3.25rem;
+  padding: .75rem .7rem;
+  color: var(--cx-code-text);
+  border-left: .35rem solid var(--cx-signal-green);
+  text-decoration: none;
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(3n + 2) .record-row__link {
+  border-left-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(3n) .record-row__link {
+  border-left-color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible {
+  padding-left: .7rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__primitive {
+  color: var(--cx-muted-on-dark);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__primitive {
+  font-family: var(--mono);
+}
+
+html[data-skin="the-clause-exchange"] .record-row__title {
+  min-width: 0;
+  color: inherit;
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__date,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-clause-exchange"] .record-row__link:focus-visible .record-row__primitive {
+  color: var(--cx-selected-text);
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a {
+  min-width: 0;
+  min-height: 2.75rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: center;
+  padding: .65rem 0;
+  color: var(--cx-code-text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--cx-rule);
+  border-left: .3rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:nth-child(n) {
+  color: var(--cx-code-text);
+  background: transparent;
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:nth-child(even) {
+  border-left-color: var(--cx-signal-red);
+}
+html[data-skin="the-clause-exchange"] .all-tags__grid a:hover,
+html[data-skin="the-clause-exchange"] .all-tags__grid a:focus-visible {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-color: var(--cx-selected-text);
+}
+html[data-skin="the-clause-exchange"] .pagination__position strong {
+  color: inherit;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+html[data-skin="the-clause-exchange"] .pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .pagination__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell > .index-heading {
+  grid-column: 1 / span 6;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .archive-tools {
+  grid-column: 7 / -1;
+  display: grid;
+  gap: 1rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .archive-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .55rem .75rem;
+  align-items: end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .archive-search label {
+  grid-column: 1 / -1;
+  color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .archive-search input {
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: .55rem .65rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border: 2px solid var(--cx-selected-text);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .archive-search input::placeholder {
+  color: #40504a;
+  opacity: 1;
+}
+
+html[data-skin="the-clause-exchange"] .archive-search p {
+  margin: 0;
+  color: var(--cx-code-text);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-clause-exchange"] .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+html[data-skin="the-clause-exchange"] .quick-filters a {
+  min-height: 2.75rem;
+  padding: .45rem;
+}
+
+html[data-skin="the-clause-exchange"] .all-tags {
+  border-top: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .all-tags summary {
+  padding: .75rem 0;
+  color: var(--cx-code-text);
+  cursor: pointer;
+}
+
+html[data-skin="the-clause-exchange"] .archive-groups {
+  grid-column: 1 / -1;
+  display: block;
+  padding: 0;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .archive-year {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  color: var(--cx-code-text);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--cx-code-text);
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .archive-year + .archive-year {
+  margin-top: 0;
+}
+
+html[data-skin="the-clause-exchange"] .archive-year > header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .archive-year > header h2 {
+  min-width: 0;
+  min-height: 0;
+  display: block;
+  color: var(--cx-code-text);
+  background: transparent;
+  border-radius: 0;
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+}
+
+html[data-skin="the-clause-exchange"] .archive-year > header span {
+  color: var(--cx-muted-on-dark);
+  background: transparent;
+  border: 0;
+}
+
+html[data-skin="the-clause-exchange"] .archive-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 1rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border: 2px solid var(--cx-selected-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-head {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: .8rem clamp(.75rem, 1.3vw, 1.3rem);
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head__key,
+html[data-skin="the-clause-exchange"] .record-page .record-head h1,
+html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
+html[data-skin="the-clause-exchange"] .record-page .tag-line {
+  grid-column: 1 / span 6;
+  min-width: 0;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head__key {
+  color: var(--cx-signal-red);
+  justify-content: flex-start;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-head h1 {
+  max-width: 16ch;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-facts {
+  grid-column: 7 / -1;
+  grid-row: 1 / span 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: var(--cx-void);
+  border: 2px solid var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .record-facts dd {
+  margin: .45rem 0 0;
+  color: var(--cx-code-text);
+  font-family: var(--body);
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-actions {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-grid {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .article__content {
+  grid-column: 1 / span 10;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  border-color: var(--cx-text);
+  border-left: .6rem solid var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
+  grid-column: 11 / -1;
+  position: sticky;
+  top: 1rem;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  align-self: start;
+  margin: 0;
+  padding: 1rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border: 2px solid var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .record-toc {
+  border-bottom: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc summary {
+  padding: .5rem 0 .75rem;
+  color: var(--cx-code-text);
+  cursor: pointer;
+}
+
+html[data-skin="the-clause-exchange"] .record-toc li,
+html[data-skin="the-clause-exchange"] .related-records li {
+  border-top: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .record-toc a,
+html[data-skin="the-clause-exchange"] .related-records a {
+  display: block;
+  padding: .65rem 0;
+  color: var(--cx-code-text);
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+html[data-skin="the-clause-exchange"] .record-toc a:hover,
+html[data-skin="the-clause-exchange"] .record-toc a:focus-visible,
+html[data-skin="the-clause-exchange"] .related-records a:hover,
+html[data-skin="the-clause-exchange"] .related-records a:focus-visible {
+  color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] .toc-fallback {
+  color: var(--cx-muted-on-dark);
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .related-records h2 {
+  margin: 0;
+  color: var(--cx-code-text);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  text-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .record-page > .record-end {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 10fr);
+  gap: clamp(.75rem, 1.3vw, 1.3rem);
+  align-items: center;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .record-end > p {
+  margin: 0;
+  color: var(--cx-code-text);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-clause-exchange"] .record-end > p a {
+  color: var(--cx-link);
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav a {
+  min-height: 3.25rem;
+  text-transform: none;
+}
+
+html[data-skin="the-clause-exchange"] .record-end nav span {
+  display: block;
+  margin-bottom: .25rem;
+  color: inherit;
+}
+
+html[data-skin="the-clause-exchange"] .page-shell > .page-heading {
+  grid-column: 1 / span 6;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .page-shell > .page-prose {
+  grid-column: 7 / -1;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  border-color: var(--cx-text);
+  border-left: .6rem solid var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell {
+  min-height: 0;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-top-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell > :not(nav) {
+  grid-column: 1 / span 6;
+  min-width: 0;
+}
+
+html[data-skin="the-clause-exchange"] .error-code {
+  color: var(--cx-selected);
+  font-family: var(--display);
+  font-size: clamp(3rem, 7vw, 4.5rem);
+}
+
+html[data-skin="the-clause-exchange"] .error-code i {
+  background: var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell .eyebrow,
+html[data-skin="the-clause-exchange"] .error-shell h1,
+html[data-skin="the-clause-exchange"] .error-shell > p {
+  color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .error-shell > p {
+  font-size: 1.125rem;
+}
+
+html[data-skin="the-clause-exchange"] .error-shell nav {
+  grid-column: 7 / -1;
+  grid-row: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  align-self: start;
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .prose {
+  max-width: var(--reading);
+  color: var(--cx-text);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+html[data-skin="the-clause-exchange"] .prose h1,
+html[data-skin="the-clause-exchange"] .prose h2,
+html[data-skin="the-clause-exchange"] .prose h3,
+html[data-skin="the-clause-exchange"] .prose h4,
+html[data-skin="the-clause-exchange"] .prose h5,
+html[data-skin="the-clause-exchange"] .prose h6 {
+  color: var(--cx-heading);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+html[data-skin="the-clause-exchange"] .prose h1 { font-size: clamp(2rem, 3.3vw, 3rem); }
+html[data-skin="the-clause-exchange"] .prose h2 {
+  padding: .55rem 0 .45rem;
+  background: transparent;
+  border-top: 3px double var(--cx-text);
+  border-left: .35rem solid var(--cx-signal-red);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+}
+html[data-skin="the-clause-exchange"] .prose h3 {
+  color: var(--cx-heading);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  text-transform: none;
+}
+html[data-skin="the-clause-exchange"] .prose h4 { font-size: 1.125rem; }
+html[data-skin="the-clause-exchange"] .prose h5,
+html[data-skin="the-clause-exchange"] .prose h6 { font-size: 1rem; }
+
+html[data-skin="the-clause-exchange"] .prose a,
+html[data-skin="the-clause-exchange"] .record-end > p a {
+  color: var(--cx-link);
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .prose a:hover,
+html[data-skin="the-clause-exchange"] .prose a:focus-visible,
+html[data-skin="the-clause-exchange"] .record-end > p a:hover,
+html[data-skin="the-clause-exchange"] .record-end > p a:focus-visible {
+  color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose a:hover,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose a:focus-visible,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end > p a:hover,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end > p a:focus-visible {
+  color: var(--cx-signal-yellow);
+}
+
+html[data-skin="the-clause-exchange"] .heading-anchor {
+  color: var(--cx-link);
+}
+
+html[data-skin="the-clause-exchange"] .prose hr {
+  height: 3px;
+  background: var(--cx-signal-green);
+  border: 0;
+}
+
+html[data-skin="the-clause-exchange"] .prose .info,
+html[data-skin="the-clause-exchange"] .prose blockquote,
+html[data-skin="the-clause-exchange"] .prose .katex-display {
+  color: var(--cx-text);
+  background: var(--cx-paper-low);
+  background-image: none;
+  border: 2px solid var(--cx-text);
+  border-left: .45rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .prose blockquote {
+  border-left-color: var(--cx-signal-red);
+  font-family: var(--body);
+  font-style: italic;
+}
+
+html[data-skin="the-clause-exchange"] .prose .katex-display {
+  max-width: 100%;
+  padding: .85rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .prose code {
+  color: var(--cx-text);
+  background: var(--cx-inline);
+  border: 1px solid var(--cx-rule);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .prose th,
+html[data-skin="the-clause-exchange"] .prose td {
+  color: var(--cx-text);
+  background: transparent;
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .prose th {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .prose tr:nth-child(even) td {
+  background: var(--cx-paper-low);
+}
+
+html[data-skin="the-clause-exchange"] .prose img:not(.emoji) {
+  border: 2px solid var(--cx-text);
+  box-shadow: .3rem .3rem 0 var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame {
+  max-width: 100%;
+  color: var(--cx-code-text);
+  background: var(--cx-code);
+  border: 2px solid var(--cx-code-text);
+  border-top: .4rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__bar {
+  min-height: 0;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-bottom: 2px solid var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__label strong,
+html[data-skin="the-clause-exchange"] .code-frame__label small {
+  color: var(--cx-code-text);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__actions button {
+  min-height: 2.75rem;
+  padding: .45rem .6rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border: 2px solid var(--cx-selected-text);
+  border-bottom: .3rem solid var(--cx-signal-red);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__actions button:last-child {
+  color: var(--cx-code-text);
+  background: var(--cx-signal-red);
+  border-color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame__gutter {
+  color: var(--cx-muted-on-dark);
+  background: var(--cx-void);
+  border-right-color: var(--cx-signal-green);
+  font-family: var(--mono);
+  line-height: 1.62;
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame > .highlight,
+html[data-skin="the-clause-exchange"] .prose .code-frame__viewport > .highlight {
+  overflow: visible;
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame pre {
+  color: var(--cx-code-text);
+  background: var(--cx-code);
+  overflow: auto;
+  font-family: var(--mono);
+  line-height: 1.62;
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame pre code {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font-size: inherit;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__status {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-top: 2px solid var(--cx-signal-red);
+  font-weight: 700;
+}
+
+html[data-skin="the-clause-exchange"] .code-frame__fallback {
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  border: 2px solid var(--cx-signal-red);
+  border-radius: 0;
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .highlight .c,
+html[data-skin="the-clause-exchange"] .highlight .c1,
+html[data-skin="the-clause-exchange"] .highlight .cm,
+html[data-skin="the-clause-exchange"] .highlight .cp,
+html[data-skin="the-clause-exchange"] .highlight .cs { color: #c9d6d0; }
+html[data-skin="the-clause-exchange"] .highlight .err { color: #fff8e8; background: #7a241e; }
+html[data-skin="the-clause-exchange"] .highlight .k,
+html[data-skin="the-clause-exchange"] .highlight .kc,
+html[data-skin="the-clause-exchange"] .highlight .kd,
+html[data-skin="the-clause-exchange"] .highlight .kn,
+html[data-skin="the-clause-exchange"] .highlight .kp,
+html[data-skin="the-clause-exchange"] .highlight .kr,
+html[data-skin="the-clause-exchange"] .highlight .kt { color: #b7ead0; font-weight: 700; }
+html[data-skin="the-clause-exchange"] .highlight .o,
+html[data-skin="the-clause-exchange"] .highlight .ow { color: #f4cf72; }
+html[data-skin="the-clause-exchange"] .highlight .n,
+html[data-skin="the-clause-exchange"] .highlight .na,
+html[data-skin="the-clause-exchange"] .highlight .nb,
+html[data-skin="the-clause-exchange"] .highlight .nc,
+html[data-skin="the-clause-exchange"] .highlight .nd,
+html[data-skin="the-clause-exchange"] .highlight .ne,
+html[data-skin="the-clause-exchange"] .highlight .nf,
+html[data-skin="the-clause-exchange"] .highlight .ni,
+html[data-skin="the-clause-exchange"] .highlight .nl,
+html[data-skin="the-clause-exchange"] .highlight .nn,
+html[data-skin="the-clause-exchange"] .highlight .no,
+html[data-skin="the-clause-exchange"] .highlight .nt,
+html[data-skin="the-clause-exchange"] .highlight .nv { color: #f7f1e3; }
+html[data-skin="the-clause-exchange"] .highlight .nc,
+html[data-skin="the-clause-exchange"] .highlight .nf { color: #f3ad9f; }
+html[data-skin="the-clause-exchange"] .highlight .s,
+html[data-skin="the-clause-exchange"] .highlight .s1,
+html[data-skin="the-clause-exchange"] .highlight .s2,
+html[data-skin="the-clause-exchange"] .highlight .sa,
+html[data-skin="the-clause-exchange"] .highlight .sb,
+html[data-skin="the-clause-exchange"] .highlight .sc,
+html[data-skin="the-clause-exchange"] .highlight .sd,
+html[data-skin="the-clause-exchange"] .highlight .se,
+html[data-skin="the-clause-exchange"] .highlight .sh,
+html[data-skin="the-clause-exchange"] .highlight .si,
+html[data-skin="the-clause-exchange"] .highlight .sr,
+html[data-skin="the-clause-exchange"] .highlight .ss,
+html[data-skin="the-clause-exchange"] .highlight .sx { color: #dce5a7; }
+html[data-skin="the-clause-exchange"] .highlight .m,
+html[data-skin="the-clause-exchange"] .highlight .mb,
+html[data-skin="the-clause-exchange"] .highlight .mf,
+html[data-skin="the-clause-exchange"] .highlight .mh,
+html[data-skin="the-clause-exchange"] .highlight .mi,
+html[data-skin="the-clause-exchange"] .highlight .mo,
+html[data-skin="the-clause-exchange"] .highlight .il { color: #f4cf72; }
+html[data-skin="the-clause-exchange"] .highlight .gd { color: #f3ad9f; }
+html[data-skin="the-clause-exchange"] .highlight .gi { color: #b7ead0; }
+html[data-skin="the-clause-exchange"] .highlight .gh,
+html[data-skin="the-clause-exchange"] .highlight .gu { color: #d8eee1; font-weight: 700; }
+
+html[data-skin="the-clause-exchange"] .site-footer__note {
+  grid-column: 1 / span 6;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: .8rem 1rem;
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-left: .55rem solid var(--cx-signal-red);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note a {
+  color: var(--cx-link);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links {
+  grid-column: 7 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  min-width: 0;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__links a {
+  min-height: 4rem;
+  text-transform: none;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .article__content,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-prose {
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  border-color: var(--cx-text);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .error-shell h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h1,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h2,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h3,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h4,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h5,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose h6 {
+  color: var(--cx-heading);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose .info,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose blockquote,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose .katex-display,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose tr:nth-child(even) td {
+  color: var(--cx-text);
+  background: var(--cx-paper-low);
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose code {
+  color: var(--cx-text);
+  background: var(--cx-inline);
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a[data-route],
+html[data-skin="the-clause-exchange"] .site-nav > a:nth-of-type(n),
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .masthead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.4vw, 1.4rem);
+  margin: 0;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell .masthead__copy {
+  min-height: 0;
+  border-left-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index .section-heading {
+  display: flex;
+  grid-template-columns: none;
+}
+
+html[data-skin="the-clause-exchange"] .home-shell > .record-index .record-row__link,
+html[data-skin="the-clause-exchange"] .archive-groups .record-row__link {
+  grid-template-columns: minmax(5.25rem, .85fr) minmax(0, 3fr) minmax(5rem, 1.25fr) minmax(4.5rem, 1fr) 1.75rem;
+  gap: .5rem;
+  padding: .75rem .7rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups {
+  display: block;
+  padding: 0;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border: 2px solid var(--cx-code-text);
+  border-top: .45rem solid var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  color: var(--cx-code-text);
+  background: transparent;
+  background-image: none;
+  border: 0;
+  border-bottom: 2px solid var(--cx-code-text);
+  box-shadow: none;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header {
+  margin-bottom: .75rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header h2 {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  color: var(--cx-code-text);
+  background: transparent;
+  border-radius: 0;
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header span {
+  padding: 0;
+  color: var(--cx-muted-on-dark);
+  background: transparent;
+  border: 0;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search,
+html[data-skin="the-clause-exchange"] .archive-shell .all-tags {
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search label,
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search p {
+  color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .archive-search p {
+  padding: 0;
+  background: transparent;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .quick-filters {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+html[data-skin="the-clause-exchange"] .archive-shell .quick-filters a {
+  min-height: 2.75rem;
+  padding: .45rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-facts > div {
+  min-height: 0;
+  padding: 1rem;
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-radius: 0;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-toc summary {
+  padding: .5rem 0 .75rem;
+  color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .related-records h2 {
+  color: var(--cx-code-text);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-end > p {
+  color: var(--cx-code-text);
+  font-size: 1rem;
+}
+
+html[data-skin="the-clause-exchange"] .record-page .record-end nav {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note a {
+  color: var(--cx-selected-text);
+}
+
+html[data-skin="the-clause-exchange"] .prose blockquote a {
+  color: var(--cx-link);
+}
+
+html[data-skin="the-clause-exchange"] .prose blockquote code {
+  color: var(--cx-text);
+  background: var(--cx-inline);
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-void);
+  border-top-color: var(--cx-signal-green);
+  box-shadow: .45rem .45rem 0 rgb(0 0 0 / 40%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+  border-top-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-tools,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-groups,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  background-image: none;
+  border-color: var(--cx-code-text);
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-tools,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
+  background: var(--cx-surface);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-shell,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-page,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .page-shell {
+  color: var(--cx-code-text);
+  background: var(--cx-surface);
+  border-color: var(--cx-void);
+  border-top-color: var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .error-shell {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-void);
+  border-top-color: var(--cx-signal-red);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-nav > a[aria-current="page"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .skin-menu[open] summary,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .quick-filters a[aria-current="true"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .action--primary,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__actions .action--primary,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-actions a:last-child,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .tag-line a:nth-child(odd),
+html[data-skin="the-clause-exchange"][data-theme="dark"] .code-frame__actions button[aria-pressed="true"],
+html[data-skin="the-clause-exchange"][data-theme="dark"] .skin-menu select:focus-visible,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input:focus-visible {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-color: var(--cx-selected-text);
+  border-bottom-color: var(--cx-signal-red);
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-facts > div:nth-child(n) {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: transparent;
+  border-right-color: var(--cx-code-text);
+  border-bottom-color: var(--cx-signal-green);
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-facts > div:nth-child(even) {
+  border-bottom-color: var(--cx-signal-red);
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-facts > div:last-child {
+  border-right-color: transparent;
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] .all-tags__grid a:nth-child(n) {
+  color: var(--cx-code-text);
+  background: transparent;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+  border-color: var(--cx-selected-text);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-search input::placeholder {
+  color: #40504a;
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end nav a {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-code-text);
+  border-bottom-color: var(--cx-signal-green);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading {
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row:nth-child(even) {
+  background: rgb(247 241 227 / 7%);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link {
+  color: var(--cx-code-text);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible {
+  color: var(--cx-selected-text);
+  background: var(--cx-selected);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__link:focus-visible .record-row__primitive {
+  color: var(--cx-selected-text);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__date,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__event,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .record-row__primitive,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading > p,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .archive-year > header span,
+html[data-skin="the-clause-exchange"][data-theme="dark"] .pagination__position {
+  color: var(--cx-muted-on-dark);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose code {
+  color: var(--cx-text);
+  background: var(--cx-inline);
+  border-color: var(--cx-rule);
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
+  color: var(--cx-code-text);
+  background: var(--cx-void);
+  border-color: var(--cx-rule);
+}
+
+@media (max-width: 72rem) {
+  html[data-skin="the-clause-exchange"] .site-header__inner,
+  html[data-skin="the-clause-exchange"] .site-footer__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .site-brand,
+  html[data-skin="the-clause-exchange"] .site-nav,
+  html[data-skin="the-clause-exchange"] .site-footer__note,
+  html[data-skin="the-clause-exchange"] .site-footer__links {
+    grid-column: 1;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
+  html[data-skin="the-clause-exchange"] .archive-tools {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 62rem) {
+  html[data-skin="the-clause-exchange"] .record-page > .record-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page .article__content,
+  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
+    grid-column: 1;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
+    position: static;
+  }
+}
+
+@media (max-width: 48rem) {
+  html[data-skin="the-clause-exchange"] .site-header,
+  html[data-skin="the-clause-exchange"] .site-footer,
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .page-shell,
+  html[data-skin="the-clause-exchange"] .error-shell {
+    width: 100%;
+    margin: 0;
+    padding: .85rem;
+    border-right-width: 0;
+    border-left-width: 0;
+    box-shadow: none;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav,
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .page-shell,
+  html[data-skin="the-clause-exchange"] .error-shell,
+  html[data-skin="the-clause-exchange"] .masthead,
+  html[data-skin="the-clause-exchange"] .record-grid,
+  html[data-skin="the-clause-exchange"] .record-page > .record-head,
+  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
+  html[data-skin="the-clause-exchange"] .record-page > .record-end {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .site-brand,
+  html[data-skin="the-clause-exchange"] .site-nav,
+  html[data-skin="the-clause-exchange"] .masthead__copy,
+  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
+  html[data-skin="the-clause-exchange"] .archive-tools,
+  html[data-skin="the-clause-exchange"] .archive-groups,
+  html[data-skin="the-clause-exchange"] .record-page > .record-head,
+  html[data-skin="the-clause-exchange"] .record-page .record-head__key,
+  html[data-skin="the-clause-exchange"] .record-page .record-head h1,
+  html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
+  html[data-skin="the-clause-exchange"] .record-page .record-facts,
+  html[data-skin="the-clause-exchange"] .record-page .tag-line,
+  html[data-skin="the-clause-exchange"] .record-page .record-actions,
+  html[data-skin="the-clause-exchange"] .record-page .article__content,
+  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index,
+  html[data-skin="the-clause-exchange"] .record-page > .record-end,
+  html[data-skin="the-clause-exchange"] .page-shell > .page-heading,
+  html[data-skin="the-clause-exchange"] .page-shell > .page-prose,
+  html[data-skin="the-clause-exchange"] .error-shell > :not(nav),
+  html[data-skin="the-clause-exchange"] .error-shell nav {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  html[data-skin="the-clause-exchange"] .record-page .record-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  html[data-skin="the-clause-exchange"] .masthead h1,
+  html[data-skin="the-clause-exchange"] .index-heading h1,
+  html[data-skin="the-clause-exchange"] .page-heading h1,
+  html[data-skin="the-clause-exchange"] .record-head h1 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  html[data-skin="the-clause-exchange"] .quick-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-skin="the-clause-exchange"] .archive-search {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .archive-search p {
+    grid-column: 1;
+  }
+  html[data-skin="the-clause-exchange"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr) 1.75rem;
+    gap: .35rem .55rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__date {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__event {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-row__primitive {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page > .record-end,
+  html[data-skin="the-clause-exchange"] .record-end nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-clause-exchange"] .site-footer__links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  html[data-skin="the-clause-exchange"] .home-shell > .record-index .record-row__link,
+  html[data-skin="the-clause-exchange"] .archive-groups .record-row__link {
+    grid-template-columns: minmax(0, 1fr) 1.75rem;
+    gap: .35rem .55rem;
+  }
+
+  html[data-skin="the-clause-exchange"] .record-page .record-end nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 23rem) {
+  html[data-skin="the-clause-exchange"] .record-page .record-facts,
+  html[data-skin="the-clause-exchange"] .quick-filters,
+  html[data-skin="the-clause-exchange"] .site-footer__links,
+  html[data-skin="the-clause-exchange"] .pagination__links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html[data-skin="the-clause-exchange"] .record-facts > div {
+    border-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="the-clause-exchange"],
+  html[data-skin="the-clause-exchange"] *,
+  html[data-skin="the-clause-exchange"] *::before,
+  html[data-skin="the-clause-exchange"] *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="the-clause-exchange"] .site-header,
+  html[data-skin="the-clause-exchange"] .site-footer,
+  html[data-skin="the-clause-exchange"] .home-shell,
+  html[data-skin="the-clause-exchange"] .archive-shell,
+  html[data-skin="the-clause-exchange"] .record-page,
+  html[data-skin="the-clause-exchange"] .page-shell,
+  html[data-skin="the-clause-exchange"] .error-shell,
+  html[data-skin="the-clause-exchange"] .masthead__copy,
+  html[data-skin="the-clause-exchange"] .index-heading,
+  html[data-skin="the-clause-exchange"] .page-heading,
+  html[data-skin="the-clause-exchange"] .record-head,
+  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+  html[data-skin="the-clause-exchange"] .archive-tools,
+  html[data-skin="the-clause-exchange"] .archive-groups,
+  html[data-skin="the-clause-exchange"] .archive-year,
+  html[data-skin="the-clause-exchange"] .page-prose,
+  html[data-skin="the-clause-exchange"] .article__content,
+  html[data-skin="the-clause-exchange"] .record-end,
+  html[data-skin="the-clause-exchange"] .record-grid > .record-index,
+  html[data-skin="the-clause-exchange"] .prose .code-frame,
+  html[data-skin="the-clause-exchange"] .code-frame__bar,
+  html[data-skin="the-clause-exchange"] .code-frame__status,
+  html[data-skin="the-clause-exchange"] .skin-menu__panel,
+  html[data-skin="the-clause-exchange"] .skin-menu select,
+  html[data-skin="the-clause-exchange"] .record-row__link {
+    color: CanvasText;
+    background: Canvas;
+    border-color: CanvasText;
+    box-shadow: none !important;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav > a,
+  html[data-skin="the-clause-exchange"] .theme-toggle,
+  html[data-skin="the-clause-exchange"] .skin-menu summary,
+  html[data-skin="the-clause-exchange"] .skin-randomizer,
+  html[data-skin="the-clause-exchange"] .action,
+  html[data-skin="the-clause-exchange"] .record-actions a,
+  html[data-skin="the-clause-exchange"] .tag-line a,
+  html[data-skin="the-clause-exchange"] .quick-filters a,
+  html[data-skin="the-clause-exchange"] .pagination a,
+  html[data-skin="the-clause-exchange"] .pagination span,
+  html[data-skin="the-clause-exchange"] .record-end nav a,
+  html[data-skin="the-clause-exchange"] .site-footer__links a,
+  html[data-skin="the-clause-exchange"] .code-frame__actions button {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+    box-shadow: none !important;
+  }
+
+  html[data-skin="the-clause-exchange"] .site-nav > a[aria-current="page"],
+  html[data-skin="the-clause-exchange"] .theme-toggle[aria-pressed="true"],
+  html[data-skin="the-clause-exchange"] .skin-menu[open] summary,
+  html[data-skin="the-clause-exchange"] .quick-filters a[aria-current="true"],
+  html[data-skin="the-clause-exchange"] .action--primary,
+  html[data-skin="the-clause-exchange"] .code-frame__actions button[aria-pressed="true"] {
+    color: HighlightText;
+    background: Highlight;
+    border-color: HighlightText;
+    text-decoration: underline;
+  }
+
+  html[data-skin="the-clause-exchange"] :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 2px Canvas, 0 0 0 5px Highlight !important;
+  }
+
+  html[data-skin="the-clause-exchange"] .highlight span {
+    color: CanvasText !important;
+  }
+}
+
+/* Cycle two corrective pass: The Clause Exchange */
+html[data-skin="the-clause-exchange"] body {
+  background-image: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(23 33 31 / 8%) 2.5rem calc(2.5rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"][data-theme="dark"] body {
+  background-image: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(247 241 227 / 7%) 2.5rem calc(2.5rem + 1px));
+}
+
+html[data-skin="the-clause-exchange"] .site-nav {
+  align-self: start;
+  align-items: start;
+}
+
+html[data-skin="the-clause-exchange"] .site-nav > a,
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu,
+html[data-skin="the-clause-exchange"] .site-footer__links a {
+  align-self: start;
+  min-height: 2.75rem;
+}
+
+html[data-skin="the-clause-exchange"] .masthead h1,
+html[data-skin="the-clause-exchange"] .index-heading h1,
+html[data-skin="the-clause-exchange"] .page-heading h1,
+html[data-skin="the-clause-exchange"] .record-head h1 {
+  font-size: clamp(2rem, 3.2vw, 3.25rem);
+}
+
+html[data-skin="the-clause-exchange"] .prose h4 {
+  font-size: 1.1875rem;
+}
+
+html[data-skin="the-clause-exchange"] .prose h5,
+html[data-skin="the-clause-exchange"] .prose h6 {
+  font-size: 1.125rem;
+}
+
+html[data-skin="the-clause-exchange"] .site-brand {
+  border-left: 2px solid var(--cx-selected-text);
+}
+
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head,
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .page-prose,
+html[data-skin="the-clause-exchange"] .home-shell .masthead__copy,
+html[data-skin="the-clause-exchange"] .record-page .article__content,
+html[data-skin="the-clause-exchange"] .page-shell > .page-prose {
+  border-left: 2px solid var(--cx-text);
+}
+
+html[data-skin="the-clause-exchange"] .record-row:nth-child(n) .record-row__link,
+html[data-skin="the-clause-exchange"] .all-tags__grid a:nth-child(n),
+html[data-skin="the-clause-exchange"] .prose h2 {
+  border-left: 0;
+}
+
+html[data-skin="the-clause-exchange"] .prose .info,
+html[data-skin="the-clause-exchange"] .prose blockquote,
+html[data-skin="the-clause-exchange"] .prose .katex-display {
+  border: 2px solid var(--cx-text);
+}
+
+html[data-skin="the-clause-exchange"] .site-footer__note {
+  border: 2px solid var(--cx-selected-text);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(n) {
+  border-bottom: 1px solid var(--cx-code-text);
+}
+html[data-skin="the-clause-exchange"] .record-facts > div::after {
+  display: none;
+  content: none;
+}
+html[data-skin="the-clause-exchange"] .record-page .record-facts {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+html[data-skin="the-clause-exchange"] .prose .code-frame__gutter {
+  border-right: 1px solid var(--cx-muted-on-dark);
+}
+
+@media (max-width: 48rem) {
+  html[data-skin="the-clause-exchange"] .masthead h1,
+  html[data-skin="the-clause-exchange"] .index-heading h1,
+  html[data-skin="the-clause-exchange"] .page-heading h1,
+  html[data-skin="the-clause-exchange"] .record-head h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+}
+
+@media (forced-colors: none) {
+  html[data-skin="the-clause-exchange"][data-theme="dark"] .skin-menu__panel .skin-randomizer,
+  html[data-skin="the-clause-exchange"][data-theme="dark"] .code-frame__actions button:last-child {
+    color: #17211f;
+  }
+  html[data-skin="the-clause-exchange"][data-theme="dark"] .record-facts > div:nth-child(n) {
+    border-bottom-color: var(--cx-code-text);
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="the-clause-exchange"] .highlight span {
+    color: revert !important;
+  }
+
+  html[data-skin="the-clause-exchange"] .highlight .k,
+  html[data-skin="the-clause-exchange"] .highlight .kc,
+  html[data-skin="the-clause-exchange"] .highlight .kd,
+  html[data-skin="the-clause-exchange"] .highlight .kn,
+  html[data-skin="the-clause-exchange"] .highlight .kp,
+  html[data-skin="the-clause-exchange"] .highlight .kr,
+  html[data-skin="the-clause-exchange"] .highlight .kt {
+    font-weight: 900;
+  }
+
+  html[data-skin="the-clause-exchange"] .highlight .c,
+  html[data-skin="the-clause-exchange"] .highlight .c1,
+  html[data-skin="the-clause-exchange"] .highlight .cm,
+  html[data-skin="the-clause-exchange"] .highlight .cp,
+  html[data-skin="the-clause-exchange"] .highlight .cs {
+    font-style: italic;
+  }
+
+  html[data-skin="the-clause-exchange"] .highlight .s,
+  html[data-skin="the-clause-exchange"] .highlight .s1,
+  html[data-skin="the-clause-exchange"] .highlight .s2,
+  html[data-skin="the-clause-exchange"] .highlight .sa,
+  html[data-skin="the-clause-exchange"] .highlight .sb,
+  html[data-skin="the-clause-exchange"] .highlight .sc,
+  html[data-skin="the-clause-exchange"] .highlight .sd,
+  html[data-skin="the-clause-exchange"] .highlight .se,
+  html[data-skin="the-clause-exchange"] .highlight .sh,
+  html[data-skin="the-clause-exchange"] .highlight .si,
+  html[data-skin="the-clause-exchange"] .highlight .sr,
+  html[data-skin="the-clause-exchange"] .highlight .ss,
+  html[data-skin="the-clause-exchange"] .highlight .sx {
+    text-decoration: underline;
+  }
+}
