@@ -4638,3 +4638,23 @@ html[data-skin="root-in-seven"] .prose .katex :is(.katex-sizing, .fontsize-ensur
 html[data-skin="root-in-seven"] .prose .katex :is(.katex-sizing, .fontsize-ensurer).reset-size11.size9{font-size:.6945337621em !important;}
 html[data-skin="root-in-seven"] .prose .katex :is(.katex-sizing, .fontsize-ensurer).reset-size11.size10{font-size:.8336012862em !important;}
 html[data-skin="root-in-seven"] .prose .katex :is(.katex-sizing, .fontsize-ensurer).reset-size11.size11{font-size:1em !important;}
+
+/* The individuality pass made these panels transparent over the club-colored
+   canvas. Restore the corresponding light foreground token. */
+html[data-skin="root-in-seven"] :is(
+  .index-heading, .page-heading, .record-head
+) > :is(.eyebrow, .record-head__key, h1, p),
+html[data-skin="root-in-seven"] .section-heading,
+html[data-skin="root-in-seven"] .section-heading :is(h2, p),
+html[data-skin="root-in-seven"] .record-row__link :is(
+  .record-row__date, .record-row__title, .record-row__event, .record-row__primitive
+) {
+  color: var(--r7-on-club) !important;
+}
+
+html[data-skin="root-in-seven"] .record-row__link:is(:hover, :focus-visible),
+html[data-skin="root-in-seven"] .record-row__link:is(:hover, :focus-visible) :is(
+  .record-row__date, .record-row__title, .record-row__event, .record-row__primitive
+) {
+  color: var(--r7-on-accent) !important;
+}
