@@ -375,7 +375,7 @@ for page in pages:
         if attributes.get("data-source-sha256") != digest: fail(f"code hash drift: {rel}")
         if attributes.get("data-lines") != str(source_lines(source)): fail(f"code line-count drift: {rel}")
 
-if len(pages) != 138 or len(shell_pages) != 135: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
+if len(pages) != 137 or len(shell_pages) != 134: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
 if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 79, 327, 106, 61):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
