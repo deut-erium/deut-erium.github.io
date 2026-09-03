@@ -4623,3 +4623,17 @@ html[data-skin="key-exchange-kiosk"] .record-row__primitive {
 html[data-skin="key-exchange-kiosk"][data-theme="dark"] .record-row__primitive {
   color: var(--kx-accent);
 }
+
+/* Rendering stability: layered translucent gradients retain the glass effect
+   without live backdrop blurs, which stalled long article pages in Chromium. */
+html[data-skin="key-exchange-kiosk"] body {
+  background-attachment: scroll;
+}
+
+html[data-skin="key-exchange-kiosk"] :is(
+  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
+  .page-shell, .error-shell, .skin-menu__panel
+) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
