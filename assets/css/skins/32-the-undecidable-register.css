@@ -4207,3 +4207,14 @@ html[data-skin="the-undecidable-register"] .prose .code-frame :is(
     display: none;
   }
 }
+
+/* Contrast repair: the final light palette replaced the original dark panels,
+   so headings must follow the final ink token rather than the retired paper
+   token. */
+html[data-skin="the-undecidable-register"] :is(
+  .masthead h1, .index-heading h1, .page-heading h1, .record-head h1,
+  .error-shell h1, .section-heading h2, .archive-year h2, .related-records h2
+) {
+  color: var(--reg-ink);
+  text-shadow: 2px 2px 0 color-mix(in srgb, var(--reg-cyan) 55%, transparent);
+}
