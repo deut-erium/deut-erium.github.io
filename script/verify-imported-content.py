@@ -66,7 +66,7 @@ for rel, item in expected.items():
     if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
         changed.append(rel)
 
-protected_roots = ("_posts", "_legacy_authored", "assigments", "ctf-tutorials/assigments")
+protected_roots = ("_posts", "assigments", "ctf-tutorials/assigments")
 actual_protected = {
     path.relative_to(ROOT).as_posix()
     for root_name in protected_roots
