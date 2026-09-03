@@ -418,3 +418,53 @@ html[data-skin] :is(.site-brand__name, .masthead h1, .index-heading h1, .page-he
     transform: none !important;
   }
 }
+
+/* Keyboard-only skip link. Skin rules must not leave it covering the masthead. */
+html[data-skin] .skip-link {
+  position: fixed !important;
+  z-index: 200 !important;
+  top: 0 !important;
+  left: 1rem !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translateY(calc(-100% - 1rem)) !important;
+}
+
+html[data-skin] .skip-link:focus-visible {
+  transform: translateY(.75rem) !important;
+}
+
+html[data-skin] .article__content :is(h1, h2, h3, h4, h5, h6) {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+html[data-skin] .record-row__date {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+@media (max-width: 54rem) {
+  /* On narrow screens the controls occupy a reserved top strip and scroll
+     away with the document instead of covering article text. */
+  html[data-skin] body {
+    position: relative;
+    padding-top: 3.35rem !important;
+  }
+
+  html[data-skin] :is(.skin-dice, .theme-toggle) {
+    position: absolute !important;
+    top: .4rem !important;
+    bottom: auto !important;
+  }
+
+  html[data-skin] .skin-dice {
+    right: 3.65rem !important;
+  }
+
+  html[data-skin] .theme-toggle {
+    right: .6rem !important;
+  }
+}
