@@ -1,8 +1,7 @@
-# Local interface fonts
+# Local fonts
 
-The calculator theme uses locally hosted subsets already archived for moodboard 31:
+Fonts are grouped by family. Each family directory contains the installed font files and, where applicable, its license. `PROVENANCE.tsv` records the acquisition URL, access time, source hash, and installed path.
 
-- Atkinson Hyperlegible 400 and 700 for reading text;
-- Silkscreen 400 and 700 for short key labels.
+The Computer Modern, Euler Fraktur, and Formal Script files share the LyX font notice in `licenses/lyx-fonts.txt`.
 
-The corresponding Open Font License texts are stored beside the WOFF2 files. No browser request leaves the site.
+All fonts are served locally; pages do not fetch font resources from third parties.
