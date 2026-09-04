@@ -513,7 +513,7 @@ for stylesheet in ROOT.rglob("*.css"):
 
 brand_asset = ROOT / "assets/images/circle-limit-iv-mark.webp"
 brand_data = brand_asset.read_bytes() if brand_asset.is_file() else b""
-if len(brand_data) != 10_340 or hashlib.sha256(brand_data).hexdigest() != "ab1a9318aab05b2e660aa1f90d1292c7e16fb5ed8008346cdf1e9c447d6bc7d8":
+if len(brand_data) != 5_878 or hashlib.sha256(brand_data).hexdigest() != "c948e796b7e426e092db0fe3644be944dad18837f6d664dc86ddea0901c1a571":
     fail("Circle Limit IV brand asset drift")
 main_css = (ROOT / "assets/css/main.css").read_text(encoding="utf-8")
 if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
