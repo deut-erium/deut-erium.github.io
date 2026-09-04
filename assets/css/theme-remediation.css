@@ -289,6 +289,14 @@ html[data-skin] .prose .katex-display > .katex {
   }
 }
 
+/* Decorative borders and shadows must not create page-level horizontal scroll.
+   Deliberately scrollable code frames retain their own overflow containers. */
+html[data-skin],
+html[data-skin] body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 /* Unified content geometry
    ------------------------
    Skins may paint these blocks, but they must not move shared content into
