@@ -511,6 +511,24 @@ for stylesheet in ROOT.rglob("*.css"):
         if urlsplit(ref).scheme in {"http", "https"}: fail(f"external CSS resource: {stylesheet.relative_to(ROOT)}: {ref}")
         if not (stylesheet.parent / unquote(urlsplit(ref).path)).resolve().is_file(): fail(f"missing CSS resource: {stylesheet.relative_to(ROOT)}: {ref}")
 
+favicon_hashes = {
+    "favicon.ico": "ca747f44c3e717d9ceaaa91a81e9bcfe5c4929c063630976cb03836392f5846f",
+    "assets/favicon.ico": "ca747f44c3e717d9ceaaa91a81e9bcfe5c4929c063630976cb03836392f5846f",
+    "assets/favicon-16x16.png": "5b4e6eaef77067e2611d47f36744f809afed41c05e1caa74535e9837e1e0faad",
+    "assets/favicon-32x32.png": "dd8d23f732dc10c08fb4d7d9c9760082a9f5c37b14e1aa264b2603a991df40be",
+    "assets/favicon-96x96.png": "99368641171b70e08da3bc02176e2f6b7a0e8c03a02447b2001a680831c4d7aa",
+}
+for rel, expected_hash in favicon_hashes.items():
+    path = ROOT / rel
+    if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
+        fail(f"Escher favicon drift: {rel}")
+home_head = (ROOT / "index.html").read_text(encoding="utf-8")
+for href in ("/assets/favicon-96x96.png", "/assets/favicon-32x32.png", "/assets/favicon-16x16.png", "/favicon.ico"):
+    if f'href="{href}"' not in home_head:
+        fail(f"Escher favicon link missing: {href}")
+if 'rel="icon" type="image/svg+xml"' in home_head:
+    fail("legacy square favicon still selected on regular pages")
+
 brand_asset = ROOT / "assets/images/circle-limit-iv-mark.webp"
 brand_data = brand_asset.read_bytes() if brand_asset.is_file() else b""
 if len(brand_data) != 5_878 or hashlib.sha256(brand_data).hexdigest() != "c948e796b7e426e092db0fe3644be944dad18837f6d664dc86ddea0901c1a571":
