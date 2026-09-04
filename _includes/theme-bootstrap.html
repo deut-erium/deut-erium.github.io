@@ -62,7 +62,21 @@
   else root.dataset.skin = skin;
 
   const skinHref = skin === defaultSkin ? null : skinBase + skinFiles[skin];
-  window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref };
+  const syncControls = () => {
+    const button = document.querySelector('.theme-toggle');
+    if (button) {
+      const dark = color === 'dark';
+      button.hidden = false;
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    const picker = document.querySelector('#skin-picker');
+    if (picker) picker.value = skin;
+    const option = picker?.querySelector('option[value="' + skin + '"]');
+    const summary = document.querySelector('.skin-menu summary');
+    if (summary && option) summary.textContent = 'Theme: ' + option.textContent;
+  };
+  window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref, syncControls };
 
   if (skinHref) {
     document.write('<link rel="preload" as="style" href="' + skinHref + '">');
