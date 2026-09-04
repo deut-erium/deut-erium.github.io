@@ -1,0 +1,270 @@
+---
+layout: base
+title: Daily cipher
+description: One small classical cipher per day, decoded and checked entirely in your browser.
+css: /assets/css/features/daily.css
+---
+<main id="content" class="page-shell daily-shell">
+  <header class="page-heading">
+    <p class="eyebrow">daily deuterium</p>
+    <h1>Daily cipher</h1>
+    <p>One small classical cipher every day, picked for your local date and checked entirely inside this page. No accounts, no network, no excuses: just you and the wheel.</p>
+  </header>
+
+  <section class="daily-board" aria-labelledby="daily-today">
+    <h2 id="daily-today">Today's cipher</h2>
+    <p class="daily-meta">
+      <span class="daily-number" id="daily-number">deuterium cipher</span>
+      <span class="daily-date" id="daily-date">picking today's puzzle&hellip;</span>
+    </p>
+    <p class="daily-ciphertext" id="daily-ciphertext">&hellip;</p>
+
+    <div class="daily-controls">
+      <label class="daily-answer-label" for="daily-answer">Your decoded answer</label>
+      <input class="daily-answer-input" id="daily-answer" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go">
+      <div class="daily-buttons">
+        <button class="daily-button" id="daily-check" type="button">Check</button>
+        <button class="daily-button" id="daily-hint" type="button">Reveal a hint</button>
+        <button class="daily-button" id="daily-share" type="button">Share</button>
+      </div>
+    </div>
+
+    <p class="daily-feedback" id="daily-feedback" role="status" aria-live="polite">The day's puzzle loads locally from this page.</p>
+    <p class="daily-hint-line" id="daily-hint-line" hidden></p>
+    <p class="daily-streak" id="daily-streak"></p>
+  </section>
+
+  <section class="daily-rules" aria-labelledby="daily-rules-title">
+    <h2 id="daily-rules-title">How to play</h2>
+    <ul class="daily-rules-list">
+      <li>The puzzle is a Caesar cipher: every letter was slid by the same secret shift, and everything that is not a letter (spaces, digits, punctuation) was left exactly where it stood.</li>
+      <li>Slide the letters back, type the decoded phrase above, and press Check. Case does not matter; extra spaces do not matter.</li>
+      <li>Stuck? Reveal a hint and you get exactly one letter mapping out of today's key. The share line will remember it.</li>
+      <li>A correct answer unlocks a celebration line and extends your streak, stored in this browser under the localStorage key daily-cipher-streak. Solve on consecutive days to grow it.</li>
+      <li>Answers are checked as SHA-256 digests with a per-day salt, recomputed in your browser. The plaintext answers never ship with the page, and nothing you type leaves your machine.</li>
+    </ul>
+  </section>
+
+  <noscript>
+    <p class="daily-noscript">The daily cipher runs entirely in your browser: JavaScript picks the day's puzzle from the data embedded in this page and checks your answer locally. Without it there is no puzzle of the day, only the rules above.</p>
+  </noscript>
+
+  <script type="application/json" id="daily-ciphers-data">{{ site.data.daily_ciphers.puzzles | jsonify }}</script>
+  <script>
+    (function () {
+      'use strict';
+
+      var STREAK_KEY = 'daily-cipher-streak';
+
+      var board = {
+        number: document.getElementById('daily-number'),
+        date: document.getElementById('daily-date'),
+        ciphertext: document.getElementById('daily-ciphertext'),
+        input: document.getElementById('daily-answer'),
+        check: document.getElementById('daily-check'),
+        hint: document.getElementById('daily-hint'),
+        hintLine: document.getElementById('daily-hint-line'),
+        share: document.getElementById('daily-share'),
+        feedback: document.getElementById('daily-feedback'),
+        streak: document.getElementById('daily-streak')
+      };
+
+      function loadPuzzles() {
+        var source = document.getElementById('daily-ciphers-data');
+        if (!source) return [];
+        try {
+          var parsed = JSON.parse(source.textContent);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function localDateKey(date) {
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return date.getFullYear() + '-' + month + '-' + day;
+      }
+
+      function shiftDay(dateKey, days) {
+        var date = new Date(dateKey + 'T12:00:00');
+        date.setDate(date.getDate() + days);
+        return localDateKey(date);
+      }
+
+      function pickToday(puzzles) {
+        var today = localDateKey(new Date());
+        var chosen = null;
+        for (var i = 0; i < puzzles.length; i += 1) {
+          if (puzzles[i].date === today) return { puzzle: puzzles[i], note: '' };
+          if (puzzles[i].date <= today) chosen = puzzles[i];
+        }
+        // Local clock outside the generated window: serve the nearest day.
+        var nearest = chosen || puzzles[0];
+        var note = ' showing ' + nearest.date + ', the nearest puzzle in this build';
+        return { puzzle: nearest, note: note };
+      }
+
+      var puzzles = loadPuzzles();
+      var selection = puzzles.length ? pickToday(puzzles) : null;
+      var puzzle = selection ? selection.puzzle : null;
+      var state = { hints: 0, solved: false, attempts: 0 };
+
+      function readStreak() {
+        try {
+          var raw = window.localStorage.getItem(STREAK_KEY);
+          var parsed = raw ? JSON.parse(raw) : null;
+          return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function writeStreak(value) {
+        try {
+          window.localStorage.setItem(STREAK_KEY, JSON.stringify(value));
+        } catch (error) {
+          /* private mode: the streak simply does not persist */
+        }
+      }
+
+      function solvedMap(streak) {
+        return streak && typeof streak.solved === 'object' && streak.solved ? streak.solved : {};
+      }
+
+      function registerSolve(puzzleDate) {
+        var streak = readStreak();
+        var solved = solvedMap(streak);
+        if (Object.prototype.hasOwnProperty.call(solved, puzzleDate)) {
+          return streak;
+        }
+        var previous = typeof streak.count === 'number' ? streak.count : 0;
+        var count = streak.last === shiftDay(puzzleDate, -1) ? previous + 1 : 1;
+        solved[puzzleDate] = state.hints;
+        streak.solved = solved;
+        streak.count = count;
+        streak.last = puzzleDate;
+        writeStreak(streak);
+        return streak;
+      }
+
+      function streakLine(streak, today) {
+        var count = typeof streak.count === 'number' ? streak.count : 0;
+        if (!count) return '';
+        var days = count === 1 ? 'day' : 'days';
+        var suffix = Object.prototype.hasOwnProperty.call(solvedMap(streak), today) ? ', today already solved' : ' on the line';
+        return 'Streak: ' + count + ' ' + days + suffix;
+      }
+
+      function say(message, tone) {
+        board.feedback.textContent = message;
+        board.feedback.className = 'daily-feedback' + (tone ? ' ' + tone : '');
+      }
+
+      function normalizeAnswer(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim().toUpperCase();
+      }
+
+      function sha256Hex(text) {
+        var bytes = new TextEncoder().encode(text);
+        return window.crypto.subtle.digest('SHA-256', bytes).then(function (digest) {
+          return Array.prototype.map.call(new Uint8Array(digest), function (byte) {
+            return byte.toString(16).padStart(2, '0');
+          }).join('');
+        });
+      }
+
+      function shareLine() {
+        var head = 'deuterium cipher #' + puzzle.n;
+        if (state.solved) {
+          return state.hints ? head + ': solved with 1 hint \u26a1' : head + ': solved with no hints \ud83d\udfe9';
+        }
+        return state.hints ? head + ': unsolved, 1 hint in \u2b1b' : head + ': unsolved \u2b1b';
+      }
+
+      function copyShareLine() {
+        var text = shareLine();
+        var report = function (done) {
+          say(done ? 'Copied to your clipboard: ' + text : 'Could not copy automatically. The line is: ' + text, done ? '' : '');
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { report(true); }, function () { report(false); });
+          return;
+        }
+        report(false);
+      }
+
+      function checkAnswer() {
+        if (!puzzle || state.solved) return;
+        var guess = normalizeAnswer(board.input.value);
+        state.attempts += 1;
+        if (!guess) {
+          say('Type your decoded answer first.');
+          board.input.focus();
+          return;
+        }
+        if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
+          say('This browser cannot run the local SHA-256 check.');
+          return;
+        }
+        say('Checking locally\u2026');
+        sha256Hex(puzzle.salt + guess).then(function (hex) {
+          if (hex === puzzle.answer_sha256) {
+            var streak = registerSolve(puzzle.date);
+            state.solved = true;
+            board.check.disabled = true;
+            board.hint.disabled = true;
+            board.hintLine.hidden = true;
+            board.streak.textContent = streakLine(streak, puzzle.date);
+            var days = streak.count === 1 ? 'day' : 'days';
+            say('Solved! deuterium cipher #' + puzzle.n + ' falls after ' + state.attempts + ' tr' + (state.attempts === 1 ? 'y' : 'ies') + '. Streak: ' + streak.count + ' ' + days + '.', 'is-correct');
+          } else {
+            say('Not it. Keep turning the wheel.', 'is-wrong');
+          }
+        }, function () {
+          say('The local digest check failed; try again.');
+        });
+      }
+
+      function revealHint() {
+        if (!puzzle || state.solved) return;
+        state.hints = 1;
+        board.hintLine.textContent = 'Hint: in today\u2019s key, ' + puzzle.hint.from + ' decodes to ' + puzzle.hint.to + '.';
+        board.hintLine.hidden = false;
+        board.hint.disabled = true;
+        say('One letter of the key is out. The share line will remember it.');
+      }
+
+      function render() {
+        board.number.textContent = 'deuterium cipher #' + puzzle.n + ' \u00b7 ' + puzzle.cipher;
+        board.date.textContent = puzzle.date + selection.note;
+        board.ciphertext.textContent = puzzle.ciphertext;
+        var streak = readStreak();
+        var solvedToday = Object.prototype.hasOwnProperty.call(solvedMap(streak), puzzle.date);
+        if (solvedToday) {
+          state.solved = true;
+          state.hints = solvedMap(streak)[puzzle.date] ? 1 : 0;
+          board.check.disabled = true;
+          board.hint.disabled = true;
+          board.streak.textContent = streakLine(streak, puzzle.date);
+          say('Already solved today. Come back tomorrow for the next one.', 'is-correct');
+        } else {
+          board.streak.textContent = streakLine(streak, puzzle.date);
+        }
+      }
+
+      board.check.addEventListener('click', checkAnswer);
+      board.hint.addEventListener('click', revealHint);
+      board.share.addEventListener('click', copyShareLine);
+      board.input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') checkAnswer();
+      });
+
+      if (puzzle) {
+        render();
+      } else {
+        say('No daily cipher data arrived with this page; the build needs a rebuild.');
+      }
+    }());
+  </script>
+</main>
