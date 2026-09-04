@@ -1,0 +1,172 @@
+/* Daily cipher page (roadmap section 11). Loaded only by /daily/ via the
+   page.css hook in _layouts/base.html. Everything is scoped under
+   .daily-shell so no rule can leak into the rest of the site, and only
+   existing main.css design tokens are used so every skin keeps its voice. */
+
+.daily-shell .daily-board {
+  margin: 1.6rem 0 0;
+  padding: 1.2rem;
+  color: var(--lcd-ink);
+  background: var(--lcd);
+  border: 4px solid var(--navy);
+  border-radius: .55rem;
+  box-shadow:
+    inset .3rem .3rem 0 var(--lcd-high),
+    inset -.3rem -.3rem 0 var(--lcd-low);
+}
+
+.daily-shell .daily-board h2,
+.daily-shell .daily-rules h2 {
+  margin: 0 0 .7rem;
+  font-family: var(--keys);
+  font-size: 1.15rem;
+  letter-spacing: .02em;
+}
+
+.daily-shell .daily-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .9rem;
+  margin: 0 0 .8rem;
+  font-family: var(--keys);
+  font-size: .95rem;
+}
+
+.daily-shell .daily-ciphertext {
+  margin: 0 0 1rem;
+  padding: .95rem 1.05rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  font-family: var(--mono);
+  font-size: 1.18rem;
+  letter-spacing: .07em;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.daily-shell .daily-controls {
+  display: grid;
+  gap: .6rem;
+}
+
+.daily-shell .daily-answer-label {
+  font-family: var(--keys);
+  font-size: .95rem;
+  font-weight: 700;
+}
+
+.daily-shell .daily-answer-input {
+  width: 100%;
+  min-height: 3rem;
+  padding: .6rem .8rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  font-family: var(--mono);
+  font-size: 1rem;
+}
+
+.daily-shell .daily-answer-input:focus-visible {
+  outline: 3px solid var(--shell-high);
+  outline-offset: 2px;
+}
+
+.daily-shell .daily-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.daily-shell .daily-button {
+  min-height: 3rem;
+  padding: .55rem .95rem;
+  color: var(--navy);
+  background: var(--orange);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  box-shadow: 0 .22rem 0 var(--navy);
+  font-family: var(--keys);
+  font-size: .95rem;
+  cursor: pointer;
+}
+
+.daily-shell .daily-button:hover {
+  filter: brightness(1.07);
+}
+
+.daily-shell .daily-button:active {
+  transform: translateY(.18rem);
+  box-shadow: 0 .04rem 0 var(--navy);
+}
+
+.daily-shell .daily-button:focus-visible {
+  outline: 3px solid var(--shell-high);
+  outline-offset: 2px;
+}
+
+.daily-shell .daily-button:disabled {
+  opacity: .55;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 .22rem 0 var(--navy);
+}
+
+.daily-shell .daily-feedback {
+  min-height: 1.5rem;
+  margin: .95rem 0 0;
+  font-family: var(--keys);
+  font-size: .95rem;
+}
+
+.daily-shell .daily-feedback.is-correct {
+  font-weight: 700;
+}
+
+.daily-shell .daily-feedback.is-wrong {
+  color: #8f1d21;
+}
+
+.daily-shell .daily-hint-line,
+.daily-shell .daily-streak {
+  margin: .55rem 0 0;
+  font-family: var(--keys);
+  font-size: .95rem;
+}
+
+.daily-shell .daily-rules {
+  margin: 1.6rem 0 0;
+}
+
+.daily-shell .daily-rules-list {
+  margin: .4rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.daily-shell .daily-rules-list li {
+  margin: .4rem 0;
+}
+
+.daily-shell .daily-noscript {
+  margin: 1.4rem 0 0;
+  padding: .8rem 1rem;
+  background: var(--paper-low);
+  border: 3px solid var(--rule);
+  border-radius: .4rem;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .daily-shell .daily-feedback.is-correct {
+    animation: daily-cipher-pop .45s ease-out;
+  }
+}
+
+@keyframes daily-cipher-pop {
+  0% { transform: scale(.92); }
+  55% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
