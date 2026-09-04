@@ -409,7 +409,7 @@ for page in pages:
     ]
     if repeated_headings:
         fail(f"adjacent repeated headings in {rel}: {repeated_headings[:5]}")
-    if 'aria-label="Social and subscription links"' not in text or "Profiles, contact, and feed:" not in text:
+    if 'aria-label="Social and subscription links"' not in text or "Are you really sure that you want to reach me?" not in text:
         fail(f"social footer missing: {rel}")
     for href in (
         "https://github.com/deut-erium",
