@@ -7,6 +7,7 @@
   const skinKey = 'deuterium-skin';
   const defaultSkin = 'rpn-garden';
   const skinBase = {{ '/assets/css/skins/' | relative_url | jsonify }};
+  const skinFontPreloads = {{ site.data.theme_font_preloads | jsonify }};
   const skinFiles = {
     {%- for theme in site.data.themes -%}
       {%- unless theme.default -%}
@@ -63,6 +64,12 @@
   const skinHref = skin === defaultSkin ? null : skinBase + skinFiles[skin];
   window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref };
 
-  if (skinHref) document.write('<link rel="preload" as="style" href="' + skinHref + '">');
+  if (skinHref) {
+    document.write('<link rel="preload" as="style" href="' + skinHref + '">');
+    for (const fontHref of skinFontPreloads[skin] || []) {
+      const type = fontHref.endsWith('.woff2') ? 'font/woff2' : 'font/ttf';
+      document.write('<link rel="preload" as="font" type="' + type + '" crossorigin href="' + fontHref + '">');
+    }
+  }
 })();
 </script>
