@@ -20,6 +20,17 @@ html[data-skin] :focus-visible {
   outline-offset: 4px;
 }
 
+/* Generated heading links must remain usable even when a skin restyles them. */
+html .prose .heading-anchor {
+  display: inline-flex !important;
+  min-width: 1.5rem !important;
+  min-height: 1.5rem !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1 !important;
+  vertical-align: middle;
+}
+
 html[data-skin] .site-header,
 html[data-skin] .site-footer,
 html[data-skin] .masthead,
@@ -31,6 +42,13 @@ html[data-skin] .page-prose {
 html[data-skin] .masthead,
 html[data-skin] .masthead__copy {
   min-height: 0 !important;
+}
+
+/* Kiosk cards use saturated magenta, violet, and navy surfaces. White is the
+   only shared foreground that clears the required contrast on all three. */
+html[data-skin="key-exchange-kiosk"] .index-map__links a,
+html[data-skin="key-exchange-kiosk"] .index-map__links a :is(span, strong) {
+  color: #fff !important;
 }
 
 /* A single dark code surface lets the complete Rouge palette stay legible. */
@@ -213,9 +231,28 @@ html[data-skin] .prose .code-frame pre {
   overflow-y: hidden !important;
 }
 
+html .prose .code-frame__gutter {
+  white-space: pre !important;
+}
+
 html[data-skin] .prose .code-frame pre code {
   display: block;
   min-width: 80ch;
+}
+
+html[data-skin] .prose .code-frame.is-wrapped .code-frame__viewport,
+html[data-skin] .prose .code-frame.is-wrapped pre {
+  overflow-x: hidden !important;
+}
+
+html[data-skin] .prose .code-frame.is-wrapped .code-frame__gutter {
+  display: none !important;
+}
+
+html[data-skin] .prose .code-frame.is-wrapped pre code {
+  min-width: 0 !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 
 html[data-skin] .prose .katex-display {
@@ -265,6 +302,14 @@ html[data-skin] .prose .katex-display > .katex {
   .skin-dice.is-rolling .skin-dice__face {
     animation: none;
   }
+}
+
+/* Decorative borders and shadows must not create page-level horizontal scroll.
+   Deliberately scrollable code frames retain their own overflow containers. */
+html[data-skin],
+html[data-skin] body {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* Unified content geometry

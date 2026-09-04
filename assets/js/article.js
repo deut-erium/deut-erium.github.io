@@ -5,6 +5,7 @@
   if (!content) return;
 
   const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+  const initialOverflowUpdates = [];
   const announce = async (node, message, isCurrent = () => true) => {
     node.textContent = '';
     await nextFrame();
@@ -14,7 +15,7 @@
   };
 
   content.querySelectorAll('[data-code-frame]').forEach((frame) => {
-    const highlight = frame.querySelector(':scope > .highlight');
+    const highlight = frame.querySelector(':scope > .code-frame__viewport > .highlight, :scope > .highlight');
     const pre = highlight?.querySelector('pre');
     const code = pre?.querySelector('code');
     const copyButton = frame.querySelector('[data-copy-code]');
@@ -26,21 +27,19 @@
     const lineSource = source.endsWith('\n') ? source.slice(0, -1) : source;
     const lineCount = lineSource.split('\n').length;
     const language = frame.dataset.language || 'plain text';
-    const viewport = document.createElement('div');
-    const gutter = document.createElement('ol');
-    viewport.className = 'code-frame__viewport';
-    gutter.className = 'code-frame__gutter';
-    gutter.setAttribute('aria-hidden', 'true');
-    for (let line = 1; line <= lineCount; line += 1) {
-      const item = document.createElement('li');
-      item.textContent = String(line);
-      gutter.append(item);
+    if (!frame.querySelector(':scope > .code-frame__viewport')) {
+      const viewport = document.createElement('div');
+      const gutter = document.createElement('div');
+      viewport.className = 'code-frame__viewport';
+      gutter.className = 'code-frame__gutter';
+      gutter.setAttribute('aria-hidden', 'true');
+      gutter.textContent = Array.from({ length: lineCount }, (_, line) => line + 1).join('\n');
+      highlight.before(viewport);
+      viewport.append(gutter, highlight);
     }
-    highlight.before(viewport);
-    viewport.append(gutter, highlight);
 
     const updateOverflow = () => {
-      const overflow = !frame.classList.contains('is-wrapped') && pre.scrollWidth > pre.clientWidth + 1;
+      const overflow = pre.scrollWidth > pre.clientWidth + 1;
       if (overflow) {
         pre.tabIndex = 0;
         pre.setAttribute('aria-label', `${language} code; horizontally scrollable`);
@@ -51,6 +50,7 @@
     };
     if ('ResizeObserver' in window) new ResizeObserver(updateOverflow).observe(pre);
     else addEventListener('resize', updateOverflow);
+    initialOverflowUpdates.push(updateOverflow);
 
     let copyAttempt = 0;
     const removeFallback = () => frame.querySelector('.code-frame__fallback')?.remove();
@@ -111,7 +111,10 @@
       wrapButton.setAttribute('aria-pressed', String(wrapped));
       updateOverflow();
     });
-    updateOverflow();
+  });
+
+  requestAnimationFrame(() => {
+    initialOverflowUpdates.forEach((update) => update());
   });
 
   const article = document.querySelector('.js-article-content');
