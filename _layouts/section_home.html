@@ -16,7 +16,7 @@ layout: base
 
   <section class="archive-groups">
     <section class="archive-year" data-year-group>
-      <header><h2>{{ page.list_title | default: page.title }}</h2><span>{{ _all_posts | size }} posts</span></header>
+      <header><h2>Posts</h2><span>{{ _all_posts | size }} posts</span></header>
       <ol class="record-list">{%- for _post in _posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
       {%- if page.section == 'writeups' -%}
       {%- assign _writeup_pages = _all_posts.size | plus: 7 | divided_by: 8 -%}
