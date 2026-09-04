@@ -1,0 +1,169 @@
+---
+layout: base
+title: "418: I'm a teapot"
+description: This page is a teapot. Short, stout, and refusing to brew coffee per RFC 2324.
+permalink: /teapot/
+sitemap: true
+---
+<main id="content" class="page-shell teapot-shell">
+  <style>
+    .teapot-shell {
+      padding-block: clamp(2rem, 6vh, 4rem) 5rem;
+      text-align: center;
+    }
+
+    .teapot-shell h1 {
+      margin: .3rem 0 1rem;
+      color: var(--ink);
+    }
+
+    .teapot-lede {
+      max-width: 34rem;
+      margin: 0 auto;
+      color: var(--ink);
+    }
+
+    .teapot-figure {
+      position: relative;
+      width: 22rem;
+      height: 14.5rem;
+      margin: 2.5rem auto;
+      font-size: 1rem;
+    }
+
+    .teapot-figure i {
+      position: absolute;
+      display: block;
+    }
+
+    .teapot-figure__base {
+      left: 4rem;
+      bottom: 0;
+      width: 14rem;
+      height: .55rem;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent, var(--rule) 22%, var(--rule) 78%, transparent);
+    }
+
+    .teapot-figure__handle {
+      left: 14.6rem;
+      bottom: 1.2rem;
+      width: 4.6rem;
+      height: 5.2rem;
+      border: .28rem solid var(--rule);
+      border-radius: 50%;
+    }
+
+    .teapot-figure__spout {
+      left: .9rem;
+      bottom: 2.8rem;
+      width: 5.6rem;
+      height: 1.6rem;
+      border: .28rem solid var(--rule);
+      border-radius: .9rem;
+      background: linear-gradient(90deg, var(--shell-low), var(--shell) 72%);
+      transform: rotate(16deg);
+      transform-origin: right center;
+    }
+
+    .teapot-figure__body {
+      left: 5.5rem;
+      bottom: .35rem;
+      width: 10rem;
+      height: 7.6rem;
+      border: .28rem solid var(--rule);
+      border-radius: 1.5rem 1.5rem 4.5rem 4.5rem;
+      background:
+        radial-gradient(circle at 32% 26%, color-mix(in srgb, var(--paper) 62%, transparent) 0 17%, transparent 19%),
+        linear-gradient(168deg, var(--shell-high) 0%, var(--shell) 44%, var(--shell-low) 100%);
+    }
+
+    .teapot-figure__lid {
+      left: 7.1rem;
+      bottom: 7.8rem;
+      width: 6.8rem;
+      height: 1.7rem;
+      border: .28rem solid var(--rule);
+      border-radius: 3.2rem 3.2rem 0 0;
+      background: linear-gradient(180deg, var(--shell-high), var(--shell-low));
+    }
+
+    .teapot-figure__knob {
+      left: 10rem;
+      bottom: 9.25rem;
+      width: 1rem;
+      height: 1rem;
+      border: .28rem solid var(--rule);
+      border-radius: 50%;
+      background: radial-gradient(circle at 34% 30%, var(--yellow), var(--orange));
+    }
+
+    .teapot-figure__steam {
+      bottom: 10.4rem;
+      width: 0;
+      height: 2.1rem;
+      border-left: .26rem dashed var(--rule);
+      border-radius: 50%;
+    }
+
+    .teapot-figure__steam--left {
+      left: 8.4rem;
+      transform: rotate(-7deg);
+    }
+
+    .teapot-figure__steam--right {
+      left: 11.4rem;
+      bottom: 10.8rem;
+      height: 1.7rem;
+      transform: rotate(6deg);
+    }
+
+    .teapot-status {
+      margin: 0 0 .8rem;
+      color: var(--muted);
+      font-family: var(--keys);
+      font-size: 1rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .teapot-cite {
+      margin: 1.6rem auto 0;
+      max-width: 34rem;
+      color: var(--ink);
+    }
+
+    .teapot-home {
+      display: inline-block;
+      margin-top: 1.4rem;
+      padding: .55rem 1.1rem;
+      color: var(--link);
+    }
+
+    @media (max-width: 26rem) {
+      .teapot-figure {
+        transform: scale(.78);
+        transform-origin: top center;
+      }
+    }
+  </style>
+  <p class="teapot-status">HTTP 418 &middot; X-Teapot-Compliant: yes</p>
+  <h1>I'm a teapot</h1>
+  <p class="teapot-lede">
+    Short and stout. Here is my handle, here is my spout, and nowhere inside me
+    is a coffee brewing subsystem. Ask me for coffee and this is what you get;
+    ask me for tea and we can talk.
+  </p>
+  <div class="teapot-figure" role="img" aria-label="A teapot drawn with CSS borders and gradients: rounded body, lid and knob, spout on the left, handle on the right, and two wisps of steam.">
+    <i class="teapot-figure__base"></i>
+    <i class="teapot-figure__handle"></i>
+    <i class="teapot-figure__spout"></i>
+    <i class="teapot-figure__body"></i>
+    <i class="teapot-figure__lid"></i>
+    <i class="teapot-figure__knob"></i>
+    <i class="teapot-figure__steam teapot-figure__steam--left"></i>
+    <i class="teapot-figure__steam teapot-figure__steam--right"></i>
+  </div>
+  <p class="teapot-cite">418 &ldquo;I am a teapot&rdquo; &mdash; RFC 2324, section 2.3.2 (HTCPCP/1.0).</p>
+  <a class="teapot-home" href="/">Tip me over and pour me out (back home)</a>
+</main>
