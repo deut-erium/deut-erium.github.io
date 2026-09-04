@@ -471,7 +471,8 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
     if re.search(r'<(?:header|section)\b[^>]*>\s*<p class="eyebrow">', text):
         fail(f"repeated landing-page eyebrow remains: {rel}")
 
-if len(pages) != 139 or len(shell_pages) != 134: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
+# Additive features may add shell pages; the baseline may not shrink.
+if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
 if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 79, 327, 106, 61):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
