@@ -1,0 +1,68 @@
+<script>
+(() => {
+  'use strict';
+
+  const root = document.documentElement;
+  const colorKey = 'deuterium-theme';
+  const skinKey = 'deuterium-skin';
+  const defaultSkin = 'rpn-garden';
+  const skinBase = {{ '/assets/css/skins/' | relative_url | jsonify }};
+  const skinFiles = {
+    {%- for theme in site.data.themes -%}
+      {%- unless theme.default -%}
+        {%- assign skin_number = forloop.index0 | prepend: '0' | slice: -2, 2 -%}
+        {{ theme.id | jsonify }}: {{ skin_number | append: '-' | append: theme.id | append: '.css' | jsonify }}{% unless forloop.last %},{% endunless %}
+      {%- endunless -%}
+    {%- endfor -%}
+  };
+  const read = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  };
+  const save = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (_) {
+      // The selected state still applies to this page.
+    }
+  };
+
+  let requestedSkin = null;
+  try {
+    requestedSkin = new URLSearchParams(location.search).get('skin');
+  } catch (_) {
+    // An invalid query falls back to the saved selection.
+  }
+
+  const hasSkin = (id) => Object.prototype.hasOwnProperty.call(skinFiles, id);
+  const savedSkin = read(skinKey);
+  const skin = hasSkin(requestedSkin)
+    ? requestedSkin
+    : requestedSkin === defaultSkin
+      ? defaultSkin
+      : hasSkin(savedSkin)
+        ? savedSkin
+        : defaultSkin;
+  if (requestedSkin === defaultSkin || hasSkin(requestedSkin)) {
+    save(skinKey, skin);
+  }
+
+  const systemDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedColor = read(colorKey);
+  const color = savedColor === 'dark' || savedColor === 'light'
+    ? savedColor
+    : systemDark ? 'dark' : 'light';
+
+  root.dataset.theme = color;
+  if (skin === defaultSkin) delete root.dataset.skin;
+  else root.dataset.skin = skin;
+
+  const skinHref = skin === defaultSkin ? null : skinBase + skinFiles[skin];
+  window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref };
+
+  if (skinHref) document.write('<link rel="preload" as="style" href="' + skinHref + '">');
+})();
+</script>

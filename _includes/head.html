@@ -34,10 +34,17 @@
   {%- endif -%}
 {%- endif -%}
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+{% include theme-bootstrap.html %}
+<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/atkinson-hyperlegible/700.woff2' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/skins/fonts.css' | relative_url }}">
-<link id="skin-stylesheet" rel="stylesheet" data-skin-base="{{ '/assets/css/skins/' | relative_url }}" disabled>
-<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+<script>
+  if (window.__deuteriumTheme.skinHref) {
+    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + '">');
+  } else {
+    document.write('<link id="skin-stylesheet" rel="stylesheet" disabled>');
+  }
+</script>
 <link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}">
 {%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}">{%- endif -%}
+<script defer src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 <meta name="theme-color" content="#3847ff">
