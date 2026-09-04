@@ -359,6 +359,18 @@ for page in pages:
         fail(f"shell invariant failed: {rel}")
     if len(audit.ids) != len(set(audit.ids)): fail(f"duplicate id: {rel}")
     if audit.bad_images: fail(f"image metadata missing in {rel}: {audit.bad_images}")
+    if 'aria-label="Social and subscription links"' not in text:
+        fail(f"social footer missing: {rel}")
+    for href in (
+        "https://github.com/deut-erium",
+        "https://twitter.com/0xdeuterium",
+        "https://www.linkedin.com/in/himanshu-sheoran-ab047b152",
+        "mailto:himanshu_sheoran@yahoo.com",
+    ):
+        if f'href="{href}"' not in text:
+            fail(f"social link missing in {rel}: {href}")
+    if "Static HTML, local assets, and no tracking." in text or "posts by <a" in text:
+        fail(f"retired footer copy remains: {rel}")
     if audit.unsafe_flag_forms: fail(f"unsafe local checker in {rel}: {audit.unsafe_flag_forms}")
     if any("noindex" in value.lower() for value in audit.robots):
         output_url = "/" + rel
@@ -381,6 +393,16 @@ for page in pages:
         digest = hashlib.sha256(source.encode("utf-8")).hexdigest()
         if attributes.get("data-source-sha256") != digest: fail(f"code hash drift: {rel}")
         if attributes.get("data-lines") != str(source_lines(source)): fail(f"code line-count drift: {rel}")
+
+home_text = (ROOT / "index.html").read_text(encoding="utf-8")
+if 'class="masthead"' in home_text:
+    fail("repeated home masthead remains")
+if home_text.count("Himanshu Sheoran's blog on tech, security, CTFs and cryptography") != 1:
+    fail("site tagline must appear once on the home page")
+for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "ramblings/index.html"):
+    text = (ROOT / rel).read_text(encoding="utf-8")
+    if re.search(r'<(?:header|section)\b[^>]*>\s*<p class="eyebrow">', text):
+        fail(f"repeated landing-page eyebrow remains: {rel}")
 
 if len(pages) != 139 or len(shell_pages) != 134: fail(f"HTML count drift: all={len(pages)} shell={len(shell_pages)}")
 if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 79, 327, 106, 61):
