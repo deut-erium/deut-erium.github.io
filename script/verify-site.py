@@ -90,6 +90,8 @@ class Audit(HTMLParser):
         self.bad_images: list[str] = []
         self.body_classes: set[str] = set()
         self.heading_levels: list[int] = []
+        self.headings: list[tuple[int, str, bool]] = []
+        self._heading: dict[str, object] | None = None
         self.unnamed_links: list[str] = []
         self._anchor: dict[str, str] | None = None
         self.forms = 0
@@ -110,7 +112,16 @@ class Audit(HTMLParser):
         data = dict(attrs)
         if tag == "title": self.title += 1
         if tag == "h1": self.h1 += 1
-        if re.fullmatch(r"h[1-6]", tag): self.heading_levels.append(int(tag[1]))
+        if re.fullmatch(r"h[1-6]", tag):
+            level = int(tag[1])
+            self.heading_levels.append(level)
+            classes = set((data.get("class") or "").split())
+            self._heading = {
+                "level": level,
+                "tag": tag,
+                "text": [],
+                "hidden": "hidden" in data or "visually-hidden" in classes,
+            }
         if tag == "main": self.main += 1
         if tag == "body": self.body_classes.update((data.get("class") or "").split())
         if tag == "meta" and data.get("name") == "description": self.description += 1
@@ -181,8 +192,21 @@ class Audit(HTMLParser):
     def handle_data(self, data: str) -> None:
         if self._anchor is not None:
             self._anchor["name"] += data
+        if self._heading is not None:
+            text = self._heading["text"]
+            assert isinstance(text, list)
+            text.append(data)
 
     def handle_endtag(self, tag: str) -> None:
+        if self._heading is not None and tag == self._heading["tag"]:
+            text = self._heading["text"]
+            assert isinstance(text, list)
+            self.headings.append((
+                int(self._heading["level"]),
+                " ".join("".join(text).split()),
+                bool(self._heading["hidden"]),
+            ))
+            self._heading = None
         if tag == "a" and self._anchor is not None:
             if not self._anchor["name"].strip():
                 self.unnamed_links.append(self._anchor["href"])
@@ -359,7 +383,16 @@ for page in pages:
         fail(f"shell invariant failed: {rel}")
     if len(audit.ids) != len(set(audit.ids)): fail(f"duplicate id: {rel}")
     if audit.bad_images: fail(f"image metadata missing in {rel}: {audit.bad_images}")
-    if 'aria-label="Social and subscription links"' not in text:
+    if any(level == 1 and hidden for level, _, hidden in audit.headings):
+        fail(f"hidden top-level heading: {rel}")
+    visible_headings = [(level, label) for level, label, hidden in audit.headings if not hidden]
+    repeated_headings = [
+        (left, right) for left, right in zip(visible_headings, visible_headings[1:])
+        if left[0] == 1 and right[0] == 2 and left[1].casefold() == right[1].casefold()
+    ]
+    if repeated_headings:
+        fail(f"adjacent repeated headings in {rel}: {repeated_headings[:5]}")
+    if 'aria-label="Social and subscription links"' not in text or "Profiles, contact, and feed:" not in text:
         fail(f"social footer missing: {rel}")
     for href in (
         "https://github.com/deut-erium",
@@ -395,6 +428,9 @@ for page in pages:
         if attributes.get("data-lines") != str(source_lines(source)): fail(f"code line-count drift: {rel}")
 
 home_text = (ROOT / "index.html").read_text(encoding="utf-8")
+home_headings = page_audits["index.html"].headings
+if not home_headings or home_headings[0] != (1, "Publications", False):
+    fail(f"home must begin with a visible Publications heading: {home_headings[:2]}")
 if 'class="masthead"' in home_text:
     fail("repeated home masthead remains")
 if home_text.count("Himanshu Sheoran's blog on tech, security, CTFs and cryptography") != 1:
