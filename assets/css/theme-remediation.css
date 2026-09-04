@@ -20,6 +20,17 @@ html[data-skin] :focus-visible {
   outline-offset: 4px;
 }
 
+/* Generated heading links must remain usable even when a skin restyles them. */
+html .prose .heading-anchor {
+  display: inline-flex !important;
+  min-width: 1.5rem !important;
+  min-height: 1.5rem !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1 !important;
+  vertical-align: middle;
+}
+
 html[data-skin] .site-header,
 html[data-skin] .site-footer,
 html[data-skin] .masthead,
@@ -211,6 +222,10 @@ html[data-skin] .prose .code-frame__viewport,
 html[data-skin] .prose .code-frame pre {
   overflow-x: auto !important;
   overflow-y: hidden !important;
+}
+
+html .prose .code-frame__gutter {
+  white-space: pre !important;
 }
 
 html[data-skin] .prose .code-frame pre code {

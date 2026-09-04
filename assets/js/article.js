@@ -5,6 +5,7 @@
   if (!content) return;
 
   const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+  const initialOverflowUpdates = [];
   const announce = async (node, message, isCurrent = () => true) => {
     node.textContent = '';
     await nextFrame();
@@ -27,15 +28,11 @@
     const lineCount = lineSource.split('\n').length;
     const language = frame.dataset.language || 'plain text';
     const viewport = document.createElement('div');
-    const gutter = document.createElement('ol');
+    const gutter = document.createElement('div');
     viewport.className = 'code-frame__viewport';
     gutter.className = 'code-frame__gutter';
     gutter.setAttribute('aria-hidden', 'true');
-    for (let line = 1; line <= lineCount; line += 1) {
-      const item = document.createElement('li');
-      item.textContent = String(line);
-      gutter.append(item);
-    }
+    gutter.textContent = Array.from({ length: lineCount }, (_, line) => line + 1).join('\n');
     highlight.before(viewport);
     viewport.append(gutter, highlight);
 
@@ -51,6 +48,7 @@
     };
     if ('ResizeObserver' in window) new ResizeObserver(updateOverflow).observe(pre);
     else addEventListener('resize', updateOverflow);
+    initialOverflowUpdates.push(updateOverflow);
 
     let copyAttempt = 0;
     const removeFallback = () => frame.querySelector('.code-frame__fallback')?.remove();
@@ -111,7 +109,10 @@
       wrapButton.setAttribute('aria-pressed', String(wrapped));
       updateOverflow();
     });
-    updateOverflow();
+  });
+
+  requestAnimationFrame(() => {
+    initialOverflowUpdates.forEach((update) => update());
   });
 
   const article = document.querySelector('.js-article-content');
