@@ -442,6 +442,17 @@ html[data-skin] .site-brand__scope {
   overflow-wrap: break-word !important;
 }
 
+/* The brand mark keeps its square plate everywhere: as a block so width and
+   aspect-ratio apply (some skins leave it inline, collapsing it to a border
+   sliver), centered against stretch (Hash Crash pulled it into an ellipse),
+   and height from the aspect ratio. */
+html[data-skin] .site-brand__mark {
+  display: block !important;
+  flex: 0 0 auto !important;
+  align-self: center !important;
+  height: auto !important;
+}
+
 /* Margin of Error keeps its header in a fixed dock column, so the wordmark
    needs a size that fits the rail instead of an uncapped plate. */
 html[data-skin="margin-of-error"] .site-brand__name {
