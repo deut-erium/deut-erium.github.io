@@ -30,6 +30,8 @@ cases.each do |name, input|
   raise "#{name}: frame missing" unless output.scan("data-code-frame").length == 1
   raise "#{name}: language missing" unless output.include?('data-language="python"')
   raise "#{name}: highlighted source changed" unless output.include?("<code>#{HIGHLIGHTED}</code>")
+  raise "#{name}: static viewport missing" unless output.include?('class="code-frame__viewport"')
+  raise "#{name}: static gutter missing" unless output.include?('<div class="code-frame__gutter" aria-hidden="true">1</div>')
   hash = Digest::SHA256.hexdigest(SOURCE)
   raise "#{name}: source hash changed" unless output.include?(%[data-source-sha256="#{hash}"])
 end

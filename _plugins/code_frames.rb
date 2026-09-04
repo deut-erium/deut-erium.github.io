@@ -85,6 +85,7 @@ module Jekyll
           ""
         end
         line_word = lines.length == 1 ? "line" : "lines"
+        gutter = (1..lines.length).to_a.join("\n")
 
         <<~HTML.chomp
           <figure class="code-frame #{CGI.escapeHTML(classes.join(" "))}" data-code-frame data-language="#{CGI.escapeHTML(language)}" data-lines="#{lines.length}" data-source-sha256="#{Digest::SHA256.hexdigest(source)}" aria-labelledby="#{label_id}">
@@ -95,7 +96,10 @@ module Jekyll
                 <button type="button" data-copy-code aria-label="Copy #{CGI.escapeHTML(label)} code frame #{index}" aria-describedby="#{status_id}" disabled hidden>Copy</button>
               </span>
             </figcaption>
-            <div class="highlight"><pre class="highlight"#{overflow_attributes}><code>#{highlighted}</code></pre></div>
+            <div class="code-frame__viewport">
+              <div class="code-frame__gutter" aria-hidden="true">#{gutter}</div>
+              <div class="highlight"><pre class="highlight"#{overflow_attributes}><code>#{highlighted}</code></pre></div>
+            </div>
             <p class="code-frame__status" id="#{status_id}" role="status" aria-live="polite" aria-atomic="true"></p>
           </figure>
         HTML
