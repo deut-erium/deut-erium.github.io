@@ -1,0 +1,118 @@
+<details class="qr-share">
+  <summary>Share this article</summary>
+  <div class="qr-share__panel">
+    <style>
+      .qr-share {
+        margin-top: 1rem;
+        border-top: 2px solid var(--rule);
+      }
+      .qr-share > summary {
+        padding: .8rem 0;
+        cursor: pointer;
+        font-family: var(--keys);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .qr-share__panel {
+        display: grid;
+        gap: .8rem;
+        justify-items: start;
+        padding: 1rem;
+        background: var(--paper-low);
+        border: 2px solid var(--rule);
+        border-radius: .5rem;
+      }
+      .qr-share__code {
+        display: block;
+        box-sizing: content-box;
+        width: 12rem;
+        max-width: 100%;
+        height: auto;
+        padding: .25rem;
+        background: #ffffff;
+      }
+      .qr-share__url {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: .95rem;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .qr-share__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .6rem;
+        align-items: center;
+      }
+      .qr-share__copy {
+        padding: .45rem .8rem;
+        color: var(--lcd-ink);
+        background: var(--lcd);
+        border: 3px solid var(--navy);
+        border-radius: .4rem;
+        font-family: var(--keys);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .qr-share__copy:focus-visible {
+        outline: 3px solid var(--shell-high);
+      }
+      .qr-share__asset {
+        color: var(--link);
+      }
+      @media print {
+        .qr-share {
+          break-inside: avoid;
+        }
+        .qr-share__actions {
+          display: none;
+        }
+      }
+    </style>
+    {%- qr_svg -%}
+    <p class="qr-share__url">{%- qr_url -%}</p>
+    <div class="qr-share__actions">
+      <button type="button" class="qr-share__copy" data-copy="{%- qr_url -%}" hidden>Copy link</button>
+      <a class="qr-share__asset" href="{%- qr_href -%}">Open QR SVG</a>
+    </div>
+    <script>
+      // Progressive enhancement only: without JavaScript the details element,
+      // the QR code and the URL text above remain fully usable.
+      (function (document) {
+        "use strict";
+        var buttons = document.querySelectorAll(".qr-share__copy");
+        Array.prototype.forEach.call(buttons, function (button) {
+          var url = button.getAttribute("data-copy") || "";
+          var idle = navigator.share ? "Share link" : "Copy link";
+          var reset = function () { button.textContent = idle; };
+          var showUrl = function () {
+            button.textContent = url;
+            window.setTimeout(reset, 4000);
+          };
+          var copied = function () {
+            button.textContent = "Link copied";
+            window.setTimeout(reset, 2500);
+          };
+          var copyToClipboard = function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(url).then(copied, showUrl);
+            } else {
+              showUrl();
+            }
+          };
+          button.textContent = idle;
+          button.hidden = false;
+          button.addEventListener("click", function () {
+            if (navigator.share) {
+              navigator.share({ url: url }).catch(copyToClipboard);
+            } else {
+              copyToClipboard();
+            }
+          });
+        });
+      })(document);
+    </script>
+  </div>
+</details>
