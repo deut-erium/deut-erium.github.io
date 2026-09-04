@@ -1,0 +1,427 @@
+/* Print-to-study stylesheet (roadmap section 9, phase 1: CSS only).
+   Loaded with media="print" from _includes/head.html after every other
+   stylesheet, so equal-specificity !important rules here win the cascade
+   over main.css and theme-remediation.css (including the active skin).
+
+   Everything is wrapped in @media print so the file stays inert if it is
+   ever included without the media attribute. */
+
+@media print {
+  /* ------------------------------------------------------------------ *
+   * Page geometry
+   *
+   * A4 with 18/16/20 mm margins keeps a ~7in text column, which also
+   * reads well when a 6x9 trim is imposed on the same PDF.
+   * ------------------------------------------------------------------ */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * E-ink floor: white paper, black ink, no decoration, no motion.
+   * The universal selector carries !important so any skin palette is
+   * overridden; declarations that fight other !important rules are
+   * restated below with matching or higher specificity.
+   * ------------------------------------------------------------------ */
+  *,
+  *::before,
+  *::after {
+    color: #000 !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transform: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    mix-blend-mode: normal !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  html[data-skin] body {
+    padding-top: 0 !important; /* cancels the narrow-screen control strip */
+  }
+
+  /* Base typography: ~10.5pt on a 1.45 rhythm for the whole study sheet. */
+  html {
+    font-size: 10.5pt;
+  }
+
+  body {
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .prose {
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .prose p,
+  .prose li,
+  .prose dt,
+  .prose dd {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .prose h1 { font-size: 15pt !important; line-height: 1.2 !important; }
+  .prose h2 { font-size: 13pt !important; line-height: 1.25 !important; }
+  .prose h3 { font-size: 11.5pt !important; line-height: 1.3 !important; }
+  .prose h4,
+  .prose h5,
+  .prose h6 { font-size: 10.5pt !important; line-height: 1.35 !important; }
+
+  .prose :is(h1, h2, h3, h4, h5, h6),
+  .record-head h1,
+  html[data-skin] .record-head h1 {
+    break-after: avoid-page !important;
+    break-inside: avoid !important;
+  }
+
+  .record-head h1,
+  html[data-skin] .record-head h1 {
+    font-size: 15pt !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .record-page :is(.record-head__key, .eyebrow) {
+    font-size: 8.5pt !important;
+  }
+
+  .record-page .record-facts :is(dt, dd) {
+    font-size: 9pt !important;
+  }
+
+  .prose hr {
+    height: 0 !important;
+    margin: 10pt 0 !important;
+    background: none !important;
+    border: 0 !important;
+    border-top: .75pt solid #000 !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Layout: shells collapse to the page box in every skin.
+   * ------------------------------------------------------------------ */
+  html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell),
+  html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header, .site-footer),
+  :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .site-footer) {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  html[data-skin] .record-page > .record-grid,
+  .record-grid {
+    display: block !important;
+    grid-template-columns: none !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Hidden chrome. The site header, all navigation and every control is
+   * interactive; the footer keeps only its note line.
+   * ------------------------------------------------------------------ */
+  .skip-link,
+  .site-header,
+  .site-nav,
+  .skin-menu,
+  .skin-dice,
+  .theme-toggle,
+  .site-footer__links,
+  .masthead__actions,
+  .record-actions,
+  .tag-line,
+  .pagination,
+  .archive-tools,
+  .archive-search,
+  .quick-filters,
+  .all-tags,
+  .code-frame__actions,
+  .code-frame__status,
+  .code-frame__fallback,
+  .record-grid > .record-index,
+  .record-row__arrow,
+  .flag-check__controls,
+  .external-embed__actions {
+    display: none !important;
+  }
+
+  /* theme-remediation forces these back on with !important; mirror and
+     overrule. Permalink icons carry no print value either. */
+  html .prose .heading-anchor {
+    display: none !important;
+  }
+
+  .site-footer {
+    display: block !important;
+    margin-top: 12pt !important;
+    padding-top: 5pt !important;
+    border-top: .75pt solid #000 !important;
+  }
+
+  .site-footer__inner {
+    display: block !important;
+  }
+
+  .site-footer .site-footer__note {
+    display: block !important;
+    margin: 0 !important;
+    font-size: 8.5pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Links. Outbound links inside articles print their destination after
+   * the text; anchors, permalinks and navigation stay clean.
+   * ------------------------------------------------------------------ */
+  .prose a[href]::after {
+    content: none !important;
+  }
+
+  .article__content a[href^="http"]::after,
+  .page-prose a[href^="http"]::after {
+    content: " (" attr(href) ")" !important;
+    font-size: 8pt;
+    overflow-wrap: anywhere;
+  }
+
+  .prose .heading-anchor::after,
+  .article__content .heading-anchor[href^="http"]::after {
+    content: none !important;
+  }
+
+  .prose a[href] {
+    text-decoration: underline !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Code frames: intact frame, kept gutter line numbers, label stays
+   * with the code it names. Short frames are atomic; a frame taller
+   * than one page fragments (break-inside: avoid is a preference, the
+   * engine drops it when a box cannot fit on a page of its own).
+   * ------------------------------------------------------------------ */
+  html[data-skin] .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight),
+  .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Syntax highlighting prints as ink, not hue. */
+  html[data-skin] .prose .highlight :is(.c, .c1, .cm, .cp, .cs, .err, .k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow, .n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .no, .nt, .nv, .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .m, .mb, .mf, .mh, .mi, .mo, .il, .gd, .gi, .gh, .gu, span, code),
+  .prose .highlight span {
+    color: #000 !important;
+    background-color: transparent !important;
+    font-style: normal !important;
+  }
+
+  .prose .code-frame,
+  .prose figure,
+  .prose pre {
+    break-inside: avoid;
+  }
+
+  .prose .code-frame {
+    margin: 9pt 0 !important;
+    padding: 0 !important;
+    border: .75pt solid #000 !important;
+    border-radius: 0 !important;
+  }
+
+  .prose .code-frame__bar {
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 3pt 6pt !important;
+    background: #fff !important;
+    border-bottom: .75pt solid #000 !important;
+    break-after: avoid-page !important;
+  }
+
+  .prose .code-frame .code-frame__label :is(strong, small) {
+    font-size: 8pt !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Keep the numbered gutter beside the code instead of main.css's
+     print-era display:none. */
+  .prose .code-frame__viewport {
+    display: grid !important;
+    grid-template-columns: 2.4rem minmax(0, 1fr) !important;
+  }
+
+  .prose .code-frame .code-frame__gutter {
+    display: block !important;
+    margin: 0 !important;
+    padding: 4pt 5pt 4pt 6pt !important;
+    color: #000 !important;
+    background: #fff !important;
+    border-right: .5pt solid #000 !important;
+    font-size: 8pt !important;
+    line-height: 14.25pt !important; /* lockstep with the code track */
+    white-space: pre !important;
+  }
+
+  /* Skins force horizontal scroll containers; print needs full flow. */
+  html[data-skin] .prose :is(.code-frame__viewport, .code-frame pre),
+  .prose .code-frame pre,
+  .prose .code-frame pre code,
+  .prose pre,
+  .prose pre code {
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .prose .code-frame pre,
+  .prose pre {
+    margin: 0 !important;
+    padding: 4pt 6pt !important;
+    border: 0 !important;
+    font-size: 9.5pt !important;
+    line-height: 14.25pt !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+
+  .prose .code-frame pre code,
+  .prose pre code {
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    font-size: inherit !important;
+  }
+
+  /* Code and label sizes must beat the skin floor (max(1rem, 1em)). */
+  html[data-skin] :is(.prose code, .prose pre, .code-frame, .code-frame *),
+  .prose :is(.highlight, .code-frame) :is(pre, code),
+  .prose pre,
+  .prose code {
+    font-size: 9.5pt !important;
+  }
+
+  .prose :is(.highlight, .code-frame) code {
+    padding: 0 .5pt !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Mathematics. KaTeX prints in the serif study stack; the KaTeX faces
+   * stay in the list after the system serifs so exotic glyphs (radicals,
+   * big operators, math alphanumerics) never fall back to tofu.
+   * ------------------------------------------------------------------ */
+  :is(.katex, .katex *) {
+    font-family: Georgia, "Times New Roman", "Liberation Serif", "Nimbus Roman",
+                 KaTeX_Main, KaTeX_Math, KaTeX_Size1, KaTeX_Size2, KaTeX_Size3,
+                 KaTeX_Size4, KaTeX_AMS, KaTeX_Caligraphic, KaTeX_Fraktur,
+                 KaTeX_SansSerif, KaTeX_Typewriter, serif !important;
+  }
+
+  html[data-skin] :is(.prose .katex, .prose .katex-display),
+  .prose .katex {
+    font-size: 10.5pt !important;
+    overflow: visible !important;
+  }
+
+  .prose .katex-display {
+    margin: 9pt 0 !important;
+    padding: 4pt 0 !important;
+    border: 0 !important;
+    background: #fff !important;
+    overflow: visible !important;
+    break-inside: avoid;
+  }
+
+  html[data-skin] .prose .katex-display,
+  .prose .katex-display > .katex {
+    overflow: visible !important;
+  }
+
+  html[data-skin] .prose .katex-display,
+  .prose .katex-display {
+    font-size: 12pt !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Tables: rows are atomic, the header repeats after each page break,
+   * zebra fills become hairline rules.
+   * ------------------------------------------------------------------ */
+  .prose table {
+    display: table !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 9pt 0 !important;
+    overflow: visible !important;
+    border-collapse: collapse !important;
+    font-size: 9.5pt !important;
+    break-inside: avoid;
+  }
+
+  .prose thead {
+    display: table-header-group !important;
+  }
+
+  .prose tr {
+    break-inside: avoid !important;
+  }
+
+  .prose table :is(th, td) {
+    min-width: 0 !important;
+    padding: 3pt 4pt !important;
+    border: 0 !important;
+    border-bottom: .5pt solid #000 !important;
+    vertical-align: top !important;
+  }
+
+  .prose table th {
+    border-bottom: 1pt solid #000 !important;
+    font-weight: 700 !important;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Boxes and rows that must not straddle a page break.
+   * ------------------------------------------------------------------ */
+  .prose blockquote,
+  .prose .info,
+  .prose .flag-check,
+  .prose .external-embed,
+  .prose img,
+  .record-row,
+  .record-row__link,
+  .masthead__ledger > div {
+    break-inside: avoid !important;
+  }
+
+  .prose blockquote {
+    margin: 9pt 0 !important;
+    padding: 5pt 0 5pt 9pt !important;
+    border: 0 !important;
+    border-left: 2pt solid #000 !important;
+    font-weight: 400 !important;
+  }
+
+  .prose .info,
+  .prose .flag-check,
+  .prose .external-embed {
+    margin: 9pt 0 !important;
+    padding: 6pt 8pt !important;
+    border: .75pt solid #000 !important;
+    border-radius: 0 !important;
+  }
+}
