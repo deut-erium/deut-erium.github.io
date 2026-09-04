@@ -447,10 +447,23 @@ for page in pages:
 
 home_text = (ROOT / "index.html").read_text(encoding="utf-8")
 home_headings = page_audits["index.html"].headings
-if not home_headings or home_headings[0] != (1, "Publications", False):
-    fail(f"home must begin with a visible Publications heading: {home_headings[:2]}")
-if 'class="masthead"' in home_text:
-    fail("repeated home masthead remains")
+if not home_headings or home_headings[0] != (1, "Your curiosity?", False):
+    fail(f"home must begin with the visible masthead heading: {home_headings[:2]}")
+if 'class="masthead"' not in home_text:
+    fail("home masthead missing")
+for phrase in ("what brings you here?", "Your curiosity?", "Please don't press any buttons, I don't know what they do"):
+    if phrase not in home_text:
+        fail(f"home masthead copy missing: {phrase}")
+SITE_TITLE = "deuterium's blog"
+for retired in ("deut-erium.github.io</p>", f"{SITE_TITLE}</h1>"):
+    if retired in home_text:
+        fail(f"repeated home masthead copy remains: {retired[:40]}")
+for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "ramblings/index.html"):
+    text = (ROOT / rel).read_text(encoding="utf-8")
+    if 'class="masthead"' in text:
+        fail(f"masthead outside the home page: {rel}")
+    if re.search(r'<(?:header|section)\b[^>]*>\s*<p class="eyebrow">', text):
+        fail(f"repeated landing-page eyebrow remains: {rel}")
 if home_text.count("Himanshu Sheoran's blog on tech, security, CTFs and cryptography") != 1:
     fail("site tagline must appear once on the home page")
 for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "ramblings/index.html"):
