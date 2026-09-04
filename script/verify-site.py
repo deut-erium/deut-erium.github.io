@@ -514,6 +514,7 @@ for stylesheet in ROOT.rglob("*.css"):
 favicon_hashes = {
     "favicon.ico": "ca747f44c3e717d9ceaaa91a81e9bcfe5c4929c063630976cb03836392f5846f",
     "assets/favicon.ico": "ca747f44c3e717d9ceaaa91a81e9bcfe5c4929c063630976cb03836392f5846f",
+    "assets/favicon.svg": "aa8d686d23ae6fbc6d08793e2869e9225992372f7ee09c609b5ba35bf756073e",
     "assets/favicon-16x16.png": "5b4e6eaef77067e2611d47f36744f809afed41c05e1caa74535e9837e1e0faad",
     "assets/favicon-32x32.png": "dd8d23f732dc10c08fb4d7d9c9760082a9f5c37b14e1aa264b2603a991df40be",
     "assets/favicon-96x96.png": "99368641171b70e08da3bc02176e2f6b7a0e8c03a02447b2001a680831c4d7aa",
