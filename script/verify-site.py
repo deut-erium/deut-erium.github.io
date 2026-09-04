@@ -74,6 +74,11 @@ def resolves(page: Path, ref: str) -> bool:
 
 
 class Audit(HTMLParser):
+    VOID_ELEMENTS = {
+        "area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr",
+    }
+
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.title = self.h1 = self.main = self.description = 0
@@ -92,6 +97,7 @@ class Audit(HTMLParser):
         self.heading_levels: list[int] = []
         self.headings: list[tuple[int, str, bool]] = []
         self._heading: dict[str, object] | None = None
+        self._element_stack: list[tuple[str, bool]] = []
         self.unnamed_links: list[str] = []
         self._anchor: dict[str, str] | None = None
         self.forms = 0
@@ -110,17 +116,24 @@ class Audit(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = dict(attrs)
+        classes = set((data.get("class") or "").split())
+        style = re.sub(r"\s+", "", (data.get("style") or "").lower())
+        ancestor_hidden = self._element_stack[-1][1] if self._element_stack else False
+        element_hidden = ancestor_hidden or "hidden" in data or data.get("aria-hidden") == "true" or (
+            "visually-hidden" in classes or "display:none" in style or "visibility:hidden" in style
+        )
+        if tag not in self.VOID_ELEMENTS:
+            self._element_stack.append((tag, element_hidden))
         if tag == "title": self.title += 1
         if tag == "h1": self.h1 += 1
         if re.fullmatch(r"h[1-6]", tag):
             level = int(tag[1])
             self.heading_levels.append(level)
-            classes = set((data.get("class") or "").split())
             self._heading = {
                 "level": level,
                 "tag": tag,
                 "text": [],
-                "hidden": "hidden" in data or "visually-hidden" in classes,
+                "hidden": element_hidden,
             }
         if tag == "main": self.main += 1
         if tag == "body": self.body_classes.update((data.get("class") or "").split())
@@ -218,6 +231,10 @@ class Audit(HTMLParser):
                 if not self._flag_submit_disabled: self.unsafe_flag_forms.append("enabled submit")
                 self._flag_form = False
                 self._flag_form_depth = 0
+        for index in range(len(self._element_stack) - 1, -1, -1):
+            if self._element_stack[index][0] == tag:
+                del self._element_stack[index:]
+                break
 
 
 class FrameParser(HTMLParser):
@@ -383,12 +400,12 @@ for page in pages:
         fail(f"shell invariant failed: {rel}")
     if len(audit.ids) != len(set(audit.ids)): fail(f"duplicate id: {rel}")
     if audit.bad_images: fail(f"image metadata missing in {rel}: {audit.bad_images}")
-    if any(level == 1 and hidden for level, _, hidden in audit.headings):
-        fail(f"hidden top-level heading: {rel}")
+    if any(level <= 2 and hidden for level, _, hidden in audit.headings):
+        fail(f"hidden primary heading: {rel}")
     visible_headings = [(level, label) for level, label, hidden in audit.headings if not hidden]
     repeated_headings = [
         (left, right) for left, right in zip(visible_headings, visible_headings[1:])
-        if left[0] == 1 and right[0] == 2 and left[1].casefold() == right[1].casefold()
+        if left[0] <= 2 and right[0] <= 2 and left[1].casefold() == right[1].casefold()
     ]
     if repeated_headings:
         fail(f"adjacent repeated headings in {rel}: {repeated_headings[:5]}")
