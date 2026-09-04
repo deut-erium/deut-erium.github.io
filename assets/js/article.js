@@ -37,7 +37,7 @@
     viewport.append(gutter, highlight);
 
     const updateOverflow = () => {
-      const overflow = !frame.classList.contains('is-wrapped') && pre.scrollWidth > pre.clientWidth + 1;
+      const overflow = pre.scrollWidth > pre.clientWidth + 1;
       if (overflow) {
         pre.tabIndex = 0;
         pre.setAttribute('aria-label', `${language} code; horizontally scrollable`);
