@@ -17,8 +17,11 @@ faces = re.findall(r"@font-face\{[^}]+\}", css)
 kept = [face for face in faces if any(name in face for name in KEEP)]
 kept = [
     re.sub(r',url\(fonts/[^)]+\.(?:woff|ttf)\) format\("(?:woff|truetype)"\)', "", face)
+    .replace("font-display:block", "font-display:swap")
     for face in kept
 ]
+if any("font-display:block" in face for face in kept):
+    raise SystemExit("retained KaTeX faces must not hide equations while loading")
 if len(kept) != len(KEEP):
     raise SystemExit(f"expected {len(KEEP)} retained font faces, found {len(kept)}")
 
