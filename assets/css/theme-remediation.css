@@ -382,6 +382,78 @@ html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .err
   overflow-x: clip !important;
 }
 
+/* The chrome shares the main shells' page width so the header and footer
+   align with the body at every zoom level and viewport. Twin Blades and
+   Margin of Error keep their rail layouts. */
+html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header, .site-footer) {
+  box-sizing: border-box !important;
+  width: min(calc(100% - 2rem), 96rem) !important;
+  max-width: 96rem !important;
+  margin-inline: auto !important;
+}
+
+/* Below 54rem the main shells go full bleed; the chrome follows them. */
+@media (max-width: 54rem) {
+  html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header, .site-footer) {
+    width: 100% !important;
+    margin-inline: 0 !important;
+  }
+}
+
+/* These skins put the brand in a fixed-minimum grid track narrower than the
+   rendered wordmark, so the word paints past its plate at wide viewports.
+   Track one sizes to the brand instead. Below 70rem each skin keeps its own
+   stacked header layout. */
+@media (min-width: 70rem) {
+  html[data-skin="key-exchange-kiosk"] .site-header__inner,
+  html[data-skin="proof-bonbons"] .site-header__inner,
+  html[data-skin="mercury-keyspace"] .site-header__inner,
+  html[data-skin="cut-paste-factor"] .site-header__inner,
+  html[data-skin="rsa-vs-the-world"] .site-header__inner,
+  html[data-skin="edge-conditions"] .site-header__inner,
+  html[data-skin="exploit-in-b-flat"] .site-header__inner,
+  html[data-skin="root-in-seven"] .site-header__inner,
+  html[data-skin="the-fat-tail-register"] .site-header__inner,
+  html[data-skin="root-access"] .site-header__inner,
+  html[data-skin="twin-blades"] .site-header__inner {
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+  }
+}
+
+/* The wordmark and tagline stay inside the brand plate at every width.
+   Several skins cap the name in glyph widths narrower than the rendered
+   word, or keep the tagline on one line wider than the plate. The header
+   row also wraps instead of flex-shrinking the brand under its content. */
+html[data-skin] .site-header__inner {
+  flex-wrap: wrap !important;
+}
+
+html[data-skin] .site-brand {
+  flex-shrink: 0 !important;
+}
+
+html[data-skin] .site-brand__name {
+  max-width: none !important;
+}
+
+html[data-skin] .site-brand__scope {
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Margin of Error keeps its header in a fixed dock column, so the wordmark
+   needs a size that fits the rail instead of an uncapped plate. */
+html[data-skin="margin-of-error"] .site-brand__name {
+  font-size: clamp(1.05rem, 1.5vw, 1.5rem) !important;
+}
+
+/* Twin Blades keeps its header in the narrow left blade, so its wordmark
+   scales to the blade instead of the full header. */
+html[data-skin="twin-blades"] .site-brand__name {
+  font-size: clamp(1.3rem, 2vw, 1.9rem) !important;
+}
+
 html[data-skin] :is(.home-shell, .archive-shell, .record-page) {
   display: block !important;
   grid-template: none !important;
