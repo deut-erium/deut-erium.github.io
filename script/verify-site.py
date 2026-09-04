@@ -415,6 +415,7 @@ for page in pages:
         "https://github.com/deut-erium",
         "https://twitter.com/0xdeuterium",
         "https://www.linkedin.com/in/himanshu-sheoran-ab047b152",
+        "https://discord.com/users/650776387535503372",
         "mailto:himanshu_sheoran@yahoo.com",
     ):
         if f'href="{href}"' not in text:

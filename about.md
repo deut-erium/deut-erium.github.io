@@ -57,7 +57,7 @@ This personal blog is aimed towards documenting my interests, research and inter
 Enthusiastic employer with interest evoking challenging problems? [Hire Me](/assets/resume.pdf)
 
 ## Contact
-Always feel free to DM(direct message) on [discord](https://discord.com/new), Username: deut_erium.   
+Always feel free to DM(direct message) on [discord](https://discord.com/users/650776387535503372), Username: deut_erium.   
 Or any other convenient medium of choice linked below.
 
 HACK THE PLANET :metal: :metal: :metal:
