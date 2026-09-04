@@ -15,7 +15,7 @@
   };
 
   content.querySelectorAll('[data-code-frame]').forEach((frame) => {
-    const highlight = frame.querySelector(':scope > .highlight');
+    const highlight = frame.querySelector(':scope > .code-frame__viewport > .highlight, :scope > .highlight');
     const pre = highlight?.querySelector('pre');
     const code = pre?.querySelector('code');
     const copyButton = frame.querySelector('[data-copy-code]');
@@ -27,14 +27,16 @@
     const lineSource = source.endsWith('\n') ? source.slice(0, -1) : source;
     const lineCount = lineSource.split('\n').length;
     const language = frame.dataset.language || 'plain text';
-    const viewport = document.createElement('div');
-    const gutter = document.createElement('div');
-    viewport.className = 'code-frame__viewport';
-    gutter.className = 'code-frame__gutter';
-    gutter.setAttribute('aria-hidden', 'true');
-    gutter.textContent = Array.from({ length: lineCount }, (_, line) => line + 1).join('\n');
-    highlight.before(viewport);
-    viewport.append(gutter, highlight);
+    if (!frame.querySelector(':scope > .code-frame__viewport')) {
+      const viewport = document.createElement('div');
+      const gutter = document.createElement('div');
+      viewport.className = 'code-frame__viewport';
+      gutter.className = 'code-frame__gutter';
+      gutter.setAttribute('aria-hidden', 'true');
+      gutter.textContent = Array.from({ length: lineCount }, (_, line) => line + 1).join('\n');
+      highlight.before(viewport);
+      viewport.append(gutter, highlight);
+    }
 
     const updateOverflow = () => {
       const overflow = pre.scrollWidth > pre.clientWidth + 1;
