@@ -27,6 +27,22 @@ The release command performs one Jekyll build for the root blog, WriteUps, tutor
 
 Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets. Mathematics and syntax highlighting are generated before publication.
 
+## API
+
+The build publishes a curl-able index of every post at `/index.json` (a JSON array) and `/index.jsonl` (one object per line). Entries are ordered newest first and are bodyless. Each entry has `title`, `date` (ISO 8601), `route` (absolute URL), `section` (`writeups`, `tutorials`, `ramblings`, or `root`), `tags`, `description`, `has_math` (mirrors the `mathjax` front matter), and `has_code` (fenced code blocks present).
+
+List the routes of every writeup:
+
+```sh
+curl -s https://deut-erium.github.io/index.json | jq -r '.[] | select(.section=="writeups") | .route'
+```
+
+Stream the JSON Lines variant:
+
+```sh
+curl -s https://deut-erium.github.io/index.jsonl | jq -c 'select(.has_math == true) | {title, route}'
+```
+
 ## Publishing a post
 
 `master` contains the Jekyll source. `gh-pages` contains the generated site. GitHub Actions verifies source pushes but does not deploy them.
