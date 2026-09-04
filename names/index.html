@@ -1,0 +1,59 @@
+---
+layout: base
+title: Name toys
+description: Type a name and get three deterministic toys from its SHA-256, an Escher-style tessellation tile, a pentatonic melody, and an 8-bit avatar, all drawn locally in your browser.
+js: /assets/js/features/names.js
+---
+<main id="content" class="page-shell names-shell">
+  <header class="page-heading">
+    <p class="eyebrow">toys</p>
+    <h1>Name toys</h1>
+    <p>Type a name, get three things back: a tessellation tile, a melody, an avatar. Everything comes from the SHA-256 of exactly what you typed, computed in your browser, so the same name always rebuilds the same toys.</p>
+  </header>
+  <article class="prose page-prose names-console">
+    <style>
+      .names-console { display: grid; gap: clamp(1.2rem, 3vw, 2rem); }
+      .names-field { display: grid; gap: .45rem; max-width: 34rem; margin: 0; }
+      .names-field__label { font-family: var(--keys); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+      .names-field__input { padding: .6rem .8rem; color: var(--ink); background: var(--paper-low); border: 3px solid var(--navy); border-radius: .45rem; font-size: 1.25rem; }
+      .names-readout { margin: -.7rem 0 0; color: var(--muted); font-family: var(--mono); font-size: .95rem; overflow-wrap: anywhere; }
+      .names-toy { display: grid; gap: .9rem; padding-top: 1.4rem; border-top: 3px solid var(--rule); }
+      .names-toy h2 { margin: 0; font-size: 1.7rem; }
+      .names-toy__note { margin: 0; color: var(--muted); }
+      .names-canvas { display: block; width: 100%; height: auto; background: var(--paper-low); border: 4px solid var(--navy); border-radius: .6rem; }
+      .names-canvas--tile { max-width: 26rem; }
+      .names-canvas--notes { max-width: 36rem; }
+      .names-canvas--avatar { max-width: 10.5rem; image-rendering: pixelated; }
+      .names-canvas--wave { flex: 1 1 14rem; max-width: 26rem; }
+      .names-toy__row { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem; }
+      .names-play { padding: .6rem 1.1rem; color: var(--ink); background: var(--yellow); border: 3px solid var(--navy); border-radius: .55rem; font-family: var(--keys); font-size: 1rem; cursor: pointer; }
+      .names-play:disabled { opacity: .6; cursor: wait; }
+      .names-noscript { margin: 0; color: var(--muted); }
+    </style>
+    <label class="names-field" for="name-input">
+      <span class="names-field__label">Your name</span>
+      <input id="name-input" class="names-field__input" type="text" value="deuterium" placeholder="type a name" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="80">
+    </label>
+    <p class="names-readout" id="name-digest">hashing your name&hellip;</p>
+    <noscript><p class="names-noscript">The toys are drawn live with JavaScript. Turn it on and type a name to meet your tile, tune, and avatar.</p></noscript>
+    <section class="names-toy" aria-labelledby="names-tile-title">
+      <h2 id="names-tile-title">Your Escher tile</h2>
+      <p class="names-toy__note">A circle-limit tessellation in your palette: concentric arcs and inward triangles with four-fold symmetry, figures crowding toward the rim the way they do in Circle Limit IV.</p>
+      <canvas id="names-tile" class="names-canvas names-canvas--tile" width="512" height="512" role="img" aria-label="Circle-limit tessellation tile derived from the name"></canvas>
+    </section>
+    <section class="names-toy" aria-labelledby="names-melody-title">
+      <h2 id="names-melody-title">Your melody</h2>
+      <p class="names-toy__note">Sixteen bytes of the hash walked across a pentatonic scale, two octaves of room. It only makes sound when you press play; the scope underneath shows the waveform while it runs.</p>
+      <canvas id="names-notes" class="names-canvas names-canvas--notes" width="672" height="192" role="img" aria-label="Note blocks of the pentatonic melody derived from the name"></canvas>
+      <div class="names-toy__row">
+        <button id="names-play" class="names-play" type="button">Play melody</button>
+        <canvas id="names-wave" class="names-canvas names-canvas--wave" width="420" height="72" role="img" aria-label="Waveform of the melody while it plays"></canvas>
+      </div>
+    </section>
+    <section class="names-toy" aria-labelledby="names-avatar-title">
+      <h2 id="names-avatar-title">Your 8-bit avatar</h2>
+      <p class="names-toy__note">Fifteen hashed pixels mirrored into a five-by-five grid, enlarged with crisp edges. Column three decides, columns four and five obey.</p>
+      <canvas id="names-avatar" class="names-canvas names-canvas--avatar" width="250" height="250" role="img" aria-label="8-bit avatar derived from the name"></canvas>
+    </section>
+  </article>
+</main>
