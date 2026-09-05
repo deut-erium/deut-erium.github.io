@@ -15,6 +15,7 @@ Jekyll::Hooks.register :site, :post_write do |site|
   next if dest.empty?
 
   challenges = []
+  by_hash = {}
   Dir.glob(File.join(dest, '**', '*.html')).sort.each do |path|
     html = begin
       File.read(path, encoding: 'UTF-8')
@@ -25,12 +26,29 @@ Jekyll::Hooks.register :site, :post_write do |site|
 
     route = '/' + path.delete_prefix(dest).delete_prefix(File::SEPARATOR)
     route = route.sub(%r{(?:^|/)index\.html\z}, '/')
-    title = html[%r{<title>(.*?)</title>}m, 1].to_s.split(' / ').first.to_s.strip
-    html.scan(%r{<input[^>]*\bdata-flag-input\b[^>]*>}).each do |tag|
-      id = tag[/\bid="flag-([^"]+)"/, 1] || tag[/\bid="([^"]+)"/, 1]
-      next unless id
+    page_title = html[%r{<title>(.*?)</title>}m, 1].to_s.split(' / ').first.to_s.strip
+    html.scan(%r{<form[^>]*data-flag-check[^>]*>}).each_with_index do |form, idx|
+      form_html = form[0]
+      hash = form_html[/\bdata-sha256="([^"]+)"/, 1].to_s
+      salt = form_html[/\bdata-salt="([^"]+)"/, 1]
+      input = form_html.empty? ? nil : nil
+      # nearest preceding heading carries the challenge's real name
+      pos = html.index(form)
+      headings = html[0...pos].scan(%r{<h([23])[^>]*>(.*?)</h\1>}m).map { |_, t| t.gsub(%r{<[^>]+>}, '').strip }
+      name = headings.last.to_s
+      name = name.empty? ? (page_title.empty? ? nil : page_title) : name
+      id_m = html[pos..pos + 400][%r{\bid="flag-([^"]+)"/, 1]
+      next unless id_m
 
-      challenges << { 'id' => id, 'page' => route, 'title' => title.empty? ? id : title }
+      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m }
+      entry['sha256'] = hash unless hash.empty?
+      entry['salt'] = salt unless salt.to_s.empty?
+      if !hash.empty? && by_hash.key?(hash)
+        by_hash[hash]['aliases'] << id_m
+      else
+        by_hash[hash] = entry unless hash.empty?
+        challenges << entry
+      end
     end
   end
 
