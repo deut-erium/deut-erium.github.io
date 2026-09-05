@@ -84,7 +84,7 @@ const att=num('flag-att:'+id)+1;set('flag-att:'+id,att);
 tries[id]=Math.max(tries[id]||0,att);put(A,tries);
 D.dispatchEvent(new CustomEvent('deuterium:attempt',{detail:{id,attempt:att,correct:ok}}));
 if(ok){
-const at=new Date().toISOString();solves[id]=at;put(K,solves);
+const at=new Date().toISOString();solves[id]={at,flag:x};put(K,solves);
 i.classList.remove('is-bad');done(f,v,o,at,true);
 D.dispatchEvent(new CustomEvent('deuterium:solved',{detail:{id,at}}));return;}
 const z=x.length>56?x.slice(0,53)+'...':x;
@@ -95,6 +95,6 @@ else wrong('is-wrong','WRONG FLAG - not '+z+': the format is right, the secret i
 finally{if(a===n){b.disabled=false;b.textContent=label;}}});
 i.addEventListener('input',()=>{i.classList.remove('is-bad');f.classList.remove('is-shaking');
 v.className!==P+'verdict is-clear'&&(v.className=P+'verdict',v.textContent='');});
-solves[id]&&done(f,v,o,solves[id],false);
+solves[id]&&done(f,v,o,(typeof solves[id]==='object'&&solves[id]?solves[id].at:solves[id]),false);
 b.disabled=false;});
 })();

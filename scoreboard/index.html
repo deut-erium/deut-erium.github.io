@@ -168,35 +168,38 @@ html[data-theme="dark"] .scoreboard-state .is-yes { color: #4fbf66; }
 const D=document,S='deuterium-solves',A='deuterium-attempts',H='deuterium-hints';
 const get=k=>{try{return JSON.parse(localStorage.getItem(k))||{}}catch(_){return{}}};
 const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}};
-const solves=get(S),tries=get(A),hints=get(H);
+const solves=get(S),tries=get(A),hints=get(H);let knownEntries=[];
 const list=D.getElementById('scoreboard-list'),status=D.getElementById('scoreboard-status');
 const say=m=>{status.textContent=m;};
 const clearList=()=>{
   list.textContent='';
-  D.getElementById('scoreboard-solved-count').textContent=String(Object.keys(solves).length);
+  D.getElementById('scoreboard-solved-count').textContent=String(new Set(Object.keys(solves).map(alias)).size);
 };
+const alias=id=>{for(const e of knownEntries){if(e.id===id)return id;if((e.aliases||[]).includes(id))return e.id;}return id;};
+const rec=id=>{const r=solves[alias(id)];return r&&typeof r==='object'?r:(r?{at:r}:null);};
 const row=(entry)=>{
   const li=D.createElement('li'),id=entry.id;
-  const solved=Object.prototype.hasOwnProperty.call(solves,id);
+  const solved=!!rec(id);
   solved&&(li.className='is-cleared');
   const name=D.createElement('p');name.className='scoreboard-name';
   if(entry.page){const a=D.createElement('a');a.href=entry.page;a.textContent=entry.title||id;name.appendChild(a);}
   else name.textContent=entry.title||id;
   const state=D.createElement('p');state.className='scoreboard-state';
-  const stamp=solved?new Date(solves[id]):null;
+  const stamp=solved?new Date(rec(id).at):null;
   state.innerHTML=solved?'<span class="is-yes">CLEARED</span>':'<span class="is-no">not cleared</span>';
   const meta=D.createElement('p');meta.className='scoreboard-meta';
   meta.textContent=(solved?'cleared '+stamp.toLocaleString():'no clear on this device yet')
-    +(tries[id]?', attempts: '+tries[id]:'')
+    +(tries[alias(id)]||tries[id]?', attempts: '+(tries[alias(id)]||tries[id]):'')
     +((hints[id]||[]).length?', hints used: '+(hints[id]||[]).length:'');
   li.append(name,state,meta);
   list.appendChild(li);
 };
 const render=known=>{
   clearList();
+  knownEntries=known;
   const seen=new Set();
-  known.forEach(e=>{seen.add(e.id);row(e);});
-  Object.keys(solves).sort().filter(id=>!seen.has(id)).forEach(id=>row({id}));
+  known.forEach(e=>{seen.add(e.id);seen.add(...(e.aliases||[]));row(e);});
+  Object.keys(solves).map(alias).filter((v,i,a)=>a.indexOf(v)===i&&!seen.has(v)).sort().forEach(id=>row({id}));
   if(!list.children.length){
     const li=D.createElement('li');li.className='scoreboard-empty';
     li.textContent='No challenges recorded on this device yet. Solve one and it appears here.';
@@ -222,19 +225,33 @@ D.getElementById('scoreboard-export').addEventListener('click',()=>{
   }else say('Clipboard unavailable; the JSON is in the box below. Copy it manually.');
 });
 const pick=(data,names)=>{for(const n of names){if(data[n]&&typeof data[n]==='object')return data[n];}return null;};
-D.getElementById('scoreboard-import').addEventListener('click',()=>{
+D.getElementById('scoreboard-import').addEventListener('click',async()=>{
   let data;
   try{data=JSON.parse(D.getElementById('scoreboard-import-box').value);}catch(_){say('That is not valid JSON. Nothing was imported.');return;}
   if(!data||typeof data!=='object'||typeof (data.solves||data[S])!=='object'){say('That JSON has no solves record. Nothing was imported.');return;}
-  [[S,['solves',S]],[A,['attempts',A]],[H,['hints',H]]].forEach(([key,names])=>{
-    const part=pick(data,names);
-    if(!part)return;
-    const target=key===S?solves:key===A?tries:hints;
-    Object.keys(part).forEach(id=>{target[id]=part[id];});
+  const part=pick(data,['solves',S])||{};
+  const byId={};knownEntries.forEach(e=>{byId[e.id]=e;(e.aliases||[]).forEach(a=>byId[a]=e);});
+  const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+  const verified={},rejected=[];let legacy=0;
+  for(const id of Object.keys(part)){
+    const rec2=part[id];const flag=rec2&&typeof rec2==='object'?rec2.flag:null;const at=rec2&&typeof rec2==='object'?rec2.at:rec2;
+    const meta=byId[alias(id)];
+    if(!flag){legacy++;verified[alias(id)]=typeof at==='string'?{at}:rec2;continue;}
+    if(!meta||!meta.sha256){rejected.push(id);continue;}
+    const digest=hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(flag+(meta.salt||''))));
+    if(digest===meta.sha256)verified[alias(id)]={at:typeof at==='string'?at:new Date().toISOString(),flag};
+    else rejected.push(id);
+  }
+  Object.assign(solves,verified);put(S,solves);
+  [[A,['attempts',A]],[H,['hints',H]]].forEach(([key,names])=>{
+    const p2=pick(data,names);
+    if(!p2)return;
+    const target=key===A?tries:hints;
+    Object.keys(p2).forEach(id=>{target[alias(id)]=p2[id];});
     put(key,target);
   });
-  say('Imported. The list above now reflects the pasted records.');
-  render(known);
+  say('Imported '+Object.keys(verified).length+' verified solve(s)'+(legacy?' ('+legacy+' without flags, kept unverified)':'')+(rejected.length?' and rejected '+rejected.length+' whose flags fail the hash check':'')+'.');
+  render(knownEntries);
 });
 })();
 </script>
