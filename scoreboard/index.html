@@ -1,0 +1,235 @@
+---
+layout: page
+title: Challenge scoreboard
+description: Your local progress across every embedded challenge on this site. Cleared flags, attempts, and hints, all kept in this browser.
+permalink: /scoreboard/
+section: scoreboard
+---
+
+<p class="scoreboard-note">
+  This scoreboard is rendered by your browser from this device's local storage.
+  Nothing leaves the browser: no accounts, no sync, no tracking. The only thing
+  this page loads is this site's own list of challenges.
+</p>
+
+<section class="scoreboard-total" aria-label="Progress summary">
+  <p class="scoreboard-count"><strong id="scoreboard-solved-count">0</strong> cleared of <strong id="scoreboard-known-count">0</strong> known challenges</p>
+</section>
+
+<h2>Per-challenge progress</h2>
+<ol class="scoreboard-list" id="scoreboard-list">
+  <li class="scoreboard-empty">Reading this device's challenge records...</li>
+</ol>
+
+<h2>Move your progress</h2>
+<p class="scoreboard-note">
+  Copy the JSON below to carry your solves to another browser or device, then
+  paste it there and press import. The paste stays on the device you paste it on.
+</p>
+<div class="scoreboard-io">
+  <button type="button" id="scoreboard-export" class="scoreboard-btn">Copy progress as JSON</button>
+  <label class="scoreboard-label" for="scoreboard-import-box">Paste progress JSON here</label>
+  <textarea class="scoreboard-box" id="scoreboard-import-box" rows="5" spellcheck="false" autocomplete="off"></textarea>
+  <button type="button" id="scoreboard-import" class="scoreboard-btn">Import pasted progress</button>
+  <p class="scoreboard-status" id="scoreboard-status" role="status" aria-live="polite"></p>
+</div>
+
+<noscript>
+  <p class="scoreboard-note">The scoreboard needs JavaScript to read the local
+  storage. Cleared challenges stay recorded on this device either way.</p>
+</noscript>
+
+<style>
+.scoreboard-note {
+  color: var(--muted);
+}
+
+.scoreboard-total {
+  margin: 1.4rem 0;
+  padding: 1rem 1.2rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 4px solid var(--navy);
+  border-radius: .55rem;
+  box-shadow: .3rem .3rem 0 var(--navy);
+}
+
+.scoreboard-count {
+  margin: 0;
+  font-family: var(--keys);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.scoreboard-list {
+  margin: 0 0 1.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.scoreboard-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1rem;
+  align-items: baseline;
+  margin: 0 0 .7rem;
+  padding: .8rem 1rem;
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .45rem;
+}
+
+.scoreboard-list .is-cleared {
+  border-color: #145f22;
+}
+
+html[data-theme="dark"] .scoreboard-list .is-cleared {
+  border-color: #1d7a32;
+}
+
+.scoreboard-name {
+  flex: 1 1 16rem;
+  min-width: 0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.scoreboard-state {
+  font-family: var(--keys);
+  font-size: .9rem;
+}
+
+.scoreboard-state .is-yes { color: #145f22; }
+html[data-theme="dark"] .scoreboard-state .is-yes { color: #4fbf66; }
+.scoreboard-state .is-no { color: var(--muted); }
+
+.scoreboard-meta {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.scoreboard-io {
+  display: grid;
+  gap: .7rem;
+  max-width: 40rem;
+}
+
+.scoreboard-btn {
+  justify-self: start;
+  min-height: 2.8rem;
+  padding: .5rem 1rem;
+  color: var(--navy);
+  background: var(--orange);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  box-shadow: 0 .22rem 0 var(--navy);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scoreboard-btn:hover,
+.scoreboard-btn:focus-visible {
+  background: var(--pink);
+}
+
+.scoreboard-label {
+  font-family: var(--keys);
+  font-weight: 700;
+}
+
+.scoreboard-box {
+  width: 100%;
+  padding: .6rem .75rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  font-family: var(--mono);
+  font-size: .95rem;
+}
+
+.scoreboard-status {
+  min-height: 1.4rem;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+</style>
+
+<script>
+(() => {
+'use strict';
+const D=document,S='deuterium-solves',A='deuterium-attempts',H='deuterium-hints';
+const get=k=>{try{return JSON.parse(localStorage.getItem(k))||{}}catch(_){return{}}};
+const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}};
+const solves=get(S),tries=get(A),hints=get(H);
+const list=D.getElementById('scoreboard-list'),status=D.getElementById('scoreboard-status');
+const say=m=>{status.textContent=m;};
+const clearList=()=>{
+  list.textContent='';
+  D.getElementById('scoreboard-solved-count').textContent=String(Object.keys(solves).length);
+};
+const row=(entry)=>{
+  const li=D.createElement('li'),id=entry.id;
+  const solved=Object.prototype.hasOwnProperty.call(solves,id);
+  solved&&(li.className='is-cleared');
+  const name=D.createElement('p');name.className='scoreboard-name';
+  if(entry.page){const a=D.createElement('a');a.href=entry.page;a.textContent=entry.title||id;name.appendChild(a);}
+  else name.textContent=entry.title||id;
+  const state=D.createElement('p');state.className='scoreboard-state';
+  const stamp=solved?new Date(solves[id]):null;
+  state.innerHTML=solved?'<span class="is-yes">CLEARED</span>':'<span class="is-no">not cleared</span>';
+  const meta=D.createElement('p');meta.className='scoreboard-meta';
+  meta.textContent=(solved?'cleared '+stamp.toLocaleString():'no clear on this device yet')
+    +(tries[id]?', attempts: '+tries[id]:'')
+    +((hints[id]||[]).length?', hints used: '+(hints[id]||[]).length:'');
+  li.append(name,state,meta);
+  list.appendChild(li);
+};
+const render=known=>{
+  clearList();
+  const seen=new Set();
+  known.forEach(e=>{seen.add(e.id);row(e);});
+  Object.keys(solves).sort().filter(id=>!seen.has(id)).forEach(id=>row({id}));
+  if(!list.children.length){
+    const li=D.createElement('li');li.className='scoreboard-empty';
+    li.textContent='No challenges recorded on this device yet. Solve one and it appears here.';
+    list.appendChild(li);
+  }
+  D.getElementById('scoreboard-known-count').textContent=String(known.length||Object.keys(solves).length);
+};
+render([]);
+let known=[];
+const load=()=>fetch('/challenges.json').then(r=>r.ok?r.json():[]).catch(()=>[])
+  .then(entries=>{known=entries;render(known);
+    known.length||say('Challenge list unavailable; showing local records only.');});
+load();
+const dump=()=>JSON.stringify({version:2,solves,attempts:tries,hints});
+D.getElementById('scoreboard-export').addEventListener('click',()=>{
+  const json=dump();
+  D.getElementById('scoreboard-import-box').value=json;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(json).then(()=>say('Progress JSON copied to the clipboard (and placed in the box below).'),
+    ()=>say('Clipboard blocked; the JSON is in the box below. Copy it manually.'));
+  }else say('Clipboard unavailable; the JSON is in the box below. Copy it manually.');
+});
+const pick=(data,names)=>{for(const n of names){if(data[n]&&typeof data[n]==='object')return data[n];}return null;};
+D.getElementById('scoreboard-import').addEventListener('click',()=>{
+  let data;
+  try{data=JSON.parse(D.getElementById('scoreboard-import-box').value);}catch(_){say('That is not valid JSON. Nothing was imported.');return;}
+  if(!data||typeof data!=='object'||typeof (data.solves||data[S])!=='object'){say('That JSON has no solves record. Nothing was imported.');return;}
+  [[S,['solves',S]],[A,['attempts',A]],[H,['hints',H]]].forEach(([key,names])=>{
+    const part=pick(data,names);
+    if(!part)return;
+    const target=key===S?solves:key===A?tries:hints;
+    Object.keys(part).forEach(id=>{target[id]=part[id];});
+    put(key,target);
+  });
+  say('Imported. The list above now reflects the pasted records.');
+  render(known);
+});
+})();
+</script>
