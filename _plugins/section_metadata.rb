@@ -29,7 +29,9 @@ module DeuteriumSite
       metadata = SECTIONS.fetch(top_level, { "section" => "root", "layout" => "article" })
 
       post.data["section"] = metadata.fetch("section")
-      post.data["layout"] = metadata.fetch("layout")
+      # A dated post may opt into the encrypted-writeup shell with an explicit
+      # `layout: locked`; every other post keeps its section's canonical layout.
+      post.data["layout"] = post.data["layout"] == "locked" ? "locked" : metadata.fetch("layout")
       post.data["source_path"] = relative
 
       if top_level == "WriteUps"

@@ -28,6 +28,26 @@ layout: base
       </div></nav>
       {%- endif -%}
     </section>
+    {%- assign _section_prefix = '/' | append: page.section | append: '/' -%}
+    {%- assign _locked = site.data.arg_chain | where_exp: 'entry', 'entry.post contains _section_prefix' -%}
+    {%- if _locked.size > 0 -%}
+    <section class="archive-year" data-year-group data-argon-listing>
+      <header><h2>Locked writeups</h2><span>{{ _locked.size }} sealed</span></header>
+      <ol class="record-list">{%- for _entry in _locked -%}
+        {%- assign _locked_page = site.pages | where: 'url', _entry.post | first -%}
+        {%- if _locked_page -%}
+        <li class="record-row" data-record data-section="{{ page.section | escape }}" data-argon-locked="{{ _entry.needs | default: 'standalone' | escape }}">
+          <a class="record-row__link" href="{{ _entry.post | relative_url }}">
+            <time class="record-row__date" datetime="{{ _locked_page.date | date_to_xmlschema }}">{{ _locked_page.date | date: '%y.%m.%d' }}</time>
+            <span class="record-row__title">{{ _locked_page.title }}</span>
+            <span class="record-row__event">{{ page.title }}</span>
+            <span class="record-row__primitive">&#128274; locked</span>
+          </a>
+        </li>
+        {%- endif -%}
+      {%- endfor -%}</ol>
+    </section>
+    {%- endif -%}
   </section>
 
   <nav class="record-end" aria-label="Section footer">

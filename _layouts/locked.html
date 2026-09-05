@@ -1,0 +1,38 @@
+---
+layout: base
+---
+{%- case page.section -%}
+  {%- when 'ramblings' -%}{%- assign _section_title = 'Ramblings' -%}
+  {%- when 'tutorials' -%}{%- assign _section_title = 'Blog on CTFs' -%}
+  {%- else -%}{%- assign _section_title = site.title -%}
+{%- endcase -%}
+{%- assign _source_path = page.source_path | default: page.path | replace: ' ', '%20' -%}
+<main id="content" class="record-page section-record" itemscope itemtype="https://schema.org/Article">
+  <header class="record-head">
+    <div class="record-head__key"><span>{{ page.date | date: '%Y.%m.%d' }}</span><span>{{ _section_title }}</span></div>
+    <h1 itemprop="headline">{{ page.title }}</h1>
+    {%- if page.description -%}<p class="record-head__abstract" itemprop="description">{{ page.description }}</p>{%- endif -%}
+    <dl class="record-facts">
+      <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
+      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+      <div><dt>Tags</dt><dd>{{ page.tags | size }}</dd></div>
+    </dl>
+    {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
+    <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>
+    <meta itemprop="author" content="{{ site.author.name }}">
+  </header>
+
+  <article id="article-body" class="prose article__content" itemprop="articleBody">{{ content }}</article>
+
+  <footer class="record-end"><p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p></footer>
+</main>
+<script>
+  (function () {
+    var body = document.body;
+    if (body && !body.hasAttribute('data-argon')) { body.setAttribute('data-argon', ''); }
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = "{{ '/assets/js/features/argon.js' | relative_url }}?v={{ '/assets/js/features/argon.js' | asset_v }}";
+    document.head.appendChild(script);
+  })();
+</script>
