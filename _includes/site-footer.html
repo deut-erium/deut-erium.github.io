@@ -1,6 +1,7 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
     <p class="site-footer__note">Are you really sure that you want to reach me?</p>
+    <button class="action site-footer__toybox" type="button" aria-label="Open the toybox (you were warned)">do not open</button>
     <nav class="site-footer__links" aria-label="Social and subscription links">
       <a rel="me" href="{{ site.author.github }}">GitHub</a>
       <a rel="me" href="{{ site.author.twitter }}">Twitter</a>
@@ -11,3 +12,4 @@
     </nav>
   </div>
 </footer>
+<script>var tb=document.querySelector('.site-footer__toybox');tb&&(tb.onclick=function(){if(window.__dtToy)return window.__dtToy.open();if(tb.q)return;tb.q=1;var s=document.createElement('script');s.src='/assets/js/features/toybox.js'+(window.__deuteriumAssetVersion?'?v='+window.__deuteriumAssetVersion:'');s.onload=function(){window.__dtToy&&window.__dtToy.open()};document.head.appendChild(s)});</script>
