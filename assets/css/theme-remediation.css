@@ -394,10 +394,15 @@ html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell) {
   display: block !important;
 }
 
-html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell) > * {
+html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell) > :not(style):not(script) {
   display: block !important;
   min-width: 0;
   grid-column: auto;
+}
+
+/* Raw tag payloads never render as page text, whatever a selector matches. */
+html[data-skin] :is(main > style, main > script) {
+  display: none !important;
 }
 
 html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
@@ -664,7 +669,7 @@ html[data-skin] .record-row__date {
     padding-top: 3.35rem !important;
   }
 
-  html[data-skin] :is(.skin-dice, .theme-toggle) {
+  html[data-skin] :is(.skin-dice, .theme-toggle, .site-share__btn) {
     position: absolute !important;
     top: .4rem !important;
     bottom: auto !important;
@@ -675,6 +680,18 @@ html[data-skin] .record-row__date {
   }
 
   html[data-skin] .theme-toggle {
+    right: .6rem !important;
+  }
+
+  html[data-skin] .site-share__btn {
+    right: 6.7rem !important;
+  }
+
+  /* The popover stays anchored to the viewport even while the button rides
+     the top strip. */
+  html[data-skin] .site-share__popover {
+    bottom: auto !important;
+    top: 3.4rem !important;
     right: .6rem !important;
   }
 }

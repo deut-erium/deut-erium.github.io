@@ -35,7 +35,7 @@
     var count = qr.getModuleCount();
     var quiet = 4;
     var cells = count + quiet * 2;
-    var scale = 8;
+    var scale = 12;
     var px = cells * scale;
     canvas.width = px;
     canvas.height = px;

@@ -187,6 +187,13 @@ a:hover {
   transform: none;
 }
 
+/* Some skins style every main child; raw style and script elements must
+   never render their contents as page text. */
+main > style,
+main > script {
+  display: none !important;
+}
+
 /* Calculator shell */
 .site-header,
 .site-footer,
@@ -330,8 +337,8 @@ a:hover {
   display: grid;
   justify-items: center;
   gap: .55rem;
-  width: min(15rem, calc(100vw - 2rem));
-  padding: .8rem;
+  width: min(18.5rem, calc(100vw - 2rem));
+  padding: 1rem;
   color: var(--ink);
   background: var(--paper);
   border: 3px solid var(--navy);
@@ -340,8 +347,8 @@ a:hover {
 }
 
 .site-share__qr {
-  width: 128px;
-  height: 128px;
+  width: 176px;
+  height: 176px;
   image-rendering: pixelated;
   background: #fff;
   border: 2px solid var(--navy);
