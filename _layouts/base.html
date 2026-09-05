@@ -33,6 +33,30 @@
         </g>
       </svg>
     </button>
+    <span class="site-share">
+      <button class="site-share__btn" type="button" aria-expanded="false" aria-controls="share-popover" aria-label="Share this page">
+        <svg class="site-share__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </g>
+          <g fill="currentColor">
+            <rect x="16.5" y="7.5" width="2" height="2"/>
+            <rect x="7.5" y="16.5" width="2" height="2"/>
+            <rect x="13" y="13" width="2" height="2"/>
+            <rect x="17" y="15" width="2" height="2"/>
+            <rect x="15" y="17" width="2" height="2"/>
+            <rect x="19" y="13" width="2" height="2"/>
+          </g>
+        </svg>
+      </button>
+      <div class="site-share__popover" id="share-popover" hidden>
+        <canvas class="site-share__qr" role="img" aria-label="QR code linking to this page"></canvas>
+        <p class="site-share__url"></p>
+        <button class="site-share__copy" type="button">Copy link</button>
+      </div>
+    </span>
     {%- include site-header.html -%}
     {{ content }}
     {%- include site-footer.html -%}
