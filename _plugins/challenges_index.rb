@@ -27,19 +27,20 @@ Jekyll::Hooks.register :site, :post_write do |site|
     route = '/' + path.delete_prefix(dest).delete_prefix(File::SEPARATOR)
     route = route.sub(%r{(?:^|/)index\.html\z}, '/')
     page_title = html[%r{<title>(.*?)</title>}m, 1].to_s.split(' / ').first.to_s.strip
-    html.scan(%r{<form[^>]*data-flag-check[^>]*>}).each_with_index do |form, idx|
-      form_html = form[0]
+    html.scan(%r{<form[^>]*data-flag-check[^>]*>}).each do |form_html|
       hash = form_html[/\bdata-sha256="([^"]+)"/, 1].to_s
       salt = form_html[/\bdata-salt="([^"]+)"/, 1]
-      input = form_html.empty? ? nil : nil
       # nearest preceding heading carries the challenge's real name
-      pos = html.index(form)
-      headings = html[0...pos].scan(%r{<h([23])[^>]*>(.*?)</h\1>}m).map { |_, t| t.gsub(%r{<[^>]+>}, '').strip }
+      pos = html.index(form_html)
+      headings = html[0...pos].scan(/<h([23])[^>]*>(.*?)<\/h\1>/m).map { |cap| cap[1].gsub(/<[^>]+>/, '').strip }
       name = headings.last.to_s
       name = name.empty? ? (page_title.empty? ? nil : page_title) : name
-      id_m = html[pos..pos + 400][%r{\bid="flag-([^"]+)"/, 1]
+      id_m = html[pos..pos + 400][/\bid="flag-([^"]+)"/, 1]
       next unless id_m
 
+      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m }
+      entry['sha256'] = hash unless hash.empty?
+      entry['salt'] = salt unless salt.to_s.empty?
       entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m }
       entry['sha256'] = hash unless hash.empty?
       entry['salt'] = salt unless salt.to_s.empty?
