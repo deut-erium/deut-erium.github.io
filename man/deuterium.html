@@ -7,112 +7,111 @@ sitemap: true
 ---
 <main id="content" class="man-shell">
   <style>
-    .man-shell {
-      width: min(calc(100% - 2rem), 62rem);
-      margin: 2rem auto 5rem;
-      padding: clamp(1.1rem, 3vw, 2.25rem);
-      color: var(--ink);
-      background: var(--paper);
-      border: 5px solid var(--navy);
-      border-radius: .6rem;
-      font-family: var(--mono);
-      font-size: 1rem;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
+    .man-shell { max-width: 52rem; padding: 1.2rem 1.4rem 1.6rem; background: var(--paper); border: 3px solid var(--ink); }
+    .man-page { font-family: var(--mono); font-size: .95rem; line-height: 1.55; color: var(--ink); }
+    .man-head, .man-foot {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-family: var(--mono); font-size: .8rem; color: var(--muted);
+      border-bottom: 1px solid var(--muted); padding-bottom: .35rem; margin-bottom: 1.1rem;
     }
-
-    .man-header,
-    .man-footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--muted);
-      font-size: .85rem;
+    .man-foot { border-bottom: 0; border-top: 1px solid var(--muted); padding-bottom: 0; padding-top: .35rem; margin-top: 1.4rem; margin-bottom: 0; }
+    .man-page h1 {
+      font-family: var(--mono); font-size: 1.05rem; font-weight: 700;
+      text-transform: none; letter-spacing: 0; margin: 0 0 .2rem;
     }
-
-    .man-header {
-      border-bottom: .18rem double var(--rule);
-      padding-bottom: .45rem;
+    .man-page h2 {
+      font-family: var(--mono); font-size: .95rem; font-weight: 700;
+      margin: 1.3rem 0 .35rem; text-transform: none; letter-spacing: 0;
     }
-
-    .man-footer {
-      border-top: .18rem double var(--rule);
-      margin-top: 2.5rem;
-      padding-top: .45rem;
-    }
-
-    .man-shell h1 {
-      margin: 1.1rem 0 1.4rem;
-      font-size: 1.35rem;
-      letter-spacing: .04em;
-      color: var(--ink);
-    }
-
-    .man-shell h2 {
-      margin: 1.9rem 0 .4rem;
-      padding-bottom: .2rem;
-      border-bottom: 1px solid var(--rule);
-      font-size: 1.05rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-
-    .man-shell p {
-      margin: .45rem 0;
-    }
-
-    .man-shell b {
-      font-weight: 700;
-    }
-
-    .man-synopsis {
-      padding-left: 3ch;
-    }
-
-    .man-indent {
-      padding-left: 5ch;
-    }
-
-    .man-flag {
-      color: var(--ink);
-      background: var(--inline-code);
-      border-bottom: 1px solid var(--inline-rule);
-      padding: 0 .25em;
-    }
-
-    .man-bugs {
-      padding: .9rem 1rem;
-      background: var(--quote);
-      color: var(--quote-ink);
-      border-left: .4rem solid var(--quote-low);
-    }
+    .man-page p { margin: .3rem 0 .55rem; }
+    .man-name { margin-left: 3.4rem; }
+    .man-name b { font-weight: 700; }
+    .man-synopsis { margin: .2rem 0 .3rem 1.2rem; }
+    .man-opt { display: grid; grid-template-columns: minmax(9rem, auto) 1fr; gap: .2rem 1rem; margin: .25rem 0; }
+    .man-opt dt { font-weight: 700; white-space: nowrap; }
+    .man-opt dd { margin: 0; }
+    .man-page a { color: var(--ink); text-underline-offset: .18em; }
+    .man-page dl { margin: .3rem 0; }
+    .man-page ol { margin: .3rem 0 .3rem 1.4rem; padding: 0; }
+    .man-page li { margin: .18rem 0; }
+    .man-bug { margin-left: 1.2rem; }
+    @media (max-width: 40rem) { .man-opt { grid-template-columns: 1fr; } }
   </style>
-  <p class="man-header"><span>Manual</span><span>DEUTERIUM(1)</span></p>
-  <h1>deuterium(1) &mdash; manual</h1>
+  <article class="man-page">
+    <div class="man-head" aria-hidden="true"><span>DEUTERIUM(1)</span><span>User Commands</span><span>DEUTERIUM(1)</span></div>
+    <h1 id="man-title">deuterium(1)</h1>
 
-  <h2>Name</h2>
-  <p><b>deuterium</b> &mdash; security blog, occasionally self-aware. This page is the user manual for the site itself.</p>
+    <h2>NAME</h2>
+    <p class="man-name"><b>deuterium</b> &mdash; security blog, occasionally self-aware</p>
 
-  <h2>Synopsis</h2>
-  <p class="man-synopsis"><b>deuterium</b> [<i>route</i>] [<b>?skin=</b><i>id</i>]</p>
-  <p>Browse by following links: every section (writeups, tutorials, ramblings) has its own home and archive, and the global archive lists every post ever published.</p>
-  <p>Append <b>?skin=</b><i>id</i> to any URL to preview a visual theme for that view, for example <b>?skin=key-exchange-kiosk</b>. An unknown id falls back to your saved theme. The full list of themes is in the header menu labelled <i>Theme</i>; the choice is remembered per browser.</p>
-  <p>Themes are skins: colors, borders, and type only. Content and routes never change with the skin, and every theme carries the same text.</p>
+    <h2>SYNOPSIS</h2>
+    <p class="man-synopsis"><b>deuterium</b> [<b>--skin</b>=<i>SKIN</i>] [<b>--no-buttons</b>] [<i>POST</i>&hellip;]</p>
 
-  <h2>Options</h2>
-  <p><b class="man-flag">theme dice</b> The dice button in the top corner of every page rolls a random visual theme and remembers it. Roll until the blog hurts in a way you enjoy.</p>
-  <p><b class="man-flag">dark mode</b> The moon/sun button toggles light and dark within the current theme. Before you press anything it follows your system preference. Once pressed, your choice wins.</p>
+    <h2>DESCRIPTION</h2>
+    <p><b>deuterium</b> reads, solves, and writes up. The blog ships CTF
+    writeups with the wrong turns included, cryptography tutorials, and
+    essays that were definitely not written at 3am. Every page is static,
+    local, and faster than your reflexes.</p>
+    <p>The interface is a lie in the friendly direction: the skins are not
+    themes, they are moods. There are 48 of them. The dice does not take
+    responsibility.</p>
 
-  <h2>See Also</h2>
-  <p class="man-indent"><a href="/archive.html">archive(1)</a> &mdash; every post on the blog, newest first, with the merged tag index.</p>
-  <p class="man-indent"><a href="/WriteUps/">writeups(1)</a> &mdash; CTF challenge writeups by event and category. Flags stay unsolved here on purpose.</p>
+    <h2>OPTIONS</h2>
+    <dl class="man-opt">
+      <dt><b>--skin</b>=<i>SKIN</i></dt><dd>Wear one of 48 identities. Append <code>?skin=</code> to any URL, or roll the dice and live dangerously. The choice is remembered, like most mistakes.</dd>
+      <dt><b>--no-buttons</b></dt><dd>Unsupported. See <a href="#BUGS">BUGS</a>.</dd>
+      <dt><b>-v</b>, <b>--verbose</b></dt><dd>No-op. Everything is already verbose.</dd>
+      <dt><b>-h</b>, <b>--help</b></dt><dd>You are reading it.</dd>
+    </dl>
 
-  <h2>Bugs</h2>
-  <p class="man-bugs">buttons may be pressed. consequences unknown.</p>
+    <h2>GAME CENTER</h2>
+    <p>Some posts carry challenge boxes. Flags are checked in your browser;
+    nothing is sent anywhere. The scoreboard lives in your localStorage and
+    judges silently.</p>
 
-  <h2>Author</h2>
-  <p>deuterium &mdash; Himanshu Sheoran &lt;<a href="mailto:himanshu_sheoran@yahoo.com">himanshu_sheoran@yahoo.com</a>&gt;. Everything else about the author lives on <a href="/about.html">the about page</a>.</p>
+    <h2>EXIT STATUS</h2>
+    <dl class="man-opt">
+      <dt><b>0</b></dt><dd>You learned something.</dd>
+      <dt><b>1</b></dt><dd>You pressed the buttons anyway.</dd>
+      <dt><b>130</b></dt><dd>You left mid-read. The tab understands.</dd>
+      <dt><b>418</b></dt><dd>See <a href="/teapot/">teapot(1)</a>.</dd>
+    </dl>
 
-  <p class="man-footer"><span>deuterium 4.18 (htcpcp)</span><span>DEUTERIUM(1)</span></p>
+    <h2>ENVIRONMENT</h2>
+    <dl class="man-opt">
+      <dt><b>HOME</b></dt><dd>You are here.</dd>
+    </dl>
+
+    <h2>FILES</h2>
+    <dl class="man-opt">
+      <dt><i>~/.deuterium/progress</i></dt><dd>Kept in your browser. We never see it, by design and by laziness.</dd>
+    </dl>
+
+    <h2>SECURITY CONSIDERATIONS</h2>
+    <p>Zero cookies. This is not a promise on a banner; it is an assertion in
+    CI. If a cookie ever appears, the build fails and the banner becomes a
+    lie, which is worse than a cookie.</p>
+
+    <h2>BUGS</h2>
+    <ol class="man-bug">
+      <li>Buttons may be pressed. Consequences unknown.</li>
+      <li>The dice is not cryptographically secure. Do not derive keys from it.</li>
+      <li>3am prose ships as-is.</li>
+      <li>Some skins are loud. This is a feature wearing a bug costume.</li>
+      <li>If you find a real one, the <a href="/.well-known/security.txt">security policy</a> accepts mail.</li>
+    </ol>
+
+    <h2>STANDARDS</h2>
+    <p>Implements no known standard. Aspires to RFC&nbsp;2324.</p>
+
+    <h2>AUTHOR</h2>
+    <p>Written by Himanshu Sheoran. Complaints may be directed to the teapot.</p>
+
+    <h2>SEE ALSO</h2>
+    <p><a href="/about.html">about(1)</a>, <a href="/archive.html">archive(1)</a>,
+    <a href="/teapot/">teapot(1)</a>, <a href="/WriteUps/">writeups(7)</a>,
+    sudo(8), crypto(7), crypt(3) (unrelated)</p>
+
+    <div class="man-foot" aria-hidden="true"><span>deuterium 4.18</span><span>2026-09</span><span>DEUTERIUM(1)</span></div>
+  </article>
 </main>

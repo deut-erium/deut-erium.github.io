@@ -7,163 +7,114 @@ sitemap: true
 ---
 <main id="content" class="page-shell teapot-shell">
   <style>
-    .teapot-shell {
-      padding-block: clamp(2rem, 6vh, 4rem) 5rem;
-      text-align: center;
+    .teapot-shell { max-width: 46rem; }
+    .teapot-stage { display: grid; gap: 1rem; justify-items: center; text-align: center; }
+    .teapot-code {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(3.2rem, 9vw, 5.2rem);
+      line-height: 1;
+      letter-spacing: -.04em;
     }
-
-    .teapot-shell h1 {
-      margin: .3rem 0 1rem;
-      color: var(--ink);
+    .teapot-sub { margin: 0; font-family: var(--mono); font-size: 1.05rem; }
+    .teapot-fig { margin: .4rem 0 0; }
+    .teapot-fig svg { width: min(20rem, 72vw); height: auto; overflow: visible; }
+    .teapot-pot { transition: transform .35s ease; transform-origin: 50% 88%; }
+    .teapot-stage.is-grumpy .teapot-pot { transform: rotate(-4deg); }
+    .teapot-steam {
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: .55;
+      animation: teapot-steam 3.4s ease-in-out infinite;
     }
-
-    .teapot-lede {
-      max-width: 34rem;
-      margin: 0 auto;
-      color: var(--ink);
+    .teapot-steam:nth-of-type(2) { animation-delay: 1.1s; }
+    .teapot-steam:nth-of-type(3) { animation-delay: 2.2s; }
+    @keyframes teapot-steam {
+      0%, 100% { transform: translateY(0); opacity: .55; }
+      50% { transform: translateY(-6px); opacity: .15; }
     }
-
-    .teapot-figure {
-      position: relative;
-      width: 22rem;
-      height: 14.5rem;
-      margin: 2.5rem auto;
-      font-size: 1rem;
+    @media (prefers-reduced-motion: reduce) {
+      .teapot-steam { animation: none; }
+      .teapot-pot { transition: none; }
     }
-
-    .teapot-figure i {
-      position: absolute;
-      display: block;
+    .teapot-response {
+      margin: 1.2rem 0 0;
+      padding: .8rem 1rem;
+      font-family: var(--mono);
+      font-size: .92rem;
+      line-height: 1.6;
+      text-align: left;
+      background: var(--shell-low);
+      border: 2px solid var(--ink);
+      border-radius: .4rem;
     }
-
-    .teapot-figure__base {
-      left: 4rem;
-      bottom: 0;
-      width: 14rem;
-      height: .55rem;
-      border-radius: 50%;
-      background: linear-gradient(90deg, transparent, var(--rule) 22%, var(--rule) 78%, transparent);
-    }
-
-    .teapot-figure__handle {
-      left: 14.6rem;
-      bottom: 1.2rem;
-      width: 4.6rem;
-      height: 5.2rem;
-      border: .28rem solid var(--rule);
-      border-radius: 50%;
-    }
-
-    .teapot-figure__spout {
-      left: .9rem;
-      bottom: 2.8rem;
-      width: 5.6rem;
-      height: 1.6rem;
-      border: .28rem solid var(--rule);
-      border-radius: .9rem;
-      background: linear-gradient(90deg, var(--shell-low), var(--shell) 72%);
-      transform: rotate(16deg);
-      transform-origin: right center;
-    }
-
-    .teapot-figure__body {
-      left: 5.5rem;
-      bottom: .35rem;
-      width: 10rem;
-      height: 7.6rem;
-      border: .28rem solid var(--rule);
-      border-radius: 1.5rem 1.5rem 4.5rem 4.5rem;
-      background:
-        radial-gradient(circle at 32% 26%, color-mix(in srgb, var(--paper) 62%, transparent) 0 17%, transparent 19%),
-        linear-gradient(168deg, var(--shell-high) 0%, var(--shell) 44%, var(--shell-low) 100%);
-    }
-
-    .teapot-figure__lid {
-      left: 7.1rem;
-      bottom: 7.8rem;
-      width: 6.8rem;
-      height: 1.7rem;
-      border: .28rem solid var(--rule);
-      border-radius: 3.2rem 3.2rem 0 0;
-      background: linear-gradient(180deg, var(--shell-high), var(--shell-low));
-    }
-
-    .teapot-figure__knob {
-      left: 10rem;
-      bottom: 9.25rem;
-      width: 1rem;
-      height: 1rem;
-      border: .28rem solid var(--rule);
-      border-radius: 50%;
-      background: radial-gradient(circle at 34% 30%, var(--yellow), var(--orange));
-    }
-
-    .teapot-figure__steam {
-      bottom: 10.4rem;
-      width: 0;
-      height: 2.1rem;
-      border-left: .26rem dashed var(--rule);
-      border-radius: 50%;
-    }
-
-    .teapot-figure__steam--left {
-      left: 8.4rem;
-      transform: rotate(-7deg);
-    }
-
-    .teapot-figure__steam--right {
-      left: 11.4rem;
-      bottom: 10.8rem;
-      height: 1.7rem;
-      transform: rotate(6deg);
-    }
-
-    .teapot-status {
-      margin: 0 0 .8rem;
-      color: var(--muted);
-      font-family: var(--keys);
-      font-size: 1rem;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .teapot-cite {
-      margin: 1.6rem auto 0;
-      max-width: 34rem;
-      color: var(--ink);
-    }
-
-    .teapot-home {
-      display: inline-block;
-      margin-top: 1.4rem;
-      padding: .55rem 1.1rem;
-      color: var(--link);
-    }
-
-    @media (max-width: 26rem) {
-      .teapot-figure {
-        transform: scale(.78);
-        transform-origin: top center;
-      }
-    }
+    .teapot-response b { color: var(--ink); }
+    .teapot-note { margin: 1.1rem 0 0; font-size: .98rem; }
+    .teapot-rfc { margin: .3rem 0 0; font-size: .85rem; color: var(--muted); }
+    .teapot-actions { display: flex; gap: .7rem; justify-content: center; flex-wrap: wrap; margin-top: 1.2rem; }
+    .teapot-verdict { min-height: 1.4em; margin: .8rem 0 0; font-family: var(--keys); }
   </style>
-  <p class="teapot-status">HTTP 418 &middot; X-Teapot-Compliant: yes</p>
-  <h1>I'm a teapot</h1>
-  <p class="teapot-lede">
-    Short and stout. Here is my handle, here is my spout, and nowhere inside me
-    is a coffee brewing subsystem. Ask me for coffee and this is what you get;
-    ask me for tea and we can talk.
-  </p>
-  <div class="teapot-figure" role="img" aria-label="A teapot drawn with CSS borders and gradients: rounded body, lid and knob, spout on the left, handle on the right, and two wisps of steam.">
-    <i class="teapot-figure__base"></i>
-    <i class="teapot-figure__handle"></i>
-    <i class="teapot-figure__spout"></i>
-    <i class="teapot-figure__body"></i>
-    <i class="teapot-figure__lid"></i>
-    <i class="teapot-figure__knob"></i>
-    <i class="teapot-figure__steam teapot-figure__steam--left"></i>
-    <i class="teapot-figure__steam teapot-figure__steam--right"></i>
-  </div>
-  <p class="teapot-cite">418 &ldquo;I am a teapot&rdquo; &mdash; RFC 2324, section 2.3.2 (HTCPCP/1.0).</p>
-  <a class="teapot-home" href="/">Tip me over and pour me out (back home)</a>
+  <section class="teapot-stage" aria-labelledby="teapot-title">
+    <p class="teapot-code">418</p>
+    <h1 class="teapot-sub" id="teapot-title">I&rsquo;m a teapot</h1>
+    <p class="teapot-fig" aria-hidden="true">
+      <svg viewBox="0 0 320 250" role="img" focusable="false">
+        <g class="teapot-pot">
+          <path d="M232 118 q44 -26 40 12 q-3 30 -34 34" fill="none" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+          <path d="M96 116 q-44 -30 -46 10 q-2 34 10 52 q6 -22 12 -30 q-18 -6 -14 -18 q4 -12 24 -6"
+                fill="var(--shell)" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M104 108 q-30 -46 56 -46 q86 0 56 46 q30 66 -8 84 q-40 20 -80 0 q-38 -18 -24 -84 Z"
+                fill="var(--shell)" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M112 106 q48 -22 96 0" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="160" cy="106" rx="52" ry="10" fill="var(--shell-high)" stroke="var(--ink)" stroke-width="5"/>
+          <circle cx="160" cy="94" r="9" fill="var(--ink)"/>
+          <g stroke="var(--ink)" stroke-width="3" fill="none" opacity=".8">
+            <circle cx="160" cy="164" r="24"/>
+            <circle cx="160" cy="164" r="17"/>
+            <circle cx="160" cy="164" r="10"/>
+            <path d="M136 164 a24 24 0 0 1 48 0 M143 164 a17 17 0 0 1 34 0"/>
+          </g>
+          <ellipse cx="160" cy="216" rx="86" ry="12" fill="var(--shell-low)" stroke="var(--ink)" stroke-width="4"/>
+        </g>
+        <g>
+          <path class="teapot-steam" d="M112 74 q8 -12 0 -24 q-8 -12 0 -24"/>
+          <path class="teapot-steam" d="M132 64 q8 -12 0 -24 q-8 -12 0 -24"/>
+          <path class="teapot-steam" d="M152 58 q8 -12 0 -24 q-8 -12 0 -24"/>
+        </g>
+      </svg>
+    </p>
+    <p class="teapot-note">This resource is short, stout, and permanently a teapot.
+    It will not brew coffee, not today, not for you, not for anyone.</p>
+    <pre class="teapot-response">HTTP/1.1 <b>418</b> I'm a teapot
+Safe-to-brew: <b>true</b> (tea only)
+Accept-Additions: milk, sugar, sympathy
+Retry-After: heat-death of the universe</pre>
+    <p class="teapot-rfc">Per HTCPCP, RFC&nbsp;2324 &sect;2.3.2. The status code is real. The teapot is real. The coffee is not.</p>
+    <p class="teapot-actions">
+      <button class="action" type="button" id="brew">Brew coffee</button>
+      <a class="action" href="/">Return to safety</a>
+    </p>
+    <p class="teapot-verdict" aria-live="polite" id="verdict"></p>
+  </section>
+  <script>
+    (function () {
+      var presses = 0;
+      var verdicts = [
+        "still a teapot.",
+        "the situation has not changed.",
+        "the teapot respects your persistence. it remains a teapot.",
+        "fine. the teapot will consider coffee. (it will not.)"
+      ];
+      var stage = document.querySelector(".teapot-stage");
+      var verdict = document.getElementById("verdict");
+      document.getElementById("brew").addEventListener("click", function () {
+        stage.classList.add("is-grumpy");
+        verdict.textContent = verdicts[Math.min(presses, verdicts.length - 1)];
+        presses += 1;
+        setTimeout(function () { stage.classList.remove("is-grumpy"); }, 500);
+      });
+    })();
+  </script>
 </main>
