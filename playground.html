@@ -7,145 +7,140 @@ sitemap: true
 ---
 <main id="content" class="page-shell pg-shell">
   <style>
-    .pg-shell { max-width: 58rem; }
-    .pg-head { color: #fff; margin-bottom: 1.2rem; }
-    .pg-head h1 { margin: 0 0 .3rem; color: var(--yellow); font-family: var(--keys); letter-spacing: .02em; text-transform: none; }
-    .pg-lede { margin: 0; max-width: 46rem; font-size: 1.02rem; }
+    /* Playground uses the site's own chrome: section headings, paper panels,
+       action buttons, and mono inputs. No bespoke palette. */
+    .pg-shell > :not(style) { max-width: 62rem; margin-inline: auto; }
+    .pg-head { margin: 0 0 1.1rem; color: var(--ink); }
+    .pg-head h1 {
+      margin: 0 0 .35rem;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+      letter-spacing: -.02em;
+      text-transform: none;
+    }
+    .pg-lede { margin: 0; max-width: 46rem; font-size: 1rem; line-height: 1.55; color: var(--ink); }
     .pg-panelwrap, .pg-docs {
       background: var(--paper);
       color: var(--ink);
-      border: 3px solid var(--ink);
-      border-radius: 1rem;
-      padding: clamp(.9rem, 2.4vw, 1.5rem);
-      margin-bottom: 1.2rem;
+      border: 4px solid var(--navy);
+      border-radius: .8rem;
+      padding: clamp(1rem, 2.6vw, 1.6rem);
+      margin: 0 0 1.2rem;
+      box-shadow: .45rem .5rem 0 rgb(8 10 19 / 35%);
     }
     .pg-tab-state { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-    .pg-tablist { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .pg-tablist { display: flex; gap: .6rem; margin: 0 0 1.1rem; flex-wrap: wrap; }
     .pg-tab {
       cursor: pointer;
-      display: inline-block;
-      padding: .45rem 1rem;
-      border: 3px solid var(--ink);
-      border-radius: .7rem;
-      background: var(--paper-low);
-      color: var(--ink);
+      display: inline-flex;
+      min-height: 2.6rem;
+      align-items: center;
+      padding: .5rem 1.05rem;
+      background: var(--navy);
+      color: #fff;
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
       font-family: var(--keys);
       font-size: .95rem;
-      user-select: none;
     }
-    .pg-tab:hover { background: var(--inline-code); }
+    .pg-tab:hover { background: var(--pink); border-color: var(--navy); color: var(--navy); }
     #pg-tab-sudoku:checked ~ .pg-tablist .pg-tab--sudoku,
     #pg-tab-smt:checked ~ .pg-tablist .pg-tab--smt {
-      background: var(--ink);
-      color: var(--paper);
-      box-shadow: .25rem .25rem 0 var(--rule);
+      background: var(--orange);
+      color: var(--navy);
+      border-color: var(--navy);
     }
     #pg-tab-sudoku:focus-visible ~ .pg-tablist .pg-tab--sudoku,
-    #pg-tab-smt:focus-visible ~ .pg-tablist .pg-tab--smt { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    #pg-tab-smt:focus-visible ~ .pg-tablist .pg-tab--smt {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
     .pg-panel { display: none; }
     #pg-tab-sudoku:checked ~ .pg-panel--sudoku { display: block; }
     #pg-tab-smt:checked ~ .pg-panel--smt { display: block; }
-    .pg-panel h2 { margin: .1rem 0 .45rem; }
+    .pg-panel h2 { margin: .1rem 0 .45rem; color: var(--ink); font-family: var(--display); text-transform: none; letter-spacing: 0; }
     .pg-panel p, .pg-docs p { max-width: 46rem; }
-    .pg-controls { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .8rem 0 1rem; }
-    .pg-btn {
-      cursor: pointer;
-      padding: .42rem .95rem;
-      border: 3px solid var(--ink);
-      border-radius: .7rem;
-      background: var(--paper-low);
-      color: var(--ink);
+    .pg-controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 0 0 1rem; }
+    .pg-btn, .pg-select {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      padding: .55rem .95rem;
+      background: var(--navy);
+      color: #fff;
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      box-shadow: 0 .2rem 0 rgb(8 10 19 / 45%);
       font-family: var(--keys);
       font-size: .95rem;
+      cursor: pointer;
     }
-    .pg-btn:hover:not(:disabled) { background: var(--inline-code); }
-    .pg-btn:disabled { cursor: progress; opacity: .55; }
-    .pg-btn--primary { background: var(--ink); color: var(--paper); }
-    .pg-btn--primary:hover:not(:disabled) { background: var(--navy-soft, var(--ink)); }
-    .pg-label { font-family: var(--keys); font-size: .9rem; color: var(--muted); }
-    .pg-select {
-      border: 3px solid var(--ink);
-      border-radius: .7rem;
-      background: var(--paper);
-      color: var(--ink);
-      padding: .4rem .6rem;
-      font-family: var(--mono);
-      font-size: .92rem;
-    }
+    .pg-btn:hover, .pg-select:hover { background: var(--pink); color: var(--navy); }
+    .pg-btn--primary { background: var(--orange); color: var(--navy); }
+    .pg-btn--primary:hover { background: var(--pink); }
+    .pg-btn[disabled] { opacity: .55; cursor: wait; }
+    .pg-label { display: block; margin: .2rem 0 .4rem; font-family: var(--keys); font-size: .85rem; color: var(--ink); }
     .pg-grid {
       display: grid;
       grid-template-columns: repeat(9, minmax(0, 1fr));
-      width: min(27rem, 100%);
-      margin: 0 0 .9rem;
-      border: 3px solid var(--ink);
-      background: var(--ink);
-      gap: 1px;
+      gap: 3px;
+      max-width: 30rem;
+      margin: 0 0 1rem;
     }
-    .pg-cell {
+    .pg-grid input {
       width: 100%;
       aspect-ratio: 1;
       min-width: 0;
-      padding: 0;
       text-align: center;
-      border: 0;
-      background: var(--paper);
-      color: var(--muted);
       font-family: var(--mono);
-      font-size: clamp(.95rem, 4.2vw, 1.35rem);
-      font-weight: 400;
-      caret-color: var(--ink);
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: .25rem;
+      padding: 0;
     }
-    .pg-cell:focus-visible { outline: 2px solid var(--link); outline-offset: -2px; z-index: 1; position: relative; }
-    .pg-cell--b { border-bottom: 3px solid var(--ink); }
-    .pg-cell--r { border-right: 3px solid var(--ink); }
-    .pg-cell--given { color: var(--ink); font-weight: 700; background: var(--paper-low); }
-    .pg-cell--filled { color: var(--link); font-weight: 700; }
-    .pg-cell--flash { animation: pg-flash .5s ease-out; }
-    @keyframes pg-flash {
-      0% { background: var(--yellow); color: var(--navy); }
-      60% { background: color-mix(in srgb, var(--cyan) 55%, var(--paper)); }
-      100% { background: var(--paper); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .pg-cell--flash { animation: none; }
-    }
-    .pg-status { font-family: var(--mono); font-size: .95rem; color: var(--ink); border: 2px dashed var(--rule); border-radius: .6rem; padding: .55rem .8rem; margin: .4rem 0 0; }
-    .pg-status[data-result="sat"] { border-style: solid; border-color: var(--ink); background: color-mix(in srgb, var(--cyan) 22%, var(--paper)); }
-    .pg-status[data-result="unsat"] { border-style: solid; border-color: var(--ink); background: color-mix(in srgb, var(--yellow) 30%, var(--paper)); }
+    .pg-grid input:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; }
+    .pg-grid input.pg-given { background: var(--paper-low); font-weight: 700; }
+    .pg-grid input.pg-flash { background: var(--orange); color: var(--navy); transition: background .35s ease; }
     .pg-script {
       width: 100%;
+      min-height: 11rem;
       box-sizing: border-box;
-      border: 3px solid var(--ink);
-      border-radius: .6rem;
-      background: var(--paper-low);
-      color: var(--ink);
+      margin: 0 0 .9rem;
+      padding: .8rem .9rem;
       font-family: var(--mono);
       font-size: .92rem;
       line-height: 1.5;
-      padding: .7rem .8rem;
-      margin: .2rem 0 .8rem;
+      color: var(--ink);
+      background: var(--paper-low);
+      border: 3px solid var(--ink);
+      border-radius: .5rem;
       resize: vertical;
-      white-space: pre;
     }
     .pg-out {
-      margin: 0;
-      border: 3px solid var(--ink);
-      border-radius: .6rem;
-      background: var(--ink);
-      color: var(--paper);
+      margin: .4rem 0 0;
+      padding: .8rem .9rem;
       font-family: var(--mono);
-      font-size: .88rem;
-      line-height: 1.45;
-      padding: .7rem .85rem;
-      min-height: 3rem;
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border-left: .4rem solid var(--navy);
+      border-radius: .3rem;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
+      min-height: 1.6rem;
     }
-    .pg-docs h2 { margin: .1rem 0 .5rem; }
-    .pg-docs h3 { margin: 1rem 0 .3rem; }
-    .pg-docs ul { margin: .4rem 0 .4rem 1.3rem; padding: 0; }
-    .pg-docs li { margin: .25rem 0; }
-    .pg-docs code, .pg-panel code { font-family: var(--mono); font-size: .9em; background: var(--inline-code); border-radius: .3em; padding: .08em .35em; }
+    .pg-status { margin: .35rem 0 0; font-family: var(--keys); font-size: .92rem; color: var(--ink); }
+    .pg-docs h2 { margin: .2rem 0 .5rem; font-family: var(--display); font-size: 1.3rem; color: var(--ink); text-transform: none; letter-spacing: 0; }
+    .pg-docs p { margin: .3rem 0 .6rem; line-height: 1.55; }
+    .pg-docs code { font-family: var(--mono); font-size: .9em; background: var(--paper-low); border: 1px solid var(--ink); border-radius: .25rem; padding: 0 .3em; }
+    @media (max-width: 40rem) {
+      .pg-grid { max-width: 100%; }
+      .pg-shell { padding-inline: .9rem; }
+    }
   </style>
 
   <header class="pg-head">
@@ -262,7 +257,7 @@ sitemap: true
 
     var VENDOR = '/assets/vendor/z3/z3-built.js';
     var COI_SW = '/playground/coi-serviceworker.js';
-    var RUN_BUDGET_MS = 10000;
+    var RUN_BUDGET_MS = 30000;
     var RESUME_KEY = 'pg-resume';
     var ISO_ATTEMPTS_KEY = 'pg-iso-attempts';
     var ISO_MAX_ATTEMPTS = 3;
@@ -334,9 +329,10 @@ sitemap: true
           if (worker.state === 'activated') { go(); } else {
             worker.addEventListener('statechange', function () { if (worker.state === 'activated') { go(); } });
           }
-        }).catch(function () { done(false); });
-        /* Nothing happened in time; keep this click on the main thread. */
-        setTimeout(function () { done(window.crossOriginIsolated === true); }, 5000);
+        }).catch(function (e) { console.warn('coi-serviceworker unavailable:', e && e.message); done(false); });
+        /* Activation can lag behind registration; give it a real chance
+           before falling back, and say so when the engine cannot run. */
+        setTimeout(function () { done(window.crossOriginIsolated === true); }, 12000);
       });
     };
 
@@ -618,7 +614,7 @@ sitemap: true
             var t0 = performance.now();
             var res = Mod._Z3_solver_check(ctx, solver);
             if (res === 0 && performance.now() - t0 >= RUN_BUDGET_MS * 0.9) {
-              throw new Error('exceeded the ' + RUN_BUDGET_MS + ' ms run budget');
+              throw new Error(navigator.serviceWorker && window.isSecureContext ? 'the solver needs its worker context; reload once and try again' : 'the solver engine cannot run in this browser context');
             }
             return res;
           });
@@ -843,6 +839,9 @@ sitemap: true
     }
 
     PG.demos.sudoku.mount();
+    /* Arrive with a real puzzle on the grid: the easy preset loads by default
+       so the first Solve press always has a well-formed instance. */
+    document.getElementById('pg-easy').click();
     PG.demos.smt.mount();
 
     /* One-time resume after the isolation reload: restore whatever the user

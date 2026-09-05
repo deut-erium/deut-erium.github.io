@@ -182,7 +182,8 @@ html[data-skin] .skin-menu__panel {
    lives separately in a lower-right dock, outside every theme header. Both
    controls are quiet glass buttons that adapt to light and dark. */
 .skin-dice,
-.theme-toggle {
+.theme-toggle,
+.site-share__btn {
   position: fixed !important;
   z-index: 90;
   display: grid !important;
@@ -219,6 +220,19 @@ html[data-skin] .skin-menu__panel {
   left: auto !important;
   right: .8rem !important;
   bottom: .8rem !important;
+}
+
+.site-share__btn {
+  top: auto !important;
+  left: auto !important;
+  right: .8rem !important;
+  bottom: 7rem !important;
+  border-radius: 22% !important;
+}
+
+.site-share__icon {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .skin-dice__face {
@@ -374,6 +388,18 @@ html[data-skin] body {
    implicit grid tracks or outside the viewport. Keep this contract complete:
    overriding a template without overriding its child placements caused the
    earlier article collisions. */
+/* Feature pages (playground, manual, teapot) keep a single stacked flow;
+   several skins lay generic main children out as side-by-side columns. */
+html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell) {
+  display: block !important;
+}
+
+html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell) > * {
+  display: block !important;
+  min-width: 0;
+  grid-column: auto;
+}
+
 html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
   box-sizing: border-box !important;
   width: min(calc(100% - 2rem), 96rem) !important;
