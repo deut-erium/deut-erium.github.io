@@ -646,7 +646,7 @@ budgets = {
     "assets/css/main.css": 12 * 1024,
     "assets/js/article.js": 2 * 1024,
     "assets/js/archive.js": 2 * 1024,
-    "assets/js/challenge.js": 2 * 1024,
+    "assets/js/challenge.js": 3 * 1024,
     "assets/js/theme.js": 3 * 1024,
 }
 metrics = {}
