@@ -38,10 +38,10 @@ Jekyll::Hooks.register :site, :post_write do |site|
       id_m = html[pos..pos + 400][/\bid="flag-([^"]+)"/, 1]
       next unless id_m
 
-      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m }
+      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m, 'aliases' => [] }
       entry['sha256'] = hash unless hash.empty?
       entry['salt'] = salt unless salt.to_s.empty?
-      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m }
+      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m, 'aliases' => [] }
       entry['sha256'] = hash unless hash.empty?
       entry['salt'] = salt unless salt.to_s.empty?
       if !hash.empty? && by_hash.key?(hash)
