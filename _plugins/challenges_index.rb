@@ -35,5 +35,14 @@ Jekyll::Hooks.register :site, :post_write do |site|
   end
 
   File.write(File.join(dest, 'challenges.json'), JSON.pretty_generate(challenges) << "\n")
+
+  board = File.join(dest, 'scoreboard', 'index.html')
+  if File.file?(board)
+    html = File.read(board, encoding: 'UTF-8')
+    embedded = '<script id="scoreboard-known" type="application/json">' + JSON.generate(challenges) + '</script>'
+    html = html.sub('<script id="scoreboard-known" type="application/json">[]</script>', embedded)
+    File.write(board, html)
+  end
+
   Jekyll.logger.info('challenges_index:', "wrote #{challenges.length} challenge ids to /challenges.json")
 end

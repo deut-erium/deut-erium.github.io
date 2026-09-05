@@ -18,7 +18,7 @@ section: scoreboard
 
 <h2>Per-challenge progress</h2>
 <ol class="scoreboard-list" id="scoreboard-list">
-  <li class="scoreboard-empty">Reading this device's challenge records...</li>
+  <li class="scoreboard-empty">Records render locally; nothing has left this device.</li>
 </ol>
 
 <h2>Move your progress</h2>
@@ -40,6 +40,7 @@ section: scoreboard
 </noscript>
 
 <style>
+    .scoreboard-wrap { max-width: 60rem; margin-inline: auto; min-height: 46rem; }
 .scoreboard-note {
   color: var(--muted);
 }
@@ -158,7 +159,9 @@ html[data-theme="dark"] .scoreboard-state .is-yes { color: #4fbf66; }
   font-weight: 700;
 }
 </style>
+<div class="scoreboard-wrap">
 
+</div>
 <script>
 (() => {
 'use strict';
@@ -203,10 +206,12 @@ const render=known=>{
 };
 render([]);
 let known=[];
-const load=()=>fetch('/challenges.json').then(r=>r.ok?r.json():[]).catch(()=>[])
+const embedded=(()=>{try{return JSON.parse(D.getElementById('scoreboard-known').textContent)}catch(_){return null}})();
+if(Array.isArray(embedded)&&embedded.length){known=embedded;render(known);}
+else{const load=()=>fetch('/challenges.json').then(r=>r.ok?r.json():[]).catch(()=>[])
   .then(entries=>{known=entries;render(known);
     known.length||say('Challenge list unavailable; showing local records only.');});
-load();
+load();}
 const dump=()=>JSON.stringify({version:2,solves,attempts:tries,hints});
 D.getElementById('scoreboard-export').addEventListener('click',()=>{
   const json=dump();
