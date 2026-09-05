@@ -1,0 +1,108 @@
+/* Zero-cookie parody banner (roadmap 12a). Requested only by
+   assets/js/features/cookie-banner.js while the notice is still pending, so
+   returning visitors never download these bytes. Colors come from the shared
+   tokens so light, dark, and every skin inherit the house look. */
+
+.cookie-banner {
+  position: fixed; /* no layout impact: CLS stays 0 while it slides up */
+  left: .8rem;
+  right: 4.6rem; /* clear of the fixed dice/theme/share dock on the right */
+  bottom: .8rem;
+  z-index: 80; /* below the control dock (90) and share popover (95) */
+  max-width: 42rem;
+  margin: 0;
+  padding: .9rem 1rem 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .55rem;
+  box-shadow: 0 .35rem 0 rgb(7 9 20 / 55%);
+  animation: cookie-banner-in .45s ease-out;
+}
+
+/* Skins restyle body children; the hidden attribute must always win. */
+.cookie-banner[hidden] { display: none; }
+
+@keyframes cookie-banner-in {
+  from { transform: translateY(110%); }
+}
+
+.cookie-banner__title {
+  margin: 0 0 .25rem;
+  color: var(--ink);
+  font-family: var(--keys);
+  font-size: .95rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.cookie-banner__body {
+  margin: 0 0 .7rem;
+  font-size: .95rem;
+  line-height: 1.45;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: 0 0 .55rem;
+}
+
+.cookie-banner__btn,
+.cookie-banner__toggle {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  padding: .45rem .8rem;
+  color: #fff;
+  background: var(--navy);
+  border: 2px solid var(--navy);
+  border-radius: .45rem;
+  font-family: var(--keys);
+  font-size: .85rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.cookie-banner__toggle {
+  color: var(--ink);
+  background: transparent;
+  border-style: dashed;
+}
+
+.cookie-banner__btn:hover,
+.cookie-banner__btn:focus-visible,
+.cookie-banner__toggle:hover,
+.cookie-banner__toggle:focus-visible {
+  color: var(--navy);
+  background: var(--pink);
+  border-color: var(--navy);
+}
+
+.cookie-banner__prefs {
+  margin: 0 0 .55rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .85rem;
+}
+
+.cookie-banner__note {
+  margin: 0;
+  font-size: .8rem;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+.cookie-banner__note a {
+  color: var(--link);
+}
+
+/* A consent dialog has no business on paper. */
+@media print {
+  .cookie-banner { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-banner { animation: none; }
+}
