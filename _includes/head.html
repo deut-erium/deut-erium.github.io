@@ -39,17 +39,18 @@
 <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
 {% include theme-bootstrap.html %}
 <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/atkinson-hyperlegible/700.woff2' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ '/' | asset_v }}">
 <script>
   if (window.__deuteriumTheme.skinHref) {
-    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + '">');
+    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + (window.__deuteriumAssetVersion ? '?v=' + window.__deuteriumAssetVersion : '') + '">');
   } else {
     document.write('<link id="skin-stylesheet" rel="stylesheet" disabled>');
   }
 </script>
-<link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}">
-{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}">{%- endif -%}
-<link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}" media="print">
-<script defer src="{{ '/assets/js/theme.js' | relative_url }}"></script>
-<script defer src="{{ '/assets/js/share.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}?v={{ '/' | asset_v }}">
+{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}?v={{ '/' | asset_v }}">{%- endif -%}
+<link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}?v={{ '/' | asset_v }}" media="print">
+<script>window.__deuteriumAssetVersion = {{ '/' | asset_v | jsonify }};</script>
+<script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/share.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
 <meta name="theme-color" content="#3847ff">

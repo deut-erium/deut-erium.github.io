@@ -4,7 +4,7 @@
 const K='deuterium-solves',M='deuterium-challenge-mute',P='flag-check__',F=/^flag\{.+\}$/,T=' ✓',D=document,ce=t=>D.createElement(t),L=localStorage;
 const get=(k,d)=>{try{return JSON.parse(L.getItem(k))??d}catch(_){return d}};
 const put=(k,v)=>{try{L.setItem(k,JSON.stringify(v))}catch(_){}};
-D.head.appendChild(Object.assign(ce('link'),{rel:'stylesheet',href:'/assets/css/features/challenge.css'}));
+D.head.appendChild(Object.assign(ce('link'),{rel:'stylesheet',href:'/assets/css/features/challenge.css?v='+window.__deuteriumAssetVersion}));
 const Q=matchMedia('(prefers-reduced-motion:reduce)');
 let mute=!!get(M,0),ac;
 const chime=()=>{if(mute)return;try{

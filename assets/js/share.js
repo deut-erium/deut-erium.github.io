@@ -19,7 +19,7 @@
     if (!libPromise) {
       libPromise = new Promise(function (resolve, reject) {
         var s = document.createElement('script');
-        s.src = '/assets/js/vendor/qrcode.js';
+        s.src = '/assets/js/vendor/qrcode.js' + (window.__deuteriumAssetVersion ? '?v=' + window.__deuteriumAssetVersion : '');
         s.onload = resolve;
         s.onerror = reject;
         document.head.appendChild(s);
