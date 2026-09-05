@@ -1,0 +1,873 @@
+---
+layout: base
+title: Escape room
+description: A three-room Z3 constraint escape room. Scheduling, factoring with leaked high bits, and liar logic; the models spell the door code. The engine loads from this site only when you press Solve.
+permalink: /rooms/
+sitemap: true
+---
+<main id="content" class="page-shell rm-shell">
+  <style>
+    /* The escape room borrows the playground's visual language: paper panels,
+       navy borders, keys-font buttons, mono outputs. No bespoke palette. */
+    .rm-shell > :not(style) { max-width: 62rem; margin-inline: auto; }
+    .rm-head { margin: 0 0 1.1rem; color: var(--ink); }
+    .rm-head h1 {
+      margin: 0 0 .35rem;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+      letter-spacing: -.02em;
+      text-transform: none;
+    }
+    .rm-lede { margin: 0; max-width: 46rem; font-size: 1rem; line-height: 1.55; color: var(--ink); }
+    .rm-panel, .rm-docs {
+      background: var(--paper);
+      color: var(--ink);
+      border: 4px solid var(--navy);
+      border-radius: .8rem;
+      padding: clamp(1rem, 2.6vw, 1.6rem);
+      margin: 0 0 1.2rem;
+      box-shadow: .45rem .5rem 0 rgb(8 10 19 / 35%);
+    }
+    .rm-panel h2, .rm-docs h2 { margin: .1rem 0 .45rem; color: var(--ink); font-family: var(--display); text-transform: none; letter-spacing: 0; }
+    .rm-panel p, .rm-docs p { max-width: 46rem; }
+    .rm-panel ul { max-width: 46rem; }
+    .rm-controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 0 0 1rem; }
+    .rm-btn {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      padding: .55rem .95rem;
+      background: var(--navy);
+      color: #fff;
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      box-shadow: 0 .2rem 0 rgb(8 10 19 / 45%);
+      font-family: var(--keys);
+      font-size: .95rem;
+      cursor: pointer;
+    }
+    .rm-btn:hover { background: var(--pink); color: var(--navy); }
+    .rm-btn--primary { background: var(--orange); color: var(--navy); }
+    .rm-btn--primary:hover { background: var(--pink); color: var(--navy); }
+    .rm-btn[disabled] { opacity: .55; cursor: wait; }
+    .rm-letter {
+      font-family: var(--keys);
+      font-size: .95rem;
+      color: var(--navy);
+      background: var(--paper-low);
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      padding: .45rem .7rem;
+    }
+    .rm-letter[data-letter] { background: var(--orange); color: var(--navy); }
+    .rm-status { margin: .35rem 0 0; font-family: var(--keys); font-size: .92rem; color: var(--ink); }
+    .rm-out {
+      margin: .8rem 0 0;
+      padding: .8rem .9rem;
+      font-family: var(--mono);
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border-left: .4rem solid var(--navy);
+      border-radius: .3rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 1.6rem;
+    }
+    .rm-sched {
+      border-collapse: collapse;
+      margin: 0 0 .9rem;
+      font-family: var(--mono);
+      font-size: .95rem;
+      color: var(--ink);
+    }
+    .rm-sched th, .rm-sched td {
+      border: 2px solid var(--navy);
+      padding: .45rem .8rem;
+      min-width: 7.5rem;
+      text-align: left;
+    }
+    .rm-sched th { font-family: var(--keys); font-weight: 700; background: var(--paper-low); }
+    .rm-sched td.rm-filled { background: var(--orange); color: var(--navy); font-weight: 700; }
+    .rm-islanders { list-style: none; margin: 0 0 .9rem; padding: 0; max-width: 46rem; }
+    .rm-islanders li {
+      margin: 0 0 .45rem;
+      padding: .5rem .7rem;
+      background: var(--paper-low);
+      border: 2px solid var(--navy);
+      border-radius: .4rem;
+      font-size: .95rem;
+      line-height: 1.45;
+    }
+    .rm-islanders .rm-says { color: var(--ink); }
+    .rm-type {
+      display: inline-block;
+      margin-left: .5rem;
+      padding: .05rem .5rem;
+      font-family: var(--keys);
+      font-size: .85rem;
+      border: 2px solid var(--navy);
+      border-radius: .35rem;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .rm-islanders li.rm-knight .rm-type { background: var(--orange); color: var(--navy); }
+    .rm-smtwrap { margin: .8rem 0 0; }
+    .rm-smtwrap summary {
+      cursor: pointer;
+      font-family: var(--keys);
+      font-size: .92rem;
+      color: var(--ink);
+      padding: .3rem 0;
+    }
+    .rm-smtwrap summary:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+    .rm-smt {
+      margin: .5rem 0 0;
+      padding: .8rem .9rem;
+      font-family: var(--mono);
+      font-size: .85rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      max-height: 26rem;
+      overflow: auto;
+    }
+    .rm-label { display: block; margin: .2rem 0 .4rem; font-family: var(--keys); font-size: .85rem; color: var(--ink); }
+    .rm-code-input {
+      min-height: 2.8rem;
+      box-sizing: border-box;
+      padding: .5rem .8rem;
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--paper-low);
+      border: 3px solid var(--ink);
+      border-radius: .5rem;
+      width: 9rem;
+    }
+    .rm-code-input:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; }
+    .rm-progress { font-family: var(--keys); font-size: 1rem; color: var(--ink); margin: .2rem 0 .8rem; }
+    .rm-progress span { color: var(--navy); background: var(--paper-low); border: 3px solid var(--navy); border-radius: .5rem; padding: .25rem .6rem; }
+    .rm-verdict {
+      margin: .4rem 0 0;
+      padding: .8rem .9rem;
+      font-family: var(--keys);
+      font-size: .95rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border-left: .4rem solid var(--navy);
+      border-radius: .3rem;
+      max-width: 46rem;
+    }
+    .rm-verdict.is-wrong { border-left: .4rem solid var(--pink); color: var(--navy); background: var(--paper-low); }
+    .rm-verdict.is-correct { border-left: .4rem solid var(--orange); background: var(--orange); color: var(--navy); }
+    .rm-attempts, .rm-timer { margin: .35rem 0 0; font-family: var(--keys); font-size: .9rem; color: var(--ink); }
+    @media (prefers-reduced-motion: no-preference) {
+      .rm-verdict.is-wrong.rm-shake { animation: rm-shake .32s ease; }
+      .rm-verdict.is-correct { animation: rm-pop .45s ease; }
+    }
+    @keyframes rm-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-.4rem); }
+      50% { transform: translateX(.35rem); }
+      75% { transform: translateX(-.2rem); }
+    }
+    @keyframes rm-pop {
+      0% { transform: scale(.97); }
+      60% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .rm-docs p { margin: .3rem 0 .6rem; line-height: 1.55; }
+    .rm-docs code { font-family: var(--mono); font-size: .9em; background: var(--paper-low); border: 1px solid var(--ink); border-radius: .25rem; padding: 0 .3em; }
+    @media (max-width: 40rem) {
+      .rm-shell { padding-inline: .9rem; }
+      .rm-sched th, .rm-sched td { min-width: 5.5rem; padding: .35rem .5rem; }
+    }
+  </style>
+
+  <header class="rm-head">
+    <h1>Escape room</h1>
+    <p class="rm-lede">Three locked doors, one constraint solver. Each room is
+      an honest SMT instance handed to the real Z3 compiled to WebAssembly and
+      served from this site; each satisfying model opens its door and drops one
+      letter of the exit code. Nothing engine-shaped loads until you press a
+      Solve button, and nothing ever leaves the page. The harness is the same
+      one that drives the <a href="/playground/">playground</a>.</p>
+  </header>
+
+  <section class="rm-panel" aria-label="Room 1, the schedule">
+    <h2>Room 1 &mdash; The schedule</h2>
+    <p>Three speakers (Ada, Bo, Cy), three slots, two rooms (a, b). Every
+      speaker talks exactly once, no room hosts two talks in the same slot,
+      every slot gets a talk, Cy is unavailable in slot 2, and the opening
+      talk is Ada in slot 1, room a. Ask Z3 for any schedule that satisfies
+      all of it.</p>
+    <div class="rm-controls">
+      <button type="button" class="rm-btn rm-btn--primary" id="rm-solve-1">Solve room 1</button>
+      <span class="rm-letter" id="rm-letter-1">door letter: ?</span>
+    </div>
+    <p class="rm-status" id="rm-status-1" role="status" aria-live="polite">Press Solve room 1 to let Z3 book the talks.</p>
+    <table class="rm-sched" id="rm-sched">
+      <caption class="rm-sched-cap">Schedule grid: slots 1&ndash;3 by rooms a and b</caption>
+      <thead>
+        <tr><th scope="col">Slot</th><th scope="col">Room a</th><th scope="col">Room b</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">1</th><td id="rm-cell-1a">?</td><td id="rm-cell-1b">?</td></tr>
+        <tr><th scope="row">2</th><td id="rm-cell-2a">?</td><td id="rm-cell-2b">?</td></tr>
+        <tr><th scope="row">3</th><td id="rm-cell-3a">?</td><td id="rm-cell-3b">?</td></tr>
+      </tbody>
+    </table>
+    <details class="rm-smtwrap">
+      <summary>See the constraints</summary>
+      <pre class="rm-smt" id="rm-smt-1"></pre>
+    </details>
+  </section>
+
+  <section class="rm-panel" aria-label="Room 2, the broken RSA">
+    <h2>Room 2 &mdash; The broken RSA</h2>
+    <p>A 40-bit modulus lost its factors, but a side channel leaked the
+      smaller factor&rsquo;s high bits: <code>p</code> lives in
+      [648704,&nbsp;648960). Prime <code>p</code>, prime <code>q</code>,
+      and <code>p&middot;q&nbsp;=&nbsp;559416513779</code> pin both factors.
+      Z3 walks the 256-candidate window and finds the only divisor.</p>
+    <div class="rm-controls">
+      <button type="button" class="rm-btn rm-btn--primary" id="rm-solve-2">Solve room 2</button>
+      <span class="rm-letter" id="rm-letter-2">door letter: ?</span>
+    </div>
+    <p class="rm-status" id="rm-status-2" role="status" aria-live="polite">Press Solve room 2 to factor the modulus.</p>
+    <pre class="rm-out" id="rm-out-2" hidden></pre>
+    <details class="rm-smtwrap">
+      <summary>See the constraints</summary>
+      <pre class="rm-smt" id="rm-smt-2"></pre>
+    </details>
+  </section>
+
+  <section class="rm-panel" aria-label="Room 3, the liar logic">
+    <h2>Room 3 &mdash; The liar logic</h2>
+    <p>Five islanders guard the last door. Knights only tell the truth,
+      knaves only lie, so each islander&rsquo;s type must equal the truth of
+      their own claim. Z3 finds the one assignment that survives all five
+      statements.</p>
+    <div class="rm-controls">
+      <button type="button" class="rm-btn rm-btn--primary" id="rm-solve-3">Solve room 3</button>
+      <span class="rm-letter" id="rm-letter-3">door letter: ?</span>
+    </div>
+    <p class="rm-status" id="rm-status-3" role="status" aria-live="polite">Press Solve room 3 to sort knights from knaves.</p>
+    <ul class="rm-islanders" id="rm-islanders">
+      <li id="rm-row-ada"><span class="rm-says">Ada says: &ldquo;Bo is a knave.&rdquo;</span><span class="rm-type" id="rm-type-ada">?</span></li>
+      <li id="rm-row-bo"><span class="rm-says">Bo says: &ldquo;Cy and Dee are both knights.&rdquo;</span><span class="rm-type" id="rm-type-bo">?</span></li>
+      <li id="rm-row-cy"><span class="rm-says">Cy says: &ldquo;Ada is a knave.&rdquo;</span><span class="rm-type" id="rm-type-cy">?</span></li>
+      <li id="rm-row-dee"><span class="rm-says">Dee says: &ldquo;Exactly one of Bo and Eli is a knight.&rdquo;</span><span class="rm-type" id="rm-type-dee">?</span></li>
+      <li id="rm-row-eli"><span class="rm-says">Eli says: &ldquo;Ada is a knight and Dee is a knave.&rdquo;</span><span class="rm-type" id="rm-type-eli">?</span></li>
+    </ul>
+    <details class="rm-smtwrap">
+      <summary>See the constraints</summary>
+      <pre class="rm-smt" id="rm-smt-3"></pre>
+    </details>
+  </section>
+
+  <section class="rm-panel" aria-label="The door code">
+    <h2>The door code</h2>
+    <p>Solve the three rooms, read one letter from each, and type the
+      assembled code to leave. The timer starts the first time you press any
+      Solve button and lives only in this browser session.</p>
+    <p class="rm-progress">Code so far: <span id="rm-progress">? &middot; ? &middot; ?</span></p>
+    <div class="rm-controls">
+      <label class="rm-label" for="rm-code">Door code</label>
+      <input class="rm-code-input" id="rm-code" type="text" inputmode="text" autocomplete="off"
+        spellcheck="false" maxlength="3" aria-describedby="rm-verdict">
+      <button type="button" class="rm-btn rm-btn--primary" id="rm-try">Open the door</button>
+    </div>
+    <p class="rm-verdict" id="rm-verdict" role="status" aria-live="assertive">Three rooms, three letters. The door is waiting.</p>
+    <p class="rm-attempts" id="rm-attempts" hidden></p>
+    <p class="rm-timer" id="rm-timer"></p>
+  </section>
+
+  <section class="rm-docs">
+    <h2>How the room works</h2>
+    <p>Each Solve press builds a fresh SMT-LIB encoding (the one behind
+      <em>See the constraints</em>), wakes the engine, and checks it under a
+      30-second client-side budget. The first press pulls ~35&nbsp;MB of WASM
+      from this site; if the host does not send COOP/COEP, the page registers
+      a small isolating service worker under <code>/rooms/</code>, reloads
+      once to unlock the off-thread solver, and resumes your room. After
+      that the engine is warm and every room is a few hundred milliseconds.</p>
+    <p>The rooms: scheduling as distinct integer cells, factoring as
+      nonlinear arithmetic over a leaked high-bit window, and liar logic as
+      boolean biconditionals. The exit flourish dispatches a
+      <code>deuterium:solved</code> event with id
+      <code>escape-room</code>, so the challenge scoreboard picks the room
+      up like any other cleared challenge. Reduced-motion visitors get the
+      same verdicts with no animation.</p>
+  </section>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var VENDOR = '/assets/vendor/z3/z3-built.js';
+    var COI_SW = '/rooms/coi-serviceworker.js';
+    var RUN_BUDGET_MS = 30000;
+    var RESUME_KEY = 'rm-resume';
+    var T0_KEY = 'rm-t0';
+    var ISO_ATTEMPTS_KEY = 'rm-iso-attempts';
+    var ISO_MAX_ATTEMPTS = 3;
+    var enginePromise = null;
+
+    /* Room registry: one entry per door. Each room owns its encoding
+       (SMT-LIB text), its render step (paint the model), and its letter. */
+    var RM = { rooms: {} };
+    window.RM = RM;
+
+    /* The official npm wasm build runs long Z3 operations on pthreads, which
+       browsers only allow on cross-origin isolated pages. Isolated hosts get
+       the off-thread API with a real wall-clock budget and interrupt; plain
+       origins bootstrap an isolating service worker (coi-serviceworker) once
+       and reload; if even that fails, a synchronous fallback runs what it
+       can on the main thread. Same negotiation as the playground. */
+    RM.offThread = function () {
+      return typeof SharedArrayBuffer === 'function' && window.crossOriginIsolated !== false;
+    };
+
+    RM.sessionCount = function (key, delta) {
+      try {
+        var n = Number(window.sessionStorage.getItem(key) || '0') + delta;
+        if (n > 0) { window.sessionStorage.setItem(key, String(n)); }
+        else { window.sessionStorage.removeItem(key); }
+        return n;
+      } catch (err) { return 0; }
+    };
+
+    RM.stash = function (state) {
+      try { window.sessionStorage.setItem(RESUME_KEY, JSON.stringify(state)); } catch (err) {}
+    };
+
+    RM.takeStash = function () {
+      try {
+        var raw = window.sessionStorage.getItem(RESUME_KEY);
+        window.sessionStorage.removeItem(RESUME_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (err) { return null; }
+    };
+
+    /* Registers the vendored isolating service worker and reloads the page
+       once it can control this URL. The worker serves document navigations
+       under /rooms/ (its scope) with COOP/COEP headers. */
+    RM.isolate = function () {
+      return new Promise(function (resolve) {
+        if (!('serviceWorker' in navigator) || !window.isSecureContext) { resolve(false); return; }
+        var attempts = RM.sessionCount(ISO_ATTEMPTS_KEY, 1);
+        if (attempts > ISO_MAX_ATTEMPTS) { resolve(false); return; }
+        var settled = false;
+        var done = function (value) { if (!settled) { settled = true; resolve(value); } };
+        var reload = function () {
+          window.location.reload();
+          /* If the reload is somehow refused, fall through to the sync mode. */
+          setTimeout(function () { done(window.crossOriginIsolated === true); }, 1500);
+        };
+        navigator.serviceWorker.register(COI_SW).then(function (reg) {
+          var worker = reg.active || reg.installing || reg.waiting;
+          if (!worker) { done(false); return; }
+          var go = function () {
+            if (settled) { return; }
+            setTimeout(function () {
+              if (window.crossOriginIsolated) { done(true); return; }
+              reload();
+            }, 100);
+          };
+          if (worker.state === 'activated') { go(); } else {
+            worker.addEventListener('statechange', function () { if (worker.state === 'activated') { go(); } });
+          }
+        }).catch(function (e) { console.warn('coi-serviceworker unavailable:', e && e.message); done(false); });
+        /* Activation can lag behind registration; give it a real chance
+           before falling back, and say so when the engine cannot run. */
+        setTimeout(function () { done(window.crossOriginIsolated === true); }, 12000);
+      });
+    };
+
+    /* Let the browser paint before a blocking synchronous run. */
+    RM.yieldFrame = function () {
+      return new Promise(function (resolve) {
+        requestAnimationFrame(function () { setTimeout(resolve, 0); });
+      });
+    };
+
+    /* Engine step. Injects the vendored Emscripten glue on first use only,
+       resolves the global initZ3() factory, and memoizes the module so the
+       ~35 MB WASM download is paid once per visit and never on page open. */
+    function loadEngineScript() {
+      return new Promise(function (resolve, reject) {
+        var started = performance.now();
+        var script = document.createElement('script');
+        script.src = VENDOR;
+        script.addEventListener('load', function () {
+          var factory = window.initZ3;
+          if (typeof factory !== 'function') {
+            reject(new Error('engine loaded but exposed no initZ3 factory'));
+            return;
+          }
+          var ready;
+          if (RM.offThread()) {
+            /* Chromium blocks network-loaded worker scripts on cross-origin
+               isolated pages (ERR_BLOCKED_BY_RESPONSE on the pthread worker
+               fetch), so hand the engine a blob URL of its own glue for its
+               pthread workers. The compiled wasm reaches workers through
+               postMessage, so the blob needs no path setup. */
+            ready = fetch(VENDOR)
+              .then(function (response) { return response.text(); })
+              .then(function (text) {
+                var blob = URL.createObjectURL(new Blob([text], { type: 'text/javascript' }));
+                return Promise.resolve(factory({ mainScriptUrlOrBlob: blob }));
+              });
+          } else {
+            ready = Promise.resolve(factory({}));
+          }
+          ready.then(function (Mod) {
+            resolve({ Mod: Mod, loadMs: Math.round(performance.now() - started) });
+          }, reject);
+        });
+        script.addEventListener('error', function () {
+          reject(new Error('failed to fetch ' + VENDOR));
+        });
+        document.head.appendChild(script);
+      });
+    }
+
+    RM.engine = function () {
+      if (enginePromise) { return enginePromise; }
+      if (RM.offThread()) {
+        enginePromise = loadEngineScript().catch(function (err) { enginePromise = null; throw err; });
+        return enginePromise;
+      }
+      /* Not isolated: the current click may be cut short by the one-time
+         reload. If the reload never comes, keep going in fallback mode. */
+      enginePromise = RM.isolate().then(function (isolated) {
+        if (!isolated && window.crossOriginIsolated !== true) { return loadEngineScript(); }
+        return loadEngineScript();
+      }).catch(function (err) { enginePromise = null; throw err; });
+      return enginePromise;
+    };
+
+    /* Shared run budget: resolves with the work's value, or rejects once the
+       wall-clock budget is spent after calling onAbort (used to interrupt the
+       solver). */
+    RM.budget = function (work, ms, onAbort) {
+      return new Promise(function (resolve, reject) {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (settled) { return; }
+          settled = true;
+          if (onAbort) { try { onAbort(); } catch (err) {} }
+          reject(new Error('exceeded the ' + ms + ' ms run budget'));
+        }, ms);
+        work.then(function (value) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); resolve(value);
+        }, function (err) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); reject(err);
+        });
+      });
+    };
+
+    /* SMT-LIB engine step, shared by all three rooms: a fresh context per
+       run, one eval, teardown, string out. */
+    RM.runSmt = function (Mod, text) {
+      var cfg = Mod._Z3_mk_config();
+      var ctx = Mod._Z3_mk_context(cfg);
+      Mod._set_noop_error_handler(ctx);
+      var torn = false;
+      var teardown = function () {
+        if (torn) { return; }
+        torn = true;
+        try { Mod._Z3_del_context(ctx); } catch (err) {}
+      };
+      var work;
+      if (RM.offThread()) {
+        work = Mod.async_call(function () {
+          return Mod.ccall('async_Z3_eval_smtlib2_string', 'void', ['number', 'string'], [ctx, text]);
+        });
+        /* On a budget timeout the evaluation is abandoned mid-flight; that
+           context is deliberately leaked rather than deleted to avoid
+           freeing state the unwinding solver still touches. */
+        work = RM.budget(work, RUN_BUDGET_MS, function () { Mod._Z3_interrupt(ctx); })
+          .then(function (result) { teardown(); return result; });
+      } else {
+        /* Main-thread fallback: Z3's own timers spawn threads that are
+           unavailable here, so the budget is a post-hoc wall-clock check.
+           Heavier encodings may refuse to run without the off-thread
+           engine. */
+        work = RM.yieldFrame().then(function () {
+          var started = performance.now();
+          var result = Mod.ccall('Z3_eval_smtlib2_string', 'string', ['number', 'string'], [ctx, text]);
+          if (performance.now() - started >= RUN_BUDGET_MS * 1.5) {
+            throw new Error('blew through the ' + RUN_BUDGET_MS + ' ms run budget');
+          }
+          teardown();
+          return result;
+        });
+      }
+      return work;
+    };
+
+    /* ---------------- Room encodings ---------------- */
+
+    /* Room 2 constants, generated at authoring time (Miller-Rabin, 40
+       witnesses): p = 648887 and q = 862117 are 20-bit primes, so
+       n = p*q = 559416513779 is a 40-bit modulus. The leak reveals p's top
+       12 bits: p in [648704, 648960), a 256-cell window holding exactly one
+       factor of n (verified at authoring time). */
+    var RSA_N = 559416513779;
+    var RSA_P_LO = 648704;
+    var RSA_P_HI = 648960;
+
+    function encodeSchedule() {
+      return [
+        '; Room 1 - the schedule. Three speakers (ada, bo, cy), three slots,',
+        '; two rooms. Each variable is a speaker\'s cell: cell = (slot-1)*2 + room',
+        '; where room a is odd and room b is even: 1=1a 2=1b 3=2a 4=2b 5=3a 6=3b.',
+        '; The model fills the grid; any valid schedule opens the door.',
+        '(declare-const pa Int)',
+        '(declare-const pb Int)',
+        '(declare-const pc Int)',
+        '(assert (>= pa 1))',
+        '(assert (<= pa 6))',
+        '(assert (>= pb 1))',
+        '(assert (<= pb 6))',
+        '(assert (>= pc 1))',
+        '(assert (<= pc 6))',
+        '(assert (distinct pa pb pc)) ; no double-booking: distinct cells',
+        '; cy is unavailable in slot 2 (cells 3 and 4)',
+        '(assert (distinct pc 3))',
+        '(assert (distinct pc 4))',
+        '; the opening talk is ada in slot 1 room a',
+        '(assert (= pa 1))',
+        '; every slot hosts a talk (three speakers, three slots: exactly one each)',
+        '(assert (or (= pa 1) (= pa 2) (= pb 1) (= pb 2) (= pc 1) (= pc 2)))',
+        '(assert (or (= pa 3) (= pa 4) (= pb 3) (= pb 4) (= pc 3) (= pc 4)))',
+        '(assert (or (= pa 5) (= pa 6) (= pb 5) (= pb 6) (= pc 5) (= pc 6)))',
+        '(check-sat)',
+        '(get-value (pa pb pc))'
+      ].join('\n');
+    }
+
+    function encodeRsa() {
+      return [
+        '; Room 2 - the broken RSA. The modulus n lost its factors, but the',
+        '; smaller factor p leaked its high bits: p sits in [648704, 648960).',
+        '; p is prime (odd, no tiny prime divides it); unique factorization',
+        '; pins q once p is found. n = 559416513779, about 40 bits.',
+        '(declare-const p Int)',
+        '(declare-const q Int)',
+        '(assert (> p 1))',
+        '(assert (> q 1))',
+        '(assert (>= p ' + RSA_P_LO + '))',
+        '(assert (< p ' + RSA_P_HI + '))',
+        '(assert (= (* p q) ' + RSA_N + ')) ; the whole attack: p * q = n',
+        '(assert (= (mod p 2) 1)) ; p is prime: odd, and no small prime divides it',
+        '(assert (> (mod p 3) 0))',
+        '(assert (> (mod p 5) 0))',
+        '(assert (> (mod p 7) 0))',
+        '(assert (> (mod p 11) 0))',
+        '(check-sat)',
+        '(get-value (p q))'
+      ].join('\n');
+    }
+
+    function encodeLiars() {
+      return [
+        '; Room 3 - the liar logic. Five islanders: knights only tell the',
+        '; truth, knaves only lie, so each speaker\'s type must equal their',
+        '; own statement. Exactly one assignment survives.',
+        '(declare-const ada Bool)',
+        '(declare-const bo Bool)',
+        '(declare-const cy Bool)',
+        '(declare-const dee Bool)',
+        '(declare-const eli Bool)',
+        '(assert (= ada (not bo))) ; Ada: "Bo is a knave."',
+        '(assert (= bo (and cy dee))) ; Bo: "Cy and Dee are both knights."',
+        '(assert (= cy (not ada))) ; Cy: "Ada is a knave."',
+        '(assert (= dee (xor bo eli))) ; Dee: "Exactly one of Bo and Eli is a knight."',
+        '(assert (= eli (and ada (not dee)))) ; Eli: "Ada is a knight and Dee is a knave."',
+        '(check-sat)',
+        '(get-value (ada bo cy dee eli))'
+      ].join('\n');
+    }
+
+    /* Parse an eval_smtlib2_string result: leading sat/unsat/unknown plus
+       every (name value) pair the script asked for. */
+    function parseSmt(out) {
+      var status = 'unknown';
+      var head = /^\s*(sat|unsat|unknown)/.exec(out);
+      if (head) { status = head[1]; }
+      var model = {};
+      var re = /\(\s*([A-Za-z0-9_-]+)\s+(true|false|-?\d+)\s*\)/g;
+      var m;
+      while ((m = re.exec(out))) { model[m[1]] = m[2]; }
+      return { status: status, model: model };
+    }
+
+    /* ---------------- Clock and door code ---------------- */
+
+    var CODE = 'SAT';
+    var letters = { 1: null, 2: null, 3: null };
+    var t0 = null;
+    var clockTimer = null;
+    var attempts = 0;
+    var escaped = false;
+
+    function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+    function elapsedMs() { return t0 === null ? 0 : Date.now() - t0; }
+
+    function formatElapsed() {
+      var s = Math.floor(elapsedMs() / 1000);
+      return pad2(Math.floor(s / 60)) + ':' + pad2(s % 60);
+    }
+
+    function tickClock() {
+      document.getElementById('rm-timer').textContent = 'Time in the room: ' + formatElapsed();
+    }
+
+    function startClock() {
+      if (escaped) { return; }
+      if (t0 === null) {
+        var saved = null;
+        try { saved = Number(window.sessionStorage.getItem(T0_KEY)); } catch (err) {}
+        t0 = saved > 0 ? saved : Date.now();
+        try { window.sessionStorage.setItem(T0_KEY, String(t0)); } catch (err) {}
+      }
+      if (clockTimer === null) { clockTimer = window.setInterval(tickClock, 1000); }
+      tickClock();
+    }
+
+    function stopClock() {
+      if (clockTimer !== null) { window.clearInterval(clockTimer); clockTimer = null; }
+    }
+
+    function refreshProgress() {
+      var parts = [1, 2, 3].map(function (n) { return letters[n] || '?'; });
+      document.getElementById('rm-progress').textContent = parts.join(' \u00b7 ');
+    }
+
+    function revealLetter(n, letter) {
+      if (letters[n]) { return; }
+      letters[n] = letter;
+      var el = document.getElementById('rm-letter-' + n);
+      el.textContent = 'door letter: ' + letter;
+      el.setAttribute('data-letter', letter);
+      refreshProgress();
+    }
+
+    function wrongCode(v) {
+      attempts += 1;
+      var attemptsEl = document.getElementById('rm-attempts');
+      attemptsEl.hidden = false;
+      attemptsEl.textContent = 'Wrong attempts: ' + attempts;
+      var verdict = document.getElementById('rm-verdict');
+      verdict.textContent = 'Wrong. ' + JSON.stringify(v) + ' does not open this door. Check the letters the rooms revealed.';
+      verdict.className = 'rm-verdict is-wrong';
+      /* Restart the shake so repeated wrong guesses still land a hit;
+         reduced-motion visitors get the same verdict with no animation. */
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        void verdict.offsetWidth;
+        verdict.classList.add('rm-shake');
+      }
+    }
+
+    function escapeRoom() {
+      if (escaped) { return; }
+      escaped = true;
+      stopClock();
+      document.getElementById('rm-timer').textContent = 'Time in the room: ' + formatElapsed();
+      var verdict = document.getElementById('rm-verdict');
+      verdict.textContent = 'YOU ESCAPED \u2014 room cleared in ' + formatElapsed() + '. ' + attempts +
+        (attempts === 1 ? ' wrong attempt on the way out.' : ' wrong attempts on the way out.');
+      verdict.className = 'rm-verdict is-correct';
+      document.getElementById('rm-try').disabled = true;
+      document.getElementById('rm-code').disabled = true;
+      /* Deuterium-solved-compatible flourish: the challenge scoreboard
+         listens for this event like any other cleared challenge. */
+      document.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'escape-room', at: new Date().toISOString() } }));
+      if (!document.title.endsWith(' \u2713')) { document.title += ' \u2713'; }
+    }
+
+    function tryCode() {
+      if (escaped) { return; }
+      var input = document.getElementById('rm-code');
+      var v = input.value.replace(/[^A-Za-z]/g, '').toUpperCase();
+      if (!v) {
+        var verdict = document.getElementById('rm-verdict');
+        verdict.textContent = 'The lock needs three letters. Solve the rooms first, or guess if you must.';
+        verdict.className = 'rm-verdict is-wrong';
+        input.focus();
+        return;
+      }
+      if (v === CODE) { escapeRoom(); } else { wrongCode(v); }
+    }
+
+    /* ---------------- Solve wiring ---------------- */
+
+    var running = false;
+
+    function busyRooms(disabled) {
+      [1, 2, 3].forEach(function (n) {
+        document.getElementById('rm-solve-' + n).disabled = disabled;
+      });
+    }
+
+    function solveRoom(n) {
+      if (running || escaped) { return; }
+      var room = RM.rooms[n];
+      var statusEl = document.getElementById('rm-status-' + n);
+      running = true;
+      busyRooms(true);
+      startClock();
+      var text = room.encode();
+      var cold = !enginePromise;
+      if (!RM.offThread()) {
+        /* The current click may be cut short by the one-time isolation
+           reload; remember the room and resume it after. */
+        RM.stash({ room: n });
+      }
+      statusEl.textContent = cold
+        ? 'Waking the Z3 engine \u2014 the first load pulls ~35 MB of WASM from this site' +
+          (RM.offThread() ? '\u2026' : ', and one reload to unlock the off-thread solver\u2026')
+        : 'Solving\u2026';
+      statusEl.removeAttribute('data-result');
+      statusEl.removeAttribute('data-solve-ms');
+      statusEl.removeAttribute('data-load-ms');
+
+      var settle = function (fn) {
+        return function (value) {
+          running = false;
+          busyRooms(false);
+          if (fn) { fn(value); }
+        };
+      };
+
+      RM.engine().then(function (eng) {
+        var solveStart = performance.now();
+        statusEl.textContent = 'Solving\u2026';
+        return RM.runSmt(eng.Mod, text).then(function (out) {
+          return { out: out, solveMs: Math.round(performance.now() - solveStart), loadMs: cold ? eng.loadMs : 0, cold: cold };
+        });
+      }).then(settle(function (result) {
+        var parsed = parseSmt(result.out);
+        statusEl.setAttribute('data-solve-ms', String(result.solveMs));
+        statusEl.setAttribute('data-load-ms', String(result.loadMs));
+        if (parsed.status === 'sat') {
+          statusEl.setAttribute('data-result', 'sat');
+          revealLetter(n, room.letter);
+          statusEl.textContent = 'SAT \u00b7 solved in ' + result.solveMs + ' ms' +
+            (result.cold ? ' \u00b7 engine loaded in ' + result.loadMs + ' ms' : ' \u00b7 engine was already warm') +
+            ' \u00b7 door letter ' + room.letter + ' revealed';
+          room.render(parsed.model);
+        } else if (parsed.status === 'unsat') {
+          statusEl.setAttribute('data-result', 'unsat');
+          statusEl.textContent = 'UNSAT \u00b7 the constraints in this room are contradictory \u2014 that should never happen; reload the page.';
+        } else {
+          statusEl.setAttribute('data-result', 'unknown');
+          statusEl.textContent = 'UNKNOWN \u00b7 the solver gave up inside the run budget. Try the room again.';
+        }
+      }), settle(function (err) {
+        statusEl.setAttribute('data-result', 'error');
+        statusEl.textContent = 'Solver error: ' + (err && err.message ? err.message : err) + ' Nothing left the page; press Solve again.';
+      }));
+    }
+
+    /* ---------------- Render steps ---------------- */
+
+    function renderSchedule(model) {
+      var byCell = {};
+      [['pa', 'Ada'], ['pb', 'Bo'], ['pc', 'Cy']].forEach(function (pair) {
+        var v = Number(model[pair[0]]);
+        if (v >= 1 && v <= 6) { byCell[v] = pair[1]; }
+      });
+      ['a', 'b'].forEach(function (room) {
+        for (var slot = 1; slot <= 3; slot++) {
+          var cell = (slot - 1) * 2 + (room === 'a' ? 1 : 2);
+          var td = document.getElementById('rm-cell-' + slot + room);
+          td.textContent = byCell[cell] || '\u2014';
+          td.classList.toggle('rm-filled', !!byCell[cell]);
+        }
+      });
+    }
+
+    function renderFactors(model) {
+      var p = Number(model.p);
+      var q = Number(model.q);
+      var out = document.getElementById('rm-out-2');
+      out.hidden = false;
+      out.textContent = 'p = ' + p + '\nq = ' + q + '\np * q = ' + (p * q) + ' = n' +
+        ((p * q) === RSA_N ? ' \u2713 factors verified' : ' \u2717 product mismatch');
+      if ((p * q) !== RSA_N) { throw new Error('the model does not multiply back to n'); }
+    }
+
+    function renderIslanders(model) {
+      var knights = [];
+      [['ada', 'Ada'], ['bo', 'Bo'], ['cy', 'Cy'], ['dee', 'Dee'], ['eli', 'Eli']].forEach(function (pair) {
+        var isKnight = model[pair[0]] === 'true';
+        var badge = document.getElementById('rm-type-' + pair[0]);
+        badge.textContent = isKnight ? 'knight' : 'knave';
+        badge.setAttribute('data-knight', isKnight ? '1' : '0');
+        document.getElementById('rm-row-' + pair[0]).classList.toggle('rm-knight', isKnight);
+        if (isKnight) { knights.push(pair[1]); }
+      });
+      document.getElementById('rm-status-3').setAttribute('data-knights', knights.join(','));
+    }
+
+    /* ---------------- Mount ---------------- */
+
+    RM.rooms[1] = { letter: 'S', encode: encodeSchedule, render: renderSchedule, solve: function () { solveRoom(1); } };
+    RM.rooms[2] = { letter: 'A', encode: encodeRsa, render: renderFactors, solve: function () { solveRoom(2); } };
+    RM.rooms[3] = { letter: 'T', encode: encodeLiars, render: renderIslanders, solve: function () { solveRoom(3); } };
+
+    document.getElementById('rm-smt-1').textContent = encodeSchedule();
+    document.getElementById('rm-smt-2').textContent = encodeRsa();
+    document.getElementById('rm-smt-3').textContent = encodeLiars();
+    [1, 2, 3].forEach(function (n) {
+      document.getElementById('rm-solve-' + n).addEventListener('click', RM.rooms[n].solve);
+    });
+    document.getElementById('rm-try').addEventListener('click', tryCode);
+    document.getElementById('rm-code').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { tryCode(); }
+    });
+    refreshProgress();
+
+    /* One-time resume after the isolation reload: finish the room the
+       reload interrupted on the now off-thread engine. */
+    (function resume() {
+      var state = RM.takeStash();
+      if (!state || !RM.rooms[state.room]) { return; }
+      var finish = function () {
+        var statusEl = document.getElementById('rm-status-' + state.room);
+        statusEl.textContent = 'Off-thread engine unlocked; resuming your room\u2026';
+        RM.rooms[state.room].solve();
+      };
+      if (RM.offThread()) {
+        RM.sessionCount(ISO_ATTEMPTS_KEY, -99);
+        finish();
+      } else if (RM.sessionCount(ISO_ATTEMPTS_KEY, 0) < ISO_MAX_ATTEMPTS) {
+        /* Isolation is still settling; nudge it once more. */
+        RM.stash(state);
+        RM.isolate().then(function (isolated) {
+          if (!isolated && window.crossOriginIsolated !== true) { finish(); }
+        });
+      } else {
+        finish();
+      }
+    })();
+  })();
+  </script>
+</main>
