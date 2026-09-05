@@ -1,0 +1,41 @@
+Z3 WASM engine vendored for the /playground/ harness.
+
+Package:    z3-solver (official Z3Prover npm package)
+Version:    5.2.0 (npm tarball z3-solver-5.2.0.tgz; ships Z3 4.15.x wasm build)
+Source:     https://www.npmjs.com/package/z3-solver
+            https://github.com/Z3Prover/z3/tree/master/src/api/js
+Downloaded: 2026-09-05 via `npm pack z3-solver@latest`
+Tarball:    z3-solver-5.2.0.tgz
+            sha256 bbb25453fbb53e1c05bf7f96921c10d7f1028e81a13fb9a8b2b5bc0f8c95a25f
+
+Files copied verbatim from package/build/ (no patches, no source maps):
+  z3-built.js    353,813 bytes
+    sha256 0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1
+  z3-built.wasm 34,938,413 bytes
+    sha256 2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a
+  LICENSE.txt    (MIT, from package/LICENSE.txt)
+    sha256 e617cad2ab9347e3129c2b171e87909332174e17961c5c3412d0799469111337
+
+Related file outside this directory:
+  playground/coi-serviceworker.js (1,608 bytes)
+    Isolation worker for this page: serves /playground/ with COOP/COEP so the
+    engine's pthreads are legal on static hosts, written for this harness and
+    adapted from coi-serviceworker v0.1.7, MIT, by Guido Zuidhof and
+    contributors, https://github.com/gzuidhof/coi-serviceworker (that file:
+    sha256 e97bbac6017322d48aa54a5bc7ce473c725a4b7376ff245002e0ba71c3dcdd7e).
+    It lives at /playground/ (not here) because a service worker may only
+    control URLs inside its own directory, and it must control this page.
+    Unlike the stock coi worker it sets CORP same-origin on same-origin
+    responses so the Emscripten pthread worker scripts pass the embedder
+    policy checks.
+
+Notes:
+- This package version ships no separate worker/JS glue file: the Emscripten
+  glue (z3-built.js) is a MODULARIZE build that exposes a global `initZ3`
+  factory and locates z3-built.wasm next to itself via document.currentScript.
+- The CommonJS wrappers (package/build/browser.js, high-level/, low-level/)
+  need a bundler and are not vendored; the playground calls the exported Z3 C
+  API on the Emscripten module directly instead.
+- Nothing here may be fetched from a CDN at runtime; the build verifier
+  enforces zero external runtime URLs. Files are byte-identical to the
+  tarball contents.

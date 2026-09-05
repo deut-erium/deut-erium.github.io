@@ -1,0 +1,879 @@
+---
+layout: base
+title: Playground
+description: A local-first Z3 WASM playground with a Sudoku solver and an SMT-LIB runner. The engine loads from this site only when you press Solve.
+permalink: /playground/
+sitemap: true
+---
+<main id="content" class="page-shell pg-shell">
+  <style>
+    .pg-shell { max-width: 58rem; }
+    .pg-head { color: #fff; margin-bottom: 1.2rem; }
+    .pg-head h1 { margin: 0 0 .3rem; color: var(--yellow); font-family: var(--keys); letter-spacing: .02em; text-transform: none; }
+    .pg-lede { margin: 0; max-width: 46rem; font-size: 1.02rem; }
+    .pg-panelwrap, .pg-docs {
+      background: var(--paper);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      border-radius: 1rem;
+      padding: clamp(.9rem, 2.4vw, 1.5rem);
+      margin-bottom: 1.2rem;
+    }
+    .pg-tab-state { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .pg-tablist { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .pg-tab {
+      cursor: pointer;
+      display: inline-block;
+      padding: .45rem 1rem;
+      border: 3px solid var(--ink);
+      border-radius: .7rem;
+      background: var(--paper-low);
+      color: var(--ink);
+      font-family: var(--keys);
+      font-size: .95rem;
+      user-select: none;
+    }
+    .pg-tab:hover { background: var(--inline-code); }
+    #pg-tab-sudoku:checked ~ .pg-tablist .pg-tab--sudoku,
+    #pg-tab-smt:checked ~ .pg-tablist .pg-tab--smt {
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: .25rem .25rem 0 var(--rule);
+    }
+    #pg-tab-sudoku:focus-visible ~ .pg-tablist .pg-tab--sudoku,
+    #pg-tab-smt:focus-visible ~ .pg-tablist .pg-tab--smt { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .pg-panel { display: none; }
+    #pg-tab-sudoku:checked ~ .pg-panel--sudoku { display: block; }
+    #pg-tab-smt:checked ~ .pg-panel--smt { display: block; }
+    .pg-panel h2 { margin: .1rem 0 .45rem; }
+    .pg-panel p, .pg-docs p { max-width: 46rem; }
+    .pg-controls { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .8rem 0 1rem; }
+    .pg-btn {
+      cursor: pointer;
+      padding: .42rem .95rem;
+      border: 3px solid var(--ink);
+      border-radius: .7rem;
+      background: var(--paper-low);
+      color: var(--ink);
+      font-family: var(--keys);
+      font-size: .95rem;
+    }
+    .pg-btn:hover:not(:disabled) { background: var(--inline-code); }
+    .pg-btn:disabled { cursor: progress; opacity: .55; }
+    .pg-btn--primary { background: var(--ink); color: var(--paper); }
+    .pg-btn--primary:hover:not(:disabled) { background: var(--navy-soft, var(--ink)); }
+    .pg-label { font-family: var(--keys); font-size: .9rem; color: var(--muted); }
+    .pg-select {
+      border: 3px solid var(--ink);
+      border-radius: .7rem;
+      background: var(--paper);
+      color: var(--ink);
+      padding: .4rem .6rem;
+      font-family: var(--mono);
+      font-size: .92rem;
+    }
+    .pg-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      width: min(27rem, 100%);
+      margin: 0 0 .9rem;
+      border: 3px solid var(--ink);
+      background: var(--ink);
+      gap: 1px;
+    }
+    .pg-cell {
+      width: 100%;
+      aspect-ratio: 1;
+      min-width: 0;
+      padding: 0;
+      text-align: center;
+      border: 0;
+      background: var(--paper);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: clamp(.95rem, 4.2vw, 1.35rem);
+      font-weight: 400;
+      caret-color: var(--ink);
+    }
+    .pg-cell:focus-visible { outline: 2px solid var(--link); outline-offset: -2px; z-index: 1; position: relative; }
+    .pg-cell--b { border-bottom: 3px solid var(--ink); }
+    .pg-cell--r { border-right: 3px solid var(--ink); }
+    .pg-cell--given { color: var(--ink); font-weight: 700; background: var(--paper-low); }
+    .pg-cell--filled { color: var(--link); font-weight: 700; }
+    .pg-cell--flash { animation: pg-flash .5s ease-out; }
+    @keyframes pg-flash {
+      0% { background: var(--yellow); color: var(--navy); }
+      60% { background: color-mix(in srgb, var(--cyan) 55%, var(--paper)); }
+      100% { background: var(--paper); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pg-cell--flash { animation: none; }
+    }
+    .pg-status { font-family: var(--mono); font-size: .95rem; color: var(--ink); border: 2px dashed var(--rule); border-radius: .6rem; padding: .55rem .8rem; margin: .4rem 0 0; }
+    .pg-status[data-result="sat"] { border-style: solid; border-color: var(--ink); background: color-mix(in srgb, var(--cyan) 22%, var(--paper)); }
+    .pg-status[data-result="unsat"] { border-style: solid; border-color: var(--ink); background: color-mix(in srgb, var(--yellow) 30%, var(--paper)); }
+    .pg-script {
+      width: 100%;
+      box-sizing: border-box;
+      border: 3px solid var(--ink);
+      border-radius: .6rem;
+      background: var(--paper-low);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: .92rem;
+      line-height: 1.5;
+      padding: .7rem .8rem;
+      margin: .2rem 0 .8rem;
+      resize: vertical;
+      white-space: pre;
+    }
+    .pg-out {
+      margin: 0;
+      border: 3px solid var(--ink);
+      border-radius: .6rem;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: .88rem;
+      line-height: 1.45;
+      padding: .7rem .85rem;
+      min-height: 3rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .pg-docs h2 { margin: .1rem 0 .5rem; }
+    .pg-docs h3 { margin: 1rem 0 .3rem; }
+    .pg-docs ul { margin: .4rem 0 .4rem 1.3rem; padding: 0; }
+    .pg-docs li { margin: .25rem 0; }
+    .pg-docs code, .pg-panel code { font-family: var(--mono); font-size: .9em; background: var(--inline-code); border-radius: .3em; padding: .08em .35em; }
+  </style>
+
+  <header class="pg-head">
+    <h1>Playground</h1>
+    <p class="pg-lede">A Sudoku solver and an SMT-LIB runner, backed by the real Z3
+      compiled to WebAssembly and served from this site. Nothing engine-shaped
+      loads until you press Solve or Run, and nothing ever leaves the page.</p>
+  </header>
+
+  <section class="pg-panelwrap" aria-label="Playground demos">
+    <input class="pg-tab-state" type="radio" name="pg-tab" id="pg-tab-sudoku" checked>
+    <input class="pg-tab-state" type="radio" name="pg-tab" id="pg-tab-smt">
+    <div class="pg-tablist" role="tablist" aria-label="Demos">
+      <label class="pg-tab pg-tab--sudoku" id="pg-tablabel-sudoku" for="pg-tab-sudoku">Sudoku</label>
+      <label class="pg-tab pg-tab--smt" id="pg-tablabel-smt" for="pg-tab-smt">SMT-LIB</label>
+    </div>
+
+    <section class="pg-panel pg-panel--sudoku" role="tabpanel" aria-labelledby="pg-tablabel-sudoku">
+      <h2>Sudoku</h2>
+      <p>Eighty-one integer variables in 1&ndash;9, pairwise distinct per row,
+        column, and box, with your givens pinned by equality. Pick a puzzle,
+        edit any cell, then press Solve. The grid below is the only input.</p>
+      <div class="pg-controls">
+        <button type="button" class="pg-btn" id="pg-easy">Easy</button>
+        <button type="button" class="pg-btn" id="pg-medium">Medium</button>
+        <button type="button" class="pg-btn" id="pg-hard">Hard</button>
+        <button type="button" class="pg-btn" id="pg-clear">Clear</button>
+        <button type="button" class="pg-btn pg-btn--primary" id="pg-solve">Solve</button>
+      </div>
+      <div class="pg-grid" id="pg-grid"></div>
+      <p class="pg-status" id="pg-status" role="status" aria-live="polite">Pick a puzzle or type your own, then Solve.</p>
+    </section>
+
+    <section class="pg-panel pg-panel--smt" role="tabpanel" aria-labelledby="pg-tablabel-smt">
+      <h2>SMT-LIB</h2>
+      <p>Raw SMT-LIB 2 through the same engine, with a 10-second client-side
+        budget. Pick a preset to see the encodings the Sudoku tab builds for
+        you, or write your own.</p>
+      <div class="pg-controls">
+        <label class="pg-label" for="pg-preset">Preset</label>
+        <select class="pg-select" id="pg-preset">
+          <option value="">Pick a preset&hellip;</option>
+          <option value="trivial">Trivial assert</option>
+          <option value="queens6">n-Queens (6)</option>
+          <option value="sudoku">Sudoku, as SMT-LIB</option>
+        </select>
+        <button type="button" class="pg-btn pg-btn--primary" id="pg-run">Run</button>
+      </div>
+      <textarea class="pg-script" id="pg-script" rows="12" spellcheck="false" aria-label="SMT-LIB script"></textarea>
+      <pre class="pg-out" id="pg-out" aria-label="Solver output" aria-live="polite"></pre>
+    </section>
+  </section>
+
+  <section class="pg-docs">
+    <h2>Extend the harness</h2>
+    <p>This page is the harness: tabs, a lazy engine loader, a shared run
+      budget, and two demos. The plan is that you take it from here.</p>
+    <h3>Where things live</h3>
+    <ul>
+      <li><code>playground.html</code> &mdash; every demo, style, and binding for this
+        page, inline. No framework, no build step.</li>
+      <li><code>assets/vendor/z3/</code> &mdash; the Emscripten build of Z3
+        (<code>z3-built.js</code>, <code>z3-built.wasm</code>) plus
+        <code>SOURCE.txt</code> with the npm source, version, and hashes.</li>
+      <li><code>playground/coi-serviceworker.js</code> &mdash; the vendored
+        service worker that serves this page (and only this page) with
+        COOP/COEP so the engine&rsquo;s threads are legal on static hosts.</li>
+      <li><code>agent_out/z3-check/</code> &mdash; the smoke probe and its captured
+        output, outside the site build.</li>
+    </ul>
+    <h3>The demo pattern</h3>
+    <p>One registry object, <code>PG.demos</code>, holds a demo per tab. A demo is
+      a <code>mount(root)</code> function that builds its controls and wires one
+      button to two steps: an <strong>engine step</strong> that calls
+      <code>PG.engine()</code>, encodes the problem with the Z3 C API on the
+      returned Emscripten module, and checks it under the shared timeout; and a
+      <strong>render step</strong> that paints the result into the demo&rsquo;s own
+      DOM. The Sudoku panel is the full pattern (grid encode, async check,
+      model readback, animated fill); the SMT-LIB panel is the smallest one
+      (string in, string out). Copy either one, rename the tab, and go.</p>
+    <p>The engine loader injects <code>assets/vendor/z3/z3-built.js</code> on
+      first use only, resolves the global <code>initZ3()</code> factory, and
+      hands every demo the same module instance, so the 35&nbsp;MB download is
+      paid once per visit, and never on page open.</p>
+    <p>Two execution modes, negotiated automatically. On a cross-origin
+      isolated host (COOP/COEP headers) long runs go through Z3&rsquo;s
+      off-thread API with a real wall-clock budget and interrupt. On a plain
+      origin the first Run registers a small isolating service worker
+      (<code>coi-serviceworker</code>, vendored next to this page) and reloads
+      once to unlock that mode; your grid and script survive the reload and
+      the run resumes. If even that fails, a synchronous main-thread fallback
+      runs what it can. Demos call the helpers and never care which mode is
+      live.</p>
+  </section>
+
+  <section class="pg-docs">
+    <h2>Smoke harness</h2>
+    <p>To probe a build: serve the release directory, point
+      <code>agent_out/z3-check/probe.mjs</code> at it with the same Chrome the
+      build gate uses, and run it with Node. It opens <code>/playground/</code>,
+      asserts that nothing under <code>assets/vendor/z3/</code> is requested
+      until Solve is pressed, loads the hard preset, waits for SAT, reads the
+      grid back and checks every row, column, and box is a permutation of
+      1&ndash;9, then runs the trivial and n-Queens SMT presets and captures
+      the output and wall times. Run it twice: plain (GitHub&nbsp;Pages-like,
+      where the harness must register its isolation worker and reload once)
+      and with <code>PROBE_COI=1</code> to simulate a host that already sends
+      COOP/COEP. Logs land next to the script.</p>
+  </section>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var VENDOR = '/assets/vendor/z3/z3-built.js';
+    var COI_SW = '/playground/coi-serviceworker.js';
+    var RUN_BUDGET_MS = 10000;
+    var RESUME_KEY = 'pg-resume';
+    var ISO_ATTEMPTS_KEY = 'pg-iso-attempts';
+    var ISO_MAX_ATTEMPTS = 3;
+    var enginePromise = null;
+
+    /* The harness object: demos register here, everything shares the lazy
+       engine loader, the run budget, and the isolation bootstrap. */
+    var PG = { demos: {} };
+    window.PG = PG;
+
+    /* The official npm wasm build runs long Z3 operations on pthreads, which
+       browsers only allow on cross-origin isolated pages. Isolated hosts get
+       the off-thread API with a real wall-clock budget and interrupt; plain
+       origins bootstrap an isolating service worker (coi-serviceworker) once
+       and reload; if even that fails, a synchronous fallback runs what it
+       can on the main thread. */
+    PG.offThread = function () {
+      return typeof SharedArrayBuffer === 'function' && window.crossOriginIsolated !== false;
+    };
+
+    PG.sessionCount = function (key, delta) {
+      try {
+        var n = Number(window.sessionStorage.getItem(key) || '0') + delta;
+        if (n > 0) { window.sessionStorage.setItem(key, String(n)); }
+        else { window.sessionStorage.removeItem(key); }
+        return n;
+      } catch (err) { return 0; }
+    };
+
+    PG.stash = function (state) {
+      try { window.sessionStorage.setItem(RESUME_KEY, JSON.stringify(state)); } catch (err) {}
+    };
+
+    PG.takeStash = function () {
+      try {
+        var raw = window.sessionStorage.getItem(RESUME_KEY);
+        window.sessionStorage.removeItem(RESUME_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (err) { return null; }
+    };
+
+    /* Registers the vendored isolating service worker and reloads the page
+       once it can control this URL. coi-serviceworker's worker half serves
+       every response under /playground/ with COOP/COEP; we drive the
+       registration from here because its page half is designed to run once
+       as a static tag, not on demand. */
+    PG.isolate = function () {
+      return new Promise(function (resolve) {
+        if (!('serviceWorker' in navigator) || !window.isSecureContext) { resolve(false); return; }
+        var attempts = PG.sessionCount(ISO_ATTEMPTS_KEY, 1);
+        if (attempts > ISO_MAX_ATTEMPTS) { resolve(false); return; }
+        var settled = false;
+        var done = function (value) { if (!settled) { settled = true; resolve(value); } };
+        var reload = function () {
+          window.location.reload();
+          /* If the reload is somehow refused, fall through to the sync mode. */
+          setTimeout(function () { done(window.crossOriginIsolated === true); }, 1500);
+        };
+        navigator.serviceWorker.register(COI_SW).then(function (reg) {
+          var worker = reg.active || reg.installing || reg.waiting;
+          if (!worker) { done(false); return; }
+          var go = function () {
+            if (settled) { return; }
+            setTimeout(function () {
+              if (window.crossOriginIsolated) { done(true); return; }
+              reload();
+            }, 100);
+          };
+          if (worker.state === 'activated') { go(); } else {
+            worker.addEventListener('statechange', function () { if (worker.state === 'activated') { go(); } });
+          }
+        }).catch(function () { done(false); });
+        /* Nothing happened in time; keep this click on the main thread. */
+        setTimeout(function () { done(window.crossOriginIsolated === true); }, 5000);
+      });
+    };
+
+    /* Let the browser paint before a blocking synchronous run. */
+    PG.yieldFrame = function () {
+      return new Promise(function (resolve) {
+        requestAnimationFrame(function () { setTimeout(resolve, 0); });
+      });
+    };
+
+    /* Engine step. Injects the vendored Emscripten glue on first use only,
+       resolves the global initZ3() factory, and memoizes the module so the
+       ~35 MB WASM download is paid once per visit and never on page open. */
+    function loadEngineScript() {
+      return new Promise(function (resolve, reject) {
+        var started = performance.now();
+        var script = document.createElement('script');
+        script.src = VENDOR;
+        script.addEventListener('load', function () {
+          var factory = window.initZ3;
+          if (typeof factory !== 'function') {
+            reject(new Error('engine loaded but exposed no initZ3 factory'));
+            return;
+          }
+          var ready;
+          if (PG.offThread()) {
+            /* Chromium blocks network-loaded worker scripts on cross-origin
+               isolated pages (ERR_BLOCKED_BY_RESPONSE on the pthread worker
+               fetch), so hand the engine a blob URL of its own glue for its
+               pthread workers. The compiled wasm reaches workers through
+               postMessage, so the blob needs no path setup. */
+            ready = fetch(VENDOR)
+              .then(function (response) { return response.text(); })
+              .then(function (text) {
+                var blob = URL.createObjectURL(new Blob([text], { type: 'text/javascript' }));
+                return Promise.resolve(factory({ mainScriptUrlOrBlob: blob }));
+              });
+          } else {
+            ready = Promise.resolve(factory({}));
+          }
+          ready.then(function (Mod) {
+            resolve({ Mod: Mod, loadMs: Math.round(performance.now() - started) });
+          }, reject);
+        });
+        script.addEventListener('error', function () {
+          reject(new Error('failed to fetch ' + VENDOR));
+        });
+        document.head.appendChild(script);
+      });
+    }
+
+    PG.engine = function () {
+      if (enginePromise) { return enginePromise; }
+      if (PG.offThread()) {
+        enginePromise = loadEngineScript().catch(function (err) { enginePromise = null; throw err; });
+        return enginePromise;
+      }
+      /* Not isolated: the current click may be cut short by the one-time
+         reload. If the reload never comes, keep going in fallback mode. */
+      enginePromise = PG.isolate().then(function (isolated) {
+        if (!isolated && window.crossOriginIsolated !== true) { return loadEngineScript(); }
+        return loadEngineScript();
+      }).catch(function (err) { enginePromise = null; throw err; });
+      return enginePromise;
+    };
+
+    /* Shared run budget: resolves with the work's value, or rejects once the
+       wall-clock budget is spent after calling onAbort (used to interrupt the
+       solver). */
+    PG.budget = function (work, ms, onAbort) {
+      return new Promise(function (resolve, reject) {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (settled) { return; }
+          settled = true;
+          if (onAbort) { try { onAbort(); } catch (err) {} }
+          reject(new Error('exceeded the ' + ms + ' ms run budget'));
+        }, ms);
+        work.then(function (value) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); resolve(value);
+        }, function (err) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); reject(err);
+        });
+      });
+    };
+
+    /* ---------------- Sudoku demo ---------------- */
+
+    var PUZZLES = {
+      easy: '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..',
+      medium: '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79',
+      hard: '8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..'
+    };
+
+    function boxOf(i) { return Math.floor(Math.floor(i / 9) / 3) * 3 + Math.floor((i % 9) / 3); }
+
+    PG.demos.sudoku = { mount: mountSudoku };
+
+    function mountSudoku() {
+      var gridEl = document.getElementById('pg-grid');
+      var statusEl = document.getElementById('pg-status');
+      var solveBtn = document.getElementById('pg-solve');
+      var busy = false;
+
+      var cells = [];
+      for (var i = 0; i < 81; i++) {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.inputMode = 'numeric';
+        input.autocomplete = 'off';
+        input.maxLength = 1;
+        input.setAttribute('aria-label', 'Row ' + (Math.floor(i / 9) + 1) + ', column ' + ((i % 9) + 1));
+        input.className = 'pg-cell' +
+          ((i % 9) === 2 || (i % 9) === 5 ? ' pg-cell--r' : '') +
+          (Math.floor(i / 9) % 3 === 2 && Math.floor(i / 9) < 8 ? ' pg-cell--b' : '');
+        input.addEventListener('input', function () {
+          this.value = this.value.replace(/[^1-9]/g, '').slice(0, 1);
+          this.classList.remove('pg-cell--given', 'pg-cell--filled');
+        });
+        gridEl.appendChild(input);
+        cells.push(input);
+      }
+
+      function loadPuzzle(text, label) {
+        var given = text.replace(/[^0-9.]/g, '');
+        cells.forEach(function (cell, idx) {
+          var ch = given[idx] || '.';
+          var has = ch >= '1' && ch <= '9';
+          cell.value = has ? ch : '';
+          cell.classList.remove('pg-cell--filled');
+          cell.classList.toggle('pg-cell--given', has);
+        });
+        statusEl.textContent = label + ' givens loaded. Solve when ready.';
+        statusEl.removeAttribute('data-result');
+        gridEl.removeAttribute('data-solved');
+      }
+
+      function readGrid() {
+        return cells.map(function (cell) {
+          return cell.value >= '1' && cell.value <= '9' ? Number(cell.value) : 0;
+        });
+      }
+
+      /* Render step: fill empty cells with the model, flash each one as it
+         lands. Reduced-motion users get the same grid with no stagger. */
+      function paintSolution(values, givenMask) {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var last = 0;
+        values.forEach(function (v, idx) {
+          if (givenMask[idx]) { return; }
+          var apply = function () {
+            cells[idx].value = String(v);
+            cells[idx].classList.add('pg-cell--filled', 'pg-cell--flash');
+          };
+          if (reduce) { apply(); } else { last = idx * 14; setTimeout(apply, last); }
+        });
+        if (reduce) { gridEl.setAttribute('data-solved', '1'); }
+        else { setTimeout(function () { gridEl.setAttribute('data-solved', '1'); }, last + 60); }
+      }
+
+      function solve() {
+        if (busy) { return; }
+        busy = true;
+        solveBtn.disabled = true;
+        var givens = readGrid();
+        var givenMask = givens.map(function (v) { return v > 0; });
+        var cold = !enginePromise;
+        if (!PG.offThread()) {
+          PG.stash({ action: 'solve', grid: givens });
+        }
+        statusEl.textContent = cold
+          ? 'Waking the Z3 engine \u2014 the first load pulls ~35 MB of WASM from this site' +
+            (PG.offThread() ? '\u2026' : ', and one reload to unlock the off-thread solver\u2026')
+          : 'Solving\u2026';
+        statusEl.removeAttribute('data-result');
+
+        var settle = function (fn) {
+          return function (value) { busy = false; solveBtn.disabled = false; if (fn) { fn(value); } };
+        };
+
+        PG.engine().then(function (eng) {
+          var solveStart = performance.now();
+          statusEl.textContent = 'Solving\u2026';
+          return solveWith(eng.Mod, givens).then(function (result) {
+            result.solveMs = Math.round(performance.now() - solveStart);
+            result.loadMs = cold ? eng.loadMs : 0;
+            result.cold = cold;
+            return result;
+          });
+        }).then(settle(function (result) {
+          if (result.status === 'sat') {
+            paintSolution(result.values, givenMask);
+            statusEl.textContent = 'SAT \u00b7 solved in ' + result.solveMs + ' ms' +
+              (result.cold ? ' \u00b7 engine loaded in ' + result.loadMs + ' ms' : ' \u00b7 engine was already warm');
+            statusEl.setAttribute('data-result', 'sat');
+          } else if (result.status === 'unsat') {
+            statusEl.textContent = 'UNSAT \u00b7 no solution exists with these givens \u2014 clear a cell or two and try again, or press Clear and pick a different puzzle.';
+            statusEl.setAttribute('data-result', 'unsat');
+          } else {
+            statusEl.textContent = 'UNKNOWN \u00b7 the solver gave up inside the run budget. Try an easier grid.';
+            statusEl.setAttribute('data-result', 'unknown');
+          }
+          statusEl.setAttribute('data-load-ms', String(result.loadMs));
+          statusEl.setAttribute('data-solve-ms', String(result.solveMs));
+        }), settle(function (err) {
+          statusEl.textContent = 'Solver error: ' + (err && err.message ? err.message : err) + ' Nothing left the page; edit the grid and retry.';
+          statusEl.setAttribute('data-result', 'error');
+        }));
+      }
+
+      /* Engine step for Sudoku: 81 int constants, 1..9 bounds, 27 distinct
+         groups (rows, columns, boxes), givens pinned with equalities, one
+         solver check under the shared budget. */
+      function solveWith(Mod, givens) {
+        var cfg = Mod._Z3_mk_config();
+        var ctx = Mod._Z3_mk_context(cfg);
+        Mod._set_noop_error_handler(ctx);
+        var scratch = [];
+        var intSort = Mod._Z3_mk_int_sort(ctx);
+        var vars = [];
+        var i, r, c, b;
+
+        var astArray = function (asts) {
+          var ptr = Mod._malloc(asts.length * 4);
+          scratch.push(ptr);
+          new Uint32Array(Mod.HEAPU8.buffer, ptr, asts.length).set(asts);
+          return ptr;
+        };
+
+        for (i = 0; i < 81; i++) {
+          vars.push(Mod._Z3_mk_const(ctx, Mod._Z3_mk_int_symbol(ctx, i), intSort));
+        }
+        var one = Mod._Z3_mk_int(ctx, 1, intSort);
+        var nine = Mod._Z3_mk_int(ctx, 9, intSort);
+        var terms = [];
+        for (i = 0; i < 81; i++) {
+          terms.push(Mod._Z3_mk_ge(ctx, vars[i], one));
+          terms.push(Mod._Z3_mk_le(ctx, vars[i], nine));
+        }
+        var groups = [];
+        for (r = 0; r < 9; r++) { groups.push(vars.slice(r * 9, r * 9 + 9)); }
+        for (c = 0; c < 9; c++) {
+          groups.push(vars.filter(function (v, idx) { return (idx % 9) === c; }));
+        }
+        for (b = 0; b < 9; b++) {
+          groups.push(vars.filter(function (v, idx) { return boxOf(idx) === b; }));
+        }
+        groups.forEach(function (group) {
+          terms.push(Mod._Z3_mk_distinct(ctx, group.length, astArray(group)));
+        });
+        for (i = 0; i < 81; i++) {
+          if (givens[i]) {
+            terms.push(Mod._Z3_mk_eq(ctx, vars[i], Mod._Z3_mk_int(ctx, givens[i], intSort)));
+          }
+        }
+        var body = Mod._Z3_mk_and(ctx, terms.length, astArray(terms));
+
+        var solver = Mod._Z3_mk_simple_solver(ctx);
+        Mod._Z3_solver_assert(ctx, solver, body);
+
+        var teardown = function () {
+          scratch.forEach(function (ptr) { Mod._free(ptr); });
+          Mod._Z3_del_context(ctx);
+        };
+
+        var check;
+        if (PG.offThread()) {
+          check = PG.budget(
+            Mod.async_call(Mod._async_Z3_solver_check, ctx, solver),
+            RUN_BUDGET_MS,
+            function () { Mod._Z3_interrupt(ctx); }
+          );
+        } else {
+          /* Main-thread fallback: no preemption, so the budget is a
+             post-hoc measurement around a synchronous check. */
+          check = PG.yieldFrame().then(function () {
+            var t0 = performance.now();
+            var res = Mod._Z3_solver_check(ctx, solver);
+            if (res === 0 && performance.now() - t0 >= RUN_BUDGET_MS * 0.9) {
+              throw new Error('exceeded the ' + RUN_BUDGET_MS + ' ms run budget');
+            }
+            return res;
+          });
+        }
+
+        return check.then(function (res) {
+          if (res !== 1) {
+            teardown();
+            return { status: res === -1 ? 'unsat' : 'unknown', values: null };
+          }
+          var model = Mod._Z3_solver_get_model(ctx, solver);
+          var outPtr = Mod._malloc(4);
+          var values = [];
+          for (var k = 0; k < 81; k++) {
+            Mod._Z3_model_eval(ctx, model, vars[k], 1, outPtr);
+            var valueAst = new Uint32Array(Mod.HEAPU8.buffer, outPtr, 1)[0];
+            Mod._Z3_get_numeral_int(ctx, valueAst, outPtr);
+            values.push(new Int32Array(Mod.HEAPU8.buffer, outPtr, 1)[0]);
+          }
+          Mod._free(outPtr);
+          teardown();
+          return { status: 'sat', values: values };
+        }, function (err) {
+          teardown();
+          throw err;
+        });
+      }
+
+      document.getElementById('pg-easy').addEventListener('click', function () { loadPuzzle(PUZZLES.easy, 'Easy'); });
+      document.getElementById('pg-medium').addEventListener('click', function () { loadPuzzle(PUZZLES.medium, 'Medium'); });
+      document.getElementById('pg-hard').addEventListener('click', function () { loadPuzzle(PUZZLES.hard, 'Hard'); });
+      document.getElementById('pg-clear').addEventListener('click', function () {
+        cells.forEach(function (cell) {
+          cell.value = '';
+          cell.classList.remove('pg-cell--given', 'pg-cell--filled');
+        });
+        statusEl.textContent = 'Grid cleared. Type your own puzzle or load a preset.';
+        statusEl.removeAttribute('data-result');
+        gridEl.removeAttribute('data-solved');
+      });
+      solveBtn.addEventListener('click', solve);
+
+      PG.demos.sudoku.setGrid = function (values) {
+        cells.forEach(function (cell, idx) {
+          var v = values ? values[idx] : 0;
+          cell.value = v ? String(v) : '';
+          cell.classList.toggle('pg-cell--given', !!v);
+          cell.classList.remove('pg-cell--filled');
+        });
+      };
+      PG.demos.sudoku.solve = solve;
+      PG.demos.sudoku.status = statusEl;
+    }
+
+    /* ---------------- SMT-LIB demo ---------------- */
+
+    /* Emits the Sudoku tab's hard preset as plain SMT-LIB, so the two
+       encodings can be compared side by side. */
+    function smtSudoku(text) {
+      var lines = [
+        '; Sudoku as SMT-LIB, mirroring what the Sudoku tab builds through the',
+        '; C API: 81 ints in 1-9, distinct rows/columns/boxes, givens fixed.',
+        '; Needs the off-thread engine on this page (one-time reload enables it).',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')'
+      ];
+      var names = [];
+      for (var i = 0; i < 81; i++) { names.push('x' + i); }
+      names.forEach(function (n) { lines.push('(declare-const ' + n + ' Int)'); });
+      lines.push('(assert (and');
+      names.forEach(function (n) { lines.push('  (and (>= ' + n + ' 1) (<= ' + n + ' 9))'); });
+      lines.push('))');
+      var r, c, b;
+      for (r = 0; r < 9; r++) {
+        lines.push('(assert (distinct ' + names.slice(r * 9, r * 9 + 9).join(' ') + '))');
+      }
+      for (c = 0; c < 9; c++) {
+        lines.push('(assert (distinct ' + names.filter(function (n, idx) { return (idx % 9) === c; }).join(' ') + '))');
+      }
+      for (b = 0; b < 9; b++) {
+        lines.push('(assert (distinct ' + names.filter(function (n, idx) { return boxOf(idx) === b; }).join(' ') + '))');
+      }
+      for (var g = 0; g < text.length && g < 81; g++) {
+        var ch = text[g];
+        if (ch >= '1' && ch <= '9') { lines.push('(assert (= x' + g + ' ' + ch + '))'); }
+      }
+      lines.push('(check-sat)');
+      lines.push('(get-model)');
+      return lines.join('\n');
+    }
+
+    var PRESETS = {
+      trivial: [
+        '; Trivial: find an integer strictly greater than 41.',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')',
+        '(declare-const x Int)',
+        '(assert (> x 41))',
+        '(check-sat)',
+        '(get-value (x))'
+      ].join('\n'),
+      queens6: [
+        '; n-Queens, n=6. One variable per row holding that row queen column.',
+        '; Distinct rows is structural; distinct columns and diagonals asserted.',
+        '; This one needs the off-thread engine, which the page enables on Run.',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')',
+        '(declare-const q0 Int)',
+        '(declare-const q1 Int)',
+        '(declare-const q2 Int)',
+        '(declare-const q3 Int)',
+        '(declare-const q4 Int)',
+        '(declare-const q5 Int)',
+        '(assert (and (>= q0 1) (<= q0 6)))',
+        '(assert (and (>= q1 1) (<= q1 6)))',
+        '(assert (and (>= q2 1) (<= q2 6)))',
+        '(assert (and (>= q3 1) (<= q3 6)))',
+        '(assert (and (>= q4 1) (<= q4 6)))',
+        '(assert (and (>= q5 1) (<= q5 6)))',
+        '(assert (distinct q0 q1 q2 q3 q4 q5))',
+        '(assert (distinct q0 (+ q1 1) (+ q2 2) (+ q3 3) (+ q4 4) (+ q5 5)))',
+        '(assert (distinct q0 (- q1 1) (- q2 2) (- q3 3) (- q4 4) (- q5 5)))',
+        '(check-sat)',
+        '(get-value (q0 q1 q2 q3 q4 q5))'
+      ].join('\n'),
+      sudoku: function () { return smtSudoku(PUZZLES.hard); }
+    };
+
+    PG.demos.smt = { mount: mountSmt };
+
+    function mountSmt() {
+      var scriptEl = document.getElementById('pg-script');
+      var outEl = document.getElementById('pg-out');
+      var presetEl = document.getElementById('pg-preset');
+      var runBtn = document.getElementById('pg-run');
+      var busy = false;
+
+      presetEl.addEventListener('change', function () {
+        var preset = PRESETS[presetEl.value];
+        if (!preset) { return; }
+        scriptEl.value = typeof preset === 'function' ? preset() : preset;
+        outEl.textContent = 'Preset loaded into the editor. Press Run.';
+      });
+
+      function run() {
+        if (busy) { return; }
+        var text = scriptEl.value;
+        if (!text.trim()) {
+          outEl.textContent = 'Nothing to run: pick a preset or write an SMT-LIB script first.';
+          return;
+        }
+        busy = true;
+        runBtn.disabled = true;
+        var t0 = performance.now();
+        if (!PG.offThread()) {
+          PG.stash({ action: 'run', script: text, preset: presetEl.value });
+        }
+        outEl.textContent = 'Waking the engine under a ' + (RUN_BUDGET_MS / 1000) + ' s budget\u2026';
+        outEl.removeAttribute('data-result');
+        outEl.removeAttribute('data-wall-ms');
+
+        var settle = function (fn) {
+          return function (value) { busy = false; runBtn.disabled = false; if (fn) { fn(value); } };
+        };
+
+        PG.engine().then(function (eng) {
+          var Mod = eng.Mod;
+          var cfg = Mod._Z3_mk_config();
+          var ctx = Mod._Z3_mk_context(cfg);
+          Mod._set_noop_error_handler(ctx);
+          var torn = false;
+          var teardown = function () {
+            if (torn) { return; }
+            torn = true;
+            try { Mod._Z3_del_context(ctx); } catch (err) {}
+          };
+          var work;
+          if (PG.offThread()) {
+            work = Mod.async_call(function () {
+              return Mod.ccall('async_Z3_eval_smtlib2_string', 'void', ['number', 'string'], [ctx, text]);
+            });
+            /* On a budget timeout the evaluation is abandoned mid-flight; that
+               context is deliberately leaked rather than deleted to avoid
+               freeing state the unwinding solver still touches. */
+            work = PG.budget(work, RUN_BUDGET_MS, function () { Mod._Z3_interrupt(ctx); })
+              .then(function (result) { teardown(); return result; });
+          } else {
+            /* Main-thread fallback: Z3's own timers spawn threads that are
+               unavailable here, so :timeout options are stripped and the
+               budget is a post-hoc wall-clock check. Heavier encodings may
+               still refuse to run without the off-thread engine. */
+            var stripped = text.split('\n').filter(function (line) {
+              return !/^\s*\(set-option\s+:timeout/.test(line);
+            }).join('\n');
+            work = PG.yieldFrame().then(function () {
+              var started = performance.now();
+              var result = Mod.ccall('Z3_eval_smtlib2_string', 'string', ['number', 'string'], [ctx, stripped]);
+              if (performance.now() - started >= RUN_BUDGET_MS * 1.5) {
+                throw new Error('blew through the ' + RUN_BUDGET_MS + ' ms run budget');
+              }
+              teardown();
+              return result;
+            });
+          }
+          return work;
+        }).then(settle(function (result) {
+          var wall = Math.round(performance.now() - t0);
+          outEl.textContent = result + '\n; wall time ' + wall + ' ms';
+          outEl.setAttribute('data-result', 'done');
+          outEl.setAttribute('data-wall-ms', String(wall));
+        }), settle(function (err) {
+          outEl.textContent = '; ' + (err && err.message ? err.message : err) + '\n; nothing left the page; edit and retry.';
+          outEl.setAttribute('data-result', 'error');
+        }));
+      }
+
+      runBtn.addEventListener('click', run);
+
+      PG.demos.smt.setScript = function (text, presetValue) {
+        scriptEl.value = text;
+        if (presetValue) { presetEl.value = presetValue; }
+      };
+      PG.demos.smt.run = run;
+      PG.demos.smt.out = outEl;
+    }
+
+    PG.demos.sudoku.mount();
+    PG.demos.smt.mount();
+
+    /* One-time resume after the isolation reload: restore whatever the user
+       was solving and finish it on the now off-thread engine. */
+    (function resume() {
+      var state = PG.takeStash();
+      if (!state) { return; }
+      var finish = function () {
+        if (state.action === 'solve') {
+          PG.demos.sudoku.setGrid(state.grid);
+          PG.demos.sudoku.status.textContent = 'Off-thread engine unlocked; resuming your solve\u2026';
+          PG.demos.sudoku.solve();
+        } else if (state.action === 'run') {
+          PG.demos.smt.setScript(state.script, state.preset);
+          PG.demos.smt.out.textContent = 'Off-thread engine unlocked; resuming your run\u2026';
+          PG.demos.smt.run();
+        }
+      };
+      if (PG.offThread()) {
+        PG.sessionCount(ISO_ATTEMPTS_KEY, -99);
+        finish();
+      } else if (PG.sessionCount(ISO_ATTEMPTS_KEY, 0) < ISO_MAX_ATTEMPTS) {
+        /* Isolation is still settling; nudge it once more. */
+        PG.stash(state);
+        PG.isolate().then(function (isolated) {
+          if (!isolated && window.crossOriginIsolated !== true) { finish(); }
+        });
+      } else {
+        finish();
+      }
+    })();
+  })();
+  </script>
+</main>
