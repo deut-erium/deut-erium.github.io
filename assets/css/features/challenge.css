@@ -1,0 +1,130 @@
+/* Flair for solved challenges: confetti canvas, sound toggle, shake,
+   solved receipt, CLEARED ribbon, and the article header badge.
+   Injected from assets/js/challenge.js so it loads only on challenge pages. */
+
+/* Full-viewport confetti canvas. Sized in CSS pixels, drawn at device ratio. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* Per-challenge sound toggle pinned to the flag box corner. */
+.flag-check {
+  position: relative;
+}
+
+.flag-check__sound {
+  position: absolute;
+  top: .45rem;
+  right: .45rem;
+  min-height: 2.1rem;
+  min-width: 2.8rem;
+  padding: .15rem .5rem;
+  color: var(--navy);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  font-family: var(--keys);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flag-check__sound[aria-pressed="true"] {
+  background: var(--paper-low);
+}
+
+.flag-check__sound:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Wrong-but-plausible flag: the box shakes once. */
+@keyframes flag-check-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-.55rem); }
+  30% { transform: translateX(.5rem); }
+  45% { transform: translateX(-.35rem); }
+  60% { transform: translateX(.3rem); }
+  75% { transform: translateX(-.12rem); }
+}
+
+.flag-check.is-shaking {
+  animation: flag-check-shake .5s ease-in-out;
+}
+
+/* Solved state: the input row collapses into a cleared receipt. */
+.flag-check.is-solved {
+  border-color: #145f22;
+}
+
+.flag-check.is-solved > label,
+.flag-check.is-solved > .flag-check__controls,
+.flag-check.is-solved > noscript {
+  display: none;
+}
+
+.flag-check__cleared {
+  margin: .1rem 0 0;
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.flag-check__cleared::before {
+  content: "\2713 ";
+  color: #145f22;
+}
+
+/* Reduced-motion celebration: a static CLEARED ribbon on the box border. */
+.flag-check.is-ribbon::after {
+  content: "CLEARED";
+  position: absolute;
+  top: -1.1rem;
+  right: -.6rem;
+  padding: .1rem .55rem;
+  color: #fffdf7;
+  background: #145f22;
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  transform: rotate(-6deg);
+  font-family: var(--keys);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  z-index: 2;
+}
+
+/* Article header badge: absolutely positioned, reserves no layout space. */
+.record-head {
+  position: relative;
+}
+
+.solved-badge {
+  position: absolute;
+  top: -1.2rem;
+  right: clamp(.9rem, 5vw, 2.4rem);
+  margin: 0;
+  padding: .18rem .7rem;
+  color: #fffdf7;
+  background: #145f22;
+  border: 3px solid var(--navy);
+  border-radius: 999px;
+  transform: rotate(3deg);
+  font-family: var(--keys);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-check.is-shaking {
+    animation: none;
+  }
+}
