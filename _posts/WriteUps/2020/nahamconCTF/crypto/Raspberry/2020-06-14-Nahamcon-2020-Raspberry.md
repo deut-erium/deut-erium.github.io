@@ -30,7 +30,7 @@ c = 5300731709583714451062905238531972160518525080858095184581839366680022995297
 
 Lets again head to [alpetron](https://www.alpertron.com.ar/ECM.HTM), suspecting there may be a lot of small prime factors
 
-![](alpetron.PNG)
+![](alpetron.webp)
 
 Which almost instantly factors the `N` using [Elliptic Curve Method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization) indicating my suspicion was true.
 

@@ -29,7 +29,7 @@ c = 8776057555426699101543111092257626153215937671876570174951376666623918901210
 ```
 Seems like usual RSA, lets see if we can factor `N` over [alpetron](https://www.alpertron.com.ar/ECM.HTM) 
 
-![](alpetron.PNG)
+![](alpetron.webp)
 Which almost instantly factors the `N` using [Elliptic Curve Method](https://en.wikipedia.org/wiki/Lenstra_elliptic-curve_factorization)  
 
 Knowing the factors or phi, rest of the job is easy
