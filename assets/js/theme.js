@@ -1,3 +1,6 @@
+---
+sitemap: false
+---
 (() => {
   'use strict';
 
@@ -103,4 +106,22 @@
   system.addEventListener?.('change', (event) => {
     if (!stored(colorKey)) applyColor(event.matches ? 'dark' : 'light');
   });
+
+  /* Print stylesheet on demand: it leaves the initial page load entirely and
+     is fetched after window load. beforeprint is the safety net for an early
+     Ctrl+P; the link is appended synchronously there, so most browsers still
+     apply it in the preview. */
+  const printHref = '{{ '/assets/css/print.css' | relative_url }}?v={{ '/assets/css/print.css' | asset_v }}';
+  let printLink = null;
+  const loadPrint = () => {
+    if (printLink) return;
+    printLink = document.createElement('link');
+    printLink.rel = 'stylesheet';
+    printLink.media = 'print';
+    printLink.href = printHref;
+    document.head.appendChild(printLink);
+  };
+  if (document.readyState === 'complete') loadPrint();
+  else window.addEventListener('load', loadPrint, { once: true });
+  window.addEventListener('beforeprint', loadPrint);
 })();

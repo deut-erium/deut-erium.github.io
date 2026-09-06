@@ -21,25 +21,33 @@ module Jekyll
         digest_for([file])
       end
     end
-
     private
 
+    # The global version covers every css/js asset plus the theme data that
+    # feeds rendered assets (skin font preloads, theme list), so editing the
+    # data always produces fresh URLs for assets whose rendered content
+    # depends on it (assets/js/theme-bootstrap.js is versioned globally).
     def version_for(site)
       @version_for ||= {}
       @version_for[site.source] ||= begin
         files = Dir.glob(File.join(site.source, 'assets', '{css,js}', '**', '*.{css,js}'))
                    .select { |f| File.file?(f) }
                    .sort
-        digest_for(files)
+        digest_for(files, site)
       end
     end
 
-    def digest_for(files)
+    def digest_for(files, site = nil)
       require 'digest'
+      require 'json'
       h = Digest::SHA1.new
       files.each do |f|
         h.update(File.basename(f))
         h.update(IO.binread(f))
+      end
+      if site
+        h.update(site.data.fetch('theme_font_preloads', {}).to_json)
+        h.update(site.data.fetch('themes', []).to_json)
       end
       h.hexdigest[0, 8]
     end

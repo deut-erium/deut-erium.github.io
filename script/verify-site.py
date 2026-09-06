@@ -593,6 +593,22 @@ for item in ARCHIVED["files"]:
             fail(f"archived asset drift: {rel}")
         archived_asset_paths += 1
 
+# The inline theme bootstrap builds skin stylesheet URLs from a JS map that
+# HTML auditing cannot see, so pin it here: every entry must name a real skin
+# file, and the deferred theme-bootstrap.js loader must point at the built asset.
+bootstrap_probe = (ROOT / "index.html").read_text(encoding="utf-8")
+skin_map = re.search(r"const skinFiles = \{(.*?)\};", bootstrap_probe, re.S)
+if not skin_map:
+    fail("theme bootstrap skin map missing from rendered HTML")
+for skin_id, skin_href in re.findall(r'"([a-z0-9-]+)":\s*"([^"]+)"', skin_map.group(1)):
+    clean = skin_href.split("?", 1)[0]
+    if not clean.startswith("/assets/css/skins/"):
+        fail(f"skin map entry outside skins dir: {skin_id} -> {skin_href}")
+    if not (ROOT / clean.lstrip("/")).is_file():
+        fail(f"skin map entry missing file: {skin_id} -> {clean}")
+if not re.search(r"theme-bootstrap\.js\?v=[0-9a-f]{8}", bootstrap_probe):
+    fail("theme bootstrap loader URL missing or unversioned")
+
 for stylesheet in ROOT.rglob("*.css"):
     text = stylesheet.read_text(encoding="utf-8")
     if re.search(r"@import\s+(?:url\()?['\"]?https?://", text, re.I): fail(f"external CSS import: {stylesheet.relative_to(ROOT)}")
@@ -648,6 +664,7 @@ budgets = {
     "assets/js/archive.js": 2 * 1024,
     "assets/js/challenge.js": 3 * 1024,
     "assets/js/theme.js": 3 * 1024,
+    "assets/js/theme-bootstrap.js": 4 * 1024,
 }
 metrics = {}
 for name, budget in budgets.items():

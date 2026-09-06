@@ -39,22 +39,20 @@
 <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
 {% include theme-bootstrap.html %}
 <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/atkinson-hyperlegible/700.woff2' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ '/' | asset_v }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ '/assets/css/main.css' | asset_v }}">
 <script>
   if (window.__deuteriumTheme.skinHref) {
-    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + (window.__deuteriumAssetVersion ? '?v=' + window.__deuteriumAssetVersion : '') + '">');
+    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + '">');
   } else {
     document.write('<link id="skin-stylesheet" rel="stylesheet" disabled>');
   }
 </script>
-<link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}?v={{ '/' | asset_v }}">
-<link rel="stylesheet" href="{{ '/assets/css/features/root-localhost.css' | relative_url }}?v={{ '/' | asset_v }}">
-{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}?v={{ '/' | asset_v }}">{%- endif -%}
-<link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}?v={{ '/' | asset_v }}" media="print">
-{%- if page.widgets -%}<link rel="stylesheet" href="{{ '/assets/widgets/osec-widgets.css' | relative_url }}?v={{ '/' | asset_v }}">{%- endif -%}
+<link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}?v={{ '/assets/css/theme-remediation.css' | asset_v }}">
+{%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}?v={{ '/assets/katex/katex.min.css' | asset_v }}">{%- endif -%}
+{%- if page.widgets -%}<link rel="stylesheet" href="{{ '/assets/widgets/osec-widgets.css' | relative_url }}?v={{ '/assets/widgets/osec-widgets.css' | asset_v }}">{%- endif -%}
 <script>window.__deuteriumAssetVersion = {{ '/' | asset_v | jsonify }};</script>
-<script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
-<script defer src="{{ '/assets/js/share.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
-<script defer src="{{ '/assets/js/features/cookie-banner.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
-<script defer src="{{ '/assets/js/features/konami.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ '/assets/js/theme.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/share.js' | relative_url }}?v={{ '/assets/js/share.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/features/cookie-banner.js' | relative_url }}?v={{ '/assets/js/features/cookie-banner.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/features/konami.js' | relative_url }}?v={{ '/assets/js/features/konami.js' | asset_v }}"></script>
 <meta name="theme-color" content="#3847ff">

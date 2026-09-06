@@ -8,12 +8,15 @@
   const skinKey = 'deuterium-skin';
   const defaultSkin = 'rpn-garden';
   const skinBase = {{ '/assets/css/skins/' | relative_url | jsonify }};
-  const skinFontPreloads = {{ site.data.theme_font_preloads | jsonify }};
   const skinFiles = {
     {%- for theme in site.data.themes -%}
       {%- unless theme.default -%}
         {%- assign skin_number = forloop.index0 | prepend: '0' | slice: -2, 2 -%}
-        {{ theme.id | jsonify }}: {{ skin_number | append: '-' | append: theme.id | append: '.css' | jsonify }}{% unless forloop.last %},{% endunless %}
+        {%- assign skin_file = skin_number | append: '-' | append: theme.id | append: '.css' -%}
+        {%- assign skin_path = '/assets/css/skins/' | append: skin_file -%}
+        {%- assign skin_hash = skin_path | asset_v -%}
+        {%- assign skin_href_entry = skin_path | append: '?v=' | append: skin_hash -%}
+        {{ theme.id | jsonify }}: {{ skin_href_entry | jsonify }}{% unless forloop.last %},{% endunless %}
       {%- endunless -%}
     {%- endfor -%}
   };
@@ -81,10 +84,13 @@
 
   if (skinHref) {
     document.write('<link rel="preload" as="style" href="' + skinHref + '">');
-    for (const fontHref of skinFontPreloads[skin] || []) {
-      const type = fontHref.endsWith('.woff2') ? 'font/woff2' : 'font/ttf';
-      document.write('<link rel="preload" as="font" type="' + type + '" crossorigin href="' + fontHref + '">');
-    }
+    {%- assign bootstrap_path = '/assets/js/theme-bootstrap.js' -%}
+    {%- assign bootstrap_version = '/' | asset_v -%}
+    {%- assign bootstrap_src = bootstrap_path | relative_url | append: '?v=' | append: bootstrap_version -%}
+    const bootstrap = document.createElement('script');
+    bootstrap.src = {{ bootstrap_src | jsonify }};
+    bootstrap.defer = true;
+    document.head.appendChild(bootstrap);
   }
 })();
 </script>

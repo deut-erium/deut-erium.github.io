@@ -5,11 +5,29 @@
   var KEY = 'deuterium-rl';
   var TITLE = 'deuterium@localhost:~';
   var EPOCH = 1555372800000;
+  var CSS_PATH = '/assets/css/features/root-localhost.css';
+  var cssLink = null;
   var root = document.documentElement;
   var baseTitle = document.title;
   var def = (window.__deuteriumTheme && window.__deuteriumTheme.defaultSkin) || '';
   var active = false;
   var skin = '';
+
+  /* The root@localhost skin stylesheet rides along lazily: pages that never
+     type the sequence never download it. */
+  function ensureCss() {
+    if (cssLink) return;
+    cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = CSS_PATH + (window.__deuteriumAssetVersion ? '?v=' + window.__deuteriumAssetVersion : '');
+    document.head.appendChild(cssLink);
+  }
+
+  function dropCss() {
+    if (!cssLink) return;
+    cssLink.parentNode.removeChild(cssLink);
+    cssLink = null;
+  }
 
   function store(on) {
     try { on ? localStorage.setItem(KEY, '1') : localStorage.removeItem(KEY); } catch (e) {}
@@ -32,6 +50,7 @@
     active = true;
     skin = root.dataset.skin || '';
     if (skin) delete root.dataset.skin;
+    ensureCss();
     root.classList.add('rl-root');
     document.title = TITLE;
     store(true);
@@ -40,6 +59,7 @@
 
   function release() {
     active = false;
+    dropCss();
     root.classList.remove('rl-root');
     document.title = baseTitle;
     store(false);
@@ -70,6 +90,7 @@
     active = true;
     skin = root.dataset.skin || '';
     if (skin) delete root.dataset.skin;
+    ensureCss();
     root.classList.add('rl-root');
     document.title = TITLE;
   }
