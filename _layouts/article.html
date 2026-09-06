@@ -33,4 +33,18 @@ layout: base
   <footer class="record-end"><p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p>{%- include qr-share.html -%}</footer>
 </main>
 <script defer src="{{ '/assets/js/article.js' | relative_url }}"></script>
+{%- if page.widgets -%}
+  {%- assign _has_math_widgets = false -%}
+  {%- for _widget in page.widgets -%}
+    {%- if _widget == 'circuit-widget' or _widget == 'poly-interpolation-panel' -%}
+      {%- assign _has_math_widgets = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if _has_math_widgets -%}
+<script defer src="{{ '/assets/widgets/js/widget-math.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
+  {%- endif -%}
+  {%- for _widget in page.widgets -%}
+<script defer src="{{ '/assets/widgets/js/' | append: _widget | append: '.js' | relative_url }}?v={{ '/' | asset_v }}"></script>
+  {%- endfor -%}
+{%- endif -%}
 {%- if page.sha256hash -%}<script defer src="{{ '/assets/js/challenge.js' | relative_url }}"></script>{%- endif -%}

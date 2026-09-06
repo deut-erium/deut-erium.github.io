@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+  <defs>
+    <marker id="arrow-yellow" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#fbbf24" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#60a5fa" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#c084fc" />
+    </marker>
+    <marker id="arrow-pink" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#f472b6" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <!-- Subgraph: Verifier Receives -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6,4"
+     x="150" y="40" width="500" height="120" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="170" y="65">VERIFIER RECEIVES</text>
+
+  <!-- Subgraph: Stage 1: Transcript Setup -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6,4"
+     x="150" y="200" width="500" height="280" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="170" y="225">STAGE 1: TRANSCRIPT SETUP</text>
+
+  <!-- Subgraph: Stages 2-4: Batched Sumchecks -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#c084fc" stroke-width="2" stroke-dasharray="6,4"
+     x="150" y="520" width="500" height="280" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="170" y="545">STAGES 2-4: BATCHED SUMCHECKS</text>
+
+  <!-- Subgraph: Stage 5: Opening Verification -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#f472b6" stroke-width="2" stroke-dasharray="6,4"
+     x="150" y="840" width="500" height="200" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="170" y="865">STAGE 5: OPENING VERIFICATION</text>
+
+  <!-- Arrows -->
+  <g fill="none" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M 400,160 V 200" stroke="#fbbf24" marker-end="url(#arrow-yellow)" />
+    <path d="M 400,295 V 325" stroke="#60a5fa" marker-end="url(#arrow-blue)" />
+    <path d="M 400,375 V 405" stroke="#60a5fa" marker-end="url(#arrow-blue)" />
+    <path d="M 400,480 V 520" stroke="#60a5fa" marker-end="url(#arrow-blue)" />
+    <path d="M 400,615 V 645" stroke="#c084fc" marker-end="url(#arrow-purple)" />
+    <path d="M 400,695 V 725" stroke="#c084fc" marker-end="url(#arrow-purple)" />
+    <path d="M 400,800 V 840" stroke="#c084fc" marker-end="url(#arrow-purple)" />
+    <path d="M 400,935 V 965" stroke="#f472b6" marker-end="url(#arrow-pink)" />
+    <path d="M 400,1040 V 1080" stroke="#f472b6" marker-end="url(#arrow-pink)" />
+  </g>
+
+  <!-- Node: JoltProof -->
+  <g transform="translate(180, 85)">
+    <rect fill="#1e293b" stroke="#fbbf24" stroke-width="2" width="200" height="50" rx="8" />
+    <text font-family="JetBrains Mono, monospace" font-size="14.5" fill="#e2e8f0" x="100" y="26" text-anchor="middle" dominant-baseline="middle">JoltProof</text>
+  </g>
+
+  <!-- Node: Public I/O -->
+  <g transform="translate(420, 85)">
+    <rect fill="#1e293b" stroke="#fbbf24" stroke-width="2" width="200" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="100" y="26" text-anchor="middle" dominant-baseline="middle">Public I/O</text>
+  </g>
+
+  <!-- Node: Initialize transcript -->
+  <g transform="translate(250, 245)">
+    <rect fill="#1e293b" stroke="#60a5fa" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="26" text-anchor="middle" dominant-baseline="middle">Initialize transcript</text>
+  </g>
+
+  <!-- Node: Absorb public I/O, trace length -->
+  <g transform="translate(250, 325)">
+    <rect fill="#1e293b" stroke="#60a5fa" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="26" text-anchor="middle" dominant-baseline="middle">Absorb public I/O, trace length</text>
+  </g>
+
+  <!-- Node: Absorb commitments -->
+  <g transform="translate(250, 405)">
+    <rect fill="#1e293b" stroke="#60a5fa" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="26" text-anchor="middle" dominant-baseline="middle">Absorb commitments</text>
+  </g>
+
+  <!-- Node: Derive batching coefficients -->
+  <g transform="translate(250, 565)">
+    <rect fill="#1e293b" stroke="#c084fc" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="18" text-anchor="middle" dominant-baseline="middle">Derive batching</text>
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="38" text-anchor="middle" dominant-baseline="middle">coefficients</text>
+  </g>
+
+  <!-- Node: Compute BatchedClaim -->
+  <g transform="translate(250, 645)">
+    <rect fill="#1e293b" stroke="#c084fc" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="26" text-anchor="middle" dominant-baseline="middle">Compute <tspan font-family="JetBrains Mono, monospace" font-size="14.5" fill="#e2e8f0">BatchedClaim</tspan></text>
+  </g>
+
+  <!-- Node: Verify sumcheck rounds -->
+  <g transform="translate(250, 725)">
+    <rect fill="#1e293b" stroke="#c084fc" stroke-width="2" width="300" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="26" text-anchor="middle" dominant-baseline="middle">Verify sumcheck rounds</text>
+  </g>
+
+  <!-- Node: Batch-verify polynomial evaluations -->
+  <g transform="translate(230, 885)">
+    <rect fill="#1e293b" stroke="#f472b6" stroke-width="2" width="340" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="170" y="26" text-anchor="middle" dominant-baseline="middle">Batch-verify polynomial evaluations</text>
+  </g>
+
+  <!-- Node: Check against commitments -->
+  <g transform="translate(230, 965)">
+    <rect fill="#1e293b" stroke="#f472b6" stroke-width="2" width="340" height="50" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="170" y="26" text-anchor="middle" dominant-baseline="middle">Check against commitments</text>
+  </g>
+
+  <!-- Node: Accept -->
+  <g transform="translate(320, 1080)">
+    <rect width="160" height="60" rx="30" fill="#065f46" stroke="#34d399" stroke-width="2" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="bold" fill="#ecfdf5" x="80" y="31" text-anchor="middle" dominant-baseline="middle">Accept</text>
+  </g>
+</svg>

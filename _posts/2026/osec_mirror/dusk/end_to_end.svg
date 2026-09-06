@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 720" width="880" height="720">
+  <defs>
+    <marker id="pa" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="4" markerHeight="4" orient="auto"><path d="M 0,-4 L 10,0 L 0,4 Z" fill="#ef4444"/></marker>
+    <marker id="pg2" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="4" markerHeight="4" orient="auto"><path d="M 0,-4 L 10,0 L 0,4 Z" fill="#34d399"/></marker>
+  </defs>
+
+  <text font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#94a3b8" letter-spacing="1" x="440" y="24" text-anchor="middle">END-TO-END EXPLOIT</text>
+
+  <!-- Column headers -->
+  <g transform="translate(40,44)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="220" height="36" rx="8"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="13" fill="#fca5a5" font-weight="600" x="110" y="19" text-anchor="middle" dominant-baseline="middle">Attacker</text>
+  </g>
+  <g transform="translate(330,44)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="220" height="36" rx="8"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="13" fill="#fca5a5" font-weight="600" x="110" y="19" text-anchor="middle" dominant-baseline="middle">Malicious Prover</text>
+  </g>
+  <g transform="translate(620,44)">
+    <rect fill="#0f172a" stroke="#34d399" stroke-width="2" width="220" height="36" rx="8"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="13" fill="#34d399" font-weight="600" x="110" y="19" text-anchor="middle" dominant-baseline="middle">Dusk Node (Mempool)</text>
+  </g>
+
+  <!-- Lifelines -->
+  <line x1="150" y1="80" x2="150" y2="700" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="440" y1="80" x2="440" y2="700" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="730" y1="80" x2="730" y2="700" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: Fabricate -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6,4" x="30" y="96" width="530" height="180" rx="10"/>
+  <text font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" fill="#94a3b8" letter-spacing="0.5" x="50" y="114">FABRICATE INVALID TRANSACTION</text>
+
+  <g fill="none" stroke-width="2.5">
+    <path d="M 150,134 H 440" stroke="#ef4444" marker-end="url(#pa)"/>
+  </g>
+  <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="295" y="128" text-anchor="middle">Fake input note (not in Merkle tree)</text>
+
+  <g fill="none" stroke-width="2.5">
+    <path d="M 150,168 H 440" stroke="#ef4444" marker-end="url(#pa)"/>
+  </g>
+  <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="295" y="162" text-anchor="middle">Random nullifier</text>
+
+  <g fill="none" stroke-width="2.5">
+    <path d="M 150,202 H 440" stroke="#ef4444" marker-end="url(#pa)"/>
+  </g>
+  <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="295" y="196" text-anchor="middle">Output = 2000 DUSK (from nothing)</text>
+
+  <g transform="translate(340,230)">
+    <rect fill="#0f172a" stroke="#334155" stroke-width="1.5" width="200" height="34" rx="6"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="10" fill="#94a3b8" x="100" y="18" text-anchor="middle" dominant-baseline="middle">All circuit constraints fail</text>
+  </g>
+
+  <!-- Step 2: Forge -->
+  <rect fill="#450a0a" fill-opacity="0.2" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,4" x="320" y="290" width="250" height="120" rx="10"/>
+  <text font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" fill="#ef4444" letter-spacing="0.5" x="340" y="308">FORGE PROOF</text>
+
+  <g transform="translate(340,318)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="210" height="70" rx="8"/>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="16" y="18">r(z) with q_arith = 0</text>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="16" y="36">solve for q_arith_eval</text>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="16" y="54">one field division</text>
+  </g>
+
+  <!-- Step 3: Submit (vertical then horizontal to node) -->
+  <g fill="none" stroke-width="2.5">
+    <path d="M 440,410 V 445 H 730" stroke="#ef4444" marker-end="url(#pa)"/>
+  </g>
+  <text font-family="JetBrains Mono,monospace" font-size="10" fill="#fca5a5" x="585" y="439" text-anchor="middle">Submit Phoenix Tx + Forged Proof</text>
+
+  <!-- Step 4: Node accepts -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#34d399" stroke-width="1.5" stroke-dasharray="6,4" x="610" y="460" width="250" height="120" rx="10"/>
+  <text font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600" fill="#94a3b8" letter-spacing="0.5" x="630" y="478">DUSK NODE ACCEPTS</text>
+
+  <g transform="translate(630,488)">
+    <rect fill="#0f172a" stroke="#34d399" stroke-width="2" width="210" height="70" rx="8"/>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#34d399" x="16" y="18">preverify() passes</text>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#34d399" x="16" y="36">Forged scalars enter MSM</text>
+    <text font-family="JetBrains Mono,monospace" font-size="10" fill="#34d399" x="16" y="54">Pairing check passes!</text>
+  </g>
+
+  <!-- Step 5: Tx mined, return to attacker -->
+  <g fill="none" stroke-width="2.5">
+    <path d="M 730,580 V 600 H 150" stroke="#34d399" marker-end="url(#pg2)"/>
+  </g>
+  <text font-family="Inter,system-ui,sans-serif" font-size="12" fill="#34d399" font-weight="600" x="440" y="596" text-anchor="middle">Tx mined into block</text>
+
+  <!-- Result: minted DUSK -->
+  <g transform="translate(30,620)">
+    <rect fill="#065f46" stroke="#34d399" stroke-width="2" width="240" height="44" rx="22"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="15" fill="#ecfdf5" font-weight="700" x="120" y="22" text-anchor="middle" dominant-baseline="middle">Free 2000 DUSK</text>
+  </g>
+
+  <!-- Bottom punchline -->
+  <g transform="translate(100,684)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="680" height="30" rx="8"/>
+    <text font-family="Inter,system-ui,sans-serif" font-size="12" fill="#f8fafc" font-weight="600" x="340" y="16" text-anchor="middle" dominant-baseline="middle">Every Phoenix constraint is vacuous. Merkle, ownership, balance: all bypassed by forged selectors.</text>
+  </g>
+</svg>

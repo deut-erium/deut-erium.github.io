@@ -1,12 +1,12 @@
 ---
 title: "The first door"
 date: 2026-09-05
-section: ramblings
+section: ctf-tutorials
 tags: challenges crypto
 description: "The first locked writeup. Bring the flag from the injection challenge to open it."
 layout: locked
 mathjax: true
-permalink: /ramblings/2026/09/05/the-first-door.html
+permalink: /ctf-tutorials/2026/09/05/the-first-door.html
 ---
 
 The first locked writeup. The key is the flag from <a href="/2021/07/25/injection.html">the injection challenge</a>: clear it, then come back and open the door.

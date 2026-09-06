@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 700" width="940" height="700">
+  <defs>
+    <marker id="arrow-yellow" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#fbbf24" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#ef4444" />
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-red-solid" viewBox="0 -5 10 10" refX="10" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0,-4 L 10,0 L 0,4 Z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Subgraph: Transcript State -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6,4"
+     x="40" y="40" width="860" height="130" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="60" y="65">TRANSCRIPT STATE</text>
+
+  <!-- Subgraph: Challenge Derivation -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4"
+     x="140" y="280" width="770" height="130" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="160" y="305">CHALLENGE DERIVATION</text>
+
+  <!-- Subgraph: Verification Equation -->
+  <rect fill="#1e293b" fill-opacity="0.3" stroke="#a3e635" stroke-width="2" stroke-dasharray="6,4"
+     x="40" y="510" width="620" height="150" rx="12" />
+  <text font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1"
+     x="60" y="535">VERIFICATION EQUATION</text>
+
+  <!-- Arrows -->
+  <g fill="none" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M 140,140 V 230 H 200 V 320" stroke="#fbbf24" marker-end="url(#arrow-yellow)" />
+    <path d="M 315,140 V 320" stroke="#fbbf24" marker-end="url(#arrow-yellow)" />
+    <path d="M 540,140 V 230 H 400 V 320" stroke="#ef4444" stroke-dasharray="6,4" marker-end="url(#arrow-red)" />
+    <path d="M 780,140 V 320" stroke="#fbbf24" marker-end="url(#arrow-yellow)" />
+    <path d="M 300,380 V 465 H 490 V 550" stroke="#38bdf8" marker-end="url(#arrow-cyan)" />
+    <path d="M 300,590 H 340" stroke="#ef4444" marker-end="url(#arrow-red-solid)" />
+  </g>
+
+  <!-- Edge label -->
+  <text font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ef4444" letter-spacing="0.5"
+     x="470" y="222" text-anchor="middle">NOT ABSORBED</text>
+
+  <!-- Node: Commitments -->
+  <g transform="translate(60, 80)">
+    <rect fill="#1e293b" stroke="#fbbf24" stroke-width="2" width="160" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="80" y="31" text-anchor="middle" dominant-baseline="middle">Commitments</text>
+  </g>
+
+  <!-- Node: Public I/O -->
+  <g transform="translate(240, 80)">
+    <rect fill="#1e293b" stroke="#fbbf24" stroke-width="2" width="150" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="75" y="31" text-anchor="middle" dominant-baseline="middle">Public I/O</text>
+  </g>
+
+  <!-- Node: opening_claims (missing) - RED -->
+  <g transform="translate(410, 80)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="260" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="130" y="31" text-anchor="middle" dominant-baseline="middle"><tspan font-family="JetBrains Mono, monospace">opening_claims</tspan> <tspan font-style="italic" fill="#fca5a5">(missing)</tspan></text>
+  </g>
+
+  <!-- Node: Round messages -->
+  <g transform="translate(690, 80)">
+    <rect fill="#1e293b" stroke="#fbbf24" stroke-width="2" width="180" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="90" y="31" text-anchor="middle" dominant-baseline="middle">Round messages</text>
+  </g>
+
+  <!-- Node: αi (batching coeffs) -->
+  <g transform="translate(160, 320)">
+    <rect fill="#1e293b" stroke="#38bdf8" stroke-width="2" width="280" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="140" y="31" text-anchor="middle" dominant-baseline="middle"><tspan font-family="Georgia, serif" font-style="italic" font-weight="bold" fill="#38bdf8">α</tspan><tspan dy="3" font-size="11" fill="#38bdf8">i</tspan><tspan dy="-3"> (batching coeffs)</tspan></text>
+  </g>
+
+  <!-- Node: sumcheck challenges -->
+  <g transform="translate(660, 320)">
+    <rect fill="#1e293b" stroke="#38bdf8" stroke-width="2" width="240" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="120" y="31" text-anchor="middle" dominant-baseline="middle">sumcheck challenges</text>
+  </g>
+
+  <!-- Node: Hi from opening_claims - RED -->
+  <g transform="translate(60, 560)">
+    <rect fill="#450a0a" stroke="#c0392b" stroke-width="2" width="240" height="60" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="120" y="31" text-anchor="middle" dominant-baseline="middle"><tspan font-family="Georgia, serif" font-style="italic" font-weight="bold" fill="#fca5a5">H</tspan><tspan dy="3" font-size="11" fill="#fca5a5">i</tspan><tspan dy="-3" fill="#f8fafc"> from </tspan><tspan font-family="JetBrains Mono, monospace" fill="#cbd5e1">opening_claims</tspan></text>
+  </g>
+
+  <!-- Node: BatchedClaim equation -->
+  <g transform="translate(340, 550)">
+    <rect fill="#1e293b" stroke="#a3e635" stroke-width="2" width="300" height="80" rx="8" />
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="30" text-anchor="middle" dominant-baseline="middle">BatchedClaim =</text>
+    <text font-family="Inter, system-ui, sans-serif" font-size="15" fill="#f8fafc" font-weight="500" x="150" y="55" text-anchor="middle" dominant-baseline="middle"><tspan font-family="Georgia, serif" font-style="italic" font-weight="bold" fill="#a3e635">∑</tspan> ( <tspan font-family="Georgia, serif" font-style="italic" font-weight="bold" fill="#38bdf8">α</tspan><tspan dy="3" font-size="11" fill="#38bdf8">i</tspan><tspan dy="-3"> · </tspan><tspan font-family="Georgia, serif" font-style="italic" font-weight="bold" fill="#fca5a5">H</tspan><tspan dy="3" font-size="11" fill="#fca5a5">i</tspan><tspan dy="-3"> )</tspan></text>
+  </g>
+</svg>

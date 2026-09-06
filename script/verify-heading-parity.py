@@ -36,7 +36,15 @@ def normalize(value: str) -> str:
 def source_headings(path: Path, section: str) -> list[tuple[int, str]]:
     headings: list[tuple[int, str]] = []
     fence: str | None = None
+    comment = False
     for line in path.read_text(encoding="utf-8").splitlines():
+        if comment:
+            if "-->" in line:
+                comment = False
+            continue
+        if "<!--" in line and "-->" not in line:
+            comment = True
+            continue
         fence_match = re.match(r"^\s*(`{3,}|~{3,})", line)
         if fence_match:
             marker = fence_match.group(1)[0]
