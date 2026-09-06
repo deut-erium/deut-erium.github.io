@@ -53,7 +53,9 @@ sitemap: false
     }
     const filename = skinFiles[skin];
     if (!filename) return;
-    const target = new URL(skinBase + filename, document.baseURI).href;
+    // Entries are absolute, content-versioned paths; keep bare-filename
+    // support so an unversioned map still resolves.
+    const target = new URL(filename.startsWith('/') ? filename : skinBase + filename, document.baseURI).href;
     if (stylesheet.href !== target) stylesheet.href = target;
     stylesheet.disabled = false;
   };
