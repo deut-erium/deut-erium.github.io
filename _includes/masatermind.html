@@ -1,0 +1,374 @@
+  <style>
+    .mst-wrap { max-width: 46rem; margin-inline: auto; }
+    .mst-head { margin: 0 0 1rem; }
+    .mst-head h1, .mst-head .mst-title { margin: 0 0 .3rem; color: var(--ink); font-family: var(--display); font-size: clamp(1.6rem, 3.4vw, 2.3rem); letter-spacing: -.02em; }
+    .mst-lede { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--ink); }
+    .mst-panel { background: var(--paper); color: var(--ink); border: 4px solid var(--navy); border-radius: .8rem; padding: clamp(1rem, 2.4vw, 1.4rem); margin: 0 0 1.1rem; box-shadow: .4rem .45rem 0 rgb(8 10 19 / 35%); }
+    .mst-panel h2, .mst-panel .mst-panel-title { margin: .1rem 0 .5rem; font-family: var(--display); font-size: 1.15rem; color: var(--ink); text-transform: none; letter-spacing: 0; }
+    .mst-controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 0 0 .9rem; }
+    .mst-btn { display: inline-flex; min-height: 2.8rem; align-items: center; padding: .55rem .95rem; background: var(--navy); color: #fff; border: 3px solid var(--navy); border-radius: .5rem; box-shadow: 0 .2rem 0 rgb(8 10 19 / 45%); font-family: var(--keys); font-size: .95rem; cursor: pointer; }
+    .mst-btn:hover { background: var(--pink); color: var(--navy); }
+    .mst-btn--primary { background: var(--orange); color: var(--navy); }
+    .mst-btn--primary:hover { background: var(--pink); }
+    .mst-btn[disabled] { opacity: .55; cursor: wait; }
+    .mst-select { min-height: 2.8rem; padding: .4rem .6rem; background: var(--navy); color: #fff; border: 3px solid var(--navy); border-radius: .5rem; font-family: var(--keys); font-size: .95rem; cursor: pointer; }
+    .mst-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin: .2rem 0 .8rem; }
+    .mst-peg { width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 3px solid var(--ink); display: inline-flex; align-items: center; justify-content: center; font-family: var(--keys); font-weight: 700; color: var(--ink); background: var(--paper-low); }
+    .mst-peg--1 { background: #e35d5d; color: #fff; } .mst-peg--2 { background: #e3a95d; }
+    .mst-peg--3 { background: #d9e35d; } .mst-peg--4 { background: #7de35d; }
+    .mst-peg--5 { background: #5dc6e3; color: #fff; } .mst-peg--6 { background: #5d6ee3; color: #fff; }
+    .mst-peg--7 { background: #b95de3; color: #fff; } .mst-peg--8 { background: #e35da8; color: #fff; }
+    .mst-guess-label { font-family: var(--keys); font-size: .9rem; color: var(--ink); margin-right: .3rem; }
+    .mst-counter { display: inline-flex; gap: .45rem; align-items: center; font-family: var(--keys); color: var(--ink); }
+    .mst-counter button { width: 2.1rem; height: 2.1rem; border-radius: .4rem; border: 2px solid var(--ink); background: var(--paper-low); color: var(--ink); font-family: var(--keys); font-size: 1rem; cursor: pointer; }
+    .mst-counter strong { min-width: 1.4ch; text-align: center; font-family: var(--mono); font-size: 1.1rem; }
+    .mst-verdict { margin: .6rem 0 0; padding: .7rem .9rem; border: 3px solid var(--ink); border-radius: .5rem; font-family: var(--keys); min-height: 1.4em; background: var(--paper-low); }
+    .mst-verdict[data-state="win"] { border-color: var(--navy); background: var(--orange); color: var(--navy); }
+    .mst-verdict[data-state="lie"] { border-style: dashed; }
+    .mst-history { margin: .3rem 0 0; padding: 0; list-style: none; font-family: var(--mono); font-size: .88rem; }
+    .mst-history li { padding: .25rem 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); display: flex; gap: .6rem; flex-wrap: wrap; }
+    .mst-history .mst-mini { display: inline-flex; gap: 3px; }
+    .mst-history .mst-mini i { width: .95rem; height: .95rem; border-radius: 50%; border: 2px solid var(--ink); display: inline-block; }
+    .mst-soft { font-family: var(--keys); font-size: .82rem; color: var(--ink); margin: .4rem 0 0; }
+    .mst-peek { margin-top: .8rem; }
+    .mst-peek summary { cursor: pointer; font-family: var(--keys); color: var(--ink); }
+    .mst-peek .mst-peg { width: 1.9rem; height: 1.9rem; cursor: pointer; }
+    .mst-smt { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--mono); font-size: .8rem; max-height: 14rem; overflow: auto; margin: .4rem 0 0; padding: .6rem .7rem; background: var(--paper-low); border-left: .35rem solid var(--navy); }
+    @media (prefers-reduced-motion: reduce) { .mst-peg { transition: none; } }
+  </style>
+  <div class="mst-wrap">
+    <header class="mst-head">
+      <{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %} class="mst-title">maSATermind</{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %}>
+      <p class="mst-lede">Think of a secret code. The solver &mdash; real Z3, running in this page &mdash; guesses it from your
+      bulls-and-cows answers. Lie a little if you like: every answer becomes a soft constraint, and the solver
+      maximizes how many of your answers fit. Ported from the author&rsquo;s maSATermind.</p>
+    </header>
+
+    <section class="mst-panel" aria-labelledby="mst-game-title">
+      <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} id="mst-game-title" class="mst-panel-title">The game</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
+      <div class="mst-controls">
+        <label class="mst-guess-label" for="mst-colors">colors</label>
+        <select class="mst-select" id="mst-colors">
+          <option value="4">4</option><option value="6" selected>6</option><option value="8">8</option>
+        </select>
+        <label class="mst-guess-label" for="mst-slots">slots</label>
+        <select class="mst-select" id="mst-slots">
+          <option value="3">3</option><option value="4" selected>4</option><option value="5">5</option>
+        </select>
+        <button class="mst-btn" type="button" id="mst-new">New game</button>
+        <button class="mst-btn" type="button" id="mst-sim">Watch it beat a liar</button>
+      </div>
+      <div class="mst-row" id="mst-guess-row" aria-live="polite">
+        <span class="mst-guess-label">solver&rsquo;s guess</span>
+      </div>
+      <div class="mst-controls" id="mst-answer-controls">
+        <span class="mst-counter">bulls <button type="button" id="mst-bulls-down" aria-label="fewer bulls">&minus;</button><strong id="mst-bulls">0</strong><button type="button" id="mst-bulls-up" aria-label="more bulls">+</button></span>
+        <span class="mst-counter">cows <button type="button" id="mst-cows-down" aria-label="fewer cows">&minus;</button><strong id="mst-cows">0</strong><button type="button" id="mst-cows-up" aria-label="more cows">+</button></span>
+        <button class="mst-btn mst-btn--primary" type="button" id="mst-answer">Answer</button>
+        <button class="mst-btn" type="button" id="mst-exact">That is my secret</button>
+      </div>
+      <p class="mst-verdict" id="mst-verdict" role="status" aria-live="polite">Press New game, think of a code, then answer the solver.</p>
+      <p class="mst-soft" id="mst-soft" hidden></p>
+      <details class="mst-peek" id="mst-peek" open>
+        <summary>Peek at my own secret (local only, never checked)</summary>
+        <div class="mst-row" id="mst-secret-row" style="margin-top:.5rem"></div>
+      </details>
+    </section>
+
+    <section class="mst-panel" aria-labelledby="mst-hist-title">
+      <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} id="mst-hist-title" class="mst-panel-title">Rounds</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
+      <ol class="mst-history" id="mst-history"></ol>
+      <details>
+        <summary>See what the solver knows (SMT-LIB)</summary>
+        <pre class="mst-smt" id="mst-smt">(nothing yet)</pre>
+      </details>
+    </section>
+  </div>
+  <script>
+  (function () {
+    'use strict';
+    var VENDOR = '/assets/vendor/z3/z3-built.js';
+    var COI_SW = (document.currentScript && document.currentScript.dataset.coiSw) ||
+    (document.querySelector('[data-coi-sw]') && document.querySelector('[data-coi-sw]').dataset.coiSw) ||
+    '/mastermind/coi-serviceworker.js';
+    var RUN_BUDGET_MS = 30000;
+    var RESUME_KEY = 'mst-resume';
+    var ISO_ATTEMPTS_KEY = 'mst-iso-attempts';
+    var ISO_MAX_ATTEMPTS = 3;
+    var enginePromise = null;
+    var MST = { rounds: [], colors: 6, slots: 4, busy: false, over: false, simSecret: null, mutation: 0.2 };
+    /* smtScript is exposed for the smoke harness. */
+    window.MST = MST;
+
+    /* ---- engine bootstrap: the playground pattern, verbatim behavior ---- */
+    MST.offThread = function () { return typeof SharedArrayBuffer === 'function' && window.crossOriginIsolated !== false; };
+    MST.sessionCount = function (key, delta) {
+      try { var n = Number(window.sessionStorage.getItem(key) || '0') + delta;
+        if (n > 0) window.sessionStorage.setItem(key, String(n)); else window.sessionStorage.removeItem(key);
+        return n; } catch (e) { return 0; }
+    };
+    MST.stash = function (s) { try { window.sessionStorage.setItem(RESUME_KEY, JSON.stringify(s)); } catch (e) {} };
+    MST.takeStash = function () { try { var r = window.sessionStorage.getItem(RESUME_KEY); window.sessionStorage.removeItem(RESUME_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } };
+    MST.isolate = function () {
+      return new Promise(function (resolve) {
+        if (!('serviceWorker' in navigator) || !window.isSecureContext) { resolve(false); return; }
+        var attempts = MST.sessionCount(ISO_ATTEMPTS_KEY, 1);
+        if (attempts > ISO_MAX_ATTEMPTS) { resolve(false); return; }
+        var settled = false;
+        var done = function (v) { if (!settled) { settled = true; resolve(v); } };
+        var reload = function () { window.location.reload(); setTimeout(function () { done(window.crossOriginIsolated === true); }, 1500); };
+        navigator.serviceWorker.register(COI_SW).then(function (reg) {
+          var w = reg.active || reg.installing || reg.waiting;
+          if (!w) { done(false); return; }
+          var go = function () { if (settled) return; setTimeout(function () { if (window.crossOriginIsolated) { done(true); return; } reload(); }, 100); };
+          if (w.state === 'activated') go(); else w.addEventListener('statechange', function () { if (w.state === 'activated') go(); });
+        }).catch(function (e) { console.warn('coi-serviceworker unavailable:', e && e.message); done(false); });
+        setTimeout(function () { done(window.crossOriginIsolated === true); }, 12000);
+      });
+    };
+    function loadEngineScript() {
+      return new Promise(function (resolve, reject) {
+        var started = performance.now();
+        var s = document.createElement('script');
+        s.src = VENDOR + (window.__deuteriumAssetVersion ? '?v=' + window.__deuteriumAssetVersion : '');
+        s.addEventListener('load', function () {
+          var factory = window.initZ3;
+          if (typeof factory !== 'function') { reject(new Error('engine loaded but exposed no initZ3')); return; }
+          var ready;
+          if (MST.offThread()) {
+            ready = fetch(VENDOR).then(function (r) { return r.text(); }).then(function (t) {
+              var blob = URL.createObjectURL(new Blob([t], { type: 'text/javascript' }));
+              return Promise.resolve(factory({ mainScriptUrlOrBlob: blob }));
+            });
+          } else { ready = Promise.resolve(factory({})); }
+          ready.then(function (Mod) { resolve({ Mod: Mod, loadMs: Math.round(performance.now() - started) }); }, reject);
+        });
+        s.addEventListener('error', function () { reject(new Error('failed to fetch ' + VENDOR)); });
+        document.head.appendChild(s);
+      });
+    }
+    MST.engine = function () {
+      if (enginePromise) return enginePromise;
+      enginePromise = MST.isolate().then(function () { return loadEngineScript(); }).catch(function (e) { enginePromise = null; throw e; });
+      return enginePromise;
+    };
+
+    /* ---- SMT-LIB generation: the soft-constraint encoding from mastermind.py ---- */
+    function smtScript() {
+      var N = MST.colors, K = MST.slots, L = [];
+      L.push('; maSATermind state: ' + MST.rounds.length + ' answered round(s)');
+      L.push('(set-option :timeout ' + RUN_BUDGET_MS + ')');
+      for (var i = 0; i < K; i++) L.push('(declare-const b' + i + ' Int)');
+      for (var j = 0; j < K; j++) L.push('(assert (and (>= b' + j + ' 1) (<= b' + j + ' ' + N + ')))');
+      MST.rounds.forEach(function (r, idx) {
+        var bulls = r.bulls, cows = r.cows, q = r.guess;
+        var exact = [];
+        for (var i2 = 0; i2 < K; i2++) exact.push('(ite (= b' + i2 + ' ' + q[i2] + ') 1 0)');
+        L.push('(assert-soft (= (+ ' + exact.join(' ') + ') ' + bulls + ')) ; round ' + (idx + 1) + ' bulls');
+        var mins = [];
+        for (var v = 1; v <= N; v++) {
+          var cb = [], cq = 0;
+          for (var i3 = 0; i3 < K; i3++) { cb.push('(ite (= b' + i3 + ' ' + v + ') 1 0)'); if (q[i3] === v) cq++; }
+          mins.push('(ite (< (+ ' + cb.join(' ') + ') ' + cq + ') (+ ' + cb.join(' ') + ') ' + cq + ')');
+        }
+        L.push('(assert-soft (= (+ ' + mins.join(' ') + ') ' + (bulls + cows) + ')) ; round ' + (idx + 1) + ' bulls+cows');
+      });
+      L.push('(check-sat)');
+      L.push('(get-model)');
+      return L.join('\n');
+    }
+    MST.smtScript = smtScript;
+    function parseModel(text) {
+      var out = [], re = /\(define-fun b(\d+)\s*\(\)\s*Int\s+(\d+)/g, m;
+      while ((m = re.exec(text))) out[+m[1]] = +m[2];
+      return out;
+    }
+
+    /* ---- DOM ---- */
+    var D = document;
+    var verdict = D.getElementById('mst-verdict');
+    var guessRow = D.getElementById('mst-guess-row');
+    var history = D.getElementById('mst-history');
+    var smtPre = D.getElementById('mst-smt');
+    var softLine = D.getElementById('mst-soft');
+    var bullsEl = D.getElementById('mst-bulls'), cowsEl = D.getElementById('mst-cows');
+    var answerBtn = D.getElementById('mst-answer'), exactBtn = D.getElementById('mst-exact');
+    var peg = function (v, mini) {
+      var el = D.createElement(mini ? 'i' : 'span');
+      el.className = mini ? '' : 'mst-peg';
+      if (!mini) { el.classList.add('mst-peg--' + v); el.textContent = v; }
+      else el.className = 'mst-peg--' + v;
+      return el;
+    };
+    var say = function (msg, state) { verdict.textContent = msg; if (state) verdict.dataset.state = state; else delete verdict.dataset.state; };
+
+    function renderGuess(g) {
+      guessRow.querySelectorAll('.mst-peg').forEach(function (e) { e.remove(); });
+      g.forEach(function (v) { guessRow.appendChild(peg(v)); });
+    }
+    function renderHistory() {
+      history.textContent = '';
+      MST.rounds.forEach(function (r, i) {
+        var li = D.createElement('li');
+        var mini = D.createElement('span'); mini.className = 'mst-mini';
+        r.guess.forEach(function (v) { mini.appendChild(peg(v, true)); });
+        var txt = D.createElement('span');
+        txt.textContent = 'bulls ' + r.bulls + ' \u00b7 cows ' + r.cows + (r.lie ? ' (lied)' : '');
+        var n = D.createElement('strong'); n.textContent = (i + 1) + '.';
+        li.append(n, mini, txt);
+        history.appendChild(li);
+      });
+    }
+    function resetGame() {
+      MST.rounds = []; MST.over = false; MST.simSecret = null;
+      MST.colors = +D.getElementById('mst-colors').value;
+      MST.slots = +D.getElementById('mst-slots').value;
+      history.textContent = ''; smtPre.textContent = '(nothing yet)';
+      softLine.hidden = true;
+      bullsEl.textContent = '0'; cowsEl.textContent = '0';
+      buildPeek();
+      say('Think of a code: ' + MST.slots + ' pegs, colors 1-' + MST.colors + '. Then press Answer controls after the first guess.');
+    }
+
+    /* peek: optional local memo of the visitor's own secret */
+    function buildPeek() {
+      var row = D.getElementById('mst-secret-row');
+      row.textContent = '';
+      MST.peek = MST.peek && MST.peek.length === MST.slots ? MST.peek : Array(MST.slots).fill(1);
+      MST.peek.forEach(function (v, i) {
+        var p = peg(v); p.title = 'click to cycle';
+        p.addEventListener('click', function () {
+          MST.peek[i] = MST.peek[i] % MST.colors + 1;
+          p.className = 'mst-peg mst-peg--' + MST.peek[i]; p.textContent = MST.peek[i];
+        });
+        row.appendChild(p);
+      });
+    }
+
+    /* their agent(): bulls/cows with a mutated secret */
+    function agent(secret, guess) {
+      var mutated = secret.map(function (i) { return Math.random() > MST.mutation ? i : 1 + Math.floor(Math.random() * MST.colors); });
+      var lied = String(mutated) !== String(secret);
+      var bulls = 0, i;
+      for (i = 0; i < secret.length; i++) if (mutated[i] === guess[i]) bulls++;
+      var count = function (a) { var c = {}; a.forEach(function (v) { c[v] = (c[v] || 0) + 1; }); return c; };
+      var cm = count(mutated), cg = count(guess), cows = 0;
+      Object.keys(cg).forEach(function (v) { cows += Math.min(cm[v] || 0, cg[v]); });
+      return { bulls: bulls, cows: cows - bulls, lied: lied };
+    }
+
+    function nextGuess() {
+      if (MST.busy || MST.over) return;
+      MST.busy = true; answerBtn.disabled = exactBtn.disabled = true;
+      say('Solving\u2026');
+      var cold = !enginePromise;
+      if (!MST.offThread()) MST.stash({ action: 'sim', sim: !!MST.simSecret, rounds: MST.rounds });
+      var script = smtScript();
+      smtPre.textContent = script;
+      MST.engine().then(function (eng) {
+        var Mod = eng.Mod;
+        var ctx = Mod._Z3_mk_context(Mod._Z3_mk_config());
+        var t0 = performance.now();
+        var work = Mod.async_call(function () {
+          return Mod.ccall('async_Z3_eval_smtlib2_string', 'void', ['number', 'string'], [ctx, script]);
+        });
+        return work.then(function (result) {
+          try { Mod._Z3_del_context(ctx); } catch (e2) {}
+          var ms = Math.round(performance.now() - t0);
+          if (!/^sat/.test(String(result))) throw new Error('solver said ' + String(result).split('\n')[0]);
+          var guess = parseModel(String(result));
+          if (guess.length !== MST.slots || guess.some(function (v) { return !v; })) throw new Error('model parse failed');
+          MST.currentGuess = guess;
+          renderGuess(guess);
+          say((cold ? 'Engine loaded. ' : '') + 'Guess ' + (MST.rounds.length + 1) + ' is on the board (' + ms + ' ms). How many bulls and cows?');
+        }, function (err) {
+          try { Mod._Z3_interrupt(ctx); } catch (e2) {}
+          throw err;
+        });
+      }).catch(function (e) {
+        say('Solver error: ' + (e && e.message ? e.message : e) + ' Nothing left the page; try again.');
+      }).then(function () { MST.busy = false; answerBtn.disabled = exactBtn.disabled = false; });
+    }
+
+    function softSummary() {
+      if (!MST.rounds.length) return '';
+      var lies = MST.rounds.filter(function (r) { return r.lie; }).length;
+      return 'soft constraints: ' + (MST.rounds.length * 2) + ' (' + MST.rounds.length + ' rounds \u00d7 2)' + (lies ? ' \u00b7 ' + lies + ' marked as lies' : '');
+    }
+
+    function answer(bulls, cows) {
+      if (!MST.currentGuess || MST.over) return;
+      MST.rounds.push({ guess: MST.currentGuess.slice(), bulls: bulls, cows: cows });
+      renderHistory();
+      softLine.hidden = false; softLine.textContent = softSummary();
+      bullsEl.textContent = '0'; cowsEl.textContent = '0';
+      nextGuess();
+    }
+
+    /* ---- wiring ---- */
+    D.getElementById('mst-new').addEventListener('click', function () { resetGame(); nextGuess(); });
+    answerBtn.addEventListener('click', function () {
+      answer(+bullsEl.textContent, +cowsEl.textContent);
+    });
+    exactBtn.addEventListener('click', function () {
+      if (!MST.currentGuess) return;
+      MST.over = true;
+      say('CLEARED \u00b7 the solver read your mind in ' + (MST.rounds.length + 1) + ' guess(es). Soft constraints absorbed everything you lied about.', 'win');
+      softLine.hidden = false; softLine.textContent = softSummary();
+      D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
+    });
+    [['mst-bulls-up', 1], ['mst-bulls-down', -1]].forEach(function (p) {
+      D.getElementById(p[0]).addEventListener('click', function () {
+        var v = Math.max(0, Math.min(MST.slots, +bullsEl.textContent + p[1])); bullsEl.textContent = String(v);
+      });
+    });
+    [['mst-cows-up', 1], ['mst-cows-down', -1]].forEach(function (p) {
+      D.getElementById(p[0]).addEventListener('click', function () {
+        var v = Math.max(0, Math.min(MST.slots, +cowsEl.textContent + p[1])); cowsEl.textContent = String(v);
+      });
+    });
+
+    /* simulation: the computer plays itself with a lying agent (their mutation param) */
+    function runSimulation() {
+      var K = MST.slots;
+      MST.simSecret = MST.simSecret || Array.from({ length: K }, function () { return 1 + Math.floor(Math.random() * MST.colors); });
+      say('Simulating: secret ' + MST.simSecret.join(' ') + ', opponent lies with mutation rate ' + MST.mutation + '.');
+      var step = function () {
+        if (MST.over || !MST.simSecret) return;
+        if (!MST.currentGuess) { nextGuess(); setTimeout(step, 800); return; }
+        var a = agent(MST.simSecret, MST.currentGuess);
+        if (a.bulls === K) {
+          MST.over = true;
+          say('SOLVED IT \u00b7 ' + (MST.rounds.length + 1) + ' guess(es) against a liar with mutation ' + MST.mutation + '.', 'win');
+          softLine.hidden = false; softLine.textContent = softSummary();
+          D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
+          return;
+        }
+        MST.rounds.push({ guess: MST.currentGuess.slice(), bulls: a.bulls, cows: a.cows, lie: a.lied });
+        renderHistory();
+        softLine.hidden = false; softLine.textContent = softSummary();
+        nextGuess();
+        setTimeout(step, 700);
+      };
+      step();
+    }
+    D.getElementById('mst-sim').addEventListener('click', function () {
+      resetGame();
+      runSimulation();
+    });
+
+    /* resume after the isolation reload */
+    (function resume() {
+      var s = MST.takeStash();
+      if (!s) { resetGame(); return; }
+      if (MST.offThread()) {
+        MST.sessionCount(ISO_ATTEMPTS_KEY, -99);
+        resetGame();
+        if (s.rounds && s.rounds.length) { MST.rounds = s.rounds; renderHistory(); }
+        if (s.sim) { runSimulation(); return; }
+        nextGuess();
+      } else { resetGame(); }
+    })();
+  })();
+  </script>
+</main>

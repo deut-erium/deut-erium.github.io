@@ -352,7 +352,7 @@ for rel in sorted(required):
     if not (ROOT / rel).is_file(): fail(f"required output missing: {rel}")
 
 post_routes = expected_post_routes()
-if len(post_routes) != 78: fail(f"source post count drift: {len(post_routes)}")
+if len(post_routes) != 79: fail(f"source post count drift: {len(post_routes)}")
 for rel in post_routes:
     if not (ROOT / rel).is_file(): fail(f"post route missing: {rel}")
 
@@ -473,7 +473,7 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 
 # Additive features may add shell pages; the baseline may not shrink.
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 79, 327, 106, 61):
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 80, 327, 106, 61):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
@@ -505,12 +505,12 @@ for rel, section in (("404.html", "root"), ("WriteUps/404.html", "writeups"), ("
 archive_text = (ROOT / "archive.html").read_text(encoding="utf-8")
 record_pattern = re.compile(r'<li\b[^>]*data-record[^>]*>.*?<a\b[^>]*href="([^"]+)"', re.S)
 archive_order = [unquote(urlsplit(url).path) for url in record_pattern.findall(archive_text)]
-if len(archive_order) != 78 or len(set(archive_order)) != 78 or set(archive_order) != {f"/{rel}" for rel in post_routes}:
+if len(archive_order) != 79 or len(set(archive_order)) != 79 or set(archive_order) != {f"/{rel}" for rel in post_routes}:
     fail("global archive membership drift")
 tag_block = re.search(r'<div class="all-tags__grid[^>]*>(.*?)</div>', archive_text, re.S)
 if not tag_block: fail("tag index missing")
 tag_count = len(re.findall(r"\bdata-filter=", tag_block.group(1)))
-if tag_count != 130 or "130 merged tags" not in archive_text: fail(f"merged tag count drift: {tag_count}")
+if tag_count != 133 or "133 merged tags" not in archive_text: fail(f"merged tag count drift: {tag_count}")
 if "?tag=RSA" not in archive_text or "?tag=CTF" not in archive_text or "?tag=rsa" in archive_text or "?tag=ctfs" in archive_text:
     fail("tag alias merge drift")
 
