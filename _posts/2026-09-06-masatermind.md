@@ -8,7 +8,7 @@ key: masatermind000001
 <p>The game runs right here; it is the same engine this post describes. Press
 &ldquo;Watch it beat a liar&rdquo; for the two-minute demo, or play a round yourself.</p>
 
-<div data-coi-sw="/2026/coi-serviceworker.js">
+<div data-coi-sw="/2026/coi-serviceworker.js" data-coi-scope="/2026/09/06/">
 {%- include masatermind.html heading="p" panel="p" -%}
 </div>
 

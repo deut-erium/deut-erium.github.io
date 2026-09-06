@@ -88,9 +88,15 @@
   (function () {
     'use strict';
     var VENDOR = '/assets/vendor/z3/z3-built.js';
+    var COI_EL = document.querySelector('[data-coi-sw]');
     var COI_SW = (document.currentScript && document.currentScript.dataset.coiSw) ||
-    (document.querySelector('[data-coi-sw]') && document.querySelector('[data-coi-sw]').dataset.coiSw) ||
+    (COI_EL && COI_EL.dataset.coiSw) ||
     '/mastermind/coi-serviceworker.js';
+    /* Narrow the worker to the page that needs it: an embedding post registers
+       with data-coi-scope so sibling routes stay out of the worker's path.
+       A previously installed broader registration of the same script is
+       retired first. */
+    var COI_SCOPE = (COI_EL && COI_EL.dataset.coiScope) || undefined;
     var RUN_BUDGET_MS = 30000;
     var RESUME_KEY = 'mst-resume';
     var ISO_ATTEMPTS_KEY = 'mst-iso-attempts';
@@ -117,12 +123,17 @@
         var settled = false;
         var done = function (v) { if (!settled) { settled = true; resolve(v); } };
         var reload = function () { window.location.reload(); setTimeout(function () { done(window.crossOriginIsolated === true); }, 1500); };
-        navigator.serviceWorker.register(COI_SW).then(function (reg) {
+        var cleanup = COI_SCOPE ? navigator.serviceWorker.getRegistration('/2026/').then(function (old) {
+          if (old && old.scope !== location.origin + COI_SCOPE) return old.unregister().catch(function () {});
+        }).catch(function () {}) : Promise.resolve();
+        cleanup.then(function () {
+        navigator.serviceWorker.register(COI_SW, COI_SCOPE ? { scope: COI_SCOPE } : undefined).then(function (reg) {
           var w = reg.active || reg.installing || reg.waiting;
           if (!w) { done(false); return; }
           var go = function () { if (settled) return; setTimeout(function () { if (window.crossOriginIsolated) { done(true); return; } reload(); }, 100); };
           if (w.state === 'activated') go(); else w.addEventListener('statechange', function () { if (w.state === 'activated') go(); });
         }).catch(function (e) { console.warn('coi-serviceworker unavailable:', e && e.message); done(false); });
+        });
         setTimeout(function () { done(window.crossOriginIsolated === true); }, 12000);
       });
     };
