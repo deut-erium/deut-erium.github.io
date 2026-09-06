@@ -34,7 +34,10 @@ I don't even know where to start, the wheel looks more like a clock than a ciphe
 
 - [ciphertext.jpg](ciphertext.jpg) "Text" XD
 
-![](ciphertext.jpg)
+![](ciphertext-1of4.webp)
+![](ciphertext-2of4.webp)
+![](ciphertext-3of4.webp)
+![](ciphertext-4of4.webp)
 
 Lets think like a clock, and start numbering colors from `0-11` 
 
@@ -42,7 +45,10 @@ Lets think like a clock, and start numbering colors from `0-11`
 
 And if we map the corresponding numbers, we get  
 
-![](ciphertext-extracted.jpg)
+![](ciphertext-extracted-1of4.webp)
+![](ciphertext-extracted-2of4.webp)
+![](ciphertext-extracted-3of4.webp)
+![](ciphertext-extracted-4of4.webp)
 
 ```
 86 90 81 87 a3 49 99 43 97 97 41 92 49 7b 41 97 7b 44 92 7b 44 96 98 a5

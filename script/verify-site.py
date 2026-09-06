@@ -473,7 +473,9 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 
 # Additive features may add shell pages; the baseline may not shrink.
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 83, 334, 243, 78):
+# 2026-09 image work: 78 -> 84 plain images after the 12-shades ciphertext was
+# tiled into 4+4 mobile-decodable strips (2 originals -> 8 strips).
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 83, 334, 243, 84):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
@@ -559,7 +561,8 @@ for item in CONTENT["files"]:
     if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
         fail(f"current postfile drift: {public.relative_to(ROOT)}")
     current_postfiles += 1
-if current_postfiles != 230: fail(f"current postfile count drift: {current_postfiles}")
+# 2026-09 image work: 230 -> 237 (12-shades: extracted jpeg dropped, 8 webp strips added).
+if current_postfiles != 237: fail(f"current postfile count drift: {current_postfiles}")
 
 for item in LEGACY["attachments"]:
     path = ROOT / item["path"]
