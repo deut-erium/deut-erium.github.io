@@ -138,7 +138,13 @@
   });
 
   const toc = document.querySelector('.js-toc-root');
+  const tocBox = toc && toc.closest('details');
+  if (tocBox && !headings.length) {
+    tocBox.hidden = true;
+    return;
+  }
   if (!toc || !headings.length) return;
+  if (tocBox && !matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
 
   toc.textContent = '';
   const list = document.createElement('ol');

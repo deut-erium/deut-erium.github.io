@@ -897,9 +897,15 @@ main > script {
 
 .record-grid {
   display: grid;
-  grid-template-columns: minmax(0, var(--reading));
+  grid-template-columns: minmax(0, var(--reading)) minmax(13.5rem, 16rem);
+  grid-template-areas: "article rail";
   gap: 1.25rem;
   justify-content: center;
+  align-items: start;
+}
+
+.record-grid > .article__content {
+  grid-area: article;
 }
 
 .article__content,
@@ -914,6 +920,13 @@ main > script {
 }
 
 .record-grid > .record-index {
+  grid-area: rail;
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   width: 100%;
   max-width: var(--reading);
   margin-inline: auto;
@@ -1308,15 +1321,14 @@ main > script {
 .code-frame__viewport {
   min-width: 0;
   display: grid;
-  grid-template-columns: 3.8rem minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
 }
 
 .prose .code-frame__gutter {
-  padding: 1rem .7rem;
+  padding: 1rem .5rem;
   margin: 0;
   color: #bbc1d7;
   background: #080b18;
-  border-right: 2px solid #3b4260;
   font-family: var(--mono);
   font-size: 1rem;
   line-height: 1.62;
@@ -1324,6 +1336,12 @@ main > script {
   text-align: right;
   white-space: pre;
   user-select: none;
+  border-right: 1px solid #3b4260;
+}
+
+@container (max-width: 34rem) {
+  .prose .code-frame__gutter { padding-inline: .4rem; }
+  .prose .code-frame pre { padding-inline: .75rem; }
 }
 
 .prose .code-frame > .highlight,
@@ -1656,6 +1674,38 @@ main > script {
 }
 
 @media (max-width: 68rem) {
+  /* Default theme only: contents above the article, related links below it. */
+  html:not([data-skin]) .record-grid {
+    grid-template-columns: minmax(0, var(--reading));
+    grid-template-areas: "toc" "article" "related";
+  }
+
+  html:not([data-skin]) .record-grid > .article__content {
+    grid-area: article;
+  }
+
+  html:not([data-skin]) .record-grid > .record-index {
+    display: contents;
+  }
+
+  html:not([data-skin]) .record-index > .record-toc,
+  html:not([data-skin]) .record-index > .related-records {
+    padding: 1rem;
+    color: #fff;
+    background: var(--navy);
+    border: 5px solid #68708c;
+    border-radius: .6rem;
+  }
+
+  html:not([data-skin]) .record-index > .record-toc {
+    grid-area: toc;
+  }
+
+  html:not([data-skin]) .record-index > .related-records {
+    grid-area: related;
+    margin-top: 0;
+  }
+
   .site-header__inner,
   .site-footer__inner {
     align-items: stretch;
