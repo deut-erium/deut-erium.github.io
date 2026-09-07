@@ -1655,6 +1655,105 @@ main > script {
   justify-content: flex-end;
 }
 
+.site-footer__mysteries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  align-items: center;
+}
+
+.site-footer__mystery {
+  display: inline-flex;
+  width: 2.7rem;
+  height: 2.7rem;
+  min-height: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--navy);
+  border: 3px solid #59617e;
+  border-radius: .45rem;
+  box-shadow: 0 .22rem 0 #070914;
+  font-family: var(--keys);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.site-footer__mysteries .site-footer__mystery:nth-child(1) { transform: rotate(-4deg); }
+.site-footer__mysteries .site-footer__mystery:nth-child(2) { transform: rotate(3deg) translateY(-2px); }
+.site-footer__mysteries .site-footer__mystery:nth-child(3) { transform: rotate(6deg); }
+
+.site-footer__mystery:hover,
+.site-footer__mystery:focus-visible {
+  color: var(--navy);
+  background: var(--pink);
+  border-color: var(--navy);
+}
+
+.site-footer__mystery.is-on {
+  color: var(--navy);
+  background: var(--yellow);
+  border-color: #fff;
+  animation: toy-pulse 1.5s ease-in-out infinite;
+}
+
+.site-footer__mystery.is-winking {
+  animation: toy-wink .5s ease;
+}
+
+.site-footer__restore {
+  display: inline-flex;
+  min-height: 2.7rem;
+  padding: .45rem .7rem;
+  align-items: center;
+  color: var(--navy);
+  background: var(--orange);
+  border: 3px solid var(--navy);
+  border-radius: .45rem;
+  box-shadow: 0 .22rem 0 #070914;
+  font-family: var(--keys);
+  font-size: .9rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.site-footer__restore:hover,
+.site-footer__restore:focus-visible {
+  background: var(--yellow);
+}
+
+@keyframes toy-pulse {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.08) rotate(2deg); }
+}
+
+@keyframes toy-wink {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18, .55); }
+  100% { transform: scale(1); }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-footer__mystery:hover {
+    animation: toy-jitter .3s linear infinite;
+  }
+}
+
+@keyframes toy-jitter {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  25% { transform: translate(1.5px, -1.5px) rotate(3deg); }
+  50% { transform: translate(-1.5px, 1px) rotate(-4deg); }
+  75% { transform: translate(1px, 1.5px) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(-2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__mystery.is-on { animation: none; }
+}
+
 /* Responsive */
 @media (max-width: 82rem) {
   .site-brand__scope {

@@ -1,8 +1,9 @@
-/* The toybox drawer: the chaos ladder and its cousins (roadmap 10b/10e).
-   Injected lazily by the footer button (see _includes/site-footer.html), so
-   pages that never open the drawer never download this file. The injected
-   stylesheet below is the only CSS the toybox owns. Nothing persists: a
-   reload restores the page exactly as built.
+/* The mystery buttons (footer) and their toys (roadmap 10b/10e).
+   Loaded lazily by the first footer ? press, so pages that never
+   press anything never download this file. Three ? buttons each
+   secretly map to one of the toys, reshuffled on every load, so the
+   map cannot be learned. Nothing persists: a reload restores the
+   page exactly as built.
    Overlays live in a div appended to document.documentElement so body-level
    transforms (tilt, chaos rotation) and filters (burn) cannot detach them
    from the viewport. */
@@ -22,24 +23,6 @@
   const css = D.createElement('style');
   css.id = 'toybox-css';
   css.textContent = `
-.toybox{position:fixed;inset:0;z-index:1000;display:flex;overflow:auto;padding:1rem;background:rgba(7,9,20,.88);font-family:var(--body,"Atkinson Hyperlegible",system-ui,sans-serif)}
-.toybox[hidden]{display:none}
-.toybox__panel{margin:auto;width:min(74rem,100%);max-height:none;background:var(--navy,#101426);color:#fff;border:5px solid #59617e;border-radius:.9rem;padding:1.1rem 1.2rem 1.3rem;box-shadow:.55rem .6rem 0 rgba(7,9,20,.55)}
-.toybox__panel:focus{outline:none}
-.toybox__head{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.toybox__title{margin:0;font-family:var(--keys,ui-monospace,monospace);font-size:1.4rem;letter-spacing:.02em;color:var(--lcd,#c9ff73)}
-.toybox__sub{margin:.15rem 0 0;font-size:.9rem;color:#c6cbe0}
-.toybox__actions{display:flex;flex-wrap:wrap;gap:.55rem}
-.toy-btn{display:inline-flex;min-height:3rem;align-items:center;justify-content:center;padding:.55rem .8rem;color:#fff;background:var(--navy-soft,#242b46);border:3px solid #59617e;border-radius:.45rem;font-family:var(--keys,ui-monospace,monospace);font-size:1rem;line-height:1.2;text-align:center;cursor:pointer}
-.toy-btn:hover,.toy-btn:focus-visible{color:var(--navy,#101426);background:var(--pink,#ff3b9d);border-color:#fff}
-.toy-btn:disabled{opacity:.45;cursor:not-allowed}
-.toy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:.8rem}
-.toy-card{display:flex;flex-direction:column;gap:.55rem;padding:.9rem;background:var(--navy-soft,#242b46);border:3px solid #59617e;border-radius:.6rem}
-.toy-card__name{margin:0;font-family:var(--keys,ui-monospace,monospace);font-size:1.02rem;color:#fff}
-.toy-card__desc{margin:0;flex:1;font-size:.88rem;line-height:1.5;color:#c6cbe0}
-.toy-card__row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
-.toy-pill{padding:.22rem .55rem;border:2px solid var(--navy,#101426);border-radius:999px;background:var(--yellow,#f7ef37);color:var(--navy,#101426);font-family:var(--keys,ui-monospace,monospace);font-size:.74rem}
-.toy-pill[hidden]{display:none}
 .toy-count{position:fixed;top:.7rem;left:50%;transform:translateX(-50%);z-index:1001;padding:.3rem .75rem;border:2px solid #fff;border-radius:999px;background:var(--pink,#ff3b9d);color:#fff;font-family:var(--keys,ui-monospace,monospace);font-size:.95rem}
 .toy-count[hidden]{display:none}
 .toy-toast{position:fixed;left:.8rem;bottom:.8rem;z-index:1001;max-width:min(24rem,calc(100vw - 1.6rem));margin:0;padding:.6rem .8rem;border:3px solid var(--navy,#101426);border-radius:.5rem;background:var(--paper,#fffdf7);color:var(--ink,#101426);font-size:.95rem;box-shadow:.35rem .35rem 0 rgba(7,9,20,.55)}
@@ -148,17 +131,15 @@ html.toy-grav main{user-select:none}
     remaining: 0,
     locked: false,
     saved: null,
+    get active() {
+      return Boolean(this.saved) || root.classList.contains('tb-rot');
+    },
     press() {
       if (this.locked) return;
       this.presses += 1;
       if (this.presses >= 3) {
         this.locked = true;
         restoreAll();
-        const btn = D.querySelector('.site-footer__toybox');
-        if (btn && !btn.dataset.warned) {
-          btn.dataset.warned = '1';
-          btn.textContent = 'you were warned.';
-        }
         toast('you were warned. the chaos cards are done for this session.');
         return;
       }
@@ -206,7 +187,7 @@ html.toy-grav main{user-select:none}
         countdown.textContent = `chaos: ${this.remaining}s`;
         if (this.remaining <= 0) {
           this.unshuffle();
-          syncPills();
+          sync();
         }
       }, 1000);
     },
@@ -241,7 +222,7 @@ html.toy-grav main{user-select:none}
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.restore();
-        syncPills();
+        sync();
       }, 30000);
     },
     restore() {
@@ -337,7 +318,7 @@ html.toy-grav main{user-select:none}
           this.fade = setTimeout(() => {
             canvas.remove();
             if (this.canvas === canvas) this.canvas = null;
-            syncPills();
+            sync();
           }, 750);
           return;
         }
@@ -702,144 +683,88 @@ html.toy-grav main{user-select:none}
   };
 
   /* ------------------------------------------------------------------ */
-  /* Drawer                                                             */
+  /* Footer controller: the mystery ? buttons                           */
   /* ------------------------------------------------------------------ */
 
-  const TOYS = [
-    { id: 'chaos', toy: chaos, name: 'Chaos shuffle', desc: 'For 60 seconds every internal link keeps its label but takes another link\u2019s destination. Presses escalate; the third puts everything back.' },
-    { id: 'tilt', toy: tilt, name: 'Tilt', desc: 'The whole page leans 1.5 degrees for 30 seconds, then stands back up on its own.' },
-    { id: 'burn', toy: burn, name: 'Burn this page', desc: 'Embers eat the page top-down for about four seconds and leave it charred until you put everything back.' },
-    { id: 'gravity', toy: grav, name: 'Gravity', desc: 'Every block of the article drops to the bottom of the screen and piles up. Drag them back home with the mouse.' },
-    { id: 'panic', toy: panic, name: 'Panic key', desc: 'Swaps the page for a beige corporate blog about leadership. Press again, or Escape, to return.' },
-    { id: 'hash', toy: hash, name: 'Hash everything', desc: 'Hover any word to see its SHA-256. Peak crypto-blog energy, zero function.' },
-    { id: 'source', toy: source, name: 'View-source skin', desc: 'Overlays the page\u2019s own syntax-highlighted source, scrollable, with the links still clickable.' },
-  ];
+  const TOYS = [chaos, tilt, burn, grav, panic, hash, source];
+  const activeCount = () => TOYS.reduce((n, t) => n + (t.active ? 1 : 0), 0);
 
-  const pills = {};
-  const presses = {};
+  const buttons = Array.from(D.querySelectorAll('.site-footer__mystery'));
+  const restoreBtn = D.querySelector('.site-footer__restore');
+  const slotOf = (button) => Number(button.dataset.toySlot || 0);
 
-  const drawer = ce('div', 'toybox');
-  drawer.id = 'toybox-drawer';
-  drawer.hidden = true;
-  const panel = ce('div', 'toybox__panel');
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-modal', 'true');
-  panel.setAttribute('aria-label', 'The toybox');
-  panel.tabIndex = -1;
-  const head = ce('div', 'toybox__head');
-  const headText = ce('div');
-  headText.append(
-    ce('h2', 'toybox__title', 'the toybox'),
-    ce('p', 'toybox__sub', 'You were warned. Everything here is reversible and nothing survives a reload.'),
-  );
-  const headActions = ce('div', 'toybox__actions');
-  const restoreBtn = ce('button', 'toy-btn', 'put everything back');
-  restoreBtn.type = 'button';
-  const closeBtn = ce('button', 'toy-btn', 'close');
-  closeBtn.type = 'button';
-  closeBtn.setAttribute('aria-label', 'Close the toybox');
-  headActions.append(restoreBtn, closeBtn);
-  head.append(headText, headActions);
-  const grid = ce('div', 'toy-grid');
-  TOYS.forEach(({ id, toy, name, desc }) => {
-    const card = ce('article', 'toy-card');
-    card.dataset.toy = id;
-    card.append(
-      ce('h3', 'toy-card__name', name),
-      ce('p', 'toy-card__desc', desc),
-    );
-    const row = ce('div', 'toy-card__row');
-    const press = ce('button', 'toy-btn', 'press');
-    press.type = 'button';
-    press.setAttribute('aria-label', `Activate ${name}`);
-    const pill = ce('span', 'toy-pill');
-    pill.hidden = true;
-    row.append(press, pill);
-    card.appendChild(row);
-    grid.appendChild(card);
-    pills[id] = pill;
-    presses[id] = press;
-    press.addEventListener('click', () => {
-      toy.press();
-      syncPills();
+  /* Secret per-load assignment: the toys are shuffled and the first
+     buttons.length of them are dealt, so the map changes every visit. */
+  const deck = TOYS.slice();
+  for (let i = deck.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  const slots = deck.slice(0, Math.max(1, buttons.length));
+
+  const sync = () => {
+    buttons.forEach((button) => {
+      const toy = slots[slotOf(button)];
+      const on = Boolean(toy && toy.active);
+      button.classList.toggle('is-on', on);
+      button.setAttribute('aria-pressed', String(on));
     });
-  });
-  panel.append(head, grid);
-  drawer.appendChild(panel);
-  toyRoot.appendChild(drawer);
+    if (restoreBtn) restoreBtn.hidden = activeCount() === 0;
+  };
 
-  const focusables = () => Array.from(
-    panel.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'),
-  );
-
-  const syncPills = () => {
-    TOYS.forEach(({ id, toy }) => {
-      const text = toy.pill();
-      const pill = pills[id];
-      if (text) {
-        pill.textContent = text;
-        pill.hidden = false;
-      } else {
-        pill.hidden = true;
-      }
-      if (id === 'chaos') presses[id].disabled = chaos.locked;
-    });
+  /* Toys can end on their own (tilt stands back up, the chaos ladder
+     finishes); poll while anything runs so the footer stays honest. */
+  let poll = 0;
+  const watch = () => {
+    clearInterval(poll);
+    poll = setInterval(() => {
+      sync();
+      if (activeCount() === 0) clearInterval(poll);
+    }, 1000);
   };
 
   const restoreAll = () => {
-    TOYS.forEach(({ toy }) => toy.restore());
-    syncPills();
+    TOYS.forEach((toy) => toy.restore());
+    sync();
   };
 
-  let opener = null;
-  const open = () => {
-    if (drawer.hidden) {
-      opener = D.activeElement;
-      drawer.hidden = false;
-      hash.hide();
-      syncPills();
+  const go = (slot) => {
+    const toy = slots[slot];
+    if (!toy) return;
+    toy.press();
+    /* The box leaks: sometimes a second mystery escapes with the first. */
+    const idle = TOYS.filter((t) => !t.active && t !== toy);
+    if (idle.length && activeCount() < 3 && Math.random() < 0.16) {
+      idle[Math.floor(Math.random() * idle.length)].press();
     }
-    (focusables()[0] || panel).focus();
-  };
-  const close = () => {
-    if (drawer.hidden) return;
-    drawer.hidden = true;
-    if (opener && D.contains(opener)) opener.focus();
-    else panel.focus();
+    sync();
+    watch();
   };
 
-  window.__dtToy = { open };
+  window.__dtToy = { go, restore: restoreAll };
 
-  restoreBtn.addEventListener('click', () => {
-    restoreAll();
-    toast('everything is back the way it was.');
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => go(slotOf(button)));
   });
-  closeBtn.addEventListener('click', close);
-  drawer.addEventListener('click', (e) => {
-    if (e.target === drawer) close();
-  });
-  drawer.addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab') return;
-    const list = focusables();
-    if (!list.length) return;
-    const first = list[0];
-    const last = list[list.length - 1];
-    const current = D.activeElement;
-    if (e.shiftKey && (current === first || current === panel)) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && current === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
+
+  if (restoreBtn) {
+    restoreBtn.addEventListener('click', () => {
+      restoreAll();
+      toast('everything is back the way it was.');
+    });
+  }
+
   D.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (!drawer.hidden) {
-      close();
-      return;
+    if (e.key === 'Escape' && panic.active) {
+      panic.restore();
+      sync();
     }
-    if (panic.active) panic.restore();
-    syncPills();
   });
+
+  /* A press may have queued before this file finished loading. */
+  if (typeof window.__dtToyPending === 'number') {
+    const pending = window.__dtToyPending;
+    delete window.__dtToyPending;
+    go(pending);
+  }
 })();
