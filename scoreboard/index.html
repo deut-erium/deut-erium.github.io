@@ -7,9 +7,7 @@ section: scoreboard
 ---
 
 <p class="scoreboard-note">
-  This scoreboard is rendered by your browser from this device's local storage.
-  Nothing leaves the browser: no accounts, no sync, no tracking. The only thing
-  this page loads is this site's own list of challenges.
+  Your challenge progress is saved in this browser.
 </p>
 
 <section class="scoreboard-total" aria-label="Progress summary">
@@ -18,13 +16,12 @@ section: scoreboard
 
 <h2>Per-challenge progress</h2>
 <ol class="scoreboard-list" id="scoreboard-list">
-  <li class="scoreboard-empty">Records render locally; nothing has left this device.</li>
 </ol>
 
 <h2>Move your progress</h2>
 <p class="scoreboard-note">
   Copy the JSON below to carry your solves to another browser or device, then
-  paste it there and press import. The paste stays on the device you paste it on.
+  paste it there and press Import pasted progress.
 </p>
 <div class="scoreboard-io">
   <button type="button" id="scoreboard-export" class="scoreboard-btn">Copy progress as JSON</button>
@@ -250,7 +247,7 @@ D.getElementById('scoreboard-import').addEventListener('click',async()=>{
     Object.keys(p2).forEach(id=>{target[alias(id)]=p2[id];});
     put(key,target);
   });
-  say('Imported '+Object.keys(verified).length+' verified solve(s)'+(legacy?' ('+legacy+' without flags, kept unverified)':'')+(rejected.length?' and rejected '+rejected.length+' whose flags fail the hash check':'')+'.');
+  say('Imported '+Object.keys(verified).length+' solve(s)'+(legacy?' ('+legacy+' without flags, kept unverified)':'')+(rejected.length?' and rejected '+rejected.length+' that could not be verified':'')+'.');
   render(knownEntries);
 });
 })();

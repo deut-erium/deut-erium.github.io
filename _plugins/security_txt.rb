@@ -28,8 +28,6 @@ module DeuteriumSite
       <<~TEXT
         # deuterium's blog security policy (RFC 9116).
         # No bug bounty, only gratitude and a fix.
-        # TODO: PGP key pending. Once generated, publish the fingerprint on
-        # the about page and add an "Encryption:" field pointing at the key.
         Contact: #{CONTACT}
         Expires: #{expires}
         Preferred-Languages: #{PREFERRED_LANGUAGES}

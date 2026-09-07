@@ -15,7 +15,6 @@ layout: base
     <dl class="record-facts">
       <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
       <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
-      <div><dt>Tags</dt><dd>{{ page.tags | size }}</dd></div>
     </dl>
     {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
     <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>
@@ -25,7 +24,7 @@ layout: base
   <div class="record-grid">
     <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">{{ content }}</article>
     <aside class="record-index" aria-label="Article navigation">
-      <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" aria-label="Table of contents"><p class="toc-fallback">Section links require the local article script.</p></nav></details>
+      <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" aria-label="Table of contents"><p class="toc-fallback">Enable JavaScript for section links.</p></nav></details>
       <section class="related-records"><h2>{{ _section_title }}</h2><ul>{%- assign _count = 0 -%}{%- for _post in site.posts -%}{%- if _post.section == page.section and _post.url != page.url and _count < 4 -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- assign _count = _count | plus: 1 -%}{%- endif -%}{%- endfor -%}</ul></section>
     </aside>
   </div>

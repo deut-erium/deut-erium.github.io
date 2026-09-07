@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Playground
-description: A local-first Z3 WASM playground with a Sudoku solver and an SMT-LIB runner. The engine loads from this site only when you press Solve.
+description: A Sudoku solver and an SMT-LIB runner using Z3 in your browser.
 permalink: /playground/
 sitemap: true
 ---
@@ -145,9 +145,8 @@ sitemap: true
 
   <header class="pg-head">
     <h1>Playground</h1>
-    <p class="pg-lede">A Sudoku solver and an SMT-LIB runner, backed by the real Z3
-      compiled to WebAssembly and served from this site. Nothing engine-shaped
-      loads until you press Solve or Run, and nothing ever leaves the page.</p>
+    <p class="pg-lede">A Sudoku solver and an SMT-LIB runner using Z3 in your browser.
+      The engine loads on first use; the page may reload.</p>
   </header>
 
   <section class="pg-panelwrap" aria-label="Playground demos">
@@ -176,9 +175,7 @@ sitemap: true
 
     <section class="pg-panel pg-panel--smt" role="tabpanel" aria-labelledby="pg-tablabel-smt">
       <h2>SMT-LIB</h2>
-      <p>Raw SMT-LIB 2 through the same engine, with a 10-second client-side
-        budget. Pick a preset to see the encodings the Sudoku tab builds for
-        you, or write your own.</p>
+      <p>Pick a preset or write an SMT-LIB 2 script, then press Run.</p>
       <div class="pg-controls">
         <label class="pg-label" for="pg-preset">Preset</label>
         <select class="pg-select" id="pg-preset">
@@ -192,63 +189,6 @@ sitemap: true
       <textarea class="pg-script" id="pg-script" rows="12" spellcheck="false" aria-label="SMT-LIB script"></textarea>
       <pre class="pg-out" id="pg-out" aria-label="Solver output" aria-live="polite"></pre>
     </section>
-  </section>
-
-  <section class="pg-docs">
-    <h2>Extend the harness</h2>
-    <p>This page is the harness: tabs, a lazy engine loader, a shared run
-      budget, and two demos. The plan is that you take it from here.</p>
-    <h3>Where things live</h3>
-    <ul>
-      <li><code>playground.html</code> &mdash; every demo, style, and binding for this
-        page, inline. No framework, no build step.</li>
-      <li><code>assets/vendor/z3/</code> &mdash; the Emscripten build of Z3
-        (<code>z3-built.js</code>, <code>z3-built.wasm</code>) plus
-        <code>SOURCE.txt</code> with the npm source, version, and hashes.</li>
-      <li><code>playground/coi-serviceworker.js</code> &mdash; the vendored
-        service worker that serves this page (and only this page) with
-        COOP/COEP so the engine&rsquo;s threads are legal on static hosts.</li>
-      <li><code>agent_out/z3-check/</code> &mdash; the smoke probe and its captured
-        output, outside the site build.</li>
-    </ul>
-    <h3>The demo pattern</h3>
-    <p>One registry object, <code>PG.demos</code>, holds a demo per tab. A demo is
-      a <code>mount(root)</code> function that builds its controls and wires one
-      button to two steps: an <strong>engine step</strong> that calls
-      <code>PG.engine()</code>, encodes the problem with the Z3 C API on the
-      returned Emscripten module, and checks it under the shared timeout; and a
-      <strong>render step</strong> that paints the result into the demo&rsquo;s own
-      DOM. The Sudoku panel is the full pattern (grid encode, async check,
-      model readback, animated fill); the SMT-LIB panel is the smallest one
-      (string in, string out). Copy either one, rename the tab, and go.</p>
-    <p>The engine loader injects <code>assets/vendor/z3/z3-built.js</code> on
-      first use only, resolves the global <code>initZ3()</code> factory, and
-      hands every demo the same module instance, so the 35&nbsp;MB download is
-      paid once per visit, and never on page open.</p>
-    <p>Two execution modes, negotiated automatically. On a cross-origin
-      isolated host (COOP/COEP headers) long runs go through Z3&rsquo;s
-      off-thread API with a real wall-clock budget and interrupt. On a plain
-      origin the first Run registers a small isolating service worker
-      (<code>coi-serviceworker</code>, vendored next to this page) and reloads
-      once to unlock that mode; your grid and script survive the reload and
-      the run resumes. If even that fails, a synchronous main-thread fallback
-      runs what it can. Demos call the helpers and never care which mode is
-      live.</p>
-  </section>
-
-  <section class="pg-docs">
-    <h2>Smoke harness</h2>
-    <p>To probe a build: serve the release directory, point
-      <code>agent_out/z3-check/probe.mjs</code> at it with the same Chrome the
-      build gate uses, and run it with Node. It opens <code>/playground/</code>,
-      asserts that nothing under <code>assets/vendor/z3/</code> is requested
-      until Solve is pressed, loads the hard preset, waits for SAT, reads the
-      grid back and checks every row, column, and box is a permutation of
-      1&ndash;9, then runs the trivial and n-Queens SMT presets and captures
-      the output and wall times. Run it twice: plain (GitHub&nbsp;Pages-like,
-      where the harness must register its isolation worker and reload once)
-      and with <code>PROBE_COI=1</code> to simulate a host that already sends
-      COOP/COEP. Logs land next to the script.</p>
   </section>
 
   <script>
@@ -506,8 +446,8 @@ sitemap: true
           PG.stash({ action: 'solve', grid: givens });
         }
         statusEl.textContent = cold
-          ? 'Waking the Z3 engine \u2014 the first load pulls ~35 MB of WASM from this site' +
-            (PG.offThread() ? '\u2026' : ', and one reload to unlock the off-thread solver\u2026')
+          ? 'Loading Z3 (about 35 MB uncompressed)' +
+            (PG.offThread() ? '\u2026' : '; the page may reload\u2026')
           : 'Solving\u2026';
         statusEl.removeAttribute('data-result');
 
@@ -527,8 +467,7 @@ sitemap: true
         }).then(settle(function (result) {
           if (result.status === 'sat') {
             paintSolution(result.values, givenMask);
-            statusEl.textContent = 'SAT \u00b7 solved in ' + result.solveMs + ' ms' +
-              (result.cold ? ' \u00b7 engine loaded in ' + result.loadMs + ' ms' : ' \u00b7 engine was already warm');
+            statusEl.textContent = 'SAT \u00b7 solved in ' + result.solveMs + ' ms';
             statusEl.setAttribute('data-result', 'sat');
           } else if (result.status === 'unsat') {
             statusEl.textContent = 'UNSAT \u00b7 no solution exists with these givens \u2014 clear a cell or two and try again, or press Clear and pick a different puzzle.';
@@ -540,7 +479,7 @@ sitemap: true
           statusEl.setAttribute('data-load-ms', String(result.loadMs));
           statusEl.setAttribute('data-solve-ms', String(result.solveMs));
         }), settle(function (err) {
-          statusEl.textContent = 'Solver error: ' + (err && err.message ? err.message : err) + ' Nothing left the page; edit the grid and retry.';
+          statusEl.textContent = 'Solver error: ' + (err && err.message ? err.message : err) + ' Edit the grid and retry.';
           statusEl.setAttribute('data-result', 'error');
         }));
       }
@@ -823,7 +762,7 @@ sitemap: true
           outEl.setAttribute('data-result', 'done');
           outEl.setAttribute('data-wall-ms', String(wall));
         }), settle(function (err) {
-          outEl.textContent = '; ' + (err && err.message ? err.message : err) + '\n; nothing left the page; edit and retry.';
+          outEl.textContent = '; ' + (err && err.message ? err.message : err) + '\n; edit and retry.';
           outEl.setAttribute('data-result', 'error');
         }));
       }

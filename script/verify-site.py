@@ -513,7 +513,7 @@ tag_block = re.search(r'<div class="all-tags__grid[^>]*>(.*?)</div>', archive_te
 if not tag_block: fail("tag index missing")
 tag_count = len(re.findall(r"\bdata-filter=", tag_block.group(1)))
 # New article tags: tetris, combinatorics, programming; games already existed.
-if tag_count != 149 or "149 merged tags" not in archive_text: fail(f"merged tag count drift: {tag_count}")
+if tag_count != 149: fail(f"merged tag count drift: {tag_count}")
 if "?tag=RSA" not in archive_text or "?tag=CTF" not in archive_text or "?tag=rsa" in archive_text or "?tag=ctfs" in archive_text:
     fail("tag alias merge drift")
 

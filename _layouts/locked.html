@@ -15,7 +15,6 @@ layout: base
     <dl class="record-facts">
       <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
       <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
-      <div><dt>Tags</dt><dd>{{ page.tags | size }}</dd></div>
     </dl>
     {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
     <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>

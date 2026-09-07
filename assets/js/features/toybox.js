@@ -140,7 +140,7 @@ html.toy-grav main{user-select:none}
       if (this.presses >= 3) {
         this.locked = true;
         restoreAll();
-        toast('you were warned. the chaos cards are done for this session.');
+        toast('you were warned. chaos is done until you reload.');
         return;
       }
       this.shuffle();
@@ -148,7 +148,7 @@ html.toy-grav main{user-select:none}
       if (this.presses === 2) {
         root.classList.add('tb-rot', 'tb-slow');
         paintRoot();
-        toast('escalated: the page leans 1.5deg and every transition now takes two seconds.');
+        toast('escalated: the page leans and transitions slow down.');
       } else {
         toast('this page has been shuffled. good luck.');
       }
@@ -472,7 +472,7 @@ html.toy-grav main{user-select:none}
         ce('p', null, 'Leadership is less about having every answer and more about asking better questions in the right meetings. In this issue we walk through three durable frameworks for aligning teams around outcomes instead of output.'),
         ce('p', null, 'High-performing organizations rarely need more meetings; they need clearer decision rights. Our ownership canvas helps leaders map accountability across the delivery lifecycle, from discovery through to measurable value.'),
         ce('p', null, 'Culture is what happens between the slides. Protect focus time, align incentives with the behaviors you actually want, and let the synergies emerge organically. The rest, as ever, is execution.'),
-        ce('p', 'toy-panic__foot', '© Synergy Insights. Press the panic key again, or Escape, to return to reality.'),
+        ce('p', 'toy-panic__foot', '© Synergy Insights. Press Escape to return to reality.'),
       );
       node.appendChild(inner);
       toyRoot.appendChild(node);
@@ -664,7 +664,7 @@ html.toy-grav main{user-select:none}
       clone.querySelectorAll('#toybox-css').forEach((n) => n.remove());
       clone.querySelectorAll('script[src*="toybox.js"]').forEach((n) => n.remove());
       const node = ce('div', 'toy-src');
-      const bar = ce('p', 'toy-src__bar', 'view-source skin: the page wearing itself. close it via the toybox.');
+      const bar = ce('p', 'toy-src__bar', 'view-source skin: the page wearing itself. reload to close.');
       const pre = ce('pre');
       const code = ce('code');
       renderSource(code, `<!DOCTYPE html>\n${clone.outerHTML}`);

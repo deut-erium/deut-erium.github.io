@@ -96,7 +96,7 @@
         await writeText.call(clipboard, source);
         if (attempt !== copyAttempt) return;
         removeFallback();
-        if (await announce(status, `Copied ${lineCount} ${lineCount === 1 ? 'line' : 'lines'}.`, () => attempt === copyAttempt)) copyButton.focus();
+        if (await announce(status, 'Copied.', () => attempt === copyAttempt)) copyButton.focus();
       } catch (error) {
         await manualFallback(error?.name === 'NotAllowedError'
           ? 'Clipboard permission denied; exact code selected below.'

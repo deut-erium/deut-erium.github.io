@@ -84,13 +84,12 @@ module Jekyll
         else
           ""
         end
-        line_word = lines.length == 1 ? "line" : "lines"
         gutter = (1..lines.length).to_a.join("\n")
 
         <<~HTML.chomp
           <figure class="code-frame #{CGI.escapeHTML(classes.join(" "))}" data-code-frame data-language="#{CGI.escapeHTML(language)}" data-lines="#{lines.length}" data-source-sha256="#{Digest::SHA256.hexdigest(source)}" aria-labelledby="#{label_id}">
             <figcaption class="code-frame__bar">
-              <span class="code-frame__label" id="#{label_id}"><strong>#{CGI.escapeHTML(label)}</strong><small>#{lines.length} #{line_word} / static highlight</small></span>
+              <span class="code-frame__label" id="#{label_id}"><strong>#{CGI.escapeHTML(label)}</strong></span>
               <span class="code-frame__actions">
                 <button type="button" data-wrap-code aria-label="Wrap #{CGI.escapeHTML(label)} code frame #{index}" aria-pressed="false" disabled hidden>Wrap</button>
                 <button type="button" data-copy-code aria-label="Copy #{CGI.escapeHTML(label)} code frame #{index}" aria-describedby="#{status_id}" disabled hidden>Copy</button>
