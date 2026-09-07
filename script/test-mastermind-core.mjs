@@ -198,6 +198,24 @@ test('no-information boundaries give the same likelihood for every secret', () =
     { probability: 1 }), [{ reply: r(2, 0), probability: 1 }]);
 });
 
+test('article candidate counts distinguish a plausible wrong reply from contradiction', () => {
+  const codes = enumerateCodes(config);
+  const redGuess = [1, 1, 1, 1];
+  assert.equal(codes.filter(candidate => removalScore(candidate, redGuess).exact === 2).length, 150);
+  assert.equal(codes.filter(candidate => removalScore(candidate, redGuess).exact === 1).length, 500);
+});
+
+test('temporary-secret noise is not determined by the truthful score alone', () => {
+  const options = { positions: 3, colors: 3 };
+  const guess = [1, 1, 2];
+  assert.deepEqual(score([1, 1, 1], guess, options), r(2, 0));
+  assert.deepEqual(score([1, 1, 3], guess, options), r(2, 0));
+  const probability = secret => replyDistribution(secret, guess, options, { probability: 0.25 })
+    .find(entry => entry.reply.exact === 1 && entry.reply.misplaced === 2).probability;
+  almost(probability([1, 1, 1]), 9 / 64);
+  almost(probability([1, 1, 3]), 3 / 128);
+});
+
 test('one whole false reply can disagree with one or two legacy fields', () => {
   assert.deepEqual([r(0, 2), r(0, 0)].map(x => wholeReplyCost(r(1, 1), x)), [1, 1]);
   assert.deepEqual([r(0, 2), r(0, 0)].map(x => fieldDisagreementCost(r(1, 1), x)), [1, 2]);
