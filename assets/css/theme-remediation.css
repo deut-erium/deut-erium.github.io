@@ -354,6 +354,38 @@ html[data-skin] .prose .katex-display > .katex {
 }
 
 @media (max-width: 44rem) {
+  /* Footer contract. Skins lay the footer out as decorative grids
+     (staff bars, ledger columns); at phone widths those grids do not
+     collapse: a one-line note stretched to 1000px and link pills
+     forced one-per-row. At <=44rem every skin stacks once, wraps
+     links inline, and the note returns to its natural height. */
+  html[data-skin] .site-footer__inner {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    align-items: stretch !important;
+  }
+
+  html[data-skin] .site-footer__note {
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: none !important;
+  }
+
+  html[data-skin] .site-footer__links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    grid-template-columns: none !important;
+    justify-content: flex-start !important;
+  }
+
+  html[data-skin] .site-footer__links a {
+    width: auto !important;
+  }
+}
+
+@media (max-width: 44rem) {
   html[data-skin] :is(.record-columns, .record-row__link, .record-facts, .site-footer__links) {
     min-width: 0;
   }
