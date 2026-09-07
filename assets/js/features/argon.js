@@ -47,12 +47,11 @@ button.textContent = 'Unlock';
 const note = D.createElement('p');
 note.className = 'argon-note';
 note.setAttribute('role', 'status');
-note.textContent = 'Client-side lock: the bytes are all on this page, the key is not.';
 ui.append(label, input, button, note);
 box.after(ui);
 
-const wrong = () => {
-  note.textContent = 'wrong key';
+const wrong = (message = 'Could not unlock the article. Check the flag and try again.') => {
+  note.textContent = message;
   note.classList.add('is-wrong');
   ui.classList.remove('is-shaking');
   void ui.offsetWidth;
@@ -62,7 +61,11 @@ const wrong = () => {
 };
 const unlock = async () => {
   const value = input.value.trim();
-  if (!value) { wrong(); return; }
+  if (!value) { wrong('Enter the flag first.'); return; }
+  if (!globalThis.crypto || !crypto.subtle) {
+    wrong('Unlocking is unavailable. Try an up-to-date browser over HTTPS.');
+    return;
+  }
   button.disabled = true;
   try {
     const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(value), 'PBKDF2', false, ['deriveKey']);

@@ -196,11 +196,6 @@ if __name__ == '__main__':
     main()
 ```
 
-DISCLAIMER: This writeup is attempted to be written in a way such that a naive
-reader who is yet to see or attempt the challenge can make sense out of the writeup.  
-Feel free to skip any sections which you understand already 
-{:.info}
-
 
 ## Understanding the challenge
 - The challenge server deploys the [Paillier Cryptosystem](https://en.wikipedia.org/wiki/Paillier_cryptosystem)

@@ -39,9 +39,9 @@
   <div class="mst-wrap">
     <header class="mst-head">
       <{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %} class="mst-title">maSATermind</{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %}>
-      <p class="mst-lede">Think of a secret code. The solver &mdash; real Z3, running in this page &mdash; guesses it from your
-      bulls-and-cows answers. Lie a little if you like: every answer becomes a soft constraint, and the solver
-      maximizes how many of your answers fit. Ported from the author&rsquo;s maSATermind.</p>
+      <p class="mst-lede">Choose a secret code; repeated colors are allowed. For each guess, report
+      exact matches (right color and position) and misplaced matches (right color, wrong position).
+      Count each peg once. Try giving false replies to the solver.</p>
     </header>
 
     <section class="mst-panel" aria-labelledby="mst-game-title">
@@ -56,21 +56,21 @@
           <option value="3">3</option><option value="4" selected>4</option><option value="5">5</option>
         </select>
         <button class="mst-btn" type="button" id="mst-new">New game</button>
-        <button class="mst-btn" type="button" id="mst-sim">Watch it beat a liar</button>
+        <button class="mst-btn" type="button" id="mst-sim">Watch noisy feedback</button>
       </div>
       <div class="mst-row" id="mst-guess-row" aria-live="polite">
         <span class="mst-guess-label">solver&rsquo;s guess</span>
       </div>
       <div class="mst-controls" id="mst-answer-controls">
-        <span class="mst-counter">bulls <button type="button" id="mst-bulls-down" aria-label="fewer bulls">&minus;</button><strong id="mst-bulls">0</strong><button type="button" id="mst-bulls-up" aria-label="more bulls">+</button></span>
-        <span class="mst-counter">cows <button type="button" id="mst-cows-down" aria-label="fewer cows">&minus;</button><strong id="mst-cows">0</strong><button type="button" id="mst-cows-up" aria-label="more cows">+</button></span>
+        <span class="mst-counter">Exact matches <button type="button" id="mst-bulls-down" aria-label="Fewer exact matches">&minus;</button><strong id="mst-bulls">0</strong><button type="button" id="mst-bulls-up" aria-label="More exact matches">+</button></span>
+        <span class="mst-counter">Misplaced matches <button type="button" id="mst-cows-down" aria-label="Fewer misplaced matches">&minus;</button><strong id="mst-cows">0</strong><button type="button" id="mst-cows-up" aria-label="More misplaced matches">+</button></span>
         <button class="mst-btn mst-btn--primary" type="button" id="mst-answer">Answer</button>
         <button class="mst-btn" type="button" id="mst-exact">That is my secret</button>
       </div>
       <p class="mst-verdict" id="mst-verdict" role="status" aria-live="polite">Press New game, think of a code, then answer the solver.</p>
       <p class="mst-soft" id="mst-soft" hidden></p>
       <details class="mst-peek" id="mst-peek" open>
-        <summary>Peek at my own secret (local only, never checked)</summary>
+        <summary>Secret-code notes (not checked)</summary>
         <div class="mst-row" id="mst-secret-row" style="margin-top:.5rem"></div>
       </details>
     </section>
@@ -224,7 +224,7 @@
         var mini = D.createElement('span'); mini.className = 'mst-mini';
         r.guess.forEach(function (v) { mini.appendChild(peg(v, true)); });
         var txt = D.createElement('span');
-        txt.textContent = 'bulls ' + r.bulls + ' \u00b7 cows ' + r.cows + (r.lie ? ' (lied)' : '');
+        txt.textContent = 'Exact: ' + r.bulls + ' \u00b7 misplaced: ' + r.cows + (r.lie ? ' (secret misread)' : '');
         var n = D.createElement('strong'); n.textContent = (i + 1) + '.';
         li.append(n, mini, txt);
         history.appendChild(li);
@@ -238,7 +238,7 @@
       softLine.hidden = true;
       bullsEl.textContent = '0'; cowsEl.textContent = '0';
       buildPeek();
-      say('Think of a code: ' + MST.slots + ' pegs, colors 1-' + MST.colors + '. Then press Answer controls after the first guess.');
+      say('Think of a code: ' + MST.slots + ' pegs, colors 1-' + MST.colors + '. Press New game, then answer each guess.');
     }
 
     /* peek: optional local memo of the visitor's own secret */
@@ -272,39 +272,36 @@
       if (MST.busy || MST.over) return;
       MST.busy = true; answerBtn.disabled = exactBtn.disabled = true;
       say('Solving\u2026');
-      var cold = !enginePromise;
       if (!MST.offThread()) MST.stash({ action: 'sim', sim: !!MST.simSecret, rounds: MST.rounds });
       var script = smtScript();
       smtPre.textContent = script;
       MST.engine().then(function (eng) {
         var Mod = eng.Mod;
         var ctx = Mod._Z3_mk_context(Mod._Z3_mk_config());
-        var t0 = performance.now();
         var work = Mod.async_call(function () {
           return Mod.ccall('async_Z3_eval_smtlib2_string', 'void', ['number', 'string'], [ctx, script]);
         });
         return work.then(function (result) {
           try { Mod._Z3_del_context(ctx); } catch (e2) {}
-          var ms = Math.round(performance.now() - t0);
           if (!/^sat/.test(String(result))) throw new Error('solver said ' + String(result).split('\n')[0]);
           var guess = parseModel(String(result));
           if (guess.length !== MST.slots || guess.some(function (v) { return !v; })) throw new Error('model parse failed');
           MST.currentGuess = guess;
           renderGuess(guess);
-          say((cold ? 'Engine loaded. ' : '') + 'Guess ' + (MST.rounds.length + 1) + ' is on the board (' + ms + ' ms). How many bulls and cows?');
+          say('Guess ' + (MST.rounds.length + 1) + ': how many exact and misplaced matches?');
         }, function (err) {
           try { Mod._Z3_interrupt(ctx); } catch (e2) {}
           throw err;
         });
       }).catch(function (e) {
-        say('Solver error: ' + (e && e.message ? e.message : e) + ' Nothing left the page; try again.');
+        say('Solver error: ' + (e && e.message ? e.message : e) + ' Try again.');
       }).then(function () { MST.busy = false; answerBtn.disabled = exactBtn.disabled = false; });
     }
 
     function softSummary() {
       if (!MST.rounds.length) return '';
-      var lies = MST.rounds.filter(function (r) { return r.lie; }).length;
-      return 'soft constraints: ' + (MST.rounds.length * 2) + ' (' + MST.rounds.length + ' rounds \u00d7 2)' + (lies ? ' \u00b7 ' + lies + ' marked as lies' : '');
+      return MST.rounds.some(function (r) { return r.lie; })
+        ? 'Marked rounds used a misread secret; their replies may still be correct.' : '';
     }
 
     function answer(bulls, cows) {
@@ -324,7 +321,7 @@
     exactBtn.addEventListener('click', function () {
       if (!MST.currentGuess) return;
       MST.over = true;
-      say('CLEARED \u00b7 the solver read your mind in ' + (MST.rounds.length + 1) + ' guess(es). Soft constraints absorbed everything you lied about.', 'win');
+      say('You confirmed the code after ' + (MST.rounds.length + 1) + ' guess(es).', 'win');
       softLine.hidden = false; softLine.textContent = softSummary();
       D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
     });
@@ -343,14 +340,14 @@
     function runSimulation() {
       var K = MST.slots;
       MST.simSecret = MST.simSecret || Array.from({ length: K }, function () { return 1 + Math.floor(Math.random() * MST.colors); });
-      say('Simulating: secret ' + MST.simSecret.join(' ') + ', opponent lies with mutation rate ' + MST.mutation + '.');
+      say('Simulating: secret ' + MST.simSecret.join(' ') + '.');
       var step = function () {
         if (MST.over || !MST.simSecret) return;
         if (!MST.currentGuess) { nextGuess(); setTimeout(step, 800); return; }
         var a = agent(MST.simSecret, MST.currentGuess);
         if (a.bulls === K) {
           MST.over = true;
-          say('SOLVED IT \u00b7 ' + (MST.rounds.length + 1) + ' guess(es) against a liar with mutation ' + MST.mutation + '.', 'win');
+          say('The scorer reported all exact matches after ' + (MST.rounds.length + 1) + ' round(s).', 'win');
           softLine.hidden = false; softLine.textContent = softSummary();
           D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
           return;

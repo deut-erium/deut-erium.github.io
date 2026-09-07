@@ -72,14 +72,19 @@
   });
 
   copy.addEventListener('click', function () {
-    var done = function () {
-      copy.textContent = 'Copied';
+    var done = function (message) {
+      copy.textContent = message;
       setTimeout(function () { copy.textContent = 'Copy link'; }, 1400);
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(done, done);
-    } else {
-      done();
+    var failed = function () { done('Copy failed'); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { done('Copied'); }, failed);
+      } else {
+        failed();
+      }
+    } catch (_) {
+      failed();
     }
   });
 

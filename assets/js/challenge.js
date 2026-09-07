@@ -42,7 +42,7 @@ if(want){const g=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(x
 return f.dataset.answer===x;};
 const done=(f,v,o,at,live)=>{
 v.textContent='CLEARED - '+new Date(at).toLocaleString();v.className=P+'verdict is-clear';
-o.textContent='Correct. The flag matches.';o.className=P+'result is-correct';
+o.textContent='Correct.';o.className=P+'result is-correct';
 f.classList.add('is-solved');
 live&&(Q.matches?f.classList.add('is-ribbon'):burst(f),chime());
 flair();};
@@ -87,11 +87,10 @@ if(ok){
 const at=new Date().toISOString();solves[id]={at,flag:x};put(K,solves);
 i.classList.remove('is-bad');done(f,v,o,at,true);
 D.dispatchEvent(new CustomEvent('deuterium:solved',{detail:{id,at}}));return;}
-const z=x.length>56?x.slice(0,53)+'...':x;
-if(!F.test(x)){wrong('is-format','WRONG FORMAT - flags look like flag{...} (lowercase, one pair of braces). attempt '+att+'.');att>2&&tease();}
-else if(att>2){wrong('is-again','WRONG AGAIN - hint available below. attempt '+att+'.');tease();}
-else wrong('is-wrong','WRONG FLAG - not '+z+': the format is right, the secret is not. attempt '+att+'.');
-}catch(_){a===n&&(v.className=P+'verdict is-format',v.textContent='Local check failed.');}
+if(!F.test(x)){wrong('is-format','WRONG FORMAT - flags look like flag{...} (lowercase, one pair of braces). Attempt '+att+'.');att>2&&tease();}
+else if(att>2){wrong('is-again','WRONG AGAIN - attempt '+att+'.'+(hs.length?' A hint is available below.':''));tease();}
+else wrong('is-wrong','WRONG FLAG - attempt '+att+'.');
+}catch(_){a===n&&(v.className=P+'verdict is-format',v.textContent='Could not check the flag. Try again.');}
 finally{if(a===n){b.disabled=false;b.textContent=label;}}});
 i.addEventListener('input',()=>{i.classList.remove('is-bad');f.classList.remove('is-shaking');
 v.className!==P+'verdict is-clear'&&(v.className=P+'verdict',v.textContent='');});
