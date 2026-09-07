@@ -1,13 +1,70 @@
-/* Only the Tetrasquares article loads this sheet. */
-#article-body .tetrasquares-figure {
-  margin: 1.5em 0;
+/* One cell scale per viewport, shared by every board in this article. */
+#article-body {
+  --tetra-cell: 40px;
 }
 
-#article-body .tetrasquares-figure img {
+#article-body .tetrasquares-figure {
+  margin: 1.5em 0 2em;
+}
+
+#article-body .tetrasquares-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  margin: 0 0 1rem;
+}
+
+#article-body .tetrasquares-steps {
+  display: grid;
+  grid-template-columns: repeat(2, calc(4 * var(--tetra-cell)));
+}
+
+#article-body .square-4 { --cells: 4; }
+#article-body .square-6 { --cells: 6; }
+#article-body .square-8 { --cells: 8; }
+
+#article-body .tetrasquares-card {
+  flex: none;
+  width: calc(var(--cells) * var(--tetra-cell));
+  color: #111;
+  background: #fff7df;
+  box-shadow: 4px 4px #bd1e2b;
+}
+
+#article-body .tetrasquares-card img {
+  display: block;
   box-sizing: border-box;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto 1rem;
+  height: auto;
+  aspect-ratio: 1;
+  margin: 0;
   border: 0;
+  border-radius: 0;
+}
+
+#article-body .tetrasquares-label,
+#article-body .tetrasquares-value {
+  display: block;
+  padding: 5px 2px;
+  border: 3px solid #111;
+  color: #111;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+#article-body .tetrasquares-label {
+  background: #ffe447;
+  border-bottom: 0;
+}
+
+#article-body .tetrasquares-value {
+  border-top: 0;
 }
 
 #article-body .tetrasquares-figure figcaption {
@@ -16,6 +73,16 @@
 }
 
 #article-body table:focus-visible {
-  outline: 3px solid var(--link, var(--navy));
+  outline: 3px solid currentColor;
   outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  #article-body { --tetra-cell: 32px; }
+  #article-body .tetrasquares-gallery { gap: 20px; }
+}
+
+@media (max-width: 360px) {
+  #article-body { --tetra-cell: 28px; }
+  #article-body .tetrasquares-gallery { gap: 16px; }
 }
