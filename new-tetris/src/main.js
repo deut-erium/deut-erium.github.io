@@ -142,7 +142,18 @@ function handleBindingEvent(event) {
   keyBindingStatus.textContent = message;
 }
 
-export const game = new Game();
+const initialParams = new URLSearchParams(window.location.search);
+let initialError = "";
+let selectedGame = new Game();
+if (initialParams.has("practice")) {
+  try {
+    const { loadConstruction, PracticeGame } = await import("./practice.js?v=20260911-practice1");
+    selectedGame = new PracticeGame(await loadConstruction(window.location.search));
+  } catch (error) {
+    initialError = `Practice unavailable: ${error instanceof Error ? error.message : String(error)}`;
+  }
+}
+export const game = selectedGame;
 const renderer = new Renderer(boardCanvas, nextCanvas, holdCanvas, { theme: uiLayout.rendererTheme });
 const input = new InputController(game, document, {
   bindings: loadStoredKeyBindings(),
@@ -157,6 +168,100 @@ let lastTime = performance.now();
 let replayVerificationGeneration = 0;
 let accessibleBoardSignature = "";
 const accessibleCells = [];
+const practicePanel = requiredElement("practice-panel");
+const practiceProgress = requiredElement("practice-progress");
+const practiceTarget = requiredElement("practice-target");
+const practiceHint = requiredElement("practice-hint");
+let lastPracticePlaced = -1;
+
+if (game.practice) {
+  const construction = game.practice.construction;
+  practicePanel.hidden = false;
+  requiredElement("practice-reference").hidden = false;
+  document.querySelector(".hold-panel").hidden = true;
+  document.querySelector(".key-panel").open = false;
+  document.querySelector(".right-rail").setAttribute("aria-label", "Construction target, piece queue and controls");
+  document.querySelector(".run-console").setAttribute("aria-labelledby", "practice-title");
+  for (const panel of document.querySelectorAll(".run-start, .run-explain, .run-readout, .run-tools")) panel.hidden = true;
+  requiredElement("practice-title").textContent = `${construction.size}x${construction.size} PRACTICE / ${construction.id}`;
+  const catalogUrl = new URL("src/catalog/index.html", location.href);
+  catalogUrl.searchParams.set("size", String(construction.size));
+  catalogUrl.searchParams.set("family", construction.id);
+  requiredElement("practice-catalog").href = catalogUrl.href;
+  document.querySelector(".catalog-button").href = catalogUrl.href;
+  const exitUrl = new URL(location.href);
+  exitUrl.search = "";
+  exitUrl.hash = "";
+  writeUILayoutToUrl(exitUrl, uiLayout.id);
+  requiredElement("practice-exit").href = exitUrl.href;
+  document.title = `${construction.id} ${construction.size}x${construction.size} practice / New Tetris Web`;
+  for (const button of document.querySelectorAll('[data-action="hold"]')) button.disabled = true;
+
+  const grid = Array.from({ length: construction.size }, () => Array(construction.size));
+  construction.steps.forEach((step, index) => {
+    for (const { x, y } of step.cells) grid[y - construction.top][x - construction.left] = { number: index + 1, type: step.type };
+  });
+  practiceTarget.querySelector("caption").textContent = `${construction.id}: numbered target`;
+  const tbody = practiceTarget.querySelector("tbody");
+  grid.forEach((row, y) => {
+    const tr = document.createElement("tr");
+    row.forEach((cell, x) => {
+      const td = document.createElement("td");
+      td.textContent = String(cell.number);
+      td.dataset.step = String(cell.number);
+      td.setAttribute("aria-label", `Row ${y + 1}, column ${x + 1}: step ${cell.number}, ${cell.type} piece`);
+      if (x === construction.size - 1 || row[x + 1].number !== cell.number) td.classList.add("piece-right");
+      if (y === construction.size - 1 || grid[y + 1][x].number !== cell.number) td.classList.add("piece-bottom");
+      tr.append(td);
+    });
+    tbody.append(tr);
+  });
+  practiceHint.addEventListener("change", () => {
+    game.practice.showHint = practiceHint.checked;
+    renderGame();
+  });
+  requiredElement("retry-practice").addEventListener("click", () => {
+    input.clearPressedInputs();
+    game.restart();
+    refreshImmediately();
+  });
+}
+
+function renderGame() {
+  renderer.draw(game);
+  if (!game.practice) return;
+  const { construction, placed, showHint } = game.practice;
+  const ctx = renderer.context;
+  const size = renderer.cellSize;
+  ctx.save();
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([5, 4]);
+  ctx.strokeRect(construction.left * size + 2, construction.top * size + 2,
+    construction.size * size - 4, construction.size * size - 4);
+  if (showHint && construction.steps[placed]) {
+    ctx.strokeStyle = "#ffffff";
+    for (const { x, y } of construction.steps[placed].cells) {
+      ctx.strokeRect(x * size + 5, y * size + 5, size - 10, size - 10);
+    }
+  }
+  ctx.restore();
+}
+
+function updatePracticeProgress() {
+  if (!game.practice || lastPracticePlaced === game.practice.placed) return;
+  lastPracticePlaced = game.practice.placed;
+  const { construction, placed } = game.practice;
+  const next = construction.steps[placed];
+  practiceProgress.textContent = next
+    ? `Untimed. ${placed} / ${construction.steps.length} placed. Next: step ${placed + 1}, ${next.type} piece.`
+    : `${construction.steps.length} / ${construction.steps.length} placed. Construction complete.`;
+  for (const td of practiceTarget.querySelectorAll("td")) {
+    const step = Number(td.dataset.step);
+    td.classList.toggle("is-placed", step <= placed);
+    td.classList.toggle("is-current", step === placed + 1);
+  }
+}
 
 for (let row = 0; row < game.board.visibleRows; row += 1) {
   const tr = document.createElement("tr");
@@ -235,7 +340,20 @@ export function handleEvents(events) {
   for (const event of events) {
     if (event.type === "start") {
       resetSquareResult();
-      announcements.push("Game started.");
+      if (game.practice) {
+        input.clearPressedInputs();
+        lastPracticePlaced = -1;
+        challengeMessage.textContent = "Match the numbered target. Wrong drops leave the board unchanged.";
+      }
+      announcements.push(game.practice ? "Practice started. No gravity or timer." : "Game started.");
+    } else if (event.type === "practicemiss") {
+      challengeMessage.textContent = `Drop rejected: match step ${event.detail.step}'s cells. The board is unchanged. Try the placement outline if you need a hint.`;
+      announcements.push(`Drop rejected. Match step ${event.detail.step}.`);
+    } else if (event.type === "practicecomplete") {
+      challengeMessage.textContent = "Construction complete. Retry this example or choose another from the catalog.";
+      announcements.push("Construction complete.");
+    } else if (event.type === "practicestep") {
+      if (game.status !== "complete") challengeMessage.textContent = `Step ${event.detail.placed} placed. Continue with the next numbered piece.`;
     } else if (event.type === "spawn") {
       announcements.push(`New ${event.detail.type} piece.`);
     } else if (event.type === "hold") {
@@ -335,9 +453,11 @@ function renderAccessibleState() {
 export function updateHud() {
   renderAccessibleState();
   const isDaily = Boolean(game.challenge);
-  fields.runMode.textContent = isDaily ? `DAILY / ${dateFromSeed(game.challenge.seed) ?? "CUSTOM"}` : "ENDLESS";
-  fields.scoreLabel.textContent = "SCORE";
-  fields.score.textContent = game.challengeScore.toLocaleString("en-US");
+  const isPractice = Boolean(game.practice);
+  updatePracticeProgress();
+  fields.runMode.textContent = isPractice ? "PRACTICE / UNTIMED" : isDaily ? `DAILY / ${dateFromSeed(game.challenge.seed) ?? "CUSTOM"}` : "ENDLESS";
+  fields.scoreLabel.textContent = isPractice ? "PLACED" : "SCORE";
+  fields.score.textContent = isPractice ? `${game.practice.placed} / ${game.practice.construction.steps.length}` : game.challengeScore.toLocaleString("en-US");
   fields.lines.textContent = game.lines.toLocaleString("en-US");
   fields.level.textContent = game.level.toLocaleString("en-US");
   fields.pieces.textContent = game.stats.pieces.toLocaleString("en-US");
@@ -362,13 +482,13 @@ export function updateHud() {
     copyResultButton.disabled = true;
   }
 
-  document.body.dataset.run = isDaily ? "daily" : "free";
+  document.body.dataset.run = isPractice ? "practice" : isDaily ? "daily" : "free";
   if (game.status === "paused") {
     setOverlay("Paused");
   } else if (game.status === "gameover") {
     setOverlay("Game over - press R to restart");
   } else if (game.status === "complete") {
-    setOverlay(`Daily game complete - ${game.challengeScore.toLocaleString("en-US")} points`);
+    setOverlay(isPractice ? "Construction complete - retry or choose another example" : `Daily game complete - ${game.challengeScore.toLocaleString("en-US")} points`);
   } else {
     setOverlay("");
   }
@@ -380,7 +500,7 @@ function frame(now) {
   input.update(delta);
   game.tick(delta);
   handleEvents(game.drainEvents());
-  renderer.draw(game);
+  renderGame();
   updateHud();
   requestAnimationFrame(frame);
 }
@@ -401,6 +521,8 @@ function replaceChallengeUrl(date) {
 function clearChallengeUrl() {
   const url = new URL(window.location.href);
   url.searchParams.delete("challenge");
+  url.searchParams.delete("practice");
+  url.searchParams.delete("family");
   history.replaceState(null, "", url);
 }
 
@@ -426,7 +548,7 @@ async function copyText(value) {
 
 function refreshImmediately() {
   handleEvents(game.drainEvents());
-  renderer.draw(game);
+  renderGame();
   updateHud();
   boardCanvas.focus();
 }
@@ -496,10 +618,10 @@ copyResultButton.addEventListener("click", async () => {
   }
 });
 
-let initialError = "";
-const initialParams = new URLSearchParams(window.location.search);
 const linkedDate = initialParams.get("challenge");
-if (linkedDate !== null) {
+if (initialParams.has("practice")) {
+  if (!initialError) game.start();
+} else if (linkedDate !== null) {
   try {
     startDatedChallenge(linkedDate, { updateUrl: false });
     challengeMessage.textContent = `Daily game started for ${linkedDate}.`;
@@ -511,7 +633,7 @@ if (linkedDate !== null) {
   game.start();
 }
 handleEvents(game.drainEvents());
-renderer.draw(game);
+renderGame();
 updateHud();
 if (initialError) challengeMessage.textContent = initialError;
 gameMachine.hidden = false;

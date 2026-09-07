@@ -18,7 +18,7 @@
       document.documentElement.dataset.layout = allowed.includes(requested) ? requested : "pop-schematic";
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260911">
+  <link rel="stylesheet" href="styles.css?v=20260911-practice1">
   <link rel="stylesheet" href="src/layouts/pop-schematic.css?v=20260911">
 </head>
 <body>
@@ -38,6 +38,19 @@
     <p class="print-only">The game controls and live board are omitted from print. Use the square catalog and scoring guide links above for printable reference material.</p>
     <div id="game-machine" class="machine" hidden>
     <section class="run-console" aria-labelledby="run-title">
+      <section id="practice-panel" class="practice-panel" aria-labelledby="practice-title" hidden>
+        <div class="practice-copy">
+          <h2 id="practice-title">CONSTRUCTION PRACTICE</h2>
+          <p id="practice-progress"></p>
+          <details class="practice-instructions"><summary>How practice works</summary><p>Follow the numbered target beside the board. Build in the outlined area at the bottom. Drop only locks a matching placement; Hold is off. There is no gravity or timer, and practice does not count toward daily results.</p></details>
+          <label class="practice-hint"><input id="practice-hint" type="checkbox"> Outline the next placement</label>
+          <div class="practice-actions">
+            <button id="retry-practice" type="button">Retry construction</button>
+            <a id="practice-catalog" href="src/catalog/index.html">Back to this example</a>
+            <a id="practice-exit" href="./">Play normally</a>
+          </div>
+        </div>
+      </section>
       <div class="run-start">
         <h2 id="run-title">CHOOSE A GAME</h2>
         <label for="challenge-date">Daily date</label>
@@ -125,6 +138,10 @@
       </section>
 
       <aside class="right-rail" aria-label="Piece queue and controls">
+        <section id="practice-reference" class="practice-reference preview-panel" hidden>
+          <table id="practice-target"><caption>Numbered target</caption><tbody></tbody></table>
+          <p>Numbers give the placement order.</p>
+        </section>
         <section class="preview-panel hold-panel">
           <h2>HOLD</h2>
           <canvas id="hold" width="120" height="70" aria-label="Held piece"></canvas>
@@ -167,6 +184,6 @@
     </div>
   </main>
 
-  <script type="module" src="src/main.js?v=20260911"></script>
+  <script type="module" src="src/main.js?v=20260911-practice1"></script>
 </body>
 </html>

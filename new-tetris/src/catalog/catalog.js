@@ -74,6 +74,8 @@ const ui = Object.freeze({
   orderSection: document.querySelector("#order-section"),
   modeNote: document.querySelector("#catalog-mode-note"),
   play: document.querySelector("#play"),
+  practice: document.querySelector("#practice-construction"),
+  practiceUnavailable: document.querySelector("#practice-unavailable"),
 });
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -276,6 +278,17 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   currentFamily = families.find((family) => family.id === id) ?? null;
   if (!currentFamily) return;
   const hasExample = Array.isArray(currentFamily.pieces);
+  const canPractice = hasExample && [4, 6].includes(size) && Array.isArray(currentFamily.order);
+  ui.practice.hidden = !canPractice;
+  ui.practiceUnavailable.hidden = canPractice;
+  if (canPractice) {
+    const practiceUrl = new URL("../../", location.href);
+    practiceUrl.searchParams.set("practice", String(size));
+    practiceUrl.searchParams.set("family", currentFamily.id);
+    ui.practice.href = practiceUrl.href;
+  } else {
+    ui.practice.removeAttribute("href");
+  }
   const pieceTotal = Object.values(currentFamily.counts).reduce((sum, count) => sum + count, 0);
   const styles = hasExample ? pieceStyles(currentFamily) : {};
   ui.detail.classList.toggle("aggregate", !hasExample);

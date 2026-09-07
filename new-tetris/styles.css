@@ -886,3 +886,43 @@ h2 {
     background: #fff;
   }
 }
+
+/* Practice shares the game shell, but keeps its target readable in both layouts. */
+html[data-layout] body[data-run="practice"] .run-console {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 12px;
+}
+.practice-panel { min-width: 0; }
+.practice-instructions summary { cursor: pointer; min-height: 32px; padding-block: 6px; }
+.practice-panel[hidden] { display: none; }
+.practice-copy { min-width: 0; }
+.practice-copy h2 { overflow-wrap: anywhere; }
+.practice-copy p { margin: 8px 0; font-size: .9rem; line-height: 1.4; }
+#practice-progress { font-weight: 700; }
+.practice-hint { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.practice-hint input { width: 20px; height: 20px; }
+.practice-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.practice-actions :is(a, button) { display: inline-flex; align-items: center; min-height: 44px; }
+.practice-actions a { color: inherit; text-underline-offset: 3px; }
+.practice-reference { min-width: 0; }
+.practice-reference p { margin: 8px 0 0; font-size: .8rem; line-height: 1.3; }
+#practice-target { width: 100%; table-layout: fixed; border: 3px solid #111; border-collapse: collapse; }
+#practice-target caption { margin-bottom: 6px; font-size: .8rem; font-weight: 700; overflow-wrap: anywhere; }
+#practice-target td {
+  height: 24px;
+  padding: 2px;
+  border: 1px solid #aaa;
+  text-align: center;
+  font-size: .85rem;
+  font-weight: 700;
+  color: #111;
+  background: #fff7df;
+}
+#practice-target td.piece-right { border-right: 3px solid #111; }
+#practice-target td.piece-bottom { border-bottom: 3px solid #111; }
+#practice-target td.is-current { background: #ffe447; }
+#practice-target td.is-placed { background: #b9edbe; }
+@media (max-width: 780px) {
+  html[data-layout] body[data-run="practice"] .game-stage { grid-template-columns: minmax(0, 300px) 116px; }
+  #practice-target td { height: 20px; font-size: .75rem; }
+}

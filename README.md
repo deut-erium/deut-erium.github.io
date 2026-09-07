@@ -43,6 +43,32 @@ Stream the JSON Lines variant:
 curl -s https://deut-erium.github.io/index.jsonl | jq -c 'select(.has_math == true) | {title, route}'
 ```
 
+## New Tetris construction practice
+
+Open the [square catalog](new-tetris/src/catalog/index.html), select an illustrated
+4x4 or 6x6 example, and choose **Practice this construction**. For example,
+`/new-tetris/?practice=4&family=T4` opens the four-T construction.
+
+Practice supplies the illustrated piece order with no gravity or timer. Match
+each numbered piece in the outlined target area and hard-drop it to lock. A
+wrong drop leaves the board unchanged. The optional placement outline shows the
+next target, and Retry resets the same sequence. Hold is disabled so the order
+stays consistent with the diagram. Completion means the construction is built;
+practice does not submit daily results or collect its pending row-clear value.
+
+The 8x8 catalog has aggregate counts rather than illustrated placement orders,
+so it does not offer construction practice. Daily and endless rules are unchanged.
+The practice engine and selected catalog dataset load only on practice URLs.
+
+Run the engine and catalog reachability tests with:
+
+```sh
+node --test script/test-tetris-practice.mjs
+```
+
+The static-app manifest distinguishes newly authored local files from patched
+recovered files and retains the original hashes for recovered source.
+
 ## Publishing a post
 
 `master` contains the Jekyll source. `gh-pages` contains the generated site. GitHub Actions verifies source pushes but does not deploy them.
