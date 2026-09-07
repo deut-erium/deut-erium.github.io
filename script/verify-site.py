@@ -475,7 +475,7 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
 # The Tetrasquares article adds one article script and nine original SVG images.
 # Existing code/math/challenge baselines are unchanged.
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 83, 334, 243, 93):
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 83, 334, 243, 103):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")

@@ -142,7 +142,7 @@ I kept the gold bonus and added a test for a *clean cut*: a horizontal or vertic
       <span class="tetrasquares-value">3,500 pending</span>
     </div>
   </div>
-  <figcaption>Both gold, both one shape. T4 gets another 1,000 points for the interlock.</figcaption>
+  <figcaption>Both use one shape and form gold. T4 gets another 1,000 points for the interlock.</figcaption>
 </figure>
 
 For a 4x4 square, I add up:
@@ -218,7 +218,7 @@ Nine Ts won't work at all. Checkerboard-color a 6x6 board and there are 18 cells
 
 ## The catalog
 
-The tiling counts in [Butler, Ekstrand and Osborne's poster](#ref-tiling) match the totals in the catalog:
+Butler, Ekstrand and Osborne [count these tilings](#ref-tiling):
 
 | Square | Pieces | Geometric tilings | Piece mixes |
 | --- | ---: | ---: | ---: |
@@ -245,7 +245,7 @@ An 8x8 square needs sixteen pieces. In a ten-column well, centering it leaves on
       <span class="tetrasquares-value">20,000 pending</span>
     </div>
   </div>
-  <figcaption>Sixteen Ts. Same cell size as the smaller figures; twice the width of T4.</figcaption>
+  <figcaption>T16, assembled from four T4 quadrants.</figcaption>
 </figure>
 
 I checked this order with a supplied T-only sequence under the browser game's movement rules. For 8x8 I went with a flat 10,000 for silver and 20,000 for gold, collected across eight rows. There is no additional interlock or diversity bonus. Those smaller T4 squares can still have their own uncollected points attached when the big square forms.
@@ -254,11 +254,11 @@ The [8x8 catalog]({{ '/new-tetris/src/catalog/?size=8&family=T16' | relative_url
 
 ## References
 
-1. <a id="ref-manual"></a>[The New Tetris instruction booklet](https://archive.org/download/new-tetris-the-usa/New%20Tetris%2C%20The%20%28USA%29_text.pdf), Nintendo, 1999. Printed page 9 describes Mono-Squares and Multi-Squares; page 11 describes collected-line rewards. These are PDF pages 11 and 13.
-2. <a id="ref-game"></a>[The New Tetris](https://tetris.wiki/The_New_Tetris), TetrisWiki. Release information, square rules, Hold, Spin Moves and scoring.
-3. <a id="ref-squares"></a>[Square Tetris](https://tetris.wiki/Square_Tetris), TetrisWiki. Square constructions and building methods.
-4. <a id="ref-platforms"></a>[Square Platforming](https://harddrop.com/wiki/Square_Platforming), Hard Drop. Supporting surfaces and placement order.
-5. <a id="ref-harddrop"></a>[The New Tetris](https://harddrop.com/wiki/The_New_Tetris), Hard Drop. Another account of the original rules and scoring; some material overlaps with TetrisWiki.
-6. <a id="ref-tiling"></a>[TETRIS Tiling](https://oeis.org/A230031/a230031.pdf), Steve Butler, Jason Ekstrand and Steven Osborne. Geometric counts for tetromino tilings of squares.
+1. <span id="ref-manual"></span>[The New Tetris instruction booklet](https://archive.org/download/new-tetris-the-usa/New%20Tetris%2C%20The%20%28USA%29_text.pdf), Nintendo, 1999. Printed page 9 describes Mono-Squares and Multi-Squares; page 11 describes collected-line rewards. These are PDF pages 11 and 13.
+2. <span id="ref-game"></span>[The New Tetris](https://tetris.wiki/The_New_Tetris), TetrisWiki. Release information, square rules, Hold, Spin Moves and scoring.
+3. <span id="ref-squares"></span>[Square Tetris](https://tetris.wiki/Square_Tetris), TetrisWiki. Square constructions and building methods.
+4. <span id="ref-platforms"></span>[Square Platforming](https://harddrop.com/wiki/Square_Platforming), Hard Drop. Supporting surfaces and placement order.
+5. <span id="ref-harddrop"></span>[The New Tetris](https://harddrop.com/wiki/The_New_Tetris), Hard Drop. Another account of the original rules and scoring; some material overlaps with TetrisWiki.
+6. <span id="ref-tiling"></span>[TETRIS Tiling](https://oeis.org/A230031/a230031.pdf), Steve Butler, Jason Ekstrand and Steven Osborne. Geometric counts for tetromino tilings of squares.
 
 A scoring wrinkle: the manual says five or ten collected lines per square row. TetrisWiki and Hard Drop describe additive bonuses and give 25 or 45 for a four-row clear through a silver or gold square. I haven't resolved that disagreement by testing the N64 game. The point values in this post belong to Tetrasquares.
