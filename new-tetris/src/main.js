@@ -173,6 +173,7 @@ const practiceProgress = requiredElement("practice-progress");
 const practiceTarget = requiredElement("practice-target");
 const practiceHint = requiredElement("practice-hint");
 let lastPracticePlaced = -1;
+let lastPracticeFrame = "";
 
 if (game.practice) {
   const construction = game.practice.construction;
@@ -227,9 +228,16 @@ if (game.practice) {
   });
 }
 
+function practiceFrameKey() {
+  const piece = game.active;
+  return [game.status, game.practice.placed, game.practice.showHint,
+    piece?.type, piece?.x, piece?.y, piece?.rotation].join("|");
+}
+
 function renderGame() {
   renderer.draw(game);
   if (!game.practice) return;
+  lastPracticeFrame = practiceFrameKey();
   const { construction, placed, showHint } = game.practice;
   const ctx = renderer.context;
   const size = renderer.cellSize;
@@ -500,8 +508,11 @@ function frame(now) {
   input.update(delta);
   game.tick(delta);
   handleEvents(game.drainEvents());
-  renderGame();
-  updateHud();
+  // Untimed practice has no visual change between inputs. Leave normal timing alone.
+  if (!game.practice || practiceFrameKey() !== lastPracticeFrame) {
+    renderGame();
+    updateHud();
+  }
   requestAnimationFrame(frame);
 }
 
