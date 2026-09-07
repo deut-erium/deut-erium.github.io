@@ -50,6 +50,7 @@
 <link rel="stylesheet" href="{{ '/assets/css/theme-remediation.css' | relative_url }}?v={{ '/assets/css/theme-remediation.css' | asset_v }}">
 {%- if page.mathjax == true -%}<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}?v={{ '/assets/katex/katex.min.css' | asset_v }}">{%- endif -%}
 {%- if page.widgets -%}<link rel="stylesheet" href="{{ '/assets/widgets/osec-widgets.css' | relative_url }}?v={{ '/assets/widgets/osec-widgets.css' | asset_v }}">{%- endif -%}
+{%- for _stylesheet in page.stylesheets -%}<link rel="stylesheet" href="{{ _stylesheet | relative_url }}?v={{ _stylesheet | asset_v }}">{%- endfor -%}
 <script>window.__deuteriumAssetVersion = {{ '/' | asset_v | jsonify }};</script>
 <script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ '/assets/js/theme.js' | asset_v }}"></script>
 <script defer src="{{ '/assets/js/share.js' | relative_url }}?v={{ '/assets/js/share.js' | asset_v }}"></script>

@@ -4,6 +4,8 @@ description: "Building bigger squares from falling tetrominoes: the N64 mechanic
 author: deuterium
 tags: games tetris combinatorics programming
 key: tetrasquares000001
+stylesheets:
+  - /assets/css/tetrasquares-article.css
 excerpt_separator: <!--more-->
 ---
 
@@ -13,8 +15,11 @@ I love *The New Tetris* on the Nintendo 64 because it makes me greedy in a diffe
 
 The mechanic is small enough to explain with four pieces. Arrange four T tetrominoes like this, and the game turns them into a gold square:
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/t4-steps.svg' | relative_url }}" width="720" height="756" alt="Four stages of the T4 construction: numbered T pieces interlock to fill a 4 by 4 square." loading="eager" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/t4-steps-mobile.svg' | relative_url }}" width="720" height="756">
+    <img src="{{ '/assets/images/tetrasquares/t4-steps.svg' | relative_url }}" width="720" height="756" alt="Four stages of the T4 construction: numbered T pieces interlock to fill a 4 by 4 square." loading="eager" decoding="async">
+  </picture>
   <figcaption>Four pieces, one square. The numbers show placement order; the colors throughout this post belong to my browser experiment, not the N64 game. <a href="{{ '/new-tetris/?practice=4&family=T4' | relative_url }}">Try this construction.</a></figcaption>
 </figure>
 
@@ -38,29 +43,41 @@ Hold gives me some control over that plan, but the incoming pieces still matter.
 
 The easy gold squares are four O pieces or four I pieces. One is a larger square made from smaller squares; the other is four strips stacked together.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/easy-squares.svg' | relative_url }}" width="720" height="456" alt="O4 consists of four 2 by 2 O pieces. I4 consists of four horizontal I strips. Each has an uncomplicated rectangular decomposition." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/easy-squares-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/easy-squares.svg' | relative_url }}" width="720" height="456" alt="O4 consists of four 2 by 2 O pieces. I4 consists of four horizontal I strips. Each has an uncomplicated rectangular decomposition." loading="lazy" decoding="async">
+  </picture>
   <figcaption>Two straightforward gold constructions. Practice <a href="{{ '/new-tetris/?practice=4&family=O4' | relative_url }}">O4</a> or <a href="{{ '/new-tetris/?practice=4&family=I4' | relative_url }}">I4</a>.</figcaption>
 </figure>
 
 Silver squares give me more freedom. I can join two 2x4 rectangles, each made from two pieces. Or I can make a 3x4 rectangle from three pieces and complete it with an I strip. The second construction below uses two T pieces and an L for that three-piece region.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/rectangles.svg' | relative_url }}" width="720" height="456" alt="Two L pieces and two O pieces split into two 2 by 4 rectangles. An L and two T pieces make a 3 by 4 rectangle, completed by an I strip. Cyan lines mark the splits." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/rectangles-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/rectangles.svg' | relative_url }}" width="720" height="456" alt="Two L pieces and two O pieces split into two 2 by 4 rectangles. An L and two T pieces make a 3 by 4 rectangle, completed by an I strip. Cyan lines mark the splits." loading="lazy" decoding="async">
+  </picture>
   <figcaption>Small rectangles are useful building blocks. Try <a href="{{ '/new-tetris/?practice=4&family=L2-O2' | relative_url }}">the two pairs</a> or <a href="{{ '/new-tetris/?practice=4&family=I1-L1-T2' | relative_url }}">the rectangle with an I cap</a>.</figcaption>
 </figure>
 
 The T square at the start feels different. Its pieces interlock: I cannot draw a straight cut all the way across the square without cutting a piece. J and L pieces have some lovely arrangements too, including spirals and pairs that form rectangles. These two examples show why the arrangement matters even when every piece has the same type.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/gold-patterns.svg' | relative_url }}" width="720" height="456" alt="A spiral of four J pieces has no clean straight split. The pictured four-L arrangement consists of two separable pairs, with a horizontal clean split." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/gold-patterns-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/gold-patterns.svg' | relative_url }}" width="720" height="456" alt="A spiral of four J pieces has no clean straight split. The pictured four-L arrangement consists of two separable pairs, with a horizontal clean split." loading="lazy" decoding="async">
+  </picture>
   <figcaption>A <a href="{{ '/new-tetris/?practice=4&family=J4' | relative_url }}">J spiral</a> and <a href="{{ '/new-tetris/?practice=4&family=L4' | relative_url }}">paired L pieces</a>. These are different arrangements, not a reflected pair. L pieces can form a spiral too.</figcaption>
 </figure>
 
 Another favorite is the silver square made from two Z pieces and two L pieces. Its reflected composition uses two S pieces and two J pieces. The two slanted pieces fit between the hooks, and the whole thing has half-turn symmetry.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/mixed-interlocks.svg' | relative_url }}" width="720" height="456" alt="Two L and two Z pieces interlock into one silver square. The reflected piece mix uses two J and two S pieces. Both pictured constructions have half-turn symmetry." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/mixed-interlocks-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/mixed-interlocks.svg' | relative_url }}" width="720" height="456" alt="Two L and two Z pieces interlock into one silver square. The reflected piece mix uses two J and two S pieces. Both pictured constructions have half-turn symmetry." loading="lazy" decoding="async">
+  </picture>
   <figcaption>The <a href="{{ '/new-tetris/?practice=4&family=L2-Z2' | relative_url }}">Z/L interlock</a> and the <a href="{{ '/new-tetris/?practice=4&family=J2-S2' | relative_url }}">S/J interlock</a>. Their displayed values are Tetrasquares points, explained below.</figcaption>
 </figure>
 
@@ -78,11 +95,15 @@ For a 4x4 square, the rule is:
 | Gold: all pieces have the same type | +1,500 |
 | Each distinct piece type after the first | +250 |
 | No clean horizontal or vertical split | +1,000 |
+{: tabindex="0" aria-label="4x4 square awards"}
 
 A **clean split** runs between rows or columns, all the way across the region, without passing through a tetromino. Four O pieces have clean splits. Four interlocking T pieces do not.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/clean-splits.svg' | relative_url }}" width="720" height="456" alt="Cyan cuts separate O4 without crossing a piece. A red sample cut through T4 crosses pieces, and no clean full cut exists. O4 carries 2500 pending points; T4 carries 3500." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/clean-splits-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/clean-splits.svg' | relative_url }}" width="720" height="456" alt="Cyan cuts separate O4 without crossing a piece. A red sample cut through T4 crosses pieces, and no clean full cut exists. O4 carries 2500 pending points; T4 carries 3500." loading="lazy" decoding="async">
+  </picture>
   <figcaption>Both are gold and use one type, so the 1,000-point difference comes entirely from the structural bonus.</figcaption>
 </figure>
 
@@ -109,18 +130,25 @@ I try the legal cuts, repeat inside the smaller rectangles, and choose the decom
 | Largest group contains 5 or 6 pieces | 1,000 |
 | All 9 stay together; some full cut crosses just 1 piece | 1,500 |
 | All 9 stay together; every full cut crosses at least 2 pieces | 2,500 |
+{: tabindex="0" aria-label="6x6 structure bonuses"}
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/six-cuts.svg' | relative_url }}" width="720" height="456" alt="The left 6 by 6 square separates into five O pieces and a four-T interlock, giving a 500-point shape bonus. The right uses five L and four T pieces; even its best full cut crosses two pieces, giving a 2500-point bonus." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/six-cuts-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/six-cuts.svg' | relative_url }}" width="720" height="456" alt="The first 6 by 6 square separates into five O pieces and a four-T interlock, giving a 500-point shape bonus. The second uses five L and four T pieces; even its best full cut crosses two pieces, giving a 2500-point bonus." loading="lazy" decoding="async">
+  </picture>
   <figcaption>Compare <a href="{{ '/new-tetris/?practice=6&family=O5-T4' | relative_url }}">a T4 core surrounded by O pieces</a> with <a href="{{ '/new-tetris/?practice=6&family=L5-T4' | relative_url }}">the nine-piece L/T interlock</a>. Cyan cuts separate pieces; the red cut crosses them.</figcaption>
 </figure>
 
 There are no groups of seven or eight in this table. Each piece has area four, so such a rectangular group would need area 28 or 32. Neither area has an integer-sided rectangle that fits inside 6x6.
 
-Type variety and interlocking are separate rewards. This seven-type example earns 7,000, while the six-type example beside it earns 7,500 because it gets the larger shape bonus. Both beat nine O pieces, whose gold square is worth 6,000.
+Type variety and interlocking are separate rewards. This seven-type example earns 7,000, while the six-type example shown with it earns 7,500 because it gets the larger shape bonus. Both beat nine O pieces, whose gold square is worth 6,000.
 
-<figure>
-  <img src="{{ '/assets/images/tetrasquares/six-mixes.svg' | relative_url }}" width="720" height="456" alt="A 6 by 6 construction using all seven types is worth 7000 pending points. A different construction using six types has a stronger interlock and is worth 7500." loading="lazy" decoding="async">
+<figure class="tetrasquares-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="{{ '/assets/images/tetrasquares/six-mixes-mobile.svg' | relative_url }}" width="360" height="912">
+    <img src="{{ '/assets/images/tetrasquares/six-mixes.svg' | relative_url }}" width="720" height="456" alt="A 6 by 6 construction using all seven types is worth 7000 pending points. A different construction using six types has a stronger interlock and is worth 7500." loading="lazy" decoding="async">
+  </picture>
   <figcaption>Try <a href="{{ '/new-tetris/?practice=6&family=I1-J1-L1-O1-S1-T2-Z2' | relative_url }}">all seven types</a> or <a href="{{ '/new-tetris/?practice=6&family=J1-L1-O1-S1-T2-Z3' | relative_url }}">the six-type interlock</a>. Each picture shows one specific arrangement, not a fixed price for every arrangement of that piece mix.</figcaption>
 </figure>
 
@@ -135,6 +163,7 @@ The number of geometric tilings grows quickly. These totals appear in a [tiling 
 | 4x4 | 4 | 117 | 24 |
 | 6x6 | 9 | 178,939 | 1,467 |
 | 8x8 | 16 | 19,077,209,438 | 30,434 |
+{: tabindex="0" aria-label="Geometric tilings and catalog piece mixes"}
 
 A piece mix records how many of each type I use. For example, L2-Z2 means two L pieces and two Z pieces. The same mix can have several arrangements, and those arrangements can have different structural scores. The totals count placements on a fixed board, including rotated or reflected arrangements when those produce different tilings; they are not counts with every symmetry identified.
 
@@ -148,7 +177,7 @@ I like this as the link between looking at a diagram and understanding it. A squ
 
 An 8x8 square needs sixteen tetrominoes. The playing well is still ten columns wide, so a centered construction leaves just one column on either side. This is where my desire to keep a square intact starts competing with almost everything else I might want to do on the board.
 
-<figure>
+<figure class="tetrasquares-figure">
   <img src="{{ '/assets/images/tetrasquares/eight-square.svg' | relative_url }}" width="480" height="546" alt="Sixteen numbered T pieces form an 8 by 8 gold square from four T4 quadrants. The new square carries 20000 pending points." loading="lazy" decoding="async">
   <figcaption>Four T4 constructions form one T16 square. This illustration's order was checked with the game's movement and locking methods using a supplied T-only sequence. It is not an 8x8 practice entry.</figcaption>
 </figure>
