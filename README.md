@@ -8,7 +8,7 @@ Sections:
 - `/WriteUps/` - CTF writeups and challenge attachments
 - `/ctf-tutorials/` - CTF tutorials and assignments
 - `/ramblings/` - informal posts
-- `/new-tetris/` - the published game, catalog, and scoring guide
+- `/new-tetris/` - Tetrasquares, its catalog, and scoring guide
 
 The imported source is recorded in `script/imported-content-manifest.json`. It includes the public WriteUps source plus eight newer local files. Historical routes, attachment bytes, feeds, sitemaps, tags, and the recovered game are checked after each build.
 
@@ -43,7 +43,10 @@ Stream the JSON Lines variant:
 curl -s https://deut-erium.github.io/index.jsonl | jq -c 'select(.has_math == true) | {title, route}'
 ```
 
-## New Tetris construction practice
+## Tetrasquares construction practice
+
+Tetrasquares keeps the existing `/new-tetris/` URLs and saved-game identifiers.
+The [accompanying article](_posts/2026-09-07-tetrasquares.md) explains its rules and diagrams.
 
 Open the [square catalog](new-tetris/src/catalog/index.html), select an illustrated
 4x4 or 6x6 example, and choose **Practice this construction**. For example,

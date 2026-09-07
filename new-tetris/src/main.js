@@ -195,7 +195,7 @@ if (game.practice) {
   exitUrl.hash = "";
   writeUILayoutToUrl(exitUrl, uiLayout.id);
   requiredElement("practice-exit").href = exitUrl.href;
-  document.title = `${construction.id} ${construction.size}x${construction.size} practice / New Tetris Web`;
+  document.title = `${construction.id} ${construction.size}x${construction.size} practice / Tetrasquares`;
   for (const button of document.querySelectorAll('[data-action="hold"]')) button.disabled = true;
 
   const grid = Array.from({ length: construction.size }, () => Array(construction.size));
