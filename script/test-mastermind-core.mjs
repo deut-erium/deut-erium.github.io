@@ -314,7 +314,13 @@ test('bounded inference retains truth under every allowed two-round tiny transcr
   let checked = 0;
   for (const secret of codes) for (const budget of [0, 1, 2]) {
     function walk(history, spent) {
-      assert.ok(boundedCandidates(options, history, budget).some(x => x.code.join() === secret.join()));
+      const actual = boundedCandidates(options, history, budget);
+      const expected = codes.filter(candidate => history.every(turn => candidate.join() !== turn.guess.join()))
+        .map(candidate => ({ code: candidate, disagreements: history.filter(turn =>
+          JSON.stringify(removalScore(candidate, turn.guess)) !== JSON.stringify(turn.reply)).length }))
+        .filter(candidate => candidate.disagreements <= budget);
+      assert.deepEqual(actual, expected);
+      assert.ok(actual.some(x => x.code.join() === secret.join()));
       checked++;
       if (history.length === 2) return;
       for (const guess of codes) {
@@ -360,6 +366,41 @@ test('agreement rankings use the declared objective and stable lexicographic tie
     assert.deepEqual(ties, [...ties].sort());
   }
   assert.throws(() => rankByAgreement(options, [], 'unknown'));
+});
+
+test('caller-defined iterators cannot replace indexed codes or histories', () => {
+  const secret = [1, 1];
+  secret[Symbol.iterator] = function* () { yield 2; };
+  assert.deepEqual(score(secret, [1, 1], { positions: 2, colors: 2 }), r(2, 0));
+  const distribution = replyDistribution(secret, [1, 1], { positions: 2, colors: 2 }, { probability: 0 });
+  assert.deepEqual(distribution, [{ reply: r(2, 0), probability: 1 }]);
+  const history = [{ guess: [1, 1], reply: null, outcome: 'not-solved' }];
+  history[Symbol.iterator] = function* () {};
+  assert.equal(boundedCandidates({ positions: 2, colors: 2 }, history, 0).length, 3);
+});
+
+test('inference rejects unattainable replies and histories beyond its explicit work limit', () => {
+  const options = { positions: 2, colors: 2 };
+  const invalid = [{ guess: [1, 1], reply: r(0, 1), outcome: 'not-solved' }];
+  for (const run of [history => boundedCandidates(options, history, 1),
+    history => rankByAgreement(options, history)]) {
+    assert.throws(() => run(invalid), /not attainable/);
+    assert.throws(() => run(Array.from({ length: 61 }, () => ({ guess: [1, 1], reply: r(0, 0), outcome: 'not-solved' }))), /history length/);
+  }
+});
+
+test('caller edits cannot change configuration, allowance or submitted feedback', () => {
+  const options = gameOptions({});
+  const game = createGame(options);
+  options.lieBudget = 60; options.colors = 2; options.sessionId = 'other';
+  issue(game, [1, 1, 1, 1]);
+  const response = r(0, 0);
+  submit(game, response);
+  response.exact = 4;
+  assert.deepEqual(game.solverView().turns[0].reply, r(0, 0));
+  assert.equal(game.solverView().config.colors, 6);
+  assert.equal(game.solverView().lieBudget, 1);
+  assert.equal(game.oracleView().remainingBudget, 0);
 });
 
 test('game validation rejects unsupported modes/configurations and wrong reply channels', () => {

@@ -23,8 +23,9 @@ export function code(value, config) {
   if (!Array.isArray(value) || value.length !== config.positions) {
     throw new RangeError(`A code needs ${config.positions} positions`);
   }
-  // Array.from visits holes too, unlike Array.prototype.map/every.
-  return Object.freeze(Array.from(value, peg => integer(peg, 'color', 1, config.colors)));
+  // Read exactly the indexed positions, including holes. Caller-defined array
+  // iterators must not change the validated code's length or contents.
+  return Object.freeze(Array.from({ length: config.positions }, (_, i) => integer(value[i], 'color', 1, config.colors)));
 }
 
 export function reply(value, positions) {
