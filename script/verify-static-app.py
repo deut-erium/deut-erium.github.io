@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 manifest = json.loads(Path(__file__).with_name("static-app-manifest.json").read_text(encoding="utf-8"))
-if manifest.get("version") != 2 or not re.fullmatch(r"[0-9a-f]{40}", manifest.get("source_commit", "")):
+if manifest.get("version") not in (2, 3) or not re.fullmatch(r"[0-9a-f]{40}", manifest.get("source_commit", "")):
     raise SystemExit("unsupported static app manifest")
 rows = manifest.get("files", [])
 expected = {item["path"]: item for item in rows}
@@ -18,10 +18,21 @@ if len(expected) != len(rows):
     raise SystemExit("static app manifest contains duplicate paths")
 
 patched = {path for patch in manifest.get("patches", []) for path in patch.get("paths", [])}
+additions = manifest.get("local_additions", [])
+if not isinstance(additions, list) or not all(isinstance(path, str) for path in additions):
+    raise SystemExit("static app local additions must be a path list")
+added_locally = set(additions)
+if len(added_locally) != len(additions) or not added_locally.issubset(patched):
+    raise SystemExit("static app local addition inventory is invalid")
+if manifest["version"] == 2 and added_locally:
+    raise SystemExit("static app local additions require manifest version 3")
 if not patched or not patched.issubset(expected):
     raise SystemExit("static app patch inventory is invalid")
 for rel, item in expected.items():
-    if rel in patched:
+    if rel in added_locally:
+        if "source_bytes" in item or "source_sha256" in item:
+            raise SystemExit(f"local addition cannot claim recovered source provenance: {rel}")
+    elif rel in patched:
         if not isinstance(item.get("source_bytes"), int) or not re.fullmatch(r"[0-9a-f]{64}", item.get("source_sha256", "")):
             raise SystemExit(f"static app source provenance is missing: {rel}")
     elif "source_bytes" in item or "source_sha256" in item:
@@ -48,5 +59,6 @@ print(json.dumps({
     "status": "pass",
     "files": len(expected),
     "source_commit": manifest["source_commit"],
-    "locally_patched": len(patched),
+    "locally_patched": len(patched - added_locally),
+    "locally_added": len(added_locally),
 }, indent=2))
