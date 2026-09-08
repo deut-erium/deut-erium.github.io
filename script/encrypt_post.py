@@ -108,6 +108,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--plaintext", required=True, help="file with the HTML body to encrypt (keep it out of the repo)")
     parser.add_argument("--answer", required=True, help="key material, usually the full previous flag, e.g. 'flag{...}'")
+    parser.add_argument("--embed-assets", action="store_true", help="embed local HTML assets in memory before encryption (no network)")
+    parser.add_argument("--asset-root", type=Path, help="private asset tree for --embed-assets; / URLs map here (default: plaintext directory)")
+    parser.add_argument("--embed-linked-files", action="store_true", help="with --embed-assets, also package local file hyperlinks as downloads")
+    parser.add_argument("--max-asset-bytes", type=int, default=8*1024*1024, help="per-asset limit with --embed-assets")
+    parser.add_argument("--max-output-bytes", type=int, default=16*1024*1024, help="bundled HTML limit with --embed-assets")
     parser.add_argument("--salt", help=f"hex-encoded {SALT_BYTES}-byte salt; random when omitted")
     parser.add_argument("--out", required=True, help="locked post file to write, e.g. _posts/ramblings/2026-09-05-the-first-door.md")
     parser.add_argument("--title", help="post title (default: slugified file name)")
@@ -172,7 +177,8 @@ def main() -> None:
     plaintext_file = Path(args.plaintext)
     if not plaintext_file.is_file():
         sys.exit(f"error: plaintext file not found: {plaintext_file}")
-    if plaintext_file.resolve().is_relative_to(REPO) and "agent_out" not in plaintext_file.parts:
+    if (plaintext_file.resolve().is_relative_to(REPO)
+            and not plaintext_file.resolve().is_relative_to(REPO / "agent_out")):
         sys.exit("error: refuse to read plaintext from inside the repository (agent_out/ is the scratch area)")
     out_path = Path(args.out)
     if not out_path.is_absolute():
@@ -190,7 +196,21 @@ def main() -> None:
     if not args.answer.strip():
         sys.exit("error: --answer is empty")
 
-    plaintext = plaintext_file.read_bytes()
+    bundled = None
+    if (args.asset_root is not None or args.embed_linked_files) and not args.embed_assets:
+        sys.exit("error: asset options require --embed-assets")
+    if args.embed_assets:
+        from embed_post_assets import BundleError, bundle_file
+        try:
+            bundled = bundle_file(plaintext_file, asset_root=args.asset_root,
+                                  linked_files=args.embed_linked_files,
+                                  max_asset_bytes=args.max_asset_bytes,
+                                  max_output_bytes=args.max_output_bytes)
+        except (BundleError, OSError, ValueError) as error:
+            sys.exit(f"error: asset embedding failed: {error}")
+        plaintext = bundled.html.encode("utf-8")
+    else:
+        plaintext = plaintext_file.read_bytes()
     if not plaintext.strip():
         sys.exit("error: plaintext file is empty")
 
@@ -245,6 +265,9 @@ def main() -> None:
     print(f"route       : {route}")
     print(f"cipher      : AES-256-GCM via {backend}, PBKDF2-SHA256 x{ITERATIONS}, salt {salt_hex}")
     print(f"payload     : {len(plaintext)} plaintext bytes -> {len(payload)} base64 chars")
+    if bundled is not None:
+        print(f"assets      : {len(bundled.assets)} local asset reads embedded; {bundled.retained_links} ordinary links retained")
+        print("Original files are unchanged. Embedding does not remove public copies.")
 
 
 if __name__ == "__main__":
