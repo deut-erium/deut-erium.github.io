@@ -121,8 +121,10 @@ if args.site:
     entries = ET.parse(args.site / 'feed.xml').findall('a:entry', ns)
     match = [entry for entry in entries if any(link.get('href', '').endswith(ROUTE) for link in entry.findall('a:link', ns))]
     assert len(match) == 1
-    assert PROMPT in ''.join(match[0].itertext())
-    assert 'data:image/jpeg;base64,' not in ET.tostring(match[0], encoding='unicode')
+    assert match[0].findtext('a:summary', namespaces=ns).strip() == 'An encrypted-image sample.'
+    feed_entry = ET.tostring(match[0], encoding='unicode')
+    assert 'data:image/jpeg;base64,' not in feed_entry
+    assert payload['text'].strip() not in feed_entry
     assert ROUTE in (args.site / 'sitemap.xml').read_text()
     assert not (args.site / 'agent_out').exists()
     for file in args.site.rglob('*'):
