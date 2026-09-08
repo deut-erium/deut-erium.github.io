@@ -49,7 +49,7 @@ jobs:
           set -euo pipefail
           python3 script/verify-imported-content.py
           python3 script/verify-static-app.py
-          node --test script/test-tetris-practice.mjs
+          node --test script/test-tetris-practice.mjs script/test-tetrasquares-urls.mjs
           node --test script/test-css-rule-selectors.mjs
           python3 script/verify-history-sanitization.py
           python3 script/test-history-sanitization.py
@@ -74,5 +74,10 @@ jobs:
           cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
 
           python3 script/verify-site.py "$out/a"
+          python3 script/test-tetrasquares-site.py "$out/a"
           python3 script/verify-code-parity.py "$out/a"
           python3 script/verify-heading-parity.py "$out/a"
+
+          printf 'goatcounter_site: ""\ntime: "%s"\n' "$BUILD_TIME" > "$out/analytics-disabled.yml"
+          bundle exec jekyll build --disable-disk-cache --config "_config.yml,$out/analytics-disabled.yml" --destination "$out/disabled"
+          python3 script/test-tetrasquares-site.py "$out/disabled" --disabled
