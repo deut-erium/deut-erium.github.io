@@ -75,10 +75,10 @@
       button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
     }
     const picker = document.querySelector('#skin-picker');
-    if (picker) picker.value = skin;
-    const option = picker?.querySelector('option[value="' + skin + '"]');
-    const summary = document.querySelector('.skin-menu summary');
-    if (summary && option) summary.textContent = 'Theme: ' + option.textContent;
+    if (picker) {
+      picker.value = skin;
+      picker.disabled = false;
+    }
   };
   window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref, syncControls };
 

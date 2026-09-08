@@ -28,11 +28,6 @@ sitemap: false
     }
   };
 
-  const skinName = (id) => {
-    const option = document.querySelector('#skin-picker option[value="' + id + '"]');
-    return option ? option.textContent : 'RPN Garden';
-  };
-
   const applyColor = (theme) => {
     root.dataset.theme = theme;
     const button = document.querySelector('.theme-toggle');
@@ -66,9 +61,10 @@ sitemap: false
     else root.dataset.skin = skin;
     loadSkin(skin);
     const picker = document.querySelector('#skin-picker');
-    if (picker) picker.value = skin;
-    const summary = document.querySelector('.skin-menu summary');
-    if (summary) summary.textContent = 'Theme: ' + skinName(skin);
+    if (picker) {
+      picker.value = skin;
+      picker.disabled = false;
+    }
   };
 
   applyColor(root.dataset.theme || 'light');
@@ -80,6 +76,25 @@ sitemap: false
       const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       save(colorKey, theme);
       applyColor(theme);
+    });
+  }
+
+  const menu = document.querySelector('.nav-menu');
+  if (menu) {
+    const summary = menu.querySelector('summary');
+    const closeMenu = () => {
+      const restoreFocus = menu.contains(document.activeElement);
+      menu.open = false;
+      if (restoreFocus) summary.focus();
+    };
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        closeMenu();
+        event.preventDefault();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (menu.open && !menu.contains(event.target)) closeMenu();
     });
   }
 

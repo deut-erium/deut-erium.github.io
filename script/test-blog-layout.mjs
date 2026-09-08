@@ -42,6 +42,7 @@ async function matrix(job){
    const links=await c.page.$$eval('.primary-links a',es=>es.map(e=>({href:new URL(e.href).pathname,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height,visible:e.checkVisibility()})));
    if(links.length!==6||links.some(e=>!e.visible||e.w<44||e.h<44))failures.push('navigation targets missing or too small');
    const panel=await c.page.$eval('.nav-menu__panel',e=>{const b=e.getBoundingClientRect();return {left:b.left,right:b.right,width:b.width,scroll:e.scrollWidth,client:e.clientWidth};});
+   metrics.menuPanel=panel;
    if(panel.left<0||panel.right>job.width||panel.scroll>panel.client+1)failures.push('menu panel overflow');
    assert.equal(await c.page.$$eval('#skin-picker option',es=>es.length),48);
    await c.page.keyboard.press('Escape');
@@ -72,7 +73,7 @@ try{
      await c.page.select('#skin-picker','rpn-garden');await c.page.waitForNetworkIdle({idleTime:200});
      await c.page.keyboard.press('Escape');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
      assert.equal(await c.page.evaluate(()=>document.activeElement.matches('.nav-menu > summary')),true);
-     await c.page.click('.nav-menu > summary');await c.page.click('#masthead-title');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
+     await c.page.click('.nav-menu > summary');await c.page.click('.post-preview__description');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
      await c.page.addScriptTag({path:path.resolve('.toolchain/verify/lighthouse-node_modules/axe-core/axe.min.js')});
      const violations=await c.page.evaluate(async()=>(await axe.run({include:['.site-header','.masthead','#records']},{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
      assert.deepEqual(violations,[]);
