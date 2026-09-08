@@ -248,6 +248,9 @@
     _buildSvg() {
       const math = this._math;
       const wrap = el('div', 'circuit-widget__svg-wrap');
+      wrap.tabIndex = 0;
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', 'Arithmetic circuit diagram, scroll horizontally to inspect');
       const svg = svgEl('svg', { class: 'circuit-widget__svg', viewBox: '0 0 720 320', role: 'img', 'aria-label': 'Arithmetic circuit diagram' });
       const defs = svgEl('defs');
       defs.innerHTML = `<marker id="circuit-arrow-head" viewBox="0 -5 10 10" markerWidth="4" markerHeight="4" refX="10" refY="0" orient="auto"><polygon points="0 -4, 10 0, 0 4" fill="context-stroke"></polygon></marker>`;

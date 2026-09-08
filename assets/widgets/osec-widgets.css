@@ -42,11 +42,60 @@
 }
 
 /* Keep custom-element hosts in the article's available column. */
-circuit-widget,
+arithmetic-circuit-widget,
 poly-interpolation-panel,
 dusk-verifier-graph {
   display: block;
   min-width: 0;
+}
+
+/* These panels keep dark surfaces in every skin. Limit palette overrides to
+ * widget text and tables; math inherits heading/status colors, not page ink. */
+:is(.circuit-widget, .poly-panel) :is(h3, h4) {
+  color: var(--widget-accent-soft) !important;
+  background: transparent !important;
+}
+
+:is(.circuit-widget, .poly-panel) p,
+:is(.circuit-widget, .poly-panel) .katex {
+  color: inherit !important;
+}
+
+:is(.circuit-widget, .poly-panel) .katex {
+  background: transparent !important;
+}
+
+:is(.circuit-widget__table, .poly-panel__mini-table),
+:is(.circuit-widget__table, .poly-panel__mini-table) tbody {
+  background: transparent !important;
+}
+
+:is(.circuit-widget__table, .poly-panel__mini-table) thead {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+:is(.circuit-widget__table, .poly-panel__mini-table) tr {
+  background: var(--widget-row-bg, transparent) !important;
+}
+
+:is(.circuit-widget__table, .poly-panel__mini-table) :is(th, td) {
+  color: #dde6f0 !important;
+  background: var(--widget-cell-bg, transparent) !important;
+}
+
+.dusk-dep-graph :is(h3, h4, h5) {
+  color: #f8fafc !important;
+  background: transparent !important;
+}
+
+.dusk-dep-graph :is(.dusk-dep-graph__anchor-list, .dusk-dep-graph__edge-list) a {
+  color: #93c5fd !important;
+  background: transparent !important;
+}
+
+:is(.circuit-widget__svg-wrap, .poly-panel__mini-svg-wrap):focus-visible {
+  outline: 2px solid var(--widget-accent);
+  outline-offset: -3px;
 }
 
 /* ---------- arithmetic-circuit-widget ---------- */
@@ -146,13 +195,17 @@ dusk-verifier-graph {
 .circuit-widget__svg-wrap {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
   margin-bottom: 0.9rem;
 }
 
 .circuit-widget__svg {
   display: block;
   width: 100%;
+  /* Native viewBox width: keep 9px wire roles and 11px values unscaled. */
+  min-width: 720px;
+  max-width: none;
   height: auto;
   background: rgba(10, 10, 15, 0.92);
 }
@@ -308,11 +361,11 @@ dusk-verifier-graph {
 }
 
 .circuit-widget__header-q:hover {
-  background: var(--widget-accent-bg);
+  --widget-cell-bg: var(--widget-accent-bg);
 }
 
 .circuit-widget__header-q--active {
-  background: var(--widget-accent-bg-strong) !important;
+  --widget-cell-bg: var(--widget-accent-bg-strong);
 }
 
 .circuit-widget__table-cell-poly {
@@ -321,7 +374,7 @@ dusk-verifier-graph {
 }
 
 .circuit-widget__table-cell-poly--active {
-  background: var(--widget-accent-bg-strong);
+  --widget-cell-bg: var(--widget-accent-bg-strong);
 }
 
 .circuit-widget__table td:first-child,
@@ -340,19 +393,19 @@ dusk-verifier-graph {
 }
 
 .circuit-widget__table-row:hover {
-  background: var(--widget-accent-bg);
+  --widget-row-bg: var(--widget-accent-bg);
 }
 
 .circuit-widget__table-row--active {
-  background: var(--widget-accent-bg-strong);
+  --widget-row-bg: var(--widget-accent-bg-strong);
 }
 
 .circuit-widget__table-row--ok {
-  background: rgba(0, 230, 118, 0.16);
+  --widget-row-bg: rgba(0, 230, 118, 0.16);
 }
 
 .circuit-widget__table-row--bad {
-  background: rgba(255, 45, 85, 0.16);
+  --widget-row-bg: rgba(255, 45, 85, 0.16);
 }
 
 .circuit-widget__poly-panel {
@@ -391,8 +444,8 @@ dusk-verifier-graph {
   font-weight: 700;
 }
 
-.circuit-widget__poly-status--ok { color: rgba(126, 240, 161, 0.96); }
-.circuit-widget__poly-status--bad { color: rgba(255, 154, 172, 0.98); }
+.circuit-widget .circuit-widget__poly-status--ok { color: rgba(126, 240, 161, 0.96) !important; }
+.circuit-widget .circuit-widget__poly-status--bad { color: rgba(255, 154, 172, 0.98) !important; }
 
 .circuit-widget__poly-toggle {
   border: 1px solid rgba(247, 185, 85, 0.24);
@@ -404,7 +457,8 @@ dusk-verifier-graph {
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.46rem 0.78rem;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100%;
   transition: background-color 120ms ease, border-color 120ms ease;
 }
 
@@ -520,11 +574,16 @@ dusk-verifier-graph {
 
 .poly-panel__mini-svg-wrap {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 
 .poly-panel__mini-svg {
   display: block;
   width: 100%;
+  /* Native viewBox width: wire values remain at least 11px. */
+  min-width: 680px;
+  max-width: none;
   height: auto;
   background: rgba(8, 8, 13, 0.9);
 }
@@ -638,11 +697,11 @@ dusk-verifier-graph {
 }
 
 .poly-panel__mini-row:hover {
-  background: var(--widget-accent-bg);
+  --widget-row-bg: var(--widget-accent-bg);
 }
 
 .poly-panel__mini-row--active {
-  background: var(--widget-accent-bg-strong);
+  --widget-row-bg: var(--widget-accent-bg-strong);
 }
 
 .poly-panel__control-group {
@@ -839,7 +898,7 @@ dusk-verifier-graph {
   }
 
   .poly-panel__equations {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .poly-panel__mini-title,
@@ -900,7 +959,7 @@ dusk-verifier-graph {
 .dusk-dep-graph .dusk-dep-graph__eyebrow,
 .dusk-dep-graph .dusk-dep-graph__detail-eyebrow {
   margin: 0 0 0.32rem;
-  color: var(--widget-accent);
+  color: var(--widget-accent) !important;
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -920,13 +979,13 @@ dusk-verifier-graph {
 .dusk-dep-graph .dusk-dep-graph__detail-callout {
   margin: 0.55rem 0 0;
   max-width: 70ch;
-  color: #b9c6d6;
+  color: #b9c6d6 !important;
   font-size: 0.96rem;
   line-height: 1.55;
 }
 
 .dusk-dep-graph .dusk-dep-graph__detail-callout {
-  color: var(--widget-accent-soft);
+  color: var(--widget-accent-soft) !important;
 }
 
 .dusk-dep-graph__meta {

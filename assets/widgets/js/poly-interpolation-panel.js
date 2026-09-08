@@ -226,6 +226,9 @@
         `Toy circuit <span class="poly-panel__inline-math">${math['poly.goal']}</span>`));
 
       const wrap = el('div', 'poly-panel__mini-svg-wrap');
+      wrap.tabIndex = 0;
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', 'Toy interpolation circuit, scroll horizontally to inspect');
       const svg = svgEl('svg', { class: 'poly-panel__mini-svg', viewBox: '0 0 680 210', role: 'img', 'aria-label': 'Toy interpolation circuit' });
       const defs = svgEl('defs');
       defs.innerHTML = `<marker id="mini-arrow-head" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth"><polygon points="0 0, 8 3, 0 6" fill="context-stroke"></polygon></marker>`;
@@ -335,7 +338,9 @@
           this._update();
         };
         slider.addEventListener('input', () => apply(slider.value));
-        number.addEventListener('input', () => apply(number.value));
+        // Preserve partial signs/decimals while typing; sliders still update live.
+        number.addEventListener('change', () => apply(number.value));
+        number.addEventListener('blur', () => apply(number.value));
         label.append(slider, number);
         group.appendChild(label);
       }
@@ -446,8 +451,6 @@
           p.setAttribute('cy', toPlotY(evalPoly(qPoints, x)));
         }
       });
-      this._applySeriesVisibility();
-
       const math = this._math;
       const eq = (labelKey, poly) =>
         `<span class="poly-panel__inline-math">${math[labelKey]}</span> <span class="ow-inline-eq">${polyBodyHtml(poly)}</span>`;
@@ -460,6 +463,7 @@
         (zDividesF
           ? `<p class="poly-panel__equation" data-series-key="Q">${eq('poly.eqLabel.q', Q)}</p>`
           : `<p class="poly-panel__equation poly-panel__equation--note">${math['poly.quotientNote']}</p>`);
+      this._applySeriesVisibility();
     }
   }
 

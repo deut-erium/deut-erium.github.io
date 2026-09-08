@@ -216,7 +216,12 @@
 
       window.addEventListener('resize', () => {
         this._updateViewportMode();
-        if (this._zoom.isMobile && !this._zoom.mobileFocused) this._applyInitialFocus();
+        if (this._zoom.isMobile && !this._zoom.mobileFocused) {
+          this._applyInitialFocus();
+          // Rebuild the slice/cache after mobile focus changes the hop count,
+          // before the queued animation frame centers the selection.
+          this._render();
+        }
       });
     }
 
@@ -851,12 +856,12 @@
 
     _edgeOpacity(edge, ctx) {
       if (ctx.useImmediateFocus) {
-        if (ctx.selectedImmediateEdgeIds.has(edge.id)) return 0.98;
+        if (ctx.selectedImmediateEdgeIds.has(edge.id)) return 1;
         if (this.dangerousDownstreamEdgeIds.has(edge.id)) return ctx.selectedPathEdgeIds.has(edge.id) ? 0.92 : 0.32;
         if (ctx.selectedPathEdgeIds.has(edge.id)) return 0.1;
         return 0.035;
       }
-      if (ctx.selectedPathEdgeIds.has(edge.id)) return 0.98;
+      if (ctx.selectedPathEdgeIds.has(edge.id)) return 1;
       if (this.dangerousDownstreamEdgeIds.has(edge.id)) return 0.34;
       return 0.12;
     }
