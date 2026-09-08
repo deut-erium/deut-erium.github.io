@@ -321,7 +321,8 @@
     exactBtn.addEventListener('click', function () {
       if (!MST.currentGuess) return;
       MST.over = true;
-      say('You confirmed the code after ' + (MST.rounds.length + 1) + ' guess(es).', 'win');
+      var guesses = MST.rounds.length + 1;
+      say('You confirmed the code after ' + guesses + (guesses === 1 ? ' guess.' : ' guesses.'), 'win');
       softLine.hidden = false; softLine.textContent = softSummary();
       D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
     });
@@ -347,7 +348,8 @@
         var a = agent(MST.simSecret, MST.currentGuess);
         if (a.bulls === K) {
           MST.over = true;
-          say('The scorer reported all exact matches after ' + (MST.rounds.length + 1) + ' round(s).', 'win');
+          var rounds = MST.rounds.length + 1;
+          say('The scorer reported all exact matches after ' + rounds + (rounds === 1 ? ' round.' : ' rounds.'), 'win');
           softLine.hidden = false; softLine.textContent = softSummary();
           D.dispatchEvent(new CustomEvent('deuterium:solved', { detail: { id: 'mastermind' } }));
           return;

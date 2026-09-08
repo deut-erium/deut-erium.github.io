@@ -3,13 +3,13 @@ title: "The first door"
 date: 2026-09-05
 section: ctf-tutorials
 tags: challenges crypto
-description: "Solution to the Injection challenge. Unlock with its flag."
+description: "Unlock this writeup with the flag from the Injection challenge."
 layout: locked
 mathjax: true
 permalink: /ctf-tutorials/2026/09/05/the-first-door.html
 ---
 
-This is the solution to the <a href="/2021/07/25/injection.html">Injection challenge</a>. Enter its flag below to read it.
+Enter the flag from the <a href="/2021/07/25/injection.html">Injection challenge</a> below to open this writeup.
 
 <!--more-->
 

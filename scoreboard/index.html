@@ -1,14 +1,10 @@
 ---
 layout: page
 title: Challenge scoreboard
-description: Your local progress across every embedded challenge on this site. Cleared flags, attempts, and hints, all kept in this browser.
+description: Your challenge progress, saved in this browser.
 permalink: /scoreboard/
 section: scoreboard
 ---
-
-<p class="scoreboard-note">
-  Your challenge progress is saved in this browser.
-</p>
 
 <section class="scoreboard-total" aria-label="Progress summary">
   <p class="scoreboard-count"><strong id="scoreboard-solved-count">0</strong> cleared of <strong id="scoreboard-known-count">0</strong> known challenges</p>
@@ -247,7 +243,8 @@ D.getElementById('scoreboard-import').addEventListener('click',async()=>{
     Object.keys(p2).forEach(id=>{target[alias(id)]=p2[id];});
     put(key,target);
   });
-  say('Imported '+Object.keys(verified).length+' solve(s)'+(legacy?' ('+legacy+' without flags, kept unverified)':'')+(rejected.length?' and rejected '+rejected.length+' that could not be verified':'')+'.');
+  const imported=Object.keys(verified).length;
+  say('Imported '+imported+(imported===1?' solve':' solves')+(legacy?' ('+legacy+' without flags, kept unverified)':'')+(rejected.length?' and rejected '+rejected.length+' that could not be verified':'')+'.');
   render(knownEntries);
 });
 })();

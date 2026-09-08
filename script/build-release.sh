@@ -28,6 +28,7 @@ script/build-site.sh "$destination"
 : > "$destination/.nojekyll"
 
 python3 script/verify-site.py "$destination"
+python3 script/verify-reader-copy.py "$destination"
 python3 script/verify-code-parity.py "$destination"
 python3 script/verify-heading-parity.py "$destination"
 python3 script/artifact_manifest.py "$destination" > "$destination.manifest.jsonl"
