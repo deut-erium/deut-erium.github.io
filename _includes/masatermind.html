@@ -1,101 +1,72 @@
-{%- capture mst_version -%}{{ '/assets/js/mastermind/core.mjs' | asset_v }}{{ '/assets/js/mastermind/inference.mjs' | asset_v }}{{ '/assets/js/mastermind/referee.mjs' | asset_v }}{{ '/assets/js/mastermind/policies.mjs' | asset_v }}{{ '/assets/js/mastermind/session.mjs' | asset_v }}{{ '/assets/js/mastermind/transport.mjs' | asset_v }}{{ '/assets/js/mastermind/worker.mjs' | asset_v }}{{ '/assets/js/mastermind/ui.mjs' | asset_v }}{%- endcapture -%}
+{%- capture mst_version -%}{{ '/assets/js/mastermind/core.mjs' | asset_v }}{{ '/assets/js/mastermind/game.mjs' | asset_v }}{{ '/assets/js/mastermind/opponent.mjs' | asset_v }}{{ '/assets/js/mastermind/opponent-worker.mjs' | asset_v }}{{ '/assets/js/mastermind/board.mjs' | asset_v }}{%- endcapture -%}
 <link rel="stylesheet" href="{{ '/assets/css/mastermind.css' | relative_url }}?v={{ '/assets/css/mastermind.css' | asset_v }}">
-<div class="mst-wrap" id="mastermind-game" data-mastermind data-worker-url="{{ '/assets/js/mastermind/worker.mjs' | relative_url }}?v={{ mst_version }}">
-  <header>
+<div class="mst-wrap" id="mastermind-game" data-mastermind data-worker-url="{{ '/assets/js/mastermind/opponent-worker.mjs' | relative_url }}?v={{ mst_version }}">
+  <header class="mst-header">
+    <p class="mst-eyebrow">A codebreaking game with unreliable clues</p>
     <{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %} class="mst-title">maSATermind</{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %}>
-    <p>Match a fixed secret with repeated colors. Exact means right color and position; misplaced means right color, wrong position. Count each peg once.</p>
-    <p><a href="#mst-play">Skip to game</a> | <a href="{{ '/2026/09/06/masatermind.html' | relative_url }}">Read the article</a> | <a href="{{ '/mastermind/' | relative_url }}">Standalone game</a></p>
+    <nav class="mst-links" aria-label="Mastermind links"><a href="#mst-play">Play</a><a href="{{ '/2026/09/06/masatermind.html' | relative_url }}">The article</a><a href="{{ '/mastermind/' | relative_url }}">Standalone</a></nav>
   </header>
-  <noscript>This game needs JavaScript, but the scoring examples and article do not. No Z3 download is required.</noscript>
-  <details class="mst-panel" open>
-    <summary>Learn the scoring</summary>
-    <p>Secret: 1 Red, 2 Blue, 1 Red, 3 Green. Guess: 1 Red, 1 Red, 1 Red, 1 Red. Only the two exact reds count; the other reds earn nothing.</p>
-    <form data-part="learn-form">
-      <label>Scoring exercise
-        <select data-part="exercise"><option value="duplicate">Repeated reds</option><option value="mixed">Mixed colors</option></select>
-      </label>
-      <p>Visible secret</p><div class="mst-code" data-part="learn-secret"></div>
-      <p>Exercise guess</p><div class="mst-code" data-part="learn-guess"></div>
-      <div class="mst-controls">
-        <label>Exercise exact matches <select data-part="learn-exact"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
-        <label>Exercise misplaced matches <select data-part="learn-misplaced"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
-        <button type="submit">Check score</button>
-      </div>
-      <p data-part="learn-result" role="status">Score the guess using the visible secret.</p>
-    </form>
-  </details>
-  <section class="mst-panel" id="mst-play" aria-label="Mastermind game">
-    <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} class="mst-panel-title">Play</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
-    <form data-part="setup-form">
-      <fieldset data-part="setup">
-        <legend>Game settings (locked during play)</legend>
-        <div class="mst-controls">
-          <label>Mode <select data-part="mode"><option value="bounded">Challenge the computer</option><option value="misread">Watch noisy feedback</option></select></label>
-          <label>Code size <select data-part="size"><option value="4x6">4 positions / 6 colors</option><option value="3x3">3 positions / 3 colors</option></select></label>
-        </div>
-        <fieldset><legend>Choose the fixed secret</legend><div class="mst-controls" data-part="secret-inputs"></div></fieldset>
-        <div data-part="bounded-settings">
-          <label>Whole-game false-reply allowance <input data-part="allowance" type="number" min="0" max="60" step="1" value="2" required></label>
-          <p>One changed pair of counts costs one reply, even if both counts change. The computer knows the initial allowance, not what you spend. Past replies cannot be edited.</p>
-        </div>
-        <div data-part="noise-settings" hidden>
-          <div class="mst-controls">
-            <label>Noise model <select data-part="noise"><option value="forced-change">Forced-change</option><option value="redraw">Redraw (may keep the same color)</option></select></label>
-            <label>Per-position event probability <input data-part="probability" type="number" min="0" max="1" step="any" value="0.2" required></label>
-            <label>Scoring rule <select data-part="policy"><option value="fields">Fields: exact and total overlap</option><option value="replies">Whole replies</option></select></label>
-          </div>
-          <p>Each reply uses a temporary misread of the same fixed secret. Forced-change replaces a selected peg with a different color. Redraw selects among all colors, including the original.</p>
-        </div>
-        <label>Replay seed (unsigned 32-bit integer) <input data-part="seed" type="number" min="0" max="4294967295" step="1" value="20260906" required></label>
-        <p>The seed drives Watch noise only. The secret is the row you choose, not a random draw.</p>
-        <button type="submit" data-part="start">Lock secret and start</button>
-      </fieldset>
-    </form>
-    <p class="mst-note">Only a guess matching the locked secret wins. A false all-exact reply cannot end the game. Limit: 60 guesses, including the final hit.</p>
-    <p data-part="session-info">No active session.</p>
-    <p class="mst-status" data-part="status" role="status" aria-live="polite" tabindex="-1">Choose a mode and lock your secret.</p>
-    <div data-part="active-guess" aria-label="Active guess"></div>
-    <form data-part="reply-form" hidden>
-      <p data-part="truth"></p>
-      <div class="mst-controls">
-        <label>Exact matches <select data-part="exact"></select></label>
-        <label>Misplaced matches <select data-part="misplaced"></select></label>
-        <button type="submit" data-part="reply">Submit reply</button>
-        <button type="button" data-part="honest">Send truthful reply</button>
-      </div>
-      <p data-part="legal"></p>
-    </form>
-    <div class="mst-controls">
-      <button type="button" data-part="next" disabled>Ask next guess</button>
-      <button type="button" data-part="step" hidden disabled>Step one turn</button>
-      <button type="button" data-part="play" hidden disabled>Play</button>
-      <button type="button" data-part="pause" hidden disabled>Pause</button>
-      <button type="button" data-part="cancel" disabled>Cancel game and review</button>
-      <button type="button" data-part="reset">Reset / change settings</button>
+  <noscript>Enable JavaScript to play. The article's scoring examples work without it.</noscript>
+  <section id="mst-play" class="mst-play" aria-label="Mastermind peg board">
+    <div class="mst-roles" role="group" aria-label="Your role. Switching starts a new round.">
+      <button type="button" data-part="breaker" aria-pressed="true">Breaker <span>Crack the code</span></button>
+      <button type="button" data-part="liar" aria-pressed="false">Liar <span>Fool the computer</span></button>
     </div>
+    <p class="mst-intro" data-part="intro">A fixed code is hidden below. Fill a row, then check your guess.</p>
+    <div class="mst-hud" aria-label="Round information"><strong data-part="turn">Turn 1 / 16</strong><span data-part="rule">Noise: 10% per peg</span><button type="button" data-part="reset">New round</button></div>
+    <div class="mst-secret-rack" data-part="secret-rack">
+      <span class="mst-label" data-part="secret-label">Secret code / sealed</span>
+      <div class="mst-code mst-sealed" data-part="secret" aria-label="Secret code is hidden"></div>
+    </div>
+    <div class="mst-board">
+      <div class="mst-board-heading"><span>Guesses</span><span>Clues: exact / misplaced</span></div>
+      <ol data-part="history" class="mst-history" aria-label="Guesses and reported clues"></ol>
+      <div class="mst-empty" data-part="empty" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="mst-thinking" data-part="thinking" hidden><span class="mst-pulse" aria-hidden="true"></span>Computer is choosing a guess...</div>
+      <div class="mst-editor-panel" data-part="editor-panel">
+        <div class="mst-editor-heading"><strong data-part="editor-title">Your guess</strong><span data-part="edit-count"></span></div>
+        <div class="mst-editor" data-part="editor" role="group" aria-label="Edit your guess" aria-describedby="mst-keyboard"></div>
+        <div data-part="preview" class="mst-preview" hidden></div>
+        <div class="mst-palette" data-part="palette" role="group" aria-label="Choose a color for the selected position"></div>
+        <p class="mst-keyboard" id="mst-keyboard">Keys: 1-6 place a peg, arrows move or change color, Backspace undoes, Enter submits.</p>
+        <div class="mst-actions"><button type="button" class="mst-primary" data-part="submit">Check guess</button><button type="button" data-part="clear">Clear row</button></div>
+      </div>
+      <div class="mst-ending" data-part="ending" hidden tabindex="-1">
+        <span class="mst-result-mark" data-part="result-mark"></span>
+        <p class="mst-end-title" data-part="end-title"></p>
+        <p data-part="end-copy"></p>
+        <button type="button" class="mst-primary" data-part="again">Play again</button>
+      </div>
+    </div>
+    <p class="mst-status" data-part="status" role="status" aria-live="polite">Choose colors for your first guess.</p>
     <p data-part="error" class="mst-error" role="alert"></p>
+    <div class="mst-footer-actions"><button type="button" data-part="giveup">Give up &amp; reveal</button><button type="button" data-part="retry" hidden>Retry computer</button></div>
+    <details class="mst-details" data-part="review" hidden><summary>Review the clues</summary><p>Exact and misplaced counts on the board were reported clues. Compare them with the fixed secret here.</p><ol data-part="review-rows" class="mst-review"></ol></details>
   </section>
-  <section class="mst-panel" aria-label="Game history and review">
-    <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} class="mst-panel-title">Guesses and replies</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
-    <ol data-part="history" class="mst-history"></ol>
-    <div data-part="review" hidden></div>
-  </section>
-  <details class="mst-panel">
-    <summary>How guesses are chosen</summary>
-    <p>The game enumerates every candidate. Challenge keeps codes within the false-reply allowance, then chooses the one disagreeing with the fewest whole replies. Watch scores agreement with either whole replies or the exact count and total color overlap. Ties use numeric code order. Every failed guess is excluded.</p>
-    <p>These rules explain past replies; they do not calculate which next question would reveal the most. The current game uses no Z3 download or probabilistic solver.</p>
+  <details class="mst-details" data-part="settings">
+    <summary>Round settings</summary>
+    <form data-part="settings-form">
+      <p>Applying settings starts a new round in your current role.</p>
+      <div class="mst-settings-grid">
+        <label>Pegs <select data-part="positions"><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label>
+        <label>Colors <select data-part="colors"><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option></select></label>
+        <label>Guess limit <input type="number" data-part="limit" min="6" max="60" step="1" value="16" required></label>
+        <label>Breaker noise (p) <input type="number" data-part="probability" min="0" max="1" step="any" value="0.1" required></label>
+        <label>Liar changes per turn (t) <input type="number" data-part="cap" min="0" max="4" step="1" value="1" required></label>
+      </div>
+      <p class="mst-help-text">Liar can search at most 32,768 possible codes. Breaker supports all sizes. The guess limit is a game goal, not a solver guarantee.</p>
+      <p data-part="settings-warning" class="mst-warning"></p>
+      <button type="submit">Apply &amp; start round</button>
+    </form>
   </details>
-  <details class="mst-panel">
-    <summary>Save or restore a session</summary>
-    <p>Saves include your secret and only update when you explicitly save. Download writes a file; Save in this browser keeps a local copy for this site. Game data is not sent to a server. Restore continues from the saved turn, with Watch paused and any unanswered guess still pending.</p>
-    <div class="mst-controls">
-      <button type="button" data-part="download" disabled>Download session</button>
-      <button type="button" data-part="save-local" disabled>Save in this browser</button>
-      <button type="button" data-part="restore-local">Restore browser save</button>
-      <button type="button" data-part="forget">Delete browser save</button>
-      <label>Restore session file (JSON, at most 256 KiB) <input data-part="file" type="file" accept=".json,application/json"></label>
-    </div>
-    <p data-part="storage-status" role="status">Only an explicit save is available after reload. Reset does not delete your browser save.</p>
+  <details class="mst-details">
+    <summary>Rules &amp; keyboard</summary>
+    <p>Colors may repeat. An exact peg has the right color and position. A misplaced peg has the right color in a different position. Each peg counts once. For secret 1 2 1 3, guess 1 1 1 1 scores 2 exact and 0 misplaced.</p>
+    <p>Breaker: the secret stays fixed. After every wrong guess, each position independently changes to a different color with probability p in a temporary scoring row. You see its clues, not its colors. Even an all-exact clue can be false; only the actual code wins. Repeating a guess is allowed.</p>
+    <p>Liar: choose and lock your secret. For each wrong computer guess, edit a temporary copy of that secret in at most t positions. The game computes the clues. The cap resets every turn, and you may change different positions. You cannot hide an actual match.</p>
+    <p>The computer keeps all codes compatible with the reported clues, the per-turn cap and confirmed wrong guesses. It compares a sample of possible guesses by their worst remaining clue bucket, with private random tie-breaking. It does not see your secret or temporary row. This heuristic is not guaranteed optimal.</p>
+    <p>Select a position, then a palette color, or type its number. Left/Right move between positions; Up/Down cycle colors. Backspace clears a peg (restores it in Liar). Enter submits a complete row. Tab reaches every control.</p>
+    <p>Rounds stay in memory. Nothing is saved automatically; any older browser save is left untouched.</p>
   </details>
 </div>
-<script type="module" src="{{ '/assets/js/mastermind/ui.mjs' | relative_url }}?v={{ mst_version }}"></script>
+<script type="module" src="{{ '/assets/js/mastermind/board.mjs' | relative_url }}?v={{ mst_version }}"></script>
