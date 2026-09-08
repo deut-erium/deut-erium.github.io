@@ -159,25 +159,40 @@ Here comes the mandatory picture from Wikipedia. Just follow the components used
 <img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/GCM-Galois_Counter_Mode_with_IV.svg/1000px-GCM-Galois_Counter_Mode_with_IV.svg.png" width="600">  
 GCM is simply a polynomial (in $GF(2^{128})$) constructed using the blocks of authentication data, ciphertext, and two additional blocks, one constructed using the lengths of data and ciphertext and one using the encryption of 96 bit nonce $N$ appended with 31 bits of 0 and a single bit 1. i.e. $s = E(N||0^{31}1,K)$  
 This polynomial is evaluated at $h = E(0,K)$ to compute the `Auth tag`  
-$$T = ((((((h*A_0) \oplus A_1)*h ...  \oplus  A_m)*h  \oplus  C_0)*h ...  \oplus  C_{n-1})*h \oplus L)*h  \oplus  s$$  
+
+$$T = ((((((h*A_0) \oplus A_1)*h ...  \oplus  A_m)*h  \oplus  C_0)*h ...  \oplus  C_{n-1})*h \oplus L)*h  \oplus  s$$
+
 Since there's no additional data in the challenge, we get  
-$$T = ((((h*C_0) \oplus C_1)*h ...  \oplus  C_{n-1})*h  \oplus L)*h  \oplus  s$$ or  
-$$T = C_0*h^{n+1} \oplus C_1*h^{n+1} ...  \oplus  C_{n-1}*h^{2}  \oplus  L*h  \oplus  s$$  
+
+$$T = ((((h*C_0) \oplus C_1)*h ...  \oplus  C_{n-1})*h  \oplus L)*h  \oplus  s$$
+
+or
+
+$$T = C_0*h^{n+1} \oplus C_1*h^{n+1} ...  \oplus  C_{n-1}*h^{2}  \oplus  L*h  \oplus  s$$
 
 ## Attack
 Continuing and exploring the idea [above](#possible-approach) one would come across a recent paper titled [Partitioning Oracle Attack](https://eprint.iacr.org/2020/1491.pdf) and what's cherry on the top is that a quick CTRL+F for github in the paper reveals the [POC demo](https://github.com/julialen/key_multicollision) of the same making it a lot easier to implement.
 
 ### Construction
 Continuing from the expression of tag, the terms dependent on key for calculation of tag are $\textbf{h, s}$ only.  
-$$T = C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2}  \oplus  L*\textbf{h}  \oplus  \textbf{s}$$  
-$$C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2} = T \oplus L*\textbf{h}  \oplus  \textbf{s}$$  
-$$C_0*\textbf{h}^{n-1} \oplus C_1*\textbf{h}^{n-2} ...  \oplus  C_{n-1} = (T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$  
+
+$$T = C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2}  \oplus  L*\textbf{h}  \oplus  \textbf{s}$$
+
+$$C_0*\textbf{h}^{n+1} \oplus C_1*\textbf{h}^{n} ...  \oplus  C_{n-1}*\textbf{h}^{2} = T \oplus L*\textbf{h}  \oplus  \textbf{s}$$
+
+$$C_0*\textbf{h}^{n-1} \oplus C_1*\textbf{h}^{n-2} ...  \oplus  C_{n-1} = (T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$
+
 writing 
 $$(T \oplus L*\textbf{h}  \oplus  \textbf{s})*\textbf{h}^{-2}$$ as a key dependent quantity $$\textbf{B}$$ we can write  it for $n$ keys $$K_0...K_{n-1}$$ , we get  
-$$C_0*\textbf{h}^{n-1}_{0} \oplus C_1*\textbf{h}^{n-2}_{0} ...  \oplus  C_{n-1} = \textbf{B}_{0}$$  
-$$C_0*\textbf{h}^{n-1}_{1} \oplus C_1*\textbf{h}^{n-2}_{1} ...  \oplus  C_{n-1} = \textbf{B}_{1}$$  
-$$\vdots \qquad \qquad \vdots \qquad \qquad \vdots \qquad \qquad \vdots$$  
-$$C_0*\textbf{h}^{n-1}_{n-1} \oplus C_1*\textbf{h}^{n-2}_{n-1} ...  \oplus  C_{n-1} = \textbf{B}_{n-1}$$  
+
+$$C_0*\textbf{h}^{n-1}_{0} \oplus C_1*\textbf{h}^{n-2}_{0} ...  \oplus  C_{n-1} = \textbf{B}_{0}$$
+
+$$C_0*\textbf{h}^{n-1}_{1} \oplus C_1*\textbf{h}^{n-2}_{1} ...  \oplus  C_{n-1} = \textbf{B}_{1}$$
+
+$$\vdots \qquad \qquad \vdots \qquad \qquad \vdots \qquad \qquad \vdots$$
+
+$$C_0*\textbf{h}^{n-1}_{n-1} \oplus C_1*\textbf{h}^{n-2}_{n-1} ...  \oplus  C_{n-1} = \textbf{B}_{n-1}$$
+
 $$
 \begin{bmatrix}
 1 & \textbf{h}_{0} & \textbf{h}_{0}^{2} & \cdots & \textbf{h}_{0}^{n-1}\\
@@ -205,7 +220,9 @@ Now that we have all the required equations set up, we can find $C_{0}, C_{1} \l
 Theoretically 15 searches would be enough to find the key, but it would require a multicollision for ~8000 keys.  
 What we can do is to first check for a few groups of smaller sizes, then proceeding with binary search on a given group.  
 If we form groups of size $k$, the total number of calls should be roughly (for worst case number of calls)
-$17576/k + \lceil log_{2}k \rceil= 49 \implies k\approx 367$
+
+$$17576/k + \lceil log_{2}k \rceil= 49 \implies k\approx 367$$
+
 Time taken to find a multicollision for $k=367$ keys,
 ```python
 import time

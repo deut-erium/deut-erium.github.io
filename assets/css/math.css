@@ -48,8 +48,9 @@ html:root body .prose .katex .katex-html .vlist-s {
     vertical-align: baseline !important;
   }
 
-  /* One scroll owner per display. A wide child starts at the left edge so
-     neither side of the equation is lost behind a centered overflow box. */
+  /* Center authored displays, not paragraphs that also contain inline math.
+     The child fills the viewport when it fits and grows to max-content when
+     it does not. One scroll owner keeps both ends of a wide equation reachable. */
   html:root body .prose .katex-display {
     display: block !important;
     box-sizing: border-box !important;
@@ -68,7 +69,7 @@ html:root body .prose .katex .katex-html .vlist-s {
     min-width: 100% !important;
     max-width: none !important;
     white-space: nowrap !important;
-    text-align: left !important;
+    text-align: center !important;
   }
 
   /* Some imported matrices are inline math. Keep them contained without
