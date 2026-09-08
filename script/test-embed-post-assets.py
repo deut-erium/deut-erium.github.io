@@ -112,6 +112,13 @@ class AssetTests(unittest.TestCase):
         self.assertTrue(uri.endswith('#c'))
         self.assertIn('viewBox', svg)
 
+    def test_svg_href_and_xlink_fallback_are_both_embedded(self):
+        (self.root / 'both.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image href="pic.png" xlink:href="pic.png"/></svg>')
+        result = self.bundle('<img src="both.svg">')
+        svg = ET.fromstring(unpack(re.search(r'src="([^"]+)', result.html)[1]))
+        self.assertEqual(len(svg[0].attrib), 2)
+        self.assertTrue(all(value.startswith('data:image/png;base64,') for value in svg[0].attrib.values()))
+
     def test_inline_svg_image_and_local_symbol(self):
         result = self.bundle('<svg viewBox="0 0 10 10"><image href="pic.png"/><use href="#local"/></svg>')
         self.assertIn('data:image/png;base64,', result.html)
@@ -326,6 +333,11 @@ const c = require('node:crypto').webcrypto;
         too_long = subprocess.run(stdin_command, input='x' * 4097 + '\n', capture_output=True, text=True)
         self.assertNotEqual(too_long.returncode, 0)
         self.assertEqual(post.read_bytes(), before)
+        for value in [' synthetic-only\n', 'synthetic-only \n', '\ufeffsynthetic-only\n', 'synthetic\ronly\n']:
+            rejected = subprocess.run(stdin_command, input=value, capture_output=True, text=True)
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertIn('browser trims', rejected.stderr)
+            self.assertEqual(post.read_bytes(), before)
         chain = project / '_data' / 'arg_chain.yml'
         before_post = post.read_bytes(); before_chain = chain.read_bytes()
         source.write_text('<img src="https://example.invalid/private.png">')

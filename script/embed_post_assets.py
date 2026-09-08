@@ -322,7 +322,9 @@ class Bundler:
                 raise BundleError('foreign SVG element namespace is unsupported')
             tag = element.tag.split('}', 1)[-1].lower()
             if tag in BLOCKED - {'title'}: raise BundleError(f'unsupported active SVG element: {tag}')
-            attrs = [(name.split('}', 1)[-1] if name.startswith('{') else name, value) for name, value in element.attrib.items()]
+            attrs = [(name.replace('{http://www.w3.org/1999/xlink}', 'xlink:')
+                      .replace('{http://www.w3.org/XML/1998/namespace}', 'xml:'), value)
+                     for name, value in element.attrib.items()]
             changed = self.attributes(tag, attrs, base, svg=True)
             for old, (_, value) in zip(list(element.attrib), changed): element.attrib[old] = value or ''
             if tag == 'style': element.text = self.css(element.text or '', base)

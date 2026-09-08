@@ -171,7 +171,7 @@ printf '%s\n' "$KEY" | python3 script/encrypt_post.py \
 unset KEY
 ```
 
-Use the intended publication date and route; the example is not a registered post. The existing post-inventory checks still apply. `--answer-stdin` avoids putting the key in process arguments; the older `--answer` option remains available. Titles, teasers and descriptions are public, so keep private details in the encrypted body.
+Use the intended publication date and route; the example is not a registered post. The existing post-inventory checks still apply. `--answer-stdin` avoids putting the key in process arguments; the older `--answer` option remains available. Keys must be nonempty, single-line and without surrounding whitespace, matching the browser's input handling. Titles, teasers and descriptions are public, so keep private details in the encrypted body.
 
 To inspect the bundled HTML separately:
 
@@ -186,16 +186,16 @@ That output is **still plaintext**, written with mode 0600. Do not publish it. N
 
 The bundler handles:
 
-- Images, picture/source image sets, inline SVG image references, and dependencies inside SVG files or existing SVG data images.
+- PNG, JPEG, GIF, WebP, SVG and ICO images, picture/source image sets, inline SVG image references, and dependencies inside SVG files or existing SVG data images.
 - Stylesheet links, CSS imports and `url()` references, including local fonts. Relative paths use the containing HTML, stylesheet or SVG location. Styles are embedded, not scoped to the article.
 - Audio/video sources, posters and caption tracks. Large media increases the encrypted page's initial download and memory use.
 - Links marked `download`. With `--embed-linked-files`, ordinary local links to supported file types also become embedded downloads. Other hyperlinks, including external references, remain links. HTML pages are not recursively crawled.
 
 The input must already be a UTF-8 **HTML body**, not Markdown or a full HTML document. The utility does not render Markdown, Liquid, or script-generated assets. Start with trusted author content: it is an asset packer, not an HTML sanitizer or a sandbox. Downloaded attachments are not sanitized.
 
-Remote asset dependencies are rejected without fetching them. Save any permitted external assets locally first. Scripts, frames, active SVG, external SVG symbol references, inline SVG/MathML style elements, and unsupported implicit CSS image functions such as `image-set()` are rejected rather than left unpacked. Ordinary system-font fallbacks and resources supplied by the surrounding page are outside the bundle.
+Remote asset dependencies are rejected without fetching them. Save any permitted external assets locally first. Scripts, frames, active SVG, external SVG symbol references, inline SVG/MathML style elements, and unsupported implicit CSS image functions such as `image-set()` are rejected rather than left unpacked. Ordinary system-font fallbacks and resources supplied by the surrounding page are outside the bundle. A restrictive site Content Security Policy may also need to permit data images/fonts and embedded styles; this utility does not change that policy.
 
-The default asset root is the HTML file's directory. Set `--asset-root` to a larger **private** tree when needed; the HTML must be inside it. A reference such as `/images/plot.png` maps to that tree, never to the filesystem root or a live website. Local query strings are ignored when reading file bytes; fragments are retained. Root escapes, including symlinks outside the tree, are rejected. The tool assumes no hostile concurrent filesystem changes.
+The default asset root is the HTML file's directory. Set `--asset-root` to a larger **private** tree when needed; the HTML must be inside it. A reference such as `/images/plot.png` maps to that tree, never to the filesystem root or a live website. Local query strings are ignored when reading file bytes; fragments are retained. Root escapes, including symlinks outside the tree, are rejected. A physical file cannot re-enter its own dependency chain through another alias; even finite alias re-entry is rejected. The tool assumes no hostile concurrent filesystem changes.
 
 Defaults are 8 MiB per asset and 16 MiB of expanded HTML, with at most 128 file reads and 16 dependency levels. Both commands accept `--max-asset-bytes` and `--max-output-bytes`. Missing files, unsupported syntax, cycles and exceeded limits abort bundling before the encrypted post or chain file is changed. Existing standalone output needs `--force` to replace it.
 

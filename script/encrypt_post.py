@@ -204,7 +204,11 @@ def main() -> None:
     if len(salt) != SALT_BYTES:
         sys.exit(f"error: --salt must be {SALT_BYTES} bytes ({SALT_BYTES * 2} hex chars)")
     if not args.answer.strip():
-        sys.exit("error: --answer is empty")
+        sys.exit("error: unlock key is empty")
+    # The browser trims the key and uses a single-line text input.
+    if (args.answer != args.answer.strip() or args.answer.startswith("\ufeff")
+            or args.answer.endswith("\ufeff") or "\r" in args.answer or "\n" in args.answer):
+        sys.exit("error: unlock key must be one line without surrounding whitespace (the browser trims it)")
 
     bundled = None
     if (args.asset_root is not None or args.embed_linked_files) and not args.embed_assets:
