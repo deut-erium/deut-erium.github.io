@@ -14,9 +14,13 @@ Jekyll::Hooks.register :site, :post_write do |site|
   dest = site.dest.to_s
   next if dest.empty?
 
+  unlisted_outputs = site.pages.select { |page| page.data['unlisted'] == true }
+                         .map { |page| File.expand_path(page.destination(dest)) }
   challenges = []
   by_hash = {}
   Dir.glob(File.join(dest, '**', '*.html')).sort.each do |path|
+    next if unlisted_outputs.include?(File.expand_path(path))
+
     html = begin
       File.read(path, encoding: 'UTF-8')
     rescue StandardError

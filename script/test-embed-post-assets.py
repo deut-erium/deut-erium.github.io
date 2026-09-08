@@ -298,7 +298,8 @@ class AssetTests(unittest.TestCase):
         for file in ['encrypt_post.py', 'embed_post_assets.py']:
             shutil.copyfile(ROOT / 'script' / file, project / 'script' / file)
         (work / 'pic.png').write_bytes(PNG)
-        source = work / 'body.html'; source.write_text('<img src="pic.png" alt="private"><a download href="note.txt">note</a>')
+        original_html = '<img src="pic.png" alt="private"><a download href="note.txt">note</a>'
+        source = work / 'body.html'; source.write_text(original_html)
         (work / 'note.txt').write_text('synthetic private attachment')
         expected = bundle_file(source).html
         post = project / '_posts' / '2099-01-01-synthetic.md'
@@ -355,6 +356,46 @@ const c = require('node:crypto').webcrypto;
         self.assertNotEqual(failed.returncode, 0)
         self.assertEqual(post.read_bytes(), before_post)
         self.assertEqual(chain.read_bytes(), before_chain)
+
+        source.write_text(original_html)
+        hidden = project / 'locked/2099/01/02/follow-up.md'
+        unlisted = stdin_command + ['--unlisted', '--section', 'tutorials']
+        unlisted[unlisted.index('--out') + 1] = str(hidden)
+        result = subprocess.run(unlisted, input='synthetic-only\n', capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        hidden_text = hidden.read_text()
+        for marker in ['unlisted: true', 'sitemap: false', 'noindex: true', 'layout: locked',
+                       'permalink: /locked/2099/01/02/follow-up.html', '<span hidden>', '<noscript>']:
+            self.assertIn(marker, hidden_text)
+        self.assertNotIn('data:image/png', hidden_text)
+        fixture.update(answer='synthetic-only', payload=re.search(r'<span hidden>([^<]+)', hidden_text)[1],
+                       salt=re.search(r'data-salt="([^"]+)', hidden_text)[1])
+        recovered = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
+        self.assertEqual(recovered.returncode, 0, recovered.stderr)
+        self.assertEqual(recovered.stdout, expected)
+        fixture['answer'] = 'wrong-synthetic-answer'
+        wrong = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
+        self.assertNotEqual(wrong.returncode, 0)
+        self.assertEqual(post.read_bytes(), before_post)
+        self.assertIn('- post: /locked/2099/01/02/follow-up.html\n', chain.read_text())
+        before_chain = chain.read_bytes(); before_hidden = hidden.read_bytes()
+        alias = project / 'locked/escape'; alias.symlink_to(work, target_is_directory=True)
+        for target in [post, project / 'ramblings/2099/01/02/bad.md',
+                       project / 'locked/../_posts/2099-01-02-bad.md', alias / '2099/01/02/bad.md']:
+            bad = unlisted.copy(); bad[bad.index('--out') + 1] = str(target)
+            result = subprocess.run(bad, input='synthetic-only\n', capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('must be under locked/', result.stderr)
+            self.assertEqual(chain.read_bytes(), before_chain)
+            self.assertEqual(post.read_bytes(), before_post)
+            self.assertEqual(hidden.read_bytes(), before_hidden)
+        for mode in [[], ['--page']]:
+            bad = [arg for arg in unlisted if arg != '--unlisted'] + mode
+            result = subprocess.run(bad, input='synthetic-only\n', capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('requires --unlisted', result.stderr)
+            self.assertEqual(chain.read_bytes(), before_chain)
+            self.assertEqual(hidden.read_bytes(), before_hidden)
 
 
 if __name__ == '__main__': unittest.main(verbosity=2)

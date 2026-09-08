@@ -156,6 +156,29 @@ The current integrity gate retains migration-era source and aggregate-count base
 
 The lowercase `/writeups/` deployment workaround is intentionally retired; `/WriteUps/` is the canonical integrated section. CI builds twice and compares JSON Lines manifests that cover every file and directory, file bytes, sizes, and permission modes. Symbolic links and special files fail the artifact gate.
 
+## Listing only the first encrypted article in a chain
+
+Keep the first entry in `_posts/`. Write later entries as ordinary Jekyll pages under `locked/` using `--unlisted`:
+
+```sh
+read -r -s -p 'Unlock key: ' KEY; printf '\n'
+printf '%s\n' "$KEY" | python3 script/encrypt_post.py \
+  --plaintext agent_out/private-post/next.html \
+  --embed-assets --answer-stdin --unlisted --section tutorials \
+  --out locked/2099/01/02/next-article.md --title 'Next article'
+unset KEY
+```
+
+Replace the example date, title and file paths. Use `--needs` to identify the preceding challenge when appropriate, as for a normal locked post. Link to the new route, `/locked/2099/01/02/next-article.html`, from the preceding article's encrypted HTML before encrypting that article.
+
+These pages keep the article layout and unlock screen but do not enter the posts collection. They stay out of the homepage, archive, tag counts, pagination, related-post lists, feeds, JSON post indexes, section locked-page lists, challenge index and sitemaps. The build also sets `noindex`. A contradictory indexing flag cannot override this; marking a regular post unlisted fails rather than hiding it inconsistently. Only the first entry should be authored as a post.
+
+The route, title, teaser and ciphertext are public. Anyone with the URL can open the page, and the repository and analytics may reveal it. `noindex` is advisory. Unlisted is not access control; encryption protects only the body passed to the encryptor. Keep plaintext and original assets outside the published source tree. Raw files under `locked/` fail the build; assets belong inside the encrypted HTML.
+
+New files under `locked/` require source-commit, byte-count and hash registration in the content manifest, just like posts. They do not increase post-count baselines. The existing `--page` mode still makes ordinary section pages; use `--unlisted` for followups that must stay out of listings.
+
+Run `bundle exec ruby script/test-unlisted-pages.rb` for the offline Jekyll publication checks. The asset-bundler suite also tests an unlisted producer/WebCrypto image roundtrip. No example article is published by either test.
+
 ## Locked posts with private images and attachments
 
 Keep the HTML body and its assets outside the checkout, or together under the top-level `agent_out/` directory. Pass `--embed-assets` to the encryptor to bundle local assets in memory before encryption. No bundled plaintext file is written by this mode.

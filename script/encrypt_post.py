@@ -18,6 +18,9 @@ payload div rendered by assets/js/features/argon.js.
 It also maintains _data/arg_chain.yml: one {post, needs, salt} entry per
 locked post (plus an optional key_answer note) for future tooling.
 
+Use --unlisted for later chain entries: they are standalone pages under
+locked/, not posts. Only the first entry needs to be in _posts/.
+
 Delivery: the default writes a dated post under _posts/. The site's content
 integrity gate (script/verify-imported-content.py) pins every file under
 _posts/ to a byte-exact manifest, so --page writes the same locked body as a
@@ -74,6 +77,13 @@ permalink: {route}
 <div class="argon" data-salt="{salt}" data-needs="{needs}" aria-live="polite">{payload}</div>
 """
 
+UNLISTED_TEMPLATE = PAGE_TEMPLATE.replace(
+    "permalink: {route}\n", "permalink: {route}\nunlisted: true\nsitemap: false\nnoindex: true\n"
+).replace("{payload}</div>", "<span hidden>{payload}</span></div>") + (
+    "\n<noscript><p>Enable JavaScript to unlock this article.</p></noscript>\n"
+)
+
+
 def load_backend():
     """Return an AES-256-GCM encrypt/decrypt pair from an available module."""
     try:
@@ -123,10 +133,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--description", help="front-matter description (default: the teaser text)")
     parser.add_argument("--needs", default="", help="challenge id whose flag is the key, e.g. assignment000003-0; empty for a standalone lock")
     parser.add_argument("--key-answer", default="flag", help="chain-file note describing the key source: 'flag' or free text")
-    parser.add_argument("--page", action="store_true", help="emit a section page (default: a dated post under _posts/)")
-    parser.add_argument("--section", default="ramblings", help="section for --page output")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--page", action="store_true", help="emit a section page (default: a dated post under _posts/)")
+    mode.add_argument("--unlisted", action="store_true", help="emit a followup page under locked/YYYY/MM/DD/slug.md, outside all post lists")
+    parser.add_argument("--section", default="ramblings", help="section for --page or --unlisted output")
     parser.add_argument("--force", action="store_true", help="overwrite an existing locked post")
     args = parser.parse_args()
+    if args.unlisted:
+        args.page = True
     if args.answer_stdin:
         args.answer = sys.stdin.readline(4098)
         if len(args.answer.rstrip("\r\n")) > 4096:
@@ -195,6 +209,13 @@ def main() -> None:
         out_path = REPO / out_path
     if out_path.exists() and not args.force:
         sys.exit(f"error: {out_path} already exists (use --force to rewrite)")
+    if args.unlisted:
+        allowed = REPO / "locked"
+        if not (Path(os.path.abspath(out_path)).is_relative_to(allowed)
+                and out_path.resolve().is_relative_to(allowed)):
+            sys.exit("error: --unlisted output must be under locked/YYYY/MM/DD/slug.md")
+    elif Path(os.path.abspath(out_path)).is_relative_to(REPO / "locked"):
+        sys.exit("error: output under locked/ requires --unlisted")
 
     salt_hex = args.salt or secrets.token_hex(SALT_BYTES)
     try:
@@ -256,7 +277,8 @@ def main() -> None:
         if not match:
             sys.exit(f"error: {rel} does not follow .../year/month/day/slug.md (the page route needs a date)")
         year = match["year"] if len(match["year"]) == 4 else f"20{match['year']}"
-        body = PAGE_TEMPLATE.format(
+        template = UNLISTED_TEMPLATE if args.unlisted else PAGE_TEMPLATE
+        body = template.format(
             title=title.replace('"', "'"),
             date=f"{year}-{match['month']}-{match['day']}",
             section=args.section,
