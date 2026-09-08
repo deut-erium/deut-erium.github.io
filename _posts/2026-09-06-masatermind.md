@@ -68,7 +68,7 @@ For honest four-position, six-color Mastermind with repetitions, [Knuth describe
 
 It considers **all legal guesses**, including codes already ruled out as secrets. A guess that cannot win immediately may distinguish the remaining candidates better. The five guesses include the final correct guess, and the bound assumes honest feedback. Knuth also distinguishes this worst-case objective from minimizing the expected number of guesses.
 
-The policies below are simpler. They choose a candidate that best explains past replies, breaking ties in numeric lexicographic order: 1111 before 1112, and so on. Their first guess is 1111. They do not implement Knuth's strategy or inherit its bound.
+The deterministic policies below are simpler. They choose a candidate that best explains past replies, breaking ties in numeric lexicographic order: 1111 before 1112, and so on. Their first guess is 1111. They do not implement Knuth's strategy or inherit its bound.
 
 ## Two ways to give bad feedback
 
