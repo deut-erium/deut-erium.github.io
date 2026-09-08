@@ -135,11 +135,11 @@ try {
         document.querySelector('[data-part="error"]').textContent = '';
       });
       await input.uploadFile(file);
-      await page.waitForFunction(() => document.querySelector('[data-part="storage-status"]').textContent.startsWith('Complete session')
+      await page.waitForFunction(() => document.querySelector('[data-part="storage-status"]').textContent.startsWith('Session restored')
         || document.querySelector('[data-part="error"]').textContent.startsWith('Restore rejected'), { timeout: 60000 });
       if (!expectRejection) {
         assert.equal(await text('error'), '', `valid restore failed: ${path.basename(file)}`);
-        assert.match(await text('storage-status'), /^Complete session/);
+        assert.match(await text('storage-status'), /^Session restored/);
       }
       restoreTimings.push({ file: path.basename(file), elapsedMs: performance.now() - started });
     };
@@ -235,7 +235,7 @@ try {
     assert.equal(await text('history'), fixedRow);
     for (let i = 0; i < 2; i++) {
       await select('exact', 4); await select('misplaced', 0); await click('reply');
-      assert.doesNotMatch(await text('status'), /Solved by/);
+      assert.doesNotMatch(await text('status'), /Found the code/);
       await click('next'); await settled(); await pending();
     }
     assert.match(await text('truth'), /remaining: 0/);
@@ -253,7 +253,7 @@ try {
     await goto();
     assert.equal(await rows(), 0);
     await showSaves(); await click('restore-local');
-    await page.waitForFunction(() => document.querySelector('[data-part="storage-status"]').textContent.startsWith('Complete session'));
+    await page.waitForFunction(() => document.querySelector('[data-part="storage-status"]').textContent.startsWith('Session restored'));
     assert.equal(await text('history'), spentRows);
     assert.equal(await page.evaluate(() => window.__mmTestWorkers.messages.length), savedObject.actions.filter(a => a.type === 'guess').length,
       'restore validates existing guesses but does not issue another guess');
@@ -296,7 +296,7 @@ try {
     await page.select('[data-position="1"]', '1'); await page.select('[data-position="2"]', '1'); await page.select('[data-position="3"]', '2');
     await page.$eval(p('allowance'), el => { el.value = '0'; });
     await start(); await pending(); await click('honest'); await click('next'); await settled();
-    assert.match(await text('status'), /Solved by actual secret equality in 2 queries/);
+    assert.match(await text('status'), /Found the code in 2 guesses/);
     assert.equal(await page.$eval(p('reply-form'), el => el.hidden), true);
     assert.match(await text('review'), /0 of 0 false replies spent/);
     assert.ok(await page.$eval(p('next'), el => el.disabled));
@@ -314,7 +314,7 @@ try {
     await reset(); await hold(true); await click('start'); await queued(); await click('cancel');
     assert.equal(await page.evaluate(() => window.__mmTestWorkers.active), 0);
     await flush(); await wait(50);
-    assert.match(await text('status'), /Cancelled after 0 issued queries/);
+    assert.match(await text('status'), /Cancelled after 0 guesses/);
     assert.equal(await rows(), 0);
 
     // Watch pause also terminates an in-flight request, without cancelling play.
@@ -372,24 +372,24 @@ try {
     assert.equal(await rows(), 60, `${await text('status')} | ${await text('error')}`);
     assert.match(await text('status'), /sample its reply/);
     await click('step'); await settled();
-    assert.match(await text('status'), /Capped at 60 queries without a hit/);
+    assert.match(await text('status'), /Stopped after 60 guesses without finding the code/);
     assert.equal(await rows(), 60);
     assert.match(await text('review'), /60 sampled replies/);
     assert.ok(await page.$eval(p('play'), el => el.disabled));
     // Also compute the last query in the real worker with 59 noisy turns.
     await restoreFile(capReady);
     await click('step'); await settled();
-    assert.match(await text('status'), /Capped at 60 queries without a hit/);
+    assert.match(await text('status'), /Stopped after 60 guesses without finding the code/);
     await click('save-local');
     const capped = JSON.parse(await saveText());
     await goto(); await showSaves(); await click('restore-local');
-    await page.waitForFunction(() => document.querySelector('[data-part="status"]').textContent.startsWith('Capped'));
+    await page.waitForFunction(() => document.querySelector('[data-part="status"]').textContent.startsWith('Stopped after 60'));
     await click('save-local');
     assert.deepEqual(JSON.parse(await saveText()), capped);
 
     // Reset cancels a long restore; its completion cannot resurrect the session.
     await click('restore-local');
-    await page.waitForFunction(() => document.querySelector('[data-part="status"]').textContent.startsWith('Validating'));
+    await page.waitForFunction(() => document.querySelector('[data-part="status"]').textContent.startsWith('Restoring the saved game'));
     await click('reset'); await wait(1200);
     assert.equal(await rows(), 0);
     assert.match(await text('status'), /Choose a mode/);

@@ -28,7 +28,7 @@
     <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} class="mst-panel-title">Play</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
     <form data-part="setup-form">
       <fieldset data-part="setup">
-        <legend>New session settings (locked during play)</legend>
+        <legend>Game settings (locked during play)</legend>
         <div class="mst-controls">
           <label>Mode <select data-part="mode"><option value="bounded">Challenge the computer</option><option value="misread">Watch noisy feedback</option></select></label>
           <label>Code size <select data-part="size"><option value="4x6">4 positions / 6 colors</option><option value="3x3">3 positions / 3 colors</option></select></label>
@@ -42,7 +42,7 @@
           <div class="mst-controls">
             <label>Noise model <select data-part="noise"><option value="forced-change">Forced-change</option><option value="redraw">Redraw (may keep the same color)</option></select></label>
             <label>Per-position event probability <input data-part="probability" type="number" min="0" max="1" step="any" value="0.2" required></label>
-            <label>Reference ranking <select data-part="policy"><option value="fields">Fields: exact and total overlap</option><option value="replies">Whole replies</option></select></label>
+            <label>Scoring rule <select data-part="policy"><option value="fields">Fields: exact and total overlap</option><option value="replies">Whole replies</option></select></label>
           </div>
           <p>Each reply uses a temporary misread of the same fixed secret. Forced-change replaces a selected peg with a different color. Redraw selects among all colors, including the original.</p>
         </div>
@@ -51,7 +51,7 @@
         <button type="submit" data-part="start">Lock secret and start</button>
       </fieldset>
     </form>
-    <p class="mst-note">Live engine: enumerating reference policies. Challenge filters by the known allowance L, then ranks by whole-reply disagreement and lexicographic code order. Watch ranks by field or whole-reply disagreement, with lexicographic ties. This is not live Z3, minimax, or Bayesian query selection. Limit: 60 queries, including the final hit. Every failed guess supplies a trusted not-solved result.</p>
+    <p class="mst-note">Only a guess matching the locked secret wins. A false all-exact reply cannot end the game. Limit: 60 guesses, including the final hit.</p>
     <p data-part="session-info">No active session.</p>
     <p class="mst-status" data-part="status" role="status" aria-live="polite" tabindex="-1">Choose a mode and lock your secret.</p>
     <div data-part="active-guess" aria-label="Active guess"></div>
@@ -76,13 +76,18 @@
     <p data-part="error" class="mst-error" role="alert"></p>
   </section>
   <section class="mst-panel" aria-label="Game history and review">
-    <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} class="mst-panel-title">Immutable history</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
+    <{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %} class="mst-panel-title">Guesses and replies</{% if include.panel %}{{ include.panel }}{% else %}h2{% endif %}>
     <ol data-part="history" class="mst-history"></ol>
     <div data-part="review" hidden></div>
   </section>
   <details class="mst-panel">
-    <summary>Save or restore a complete session</summary>
-    <p>Saves include your secret, settings, seed, policy, issued guesses, replies and private review state. Nothing is saved automatically or sent to a server. Download writes a local file; Save in this browser writes local storage for this site. Restore replays and validates the log, with a new session ID. Watch always resumes paused. A pending guess stays pending.</p>
+    <summary>How guesses are chosen</summary>
+    <p>The game enumerates every candidate. Challenge keeps codes within the false-reply allowance, then chooses the one disagreeing with the fewest whole replies. Watch scores agreement with either whole replies or the exact count and total color overlap. Ties use numeric code order. Every failed guess is excluded.</p>
+    <p>These rules explain past replies; they do not calculate which next question would reveal the most. The current game uses no Z3 download or probabilistic solver.</p>
+  </details>
+  <details class="mst-panel">
+    <summary>Save or restore a session</summary>
+    <p>Saves include your secret and only update when you explicitly save. Download writes a file; Save in this browser keeps a local copy for this site. Game data is not sent to a server. Restore continues from the saved turn, with Watch paused and any unanswered guess still pending.</p>
     <div class="mst-controls">
       <button type="button" data-part="download" disabled>Download session</button>
       <button type="button" data-part="save-local" disabled>Save in this browser</button>

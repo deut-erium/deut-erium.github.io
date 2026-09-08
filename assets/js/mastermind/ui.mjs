@@ -131,20 +131,20 @@ export function mountMastermind(root) {
         : `Known allowance L = ${initial.lieBudget}; ${oracle.remainingBudget} false replies remaining.`;
       part('session-info').textContent = `${initial.positions} positions / ${initial.colors} colors. ${POLICY_LABELS[initial.policy]}. ${setting}`;
     }
-    part('status').textContent = restoring ? 'Validating saved actions and reference guesses. Reset cancels restore.'
+    part('status').textContent = restoring ? 'Restoring the saved game. Reset cancels this.'
       : !session ? 'Choose a mode and lock your secret.'
-        : end === 'solved' ? `Solved by actual secret equality in ${view.turns.length} ${view.turns.length === 1 ? 'query' : 'queries'}. Final guess counted. Review below.`
-          : end === 'capped' ? `Capped at ${QUERY_CAP} queries without a hit. This is not a win. Review below.`
-            : end === 'cancelled' ? `Cancelled after ${view.turns.length} issued queries. This is not a win. Review below.`
-              : busy ? 'Computing one reference guess off the main thread...'
+        : end === 'solved' ? `Found the code in ${view.turns.length} ${view.turns.length === 1 ? 'guess' : 'guesses'}. Review below.`
+          : end === 'capped' ? `Stopped after ${QUERY_CAP} guesses without finding the code. Review below.`
+            : end === 'cancelled' ? `Cancelled after ${view.turns.length} guesses. Review below.`
+              : busy ? 'Computing the next guess...'
                 : pending ? `Guess ${view.turns.length} is not the secret. ${watch ? 'Step or Play to sample its reply.' : 'Send an attainable reply; past replies stay fixed.'}`
                   : `${view.turns.length} / ${QUERY_CAP} queries used. ${watch ? playing ? 'Playing; Pause stops pending computation and playback.' : 'Paused. Step one turn or Play.' : 'Ask the next guess.'}${detail ? ` ${detail}` : ''}`;
     part('history').replaceChildren();
     for (const turn of view?.turns ?? []) {
       const item = node('li');
       item.append(codeRow(turn.guess), node('p', turn.outcome === 'solved'
-        ? 'Trusted equality: solved. No feedback or noise sampled.'
-        : `Trusted not-solved. ${turn.reply ? `Reported: ${textReply(turn.reply)}.` : 'Reply not submitted.'}`));
+        ? 'Correct code.'
+        : `Not the code. ${turn.reply ? `Reported: ${textReply(turn.reply)}.` : 'Awaiting a reply.'}`));
       part('history').append(item);
     }
     const review = part('review');
@@ -152,7 +152,7 @@ export function mountMastermind(root) {
     review.replaceChildren();
     if (end) {
       const data = session.review();
-      review.append(node('h3', 'Postgame truth and noise review'), node('p', 'Fixed secret:'), codeRow(data.secret));
+      review.append(node('h3', 'Game review'), node('p', 'Fixed secret:'), codeRow(data.secret));
       if (watch) {
         const changedPositions = data.annotations.reduce((n, a) => n + a.changedPositions, 0);
         const changedReplies = data.annotations.filter(a => a.changedReply).length;
@@ -319,7 +319,7 @@ export function mountMastermind(root) {
       detail = '';
       showInitial(session.initial);
       counts(session.initial.positions);
-      part('storage-status').textContent = 'Complete session validated and restored with a fresh ID. Playback is paused; any issued unanswered guess is preserved.';
+      part('storage-status').textContent = 'Session restored. Playback is paused; any unanswered guess is preserved.';
     } catch (failure) {
       if (token === generation) error(`Restore rejected: ${failure.message}. The current session was not replaced.`);
     } finally {
