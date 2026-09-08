@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Publish only the KaTeX font faces exercised by this site's math corpus."""
+"""Publish selected KaTeX font faces without changing its layout rules."""
 
 from pathlib import Path
 import re
+import shutil
 
 SOURCE = Path("node_modules/katex/dist/katex.min.css")
 TARGET = Path("assets/katex/katex.min.css")
@@ -10,7 +11,13 @@ KEEP = {
     "KaTeX_Main-Regular.woff2",
     "KaTeX_Main-Bold.woff2",
     "KaTeX_Math-Italic.woff2",
+    "KaTeX_AMS-Regular.woff2",
 }
+
+font_dir = TARGET.parent / "fonts"
+font_dir.mkdir(exist_ok=True)
+for name in KEEP:
+    shutil.copyfile(SOURCE.parent / "fonts" / name, font_dir / name)
 
 css = SOURCE.read_text(encoding="utf-8")
 faces = re.findall(r"@font-face\{[^}]+\}", css)

@@ -3,11 +3,11 @@
 html[data-skin] :is(
   p, li, a, button, input, select, label, summary, time, small, dt, dd, th, td,
   code, pre, kbd, samp, span
-) {
+):not(.katex *) {
   font-size: max(1rem, 1em) !important;
 }
 
-html[data-skin] :is(.prose code, .prose pre, .katex, .katex-display, .code-frame *) {
+html[data-skin] :is(.prose code, .prose pre, .code-frame *) {
   font-size: max(1rem, 1em) !important;
 }
 
@@ -323,16 +323,6 @@ html[data-skin] .prose .code-frame.is-wrapped pre code {
   min-width: 0 !important;
   white-space: pre-wrap !important;
   overflow-wrap: anywhere !important;
-}
-
-html[data-skin] .prose .katex-display {
-  max-width: 100% !important;
-  overflow: visible !important;
-}
-
-html[data-skin] .prose .katex-display > .katex {
-  max-width: 100%;
-  white-space: normal !important;
 }
 
 @media (forced-colors: active) {
