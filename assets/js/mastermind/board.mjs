@@ -261,8 +261,8 @@ export function mountMastermind(root) {
       part('result-mark').textContent = gaveUp ? 'ENDED' : win ? 'WIN' : 'LOSS';
       part('end-title').textContent = gaveUp ? 'Round conceded' : win ? liar ? 'You kept the secret' : 'Code cracked' : liar ? 'The computer cracked it' : 'Out of guesses';
       part('end-copy').textContent = gaveUp ? 'The fixed secret is revealed above. Review the clues or try a fresh round.'
-        : view.ending.reason === 'solved' ? `The actual code was matched in ${view.turns.length} guess${view.turns.length === 1 ? '' : 'es'}. ${liar ? 'An exact match cannot be hidden by a temporary row.' : 'No noisy clue can take that win away.'}`
-          : liar ? `Your secret survived all ${view.limit} guesses. The per-turn cap held on every reply.` : `The secret survived ${view.limit} guesses. Compare the reported clues with the truth below.`;
+        : view.ending.reason === 'solved' ? `${liar ? 'The computer found your code' : 'You found the code'} in ${view.turns.length} guess${view.turns.length === 1 ? '' : 'es'}.`
+          : liar ? `The computer used all ${view.limit} guesses without finding your code.` : `You used all ${view.limit} guesses. Compare the reported clues with the truth below.`;
       part('review-rows').replaceChildren(...(view.review ?? []).map(turn => {
         const li = node('li');
         li.append(node('strong', `Guess ${turn.number}: true score ${textScore(turn.truth)}`));
