@@ -22,6 +22,8 @@ SITE_HOST = urlsplit(SITE_URL).netloc
 HISTORICAL = json.loads(Path(__file__).with_name("historical-html-paths.json").read_text(encoding="utf-8"))
 CONTENT = json.loads(Path(__file__).with_name("imported-content-manifest.json").read_text(encoding="utf-8"))
 STATIC_APP = json.loads(Path(__file__).with_name("static-app-manifest.json").read_text(encoding="utf-8"))
+APP_ROUTES = json.loads((SOURCE / "_data/tetrasquares_routes.json").read_text(encoding="utf-8"))
+APP_PAGES = set(APP_ROUTES.values())
 ARCHIVED = json.loads(Path(__file__).with_name("archived-assets.json").read_text(encoding="utf-8"))
 LEGACY = json.loads((SOURCE / "_data/legacy_paths.json").read_text(encoding="utf-8"))
 DATE_POST = re.compile(r"^(?P<year>\d{4}|\d{2})-(?P<month>\d{2})-(?P<day>\d{2})-(?P<slug>.+)\.(?:md|markdown)$", re.I)
@@ -345,9 +347,12 @@ required = {
     "WriteUps/index.html", "WriteUps/archive.html", "WriteUps/about.html", "WriteUps/feed.xml", "WriteUps/sitemap.xml", "WriteUps/robots.txt",
     "ramblings/index.html", "ramblings/archive.html", "ramblings/about.html", "ramblings/feed.xml", "ramblings/sitemap.xml", "ramblings/robots.txt",
     "ctf-tutorials/index.html", "ctf-tutorials/archive.html", "ctf-tutorials/assignments.html", "ctf-tutorials/feed.xml", "ctf-tutorials/sitemap.xml", "ctf-tutorials/robots.txt",
-    "new-tetris/index.html", "new-tetris/src/catalog/index.html", "new-tetris/src/scoring/index.html",
 }
+required.update(APP_PAGES)
 required.update(HISTORICAL["html_paths"])
+if (ROOT / "new-tetris").exists(): fail("retired new-tetris directory remains in output")
+for retired in HISTORICAL.get("retired_html_paths", []):
+    if (ROOT / retired).exists(): fail(f"retired route remains: {retired}")
 for rel in sorted(required):
     if not (ROOT / rel).is_file(): fail(f"required output missing: {rel}")
 
@@ -360,7 +365,7 @@ pages = sorted(ROOT.rglob("*.html"))
 VERIFICATION_HTML = {"google98b86655786074b6.html", "yandex_0a37c4f8df609655.html"}
 shell_pages = [
     page for page in pages
-    if "new-tetris" not in page.relative_to(ROOT).parts
+    if page.relative_to(ROOT).as_posix() not in APP_PAGES
     and page.relative_to(ROOT).as_posix() not in VERIFICATION_HTML
 ]
 forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
@@ -388,13 +393,14 @@ for page in pages:
     broken = [ref for ref in audit.local if not resolves(page, ref)]
     if broken: fail(f"broken local links in {rel}: {broken[:10]}")
     if any(host in text.lower() for host in TRACKERS): fail(f"retired runtime service remains in {rel}")
-    if rel.startswith("new-tetris/"):
-        if rel in {"new-tetris/index.html", "new-tetris/src/catalog/index.html", "new-tetris/src/scoring/index.html"}:
-            expected_path = "/" + rel.removesuffix("index.html")
-            if audit.description != 1 or audit.canonicals != [f"{SITE_URL}{expected_path}"]:
-                fail(f"static-app metadata drift: {rel}")
-            if text.count('property="og:title"') != 1 or text.count('property="og:url"') != 1:
-                fail(f"static-app social metadata drift: {rel}")
+    if rel in APP_PAGES:
+        expected_path = "/" + rel.removesuffix("index.html")
+        if audit.description != 1 or audit.canonicals != [f"{SITE_URL}{expected_path}"]:
+            fail(f"static-app metadata drift: {rel}")
+        if text.count('property="og:title"') != 1 or f'property="og:url" content="{SITE_URL}{expected_path}"' not in text:
+            fail(f"static-app social metadata drift: {rel}")
+        if 'class="site-header"' in text or '/assets/css/main.css' in text:
+            fail(f"blog layout leaked into game: {rel}")
         continue
     if (audit.title, audit.h1, audit.main, audit.description, len(audit.canonicals)) != (1, 1, 1, 1, 1):
         fail(f"shell invariant failed: {rel}")
@@ -493,7 +499,7 @@ if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_
 if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
 if len(math_pages) != 7: fail(f"math page count drift: {len(math_pages)}")
 if GOATCOUNTER:
-    wired = [rel for rel, audit in page_audits.items() if rel not in VERIFICATION_HTML and not rel.startswith("new-tetris/") and not audit.refresh]
+    wired = [rel for rel, audit in page_audits.items() if rel not in VERIFICATION_HTML and not audit.refresh]
     missing_script = [rel for rel in wired if page_audits[rel].analytics.count(ANALYTICS_SCRIPT) != 1]
     missing_pixel = [rel for rel in wired if len([r for r in page_audits[rel].analytics if r != ANALYTICS_SCRIPT and urlsplit(r).netloc == f"{GOATCOUNTER}.goatcounter.com"]) != 1]
     if missing_script: fail(f"goatcounter script missing in {missing_script[:5]}")
@@ -545,6 +551,10 @@ for directory, (section, limit, home) in section_specs.items():
 
 root_sitemap = parse_sitemap(ROOT / "sitemap.xml")
 if not {f"/{rel}" for rel in post_routes}.issubset(root_sitemap): fail("root sitemap omits posts")
+if not {"/" + rel.removesuffix("index.html") for rel in APP_PAGES}.issubset(root_sitemap):
+    fail("root sitemap omits Tetrasquares pages")
+if any(path.startswith("/new-tetris/") for path in root_sitemap):
+    fail("root sitemap retains retired game URLs")
 if root_sitemap.intersection(noindex_paths): fail(f"noindex URL in sitemap: {sorted(root_sitemap.intersection(noindex_paths))}")
 if "/assets/resume.pdf" in root_sitemap: fail("stale resume is listed in sitemap")
 for path in root_sitemap:
@@ -593,8 +603,14 @@ for item in LEGACY["aliases"]:
     if not any("noindex" in value.lower() for value in audit.robots): fail(f"legacy alias is indexable: {item['path']}")
 
 for item in STATIC_APP["files"]:
-    path = ROOT / item["path"]
+    path = ROOT / APP_ROUTES.get(item["path"], item["path"])
     if not path.is_file(): fail(f"static app file missing: {item['path']}")
+    if item["path"] in APP_ROUTES:
+        # Source integrity is checked before Jekyll renders entry HTML.
+        # Rendered metadata, routes and analytics are checked above.
+        if APP_ROUTES[item["path"]] != item["path"] and (ROOT / item["path"]).exists():
+            fail(f"noncanonical game entry remains: {item['path']}")
+        continue
     data = path.read_bytes()
     if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]: fail(f"static app file drift: {item['path']}")
 

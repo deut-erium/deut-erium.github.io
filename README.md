@@ -8,7 +8,8 @@ Sections:
 - `/WriteUps/` - CTF writeups and challenge attachments
 - `/ctf-tutorials/` - CTF tutorials and assignments
 - `/ramblings/` - informal posts
-- `/new-tetris/` - Tetrasquares, its catalog, and scoring guide
+- `/tetrasquares/` - Tetrasquares
+- `/tetrasquares/catalog/` and `/tetrasquares/scoring/` - its catalog and scoring guide
 
 The imported source is recorded in `script/imported-content-manifest.json`. It includes the public WriteUps source plus eight newer local files. Historical routes, attachment bytes, feeds, sitemaps, tags, and the recovered game are checked after each build.
 
@@ -23,7 +24,7 @@ npm ci --ignore-scripts --no-audit --no-fund
 script/build-release.sh agent_out/release/site
 ```
 
-The release command performs one Jekyll build for the root blog, WriteUps, tutorials, and ramblings. It also copies `/new-tetris/` unchanged, adds `.nojekyll`, runs the content and route checks, and writes `agent_out/release/site.manifest.jsonl`.
+The release command performs one Jekyll build for the root blog, WriteUps, tutorials, and ramblings. It renders the three Tetrasquares entry pages with optional analytics, copies the engine assets unchanged, adds `.nojekyll`, runs the content and route checks, and writes `agent_out/release/site.manifest.jsonl`.
 
 Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets. Mathematics and syntax highlighting are generated before publication.
 
@@ -45,12 +46,14 @@ curl -s https://deut-erium.github.io/index.jsonl | jq -c 'select(.has_math == tr
 
 ## Tetrasquares construction practice
 
-Tetrasquares keeps the existing `/new-tetris/` URLs and saved-game identifiers.
+Tetrasquares uses `/tetrasquares/`. The old `/new-tetris/` routes have been removed at the author's request; old bookmarks will not redirect. Existing storage keys, daily seeds and replay identifiers are unchanged.
 The [accompanying article](_posts/2026-09-07-tetrasquares.md) explains its rules and diagrams.
 
-Open the [square catalog](new-tetris/src/catalog/index.html), select an illustrated
+Open the [square catalog](/tetrasquares/catalog/), select an illustrated
 4x4 or 6x6 example, and choose **Practice this construction**. For example,
-`/new-tetris/?practice=4&family=T4` opens the four-T construction.
+`/tetrasquares/?practice=4&family=T4` opens the four-T construction.
+
+All three game pages use the shared GoatCounter configuration, without the blog's header or stylesheet. Their analytics labels use canonical paths rather than query strings or per-construction titles. Setting `goatcounter_site` to an empty string disables the script and counting image everywhere.
 
 Practice supplies the illustrated piece order with no gravity or timer. Match
 each numbered piece in the outlined target area and hard-drop it to lock. A

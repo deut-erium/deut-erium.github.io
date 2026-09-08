@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the recovered new-tetris application and its recorded local patches."""
+"""Verify the recovered Tetrasquares application and its recorded local patches."""
 
 from __future__ import annotations
 
@@ -12,6 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 manifest = json.loads(Path(__file__).with_name("static-app-manifest.json").read_text(encoding="utf-8"))
 if manifest.get("version") not in (2, 3) or not re.fullmatch(r"[0-9a-f]{40}", manifest.get("source_commit", "")):
     raise SystemExit("unsupported static app manifest")
+routes = json.loads((ROOT / "_data/tetrasquares_routes.json").read_text(encoding="utf-8"))
+if (ROOT / "new-tetris").exists():
+    raise SystemExit("retired new-tetris source directory remains")
 rows = manifest.get("files", [])
 expected = {item["path"]: item for item in rows}
 if len(expected) != len(rows):
@@ -28,7 +31,18 @@ if manifest["version"] == 2 and added_locally:
     raise SystemExit("static app local additions require manifest version 3")
 if not patched or not patched.issubset(expected):
     raise SystemExit("static app patch inventory is invalid")
+if set(routes) != {rel for rel in expected if rel.endswith('.html')}:
+    raise SystemExit("Tetrasquares entry inventory drift")
+for rel, target in routes.items():
+    if not target.startswith('tetrasquares/') or not target.endswith('/index.html') or '..' in target.split('/'):
+        raise SystemExit(f"invalid Tetrasquares output path: {target}")
+    source = (ROOT / rel).read_text(encoding='utf-8')
+    canonical = '/' + target.removesuffix('index.html')
+    if not source.startswith('---\nlayout: null\n') or f'\npermalink: {canonical}\n' not in source or f'\nanalytics_path: {canonical}\n' not in source:
+        raise SystemExit(f"Tetrasquares entry metadata drift: {rel}")
 for rel, item in expected.items():
+    if rel not in added_locally and item.get('source_path') != rel.replace('tetrasquares/', 'new-tetris/', 1):
+        raise SystemExit(f"recovered source filename missing: {rel}")
     if rel in added_locally:
         if "source_bytes" in item or "source_sha256" in item:
             raise SystemExit(f"local addition cannot claim recovered source provenance: {rel}")
@@ -40,7 +54,7 @@ for rel, item in expected.items():
 
 actual = {
     path.relative_to(ROOT).as_posix()
-    for path in (ROOT / "new-tetris").rglob("*")
+    for path in (ROOT / "tetrasquares").rglob("*")
     if path.is_file()
 }
 missing = sorted(set(expected) - actual)

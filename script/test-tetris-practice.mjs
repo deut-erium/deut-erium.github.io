@@ -1,10 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createConstruction, loadConstruction, PracticeGame } from "../new-tetris/src/practice.js";
-import { Game } from "../new-tetris/src/game.js?v=20260911";
-import { cellsFor, kicksFor, rotatedState } from "../new-tetris/src/pieces.js?v=20260911";
-import four from "../new-tetris/src/catalog/data-4.js";
-import six from "../new-tetris/src/catalog/data-6.js";
+import { createConstruction, loadConstruction, PracticeGame } from "../tetrasquares/src/practice.js";
+import { Game } from "../tetrasquares/src/game.js?v=20260911";
+import { cellsFor, kicksFor, rotatedState } from "../tetrasquares/src/pieces.js?v=20260911";
+import four from "../tetrasquares/src/catalog/data-4.js";
+import six from "../tetrasquares/src/catalog/data-6.js";
 
 const key = (piece) => `${piece.x},${piece.y},${piece.rotation}`;
 const geometry = (piece) => cellsFor(piece).map(({ x, y }) => `${x},${y}`).sort().join(";");

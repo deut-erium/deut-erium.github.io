@@ -185,7 +185,7 @@ if (game.practice) {
   document.querySelector(".run-console").setAttribute("aria-labelledby", "practice-title");
   for (const panel of document.querySelectorAll(".run-start, .run-explain, .run-readout, .run-tools")) panel.hidden = true;
   requiredElement("practice-title").textContent = `${construction.size}x${construction.size} PRACTICE / ${construction.id}`;
-  const catalogUrl = new URL("src/catalog/index.html", location.href);
+  const catalogUrl = new URL("/tetrasquares/catalog/", location.href);
   catalogUrl.searchParams.set("size", String(construction.size));
   catalogUrl.searchParams.set("family", construction.id);
   requiredElement("practice-catalog").href = catalogUrl.href;

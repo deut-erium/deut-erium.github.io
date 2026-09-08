@@ -1,24 +1,31 @@
+---
+layout: null
+permalink: /tetrasquares/catalog/
+title: Tetrasquares Catalog
+analytics_path: /tetrasquares/catalog/
+sitemap: true
+---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore 4x4, 6x6, and 8x8 tetromino squares in the Tetrasquares catalog.">
-  <link rel="canonical" href="https://deut-erium.github.io/new-tetris/src/catalog/">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Tetrasquares Catalog">
   <meta property="og:description" content="Explore 4x4, 6x6, and 8x8 tetromino squares in the Tetrasquares catalog.">
-  <meta property="og:url" content="https://deut-erium.github.io/new-tetris/src/catalog/">
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <title>Tetrasquares Catalog</title>
-  <link rel="stylesheet" href="catalog.css?v=20260911-practice1">
+  <link rel="stylesheet" href="/tetrasquares/src/catalog/catalog.css?v=20260908-routes1">
 </head>
 <body>
   <header class="catalog-head">
     <h1 class="catalog-mark"><span>SQUARE</span><strong>CATALOG</strong></h1>
     <div>
       <p>Every feasible piece mix: 24 at 4x4, 1,467 at 6x6, and 30,434 at 8x8.</p>
-      <nav><a href="../scoring/index.html">Scoring guide</a><a href="../../index.html">Back to Tetrasquares</a></nav>
+      <nav><a href="/tetrasquares/scoring/">Scoring guide</a><a href="/tetrasquares/">Back to Tetrasquares</a></nav>
     </div>
   </header>
 
@@ -91,7 +98,7 @@
         <div class="family-data">
           <p id="material" class="material">-</p>
           <h2 id="family-title" class="family-title">-</h2>
-          <a id="practice-construction" class="practice-link" href="../../" hidden>Practice this construction</a>
+          <a id="practice-construction" class="practice-link" href="/tetrasquares/" hidden>Practice this construction</a>
           <p id="practice-unavailable" hidden>Practice needs an example diagram and placement order. The 8x8 catalog currently has counts only.</p>
           <p id="catalog-status" class="sr-only" role="status" aria-live="polite"></p>
           <section class="construction-score" aria-labelledby="score-label">
@@ -120,7 +127,7 @@
   </main>
 
   <footer>4x4 has 24 piece mixes, 6x6 has 1,467, and 8x8 has 30,434. Their exact board-arrangement totals are 117, 178,939, and 19,077,209,438.</footer>
-  <script id="catalog-module" type="module" src="catalog.js?v=20260911-practice1"></script>
+  <script id="catalog-module" type="module" src="/tetrasquares/src/catalog/catalog.js?v=20260908-routes1"></script>
   <script>
     (() => {
       const module = document.querySelector("#catalog-module");
@@ -134,5 +141,6 @@
       setTimeout(reportFailure, 10000);
     })();
   </script>
+  {% include goatcounter.html %}
 </body>
 </html>

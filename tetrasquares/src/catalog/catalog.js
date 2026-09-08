@@ -282,7 +282,7 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   ui.practice.hidden = !canPractice;
   ui.practiceUnavailable.hidden = canPractice;
   if (canPractice) {
-    const practiceUrl = new URL("../../", location.href);
+    const practiceUrl = new URL("/tetrasquares/", location.href);
     practiceUrl.searchParams.set("practice", String(size));
     practiceUrl.searchParams.set("family", currentFamily.id);
     ui.practice.href = practiceUrl.href;

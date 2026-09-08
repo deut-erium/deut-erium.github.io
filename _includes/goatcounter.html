@@ -7,6 +7,9 @@
 {%- endcomment -%}
 {%- capture _gc_site -%}{{ site.goatcounter_site }}{%- endcapture -%}
 {%- if _gc_site != "" -%}{%- unless page.redirect_to -%}
-<script src="https://gc.zgo.at/count.js" data-goatcounter="https://{{ _gc_site }}.goatcounter.com/count" async></script>
-<noscript><img src="https://{{ _gc_site }}.goatcounter.com/count?p={{ page.url | url_encode }}" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript>
+{%- if page.analytics_path -%}
+  {%- capture _gc_settings -%}{"path":{{ page.analytics_path | jsonify }},"title":{{ page.title | jsonify }}}{%- endcapture -%}
+{%- endif -%}
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://{{ _gc_site }}.goatcounter.com/count"{% if page.analytics_path %} data-goatcounter-settings="{{ _gc_settings | escape }}"{% endif %} async></script>
+<noscript><img src="https://{{ _gc_site }}.goatcounter.com/count?p={{ page.analytics_path | default: page.url | url_encode }}" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript>
 {%- endunless -%}{%- endif -%}

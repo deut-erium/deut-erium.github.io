@@ -38,10 +38,10 @@ Four pieces of the same shape turn gold; a mixture turns silver. Four T pieces c
 
     </div>
   </div>
-  <figcaption>T4 in the browser game's colors. Each number identifies one piece and its placement order. <a href="{{ '/new-tetris/?practice=4&family=T4' | relative_url }}">Build this one.</a></figcaption>
+  <figcaption>T4 in the browser game's colors. Each number identifies one piece and its placement order. <a href="{{ '/tetrasquares/?practice=4&family=T4' | relative_url }}">Build this one.</a></figcaption>
 </figure>
 
-I wanted more of that, so I made [Tetrasquares]({{ '/new-tetris/' | relative_url }}), a browser game with 6x6 and 8x8 squares as well. I also changed the scoring to give interlocking arrangements some extra points. Four O pieces and four interlocking Ts both make gold, but I like the T square enough to pay it more.
+I wanted more of that, so I made [Tetrasquares]({{ '/tetrasquares/' | relative_url }}), a browser game with 6x6 and 8x8 squares as well. I also changed the scoring to give interlocking arrangements some extra points. Four O pieces and four interlocking Ts both make gold, but I like the T square enough to pay it more.
 
 ## The bit I borrowed from the N64 game
 
@@ -68,7 +68,7 @@ O4 and I4 are the easy gold squares: four little squares, or four strips.
 
     </div>
   </div>
-  <figcaption>Practice <a href="{{ '/new-tetris/?practice=4&family=O4' | relative_url }}">four Os</a> or <a href="{{ '/new-tetris/?practice=4&family=I4' | relative_url }}">four Is</a>.</figcaption>
+  <figcaption>Practice <a href="{{ '/tetrasquares/?practice=4&family=O4' | relative_url }}">four Os</a> or <a href="{{ '/tetrasquares/?practice=4&family=I4' | relative_url }}">four Is</a>.</figcaption>
 </figure>
 
 For silver, I can join two 2x4 rectangles made from two pieces each. Another option is a three-piece 3x4 assembly with an I across the top. These are handy recipes because I can work on a smaller rectangle while waiting for the piece that finishes it.
@@ -86,7 +86,7 @@ For silver, I can join two 2x4 rectangles made from two pieces each. Another opt
 
     </div>
   </div>
-  <figcaption><a href="{{ '/new-tetris/?practice=4&family=L2-O2' | relative_url }}">Two pairs</a>, or <a href="{{ '/new-tetris/?practice=4&family=I1-L1-T2' | relative_url }}">three pieces with an I cap</a>. Cyan marks the seams.</figcaption>
+  <figcaption><a href="{{ '/tetrasquares/?practice=4&family=L2-O2' | relative_url }}">Two pairs</a>, or <a href="{{ '/tetrasquares/?practice=4&family=I1-L1-T2' | relative_url }}">three pieces with an I cap</a>. Cyan marks the seams.</figcaption>
 </figure>
 
 The T square has no such seam. Any straight cut across the whole square goes through at least one piece. J pieces can make a spiral too; the L arrangement below uses two separable pairs instead. Ls can also spiral, but this particular catalog example doesn't.
@@ -104,7 +104,7 @@ The T square has no such seam. Any straight cut across the whole square goes thr
 
     </div>
   </div>
-  <figcaption><a href="{{ '/new-tetris/?practice=4&family=J4' | relative_url }}">Spiral Js</a> and <a href="{{ '/new-tetris/?practice=4&family=L4' | relative_url }}">paired Ls</a>. These are different arrangements, not mirror images.</figcaption>
+  <figcaption><a href="{{ '/tetrasquares/?practice=4&family=J4' | relative_url }}">Spiral Js</a> and <a href="{{ '/tetrasquares/?practice=4&family=L4' | relative_url }}">paired Ls</a>. These are different arrangements, not mirror images.</figcaption>
 </figure>
 
 I also like the two-L, two-Z square. Reflecting its piece mix gives two Js and two Ss. The slanted pieces fit between the hooks, and both of these arrangements have half-turn symmetry.
@@ -122,7 +122,7 @@ I also like the two-L, two-Z square. Reflecting its piece mix gives two Js and t
 
     </div>
   </div>
-  <figcaption>Practice the <a href="{{ '/new-tetris/?practice=4&family=L2-Z2' | relative_url }}">L/Z</a> or <a href="{{ '/new-tetris/?practice=4&family=J2-S2' | relative_url }}">J/S</a> interlock.</figcaption>
+  <figcaption>Practice the <a href="{{ '/tetrasquares/?practice=4&family=L2-Z2' | relative_url }}">L/Z</a> or <a href="{{ '/tetrasquares/?practice=4&family=J2-S2' | relative_url }}">J/S</a> interlock.</figcaption>
 </figure>
 
 ## Paying extra for an interlock
@@ -159,7 +159,7 @@ That makes O4 worth 2,500 and T4 worth 3,500. The silver comparison works the sa
 
 This bonus only looks at geometry. It doesn't know whether the queue is being helpful or whether I've built the whole thing on top of a mess.
 
-These are pending points. Making O4 attaches 2,500 points to it, split into four shares of 625. Clear one of its rows and collect that row's share, plus the ordinary line-clear points. The [scoring page]({{ '/new-tetris/src/scoring/' | relative_url }}) has the full rules, including what happens when a larger square contains smaller ones.
+These are pending points. Making O4 attaches 2,500 points to it, split into four shares of 625. Clear one of its rows and collect that row's share, plus the ordinary line-clear points. The [scoring page]({{ '/tetrasquares/scoring/' | relative_url }}) has the full rules, including what happens when a larger square contains smaller ones.
 
 ## Six by six takes nine pieces
 
@@ -180,7 +180,7 @@ The first construction below comes apart into five individual Os and the four-T 
       <span class="tetrasquares-value">Shape bonus: 2,500</span>
     </div>
   </div>
-  <figcaption><a href="{{ '/new-tetris/?practice=6&family=O5-T4' | relative_url }}">A T4 core with five Os</a>, and <a href="{{ '/new-tetris/?practice=6&family=L5-T4' | relative_url }}">a nine-piece interlock</a>.</figcaption>
+  <figcaption><a href="{{ '/tetrasquares/?practice=6&family=O5-T4' | relative_url }}">A T4 core with five Os</a>, and <a href="{{ '/tetrasquares/?practice=6&family=L5-T4' | relative_url }}">a nine-piece interlock</a>.</figcaption>
 </figure>
 
 The 6x6 base is 2,500 points, gold adds 3,500, and each distinct shape after the first adds 500. Then I add the shape bonus:
@@ -211,7 +211,7 @@ Using all seven shapes is worth a decent bonus, though it doesn't guarantee the 
       <span class="tetrasquares-value">7,500 pending</span>
     </div>
   </div>
-  <figcaption>Try <a href="{{ '/new-tetris/?practice=6&family=I1-J1-L1-O1-S1-T2-Z2' | relative_url }}">all seven shapes</a> or <a href="{{ '/new-tetris/?practice=6&family=J1-L1-O1-S1-T2-Z3' | relative_url }}">the stronger six-type interlock</a>.</figcaption>
+  <figcaption>Try <a href="{{ '/tetrasquares/?practice=6&family=I1-J1-L1-O1-S1-T2-Z2' | relative_url }}">all seven shapes</a> or <a href="{{ '/tetrasquares/?practice=6&family=J1-L1-O1-S1-T2-Z3' | relative_url }}">the stronger six-type interlock</a>.</figcaption>
 </figure>
 
 Nine Ts won't work at all. Checkerboard-color a 6x6 board and there are 18 cells of each color. A T always covers three of one color and one of the other, giving an imbalance of +2 or -2. Nine such imbalances can't sum to zero. The little T4 spiral has no T9 equivalent.
@@ -229,7 +229,7 @@ Butler, Ekstrand and Osborne [count these tilings](#ref-tiling):
 
 A mix such as L2-Z2 says which pieces are used, not where they go. It can have several arrangements with different scores. These counts keep rotations and reflections when they give different tilings on the fixed board. They also include geometric tilings without promising that a falling-piece sequence can reach each one.
 
-The [catalog]({{ '/new-tetris/src/catalog/' | relative_url }}) has one illustrated, checked construction for every 4x4 and 6x6 mix: 1,491 examples altogether. Its step slider shows how they go together. The [platforming guide](#ref-platforms) is useful background here; a finished tiling hides all the trouble you can have getting a piece into place.
+The [catalog]({{ '/tetrasquares/catalog/' | relative_url }}) has one illustrated, checked construction for every 4x4 and 6x6 mix: 1,491 examples altogether. Its step slider shows how they go together. The [platforming guide](#ref-platforms) is useful background here; a finished tiling hides all the trouble you can have getting a piece into place.
 
 Each example links to practice mode, which supplies its pieces in order without gravity. A wrong drop leaves the board alone, and there's an optional placement outline. You can learn the construction without waiting for a friendly queue or trying to keep the rest of the board alive. Practice stops when the square is built; collecting its points is left to normal play.
 
@@ -250,7 +250,7 @@ An 8x8 square needs sixteen pieces. In a ten-column well, centering it leaves on
 
 I checked this order with a supplied T-only sequence under the browser game's movement rules. For 8x8 I went with a flat 10,000 for silver and 20,000 for gold, collected across eight rows. There is no additional interlock or diversity bonus. Those smaller T4 squares can still have their own uncollected points attached when the big square forms.
 
-The [8x8 catalog]({{ '/new-tetris/src/catalog/?size=8&family=T16' | relative_url }}) has counts by piece mix, but no construction orders or practice mode yet. You can build 8x8 squares in the [full game]({{ '/new-tetris/' | relative_url }}). The [four-T practice]({{ '/new-tetris/?practice=4&family=T4' | relative_url }}) supplies the right queue if you want to try the spiral.
+The [8x8 catalog]({{ '/tetrasquares/catalog/?size=8&family=T16' | relative_url }}) has counts by piece mix, but no construction orders or practice mode yet. You can build 8x8 squares in the [full game]({{ '/tetrasquares/' | relative_url }}). The [four-T practice]({{ '/tetrasquares/?practice=4&family=T4' | relative_url }}) supplies the right queue if you want to try the spiral.
 
 ## References
 

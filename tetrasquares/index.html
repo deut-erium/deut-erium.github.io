@@ -1,15 +1,22 @@
+---
+layout: null
+permalink: /tetrasquares/
+title: Tetrasquares
+analytics_path: /tetrasquares/
+sitemap: true
+---
 <!doctype html>
 <html lang="en" data-layout="pop-schematic">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Build gold and silver squares in Tetrasquares, a browser experiment with falling tetrominoes.">
-  <link rel="canonical" href="https://deut-erium.github.io/new-tetris/">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Tetrasquares">
   <meta property="og:description" content="Build gold and silver squares in Tetrasquares, a browser experiment with falling tetrominoes.">
-  <meta property="og:url" content="https://deut-erium.github.io/new-tetris/">
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <title>Tetrasquares</title>
   <script>
     (() => {
@@ -18,8 +25,8 @@
       document.documentElement.dataset.layout = allowed.includes(requested) ? requested : "pop-schematic";
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260907-tetrasquares1">
-  <link rel="stylesheet" href="src/layouts/pop-schematic.css?v=20260907-tetrasquares1">
+  <link rel="stylesheet" href="/tetrasquares/styles.css?v=20260908-routes1">
+  <link rel="stylesheet" href="/tetrasquares/src/layouts/pop-schematic.css?v=20260908-routes1">
 </head>
 <body>
   <header class="topbar">
@@ -28,7 +35,7 @@
     </h1>
     <div class="topbar-actions">
       <p>Build <b class="gold-text">gold</b> and <b class="silver-text">silver</b> 4x4, 6x6, and 8x8 squares.</p>
-      <a class="catalog-button" href="src/catalog/index.html">Browse 4x4 + 6x6 + 8x8 catalog</a>
+      <a class="catalog-button" href="/tetrasquares/catalog/">Browse 4x4 + 6x6 + 8x8 catalog</a>
     </div>
   </header>
 
@@ -46,8 +53,8 @@
           <label class="practice-hint"><input id="practice-hint" type="checkbox"> Outline the next placement</label>
           <div class="practice-actions">
             <button id="retry-practice" type="button">Retry construction</button>
-            <a id="practice-catalog" href="src/catalog/index.html">Back to this example</a>
-            <a id="practice-exit" href="./">Play normally</a>
+            <a id="practice-catalog" href="/tetrasquares/catalog/">Back to this example</a>
+            <a id="practice-exit" href="/tetrasquares/">Play normally</a>
           </div>
         </div>
       </section>
@@ -74,7 +81,7 @@
             <p>Gold uses one piece type. Silver mixes piece types. Dropping faster, clearing rows on back-to-back turns, and level do not add points.</p>
           </div>
         </details>
-        <a class="scoring-page-link" href="src/scoring/index.html">Full scoring guide</a>
+        <a class="scoring-page-link" href="/tetrasquares/scoring/">Full scoring guide</a>
       </div>
       <dl class="run-readout">
         <div><dt>GAME</dt><dd id="challenge-status">ENDLESS</dd></div>
@@ -184,8 +191,9 @@
     </div>
   </main>
 
-  <footer class="game-credit"><a href="../2026/09/07/tetrasquares.html">About Tetrasquares</a>. An independent experiment inspired by The New Tetris on Nintendo 64.</footer>
+  <footer class="game-credit"><a href="/2026/09/07/tetrasquares.html">About Tetrasquares</a>. An independent experiment inspired by The New Tetris on Nintendo 64.</footer>
 
-  <script type="module" src="src/main.js?v=20260907-tetrasquares1"></script>
+  <script type="module" src="/tetrasquares/src/main.js?v=20260908-routes1"></script>
+  {% include goatcounter.html %}
 </body>
 </html>

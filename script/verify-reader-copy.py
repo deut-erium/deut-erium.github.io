@@ -52,7 +52,7 @@ def removed_notes(source):
 
 
 def verify(root):
-    pages = sorted(p for p in root.rglob('*.html') if 'new-tetris' not in p.relative_to(root).parts)
+    pages = sorted(root.rglob('*.html'))
     if not pages:
         raise SystemExit(f'No rendered HTML found under {root}')
     failures = {}

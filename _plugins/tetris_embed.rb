@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# tetris_embed: build-time inline embed of the preserved new-tetris app.
+# tetris_embed: build-time inline embed of the Tetrasquares app.
 #
-# Reads the verbatim app under new-tetris/ (never modifies it), extracts the
-# game markup, rewrites relative URLs to absolute /new-tetris/ paths, scopes
+# Reads the app under tetrasquares/ (never modifies it), extracts the
+# game markup, rewrites relative URLs to absolute /tetrasquares/ paths, scopes
 # the app stylesheets under a single container class so their global rules
 # (body, button, input, [hidden], :root) cannot leak into the host page, and
 # exposes everything through the {% tetris_embed %} Liquid tag.
@@ -14,7 +14,7 @@
 require 'cgi'
 
 class TetrisEmbedBuilder
-  APP_DIR = 'new-tetris'
+  APP_DIR = 'tetrasquares'
   CONTAINER = 'nt-embed'
   LAYOUTS = %w[styles.css src/layouts/pop-schematic.css].freeze
 
@@ -35,8 +35,8 @@ class TetrisEmbedBuilder
     body = body.gsub(/(href|src)="(?!https?:|\/|#|mailto:)([^"]+)"/) do
       "#{Regexp.last_match(1)}=\"/#{APP_DIR}/#{Regexp.last_match(2)}\""
     end
-    # the app's catalog link opens the standalone catalog
-    body = body.gsub(%r{href="/new-tetris/src/}, 'href="/new-tetris/src/')
+    # The host supplies analytics; an embedded game must not add a second copy.
+    body = body.gsub(/\{%\s*include goatcounter\.html\s*%\}/, '')
 
     css = LAYOUTS.map do |sheet|
       scope_css(File.read(File.join(source, sheet), encoding: 'UTF-8'))
