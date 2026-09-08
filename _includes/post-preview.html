@@ -1,9 +1,0 @@
-{%- assign _record = include.record -%}
-{%- assign _description = _record.description | strip_html | normalize_whitespace | truncate: 190 -%}
-<li class="post-preview" data-record>
-  <article>
-    <h3 class="post-preview__title"><a href="{{ _record.url | relative_url }}">{{ _record.title | escape }}</a></h3>
-    {%- if _description != empty and _record.description_generated != true -%}<p class="post-preview__description">{{ _description | escape }}</p>{%- endif -%}
-    <p class="post-preview__meta"><time datetime="{{ _record.date | date_to_xmlschema }}">{{ _record.date | date: '%b %-d, %Y' }}</time></p>
-  </article>
-</li>

@@ -207,7 +207,6 @@ main > script {
 }
 
 .site-header {
-  position: relative;
   margin-top: 1rem;
   color: #fff;
   background: var(--shell);
@@ -267,203 +266,15 @@ main > script {
   line-height: 1.25;
 }
 
-/* Navigation owns its layout here. The disclosure also works without JS. */
-.nav-menu {
-  position: relative;
-  flex: 0 0 auto;
-  min-width: max-content;
-  align-self: center;
-  font: 1rem/1.4 var(--body);
-}
-
-#site-header { z-index: 96; }
-#site-header .site-header__inner { overflow: visible; }
-
-.nav-menu > summary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  min-width: 5rem;
-  min-height: 44px;
-  padding: .4rem .65rem;
-  color: #fff !important;
-  background: #101426 !important;
-  border: 3px solid #59617e;
-  border-radius: .4rem;
-  box-shadow: 0 3px #070914;
-  font: 700 1rem/1.2 var(--body);
-  list-style: none;
-  cursor: pointer;
-}
-.nav-menu > summary::-webkit-details-marker { display: none; }
-.nav-menu[open] .nav-menu__indicator { transform: rotate(45deg); }
-
-.nav-menu__panel {
-  position: absolute;
-  z-index: 100;
-  top: calc(100% + .5rem);
-  right: 0;
-  width: min(28rem, calc(100vw - 2rem));
-  max-height: calc(100vh - 100px);
-  max-height: calc(100svh - 100px);
-  overflow: auto;
-  padding: 1rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 3px solid var(--navy);
-  border-radius: .5rem;
-  box-shadow: 4px 5px #070914;
-}
-
-.primary-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .5rem;
-}
-.primary-links a {
-  display: flex;
+.site-nav {
   min-width: 0;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: .45rem;
-  color: #fff !important;
-  background: #101426 !important;
-  border: 2px solid #59617e;
-  border-radius: .3rem;
-  font-family: var(--body);
-  font-weight: 700;
-  line-height: 1.3;
-  text-align: center;
-  text-decoration: none;
-  overflow-wrap: anywhere;
-}
-.primary-links a[aria-current="page"] {
-  color: #101426 !important;
-  background: #f7ef37 !important;
-  border-color: #101426;
-}
-#site-header .primary-links a:hover { text-decoration: underline; }
-#site-header :is(summary, .primary-links a, select):focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 3px;
-}
-.nav-menu__appearance { margin-top: 1rem; }
-.nav-menu__appearance label { display: block; margin-bottom: .35rem; }
-.nav-menu__appearance select {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  padding: .45rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 2px solid var(--rule);
-  font: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  justify-content: flex-end;
 }
 
-/* The two desktop rail layouts open their panel into the page. */
-@media (min-width: 54.001rem) {
-  html:is([data-skin="twin-blades"], [data-skin="margin-of-error"]) .nav-menu__panel {
-    left: 0;
-    right: auto;
-  }
-}
-
-/* The shared mobile contract takes precedence over legacy skin geometry.
-   Desktop wordmarks, colors and rail layouts are otherwise left to the skin. */
-@media (max-width: 54rem) {
-  #site-header {
-    position: relative !important;
-    inset: auto !important;
-    display: block !important;
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-width: 4px !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-    overflow: visible !important;
-  }
-  #site-header::before, #site-header::after,
-  #site-header .site-header__inner::before, #site-header .site-header__inner::after,
-  #site-header .site-brand::before, #site-header .site-brand::after { display: none !important; }
-  #site-header .site-header__inner {
-    position: static !important;
-    display: flex !important;
-    flex-flow: row nowrap !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: .5rem !important;
-    width: auto !important;
-    max-width: none !important;
-    min-height: 64px !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: .5rem .75rem !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-  #site-header .site-brand {
-    position: static !important;
-    display: flex !important;
-    flex: 0 1 auto !important;
-    align-items: center !important;
-    gap: .5rem !important;
-    width: auto !important;
-    min-width: 0 !important;
-    min-height: 44px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-  #site-header .site-brand__mark {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    margin: 0 !important;
-    border-width: 2px !important;
-  }
-  #site-header .site-brand__text {
-    position: static !important;
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-  }
-  #site-header .site-brand__name {
-    width: auto !important;
-    margin: 0 !important;
-    font: 700 1.35rem/1.1 var(--body) !important;
-    letter-spacing: -.02em !important;
-    white-space: nowrap !important;
-    text-shadow: none !important;
-    -webkit-text-stroke: 0 !important;
-  }
-  #site-header .site-brand__scope { display: none !important; }
-}
-
-@media (forced-colors: active) {
-  #site-header :is(.nav-menu > summary, .primary-links a) {
-    color: ButtonText !important;
-    background: ButtonFace !important;
-    border-color: ButtonText;
-  }
-  #site-header .primary-links a[aria-current] {
-    color: HighlightText !important;
-    background: Highlight !important;
-  }
-}
-
+.site-nav a,
 .theme-toggle,
 .site-share__btn,
 .action,
@@ -490,12 +301,19 @@ main > script {
   text-decoration: none;
 }
 
+.site-nav a,
+.site-nav .theme-toggle,
+.site-nav .site-share__btn {
+  padding-inline: .65rem;
+}
 
 .theme-toggle,
 .site-share__btn {
   cursor: pointer;
 }
 
+.site-nav a:hover,
+.site-nav a:focus-visible,
 .theme-toggle:hover,
 .theme-toggle:focus-visible,
 .site-share__btn:hover,
@@ -563,6 +381,7 @@ main > script {
   background: var(--pink);
 }
 
+.site-nav a[aria-current="page"],
 .quick-filters a[aria-current="true"],
 .theme-toggle[aria-pressed="true"] {
   color: var(--navy);
@@ -640,13 +459,9 @@ main > script {
   line-height: 1.55;
 }
 
-.masthead__copy { padding: 1rem 1.25rem; }
-.masthead h1 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.05; }
-
 .masthead__lede {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  margin-top: .65rem;
-  font-size: 1.05rem;
+  font-size: clamp(1.22rem, 1.7vw, 1.38rem);
   font-weight: 700;
 }
 
@@ -1946,6 +1761,17 @@ main > script {
   }
 }
 
+@media (max-width: 72rem) {
+  .site-header__inner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .site-nav {
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 68rem) {
   /* Default theme only: contents above the article, related links below it. */
   html:not([data-skin]) .record-grid {
@@ -1985,6 +1811,7 @@ main > script {
     flex-direction: column;
   }
 
+  .site-nav,
   .site-footer__links {
     justify-content: flex-start;
   }
@@ -2031,6 +1858,15 @@ main > script {
     display: none;
   }
 
+  .site-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-nav a:last-child {
+    grid-column: 1 / -1;
+  }
+
   .home-shell,
   .archive-shell,
   .record-page,
@@ -2056,6 +1892,7 @@ main > script {
     border-width: 4px;
   }
 
+  .masthead h1,
   .index-heading h1,
   .page-heading h1,
   .record-head h1 {
@@ -2135,11 +1972,13 @@ main > script {
 }
 
 @media (max-width: 23rem) {
+  .site-nav,
   .masthead__ledger,
   .pagination__links {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .site-nav a:last-child,
   .pagination__links > :nth-child(2) {
     grid-column: 1;
   }
@@ -2182,6 +2021,7 @@ main > script {
     box-shadow: none;
   }
 
+  .site-nav a,
   .theme-toggle,
   .action,
   .record-actions a,
@@ -2448,45 +2288,4 @@ html[data-theme="dark"] .flag-check output.is-wrong { color: #5e0a2a; }
   .about-profile .item__image { width: min(72vw, 13rem); margin-inline: auto; }
   .profile-figure { float: none; width: min(100%, 20rem); margin: 0 auto 1.5rem; }
   .theme-toggle { grid-column: 1 / -1; }
-}
-
-/* Home reading choices. Archive rows keep their existing compact layout. */
-.home-shell .post-preview {
-  padding: .75rem 0 1rem;
-  color: var(--ink);
-  background: var(--paper);
-  border-bottom: 2px solid var(--rule);
-  font: 1rem/1.5 var(--body);
-}
-.home-shell .post-preview:first-child { padding-top: 0; }
-.home-shell .post-preview .post-preview__title {
-  margin: 0;
-  padding: 0;
-  color: var(--ink);
-  background: transparent;
-  font: 700 1.3rem/1.3 var(--body);
-  text-transform: none;
-  letter-spacing: normal;
-}
-.home-shell .post-preview__title a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--link);
-  text-decoration: underline;
-}
-.home-shell .post-preview .post-preview__description {
-  margin: .3rem 0;
-  color: var(--ink);
-  font: 1rem/1.5 var(--body);
-}
-.home-shell .post-preview .post-preview__meta {
-  margin: .4rem 0 0;
-  color: var(--muted);
-  font: 1rem/1.4 var(--body);
-}
-
-/* Leave the mobile utility dock clear of the homepage reading choices. */
-@media (max-width: 54rem) {
-  .home-shell .post-preview { padding-inline-end: 2rem; }
 }

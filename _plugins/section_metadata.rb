@@ -64,10 +64,7 @@ class DeuteriumSectionMetadata < Jekyll::Generator
   def generate(site)
     site.posts.docs.each do |post|
       DeuteriumSite::SectionMetadata.apply(post)
-      unless post.data["description"]
-        post.data["description"] = DeuteriumSite::SectionMetadata.generated_description(post)
-        post.data["description_generated"] = true
-      end
+      post.data["description"] ||= DeuteriumSite::SectionMetadata.generated_description(post)
     end
   end
 end

@@ -137,11 +137,45 @@ html[data-skin] .record-head h1 {
   line-height: 1.05 !important;
 }
 
+html[data-skin] .site-nav {
+  align-items: start !important;
+  grid-auto-rows: auto !important;
+}
+
+html[data-skin] .site-nav > :is(a, button, details),
 html[data-skin] :is(.action, .record-actions a, .quick-filters a, .pagination a, .code-frame__actions button) {
   align-self: start;
   min-height: 2.75rem !important;
   padding-block: .35rem !important;
   line-height: 1.25 !important;
+}
+
+html[data-skin] .skin-menu__panel {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* The unified header carries more routes than the writeup register did, so
+   skin nav grids sized for six items would overlap. On wide screens every
+   skin gets a wrapping flex nav instead of a fixed grid. */
+@media (min-width: 68rem) {
+  html[data-skin] .site-nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    grid-auto-flow: row !important;
+    justify-content: flex-end !important;
+  }
+
+  html[data-skin] .site-nav > :is(a, details, .skin-menu) {
+    grid-area: auto !important;
+    width: auto !important;
+    min-width: 7rem !important;
+    max-width: none !important;
+  }
 }
 
 /* Theme choice is an unobtrusive dice in the upper-right corner. Appearance
@@ -153,12 +187,12 @@ html[data-skin] :is(.action, .record-actions a, .quick-filters a, .pagination a,
   position: fixed !important;
   z-index: 90;
   display: grid !important;
-  width: 2.75rem !important;
-  min-width: 2.75rem !important;
-  height: 2.75rem !important;
-  min-height: 2.75rem !important;
-  max-width: 2.75rem !important;
-  max-height: 2.75rem !important;
+  width: 2.6rem !important;
+  min-width: 2.6rem !important;
+  height: 2.6rem !important;
+  min-height: 2.6rem !important;
+  max-width: 2.6rem !important;
+  max-height: 2.6rem !important;
   place-items: center;
   padding: 0 !important;
   color: CanvasText !important;

@@ -8,15 +8,13 @@ layout: base
       <p class="eyebrow">what brings you here?</p>
       <h1 id="masthead-title">Your curiosity?</h1>
       <p class="masthead__lede">Please don't press any buttons, I don't know what they do</p>
+      <div class="masthead__actions">
+        <a class="action action--primary" href="#records">Latest posts</a>
+        <a class="action" href="{{ '/archive.html' | relative_url }}">Archive</a>
+      </div>
     </div>
   </section>
 
-
-  <section id="records" class="record-index" aria-labelledby="records-title">
-    <header class="section-heading"><div><h2 id="records-title">Latest posts</h2></div></header>
-    <ol class="record-list">{%- for _post in _home_posts -%}{%- include post-preview.html record=_post -%}{%- endfor -%}</ol>
-    {%- if paginator -%}{%- include paginator.html -%}{%- endif -%}
-  </section>
   <section class="record-index section-cards" aria-labelledby="sections-title">
     <div class="section-heading"><div><h2 id="sections-title">Publications</h2></div></div>
     <nav class="section-links index-map__links" aria-label="Site sections">
@@ -25,5 +23,11 @@ layout: base
       <a href="{{ '/ramblings/' | relative_url }}"><span>Ramblings</span><strong>{{ site.posts | where: 'section', 'ramblings' | size }}</strong></a>
       <a href="{{ '/archive.html' | relative_url }}"><span>All posts</span><strong>{{ site.posts | size }}</strong></a>
     </nav>
+  </section>
+
+  <section id="records" class="record-index" aria-labelledby="records-title">
+    <header class="section-heading"><div><h2 id="records-title">Latest posts</h2></div></header>
+    <ol class="record-list">{%- for _post in _home_posts -%}{%- include post-row.html record=_post -%}{%- endfor -%}</ol>
+    {%- if paginator -%}{%- include paginator.html -%}{%- endif -%}
   </section>
 </main>

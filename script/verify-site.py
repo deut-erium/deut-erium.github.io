@@ -423,9 +423,9 @@ for page in pages:
     if "Static HTML, local assets, and no tracking." in text or "posts by <a" in text:
         fail(f"retired footer copy remains: {rel}")
     if audit.unsafe_flag_forms: fail(f"unsafe local checker in {rel}: {audit.unsafe_flag_forms}")
-    if text.count('<details class="nav-menu">') != 1:
-        fail(f"closed native navigation disclosure missing: {rel}")
-    primary_nav = re.search(r'<nav\b[^>]*class="primary-links"[^>]*>(.*?)</nav>', text, re.S)
+    if '<details class="nav-menu"' in text:
+        fail(f"primary navigation must remain visible: {rel}")
+    primary_nav = re.search(r'<nav\b[^>]*class="site-nav"[^>]*>(.*?)</nav>', text, re.S)
     expected_nav = {"/", "/archive.html", "/WriteUps/", "/ctf-tutorials/", "/ramblings/", "/about.html"}
     if not primary_nav or set(re.findall(r'href="([^"]+)"', primary_nav[1])) != expected_nav:
         fail(f"primary navigation destinations changed: {rel}")
@@ -460,10 +460,10 @@ if 'class="masthead"' not in home_text:
 for phrase in ("what brings you here?", "Your curiosity?", "Please don't press any buttons, I don't know what they do"):
     if phrase not in home_text:
         fail(f"home masthead copy missing: {phrase}")
-if home_text.index('id="records"') > home_text.index('id="sections-title"'):
-    fail("home publications precede reading choices")
-if 'class="post-preview__description"' not in home_text:
-    fail("home reading choices have no descriptions")
+if home_text.index('id="sections-title"') > home_text.index('id="records"'):
+    fail("home publications must precede latest posts")
+if 'class="masthead__actions"' not in home_text:
+    fail("home masthead actions missing")
 SITE_TITLE = "deuterium's blog"
 for retired in ("deut-erium.github.io</p>", f"{SITE_TITLE}</h1>"):
     if retired in home_text:
