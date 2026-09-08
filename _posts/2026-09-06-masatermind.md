@@ -100,10 +100,14 @@ The earlier maSATermind implementation used Z3 soft constraints. Each old reply 
 
 That objective is different from agreeing with complete replies. Suppose a candidate predicts one exact and one misplaced, so its total overlap is two:
 
+<div class="mst-table" role="region" aria-label="Reply scoring objectives" tabindex="0" markdown="1">
+
 | Reported reply | Failed E/T checks | False whole replies |
 | --- | ---: | ---: |
 | 0 exact, 2 misplaced | 1 | 1 |
 | 0 exact, 0 misplaced | 2 | 1 |
+
+</div>
 
 The first report preserves the total. The second changes both checks. Under the game-wide allowance, either report costs one reply.
 
@@ -149,12 +153,16 @@ The same secret draws and separate random streams were paired across conditions 
 
 Here is the moderate-noise case, forced-change $$p=0.2$$. Every percentage includes all 200 games, including failures:
 
+<div class="mst-table" role="region" aria-label="Completion with moderate noise" tabindex="0" markdown="1">
+
 | Policy | Solved by 10 guesses | Solved by 60, with 95% interval |
 | --- | ---: | ---: |
 | Strict consistency | 10.5% | 10.5% (7.0-15.5%) |
 | E/T agreement | 36.5% | 100% (98.1-100%) |
 | Whole-reply agreement | 42.0% | 100% (98.1-100%) |
 | Random/no-repeat | 0.5% | 5.0% (2.7-9.0%) |
+
+</div>
 
 <img src="{{ '/assets/images/mastermind/completion-p02.svg' | relative_url }}" width="480" height="480" alt="Cumulative completion at forced-change probability 0.2. Strict consistency plateaus at 10.5 percent. Both agreement policies reach 100 percent within 40 guesses." loading="lazy">
 
@@ -174,11 +182,15 @@ This does not make $$p=1$$ an information-free channel. For a binary alphabet, f
 
 For bounded feedback, the simulated opponent chose an attainable false alternative with probability 0.35 while it had allowance remaining. This tests random mistakes, not a player selecting the most damaging reply.
 
+<div class="mst-table" role="region" aria-label="Completion with bounded false replies" tabindex="0" markdown="1">
+
 | Allowance | Strict: solved by 60 | E/T: solved by 60 | Whole-reply / Known-L: solved by 60 |
 | --- | ---: | ---: | ---: |
 | 0 | 200/200 | 200/200 | 200/200 |
 | 1 | 27/200 | 200/200 | 200/200 |
 | 2 | 27/200 | 200/200 | 200/200 |
+
+</div>
 
 Whole-reply agreement and Known-L produced identical transcripts in all 600 paired bounded trials. There is a reason beyond chance: while the true secret remains viable, the smallest disagreement count is at most $$L$$. Removing candidates above $$L$$ cannot change that minimum or its lexicographic tie-break. The filter certifies which candidates remain possible; this particular query rule gets no different next guess from it.
 
@@ -188,11 +200,15 @@ Neither those completions nor the invariant that truth survives establishes a 60
 
 In one recorded E/T-agreement game at $$p=0.2$$, the secret was **2261**. The first three rounds were:
 
+<div class="mst-table" role="region" aria-label="Recovery example replies" tabindex="0" markdown="1">
+
 | Guess | Temporary secret | True exact/misplaced | Reported exact/misplaced |
 | --- | --- | --- | --- |
 | 1111 | 2221 | 1/0 | 1/0 |
 | 1222 | 2211 | 1/2 | 1/2 |
 | 2123 | 2266 | 1/2 | 1/1 |
+
+</div>
 
 The first two misreads changed a peg but left the reply correct. The third reply understated the overlap. Further guesses were:
 
@@ -226,7 +242,7 @@ The game stops after 60 guesses. Saves include the secret and only update when y
 
 The batch experiments use cached scores and incremental costs; the browser uses the enumerating reference implementation in a worker. They use the same scoring objectives, trusted failed-guess exclusions, and tie-breaking. The experiment checks compare every issued guess with independently accumulated costs and sample complete transcripts against the production referee and ordered candidate lists. All actual wins, non-repeats, and spent allowances were checked. A second run reproduced the deterministic result files byte for byte; timing logs are separate.
 
-The [experiment code and retained results](https://github.com/deut-erium/deut-erium.github.io/tree/1e85d233929ab807ccb122ae661f938b6daeeee3/agent_out/mastermind-publish/experiments) document the seeds, opponent, cap, intervals, and verification. To rerun after checking out the repository:
+The [experiment code and retained results](https://github.com/deut-erium/deut-erium.github.io/tree/b0162fd002bed5851b43d4f45e29c527c6c62228/agent_out/mastermind-publish/experiments) document the seeds, opponent, cap, intervals, and verification. To rerun after checking out the repository:
 
 ```sh
 D=agent_out/mastermind-publish/experiments

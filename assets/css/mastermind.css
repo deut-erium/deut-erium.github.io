@@ -25,9 +25,16 @@
 }
 .mst-wrap *, .mst-wrap *::before, .mst-wrap *::after { box-sizing: border-box; }
 .mst-wrap [hidden] { display: none !important; }
-.mst-wrap .mst-title { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0 0 .7rem; }
-.mst-wrap .mst-panel-title { font-size: 1.2rem; font-weight: 700; margin: 0 0 .7rem; }
+/* Article embeds use paragraphs for these titles. Keep the skin's important
+   prose text-size floor from flattening them into ordinary body text. */
+.mst-wrap .mst-title { font-size: clamp(1.5rem, 5vw, 2rem) !important; font-weight: 700; margin: 0 0 .7rem; }
+.mst-wrap .mst-panel-title { font-size: 1.2rem !important; font-weight: 700; margin: 0 0 .7rem; }
 .mst-wrap p, .mst-wrap legend, .mst-wrap label, .mst-wrap summary, .mst-wrap .mst-title, .mst-wrap .mst-panel-title { color: var(--mst-fg); }
+html:root body .mst-wrap :is(h1, h2, h3, h4, .mst-title, .mst-panel-title) {
+  color: var(--mst-fg) !important;
+  background: transparent !important;
+  transition: none;
+}
 .mst-wrap p { margin: .7rem 0; }
 .mst-wrap a { color: var(--mst-focus); text-decoration: underline; }
 .mst-wrap .mst-panel { border: 1px solid var(--mst-border); border-radius: .4rem; padding: clamp(.65rem, 2vw, 1rem); margin: 1rem 0; background: var(--mst-bg); }
@@ -66,6 +73,27 @@
 @media (max-width: 420px) {
   .mst-wrap .mst-controls > label { width: 100%; }
   .mst-wrap .mst-controls > label select { width: 100%; }
+}
+/* Article result tables keep native table semantics inside a named viewport.
+   Some skins otherwise force the table wider than the clipped article panel. */
+html:root body .prose .mst-table {
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+  margin: 1.25rem 0;
+  overscroll-behavior-inline: contain;
+}
+html:root body .prose .mst-table > table {
+  display: table !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+html:root body .prose .mst-table:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 @media (forced-colors: active) {
   .mst-wrap .mst-peg::before { display: none; }

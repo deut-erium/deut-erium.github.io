@@ -8,8 +8,12 @@ import http from 'node:http';
 import { createSession } from '../assets/js/mastermind/session.mjs';
 import { chooseGuess } from '../assets/js/mastermind/policies.mjs';
 
-const out = path.resolve('agent_out/mastermind-publish/ui');
-const site = path.resolve(process.env.MASTERMIND_TEST_SITE || path.join(out, 'site'));
+const out = path.resolve(process.env.MASTERMIND_TEST_OUT || 'agent_out/mastermind-publish/ui');
+const site = path.resolve(process.env.MASTERMIND_TEST_SITE || 'agent_out/mastermind-publish/ui/site');
+// Serve only scoped source assets over the rendered candidate; never rewrite it.
+const override = process.env.MASTERMIND_TEST_OVERRIDE === '1';
+const themeOnly = process.env.MASTERMIND_TEST_THEMES === '1';
+const scopedAsset = /^\/assets\/(?:css\/mastermind\.css|js\/mastermind\/(?:ui|session|transport|policies|worker)\.mjs)$/;
 await fs.mkdir(path.join(out, 'screenshots'), { recursive: true });
 await fs.mkdir(path.join(out, 'downloads'), { recursive: true });
 const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript',
@@ -21,7 +25,7 @@ const server = http.createServer(async (req, res) => {
     if (name.endsWith('/')) name += 'index.html';
     const file = path.resolve(site, `.${name}`);
     if (!file.startsWith(`${site}/`)) throw new Error('Path outside site');
-    const data = await fs.readFile(file);
+    const data = await fs.readFile(override && scopedAsset.test(name) ? path.resolve(`.${name}`) : file);
     if (delayPolicyImport && name.endsWith('/mastermind/policies.mjs')) await new Promise(resolve => setTimeout(resolve, 250));
     res.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(data);
@@ -170,6 +174,14 @@ try {
       assert.equal(await page.evaluate(() => crossOriginIsolated), false);
     };
     await goto();
+    if (themeOnly) {
+      const matrix = await themeMatrix(page, route);
+      results.push({ route, ...matrix, errors, localFailures });
+      await fs.writeFile(path.join(out, 'browser-results.json'), JSON.stringify(results, null, 2));
+      console.log(`${matrix.failures.length ? 'FAIL' : 'PASS'} themes ${route}: ${matrix.cases.length} states, ${matrix.failures.length} failures`);
+      await context.close();
+      continue;
+    }
     assert.equal(await saveText(), null);
     assert.equal(await page.$eval('[data-mastermind] > script', el => Boolean(el)).catch(() => false), false);
     const versions = await page.$$eval('link[href*="mastermind.css"], script[src*="mastermind/ui.mjs"]', els => els.map(el => el.href || el.src));
@@ -419,6 +431,7 @@ try {
     await context.close();
   }
   await fs.writeFile(path.join(out, 'browser-results.json'), JSON.stringify(results, null, 2));
+  if (themeOnly) assert.ok(results.every(r => !r.failures.length && !r.errors.length && !r.localFailures.length), 'Theme regression; see browser-results.json');
 } catch (error) {
   const diagnostics = await activePage?.evaluate(() => ({
     status: document.querySelector('[data-part="status"]')?.textContent,
@@ -433,4 +446,156 @@ try {
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));
+}
+
+// Exercise the actual skin picker and wait for its stylesheet, rather than only
+// changing data-theme on the default skin. Measurements include content outside
+// the game because document-level clipping can hide an overflowing article.
+async function themeMatrix(page, route) {
+  const cases = [], failures = [];
+  // Viewport captures avoid a tall element screenshot resizing the viewport and
+  // moving responsive article content underneath the capture rectangle.
+  const capture = async (target, filename) => {
+    await target.evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.screenshot({ path: path.join(out, 'screenshots', filename), captureBeyondViewport: false });
+  };
+  const skins = await page.$$eval('#skin-picker option', els => els.map(el => el.value));
+  assert.equal(skins.length, 48);
+  const article = route.includes('2026');
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  const representative = new Set([skins[0], 'grid-meltdown', 'proof-bonbons', 'the-descent', 'twin-blades']);
+  const click = name => page.click(p(name));
+  const settle = () => page.waitForFunction(() => !document.querySelector('[data-part="status"]').textContent.includes('Computing'));
+  if (article) {
+    for (const [href, tag] of [['#play', 'H2'], ['#mst-play', 'SECTION']]) {
+      assert.equal(await page.$$eval(href, els => els.length), 1);
+      await page.click(`a[href="${href}"]`);
+      await page.waitForFunction(href => {
+        const target = document.querySelector(href);
+        const top = target.getBoundingClientRect().top;
+        return location.hash === href && top >= -1 && top < innerHeight / 2;
+      }, {}, href);
+      assert.equal(await page.$eval(href, el => el.tagName), tag);
+    }
+    const curve = await page.$('img[src*="mastermind/completion"]');
+    await curve.scrollIntoView();
+    await page.waitForFunction(() => document.querySelector('img[src*="mastermind/completion"]').naturalWidth > 0);
+  }
+  for (const stage of ['watch-setup', 'challenge-pending', 'watch-review']) {
+    await click('reset');
+    await page.select(p('mode'), stage === 'challenge-pending' ? 'bounded' : 'misread');
+    if (stage !== 'watch-setup') {
+      await click('start'); await settle();
+      if (stage === 'watch-review') {
+        await click('step'); await settle();
+        await click('step'); await settle();
+        await click('cancel');
+        assert.match(await page.$eval(p('review'), el => el.textContent), /Temporary row/);
+      } else {
+        await page.waitForFunction(() => !document.querySelector('[data-part="reply-form"]').hidden);
+        // Also expose the alert palette with a rejected, unattainable reply.
+        await page.select(p('exact'), '0'); await page.select(p('misplaced'), '1');
+        await click('reply');
+        assert.match(await page.$eval(p('error'), el => el.textContent), /not attainable/);
+      }
+    }
+    await page.$$eval('[data-mastermind] details', els => els.forEach(el => { el.open = true; }));
+    for (const skin of skins) {
+      await page.select('#skin-picker', skin);
+      await page.waitForFunction(skin => {
+        const link = document.querySelector('#skin-stylesheet');
+        return skin === window.__deuteriumTheme.defaultSkin ? link.disabled
+          : document.documentElement.dataset.skin === skin && link.sheet?.href === link.href;
+      }, {}, skin);
+      await page.evaluate(() => document.fonts.ready);
+      for (const width of representative.has(skin) ? [320, 390, 1440] : [390]) for (const mode of ['light', 'dark']) {
+        await page.setViewport({ width, height: 900 });
+        await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: mode }, { name: 'prefers-reduced-motion', value: 'reduce' }]);
+        await page.evaluate(mode => { document.documentElement.dataset.theme = mode; }, mode);
+        await page.focus(p('exercise'));
+        // Let inherited color transitions and article ResizeObservers finish.
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        const metrics = await page.evaluate(() => {
+          const root = document.querySelector('[data-mastermind]');
+          const box = root.getBoundingClientRect();
+          const rgb = value => (value.match(/[\d.]+/g) || []).map(Number);
+          const mix = (front, back) => {
+            const a = front[3] ?? 1;
+            return front.slice(0, 3).map((v, i) => v * a + back[i] * (1 - a));
+          };
+          const background = el => {
+            const stack = [];
+            for (let at = el; at; at = at.parentElement) stack.unshift(rgb(getComputedStyle(at).backgroundColor));
+            return stack.reduce((back, front) => mix(front, back), [255, 255, 255]);
+          };
+          const lum = c => c.slice(0, 3).map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; })
+            .reduce((sum, v, i) => sum + v * [.2126, .7152, .0722][i], 0);
+          const contrast = (a, b) => (Math.max(lum(a), lum(b)) + .05) / (Math.min(lum(a), lum(b)) + .05);
+          const visible = el => el.checkVisibility({ checkVisibilityCSS: true }) && el.getBoundingClientRect().width > 0;
+          const label = el => el.dataset.part || el.className || el.tagName;
+          const lowContrast = [], geometry = [], controls = [], paints = [];
+          for (const el of root.querySelectorAll('*')) {
+            if (!visible(el)) continue;
+            const css = getComputedStyle(el), rect = el.getBoundingClientRect();
+            if (rect.left < Math.max(0, box.left) - 1 || rect.right > Math.min(innerWidth, box.right) + 1) {
+              geometry.push({ element: label(el), left: rect.left, right: rect.right });
+            }
+            const hasText = [...el.childNodes].some(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+            if (hasText && !['OPTION', 'SCRIPT', 'STYLE'].includes(el.tagName)) {
+              const bg = background(el), fg = rgb(css.color), ratio = contrast(mix(fg, bg), bg);
+              // Disabled native controls are exempt; their inherited labels are not.
+              if (!el.matches(':disabled') && ratio < 4.5) lowContrast.push({ element: label(el), text: el.textContent.trim().slice(0, 65), fg: css.color, bg, ratio });
+              if (css.backgroundImage !== 'none') paints.push({ element: label(el), image: css.backgroundImage });
+            }
+            if (['INPUT', 'SELECT', 'BUTTON'].includes(el.tagName)) {
+              controls.push({ element: label(el), width: rect.width, height: rect.height, scheme: css.colorScheme, fg: css.color, bg: css.backgroundColor });
+              if (rect.height < 44) geometry.push({ element: label(el), height: rect.height });
+            }
+          }
+          const articleMetrics = { tables: [], displays: [], inline: [], curve: null };
+          const within = el => {
+            const rect = el.getBoundingClientRect();
+            const parent = el.closest('.article__content').getBoundingClientRect();
+            return rect.left >= Math.max(0, parent.left) - 1 && rect.right <= Math.min(innerWidth, parent.right) + 1;
+          };
+          for (const el of document.querySelectorAll('.article__content table, .article__content .katex-display')) {
+            const owner = el.closest('.mst-table') || el;
+            const before = owner.scrollLeft;
+            owner.scrollLeft = owner.scrollWidth;
+            const measured = { width: owner.clientWidth, scroll: owner.scrollWidth, scrollable: owner.scrollWidth <= owner.clientWidth + 1 || owner.scrollLeft > 0,
+              within: within(owner), align: getComputedStyle(el).textAlign };
+            owner.scrollLeft = before;
+            articleMetrics[el.tagName === 'TABLE' ? 'tables' : 'displays'].push(measured);
+          }
+          for (const el of document.querySelectorAll('.article__content .katex')) {
+            if (!el.closest('.katex-display')) articleMetrics.inline.push({ within: within(el) });
+          }
+          const curve = document.querySelector('img[src*="mastermind/completion"]');
+          if (curve) articleMetrics.curve = { within: within(curve), loaded: curve.naturalWidth > 0, width: curve.clientWidth, height: curve.clientHeight };
+          return { pageOverflow: document.documentElement.scrollWidth - innerWidth,
+            gameOverflow: root.scrollWidth - root.clientWidth, lowContrast, geometry, controls, paints,
+            focus: getComputedStyle(document.activeElement).outlineStyle, article: articleMetrics };
+        });
+        const record = { skin, mode, width, stage, ...metrics };
+        cases.push(record);
+        if (metrics.pageOverflow || metrics.gameOverflow > 1 || metrics.lowContrast.length || metrics.geometry.length
+          || metrics.focus !== 'solid' || metrics.controls.some(c => c.scheme !== mode)
+          || metrics.article.tables.some(t => !t.within || !t.scrollable)
+          || metrics.article.displays.some(t => !t.within || !t.scrollable || t.align !== 'center')
+          || metrics.article.inline.some(t => !t.within)
+          || (article && (!metrics.article.curve?.within || !metrics.article.curve.loaded))) failures.push({ skin, mode, width, stage });
+        if (representative.has(skin) && width === 390 && stage !== 'challenge-pending') {
+          const prefix = `${article ? 'article' : 'standalone'}-${skin}-${mode}-${stage}`;
+          const target = await page.$(stage === 'watch-review' ? p('review') : '[data-mastermind] details');
+          await capture(target, `${prefix}.png`);
+          if (article && stage === 'watch-setup') {
+            const curve = await page.$('img[src*="mastermind/completion"]');
+            await capture(curve, `${prefix}-curve.png`);
+          }
+        }
+      }
+    }
+  }
+  return { cases, failures };
 }
