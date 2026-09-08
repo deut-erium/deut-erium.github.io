@@ -32,6 +32,9 @@ html:root body .prose .katex .katex-html :is(.katex-sizing, .fontsize-ensurer)[c
 html:root body .prose .katex .katex-html .vlist-s {
   font-size: 1px !important;
 }
+.prose .katex :is(.katex-rule, .frac-line) {
+  box-sizing: content-box;
+}
 
 @media screen {
   /* Inline symbols stay in the surrounding line box, including their ink
@@ -83,7 +86,7 @@ html:root body .prose .katex .katex-html .vlist-s {
     padding: .5em .25em !important;
     overflow: auto !important;
   }
-  html:root body .prose [data-math-scroll]:focus-visible {
+  html:root body .prose :is(.katex, .katex-display):focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }

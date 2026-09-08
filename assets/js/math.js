@@ -51,10 +51,18 @@
     const overflowing = new Set(viewports.filter(v => v.scrollWidth > v.clientWidth + 1 || v.scrollHeight > v.clientHeight + 1));
     for (const element of [...roots, ...viewports]) {
       if (overflowing.has(element)) continue;
-      for (const [name, value] of owned.get(element) ?? []) {
+      const attributes = owned.get(element);
+      for (const [name, value] of attributes ?? []) {
+        if (name === 'tabindex' && element.getAttribute(name) === value && document.activeElement === element) {
+          // Keep current focus during resize, without an extra Tab stop.
+          setOwned(element, name, '-1');
+          element.addEventListener('blur', schedule, { once: true });
+          continue;
+        }
         if (element.getAttribute(name) === value) element.removeAttribute(name);
+        attributes.delete(name);
       }
-      owned.delete(element);
+      if (!attributes?.size) owned.delete(element);
     }
     if (resize) {
       for (const element of observed) if (!targets.has(element)) { resize.unobserve(element); observed.delete(element); }
