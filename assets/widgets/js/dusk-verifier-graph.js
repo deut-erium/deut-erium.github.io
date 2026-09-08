@@ -71,35 +71,23 @@
   /* ---------- text helpers (lib/dusk-verifier-graph/text.ts) ---------- */
   const labelLines = (label) => {
     const source = label.trim();
-    if (source.length <= 11) return [source];
-    const separator = source.includes('_') ? '_' : source.includes(' ') ? ' ' : source.includes('-') ? '-' : '';
-    if (separator) {
-      const pieces = source.split(separator);
-      if (pieces.length > 1) {
-        const lines = ['', '', ''];
-        const join = separator === ' ' ? ' ' : separator;
-        for (const piece of pieces) {
-          let target = 0;
-          for (let i = 1; i < lines.length; i += 1) {
-            if (lines[i].length < lines[target].length) target = i;
-          }
-          lines[target] = lines[target] ? `${lines[target]}${join}${piece}` : piece;
-        }
-        return lines.filter(Boolean);
-      }
+    // Nine 15px monospace characters fit the 92px boxes with 5px side insets.
+    // Keep the label in order, preferring separators when the remaining text fits.
+    const maxChars = 9;
+    const lineCount = Math.ceil(source.length / maxChars);
+    const lines = [];
+    let rest = source;
+    while (rest.length > maxChars) {
+      const boundary = Math.max(...[' ', '_', '-'].map((s) => rest.lastIndexOf(s, maxChars - 1))) + 1;
+      const remainingLines = lineCount - lines.length - 1;
+      const split = boundary > 0 && rest.length - boundary <= remainingLines * maxChars ? boundary : maxChars;
+      lines.push(rest.slice(0, split).trim());
+      rest = rest.slice(split).trim();
     }
-    if (source.length <= 20) {
-      return [source.slice(0, Math.ceil(source.length / 2)), source.slice(Math.ceil(source.length / 2))].filter(Boolean);
-    }
-    const chunkSize = Math.ceil(source.length / 3);
-    return Array.from({ length: 3 }, (_, i) => source.slice(i * chunkSize, (i + 1) * chunkSize)).filter(Boolean);
+    if (rest) lines.push(rest);
+    return lines;
   };
-  const labelStartY = (label) => {
-    const lines = labelLines(label).length;
-    if (lines === 1) return 31;
-    if (lines === 2) return 21;
-    return 13;
-  };
+  const labelStartY = (label) => 33 - (labelLines(label).length - 1) * 7.5;
   const ambientTagWidth = (label) => Math.max(18, Math.ceil(label.length * 6 + 12));
 
   /* ---------- DOM helpers ---------- */
@@ -265,7 +253,9 @@
       this._svg.setAttribute('role', 'img');
       this._svg.setAttribute('aria-label', 'Dusk verifier dependence graph');
       this._svg.innerHTML = `<defs><marker id="dusk-dep-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 8 4 L 0 8 z" fill="context-stroke"></path></marker></defs>`;
-      this._canvasWrap.appendChild(this._svg);
+      const canvasStage = el('div', 'dusk-dep-graph__canvas-stage');
+      canvasStage.appendChild(this._svg);
+      this._canvasWrap.appendChild(canvasStage);
       this._canvasWrap.addEventListener('pointerdown', (e) => this._beginPan(e));
       this._canvasWrap.addEventListener('pointermove', (e) => this._continuePan(e));
       this._canvasWrap.addEventListener('pointerup', (e) => this._endPan(e));
@@ -361,7 +351,6 @@
         grid.appendChild(item);
       }
       filters.appendChild(grid);
-      box.appendChild(filters);
 
       const zoomBox = el('div', 'dusk-dep-graph__zoom');
       zoomBox.innerHTML = '<span>Zoom</span>';
@@ -379,7 +368,7 @@
         mkButton('+', () => this._zoomIn()),
       );
       zoomBox.appendChild(zoomControls);
-      box.appendChild(zoomBox);
+      box.append(zoomBox, filters);
 
       this.querySelector('.dusk-dep-graph__commit').textContent = `commit ${this._graph.commitHash.slice(0, 12)}`;
       this._updateZoomReadout();
@@ -416,7 +405,7 @@
 
     _pipeline() {
       const g = this._graph;
-      const { selectedNodeId, enabledKinds } = this._state;
+      const { selectedNodeId } = this._state;
 
       const baseVisibleNodeIds = this._baseVisibleNodeIds();
       const baseVisibleEdges = g.edges.filter((e) => baseVisibleNodeIds.has(e.from) && baseVisibleNodeIds.has(e.to));
@@ -474,7 +463,7 @@
         }
       }
 
-      return { baseVisibleNodeIds, baseVisibleEdges, selectedNode, useReducedAggregationView, immediateBaseNeighborIds, visibleNodeIds, visibleNodes, visibleEdges, ambientTagsByNodeId };
+      return { baseVisibleNodeIds, baseVisibleEdges, selectedNodeId, selectedNode, useReducedAggregationView, immediateBaseNeighborIds, visibleNodeIds, visibleNodes, visibleEdges, ambientTagsByNodeId };
     }
 
     _layout(pipeline) {
@@ -948,13 +937,13 @@
         }).join('');
         const lines = labelLines(node.label);
         const tspans = lines.map((line, index) =>
-          `<tspan x="10" dy="${index === 0 ? 0 : 15}">${escapeHtml(line)}</tspan>`).join('');
+          `<tspan x="5" dy="${index === 0 ? 0 : 15}">${escapeHtml(line)}</tspan>`).join('');
         parts.push(
           `<g class="dusk-dep-graph__node" data-node-id="${escapeHtml(node.id)}" transform="translate(${node.displayX}, ${node.displayY})" opacity="${this._nodeOpacity(node, ctx)}">` +
           `<title>${escapeHtml(node.label)}</title>${tagMarkup}` +
           `<rect class="dusk-dep-graph__node-box" width="${node.layout.width}" height="${node.layout.height}" rx="10"` +
           ` fill="${nodeStyle.fill}" stroke="${isSelected ? '#f8fafc' : nodeStyle.stroke}" stroke-width="${isSelected ? 2.8 : 1.5}"></rect>` +
-          `<text class="dusk-dep-graph__node-label" fill="${nodeStyle.text}" x="10" y="${labelStartY(node.label)}">${tspans}</text></g>`,
+          `<text class="dusk-dep-graph__node-label" fill="${nodeStyle.text}" x="5" y="${labelStartY(node.label)}">${tspans}</text></g>`,
         );
       }
       const content = this._svg.querySelector('defs');
@@ -1052,13 +1041,23 @@
     /* ================= pan / zoom (ported useScrollGraphPanZoom) ================= */
     _applyCanvasSize() {
       const bounds = this._viewBounds ?? { width: 900, height: 620 };
-      this._canvasPixelWidth = Math.max(this._zoom.isMobile ? 620 : 760, Math.ceil(bounds.width));
-      this._canvasPixelHeight = Math.max(520, Math.ceil(bounds.height));
-      const width = Math.ceil(this._canvasPixelWidth * this._zoom.scale);
-      const height = Math.ceil(this._canvasPixelHeight * this._zoom.scale);
+      // Keep one SVG unit equal to one CSS pixel at 100%, even for small slices.
+      const width = bounds.width * this._zoom.scale;
+      const height = bounds.height * this._zoom.scale;
       this._svg.style.width = `${width}px`;
       this._svg.style.minWidth = `${width}px`;
       this._svg.style.height = `${height}px`;
+    }
+
+    _canvasOffset() {
+      const wrap = this._canvasWrap;
+      const viewport = wrap.getBoundingClientRect();
+      const canvas = this._svg.getBoundingClientRect();
+      // The stage centers small graphs without changing their scale.
+      return {
+        x: canvas.left - viewport.left - wrap.clientLeft + wrap.scrollLeft,
+        y: canvas.top - viewport.top - wrap.clientTop + wrap.scrollTop,
+      };
     }
 
     _updateZoomReadout() {
@@ -1075,15 +1074,17 @@
         return;
       }
       const rect = wrap.getBoundingClientRect();
-      const originX = origin ? origin.clientX - rect.left : wrap.clientWidth / 2;
-      const originY = origin ? origin.clientY - rect.top : wrap.clientHeight / 2;
-      const contentX = wrap.scrollLeft + originX;
-      const contentY = wrap.scrollTop + originY;
+      const originX = origin ? origin.clientX - rect.left - wrap.clientLeft : wrap.clientWidth / 2;
+      const originY = origin ? origin.clientY - rect.top - wrap.clientTop : wrap.clientHeight / 2;
+      const offset = this._canvasOffset();
+      const contentX = wrap.scrollLeft + originX - offset.x;
+      const contentY = wrap.scrollTop + originY - offset.y;
       const ratio = clamped / previous;
       this._zoom.scale = clamped;
       requestAnimationFrame(() => {
-        wrap.scrollLeft = Math.max(0, contentX * ratio - originX);
-        wrap.scrollTop = Math.max(0, contentY * ratio - originY);
+        const nextOffset = this._canvasOffset();
+        wrap.scrollLeft = Math.max(0, contentX * ratio + nextOffset.x - originX);
+        wrap.scrollTop = Math.max(0, contentY * ratio + nextOffset.y - originY);
       });
       this._applyCanvasSize();
       this._updateZoomReadout();
@@ -1092,7 +1093,7 @@
     _zoomIn() { this._setZoom(this._zoom.scale * 1.15); }
     _zoomOut() { this._setZoom(this._zoom.scale / 1.15); }
     _resetZoom() {
-      this._setZoom(this._zoom.isMobile ? 0.9 : 1);
+      this._setZoom(1);
       requestAnimationFrame(() => this._centerOnSelection());
     }
 
@@ -1179,20 +1180,7 @@
         this._zoom.mobileFocused = true;
       }
       requestAnimationFrame(() => {
-        if (this._zoom.isMobile) {
-          const bounds = this._viewBounds ?? { width: 1, height: 1 };
-          const fit = Math.min(
-            MAX_ZOOM,
-            Math.max(
-              MIN_ZOOM,
-              Math.min(this._canvasWrap.clientWidth / Math.max(bounds.width, 1), this._canvasWrap.clientHeight / Math.max(bounds.height, 1)),
-              1,
-            ),
-          );
-          this._zoom.scale = fit;
-        } else if (this._zoom.scale < 1) {
-          this._zoom.scale = 1;
-        }
+        this._zoom.scale = 1;
         this._applyCanvasSize();
         this._updateZoomReadout();
         this._centerOnSelection();
@@ -1207,10 +1195,9 @@
       const centerX = displayNode?.displayCenterX ?? node.layout.centerX;
       const centerY = displayNode?.displayCenterY ?? node.layout.centerY;
       const bounds = this._viewBounds ?? { minX: 0, minY: 0, width: 1, height: 1 };
-      const relativeX = (centerX - bounds.minX) / (bounds.width || 1);
-      const relativeY = (centerY - bounds.minY) / (bounds.height || 1);
-      const pointX = relativeX * this._canvasPixelWidth * this._zoom.scale;
-      const pointY = relativeY * this._canvasPixelHeight * this._zoom.scale;
+      const offset = this._canvasOffset();
+      const pointX = offset.x + (centerX - bounds.minX) * this._zoom.scale;
+      const pointY = offset.y + (centerY - bounds.minY) * this._zoom.scale;
       this._canvasWrap.scrollLeft = Math.max(0, pointX - this._canvasWrap.clientWidth / 2);
       this._canvasWrap.scrollTop = Math.max(0, pointY - this._canvasWrap.clientHeight / 2);
     }

@@ -41,6 +41,14 @@
   font-size: 1em;
 }
 
+/* Keep custom-element hosts in the article's available column. */
+circuit-widget,
+poly-interpolation-panel,
+dusk-verifier-graph {
+  display: block;
+  min-width: 0;
+}
+
 /* ---------- arithmetic-circuit-widget ---------- */
 .circuit-widget {
   --widget-accent: #f7b955;
@@ -843,18 +851,30 @@
 }
 
 /* ---------- dusk-verifier-graph ---------- */
+dusk-verifier-graph {
+  container: dusk-graph / inline-size;
+}
+
 .dusk-dep-graph {
   --widget-accent: #f7b955;
   --widget-accent-soft: #f6d786;
   --widget-accent-bg: rgba(247, 185, 85, 0.08);
   --widget-accent-bg-strong: rgba(247, 185, 85, 0.16);
   --widget-accent-border: rgba(247, 185, 85, 0.38);
-  margin: 2rem 0;
+  margin: 1.5rem 0;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
   border: 1px solid rgba(148, 163, 184, 0.16);
   border-radius: 24px;
   background: #05070b;
   color: #dde6f0;
   box-shadow: 0 28px 96px rgba(0, 0, 0, 0.42);
+}
+
+.dusk-dep-graph,
+.dusk-dep-graph * {
+  box-sizing: border-box;
 }
 
 .dusk-dep-graph__header,
@@ -865,14 +885,20 @@
 
 .dusk-dep-graph__header {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
 }
 
-.dusk-dep-graph__eyebrow,
-.dusk-dep-graph__detail-eyebrow {
+.dusk-dep-graph__header > :first-child {
+  flex: 2 1 26rem;
+  min-width: 0;
+}
+
+.dusk-dep-graph .dusk-dep-graph__eyebrow,
+.dusk-dep-graph .dusk-dep-graph__detail-eyebrow {
   margin: 0 0 0.32rem;
   color: var(--widget-accent);
   font-size: 0.76rem;
@@ -880,17 +906,18 @@
   text-transform: uppercase;
 }
 
-.dusk-dep-graph__title,
-.dusk-dep-graph__detail-title {
+.dusk-dep-graph .dusk-dep-graph__title,
+.dusk-dep-graph .dusk-dep-graph__detail-title {
   margin: 0;
+  font-family: inherit;
   font-size: 1.3rem;
   line-height: 1.15;
   color: #f8fafc;
 }
 
-.dusk-dep-graph__lede,
-.dusk-dep-graph__detail-copy,
-.dusk-dep-graph__detail-callout {
+.dusk-dep-graph .dusk-dep-graph__lede,
+.dusk-dep-graph .dusk-dep-graph__detail-copy,
+.dusk-dep-graph .dusk-dep-graph__detail-callout {
   margin: 0.55rem 0 0;
   max-width: 70ch;
   color: #b9c6d6;
@@ -898,7 +925,7 @@
   line-height: 1.55;
 }
 
-.dusk-dep-graph__detail-callout {
+.dusk-dep-graph .dusk-dep-graph__detail-callout {
   color: var(--widget-accent-soft);
 }
 
@@ -906,7 +933,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  justify-content: flex-end;
+  flex: 1 1 14rem;
+  justify-content: flex-start;
 }
 
 .dusk-dep-graph__meta-pill,
@@ -919,7 +947,9 @@
   background: rgba(6, 9, 14, 0.92);
   color: #b9c6d6;
   font-size: 0.78rem;
-  line-height: 1;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .dusk-dep-graph__badge--omitted {
@@ -930,7 +960,7 @@
 
 .dusk-dep-graph__controls {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(9rem, 0.7fr) minmax(12rem, 1fr) minmax(10rem, 0.75fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.9rem;
   align-items: end;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
@@ -944,13 +974,15 @@
 
 .dusk-dep-graph__control span,
 .dusk-dep-graph__filters summary {
-  font-size: 0.83rem;
+  font-size: 0.875rem;
   color: #8392a6;
 }
 
 .dusk-dep-graph__input,
 .dusk-dep-graph__select {
   width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 12px;
   background: rgba(7, 10, 15, 0.96);
@@ -960,6 +992,8 @@
 }
 
 .dusk-dep-graph__filters {
+  grid-column: 1 / -1;
+  min-width: 0;
   border: 1px solid rgba(148, 163, 184, 0.14);
   border-radius: 14px;
   background: rgba(7, 10, 15, 0.78);
@@ -968,31 +1002,48 @@
 
 .dusk-dep-graph__filters summary {
   cursor: pointer;
-  list-style: none;
 }
 
 .dusk-dep-graph__filter-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
   gap: 0.48rem 0.8rem;
   margin-top: 0.7rem;
 }
 
 .dusk-dep-graph__filter-item {
   display: flex;
+  min-width: 0;
+  min-height: 2rem;
   gap: 0.45rem;
   align-items: center;
   color: #bcc9d8;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
+}
+
+/* Do not let broad article input rules turn checkboxes into text fields. */
+.dusk-dep-graph .dusk-dep-graph__filter-item input[type='checkbox'] {
+  appearance: auto;
+  flex: 0 0 1rem;
+  width: 1rem;
+  height: 1rem;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  accent-color: var(--widget-accent);
 }
 
 .dusk-dep-graph__zoom {
   display: grid;
+  min-width: 0;
   gap: 0.42rem;
 }
 
 .dusk-dep-graph__zoom span {
-  font-size: 0.83rem;
+  font-size: 0.875rem;
   color: #8392a6;
 }
 
@@ -1003,8 +1054,10 @@
 }
 
 .dusk-dep-graph__zoom-button {
-  min-width: 2.2rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
   padding: 0.64rem 0.72rem;
+  cursor: pointer;
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 12px;
   background: rgba(7, 10, 15, 0.96);
@@ -1019,10 +1072,13 @@
 
 .dusk-dep-graph__frame {
   display: grid;
-  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
 }
 
 .dusk-dep-graph__canvas-wrap {
+  min-width: 0;
+  min-height: min(32.5rem, 70vh);
   overflow-x: auto;
   overflow-y: auto;
   overscroll-behavior-x: contain;
@@ -1035,6 +1091,15 @@
     #030508;
   cursor: grab;
   touch-action: none;
+}
+
+/* Oversized graphs start at the scroll origin; small graphs are centered. */
+.dusk-dep-graph__canvas-stage {
+  display: grid;
+  place-items: center;
+  width: max-content;
+  min-width: 100%;
+  min-height: inherit;
 }
 
 .dusk-dep-graph__canvas {
@@ -1084,19 +1149,13 @@
 
 .dusk-dep-graph__edge {
   fill: none;
-  stroke-width: 2.5px;
   pointer-events: stroke;
   stroke-linejoin: round;
   stroke-linecap: round;
-  transition: filter 120ms ease, stroke-width 120ms ease, opacity 120ms ease;
-}
-
-.dusk-dep-graph__edge--dangerous {
-  filter: drop-shadow(0 0 5px rgba(251, 113, 133, 0.45));
+  transition: stroke-width 120ms ease, opacity 120ms ease;
 }
 
 .dusk-dep-graph__edge:hover {
-  filter: drop-shadow(0 0 4px currentColor);
   stroke-width: 3px;
 }
 
@@ -1117,6 +1176,8 @@
 }
 
 .dusk-dep-graph__detail {
+  min-width: 0;
+  overflow-wrap: anywhere;
   border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 20px;
   background: rgba(5, 8, 12, 0.92);
@@ -1125,13 +1186,14 @@
 
 .dusk-dep-graph__detail-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
   margin-top: 1rem;
 }
 
 .dusk-dep-graph__detail-header {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   justify-content: space-between;
   align-items: flex-start;
@@ -1141,21 +1203,22 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .dusk-dep-graph__detail-block {
   min-width: 0;
 }
 
-.dusk-dep-graph__detail-block h5 {
+.dusk-dep-graph .dusk-dep-graph__detail-block h5 {
   margin: 0 0 0.65rem;
+  font-family: inherit;
   color: #f8fafc;
   font-size: 0.92rem;
 }
 
-.dusk-dep-graph__anchor-list,
-.dusk-dep-graph__edge-list {
+.dusk-dep-graph ul.dusk-dep-graph__anchor-list,
+.dusk-dep-graph ul.dusk-dep-graph__edge-list {
   display: grid;
   gap: 0.65rem;
   margin: 0;
@@ -1163,8 +1226,10 @@
   list-style: none;
 }
 
-.dusk-dep-graph__anchor-list li,
-.dusk-dep-graph__edge-list li {
+.dusk-dep-graph .dusk-dep-graph__anchor-list li,
+.dusk-dep-graph .dusk-dep-graph__edge-list li {
+  margin: 0;
+  min-width: 0;
   display: grid;
   gap: 0.18rem;
 }
@@ -1192,26 +1257,20 @@
   font-size: 0.88rem;
 }
 
-@media (max-width: 980px) {
-  .dusk-dep-graph__controls,
-  .dusk-dep-graph__header {
-    grid-template-columns: 1fr;
-    display: grid;
-  }
-
-  .dusk-dep-graph__meta,
-  .dusk-dep-graph__detail-badges {
-    justify-content: flex-start;
-  }
-
-  .dusk-dep-graph__detail-grid {
-    grid-template-columns: 1fr;
+@container dusk-graph (min-width: 40rem) {
+  .dusk-dep-graph__controls {
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.55fr) auto;
   }
 }
 
-@media (max-width: 640px) {
+@container dusk-graph (min-width: 50rem) {
+  .dusk-dep-graph__detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container dusk-graph (max-width: 39.99rem) {
   .dusk-dep-graph {
-    margin-inline: calc(50% - 50vw + 0.5rem);
     border-radius: 18px;
   }
 
@@ -1221,17 +1280,8 @@
     padding: 0.95rem;
   }
 
-  .dusk-dep-graph__filter-grid {
-    grid-template-columns: 1fr;
-  }
-
   .dusk-dep-graph__canvas-wrap {
-    margin-inline: -0.1rem;
     max-height: 70vh;
-  }
-
-  .dusk-dep-graph__node-label {
-    font-size: 14px;
   }
 }
 
