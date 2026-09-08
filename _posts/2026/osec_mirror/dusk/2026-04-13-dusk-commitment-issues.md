@@ -12,7 +12,7 @@ widgets: [circuit-widget, poly-interpolation-panel, dusk-verifier-graph]
 ---
 
 > Mirror of the osec.io post
-> [Commitment Issues: Unverified Evaluations in Dusk's PLONK](https://osec.io/blog/2026-04-13-dusk-commitment-issues/)
+> [Commitment Issues: Unverified Evaluations in Dusk's PLONK](https://osec.io/blog/unverified-evaluations-dusk-plonk/)
 > (canonical), preserved here with its interactive widgets.
 
 We found a critical soundness vulnerability in [dusk-plonk](https://github.com/dusk-network/plonk/), the PLONK implementation powering [Dusk's](https://dusk.network/) ~$60M [market cap](https://www.coingecko.com/en/coins/dusk). By exploiting a gap in the verification step, a malicious prover could forge verifying proofs for arbitrary false statements, bypassing every constraint in the transaction circuit. On the live [Rusk](https://github.com/dusk-network/rusk) network, this would have enabled minting arbitrary amounts of DUSK and moving forged shielded funds through the normal Phoenix path.
@@ -36,7 +36,7 @@ An arithmetic circuit is a series of addition and multiplication gates wired tog
 <arithmetic-circuit-widget>
   <p class="widget-fallback">This interactive arithmetic-circuit widget needs JavaScript.
   It lets you move the witness (x, y) over the field F<sub>37</sub> and watch the gate table and interpolated polynomials update.
-  See the <a href="https://osec.io/blog/2026-04-13-dusk-commitment-issues/">original post</a> for the live version.</p>
+  See the <a href="https://osec.io/blog/unverified-evaluations-dusk-plonk/">original post</a> for the live version.</p>
 </arithmetic-circuit-widget>
 
 Each gate $$i$$ has a left input $$l_i$$, right input $$r_i$$, and output $$o_i$$. The prover's job is to show it knows wire values that satisfy every gate.
@@ -57,7 +57,7 @@ Instead of checking each gate individually, PLONK reads the execution trace colu
 <poly-interpolation-panel>
   <p class="widget-fallback">This interactive polynomial-interpolation widget needs JavaScript.
   It plots the witness and constraint polynomials as you move the circuit inputs.
-  See the <a href="https://osec.io/blog/2026-04-13-dusk-commitment-issues/">original post</a> for the live version.</p>
+  See the <a href="https://osec.io/blog/unverified-evaluations-dusk-plonk/">original post</a> for the live version.</p>
 </poly-interpolation-panel>
 
 Because all columns are now polynomials, the entire circuit compresses into a single master constraint polynomial $$F(x)$$ that combines selectors and witnesses. If the prover was honest, $$F(x) = 0$$ at every row index in the domain. The vanishing polynomial $$Z(x) = x^n - 1$$ is zero on exactly those points, so if all constraints hold then $$Z(x)$$ divides $$F(x)$$, yielding a quotient polynomial $$T(x)$$ with $$F(x) = T(x) \cdot Z(x)$$.
@@ -96,7 +96,7 @@ The shortest way to see the bug is the graph below: safe values flow through the
   <p class="widget-fallback">This verifier dependence-graph widget needs JavaScript.
   It traces which proof values reach the final pairing check and highlights the four selector evaluations
   that were consumed without an opening proof. See the
-  <a href="https://osec.io/blog/2026-04-13-dusk-commitment-issues/">original post</a> for the live version.</p>
+  <a href="https://osec.io/blog/unverified-evaluations-dusk-plonk/">original post</a> for the live version.</p>
 </dusk-verifier-graph>
 
 ---
@@ -240,7 +240,7 @@ To our knowledge, Jellyfish's UltraPlonk mode is not currently deployed in produ
 
 ## Toward standardization
 
-The fact that two independent PLONK implementations contain the same class of bug, and that [similar patterns appear across zkVMs](https://osec.io/blog/2026-03-03-zkvms-unfaithful-claims/), suggests this isn't a problem that individual audits alone can solve. The check described above (diff "evaluations used" against "evaluations bound") is mechanical and could be built into development tooling, CI pipelines, or standardized PLONK verification specifications.
+The fact that two independent PLONK implementations contain the same class of bug, and that [similar patterns appear across zkVMs](https://osec.io/blog/zkvms-unfaithful-claims/), suggests this isn't a problem that individual audits alone can solve. The check described above (diff "evaluations used" against "evaluations bound") is mechanical and could be built into development tooling, CI pipelines, or standardized PLONK verification specifications.
 
 We're in early discussions with the Dusk team and other stakeholders about what a PLONK standardization effort could look like: a curve-agnostic, backend-agnostic specification of the verification protocol that makes invariants like evaluation binding explicit and checkable.
 

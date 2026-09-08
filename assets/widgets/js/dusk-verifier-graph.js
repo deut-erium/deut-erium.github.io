@@ -170,7 +170,7 @@
       } catch (error) {
         this._canvasWrap.innerHTML =
           `<p class="dusk-dep-graph__load-error">Could not load the verifier graph data (${escapeHtml(error.message)}). ` +
-          `See the <a href="https://osec.io/blog/2026-04-13-dusk-commitment-issues/" target="_blank" rel="noreferrer">original post</a> for the interactive version.</p>`;
+          `See the <a href="https://osec.io/blog/unverified-evaluations-dusk-plonk/" target="_blank" rel="noreferrer">original post</a> for the interactive version.</p>`;
       }
     }
 

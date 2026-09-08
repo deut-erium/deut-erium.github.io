@@ -10,7 +10,7 @@ description: >-
 mathjax: true
 ---
 
-> Mirror of the osec.io post
+> Mirror of [Unfaithful Claims: Breaking 6 zkVMs](https://osec.io/blog/zkvms-unfaithful-claims/) on osec.io.
 
 A zkVM verifier should be faithful to one thing above all else: its public claims. If the claimed input/output statement is false, verification must fail.
 
