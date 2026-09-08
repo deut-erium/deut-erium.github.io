@@ -1,18 +1,17 @@
-/* Zero-cookie parody banner (roadmap 12a): shows once per browser, every
-   control dismisses identically, and the only thing stored is the dismissal
-   flag. No cookie is ever written. */
+/* Zero-cookie parody banner: one 1% draw per document. Dismissal lasts for
+   this document only. No cookies or browser storage are read or written. */
 (() => {
 'use strict';
-const D = document, K = 'deuterium-cookie-banner';
+const D = document, sampled = Symbol.for('deuterium.cookieBannerSampled');
 const B = D.getElementById('cookie-banner');
-if (!B) return;
-let seen = 0;
-try { seen = localStorage.getItem(K) === '1'; } catch (_) {}
-if (seen) { B.remove(); return; }
-const reveal = () => { if (B.hidden) B.removeAttribute('hidden'); };
+if (!B || D[sampled]) return;
+D[sampled] = true;
+if (!(Math.random() < 0.01)) { B.remove(); return; }
+const reveal = () => { if (B.isConnected) B.hidden = false; };
 const onKey = (e) => { if (e.key === 'Escape') dismiss(); };
 const dismiss = () => {
-  try { localStorage.setItem(K, '1'); } catch (_) {}
+  clearTimeout(fallback);
+  sheet.onload = null;
   D.removeEventListener('keydown', onKey, true);
   B.remove();
 };
@@ -21,7 +20,7 @@ sheet.rel = 'stylesheet';
 sheet.href = '/assets/css/features/cookie-banner.css?v=' + (window.__deuteriumAssetVersion || '');
 sheet.onload = () => requestAnimationFrame(reveal);
 D.head.appendChild(sheet);
-setTimeout(reveal, 400); /* a stalled stylesheet must not hide the joke */
+const fallback = setTimeout(reveal, 400);
 B.addEventListener('click', (e) => {
   const t = e.target.closest('button');
   if (!t || !B.contains(t)) return;

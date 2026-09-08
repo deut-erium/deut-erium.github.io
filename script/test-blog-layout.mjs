@@ -27,7 +27,10 @@ async function open(job, js = true) {
   await page.setViewport({ width: job.width, height: job.height, deviceScaleFactor: 1 });
   await page.setJavaScriptEnabled(js);
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: job.mode }, { name: 'prefers-reduced-motion', value: 'reduce' }]);
-  await page.evaluateOnNewDocument(() => localStorage.setItem('deuterium-cookie-banner', '1'));
+  await page.evaluateOnNewDocument(() => {
+    // The banner has separate probability tests; it must not cover layout controls.
+    document.addEventListener('DOMContentLoaded', () => document.getElementById('cookie-banner')?.remove(), { once: true });
+  });
   if (job.storageBlocked) await page.evaluateOnNewDocument(() => {
     Storage.prototype.getItem = Storage.prototype.setItem = () => { throw new DOMException('Storage blocked for this test', 'SecurityError'); };
   });

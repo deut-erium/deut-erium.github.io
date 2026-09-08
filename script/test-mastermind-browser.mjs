@@ -65,7 +65,9 @@ try {
       else { blocked.push(url.hostname); request.abort(); }
     });
     await page.evaluateOnNewDocument(() => {
-      localStorage.setItem('deuterium-cookie-banner', '1');
+      // Banner probability has its own tests. Keep game focus checks independent
+      // of that draw without changing the page's random-number generator.
+      document.addEventListener('DOMContentLoaded', () => document.getElementById('cookie-banner')?.remove(), { once: true });
       localStorage.setItem('mastermind-reference-v1', 'untouched legacy save');
       // Only the round and independent opponent seeds are deterministic. Game
       // scoring and native worker choices run unmodified from production files.
