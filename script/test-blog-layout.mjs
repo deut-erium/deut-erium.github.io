@@ -18,6 +18,9 @@ async function open(job,js=true){
  await page.setViewport({width:job.width,height:job.height,deviceScaleFactor:1});await page.setJavaScriptEnabled(js);
  await page.emulateMediaFeatures([{name:'prefers-color-scheme',value:job.mode},{name:'prefers-reduced-motion',value:'reduce'}]);
  await page.evaluateOnNewDocument(()=>localStorage.setItem('deuterium-cookie-banner','1'));
+ if(job.storageBlocked)await page.evaluateOnNewDocument(()=>{
+  Storage.prototype.getItem=Storage.prototype.setItem=()=>{throw new DOMException('Storage blocked for this test','SecurityError');};
+ });
  await page.setRequestInterception(true);
  page.on('request',r=>{const u=new URL(r.url());if(u.origin===origin||u.protocol==='data:')r.continue();else r.abort();});
  page.on('pageerror',e=>errors.push(String(e)));
@@ -36,11 +39,24 @@ async function matrix(job){
   const metrics=await geometry(c.page),failures=[];
   if(metrics.overflow>0)failures.push('page overflow');
   if(!baseline){
+   if(job.name==='home-mobile'){
+    await c.page.addScriptTag({path:path.resolve('.toolchain/verify/lighthouse-node_modules/axe-core/axe.min.js')});
+    metrics.axeReading=await c.page.evaluate(async()=>(await axe.run({include:['.site-header','.post-preview']},{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
+    if(metrics.axeReading.length)failures.push('header/reading accessibility');
+    const sameColor=await c.page.$$eval('.post-preview__description',es=>es.some(e=>getComputedStyle(e).color===getComputedStyle(e.closest('.post-preview')).backgroundColor));
+    if(sameColor)failures.push('preview text equals its background');
+   }
    if(job.name==='home-mobile'&&metrics.header.height>80)failures.push('mobile header exceeds 80px');
-   if(job.skin==='rpn-garden'&&job.name==='home-mobile'&&(!metrics.description||metrics.description.bottom>job.height))failures.push('first post description below first viewport');
+   if(job.name==='home-mobile'&&(!metrics.description||metrics.description.bottom>job.height))failures.push('first post description below first viewport');
    await c.page.click('.nav-menu > summary');
-   const links=await c.page.$$eval('.primary-links a',es=>es.map(e=>({href:new URL(e.href).pathname,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height,visible:e.checkVisibility()})));
-   if(links.length!==6||links.some(e=>!e.visible||e.w<44||e.h<44))failures.push('navigation targets missing or too small');
+   if(job.name==='home-mobile'){
+    metrics.axeMenu=await c.page.evaluate(async()=>(await axe.run({include:['.nav-menu']},{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
+    if(metrics.axeMenu.length)failures.push('menu accessibility');
+   }
+   const links=await c.page.$$eval('.primary-links a',es=>es.map(e=>({href:new URL(e.href).pathname,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height,visible:e.checkVisibility(),hit:(()=>{const b=e.getBoundingClientRect(),top=document.elementFromPoint(b.x+b.width/2,b.y+b.height/2);return top===e||e.contains(top);})()})));
+   if(links.length!==6||links.some(e=>!e.visible||!e.hit||e.w<44||e.h<44))failures.push('navigation targets missing, covered or too small');
+   assert.deepEqual(links.map(l=>l.href).sort(),['/','/archive.html','/WriteUps/','/ctf-tutorials/','/ramblings/','/about.html'].sort());
+   assert.equal(await c.page.$$eval('.site-footer__mystery',es=>es.filter(e=>e.checkVisibility()).length),3);
    const panel=await c.page.$eval('.nav-menu__panel',e=>{const b=e.getBoundingClientRect();return {left:b.left,right:b.right,width:b.width,scroll:e.scrollWidth,client:e.clientWidth};});
    metrics.menuPanel=panel;
    if(panel.left<0||panel.right>job.width||panel.scroll>panel.client+1)failures.push('menu panel overflow');
@@ -73,15 +89,42 @@ try{
      await c.page.select('#skin-picker','rpn-garden');await c.page.waitForNetworkIdle({idleTime:200});
      await c.page.keyboard.press('Escape');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
      assert.equal(await c.page.evaluate(()=>document.activeElement.matches('.nav-menu > summary')),true);
-     await c.page.click('.nav-menu > summary');await c.page.click('.post-preview__description');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
+     await c.page.click('.nav-menu > summary');
+     await c.page.screenshot({path:path.join(out,`menu-${width}.png`)});
+     await c.page.click('.post-preview__description');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
      await c.page.addScriptTag({path:path.resolve('.toolchain/verify/lighthouse-node_modules/axe-core/axe.min.js')});
      const violations=await c.page.evaluate(async()=>(await axe.run({include:['.site-header','.masthead','#records']},{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
      assert.deepEqual(violations,[]);
     }else{
+     assert.equal(await c.page.$eval('#skin-picker',e=>e.disabled),true);
      await c.page.focus('.nav-menu > summary');await c.page.keyboard.press('Enter');assert.equal(await c.page.$eval('.nav-menu',e=>e.open),false);
+    }
+    const dock=await c.page.$$eval('.skin-dice, .theme-toggle:not([hidden]), .site-share__btn',es=>es.map(e=>{const b=e.getBoundingClientRect();return {x:b.x,y:b.y,right:b.right,bottom:b.bottom,w:b.width,h:b.height};}));
+    assert.ok(dock.every(r=>r.w>=44&&r.h>=44));
+    if(width<=864){
+     const text=await c.page.$$eval('.post-preview__title, .post-preview__description',es=>es.map(e=>{const b=e.getBoundingClientRect();return {x:b.x,y:b.y,right:b.right,bottom:b.bottom};}));
+     for(const a of text)for(const b of dock)assert.ok(!(a.x<b.right&&b.x<a.right&&a.y<b.bottom&&b.y<a.bottom),'dock covers homepage reading choices');
     }
     await c.page.screenshot({path:path.join(out,`home-${width}-${js?'js':'no-js'}.png`)});
     assert.deepEqual(c.errors,[]);interactionResults.push({width,height,js,...g,pass:true});
+   }finally{await c.context.close();}
+  }
+  for(const storageBlocked of [false,true]){
+   const c=await open({skin:'rpn-garden',mode:'light',route:'/',width:390,height:844,storageBlocked});
+   try{
+    // The old cookie banner still appears when storage reads fail. Dismiss it
+    // before checking navigation; its probability policy is a separate change.
+    if(storageBlocked)await c.page.keyboard.press('Escape');
+    await c.page.click('.nav-menu > summary');await c.page.select('#skin-picker','cryptographic-blockbuster');
+    await c.page.waitForNetworkIdle({idleTime:200});
+    assert.equal(await c.page.evaluate(()=>document.documentElement.dataset.skin),'cryptographic-blockbuster');
+    if(!storageBlocked){
+     await c.page.goto(origin+'/',{waitUntil:'networkidle0'});
+     assert.equal(await c.page.evaluate(()=>document.documentElement.dataset.skin),'cryptographic-blockbuster');
+     await c.page.goto(origin+'/?skin=rpn-garden',{waitUntil:'networkidle0'});
+     assert.equal(await c.page.evaluate(()=>document.documentElement.dataset.skin),undefined);
+    }
+    assert.deepEqual(c.errors,[]);interactionResults.push({case:storageBlocked?'blocked-storage':'saved-and-query-skins',pass:true});
    }finally{await c.context.close();}
   }
  }
