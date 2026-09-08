@@ -195,7 +195,7 @@ export function mountMastermind(root) {
     part('liar').setAttribute('aria-pressed', String(liar));
     part('intro').textContent = liar
       ? `Lock your secret, then change up to ${view.cap} peg${view.cap === 1 ? '' : 's'} in a temporary scoring row each turn.`
-      : 'Crack the fixed secret. Clues can be noisy; only the actual code wins.';
+      : 'Place your pegs, then check the row. Clues can be wrong.';
     const turn = Math.min(view.limit, view.turns.length + (['guess', 'ready'].includes(view.phase) ? 1 : 0));
     part('turn').textContent = view.phase === 'setup' ? 'Set your secret' : over ? `${view.turns.length} / ${view.limit} guesses` : `Turn ${turn} / ${view.limit}`;
     part('rule').textContent = liar ? `Cap: ${view.cap} per turn` : `Noise: ${Number((100 * view.probability).toFixed(2))}% per peg`;
@@ -220,8 +220,6 @@ export function mountMastermind(root) {
     part('history').replaceChildren(...rows);
     part('history').tabIndex = rows.length ? 0 : -1;
     part('history').scrollTop = part('history').scrollHeight;
-    part('empty').hidden = rows.length > 0;
-    if (!rows.length) part('empty').replaceChildren(...Array.from({ length: view.positions }, () => node('span')));
     part('thinking').hidden = view.phase !== 'ready';
     part('editor-panel').hidden = !editable(view);
     part('giveup').disabled = over || view.phase === 'setup';
@@ -253,7 +251,7 @@ export function mountMastermind(root) {
         button.addEventListener('click', () => place(i + 1));
         return button;
       }));
-      root.querySelector('#mst-keyboard').textContent = `Keys: 1-${view.colors} place a peg, arrows move or change color, Backspace undoes, Enter submits.`;
+      root.querySelector('#mst-keyboard').textContent = `1-${view.colors}: colors. Left/Right: select. Enter: submit.`;
       updateEditor();
     }
     if (over) {

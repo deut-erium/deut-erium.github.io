@@ -2,9 +2,7 @@
 <link rel="stylesheet" href="{{ '/assets/css/mastermind.css' | relative_url }}?v={{ '/assets/css/mastermind.css' | asset_v }}">
 <div class="mst-wrap" id="mastermind-game" data-mastermind data-worker-url="{{ '/assets/js/mastermind/opponent-worker.mjs' | relative_url }}?v={{ mst_version }}">
   <header class="mst-header">
-    <p class="mst-eyebrow">A codebreaking game with unreliable clues</p>
     <{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %} class="mst-title">maSATermind</{% if include.heading %}{{ include.heading }}{% else %}h1{% endif %}>
-    <nav class="mst-links" aria-label="Mastermind links"><a href="#mst-play">Play</a><a href="{{ '/2026/09/06/masatermind.html' | relative_url }}">The article</a><a href="{{ '/mastermind/' | relative_url }}">Standalone</a></nav>
   </header>
   <noscript>Enable JavaScript to play. The article's scoring examples work without it.</noscript>
   <section id="mst-play" class="mst-play" aria-label="Mastermind peg board">
@@ -21,14 +19,13 @@
     <div class="mst-board">
       <div class="mst-board-heading"><span>Guesses</span><span>Clues: exact / misplaced</span></div>
       <ol data-part="history" class="mst-history" aria-label="Guesses and reported clues"></ol>
-      <div class="mst-empty" data-part="empty" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       <div class="mst-thinking" data-part="thinking" hidden><span class="mst-pulse" aria-hidden="true"></span>Computer is choosing a guess...</div>
       <div class="mst-editor-panel" data-part="editor-panel">
         <div class="mst-editor-heading"><strong data-part="editor-title">Your guess</strong><span data-part="edit-count"></span></div>
         <div class="mst-editor" data-part="editor" role="group" aria-label="Edit your guess" aria-describedby="mst-keyboard"></div>
         <div data-part="preview" class="mst-preview" hidden></div>
         <div class="mst-palette" data-part="palette" role="group" aria-label="Choose a color for the selected position"></div>
-        <p class="mst-keyboard" id="mst-keyboard">Keys: 1-6 place a peg, arrows move or change color, Backspace undoes, Enter submits.</p>
+        <p class="mst-keyboard" id="mst-keyboard">1-6: colors. Left/Right: select. Enter: submit.</p>
         <div class="mst-actions"><button type="button" class="mst-primary" data-part="submit">Check guess</button><button type="button" data-part="clear">Clear row</button></div>
       </div>
       <div class="mst-ending" data-part="ending" hidden tabindex="-1">
@@ -54,7 +51,7 @@
         <label>Breaker noise (p) <input type="number" data-part="probability" min="0" max="1" step="any" value="0.1" required></label>
         <label>Liar changes per turn (t) <input type="number" data-part="cap" min="0" max="4" step="1" value="1" required></label>
       </div>
-      <p class="mst-help-text">Liar can search at most 32,768 possible codes. Breaker supports all sizes. The guess limit is a game goal, not a solver guarantee.</p>
+      <p class="mst-help-text">The computer opponent supports up to 32,768 possible codes. Breaker supports every listed size. The guess limit is a round goal, not a solver guarantee.</p>
       <p data-part="settings-warning" class="mst-warning"></p>
       <button type="submit">Apply &amp; start round</button>
     </form>
@@ -66,7 +63,8 @@
     <p>Liar: choose and lock your secret. For each wrong computer guess, edit a temporary copy of that secret in at most t positions. The game computes the clues. The cap resets every turn, and you may change different positions. You cannot hide an actual match.</p>
     <p>The computer keeps all codes compatible with the reported clues, the per-turn cap and confirmed wrong guesses. It compares a sample of possible guesses by their worst remaining clue bucket, with private random tie-breaking. It does not see your secret or temporary row. This heuristic is not guaranteed optimal.</p>
     <p>Select a position, then a palette color, or type its number. Left/Right move between positions; Up/Down cycle colors. Backspace clears a peg (restores it in Liar). Enter submits a complete row. Tab reaches every control.</p>
-    <p>Rounds stay in memory. Nothing is saved automatically; any older browser save is left untouched.</p>
+    <p>Rounds last until you reload or start a new game.</p>
   </details>
+  <nav class="mst-links" aria-label="Mastermind links"><a href="{{ '/2026/09/06/masatermind.html' | relative_url }}">Read the article</a><a href="{{ '/mastermind/' | relative_url }}">Standalone game</a></nav>
 </div>
 <script type="module" src="{{ '/assets/js/mastermind/board.mjs' | relative_url }}?v={{ mst_version }}"></script>

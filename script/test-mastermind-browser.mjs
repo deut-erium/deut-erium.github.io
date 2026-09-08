@@ -402,7 +402,8 @@ try {
     const representative = [...new Set([skins[0], 'grid-meltdown', 'proof-bonbons', 'the-descent', 'twin-blades'])].filter(value => skins.includes(value));
     assert.ok(representative.length >= 4);
     const themes = [];
-    for (const skin of representative) {
+    const selectedSkins = process.env.MASTERMIND_TEST_ALL_SKINS === '1' ? skins : representative;
+    for (const skin of selectedSkins) {
       await page.select('#skin-picker', skin);
       await page.waitForFunction(skin => {
         const link = document.querySelector('#skin-stylesheet');
@@ -420,7 +421,7 @@ try {
         await capture(`theme-${skin}-${mode}-320`);
       }
     }
-    tests.push('Five real site skins in light/dark at 320px; consistent dark board');
+    tests.push(`${selectedSkins.length} real site skins in light/dark at 320px; consistent dark board`);
 
     const cdp = await page.createCDPSession();
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'forced-colors', value: 'active' }, { name: 'prefers-reduced-motion', value: 'reduce' }] });
