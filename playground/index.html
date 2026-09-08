@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Playground / deuterium's blog</title><!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Playground" />
+<meta name="author" content="deuterium" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A Sudoku solver and an SMT-LIB runner using Z3 in your browser." />
+<meta name="twitter:description" property="og:description" content="A Sudoku solver and an SMT-LIB runner using Z3 in your browser." />
+<link rel="canonical" href="https://deut-erium.github.io/playground/" />
+<meta property="og:url" content="https://deut-erium.github.io/playground/" />
+<meta property="og:site_name" content="deuterium’s blog" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Playground" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"A Sudoku solver and an SMT-LIB runner using Z3 in your browser.","headline":"Playground","url":"https://deut-erium.github.io/playground/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<script>
+(() => {
+  'use strict';
+
+  const root = document.documentElement;
+  root.classList.add('js');
+  const colorKey = 'deuterium-theme';
+  const skinKey = 'deuterium-skin';
+  const defaultSkin = 'rpn-garden';
+  const skinBase = "/assets/css/skins/";
+  const skinFiles = {"grid-meltdown": "/assets/css/skins/01-grid-meltdown.css?v=d139f940","proof-bonbons": "/assets/css/skins/02-proof-bonbons.css?v=e8de48dd","the-exploit-grimoire": "/assets/css/skins/03-the-exploit-grimoire.css?v=148e3d73","form-follows-failure": "/assets/css/skins/04-form-follows-failure.css?v=f380421d","key-exchange-kiosk": "/assets/css/skins/05-key-exchange-kiosk.css?v=a80fb132","cryptographic-blockbuster": "/assets/css/skins/06-cryptographic-blockbuster.css?v=f2941b50","thirteen-orphans": "/assets/css/skins/07-thirteen-orphans.css?v=91e5a885","orbiting-footnotes": "/assets/css/skins/08-orbiting-footnotes.css?v=30907439","pretty-ugly-proofs": "/assets/css/skins/09-pretty-ugly-proofs.css?v=733a73af","monsters-in-the-math": "/assets/css/skins/10-monsters-in-the-math.css?v=20f42e77","the-hash-crash": "/assets/css/skins/11-the-hash-crash.css?v=0e192480","mercury-keyspace": "/assets/css/skins/12-mercury-keyspace.css?v=608dbcc3","proof-by-confetti": "/assets/css/skins/13-proof-by-confetti.css?v=e334ee52","cut-paste-factor": "/assets/css/skins/14-cut-paste-factor.css?v=e66463c5","the-house-always-seeds": "/assets/css/skins/15-the-house-always-seeds.css?v=bcb66f6e","cathedral-of-constraints": "/assets/css/skins/16-cathedral-of-constraints.css?v=5b948678","soft-shell-exploits": "/assets/css/skins/17-soft-shell-exploits.css?v=4d58dc73","rsa-vs-the-world": "/assets/css/skins/18-rsa-vs-the-world.css?v=3b7d1afd","palace-of-excess": "/assets/css/skins/19-palace-of-excess.css?v=bc59c75d","mutant-mathematics": "/assets/css/skins/20-mutant-mathematics.css?v=95ddfb0c","the-impossible-proof": "/assets/css/skins/21-the-impossible-proof.css?v=e0a49ad7","the-boundary-repeats": "/assets/css/skins/22-the-boundary-repeats.css?v=da8180a7","edge-conditions": "/assets/css/skins/23-edge-conditions.css?v=1e622737","maximum-gain": "/assets/css/skins/24-maximum-gain.css?v=b33aa9d9","exploit-in-b-flat": "/assets/css/skins/25-exploit-in-b-flat.css?v=f338d3ff","root-in-seven": "/assets/css/skins/26-root-in-seven.css?v=55506250","high-lonesome-protocol": "/assets/css/skins/27-high-lonesome-protocol.css?v=765312af","sam-at-sunrise": "/assets/css/skins/28-sam-at-sunrise.css?v=cc021156","unknown-at-rf-0-73": "/assets/css/skins/29-unknown-at-rf-0-73.css?v=11e150d1","collision-atlas": "/assets/css/skins/30-collision-atlas.css?v=5e7a8a91","stack-underflow": "/assets/css/skins/31-stack-underflow.css?v=011ff86f","the-undecidable-register": "/assets/css/skins/32-the-undecidable-register.css?v=a6711f51","the-fat-tail-register": "/assets/css/skins/33-the-fat-tail-register.css?v=ed963dfd","the-interlocking": "/assets/css/skins/34-the-interlocking.css?v=1b28d735","the-clause-exchange": "/assets/css/skins/35-the-clause-exchange.css?v=eedd31cb","margin-of-error": "/assets/css/skins/36-margin-of-error.css?v=17b30a0a","layer-shift": "/assets/css/skins/37-layer-shift.css?v=9a250dba","root-access": "/assets/css/skins/38-root-access.css?v=59e1546b","gravity-glove-evidence": "/assets/css/skins/39-gravity-glove-evidence.css?v=02a6ebc7","presence-check": "/assets/css/skins/40-presence-check.css?v=5b26b9b9","weak-joints": "/assets/css/skins/41-weak-joints.css?v=086d3ab2","riff-atlas": "/assets/css/skins/42-riff-atlas.css?v=4f93e997","the-pit-index": "/assets/css/skins/43-the-pit-index.css?v=284c1a6c","the-descent": "/assets/css/skins/44-the-descent.css?v=60e51cee","magnetic-index": "/assets/css/skins/45-magnetic-index.css?v=9f62c9f4","twin-blades": "/assets/css/skins/46-twin-blades.css?v=24a343ad","crowd-signal": "/assets/css/skins/47-crowd-signal.css?v=8cc22968"};
+  const read = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  };
+  const save = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (_) {
+      // The selected state still applies to this page.
+    }
+  };
+
+  let requestedSkin = null;
+  try {
+    requestedSkin = new URLSearchParams(location.search).get('skin');
+  } catch (_) {
+    // An invalid query falls back to the saved selection.
+  }
+
+  const hasSkin = (id) => Object.prototype.hasOwnProperty.call(skinFiles, id);
+  const savedSkin = read(skinKey);
+  const skin = hasSkin(requestedSkin)
+    ? requestedSkin
+    : requestedSkin === defaultSkin
+      ? defaultSkin
+      : hasSkin(savedSkin)
+        ? savedSkin
+        : defaultSkin;
+  if (requestedSkin === defaultSkin || hasSkin(requestedSkin)) {
+    save(skinKey, skin);
+  }
+
+  const systemDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedColor = read(colorKey);
+  const color = savedColor === 'dark' || savedColor === 'light'
+    ? savedColor
+    : systemDark ? 'dark' : 'light';
+
+  root.dataset.theme = color;
+  if (skin === defaultSkin) delete root.dataset.skin;
+  else root.dataset.skin = skin;
+
+  const skinHref = skin === defaultSkin ? null : skinFiles[skin];
+  const syncControls = () => {
+    const button = document.querySelector('.theme-toggle');
+    if (button) {
+      const dark = color === 'dark';
+      button.hidden = false;
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    const picker = document.querySelector('#skin-picker');
+    if (picker) picker.value = skin;
+    const option = picker?.querySelector('option[value="' + skin + '"]');
+    const summary = document.querySelector('.skin-menu summary');
+    if (summary && option) summary.textContent = 'Theme: ' + option.textContent;
+  };
+  window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref, syncControls };
+
+  if (skinHref) {
+    document.write('<link rel="preload" as="style" href="' + skinHref + '">');const bootstrap = document.createElement('script');
+    bootstrap.src = "/assets/js/theme-bootstrap.js?v=e19b906c";
+    bootstrap.defer = true;
+    document.head.appendChild(bootstrap);
+  }
+})();
+</script>
+
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/atkinson-hyperlegible/700.woff2">
+<link rel="stylesheet" href="/assets/css/main.css?v=4180b6a3">
+<script>
+  if (window.__deuteriumTheme.skinHref) {
+    document.write('<link id="skin-stylesheet" rel="stylesheet" href="' + window.__deuteriumTheme.skinHref + '">');
+  } else {
+    document.write('<link id="skin-stylesheet" rel="stylesheet" disabled>');
+  }
+</script>
+<link rel="stylesheet" href="/assets/css/theme-remediation.css?v=9a7280b4"><script>window.__deuteriumAssetVersion = "e19b906c";</script>
+<script defer src="/assets/js/theme.js?v=f161a0cb"></script>
+<script defer src="/assets/js/share.js?v=6fbc2119"></script>
+<script defer src="/assets/js/features/cookie-banner.js?v=f487d286"></script>
+<script defer src="/assets/js/features/konami.js?v=862a9e89"></script>
+<meta name="theme-color" content="#3847ff">
+</head>
+  <body class="layout-base section-root" data-layout="base">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <button class="skin-dice" type="button" aria-label="Choose a random visual theme">
+      <svg class="skin-dice__face" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="18" height="18" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.2" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="8.2" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <circle cx="8.2" cy="15.8" r="1.6" fill="currentColor"/>
+        <circle cx="15.8" cy="15.8" r="1.6" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="theme-toggle" type="button" aria-pressed="false" hidden>
+      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 13.65A8.5 8.5 0 0 1 10.35 3.8a8.5 8.5 0 1 0 9.85 9.85Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="2.75" x2="12" y2="4.9"/>
+          <line x1="12" y1="19.1" x2="12" y2="21.25"/>
+          <line x1="2.75" y1="12" x2="4.9" y2="12"/>
+          <line x1="19.1" y1="12" x2="21.25" y2="12"/>
+          <line x1="5.4" y1="5.4" x2="6.9" y2="6.9"/>
+          <line x1="17.1" y1="17.1" x2="18.6" y2="18.6"/>
+          <line x1="5.4" y1="18.6" x2="6.9" y2="17.1"/>
+          <line x1="17.1" y1="6.9" x2="18.6" y2="5.4"/>
+        </g>
+      </svg>
+    </button>
+    <span class="site-share">
+      <button class="site-share__btn" type="button" aria-expanded="false" aria-controls="share-popover" aria-label="Share this page">
+        <svg class="site-share__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </g>
+          <g fill="currentColor">
+            <rect x="16.5" y="7.5" width="2" height="2"/>
+            <rect x="7.5" y="16.5" width="2" height="2"/>
+            <rect x="13" y="13" width="2" height="2"/>
+            <rect x="17" y="15" width="2" height="2"/>
+            <rect x="15" y="17" width="2" height="2"/>
+            <rect x="19" y="13" width="2" height="2"/>
+          </g>
+        </svg>
+      </button>
+      <div class="site-share__popover" id="share-popover" hidden>
+        <canvas class="site-share__qr" role="img" aria-label="QR code linking to this page"></canvas>
+        <p class="site-share__url"></p>
+        <button class="site-share__copy" type="button">Copy link</button>
+      </div>
+    </span><header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text">
+        <strong class="site-brand__name">deuterium</strong>
+        <small class="site-brand__scope">Himanshu Sheoran's blog on tech, security, CTFs and cryptography</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="archive" href="/archive.html">Archive</a>
+      <a data-route="writeups" href="/WriteUps/">Writeups</a>
+      <a data-route="tutorials" href="/ctf-tutorials/">Tutorials</a>
+      <a data-route="ramblings" href="/ramblings/">Ramblings</a>
+      <a data-route="about" href="/about.html">About</a>
+      <details class="skin-menu">
+        <summary>Theme: RPN Garden</summary>
+        <div class="skin-menu__panel">
+          <label for="skin-picker">Visual theme</label>
+          <select id="skin-picker" name="skin-picker">
+            
+              <option value="rpn-garden">RPN Garden</option>
+            
+              <option value="grid-meltdown">Grid Meltdown</option>
+            
+              <option value="proof-bonbons">Proof Bonbons</option>
+            
+              <option value="the-exploit-grimoire">The Exploit Grimoire</option>
+            
+              <option value="form-follows-failure">Form Follows Failure</option>
+            
+              <option value="key-exchange-kiosk">Key Exchange Kiosk</option>
+            
+              <option value="cryptographic-blockbuster">Cryptographic Blockbuster</option>
+            
+              <option value="thirteen-orphans">Thirteen Orphans</option>
+            
+              <option value="orbiting-footnotes">Orbiting Footnotes</option>
+            
+              <option value="pretty-ugly-proofs">Pretty Ugly Proofs</option>
+            
+              <option value="monsters-in-the-math">Monsters in the Math</option>
+            
+              <option value="the-hash-crash">The Hash Crash</option>
+            
+              <option value="mercury-keyspace">Mercury Keyspace</option>
+            
+              <option value="proof-by-confetti">Proof by Confetti</option>
+            
+              <option value="cut-paste-factor">Cut, Paste, Factor</option>
+            
+              <option value="the-house-always-seeds">The House Always Seeds</option>
+            
+              <option value="cathedral-of-constraints">Cathedral of Constraints</option>
+            
+              <option value="soft-shell-exploits">Soft Shell Exploits</option>
+            
+              <option value="rsa-vs-the-world">RSA vs. The World</option>
+            
+              <option value="palace-of-excess">Palace of Excess</option>
+            
+              <option value="mutant-mathematics">Mutant Mathematics</option>
+            
+              <option value="the-impossible-proof">The Impossible Proof</option>
+            
+              <option value="the-boundary-repeats">The Boundary Repeats</option>
+            
+              <option value="edge-conditions">Edge Conditions</option>
+            
+              <option value="maximum-gain">Maximum Gain</option>
+            
+              <option value="exploit-in-b-flat">Exploit in B-flat</option>
+            
+              <option value="root-in-seven">Root in Seven</option>
+            
+              <option value="high-lonesome-protocol">High Lonesome Protocol</option>
+            
+              <option value="sam-at-sunrise">Sam at Sunrise</option>
+            
+              <option value="unknown-at-rf-0-73">Unknown at Rf 0.73</option>
+            
+              <option value="collision-atlas">Collision Atlas</option>
+            
+              <option value="stack-underflow">Stack Underflow</option>
+            
+              <option value="the-undecidable-register">The Undecidable Register</option>
+            
+              <option value="the-fat-tail-register">The Fat Tail Register</option>
+            
+              <option value="the-interlocking">The Interlocking</option>
+            
+              <option value="the-clause-exchange">The Clause Exchange</option>
+            
+              <option value="margin-of-error">Margin of Error</option>
+            
+              <option value="layer-shift">Layer Shift</option>
+            
+              <option value="root-access">Root Access</option>
+            
+              <option value="gravity-glove-evidence">Gravity-Glove Evidence</option>
+            
+              <option value="presence-check">Presence Check</option>
+            
+              <option value="weak-joints">Weak Joints</option>
+            
+              <option value="riff-atlas">Riff Atlas</option>
+            
+              <option value="the-pit-index">The Pit Index</option>
+            
+              <option value="the-descent">The Descent</option>
+            
+              <option value="magnetic-index">Magnetic Index</option>
+            
+              <option value="twin-blades">Twin Blades</option>
+            
+              <option value="crowd-signal">Crowd Signal</option>
+            
+          </select>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<script>window.__deuteriumTheme?.syncControls();</script>
+<main id="content" class="page-shell pg-shell">
+  <style>
+    /* Playground uses the site's own chrome: section headings, paper panels,
+       action buttons, and mono inputs. No bespoke palette. */
+    .pg-shell > :not(style) { max-width: 62rem; margin-inline: auto; }
+    .pg-head { margin: 0 0 1.1rem; color: var(--ink); }
+    .pg-head h1 {
+      margin: 0 0 .35rem;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+      letter-spacing: -.02em;
+      text-transform: none;
+    }
+    .pg-lede { margin: 0; max-width: 46rem; font-size: 1rem; line-height: 1.55; color: var(--ink); }
+    .pg-panelwrap, .pg-docs {
+      background: var(--paper);
+      color: var(--ink);
+      border: 4px solid var(--navy);
+      border-radius: .8rem;
+      padding: clamp(1rem, 2.6vw, 1.6rem);
+      margin: 0 0 1.2rem;
+      box-shadow: .45rem .5rem 0 rgb(8 10 19 / 35%);
+    }
+    .pg-tab-state { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .pg-tablist { display: flex; gap: .6rem; margin: 0 0 1.1rem; flex-wrap: wrap; }
+    .pg-tab {
+      cursor: pointer;
+      display: inline-flex;
+      min-height: 2.6rem;
+      align-items: center;
+      padding: .5rem 1.05rem;
+      background: var(--navy);
+      color: #fff;
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      font-family: var(--keys);
+      font-size: .95rem;
+    }
+    .pg-tab:hover { background: var(--pink); border-color: var(--navy); color: var(--navy); }
+    #pg-tab-sudoku:checked ~ .pg-tablist .pg-tab--sudoku,
+    #pg-tab-smt:checked ~ .pg-tablist .pg-tab--smt {
+      background: var(--orange);
+      color: var(--navy);
+      border-color: var(--navy);
+    }
+    #pg-tab-sudoku:focus-visible ~ .pg-tablist .pg-tab--sudoku,
+    #pg-tab-smt:focus-visible ~ .pg-tablist .pg-tab--smt {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
+    .pg-panel { display: none; }
+    #pg-tab-sudoku:checked ~ .pg-panel--sudoku { display: block; }
+    #pg-tab-smt:checked ~ .pg-panel--smt { display: block; }
+    .pg-panel h2 { margin: .1rem 0 .45rem; color: var(--ink); font-family: var(--display); text-transform: none; letter-spacing: 0; }
+    .pg-panel p, .pg-docs p { max-width: 46rem; }
+    .pg-controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 0 0 1rem; }
+    .pg-btn, .pg-select {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      padding: .55rem .95rem;
+      background: var(--navy);
+      color: #fff;
+      border: 3px solid var(--navy);
+      border-radius: .5rem;
+      box-shadow: 0 .2rem 0 rgb(8 10 19 / 45%);
+      font-family: var(--keys);
+      font-size: .95rem;
+      cursor: pointer;
+    }
+    .pg-btn:hover, .pg-select:hover { background: var(--pink); color: var(--navy); }
+    .pg-btn--primary { background: var(--orange); color: var(--navy); }
+    .pg-btn--primary:hover { background: var(--pink); }
+    .pg-btn[disabled] { opacity: .55; cursor: wait; }
+    .pg-label { display: block; margin: .2rem 0 .4rem; font-family: var(--keys); font-size: .85rem; color: var(--ink); }
+    .pg-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 3px;
+      max-width: 30rem;
+      margin: 0 0 1rem;
+    }
+    .pg-grid input {
+      width: 100%;
+      aspect-ratio: 1;
+      min-width: 0;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: .25rem;
+      padding: 0;
+    }
+    .pg-grid input:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; }
+    .pg-grid input.pg-given { background: var(--paper-low); font-weight: 700; }
+    .pg-grid input.pg-flash { background: var(--orange); color: var(--navy); transition: background .35s ease; }
+    .pg-script {
+      width: 100%;
+      min-height: 11rem;
+      box-sizing: border-box;
+      margin: 0 0 .9rem;
+      padding: .8rem .9rem;
+      font-family: var(--mono);
+      font-size: .92rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border: 3px solid var(--ink);
+      border-radius: .5rem;
+      resize: vertical;
+    }
+    .pg-out {
+      margin: .4rem 0 0;
+      padding: .8rem .9rem;
+      font-family: var(--mono);
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper-low);
+      border-left: .4rem solid var(--navy);
+      border-radius: .3rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 1.6rem;
+    }
+    .pg-status { margin: .35rem 0 0; font-family: var(--keys); font-size: .92rem; color: var(--ink); }
+    .pg-docs h2 { margin: .2rem 0 .5rem; font-family: var(--display); font-size: 1.3rem; color: var(--ink); text-transform: none; letter-spacing: 0; }
+    .pg-docs p { margin: .3rem 0 .6rem; line-height: 1.55; }
+    .pg-docs code { font-family: var(--mono); font-size: .9em; background: var(--paper-low); border: 1px solid var(--ink); border-radius: .25rem; padding: 0 .3em; }
+    @media (max-width: 40rem) {
+      .pg-grid { max-width: 100%; }
+      .pg-shell { padding-inline: .9rem; }
+    }
+  </style>
+
+  <header class="pg-head">
+    <h1>Playground</h1>
+    <p class="pg-lede">A Sudoku solver and an SMT-LIB runner using Z3 in your browser.
+      The engine loads on first use; the page may reload.</p>
+  </header>
+
+  <section class="pg-panelwrap" aria-label="Playground demos">
+    <input class="pg-tab-state" type="radio" name="pg-tab" id="pg-tab-sudoku" checked>
+    <input class="pg-tab-state" type="radio" name="pg-tab" id="pg-tab-smt">
+    <div class="pg-tablist" role="tablist" aria-label="Demos">
+      <label class="pg-tab pg-tab--sudoku" id="pg-tablabel-sudoku" for="pg-tab-sudoku">Sudoku</label>
+      <label class="pg-tab pg-tab--smt" id="pg-tablabel-smt" for="pg-tab-smt">SMT-LIB</label>
+    </div>
+
+    <section class="pg-panel pg-panel--sudoku" role="tabpanel" aria-labelledby="pg-tablabel-sudoku">
+      <h2>Sudoku</h2>
+      <p>Eighty-one integer variables in 1&ndash;9, pairwise distinct per row,
+        column, and box, with your givens pinned by equality. Pick a puzzle,
+        edit any cell, then press Solve. The grid below is the only input.</p>
+      <div class="pg-controls">
+        <button type="button" class="pg-btn" id="pg-easy">Easy</button>
+        <button type="button" class="pg-btn" id="pg-medium">Medium</button>
+        <button type="button" class="pg-btn" id="pg-hard">Hard</button>
+        <button type="button" class="pg-btn" id="pg-clear">Clear</button>
+        <button type="button" class="pg-btn pg-btn--primary" id="pg-solve">Solve</button>
+      </div>
+      <div class="pg-grid" id="pg-grid"></div>
+      <p class="pg-status" id="pg-status" role="status" aria-live="polite">Pick a puzzle or type your own, then Solve.</p>
+    </section>
+
+    <section class="pg-panel pg-panel--smt" role="tabpanel" aria-labelledby="pg-tablabel-smt">
+      <h2>SMT-LIB</h2>
+      <p>Pick a preset or write an SMT-LIB 2 script, then press Run.</p>
+      <div class="pg-controls">
+        <label class="pg-label" for="pg-preset">Preset</label>
+        <select class="pg-select" id="pg-preset">
+          <option value="">Pick a preset&hellip;</option>
+          <option value="trivial">Trivial assert</option>
+          <option value="queens6">n-Queens (6)</option>
+          <option value="sudoku">Sudoku, as SMT-LIB</option>
+        </select>
+        <button type="button" class="pg-btn pg-btn--primary" id="pg-run">Run</button>
+      </div>
+      <textarea class="pg-script" id="pg-script" rows="12" spellcheck="false" aria-label="SMT-LIB script"></textarea>
+      <pre class="pg-out" id="pg-out" aria-label="Solver output" aria-live="polite"></pre>
+    </section>
+  </section>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var VENDOR = '/assets/vendor/z3/z3-built.js';
+    var COI_SW = '/playground/coi-serviceworker.js';
+    var RUN_BUDGET_MS = 30000;
+    var RESUME_KEY = 'pg-resume';
+    var ISO_ATTEMPTS_KEY = 'pg-iso-attempts';
+    var ISO_MAX_ATTEMPTS = 3;
+    var enginePromise = null;
+
+    /* The harness object: demos register here, everything shares the lazy
+       engine loader, the run budget, and the isolation bootstrap. */
+    var PG = { demos: {} };
+    window.PG = PG;
+
+    /* The official npm wasm build runs long Z3 operations on pthreads, which
+       browsers only allow on cross-origin isolated pages. Isolated hosts get
+       the off-thread API with a real wall-clock budget and interrupt; plain
+       origins bootstrap an isolating service worker (coi-serviceworker) once
+       and reload; if even that fails, a synchronous fallback runs what it
+       can on the main thread. */
+    PG.offThread = function () {
+      return typeof SharedArrayBuffer === 'function' && window.crossOriginIsolated !== false;
+    };
+
+    PG.sessionCount = function (key, delta) {
+      try {
+        var n = Number(window.sessionStorage.getItem(key) || '0') + delta;
+        if (n > 0) { window.sessionStorage.setItem(key, String(n)); }
+        else { window.sessionStorage.removeItem(key); }
+        return n;
+      } catch (err) { return 0; }
+    };
+
+    PG.stash = function (state) {
+      try { window.sessionStorage.setItem(RESUME_KEY, JSON.stringify(state)); } catch (err) {}
+    };
+
+    PG.takeStash = function () {
+      try {
+        var raw = window.sessionStorage.getItem(RESUME_KEY);
+        window.sessionStorage.removeItem(RESUME_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (err) { return null; }
+    };
+
+    /* Registers the vendored isolating service worker and reloads the page
+       once it can control this URL. coi-serviceworker's worker half serves
+       every response under /playground/ with COOP/COEP; we drive the
+       registration from here because its page half is designed to run once
+       as a static tag, not on demand. */
+    PG.isolate = function () {
+      return new Promise(function (resolve) {
+        if (!('serviceWorker' in navigator) || !window.isSecureContext) { resolve(false); return; }
+        var attempts = PG.sessionCount(ISO_ATTEMPTS_KEY, 1);
+        if (attempts > ISO_MAX_ATTEMPTS) { resolve(false); return; }
+        var settled = false;
+        var done = function (value) { if (!settled) { settled = true; resolve(value); } };
+        var reload = function () {
+          window.location.reload();
+          /* If the reload is somehow refused, fall through to the sync mode. */
+          setTimeout(function () { done(window.crossOriginIsolated === true); }, 1500);
+        };
+        navigator.serviceWorker.register(COI_SW).then(function (reg) {
+          var worker = reg.active || reg.installing || reg.waiting;
+          if (!worker) { done(false); return; }
+          var go = function () {
+            if (settled) { return; }
+            setTimeout(function () {
+              if (window.crossOriginIsolated) { done(true); return; }
+              reload();
+            }, 100);
+          };
+          if (worker.state === 'activated') { go(); } else {
+            worker.addEventListener('statechange', function () { if (worker.state === 'activated') { go(); } });
+          }
+        }).catch(function (e) { console.warn('coi-serviceworker unavailable:', e && e.message); done(false); });
+        /* Activation can lag behind registration; give it a real chance
+           before falling back, and say so when the engine cannot run. */
+        setTimeout(function () { done(window.crossOriginIsolated === true); }, 12000);
+      });
+    };
+
+    /* Let the browser paint before a blocking synchronous run. */
+    PG.yieldFrame = function () {
+      return new Promise(function (resolve) {
+        requestAnimationFrame(function () { setTimeout(resolve, 0); });
+      });
+    };
+
+    /* Engine step. Injects the vendored Emscripten glue on first use only,
+       resolves the global initZ3() factory, and memoizes the module so the
+       ~35 MB WASM download is paid once per visit and never on page open. */
+    function loadEngineScript() {
+      return new Promise(function (resolve, reject) {
+        var started = performance.now();
+        var script = document.createElement('script');
+        script.src = VENDOR;
+        script.addEventListener('load', function () {
+          var factory = window.initZ3;
+          if (typeof factory !== 'function') {
+            reject(new Error('engine loaded but exposed no initZ3 factory'));
+            return;
+          }
+          var ready;
+          if (PG.offThread()) {
+            /* Chromium blocks network-loaded worker scripts on cross-origin
+               isolated pages (ERR_BLOCKED_BY_RESPONSE on the pthread worker
+               fetch), so hand the engine a blob URL of its own glue for its
+               pthread workers. The compiled wasm reaches workers through
+               postMessage, so the blob needs no path setup. */
+            ready = fetch(VENDOR)
+              .then(function (response) { return response.text(); })
+              .then(function (text) {
+                var blob = URL.createObjectURL(new Blob([text], { type: 'text/javascript' }));
+                return Promise.resolve(factory({ mainScriptUrlOrBlob: blob }));
+              });
+          } else {
+            ready = Promise.resolve(factory({}));
+          }
+          ready.then(function (Mod) {
+            resolve({ Mod: Mod, loadMs: Math.round(performance.now() - started) });
+          }, reject);
+        });
+        script.addEventListener('error', function () {
+          reject(new Error('failed to fetch ' + VENDOR));
+        });
+        document.head.appendChild(script);
+      });
+    }
+
+    PG.engine = function () {
+      if (enginePromise) { return enginePromise; }
+      if (PG.offThread()) {
+        enginePromise = loadEngineScript().catch(function (err) { enginePromise = null; throw err; });
+        return enginePromise;
+      }
+      /* Not isolated: the current click may be cut short by the one-time
+         reload. If the reload never comes, keep going in fallback mode. */
+      enginePromise = PG.isolate().then(function (isolated) {
+        if (!isolated && window.crossOriginIsolated !== true) { return loadEngineScript(); }
+        return loadEngineScript();
+      }).catch(function (err) { enginePromise = null; throw err; });
+      return enginePromise;
+    };
+
+    /* Shared run budget: resolves with the work's value, or rejects once the
+       wall-clock budget is spent after calling onAbort (used to interrupt the
+       solver). */
+    PG.budget = function (work, ms, onAbort) {
+      return new Promise(function (resolve, reject) {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (settled) { return; }
+          settled = true;
+          if (onAbort) { try { onAbort(); } catch (err) {} }
+          reject(new Error('exceeded the ' + ms + ' ms run budget'));
+        }, ms);
+        work.then(function (value) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); resolve(value);
+        }, function (err) {
+          if (settled) { return; }
+          settled = true; clearTimeout(timer); reject(err);
+        });
+      });
+    };
+
+    /* ---------------- Sudoku demo ---------------- */
+
+    var PUZZLES = {
+      easy: '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..',
+      medium: '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79',
+      hard: '8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..'
+    };
+
+    function boxOf(i) { return Math.floor(Math.floor(i / 9) / 3) * 3 + Math.floor((i % 9) / 3); }
+
+    PG.demos.sudoku = { mount: mountSudoku };
+
+    function mountSudoku() {
+      var gridEl = document.getElementById('pg-grid');
+      var statusEl = document.getElementById('pg-status');
+      var solveBtn = document.getElementById('pg-solve');
+      var busy = false;
+
+      var cells = [];
+      for (var i = 0; i < 81; i++) {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.inputMode = 'numeric';
+        input.autocomplete = 'off';
+        input.maxLength = 1;
+        input.setAttribute('aria-label', 'Row ' + (Math.floor(i / 9) + 1) + ', column ' + ((i % 9) + 1));
+        input.className = 'pg-cell' +
+          ((i % 9) === 2 || (i % 9) === 5 ? ' pg-cell--r' : '') +
+          (Math.floor(i / 9) % 3 === 2 && Math.floor(i / 9) < 8 ? ' pg-cell--b' : '');
+        input.addEventListener('input', function () {
+          this.value = this.value.replace(/[^1-9]/g, '').slice(0, 1);
+          this.classList.remove('pg-cell--given', 'pg-cell--filled');
+        });
+        gridEl.appendChild(input);
+        cells.push(input);
+      }
+
+      function loadPuzzle(text, label) {
+        var given = text.replace(/[^0-9.]/g, '');
+        cells.forEach(function (cell, idx) {
+          var ch = given[idx] || '.';
+          var has = ch >= '1' && ch <= '9';
+          cell.value = has ? ch : '';
+          cell.classList.remove('pg-cell--filled');
+          cell.classList.toggle('pg-cell--given', has);
+        });
+        statusEl.textContent = label + ' givens loaded. Solve when ready.';
+        statusEl.removeAttribute('data-result');
+        gridEl.removeAttribute('data-solved');
+      }
+
+      function readGrid() {
+        return cells.map(function (cell) {
+          return cell.value >= '1' && cell.value <= '9' ? Number(cell.value) : 0;
+        });
+      }
+
+      /* Render step: fill empty cells with the model, flash each one as it
+         lands. Reduced-motion users get the same grid with no stagger. */
+      function paintSolution(values, givenMask) {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var last = 0;
+        values.forEach(function (v, idx) {
+          if (givenMask[idx]) { return; }
+          var apply = function () {
+            cells[idx].value = String(v);
+            cells[idx].classList.add('pg-cell--filled', 'pg-cell--flash');
+          };
+          if (reduce) { apply(); } else { last = idx * 14; setTimeout(apply, last); }
+        });
+        if (reduce) { gridEl.setAttribute('data-solved', '1'); }
+        else { setTimeout(function () { gridEl.setAttribute('data-solved', '1'); }, last + 60); }
+      }
+
+      function solve() {
+        if (busy) { return; }
+        busy = true;
+        solveBtn.disabled = true;
+        var givens = readGrid();
+        var givenMask = givens.map(function (v) { return v > 0; });
+        var cold = !enginePromise;
+        if (!PG.offThread()) {
+          PG.stash({ action: 'solve', grid: givens });
+        }
+        statusEl.textContent = cold
+          ? 'Loading Z3 (about 35 MB uncompressed)' +
+            (PG.offThread() ? '\u2026' : '; the page may reload\u2026')
+          : 'Solving\u2026';
+        statusEl.removeAttribute('data-result');
+
+        var settle = function (fn) {
+          return function (value) { busy = false; solveBtn.disabled = false; if (fn) { fn(value); } };
+        };
+
+        PG.engine().then(function (eng) {
+          var solveStart = performance.now();
+          statusEl.textContent = 'Solving\u2026';
+          return solveWith(eng.Mod, givens).then(function (result) {
+            result.solveMs = Math.round(performance.now() - solveStart);
+            result.loadMs = cold ? eng.loadMs : 0;
+            result.cold = cold;
+            return result;
+          });
+        }).then(settle(function (result) {
+          if (result.status === 'sat') {
+            paintSolution(result.values, givenMask);
+            statusEl.textContent = 'SAT \u00b7 solved in ' + result.solveMs + ' ms';
+            statusEl.setAttribute('data-result', 'sat');
+          } else if (result.status === 'unsat') {
+            statusEl.textContent = 'UNSAT \u00b7 no solution exists with these givens \u2014 clear a cell or two and try again, or press Clear and pick a different puzzle.';
+            statusEl.setAttribute('data-result', 'unsat');
+          } else {
+            statusEl.textContent = 'UNKNOWN \u00b7 the solver gave up inside the run budget. Try an easier grid.';
+            statusEl.setAttribute('data-result', 'unknown');
+          }
+          statusEl.setAttribute('data-load-ms', String(result.loadMs));
+          statusEl.setAttribute('data-solve-ms', String(result.solveMs));
+        }), settle(function (err) {
+          statusEl.textContent = 'Solver error: ' + (err && err.message ? err.message : err) + ' Edit the grid and retry.';
+          statusEl.setAttribute('data-result', 'error');
+        }));
+      }
+
+      /* Engine step for Sudoku: 81 int constants, 1..9 bounds, 27 distinct
+         groups (rows, columns, boxes), givens pinned with equalities, one
+         solver check under the shared budget. */
+      function solveWith(Mod, givens) {
+        var cfg = Mod._Z3_mk_config();
+        var ctx = Mod._Z3_mk_context(cfg);
+        Mod._set_noop_error_handler(ctx);
+        var scratch = [];
+        var intSort = Mod._Z3_mk_int_sort(ctx);
+        var vars = [];
+        var i, r, c, b;
+
+        var astArray = function (asts) {
+          var ptr = Mod._malloc(asts.length * 4);
+          scratch.push(ptr);
+          new Uint32Array(Mod.HEAPU8.buffer, ptr, asts.length).set(asts);
+          return ptr;
+        };
+
+        for (i = 0; i < 81; i++) {
+          vars.push(Mod._Z3_mk_const(ctx, Mod._Z3_mk_int_symbol(ctx, i), intSort));
+        }
+        var one = Mod._Z3_mk_int(ctx, 1, intSort);
+        var nine = Mod._Z3_mk_int(ctx, 9, intSort);
+        var terms = [];
+        for (i = 0; i < 81; i++) {
+          terms.push(Mod._Z3_mk_ge(ctx, vars[i], one));
+          terms.push(Mod._Z3_mk_le(ctx, vars[i], nine));
+        }
+        var groups = [];
+        for (r = 0; r < 9; r++) { groups.push(vars.slice(r * 9, r * 9 + 9)); }
+        for (c = 0; c < 9; c++) {
+          groups.push(vars.filter(function (v, idx) { return (idx % 9) === c; }));
+        }
+        for (b = 0; b < 9; b++) {
+          groups.push(vars.filter(function (v, idx) { return boxOf(idx) === b; }));
+        }
+        groups.forEach(function (group) {
+          terms.push(Mod._Z3_mk_distinct(ctx, group.length, astArray(group)));
+        });
+        for (i = 0; i < 81; i++) {
+          if (givens[i]) {
+            terms.push(Mod._Z3_mk_eq(ctx, vars[i], Mod._Z3_mk_int(ctx, givens[i], intSort)));
+          }
+        }
+        var body = Mod._Z3_mk_and(ctx, terms.length, astArray(terms));
+
+        var solver = Mod._Z3_mk_simple_solver(ctx);
+        Mod._Z3_solver_assert(ctx, solver, body);
+
+        var teardown = function () {
+          scratch.forEach(function (ptr) { Mod._free(ptr); });
+          Mod._Z3_del_context(ctx);
+        };
+
+        var check;
+        if (PG.offThread()) {
+          check = PG.budget(
+            Mod.async_call(Mod._async_Z3_solver_check, ctx, solver),
+            RUN_BUDGET_MS,
+            function () { Mod._Z3_interrupt(ctx); }
+          );
+        } else {
+          /* Main-thread fallback: no preemption, so the budget is a
+             post-hoc measurement around a synchronous check. */
+          check = PG.yieldFrame().then(function () {
+            var t0 = performance.now();
+            var res = Mod._Z3_solver_check(ctx, solver);
+            if (res === 0 && performance.now() - t0 >= RUN_BUDGET_MS * 0.9) {
+              throw new Error(navigator.serviceWorker && window.isSecureContext ? 'the solver needs its worker context; reload once and try again' : 'the solver engine cannot run in this browser context');
+            }
+            return res;
+          });
+        }
+
+        return check.then(function (res) {
+          if (res !== 1) {
+            teardown();
+            return { status: res === -1 ? 'unsat' : 'unknown', values: null };
+          }
+          var model = Mod._Z3_solver_get_model(ctx, solver);
+          var outPtr = Mod._malloc(4);
+          var values = [];
+          for (var k = 0; k < 81; k++) {
+            Mod._Z3_model_eval(ctx, model, vars[k], 1, outPtr);
+            var valueAst = new Uint32Array(Mod.HEAPU8.buffer, outPtr, 1)[0];
+            Mod._Z3_get_numeral_int(ctx, valueAst, outPtr);
+            values.push(new Int32Array(Mod.HEAPU8.buffer, outPtr, 1)[0]);
+          }
+          Mod._free(outPtr);
+          teardown();
+          return { status: 'sat', values: values };
+        }, function (err) {
+          teardown();
+          throw err;
+        });
+      }
+
+      document.getElementById('pg-easy').addEventListener('click', function () { loadPuzzle(PUZZLES.easy, 'Easy'); });
+      document.getElementById('pg-medium').addEventListener('click', function () { loadPuzzle(PUZZLES.medium, 'Medium'); });
+      document.getElementById('pg-hard').addEventListener('click', function () { loadPuzzle(PUZZLES.hard, 'Hard'); });
+      document.getElementById('pg-clear').addEventListener('click', function () {
+        cells.forEach(function (cell) {
+          cell.value = '';
+          cell.classList.remove('pg-cell--given', 'pg-cell--filled');
+        });
+        statusEl.textContent = 'Grid cleared. Type your own puzzle or load a preset.';
+        statusEl.removeAttribute('data-result');
+        gridEl.removeAttribute('data-solved');
+      });
+      solveBtn.addEventListener('click', solve);
+
+      PG.demos.sudoku.setGrid = function (values) {
+        cells.forEach(function (cell, idx) {
+          var v = values ? values[idx] : 0;
+          cell.value = v ? String(v) : '';
+          cell.classList.toggle('pg-cell--given', !!v);
+          cell.classList.remove('pg-cell--filled');
+        });
+      };
+      PG.demos.sudoku.solve = solve;
+      PG.demos.sudoku.status = statusEl;
+    }
+
+    /* ---------------- SMT-LIB demo ---------------- */
+
+    /* Emits the Sudoku tab's hard preset as plain SMT-LIB, so the two
+       encodings can be compared side by side. */
+    function smtSudoku(text) {
+      var lines = [
+        '; Sudoku as SMT-LIB, mirroring what the Sudoku tab builds through the',
+        '; C API: 81 ints in 1-9, distinct rows/columns/boxes, givens fixed.',
+        '; Needs the off-thread engine on this page (one-time reload enables it).',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')'
+      ];
+      var names = [];
+      for (var i = 0; i < 81; i++) { names.push('x' + i); }
+      names.forEach(function (n) { lines.push('(declare-const ' + n + ' Int)'); });
+      lines.push('(assert (and');
+      names.forEach(function (n) { lines.push('  (and (>= ' + n + ' 1) (<= ' + n + ' 9))'); });
+      lines.push('))');
+      var r, c, b;
+      for (r = 0; r < 9; r++) {
+        lines.push('(assert (distinct ' + names.slice(r * 9, r * 9 + 9).join(' ') + '))');
+      }
+      for (c = 0; c < 9; c++) {
+        lines.push('(assert (distinct ' + names.filter(function (n, idx) { return (idx % 9) === c; }).join(' ') + '))');
+      }
+      for (b = 0; b < 9; b++) {
+        lines.push('(assert (distinct ' + names.filter(function (n, idx) { return boxOf(idx) === b; }).join(' ') + '))');
+      }
+      for (var g = 0; g < text.length && g < 81; g++) {
+        var ch = text[g];
+        if (ch >= '1' && ch <= '9') { lines.push('(assert (= x' + g + ' ' + ch + '))'); }
+      }
+      lines.push('(check-sat)');
+      lines.push('(get-model)');
+      return lines.join('\n');
+    }
+
+    var PRESETS = {
+      trivial: [
+        '; Trivial: find an integer strictly greater than 41.',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')',
+        '(declare-const x Int)',
+        '(assert (> x 41))',
+        '(check-sat)',
+        '(get-value (x))'
+      ].join('\n'),
+      queens6: [
+        '; n-Queens, n=6. One variable per row holding that row queen column.',
+        '; Distinct rows is structural; distinct columns and diagonals asserted.',
+        '; This one needs the off-thread engine, which the page enables on Run.',
+        '(set-option :timeout ' + RUN_BUDGET_MS + ')',
+        '(declare-const q0 Int)',
+        '(declare-const q1 Int)',
+        '(declare-const q2 Int)',
+        '(declare-const q3 Int)',
+        '(declare-const q4 Int)',
+        '(declare-const q5 Int)',
+        '(assert (and (>= q0 1) (<= q0 6)))',
+        '(assert (and (>= q1 1) (<= q1 6)))',
+        '(assert (and (>= q2 1) (<= q2 6)))',
+        '(assert (and (>= q3 1) (<= q3 6)))',
+        '(assert (and (>= q4 1) (<= q4 6)))',
+        '(assert (and (>= q5 1) (<= q5 6)))',
+        '(assert (distinct q0 q1 q2 q3 q4 q5))',
+        '(assert (distinct q0 (+ q1 1) (+ q2 2) (+ q3 3) (+ q4 4) (+ q5 5)))',
+        '(assert (distinct q0 (- q1 1) (- q2 2) (- q3 3) (- q4 4) (- q5 5)))',
+        '(check-sat)',
+        '(get-value (q0 q1 q2 q3 q4 q5))'
+      ].join('\n'),
+      sudoku: function () { return smtSudoku(PUZZLES.hard); }
+    };
+
+    PG.demos.smt = { mount: mountSmt };
+
+    function mountSmt() {
+      var scriptEl = document.getElementById('pg-script');
+      var outEl = document.getElementById('pg-out');
+      var presetEl = document.getElementById('pg-preset');
+      var runBtn = document.getElementById('pg-run');
+      var busy = false;
+
+      presetEl.addEventListener('change', function () {
+        var preset = PRESETS[presetEl.value];
+        if (!preset) { return; }
+        scriptEl.value = typeof preset === 'function' ? preset() : preset;
+        outEl.textContent = 'Preset loaded into the editor. Press Run.';
+      });
+
+      function run() {
+        if (busy) { return; }
+        var text = scriptEl.value;
+        if (!text.trim()) {
+          outEl.textContent = 'Nothing to run: pick a preset or write an SMT-LIB script first.';
+          return;
+        }
+        busy = true;
+        runBtn.disabled = true;
+        var t0 = performance.now();
+        if (!PG.offThread()) {
+          PG.stash({ action: 'run', script: text, preset: presetEl.value });
+        }
+        outEl.textContent = 'Waking the engine under a ' + (RUN_BUDGET_MS / 1000) + ' s budget\u2026';
+        outEl.removeAttribute('data-result');
+        outEl.removeAttribute('data-wall-ms');
+
+        var settle = function (fn) {
+          return function (value) { busy = false; runBtn.disabled = false; if (fn) { fn(value); } };
+        };
+
+        PG.engine().then(function (eng) {
+          var Mod = eng.Mod;
+          var cfg = Mod._Z3_mk_config();
+          var ctx = Mod._Z3_mk_context(cfg);
+          Mod._set_noop_error_handler(ctx);
+          var torn = false;
+          var teardown = function () {
+            if (torn) { return; }
+            torn = true;
+            try { Mod._Z3_del_context(ctx); } catch (err) {}
+          };
+          var work;
+          if (PG.offThread()) {
+            work = Mod.async_call(function () {
+              return Mod.ccall('async_Z3_eval_smtlib2_string', 'void', ['number', 'string'], [ctx, text]);
+            });
+            /* On a budget timeout the evaluation is abandoned mid-flight; that
+               context is deliberately leaked rather than deleted to avoid
+               freeing state the unwinding solver still touches. */
+            work = PG.budget(work, RUN_BUDGET_MS, function () { Mod._Z3_interrupt(ctx); })
+              .then(function (result) { teardown(); return result; });
+          } else {
+            /* Main-thread fallback: Z3's own timers spawn threads that are
+               unavailable here, so :timeout options are stripped and the
+               budget is a post-hoc wall-clock check. Heavier encodings may
+               still refuse to run without the off-thread engine. */
+            var stripped = text.split('\n').filter(function (line) {
+              return !/^\s*\(set-option\s+:timeout/.test(line);
+            }).join('\n');
+            work = PG.yieldFrame().then(function () {
+              var started = performance.now();
+              var result = Mod.ccall('Z3_eval_smtlib2_string', 'string', ['number', 'string'], [ctx, stripped]);
+              if (performance.now() - started >= RUN_BUDGET_MS * 1.5) {
+                throw new Error('blew through the ' + RUN_BUDGET_MS + ' ms run budget');
+              }
+              teardown();
+              return result;
+            });
+          }
+          return work;
+        }).then(settle(function (result) {
+          var wall = Math.round(performance.now() - t0);
+          outEl.textContent = result + '\n; wall time ' + wall + ' ms';
+          outEl.setAttribute('data-result', 'done');
+          outEl.setAttribute('data-wall-ms', String(wall));
+        }), settle(function (err) {
+          outEl.textContent = '; ' + (err && err.message ? err.message : err) + '\n; edit and retry.';
+          outEl.setAttribute('data-result', 'error');
+        }));
+      }
+
+      runBtn.addEventListener('click', run);
+
+      PG.demos.smt.setScript = function (text, presetValue) {
+        scriptEl.value = text;
+        if (presetValue) { presetEl.value = presetValue; }
+      };
+      PG.demos.smt.run = run;
+      PG.demos.smt.out = outEl;
+    }
+
+    PG.demos.sudoku.mount();
+    /* Arrive with a real puzzle on the grid: the easy preset loads by default
+       so the first Solve press always has a well-formed instance. */
+    document.getElementById('pg-easy').click();
+    PG.demos.smt.mount();
+
+    /* One-time resume after the isolation reload: restore whatever the user
+       was solving and finish it on the now off-thread engine. */
+    (function resume() {
+      var state = PG.takeStash();
+      if (!state) { return; }
+      var finish = function () {
+        if (state.action === 'solve') {
+          PG.demos.sudoku.setGrid(state.grid);
+          PG.demos.sudoku.status.textContent = 'Off-thread engine unlocked; resuming your solve\u2026';
+          PG.demos.sudoku.solve();
+        } else if (state.action === 'run') {
+          PG.demos.smt.setScript(state.script, state.preset);
+          PG.demos.smt.out.textContent = 'Off-thread engine unlocked; resuming your run\u2026';
+          PG.demos.smt.run();
+        }
+      };
+      if (PG.offThread()) {
+        PG.sessionCount(ISO_ATTEMPTS_KEY, -99);
+        finish();
+      } else if (PG.sessionCount(ISO_ATTEMPTS_KEY, 0) < ISO_MAX_ATTEMPTS) {
+        /* Isolation is still settling; nudge it once more. */
+        PG.stash(state);
+        PG.isolate().then(function (isolated) {
+          if (!isolated && window.crossOriginIsolated !== true) { finish(); }
+        });
+      } else {
+        finish();
+      }
+    })();
+  })();
+  </script>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">Are you really sure that you want to reach me?</p>
+    <div class="site-footer__mysteries">
+      <button class="site-footer__mystery" type="button" data-toy-slot="0" aria-label="Mystery button 1. Something will happen." aria-pressed="false">?</button>
+      <button class="site-footer__mystery" type="button" data-toy-slot="1" aria-label="Mystery button 2. Something will happen." aria-pressed="false">?</button>
+      <button class="site-footer__mystery" type="button" data-toy-slot="2" aria-label="Mystery button 3. Something will happen." aria-pressed="false">?</button>
+      <button class="site-footer__restore" type="button" hidden>put everything back</button>
+    </div>
+    <nav class="site-footer__links" aria-label="Social and subscription links">
+      <a rel="me" href="https://github.com/deut-erium">GitHub</a>
+      <a rel="me" href="https://twitter.com/0xdeuterium">Twitter</a>
+      <a rel="me" href="https://www.linkedin.com/in/himanshu-sheoran-ab047b152">LinkedIn</a>
+      <a href="https://discord.com/users/650776387535503372">Discord</a>
+      <a href="mailto:himanshu_sheoran@yahoo.com">Email</a>
+      <a href="/feed.xml">Feed</a>
+    </nav>
+  </div>
+</footer>
+<script>(function(){var P=window,q=function(b){var s=+b.getAttribute('data-toy-slot');P.__dtToyPending=s;if(P.__dtToy)return P.__dtToy.go(s);if(b.q)return;b.q=1;var e=document.createElement('script');e.src='/assets/js/features/toybox.js'+(P.__deuteriumAssetVersion?'?v='+P.__deuteriumAssetVersion:'');document.head.appendChild(e)};var ms=[].slice.call(document.querySelectorAll('.site-footer__mystery'));ms.forEach(function(b){b.onclick=function(){q(b)}});var par=ms[0]&&ms[0].parentNode;if(par&&ms.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){setInterval(function(){var i=Math.floor(Math.random()*ms.length),j=(i+1)%ms.length,a=ms[i],b=ms[j];if(!a||!b||a===b||a.parentNode!==par)return;a.classList.add('is-winking');b.classList.add('is-winking');var nx=b.nextSibling===a?b:b.nextSibling;par.insertBefore(a,b);par.insertBefore(b,nx);setTimeout(function(){a.classList.remove('is-winking');b.classList.remove('is-winking')},550)},9000+Math.floor(Math.random()*5000))}})();</script>
+<aside class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie notice" hidden>
+  <p class="cookie-banner__title">This page does not use cookies.</p>
+  <p class="cookie-banner__body">There is nothing to accept. You may go about your day.</p>
+  <p class="cookie-banner__actions">
+    <button class="cookie-banner__btn" type="button">Accept all 0 cookies</button>
+    <button class="cookie-banner__btn" type="button">Reject all 0 cookies</button>
+    <button class="cookie-banner__toggle" type="button" data-prefs aria-expanded="false" aria-controls="cookie-banner-prefs">Manage preferences</button>
+  </p>
+  <p class="cookie-banner__prefs" id="cookie-banner-prefs" hidden>0 of 0 categories active</p>
+</aside>
+<script src="https://gc.zgo.at/count.js" data-goatcounter="https://deuterium.goatcounter.com/count" async></script>
+<noscript><img src="https://deuterium.goatcounter.com/count?p=%2Fplayground%2F" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript><!-- nice try. grep harder. -->
+  </body>
+</html>

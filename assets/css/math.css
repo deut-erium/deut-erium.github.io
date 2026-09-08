@@ -1,0 +1,94 @@
+/* KaTeX owns the sizes inside a formula; theme text-size floors do not.
+   These multipliers are KaTeX's size1..size11 values relative to size6. */
+.katex .reset-size1 { --math-reset: .5; }
+.katex .reset-size2 { --math-reset: .6; }
+.katex .reset-size3 { --math-reset: .7; }
+.katex .reset-size4 { --math-reset: .8; }
+.katex .reset-size5 { --math-reset: .9; }
+.katex .reset-size6 { --math-reset: 1; }
+.katex .reset-size7 { --math-reset: 1.2; }
+.katex .reset-size8 { --math-reset: 1.44; }
+.katex .reset-size9 { --math-reset: 1.728; }
+.katex .reset-size10 { --math-reset: 2.074; }
+.katex .reset-size11 { --math-reset: 2.488; }
+.katex .size1 { --math-size: .5; }
+.katex .size2 { --math-size: .6; }
+.katex .size3 { --math-size: .7; }
+.katex .size4 { --math-size: .8; }
+.katex .size5 { --math-size: .9; }
+.katex .size6 { --math-size: 1; }
+.katex .size7 { --math-size: 1.2; }
+.katex .size8 { --math-size: 1.44; }
+.katex .size9 { --math-size: 1.728; }
+.katex .size10 { --math-size: 2.074; }
+.katex .size11 { --math-size: 2.488; }
+
+html:root body .prose .katex .katex-html span:not(.katex-sizing):not(.fontsize-ensurer):not(.vlist-s) {
+  font-size: inherit !important;
+}
+html:root body .prose .katex .katex-html :is(.katex-sizing, .fontsize-ensurer)[class*="reset-size"][class*="size"] {
+  font-size: calc(1em * var(--math-size) / var(--math-reset)) !important;
+}
+html:root body .prose .katex .katex-html .vlist-s {
+  font-size: 1px !important;
+}
+.prose .katex :is(.katex-rule, .frac-line) {
+  box-sizing: content-box;
+}
+
+@media screen {
+  /* Inline symbols stay in the surrounding line box, including their ink
+     overhang. Making them scroll containers clips glyphs and adds tiny bars. */
+  html:root body .prose .katex {
+    display: inline !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    font-size: 1.04em !important;
+    vertical-align: baseline !important;
+  }
+
+  /* Center authored displays, not paragraphs that also contain inline math.
+     The child fills the viewport when it fits and grows to max-content when
+     it does not. One scroll owner keeps both ends of a wide equation reachable. */
+  html:root body .prose .katex-display {
+    display: block !important;
+    box-sizing: border-box !important;
+    contain: inline-size;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: auto !important;
+    padding: 1rem;
+  }
+  html:root body .prose .katex-display > .katex {
+    display: block !important;
+    width: max-content !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+
+  /* Some imported matrices are inline math. Keep them contained without
+     converting ordinary subscripts into scroll regions. The class also
+     handles measured, unbreakable inline expressions (article.js). */
+  html:root body .prose .katex:has(.mtable):not(.katex-display > .katex),
+  html:root body .prose .katex.math-scroll {
+    display: inline-block !important;
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: .5em .25em !important;
+    overflow: auto !important;
+  }
+  html:root body .prose :is(.katex, .katex-display):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}

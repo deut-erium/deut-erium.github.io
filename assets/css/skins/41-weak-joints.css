@@ -1311,6 +1311,14 @@ html[data-skin="weak-joints"] .site-footer a {
   color: var(--wj-paper);
 }
 
+/* The note plate is cream-on-navy but painted below the footer's
+   paper in stacking order, so light mode rendered it invisible
+   (cream on cream). Lift the note above the paper. */
+html[data-skin="weak-joints"] .site-footer__note {
+  position: relative;
+  z-index: 2;
+}
+
 html[data-skin="weak-joints"] .site-footer__note a {
   color: var(--wj-yellow-light);
 }

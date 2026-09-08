@@ -96,7 +96,7 @@
         await writeText.call(clipboard, source);
         if (attempt !== copyAttempt) return;
         removeFallback();
-        if (await announce(status, `Copied ${lineCount} ${lineCount === 1 ? 'line' : 'lines'}.`, () => attempt === copyAttempt)) copyButton.focus();
+        if (await announce(status, 'Copied.', () => attempt === copyAttempt)) copyButton.focus();
       } catch (error) {
         await manualFallback(error?.name === 'NotAllowedError'
           ? 'Clipboard permission denied; exact code selected below.'
@@ -138,7 +138,13 @@
   });
 
   const toc = document.querySelector('.js-toc-root');
+  const tocBox = toc && toc.closest('details');
+  if (tocBox && !headings.length) {
+    tocBox.hidden = true;
+    return;
+  }
   if (!toc || !headings.length) return;
+  if (tocBox && !matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
 
   toc.textContent = '';
   const list = document.createElement('ol');

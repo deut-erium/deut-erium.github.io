@@ -3,11 +3,11 @@
 html[data-skin] :is(
   p, li, a, button, input, select, label, summary, time, small, dt, dd, th, td,
   code, pre, kbd, samp, span
-) {
+):not(.katex *) {
   font-size: max(1rem, 1em) !important;
 }
 
-html[data-skin] :is(.prose code, .prose pre, .katex, .katex-display, .code-frame *) {
+html[data-skin] :is(.prose code, .prose pre, .code-frame *) {
   font-size: max(1rem, 1em) !important;
 }
 
@@ -182,7 +182,8 @@ html[data-skin] .skin-menu__panel {
    lives separately in a lower-right dock, outside every theme header. Both
    controls are quiet glass buttons that adapt to light and dark. */
 .skin-dice,
-.theme-toggle {
+.theme-toggle,
+.site-share__btn {
   position: fixed !important;
   z-index: 90;
   display: grid !important;
@@ -219,6 +220,19 @@ html[data-skin] .skin-menu__panel {
   left: auto !important;
   right: .8rem !important;
   bottom: .8rem !important;
+}
+
+.site-share__btn {
+  top: auto !important;
+  left: auto !important;
+  right: .8rem !important;
+  bottom: 7rem !important;
+  border-radius: 22% !important;
+}
+
+.site-share__icon {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .skin-dice__face {
@@ -311,16 +325,6 @@ html[data-skin] .prose .code-frame.is-wrapped pre code {
   overflow-wrap: anywhere !important;
 }
 
-html[data-skin] .prose .katex-display {
-  max-width: 100% !important;
-  overflow: visible !important;
-}
-
-html[data-skin] .prose .katex-display > .katex {
-  max-width: 100%;
-  white-space: normal !important;
-}
-
 @media (forced-colors: active) {
   html[data-skin] .prose .highlight span {
     color: CanvasText !important;
@@ -336,6 +340,38 @@ html[data-skin] .prose .katex-display > .katex {
   html[data-skin] .record-page .record-grid > .record-index {
     position: static !important;
     width: 100%;
+  }
+}
+
+@media (max-width: 44rem) {
+  /* Footer contract. Skins lay the footer out as decorative grids
+     (staff bars, ledger columns); at phone widths those grids do not
+     collapse: a one-line note stretched to 1000px and link pills
+     forced one-per-row. At <=44rem every skin stacks once, wraps
+     links inline, and the note returns to its natural height. */
+  html[data-skin] .site-footer__inner {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    align-items: stretch !important;
+  }
+
+  html[data-skin] .site-footer__note {
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: none !important;
+  }
+
+  html[data-skin] .site-footer__links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    grid-template-columns: none !important;
+    justify-content: flex-start !important;
+  }
+
+  html[data-skin] .site-footer__links a {
+    width: auto !important;
   }
 }
 
@@ -374,6 +410,23 @@ html[data-skin] body {
    implicit grid tracks or outside the viewport. Keep this contract complete:
    overriding a template without overriding its child placements caused the
    earlier article collisions. */
+/* Feature pages (playground, manual, teapot) keep a single stacked flow;
+   several skins lay generic main children out as side-by-side columns. */
+html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell, .rm-shell, .mst-shell) {
+  display: block !important;
+}
+
+html[data-skin] :is(.pg-shell, .man-shell, .teapot-shell, .rm-shell, .mst-shell) > :not(style):not(script) {
+  display: block !important;
+  min-width: 0;
+  grid-column: auto;
+}
+
+/* Raw tag payloads never render as page text, whatever a selector matches. */
+html[data-skin] :is(main > style, main > script) {
+  display: none !important;
+}
+
 html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
   box-sizing: border-box !important;
   width: min(calc(100% - 2rem), 96rem) !important;
@@ -638,7 +691,7 @@ html[data-skin] .record-row__date {
     padding-top: 3.35rem !important;
   }
 
-  html[data-skin] :is(.skin-dice, .theme-toggle) {
+  html[data-skin] :is(.skin-dice, .theme-toggle, .site-share__btn) {
     position: absolute !important;
     top: .4rem !important;
     bottom: auto !important;
@@ -649,6 +702,18 @@ html[data-skin] .record-row__date {
   }
 
   html[data-skin] .theme-toggle {
+    right: .6rem !important;
+  }
+
+  html[data-skin] .site-share__btn {
+    right: 6.7rem !important;
+  }
+
+  /* The popover stays anchored to the viewport even while the button rides
+     the top strip. */
+  html[data-skin] .site-share__popover {
+    bottom: auto !important;
+    top: 3.4rem !important;
     right: .6rem !important;
   }
 }

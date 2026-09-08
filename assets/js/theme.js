@@ -50,7 +50,9 @@
     }
     const filename = skinFiles[skin];
     if (!filename) return;
-    const target = new URL(skinBase + filename, document.baseURI).href;
+    // Entries are absolute, content-versioned paths; keep bare-filename
+    // support so an unversioned map still resolves.
+    const target = new URL(filename.startsWith('/') ? filename : skinBase + filename, document.baseURI).href;
     if (stylesheet.href !== target) stylesheet.href = target;
     stylesheet.disabled = false;
   };
@@ -103,4 +105,22 @@
   system.addEventListener?.('change', (event) => {
     if (!stored(colorKey)) applyColor(event.matches ? 'dark' : 'light');
   });
+
+  /* Print stylesheet on demand: it leaves the initial page load entirely and
+     is fetched after window load. beforeprint is the safety net for an early
+     Ctrl+P; the link is appended synchronously there, so most browsers still
+     apply it in the preview. */
+  const printHref = '/assets/css/print.css?v=52e91316';
+  let printLink = null;
+  const loadPrint = () => {
+    if (printLink) return;
+    printLink = document.createElement('link');
+    printLink.rel = 'stylesheet';
+    printLink.media = 'print';
+    printLink.href = printHref;
+    document.head.appendChild(printLink);
+  };
+  if (document.readyState === 'complete') loadPrint();
+  else window.addEventListener('load', loadPrint, { once: true });
+  window.addEventListener('beforeprint', loadPrint);
 })();

@@ -1,0 +1,253 @@
+/* Challenge engine v2 flair: emphatic verdict box, wrong-answer treatment,
+   confetti canvas, sound toggle, solved receipt, CLEARED ribbon, hint ladder,
+   and the article header badge.
+   Injected from assets/js/challenge.js so it loads only on challenge pages. */
+
+/* Full-viewport confetti canvas. Sized in CSS pixels, drawn at device ratio. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* Per-challenge sound toggle pinned to the flag box corner. */
+.flag-check {
+  position: relative;
+}
+
+.flag-check__sound {
+  position: absolute;
+  top: .45rem;
+  right: .45rem;
+  min-height: 2.1rem;
+  min-width: 2.8rem;
+  padding: .15rem .5rem;
+  color: var(--navy);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  font-family: var(--keys);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flag-check__sound[aria-pressed="true"] {
+  background: var(--paper-low);
+}
+
+.flag-check__sound:focus-visible,
+.flag-check__hint:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Emphatic verdict box directly under the input. Hidden until it has a verdict,
+   and it never fades out: it stays until the visitor types again. */
+.flag-check__verdict {
+  display: none;
+  margin: .85rem 0 0;
+  padding: .75rem .9rem;
+  color: #fffdf7;
+  border: 4px solid var(--navy);
+  border-radius: .45rem;
+  box-shadow: .3rem .3rem 0 var(--navy);
+  font-family: var(--keys);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.flag-check__verdict.is-wrong,
+.flag-check__verdict.is-format,
+.flag-check__verdict.is-again {
+  display: block;
+  background: #a4122e;
+}
+
+.flag-check__verdict.is-again {
+  background: #7c0d22;
+}
+
+.flag-check__verdict.is-clear {
+  display: block;
+  color: #fffdf7;
+  background: #145f22;
+}
+
+.flag-check__verdict.is-clear::before {
+  content: "\2713 ";
+}
+
+html[data-theme="dark"] .flag-check__verdict.is-wrong,
+html[data-theme="dark"] .flag-check__verdict.is-format {
+  background: #d81b47;
+}
+
+html[data-theme="dark"] .flag-check__verdict.is-again {
+  background: #b8103a;
+}
+
+html[data-theme="dark"] .flag-check__verdict.is-clear {
+  background: #1d7a32;
+}
+
+/* Wrong answer: the input itself wears a red tint until the visitor types. */
+.flag-check input.is-bad {
+  border-color: #a4122e;
+  background: color-mix(in srgb, #a4122e 14%, var(--paper));
+  box-shadow: inset 0 0 0 1px #a4122e;
+}
+
+html[data-theme="dark"] .flag-check input.is-bad {
+  border-color: #ff5c7a;
+  box-shadow: inset 0 0 0 1px #ff5c7a;
+}
+
+/* Wrong-but-plausible flag: the box shakes once. */
+@keyframes flag-check-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-.55rem); }
+  30% { transform: translateX(.5rem); }
+  45% { transform: translateX(-.35rem); }
+  60% { transform: translateX(.3rem); }
+  75% { transform: translateX(-.12rem); }
+}
+
+.flag-check.is-shaking {
+  animation: flag-check-shake .5s ease-in-out;
+}
+
+/* Hint ladder: one small button per provided hint, plus the revealed hint card. */
+.flag-check__hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: .85rem 0 0;
+  padding: .2rem;
+}
+
+.flag-check__hint {
+  min-height: 2.4rem;
+  padding: .3rem .75rem;
+  color: var(--navy);
+  background: var(--paper);
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  box-shadow: 0 .18rem 0 var(--navy);
+  font-family: var(--keys);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flag-check__hint.is-used {
+  color: var(--muted);
+  background: var(--paper-low);
+  box-shadow: none;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.challenge-hint[hidden] {
+  display: none;
+}
+
+.challenge-hint.is-revealed {
+  display: block;
+  margin: .85rem 0 0;
+  padding: .7rem .9rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px dashed var(--navy);
+  border-radius: .45rem;
+  font-size: 1rem;
+}
+
+.challenge-hint.is-revealed::before {
+  content: "hint: ";
+  font-family: var(--keys);
+  font-weight: 700;
+}
+
+@keyframes flag-check-flash {
+  0%, 100% { outline-color: var(--yellow); }
+  50% { outline-color: var(--orange); }
+}
+
+.challenge-hint.is-highlighted,
+.flag-check__hints.is-highlighted {
+  outline: 4px solid var(--yellow);
+  outline-offset: 3px;
+  border-radius: .45rem;
+  animation: flag-check-flash 1.1s ease-in-out 3;
+}
+
+/* Solved state: the input row collapses, the CLEARED verdict stays. */
+.flag-check.is-solved {
+  border-color: #145f22;
+}
+
+.flag-check.is-solved > label,
+.flag-check.is-solved > .flag-check__controls,
+.flag-check.is-solved > noscript {
+  display: none;
+}
+
+/* Reduced-motion celebration: a static CLEARED ribbon on the box border. */
+.flag-check.is-ribbon::after {
+  content: "CLEARED";
+  position: absolute;
+  top: -1.1rem;
+  right: -.6rem;
+  padding: .1rem .55rem;
+  color: #fffdf7;
+  background: #145f22;
+  border: 3px solid var(--navy);
+  border-radius: .4rem;
+  transform: rotate(-6deg);
+  font-family: var(--keys);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  z-index: 2;
+}
+
+/* Article header badge: absolutely positioned, reserves no layout space. */
+.record-head {
+  position: relative;
+}
+
+.solved-badge {
+  position: absolute;
+  top: -1.2rem;
+  right: clamp(.9rem, 5vw, 2.4rem);
+  margin: 0;
+  padding: .18rem .7rem;
+  color: #fffdf7;
+  background: #145f22;
+  border: 3px solid var(--navy);
+  border-radius: 999px;
+  transform: rotate(3deg);
+  font-family: var(--keys);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-check.is-shaking {
+    animation: none;
+  }
+
+  .challenge-hint.is-highlighted,
+  .flag-check__hints.is-highlighted {
+    animation: none;
+  }
+}
