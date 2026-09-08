@@ -107,7 +107,9 @@ def load_backend():
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--plaintext", required=True, help="file with the HTML body to encrypt (keep it out of the repo)")
-    parser.add_argument("--answer", required=True, help="key material, usually the full previous flag, e.g. 'flag{...}'")
+    answer = parser.add_mutually_exclusive_group(required=True)
+    answer.add_argument("--answer", help="key material (visible in process arguments; prefer --answer-stdin)")
+    answer.add_argument("--answer-stdin", action="store_true", help="read the key from one stdin line, at most 4096 characters")
     parser.add_argument("--embed-assets", action="store_true", help="embed local HTML assets in memory before encryption (no network)")
     parser.add_argument("--asset-root", type=Path, help="private asset tree for --embed-assets; / URLs map here (default: plaintext directory)")
     parser.add_argument("--embed-linked-files", action="store_true", help="with --embed-assets, also package local file hyperlinks as downloads")
@@ -124,7 +126,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--page", action="store_true", help="emit a section page (default: a dated post under _posts/)")
     parser.add_argument("--section", default="ramblings", help="section for --page output")
     parser.add_argument("--force", action="store_true", help="overwrite an existing locked post")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.answer_stdin:
+        args.answer = sys.stdin.readline(4098)
+        if len(args.answer.rstrip("\r\n")) > 4096:
+            parser.error("stdin answer exceeds 4096 characters")
+        args.answer = args.answer.rstrip("\r\n")
+    return args
 
 
 def derive_key(answer: str, salt: bytes) -> bytes:
@@ -177,8 +185,10 @@ def main() -> None:
     plaintext_file = Path(args.plaintext)
     if not plaintext_file.is_file():
         sys.exit(f"error: plaintext file not found: {plaintext_file}")
-    if (plaintext_file.resolve().is_relative_to(REPO)
-            and not plaintext_file.resolve().is_relative_to(REPO / "agent_out")):
+    input_locations = (Path(os.path.abspath(plaintext_file)), plaintext_file.resolve(),
+                       plaintext_file.parent.resolve() / plaintext_file.name)
+    if any(path.is_relative_to(REPO) and not path.is_relative_to(REPO / "agent_out")
+           for path in input_locations):
         sys.exit("error: refuse to read plaintext from inside the repository (agent_out/ is the scratch area)")
     out_path = Path(args.out)
     if not out_path.is_absolute():

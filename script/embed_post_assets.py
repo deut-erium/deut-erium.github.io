@@ -32,13 +32,13 @@ MIME = {
 }
 BLOCKED = {'script', 'iframe', 'frame', 'frameset', 'object', 'embed', 'applet', 'base',
            'meta', 'html', 'head', 'body', 'title', 'template', 'noscript', 'foreignobject',
-           'xmp', 'plaintext', 'noembed', 'noframes', 'textarea', 'form',
+           'xmp', 'plaintext', 'noembed', 'noframes', 'textarea', 'form', 'select',
            'animate', 'animatemotion', 'animatetransform', 'set', 'discard', 'annotation-xml'}
 VOID = {'area', 'br', 'col', 'hr', 'img', 'input', 'link', 'param', 'source', 'track', 'wbr'}
 SVG_URL_ATTRS = {'fill', 'stroke', 'filter', 'clip-path', 'mask', 'cursor',
                 'marker', 'marker-start', 'marker-mid', 'marker-end'}
 UNSUPPORTED_ATTRS = {'srcdoc', 'ping', 'codebase', 'archive', 'classid', 'data', 'lowsrc', 'dynsrc',
-                     'xml:base', 'base', 'manifest', 'imagesrcset', 'imagesizes', 'profile', 'action', 'formaction'}
+                     'data-src', 'data-srcset', 'data-lazy-src', 'data-original', 'xml:base', 'base', 'manifest', 'imagesrcset', 'imagesizes', 'profile', 'action', 'formaction'}
 
 class BundleError(ValueError):
     pass
@@ -47,8 +47,9 @@ class BundleError(ValueError):
 def private_path(path: Path) -> Path:
     """Reject public checkout paths, including misleading nested agent_out names."""
     real = path.resolve()
-    if real.is_relative_to(REPO) and not real.is_relative_to(REPO / 'agent_out'):
-        raise BundleError('plaintext and asset roots must be outside the checkout or under its top-level agent_out/')
+    for candidate in (Path(os.path.abspath(path)), path.parent.resolve() / path.name, real):
+        if candidate.is_relative_to(REPO) and not candidate.is_relative_to(REPO / 'agent_out'):
+            raise BundleError('plaintext and asset roots must be outside the checkout or under its top-level agent_out/')
     return real
 
 
@@ -180,7 +181,7 @@ class Bundler:
         if max_asset_bytes <= 0 or max_output_bytes <= 0: raise BundleError('byte limits must be positive')
         self.max_asset = max_asset_bytes; self.max_output = max_output_bytes
         self.linked_files = linked_files
-        self.cache = {}; self.active = set(); self.assets = []; self.read_bytes = 0
+        self.cache = {}; self.active = set(); self.assets = []; self.read_bytes = 0; self.asset_reads = 0
         self.retained_links = 0; self.depth = 0
 
     def limit(self, text: str) -> str:
@@ -195,8 +196,8 @@ class Bundler:
         name = unquote(parts.path, errors='strict')
         if not name or '\\' in name or any(ord(c) < 32 or ord(c) == 127 for c in name):
             raise BundleError('invalid local asset path')
-        path = (self.root / name.lstrip('/') if name.startswith('/') else base.parent / name).resolve()
-        if not path.is_relative_to(self.root): raise BundleError('asset escapes the configured root (including through a symlink)')
+        path = Path(os.path.abspath(self.root / name.lstrip('/') if name.startswith('/') else base.parent / name))
+        if not path.is_relative_to(self.root) or not path.resolve().is_relative_to(self.root): raise BundleError('asset escapes the configured root (including through a symlink)')
         if not path.is_file(): raise BundleError(f'asset not found: {path.relative_to(self.root)}')
         return path
 
@@ -242,15 +243,17 @@ class Bundler:
             mime = MIME.get(path.suffix.lower())
             if not mime: raise BundleError(f'unsupported asset extension: {path.suffix}')
             key = (path, kind)
-            if path in self.active: raise BundleError('cyclic asset dependency')
+            canonical = path.resolve()
+            if canonical in self.active: raise BundleError('cyclic asset dependency')
             if key not in self.cache:
-                if len(self.assets) >= 128: raise BundleError('more than 128 asset reads')
+                if self.asset_reads >= 128: raise BundleError('more than 128 asset reads')
+                self.asset_reads += 1  # Reserve the read before following nested imports.
                 data = bounded_read(path, self.max_asset)
                 self.read_bytes += len(data)
                 if self.read_bytes > 2 * self.max_output: raise BundleError('total asset reads exceed the byte budget')
-                self.active.add(path)
+                self.active.add(canonical)
                 try: encoded = self._encode(data, mime, path, kind, '')
-                finally: self.active.remove(path)
+                finally: self.active.remove(canonical)
                 self.cache[key] = encoded
                 self.assets.append({'path': path.relative_to(self.root).as_posix(), 'mime': mime,
                                     'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
@@ -371,13 +374,20 @@ class Bundler:
                 elif svg and value.startswith('#'): pass
                 else: raise BundleError(f'unsupported external reference on {tag}; inline SVG symbols first')
             out.append((name, value))
-        if download_name is not None and 'download' not in values: out.append(('download', download_name))
+        if svg and download_name is not None: raise BundleError('SVG attachment links are unsupported; use an HTML download link')
+        if download_name is not None:
+            if 'download' not in values: out.append(('download', download_name))
+            else: out = [(name, download_name if name.lower() == 'download' and not value else value) for name, value in out]
         return out
 
     def html(self, text: str, base: Path) -> str:
         if re.search(r'<!--(?:>|->)', text) or '--!>' in text:
             raise BundleError('malformed HTML comments are unsupported')
-        parser = BodyParser(self, base); parser.feed(text); parser.close()
+        parser = BodyParser(self, base)
+        try:
+            parser.feed(text); parser.close()
+        except AssertionError as error:
+            raise BundleError('malformed HTML declaration') from error
         if parser.style is not None: raise BundleError('unclosed style element')
         return ''.join(parser.output)
 
@@ -397,7 +407,8 @@ class BodyParser(HTMLParser):
     def handle_startendtag(self, tag, attrs): self.start(tag, attrs, True)
 
     def start(self, tag, attrs, closed):
-        if tag == 'style' and 'svg' in self.stack: raise BundleError('inline SVG style elements are unsupported; use an outer HTML stylesheet')
+        if tag == 'style' and any(t in self.stack for t in ('svg', 'math')):
+            raise BundleError('inline SVG style / MathML style elements are unsupported; use an outer HTML stylesheet')
         if tag in BLOCKED and not (tag == 'title' and 'svg' in self.stack): raise BundleError(f'unsupported active/document element: {tag}; supply a passive HTML body')
         raw = self.get_starttag_text()
         # Preserve SVG attribute capitalization while checking against HTMLParser's values.
@@ -462,9 +473,13 @@ class BodyParser(HTMLParser):
 
 def bundle_file(source: Path, *, asset_root: Path | None = None, linked_files=False,
                 max_asset_bytes=8*1024*1024, max_output_bytes=16*1024*1024) -> BundleResult:
-    source = private_path(source)
-    root = private_path(asset_root if asset_root is not None else source.parent)
-    if not source.is_relative_to(root): raise BundleError('HTML input must be inside the asset root')
+    source = Path(os.path.abspath(source))
+    private_path(source)
+    logical_root = Path(os.path.abspath(asset_root if asset_root is not None else source.parent))
+    root = private_path(logical_root)
+    if not source.is_relative_to(logical_root): raise BundleError('HTML input must be inside the asset root')
+    source = root / source.relative_to(logical_root)
+    if not source.resolve().is_relative_to(root): raise BundleError('HTML input symlink escapes the asset root')
     bundler = Bundler(root, linked_files=linked_files, max_asset_bytes=max_asset_bytes, max_output_bytes=max_output_bytes)
     try: text = bounded_read(source, max_output_bytes).decode('utf-8-sig')
     except UnicodeDecodeError as error: raise BundleError('HTML input must use UTF-8') from error

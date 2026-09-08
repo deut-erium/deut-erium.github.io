@@ -141,6 +141,7 @@ class AssetTests(unittest.TestCase):
         result = self.bundle('<a download href="file.txt">Download</a><a href="file.txt">File</a><a href="https://example.invalid/paper.pdf">Paper</a>')
         self.assertIn('data:text/plain;base64,', result.html)
         self.assertIn('href="file.txt"', result.html)
+        self.assertIn('download="file.txt"', result.html)
         self.assertEqual(result.retained_links, 2)
         result = self.bundle('<a href="file.txt">File</a><a href="/article.html">Article</a>', linked_files=True)
         self.assertIn('download="file.txt"', result.html)
@@ -169,6 +170,7 @@ class AssetTests(unittest.TestCase):
         for text in ['<script src="file.txt"></script>', '<iframe src="file.txt"></iframe>',
                      '<object data="file.txt"></object>', '<img onerror="f()" src="pic.png">',
                      '<img src="pic.png" SRC="remote">', '<foo src="pic.png">', '<img src>',
+                     '<img data-src="pic.png">',
                      '<base href="https://example.invalid/">', '<link rel="preload" href="pic.png">',
                      '<meta http-equiv="refresh" content="0;url=remote">', '<a href="javascript:f()">x</a>',
                      '<a href="/" ping="https://example.invalid/">x</a>', '<!--><img src="pic.png">-->',
@@ -216,6 +218,57 @@ class AssetTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('still private plaintext', result.stdout)
 
+    def test_symlinked_assets_and_html_keep_logical_url_bases(self):
+        (self.css / 'pic.png').write_bytes(PNG + b'other-image-bytes')
+        (self.css / 'alias-target.css').write_text('.x {background:url(pic.png)}')
+        (self.root / 'alias.css').symlink_to(self.css / 'alias-target.css')
+        result = self.bundle('<link rel="stylesheet" href="alias.css"><link rel="stylesheet" href="css/alias-target.css">')
+        images = re.findall(r'url\("(data:image/png;[^"]+)"\)', result.html)
+        self.assertEqual([unpack(x) for x in images], [PNG, PNG + b'other-image-bytes'])
+        svg = '<svg xmlns="http://www.w3.org/2000/svg"><image href="pic.png"/></svg>'
+        (self.css / 'target.svg').write_text(svg)
+        (self.root / 'alias.svg').symlink_to(self.css / 'target.svg')
+        result = self.bundle('<img src="alias.svg">')
+        embedded = unpack(re.search(r'src="([^"]+)', result.html)[1]).decode()
+        self.assertEqual(unpack(re.search(r'href="([^"]+)', embedded)[1]), PNG)
+        (self.css / 'target.html').write_text('<img src="pic.png">')
+        alias = self.root / 'alias.html'; alias.symlink_to(self.css / 'target.html')
+        result = bundle_file(alias, asset_root=self.root)
+        self.assertEqual(unpack(re.search(r'src="([^"]+)', result.html)[1]), PNG)
+
+    def test_recursive_read_reservations_enforce_exact_cap(self):
+        for i in range(15):
+            (self.css / f'chain{i}.css').write_text(f'@import "chain{i+1}.css";' if i < 14 else '')
+        for i in range(114): (self.css / f'leaf{i}.css').write_text(f'.x{i} {{color: red}}')
+        last = self.css / 'chain14.css'
+        last.write_text(''.join(f'@import "leaf{i}.css";' for i in range(113)))
+        result = self.bundle('<link rel="stylesheet" href="css/chain0.css">')
+        self.assertEqual(len(result.assets), 128)
+        last.write_text(last.read_text() + '@import "leaf113.css";')
+        self.rejects('<link rel="stylesheet" href="css/chain0.css">', '128')
+
+    def test_canonical_cycle_detection_with_logical_aliases(self):
+        (self.css / 'cycle.css').write_text('@import "alias.css";')
+        (self.css / 'alias.css').symlink_to(self.css / 'cycle.css')
+        self.rejects('<link rel="stylesheet" href="css/cycle.css">', 'cyclic')
+
+    def test_foreign_style_contexts_and_bad_declarations_fail(self):
+        for text in ['<math><style>/*<img src="https://example.invalid/x">*/</style></math>',
+                     '<select><style>/*<img src="https://example.invalid/x">*/</style></select>',
+                     '<![not-a-valid-declaration]>']:
+            with self.subTest(text=text): self.rejects(text)
+
+    def test_public_alias_of_private_input_is_rejected(self):
+        import embed_post_assets as module
+        from unittest.mock import patch
+        fake = self.root / 'fake'; scratch = fake / 'agent_out'; public = fake / 'assets'
+        scratch.mkdir(parents=True); public.mkdir()
+        plain = scratch / 'body.html'; plain.write_text('private')
+        alias = public / 'exposed.html'; alias.symlink_to(plain)
+        with patch.object(module, 'REPO', fake):
+            with self.assertRaises(BundleError): private_path(alias)
+            self.assertEqual(private_path(plain), plain)
+
     def test_markdown_is_not_rendered(self):
         result = self.bundle('![Not HTML](pic.png)\n')
         self.assertEqual(result.html, '![Not HTML](pic.png)\n')
@@ -257,6 +310,22 @@ const c = require('node:crypto').webcrypto;
         fixture['answer'] = 'wrong-synthetic-answer'
         wrong = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
         self.assertNotEqual(wrong.returncode, 0)
+        stdin_command = command.copy()
+        at = stdin_command.index('--answer')
+        stdin_command[at:at+2] = ['--answer-stdin']
+        from_stdin = subprocess.run(stdin_command, input='synthetic-only\n', capture_output=True, text=True)
+        self.assertEqual(from_stdin.returncode, 0, from_stdin.stderr)
+        self.assertNotIn('synthetic-only', from_stdin.stdout)
+        new_text = post.read_text()
+        fixture.update(answer='synthetic-only', payload=re.search(r'aria-live="polite">([^<]+)', new_text)[1],
+                       salt=re.search(r'data-salt="([^"]+)', new_text)[1])
+        decrypted = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
+        self.assertEqual(decrypted.returncode, 0, decrypted.stderr)
+        self.assertEqual(decrypted.stdout, expected)
+        before = post.read_bytes()
+        too_long = subprocess.run(stdin_command, input='x' * 4097 + '\n', capture_output=True, text=True)
+        self.assertNotEqual(too_long.returncode, 0)
+        self.assertEqual(post.read_bytes(), before)
         chain = project / '_data' / 'arg_chain.yml'
         before_post = post.read_bytes(); before_chain = chain.read_bytes()
         source.write_text('<img src="https://example.invalid/private.png">')
