@@ -192,7 +192,7 @@ class Bundler:
         if '\\' in ref or any(ord(c) < 32 or ord(c) == 127 for c in ref):
             raise BundleError('control characters and backslashes are not allowed in asset URLs')
         parts = urlsplit(ref)
-        if parts.scheme or parts.netloc: raise BundleError('remote/file-scheme assets are not fetched; save them inside the private asset root first')
+        if parts.scheme or parts.netloc or ref.startswith('//'): raise BundleError('remote/file-scheme assets are not fetched; save them inside the private asset root first')
         name = unquote(parts.path, errors='strict')
         if not name or '\\' in name or any(ord(c) < 32 or ord(c) == 127 for c in name):
             raise BundleError('invalid local asset path')
@@ -333,7 +333,7 @@ class Bundler:
 
     def link(self, value: str, base: Path, download: bool) -> tuple[str, str | None]:
         clean = value.strip(SPACE); parts = urlsplit(clean)
-        if download or (self.linked_files and not parts.scheme and not parts.netloc and Path(unquote(parts.path)).suffix.lower() in MIME):
+        if download or (self.linked_files and not parts.scheme and not parts.netloc and not clean.startswith('//') and Path(unquote(parts.path)).suffix.lower() in MIME):
             packed = self.resource(clean, base, 'download')
             name = Path(unquote(parts.path)).name if parts.scheme.lower() != 'data' else 'attachment'
             return packed, name or 'attachment'

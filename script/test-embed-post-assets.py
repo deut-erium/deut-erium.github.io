@@ -173,6 +173,16 @@ class AssetTests(unittest.TestCase):
                     '%00.png', 'https:&#10;//example.invalid/p.png']:
             with self.subTest(url=url): self.rejects(f'<img src="{url}">')
 
+    def test_repeated_slashes_do_not_disguise_remote_assets_as_local(self):
+        (self.root / 'example.invalid').mkdir()
+        (self.root / 'example.invalid' / 'pic.png').write_bytes(PNG)
+        for prefix in ['//', '///', '////']:
+            with self.subTest(prefix=prefix):
+                self.rejects(f'<img src="{prefix}example.invalid/pic.png">', 'not fetched')
+                result = self.bundle(f'<a href="{prefix}example.invalid/pic.png">reference</a>', linked_files=True)
+                self.assertEqual(result.assets, [])
+                self.assertEqual(result.retained_links, 1)
+
     def test_active_or_unknown_loading_constructs_rejected(self):
         for text in ['<script src="file.txt"></script>', '<iframe src="file.txt"></iframe>',
                      '<object data="file.txt"></object>', '<img onerror="f()" src="pic.png">',
