@@ -203,7 +203,7 @@ Eleven interactive archive articles now offer **Browser practice**. Their catalo
 
 ### Browser terminal and console API
 
-Choose Start on an interactive article to run its JavaScript port in a same-origin Web Worker. The UI module and scoped stylesheet load only on those eleven articles; the Worker and puzzle modules load only on Start. No retired service is contacted. Each new session uses fresh browser entropy. Law and Order's selector offers `corrected` (default) and `released`; these match the separately labeled sources and are not interchangeable.
+Choose Start on an interactive article to run its JavaScript port in a same-origin Web Worker. The UI module and scoped stylesheet load only on those eleven articles; the Worker and puzzle modules load only on Start. No retired service is contacted, and there is no TCP endpoint for netcat or an external solver. Each new session uses fresh browser entropy. Law and Order's selector offers `corrected` (default) and `released`; these match the separately labeled sources and are not interchangeable.
 
 On the article, the console exposes these methods on `window.challengePractice`:
 
@@ -219,30 +219,6 @@ Use ASCII input for numeric parsers; Python Unicode-digit spellings are outside 
 The reward is the public string `practice{local_dummy_reward}`. Completion means the port reached the original success predicate, which may leave the original loop running. It is local feedback, not an original event solve or an authoritative score. Completion timestamps are stored under `deuterium-browser-practice-v1`, keyed by full challenge ID plus `:` plus variant; no original answers are stored. Storage failures do not block practice. This storage is separate from `deuterium-solves`, encrypted unlocks and the unchanged `/challenges.json` progress index. The seven event checkers do not accept the dummy reward.
 
 CI runs every `script/test-practice-*.mjs` suite with retained public vectors and AST reference fixtures from `agent_out/challenge-runtime/integration/public-fixtures/`. Some suites inject deterministic entropy or known state to compare the port with the original; those are reference controls, not independent puzzle solves. The Bloom reference needs Python 3 and a C compiler, without extra Python packages or a live service. Source-mutation tests and synthetic HTML/Jekyll fixtures check metadata, allowlists and page scope; real builds and browser execution remain separate checks.
-
-### Native TCP practice service
-
-For `nc`, `telnet` or `pwntools.remote()`, run the optional Python service separately from the static site. It binds to loopback only, starts a fresh subprocess for every connection, supplies the public dummy reward, and removes the session directory when the connection ends. The mirrored challenge source is hash-checked before launch. The service has no event flags and does not contact a retired organizer server.
-
-```sh
-python3 script/challenge_practice/server.py chaos --port 31337
-nc 127.0.0.1 31337
-```
-
-The other listeners use the same command with `desfunctional`, `idea`, `diffecient`, `diffecientwo`, `randsubware`, `law-and-order`, `b00tleg`, `real-mersenne`, `cheater-mind` or `blokechain`. Law and Order accepts `--variant corrected` or `--variant released`. The adapter includes local MurmurHash3 and `tqdm` shims, so the only Python dependencies are PyCryptodome and py-ecc, listed in `script/challenge_practice/requirements.txt`. The default limits are loopback-only, eight clients, 4 MiB inbound data, 16 MiB outbound data, 900 seconds idle time and 2,100 seconds wall time. Adjust limits only for a local test.
-
-Example pwntools client:
-
-```python
-from pwn import *
-
-io = remote('127.0.0.1', 31337)
-io.sendlineafter(b'input first string to hash : ', first_hex.encode())
-io.sendlineafter(b'input second string to hash : ', second_hex.encode())
-print(io.recvall().decode())
-```
-
-This is a local practice service, not a public deployment. Keep it bound to loopback unless a separate deployment review approves a network-facing listener.
 
 When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register posts, outputs and updated data in the content manifest. Keep flags, generation inputs and solver scratch private. A browser hash check is local feedback, not proof of independent work or a trustworthy competition score. Check source alone, or pass a generated site directory:
 
