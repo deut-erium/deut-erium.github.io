@@ -5,9 +5,10 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import quote, unquote, urlsplit
+from urllib.parse import parse_qs, quote, unquote, urlsplit
 import gzip
 import hashlib
+import html
 import json
 import re
 import sys
@@ -283,7 +284,38 @@ def source_lines(text: str) -> int:
     return len(lines) or 1
 
 
+def registered_challenge_routes() -> dict[str, str]:
+    """Read the narrow post-path override registry, not arbitrary permalinks."""
+    entries = json.loads((SOURCE / "_data/authored_challenges.json").read_text(encoding="utf-8"))["entries"]
+    routes: dict[str, str] = {}
+    for entry in entries:
+        path, url = entry.get("post_path"), entry.get("url")
+        valid_path = isinstance(path, str) and re.fullmatch(r"_posts/ctf-tutorials/challenges/[^/\\]+\.md", path)
+        if not valid_path or not DATE_POST.fullmatch(Path(path).name):
+            fail(f"invalid registered challenge post path: {path}")
+        if not isinstance(url, str) or not re.fullmatch(r"/challenges/[a-z0-9-]+/[a-z0-9-]+/", url):
+            fail(f"invalid registered challenge URL: {url}")
+        if url != f"/challenges/{entry.get('event_id')}/{entry.get('slug')}/":
+            fail(f"registered challenge event/slug route mismatch: {path}")
+        if path in routes or url in routes.values():
+            fail(f"duplicate registered challenge route: {path}")
+        if not (SOURCE / path).is_file():
+            fail(f"registered challenge post missing: {path}")
+        routes[path] = url
+    members = {path.relative_to(SOURCE).as_posix() for path in (SOURCE / "_posts/ctf-tutorials/challenges").rglob("*.md")}
+    if set(routes) != members:
+        fail("registered challenge post membership drift")
+    return routes
+
+
+def post_output_path(route: str) -> str:
+    """Convert a canonical post route to a build-relative file path."""
+    return route.lstrip("/") + ("index.html" if route.endswith("/") else "")
+
+
 def expected_post_routes() -> dict[str, str]:
+    """Map canonical URLs to sections; filesystem paths are derived separately."""
+    registered = registered_challenge_routes()
     routes: dict[str, str] = {}
     for source in sorted((SOURCE / "_posts").rglob("*.md")):
         match = DATE_POST.match(source.name)
@@ -291,7 +323,10 @@ def expected_post_routes() -> dict[str, str]:
             continue
         rel = source.relative_to(SOURCE / "_posts")
         first = rel.parts[0]
-        if first == "WriteUps":
+        if source.relative_to(SOURCE).as_posix() in registered:
+            route = registered[source.relative_to(SOURCE).as_posix()].lstrip("/")
+            section = "tutorials"
+        elif first == "WriteUps":
             route = rel.with_suffix(".html").as_posix()
             section = "writeups"
         elif first in {"ramblings", "ctf-tutorials"}:
@@ -303,9 +338,78 @@ def expected_post_routes() -> dict[str, str]:
             slug = re.sub(r"\s+", "-", match["slug"])
             route = f"{match['year']}/{match['month']}/{match['day']}/{slug}.html"
             section = "root"
+        route = "/" + route
         if route in routes: fail(f"duplicate expected post route: {route}")
         routes[route] = section
     return routes
+
+
+def parse_archive(path: Path) -> list[str]:
+    records = re.findall(r'<li\b[^>]*data-record[^>]*>.*?<a\b[^>]*href="([^"]+)"', path.read_text(encoding="utf-8"), re.S)
+    return [unquote(urlsplit(html.unescape(url)).path) for url in records]
+
+
+def check_archive_membership(actual: list[str], expected: set[str], label: str) -> None:
+    if len(actual) != len(expected) or set(actual) != expected:
+        fail(f"{label} archive membership drift")
+
+
+# Canonical tags in the retained 83-post challenge-archive/site/index.json.
+# Keep these independent of the build being checked; additions come from the
+# registered posts' JSON-compatible tags below.
+BASELINE_TAGS = frozenset("""
+0CTF 2020 2021 2022 2023 ACSC AES AI BATPWN BlowFish Bsides CBC CRT CTF DES
+ECC ECDLP ECM GCD GCM GF2 HSCTF HTB LC4 LCG Nullcon PoW QR RACTF RSA SDCTF SPN
+abbreviations affine alpertron artificial_intelligence assignment base12 base64
+bash bifid big_e binius64 bit_flipping bonehdurfee bootleg bruteforce cairo-m
+ceno challenges choosen_plaintext classical close_primes combinatorics
+contribution coppersmith cryptanalysis crypto cryptography cyber_apocalypse
+cybersecurity dialogue differential dusk encoding errorcorrection expander
+fernet fiat-shamir franklinreiter games gaussian_elimination golang googlectf
+gromark guess hacking hashcollision hastad_broadcast hillcipher injection
+inputrc introduction invalid_curve invariant javascript jolt known_plaintext
+kzg leakage magic mastermind matrixinverse mersenne_twister miscellaneous
+morse nahamcon netcat nexus oracle out_of_context padding paillier palindrome
+permutation plonk polynomialring ponder poo-i-try prime productivity
+programming pun python_bytes python_walrus quipquip railfence randoblurry rc4
+redpwn reversing rgbCTF sagemath sat schmidtsamoa short small_e small_factors
+small_prime smt soundness substitution testing tetris timeseed transposition
+twin_prime vignere vim wargames weak_keys welcome wordgame xor z3 zh3r0
+zh3r0_ctf2 zk zkvm
+""".split())
+
+
+def expected_archive_tags() -> set[str]:
+    tags = set(BASELINE_TAGS)
+    for path in registered_challenge_routes():
+        text = (SOURCE / path).read_text(encoding="utf-8")
+        header = re.match(r"\A---\n(.*?)\n---(?:\n|\Z)", text, re.S)
+        field = re.search(r"(?m)^tags:\s*(\[[^\n]*\])\s*$", header[1]) if header else None
+        try:
+            values = json.loads(field[1]) if field else None
+        except json.JSONDecodeError:
+            values = None
+        if not isinstance(values, list) or not values or not all(isinstance(tag, str) and tag.strip() for tag in values):
+            fail(f"invalid challenge post tags: {path}")
+        # These are the same three canonicalizations as _data/tag_aliases.yml.
+        aliases = {"ctf": "CTF", "ctfs": "CTF", "rsa": "RSA"}
+        tags.update(aliases.get(tag, tag) for tag in values)
+    return tags
+
+
+def check_archive_tags(archive_text: str) -> int:
+    block = re.search(r'<div class="all-tags__grid[^>]*>(.*?)</div>', archive_text, re.S)
+    if not block: fail("tag index missing")
+    labels = []
+    for href in re.findall(r'href="([^"]+)"', block[1]):
+        query = parse_qs(urlsplit(html.unescape(href)).query)
+        if len(query.get("tag", [])) != 1: fail("invalid archive tag link")
+        labels.append(query["tag"][0])
+    expected = expected_archive_tags()
+    if len(labels) != len(expected) or set(labels) != expected:
+        fail(f"merged tag membership drift: missing={sorted(expected - set(labels))} extra={sorted(set(labels) - expected)}")
+    if len(re.findall(r"\bdata-filter=", block[1])) != len(labels): fail("archive tag filter count drift")
+    return len(labels)
 
 
 def parse_feed(path: Path, *, link_ids: bool = True) -> list[str]:
@@ -357,9 +461,9 @@ for rel in sorted(required):
     if not (ROOT / rel).is_file(): fail(f"required output missing: {rel}")
 
 post_routes = expected_post_routes()
-if len(post_routes) != 83: fail(f"source post count drift: {len(post_routes)}")
-for rel in post_routes:
-    if not (ROOT / rel).is_file(): fail(f"post route missing: {rel}")
+if len(post_routes) != 101: fail(f"source post count drift: {len(post_routes)}")
+for route in post_routes:
+    if not (ROOT / post_output_path(route)).is_file(): fail(f"post route missing: {route}")
 
 pages = sorted(ROOT.rglob("*.html"))
 VERIFICATION_HTML = {"google98b86655786074b6.html", "yandex_0a37c4f8df609655.html"}
@@ -489,12 +593,11 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 
 # Additive features may add shell pages; the baseline may not shrink.
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
-# The Tetrasquares article adds one article script and 19 original SVG images.
-# The expanded Mastermind article adds four code blocks, 32 formulas and one
-# results figure. Challenge and existing article-script scopes are unchanged.
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (10, 6, 83, 338, 275, 104):
+# Eighteen challenge posts add article scripts and one download code frame each;
+# seven also add a local checker. Existing math and image counts stay fixed.
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (17, 13, 101, 356, 275, 104):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
-if len(challenge_pages) != 6: fail(f"challenge page count drift: {len(challenge_pages)}")
+if len(challenge_pages) != 13: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
 if brand_marks != len(shell_pages): fail(f"brand-mark scoping drift: {brand_marks} != {len(shell_pages)}")
 if len(math_pages) != 7: fail(f"math page count drift: {len(math_pages)}")
@@ -505,11 +608,12 @@ if GOATCOUNTER:
     if missing_script: fail(f"goatcounter script missing in {missing_script[:5]}")
     if missing_pixel: fail(f"goatcounter pixel missing in {missing_pixel[:5]}")
 
-article_routes = {rel for rel in post_routes if 'itemtype="https://schema.org/Article"' in (ROOT / rel).read_text(encoding="utf-8")}
+article_routes = {route for route in post_routes if 'itemtype="https://schema.org/Article"' in (ROOT / post_output_path(route)).read_text(encoding="utf-8")}
 if article_routes != set(post_routes): fail(f"article schema route drift: {sorted(set(post_routes) - article_routes)[:10]}")
-writeup_routes = {rel for rel, section in post_routes.items() if section == "writeups"}
+writeup_routes = {route for route, section in post_routes.items() if section == "writeups"}
 if len(writeup_routes) != 61: fail(f"WriteUps source count drift: {len(writeup_routes)}")
-for rel in writeup_routes:
+for route in writeup_routes:
+    rel = post_output_path(route)
     text = (ROOT / rel).read_text(encoding="utf-8")
     classes = page_audits[rel].body_classes
     if not {"layout-writeup", "section-writeups"}.issubset(classes) or "<dt>Event</dt>" not in text or "<dt>Category</dt>" not in text:
@@ -522,15 +626,9 @@ for rel, section in (("404.html", "root"), ("WriteUps/404.html", "writeups"), ("
 
 # Archive order is the source of truth for feed windows.
 archive_text = (ROOT / "archive.html").read_text(encoding="utf-8")
-record_pattern = re.compile(r'<li\b[^>]*data-record[^>]*>.*?<a\b[^>]*href="([^"]+)"', re.S)
-archive_order = [unquote(urlsplit(url).path) for url in record_pattern.findall(archive_text)]
-if len(archive_order) != 83 or len(set(archive_order)) != 83 or set(archive_order) != {f"/{rel}" for rel in post_routes}:
-    fail("global archive membership drift")
-tag_block = re.search(r'<div class="all-tags__grid[^>]*>(.*?)</div>', archive_text, re.S)
-if not tag_block: fail("tag index missing")
-tag_count = len(re.findall(r"\bdata-filter=", tag_block.group(1)))
-# New article tags: tetris, combinatorics, programming; games already existed.
-if tag_count != 149: fail(f"merged tag count drift: {tag_count}")
+archive_order = parse_archive(ROOT / "archive.html")
+check_archive_membership(archive_order, set(post_routes), "global")
+tag_count = check_archive_tags(archive_text)
 if "?tag=RSA" not in archive_text or "?tag=CTF" not in archive_text or "?tag=rsa" in archive_text or "?tag=ctfs" in archive_text:
     fail("tag alias merge drift")
 
@@ -543,14 +641,18 @@ section_specs = {
     "ctf-tutorials": ("tutorials", 5, "/ctf-tutorials/"),
 }
 for directory, (section, limit, home) in section_specs.items():
-    expected = [path for path in archive_order if post_routes[path.lstrip("/")] == section]
+    expected = [path for path in archive_order if post_routes[path] == section]
+    check_archive_membership(parse_archive(ROOT / directory / "archive.html"), set(expected), directory)
+    # WriteUps has a paginated home; the other section homes list every post.
+    if section != "writeups":
+        check_archive_membership(parse_archive(ROOT / directory / "index.html"), set(expected), f"{directory} home")
     actual = parse_feed(ROOT / directory / "feed.xml")
     if actual != expected[:limit]: fail(f"section feed membership or order drift: {directory}")
     sitemap = parse_sitemap(ROOT / directory / "sitemap.xml")
     if sitemap != {home, *expected}: fail(f"section sitemap membership drift: {directory}")
 
 root_sitemap = parse_sitemap(ROOT / "sitemap.xml")
-if not {f"/{rel}" for rel in post_routes}.issubset(root_sitemap): fail("root sitemap omits posts")
+if not set(post_routes).issubset(root_sitemap): fail("root sitemap omits posts")
 if not {"/" + rel.removesuffix("index.html") for rel in APP_PAGES}.issubset(root_sitemap):
     fail("root sitemap omits Tetrasquares pages")
 if any(path.startswith("/new-tetris/") for path in root_sitemap):

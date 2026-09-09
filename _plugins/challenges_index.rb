@@ -47,13 +47,11 @@ Jekyll::Hooks.register :site, :post_write do |site|
       entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m, 'aliases' => [] }
       entry['sha256'] = hash unless hash.empty?
       entry['salt'] = salt unless salt.to_s.empty?
-      entry = { 'id' => id_m, 'page' => route, 'title' => name || id_m, 'aliases' => [] }
-      entry['sha256'] = hash unless hash.empty?
-      entry['salt'] = salt unless salt.to_s.empty?
-      if !hash.empty? && by_hash.key?(hash)
-        by_hash[hash]['aliases'] << id_m
+      identity = [hash, salt.to_s]
+      if !hash.empty? && by_hash.key?(identity)
+        by_hash[identity]['aliases'] << id_m
       else
-        by_hash[hash] = entry unless hash.empty?
+        by_hash[identity] = entry unless hash.empty?
         challenges << entry
       end
     end

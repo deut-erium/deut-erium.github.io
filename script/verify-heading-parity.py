@@ -6,6 +6,7 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 import html
+import json
 import re
 import sys
 
@@ -99,7 +100,44 @@ class HeadingParser(HTMLParser):
             self.in_article = False
 
 
-def output_path(source: Path, match: re.Match[str], section: str) -> Path:
+def fail(message: str) -> None:
+    raise SystemExit(f"FAIL: {message}")
+
+
+def registered_challenge_routes() -> dict[str, str]:
+    """Read the narrow post-path override registry, not arbitrary permalinks."""
+    entries = json.loads((SOURCE / "_data/authored_challenges.json").read_text(encoding="utf-8"))["entries"]
+    routes: dict[str, str] = {}
+    for entry in entries:
+        path, url = entry.get("post_path"), entry.get("url")
+        valid_path = isinstance(path, str) and re.fullmatch(r"_posts/ctf-tutorials/challenges/[^/\\]+\.md", path)
+        if not valid_path or not DATE_POST.fullmatch(Path(path).name):
+            fail(f"invalid registered challenge post path: {path}")
+        if not isinstance(url, str) or not re.fullmatch(r"/challenges/[a-z0-9-]+/[a-z0-9-]+/", url):
+            fail(f"invalid registered challenge URL: {url}")
+        if url != f"/challenges/{entry.get('event_id')}/{entry.get('slug')}/":
+            fail(f"registered challenge event/slug route mismatch: {path}")
+        if path in routes or url in routes.values():
+            fail(f"duplicate registered challenge route: {path}")
+        if not (SOURCE / path).is_file():
+            fail(f"registered challenge post missing: {path}")
+        routes[path] = url
+    members = {path.relative_to(SOURCE).as_posix() for path in (SOURCE / "_posts/ctf-tutorials/challenges").rglob("*.md")}
+    if set(routes) != members:
+        fail("registered challenge post membership drift")
+    return routes
+
+
+def post_output_path(route: str) -> str:
+    """Convert a canonical post route to a build-relative file path."""
+    return route.lstrip("/") + ("index.html" if route.endswith("/") else "")
+
+
+def output_path(source: Path, match: re.Match[str], section: str, registered: dict[str, str]) -> Path:
+    path = source.relative_to(SOURCE).as_posix()
+    if path in registered:
+        # The catalog holds canonical routes; heading parity reads build files.
+        return SITE / post_output_path(registered[path])
     rel = source.relative_to(SOURCE / "_posts")
     if section == "writeups":
         return SITE / "WriteUps" / Path(*rel.parts[1:]).with_suffix(".html")
@@ -112,6 +150,7 @@ def output_path(source: Path, match: re.Match[str], section: str) -> Path:
     return SITE / match["year"] / match["month"] / match["day"] / f"{slug}.html"
 
 
+registered = registered_challenge_routes()
 failures = []
 pages = headings = 0
 for source in sorted((SOURCE / "_posts").rglob("*.md")):
@@ -121,7 +160,7 @@ for source in sorted((SOURCE / "_posts").rglob("*.md")):
     first = source.relative_to(SOURCE / "_posts").parts[0]
     section = "writeups" if first == "WriteUps" else "tutorials" if first == "ctf-tutorials" else "ramblings" if first == "ramblings" else "root"
     expected = source_headings(source, section)
-    destination = output_path(source, match, section)
+    destination = output_path(source, match, section, registered)
     if not destination.is_file():
         failures.append({"source": str(source.relative_to(SOURCE)), "error": "missing output"})
         continue

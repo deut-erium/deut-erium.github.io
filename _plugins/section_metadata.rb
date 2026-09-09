@@ -44,7 +44,7 @@ module DeuteriumSite
         output_path = source_path.sub(/\.(?:md|markdown)\z/i, ".html")
         post.data["permalink"] = "/#{output_path}"
       elsif top_level == "ctf-tutorials" && post.data["challenge_id"]
-        # These are posts in the tutorials collection, but existing archive
+        # These are posts in the Tutorials section, but existing archive
         # links keep their original destinations rather than gaining redirects.
         route = post.data["permalink"].to_s
         unless route.match?(%r{\A/challenges/[a-z0-9-]+/[a-z0-9-]+/\z})
