@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 
 const source = readFileSync(new URL('../assets/js/features/cookie-banner.js', import.meta.url), 'utf8');
 
-function page(roll, { bannerPresent = true, storageBlocked = false } = {}) {
+function page(roll, { bannerPresent = true, storageBlocked = false, scriptSrc = null } = {}) {
   const links = [], timers = new Map(), frames = [], listeners = new Map();
   let draws = 0, storageAccesses = 0, cookieAccesses = 0, nextTimer = 0;
   const makeBanner = () => ({
@@ -24,6 +24,7 @@ function page(roll, { bannerPresent = true, storageBlocked = false } = {}) {
       return null;
     },
     createElement(tag) { assert.equal(tag, 'link'); return {}; },
+    currentScript: scriptSrc ? { src: scriptSrc } : null,
     head: { appendChild(link) { links.push(link); } },
     addEventListener(name, fn, capture) {
       assert.equal(capture, true);
@@ -40,7 +41,7 @@ function page(roll, { bannerPresent = true, storageBlocked = false } = {}) {
     set() { cookieAccesses++; throw new Error('Unexpected cookie write'); },
   });
   const sandbox = {
-    document, window: { __deuteriumAssetVersion: 'test' },
+    document, window: { __deuteriumAssetVersion: 'test' }, URL,
     Math: { random() { draws++; return roll; } },
     setTimeout(fn, delay) { assert.equal(delay, 400); timers.set(++nextTimer, fn); return nextTimer; },
     clearTimeout(id) { timers.delete(id); },
@@ -163,6 +164,12 @@ for (const action of ['accept', 'reject', 'Escape']) {
     assert.equal(nextPage.banner().hidden, false, 'New documents get a fresh draw');
   });
 }
+
+test('deferred stylesheet follows the configured script baseurl', () => {
+  const p = page(0, { scriptSrc: 'https://example.test/archive-test/assets/js/features/cookie-banner.js?v=test' });
+  p.run();
+  assert.equal(p.links[0].href, 'https://example.test/archive-test/assets/css/features/cookie-banner.css?v=test');
+});
 
 test('markup is hidden by default and shared CSS keeps hidden elements out of layout', () => {
   const markup = readFileSync(new URL('../_includes/cookie-banner.html', import.meta.url), 'utf8');
