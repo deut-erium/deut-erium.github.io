@@ -265,7 +265,7 @@ class RouteTests(unittest.TestCase):
         write(self.work, "archive.html", tags + records(order))
         write(self.work, "feed.xml", feed(order[:10]))
         write(self.work, "sitemap.xml", sitemap(order))
-        for directory, section, limit in (("WriteUps", "writeups", 20), ("ramblings", "ramblings", 5), ("ctf-tutorials", "tutorials", 5)):
+        for directory, section, limit in (("WriteUps", "writeups", 20), ("ramblings", "ramblings", 5), ("ctf-tutorials", "tutorials", 20)):
             expected = [route for route in order if routes[route] == section]
             write(self.work, f"{directory}/archive.html", records(expected))
             write(self.work, f"{directory}/index.html", records(expected))

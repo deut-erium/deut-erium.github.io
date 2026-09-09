@@ -204,7 +204,7 @@ render([]);
 let known=[];
 const embedded=(()=>{try{return JSON.parse(D.getElementById('scoreboard-known').textContent)}catch(_){return null}})();
 if(Array.isArray(embedded)&&embedded.length){known=embedded;render(known);}
-else{const load=()=>fetch('/challenges.json').then(r=>r.ok?r.json():[]).catch(()=>[])
+else{const load=()=>fetch({{ '/challenges.json' | relative_url | jsonify }}).then(r=>r.ok?r.json():[]).catch(()=>[])
   .then(entries=>{known=entries;render(known);
     known.length||say('Challenge list unavailable; showing local records only.');});
 load();}

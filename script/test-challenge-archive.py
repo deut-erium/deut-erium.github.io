@@ -97,7 +97,7 @@ def rendered_fixture(source, site, baseurl=''):
                          f'data-flag-prefix="{c["prefix"]}" data-challenge-title="{escape(e["title"], quote=True)}">'
                          f'<input data-flag-input id="flag-{c["id"]}" placeholder="{c["prefix"]}{{...}}">'
                          '<button type="submit" disabled>Check flag</button></form>')
-            progress.append({'id': c['id'], 'page': e['url'], 'title': e['title'], 'sha256': c['sha256'], 'salt': c['salt'], 'aliases': []})
+            progress.append({'id': c['id'], 'page': baseurl + e['url'], 'title': e['title'], 'sha256': c['sha256'], 'salt': c['salt'], 'aliases': []})
         contents += '<details data-archive-spoilers><summary>Sources and solutions (spoilers)</summary>'
         if 'organizer_download' in e:
             contents += block

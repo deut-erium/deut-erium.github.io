@@ -187,6 +187,8 @@ Each post includes curl commands. Original file links use pinned repository revi
 
 Player handouts, archived server source and spoiler-bearing organizer files have separate labels. b00tleg withheld its source during the event; its curl command stays inside the spoiler disclosure because that code contains answers. Law and Order retains the incorrect released handout and corrected source, with distinct download names and an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. No retired service is contacted or placeholder flag checked.
 
+The root Atom feed uses `feed.xml` so challenges sharing an event start keep the archive's order. Existing Atom item IDs are preserved. Section feeds retain their 20-post window.
+
 The download commands for new output files use the site's configured publishing origin and baseurl. In a local preview, replace that origin with the loopback server's address. Upstream file commands work independently of deployment. Serve only generated output, never the checkout or all of `agent_out/`.
 
 When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register posts, outputs and updated data in the content manifest. Keep flags, generation inputs and solver scratch private. A browser hash check is local feedback, not proof of independent work or a trustworthy competition score. Check source alone, or pass a generated site directory:

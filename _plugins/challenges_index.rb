@@ -30,7 +30,7 @@ Jekyll::Hooks.register :site, :post_write do |site|
     next unless html.include?('data-flag-check')
 
     route = '/' + path.delete_prefix(dest).delete_prefix(File::SEPARATOR)
-    route = route.sub(%r{(?:^|/)index\.html\z}, '/')
+    route = site.baseurl.to_s + route.sub(%r{(?:^|/)index\.html\z}, '/')
     page_title = html[%r{<title>(.*?)</title>}m, 1].to_s.split(' / ').first.to_s.strip
     html.scan(%r{<form\b[^>]*data-flag-check[^>]*>.*?</form>}m).each do |form_html|
       hash = form_html[/\bdata-sha256="([^"]+)"/, 1].to_s

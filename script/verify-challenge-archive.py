@@ -543,8 +543,7 @@ def verify_rendered(site, baseurl, catalog, metadata):
             continue
         c = e['checker']
         record = next(p for p in progress if p['id'] == c['id'])
-        # challenges_index emits canonical paths without baseurl, unlike index.json.
-        require(record['page'] == e['url'] and record['title'] == e['title'] and
+        require(record['page'] == baseurl + e['url'] and record['title'] == e['title'] and
                 record.get('sha256') == c['sha256'] and record.get('salt') == c['salt'] and not record['aliases'], 'authored progress entry for ' + e['id'])
     posts = json.loads((site/'index.json').read_text())
     require(len(posts) == 101, 'post index count')

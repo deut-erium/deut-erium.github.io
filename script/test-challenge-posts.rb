@@ -251,7 +251,7 @@ class ChallengePostsTest < Minitest::Test
     assert_equal title, form_node["data-challenge-title"]
     assert_operator html.index('id="flag-synthetic-long"') - html.index('<form'), :>, 400
     rows = JSON.parse(File.read(File.join(@dest, "challenges.json")))
-    assert_equal [{ "id" => "synthetic-long", "page" => "/challenges/fixture/long-title/", "title" => title,
+    assert_equal [{ "id" => "synthetic-long", "page" => "/preview/challenges/fixture/long-title/", "title" => title,
                     "aliases" => [], "sha256" => HASH, "salt" => "a" * 32 }], rows
   end
 
@@ -292,8 +292,8 @@ class ChallengePostsTest < Minitest::Test
     rows = index(pages, baseurl: "/preview")
     assert_equal ids, rows.map { |row| row["id"] }
     assert rows.all? { |row| row["aliases"].empty? }
-    assert rows.all? { |row| row["page"].start_with?("/challenges/") && row["page"].end_with?("/") }
-    refute rows.any? { |row| row["page"].include?("index.html") || row["page"].include?("preview") }
+    assert rows.all? { |row| row["page"].start_with?("/preview/challenges/") && row["page"].end_with?("/") }
+    refute rows.any? { |row| row["page"].include?("index.html") || row["page"].include?("/preview/preview/") }
   end
 
   def test_index_deduplicates_identical_hash_and_salt
@@ -341,7 +341,7 @@ class ChallengePostsTest < Minitest::Test
     rows = index(pages, unlisted: hidden_paths, baseurl: "/preview")
     assert_equal ["visible"], rows.map { |row| row["id"] }
     assert_equal [], rows.first["aliases"]
-    assert_equal "/public/", rows.first["page"]
+    assert_equal "/preview/public/", rows.first["page"]
   end
 
   def test_index_ignores_forms_without_input_ids_and_non_html_files
@@ -398,5 +398,21 @@ class ChallengePostsTest < Minitest::Test
     assert_equal ["1", "2"], hints.map { |hint| hint["data-hint"] }
     assert_equal ["first clue", "second clue"], hints.map(&:text)
     assert hints.all? { |hint| hint.key?("hidden") && hint["data-hint-for"] == "hint-fixture" }
+  end
+
+  def test_global_feed_preserves_tied_archive_order_and_item_ids
+    12.times do |i|
+      post("_posts/ctf-tutorials/2024-06-21-tie-#{i.to_s.rjust(2, '0')}.md",
+           { 'title' => "Tied post #{i}", 'description' => 'Synthetic description.' })
+    end
+    write('feed.xml', File.read(File.join(ROOT, 'feed.xml')))
+    write('order.html', "---\n---\n{% for p in site.posts %}<a href=\"{{ p.url | absolute_url }}\">{{ p.id | absolute_url }}</a>{% endfor %}")
+    site('/preview').process
+    order = parse(File.read(File.join(@dest, 'order.html'))).css('a').first(10)
+    entries = parse(File.read(File.join(@dest, 'feed.xml'))).css('entry')
+    assert_equal 10, entries.size
+    assert_equal order.map { |n| n['href'] }, entries.map { |n| n.at_css('link')['href'] }
+    assert_equal order.map(&:text), entries.map { |n| n.at_css('id').text }
+    assert entries.all? { |n| n.at_css('summary').text == 'Synthetic description.' }
   end
 end

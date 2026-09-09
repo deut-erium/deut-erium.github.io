@@ -638,7 +638,7 @@ if global_feed != archive_order[:10]: fail("global feed membership or order drif
 section_specs = {
     "WriteUps": ("writeups", 20, "/WriteUps/"),
     "ramblings": ("ramblings", 5, "/ramblings/"),
-    "ctf-tutorials": ("tutorials", 5, "/ctf-tutorials/"),
+    "ctf-tutorials": ("tutorials", 20, "/ctf-tutorials/"),
 }
 for directory, (section, limit, home) in section_specs.items():
     expected = [path for path in archive_order if post_routes[path] == section]
