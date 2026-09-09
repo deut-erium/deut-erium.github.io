@@ -104,6 +104,12 @@ class Audit(HTMLParser):
         self.unnamed_links: list[str] = []
         self._anchor: dict[str, str] | None = None
         self.forms = 0
+        self.browser_forms = 0
+        self.browser_widgets: list[dict] = []
+        self.browser_resources: list[tuple[str, dict, bool]] = []
+        self.unsafe_browser_markup: list[str] = []
+        self._browser_depth = 0
+        self._article_depth = 0
         self.unsafe_flag_forms: list[str] = []
         self._flag_form = False
         self._flag_input_named = False
@@ -127,6 +133,24 @@ class Audit(HTMLParser):
         )
         if tag not in self.VOID_ELEMENTS:
             self._element_stack.append((tag, element_hidden))
+        if tag == "article" and data.get("id") == "article-body":
+            self._article_depth = len(self._element_stack)
+        if "data-challenge-practice" in data:
+            self.browser_widgets.append(data)
+            self._browser_depth = len(self._element_stack)
+            if not self._article_depth or tag not in {"section", "div"}:
+                self.unsafe_browser_markup.append("widget outside article")
+        for key in ("src", "href"):
+            path = urlsplit(data.get(key) or "").path
+            if "/assets/js/challenge-practice/" in path or path.endswith("/assets/css/features/challenge-practice.css"):
+                self.browser_resources.append((tag, data, bool(self._article_depth)))
+        if self._browser_depth:
+            if tag == "form":
+                self.browser_forms += 1
+                if "action" in data or "name" in data or "data-flag-check" in data:
+                    self.unsafe_browser_markup.append("practice form attributes")
+            if "name" in data or "formaction" in data or tag in {"script", "pre", "iframe", "object", "embed"}:
+                self.unsafe_browser_markup.append("active practice markup")
         if tag == "title": self.title += 1
         if tag == "h1": self.h1 += 1
         if re.fullmatch(r"h[1-6]", tag):
@@ -238,6 +262,38 @@ class Audit(HTMLParser):
             if self._element_stack[index][0] == tag:
                 del self._element_stack[index:]
                 break
+        if len(self._element_stack) < self._browser_depth:
+            self._browser_depth = 0
+        if len(self._element_stack) < self._article_depth:
+            self._article_depth = 0
+
+
+def check_browser_scope(audit: Audit, entry: dict | None, label: str) -> None:
+    intended = entry is not None
+    if len(audit.browser_widgets) != int(intended) or audit.browser_forms != int(intended):
+        fail(f"browser practice form/widget scope: {label}")
+    if audit.unsafe_browser_markup:
+        fail(f"unsafe browser practice markup: {label}")
+    if intended:
+        widget = audit.browser_widgets[0]
+        if widget.get("data-id") != entry["id"] or widget.get("data-runtime") != entry["slug"]:
+            fail(f"browser practice binding: {label}")
+    resources = []
+    for tag, attrs, in_article in audit.browser_resources:
+        parsed = urlsplit(attrs.get("src") or attrs.get("href") or "")
+        if parsed.scheme or parsed.netloc:
+            fail(f"nonlocal browser resource: {label}")
+        if in_article:
+            fail(f"browser resource inside article body: {label}")
+        if tag == "script" and attrs.get("type") == "module":
+            resources.append(urlsplit(attrs.get("src") or "").path)
+        elif tag == "link" and attrs.get("rel") == "stylesheet":
+            resources.append(urlsplit(attrs.get("href") or "").path)
+        else:
+            fail(f"unexpected browser resource type: {label}")
+    expected = ["/assets/js/challenge-practice/ui.mjs", "/assets/css/features/challenge-practice.css"] if intended else []
+    if sorted(resources) != sorted(expected):
+        fail(f"browser resource scope: {label}")
 
 
 class FrameParser(HTMLParser):
@@ -472,7 +528,10 @@ shell_pages = [
     if page.relative_to(ROOT).as_posix() not in APP_PAGES
     and page.relative_to(ROOT).as_posix() not in VERIFICATION_HTML
 ]
-forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
+browser_entries = {post_output_path(e["url"]): e for e in json.loads(
+    (SOURCE / "_data/authored_challenges.json").read_text(encoding="utf-8"))["entries"] if e["mode"] == "interactive"}
+if len(browser_entries) != 11: fail("browser practice membership drift")
+forms = browser_forms = challenge_scripts = article_scripts = theme_scripts = images = brand_marks = code_frames = math_expressions = 0
 challenge_pages: set[str] = set()
 article_pages: set[str] = set()
 math_pages: set[str] = set()
@@ -484,6 +543,7 @@ for page in pages:
     rel = page.relative_to(ROOT).as_posix()
     text = page.read_text(encoding="utf-8")
     audit = Audit(); audit.feed(text); audit.close(); page_audits[rel] = audit
+    check_browser_scope(audit, browser_entries.get(rel), rel)
     if rel in VERIFICATION_HTML:
         continue
     if not text.lower().lstrip().startswith("<!doctype html>"): fail(f"doctype missing: {rel}")
@@ -543,7 +603,8 @@ for page in pages:
         output_url = "/" + rel
         noindex_paths.add(output_url)
         if rel.endswith("/index.html"): noindex_paths.add("/" + rel.removesuffix("index.html"))
-    forms += audit.forms
+    forms += audit.forms + audit.browser_forms
+    browser_forms += audit.browser_forms
     images += audit.plain_images
     brand_marks += text.count('class="site-brand__mark"')
     challenge_scripts += text.count('/assets/js/challenge.js')
@@ -594,8 +655,10 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 # Additive features may add shell pages; the baseline may not shrink.
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
 # Eighteen challenge posts add article scripts and one download code frame each;
-# seven also add a local checker. Existing math and image counts stay fixed.
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (17, 13, 101, 356, 275, 104):
+# seven also add an event checker, eleven add browser practice forms. Existing
+# checker/article scripts, download frames, math and image counts stay fixed.
+if browser_forms != 11: fail(f"browser practice form count drift: {browser_forms}")
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (28, 13, 101, 356, 275, 104):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 13: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
@@ -820,6 +883,7 @@ print(json.dumps({
     "code_frames": code_frames,
     "math_expressions": math_expressions,
     "challenge_forms": forms,
+    "browser_practice_forms": browser_forms,
     "challenge_pages": len(challenge_pages),
     "external_runtime_resources": 0,
     "analytics": f"goatcounter:{GOATCOUNTER}" if GOATCOUNTER else "none",

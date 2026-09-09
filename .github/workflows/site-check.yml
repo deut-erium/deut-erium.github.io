@@ -44,6 +44,25 @@ jobs:
       - name: Install build-only JavaScript packages
         run: npm ci --ignore-scripts --no-audit --no-fund
 
+      - name: Restore retained public browser-practice fixtures
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import shutil
+          fixtures = Path('agent_out/challenge-runtime/integration/public-fixtures')
+          for entry in json.loads((fixtures / 'manifest.json').read_text())['files']:
+              relative = Path(entry['path'])
+              assert not relative.is_absolute() and '..' not in relative.parts
+              source = fixtures / relative
+              data = source.read_bytes()
+              assert (len(data), hashlib.sha256(data).hexdigest()) == (entry['bytes'], entry['sha256'])
+              target = Path('agent_out/challenge-runtime') / relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, target)
+          PY
+
       - name: Verify source and generated dependencies
         run: |
           set -euo pipefail
@@ -55,6 +74,7 @@ jobs:
           ruby script/test-challenge-posts.rb
           ruby script/test-challenge-documents.rb
           node --test script/test-challenge-engine.mjs
+          node --test script/test-practice-*.mjs
           node --test script/test-tetris-practice.mjs script/test-tetrasquares-urls.mjs
           node --test script/test-css-rule-selectors.mjs
           node --test script/test-cookie-banner.mjs

@@ -17,7 +17,7 @@ import tempfile
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'agent_out/challenge-hosting/archive-gates'
+OUT = ROOT/'agent_out/challenge-runtime/integration/archive-gates'
 OUT.mkdir(parents=True, exist_ok=True)
 sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location('archive_check', ROOT/'script/verify-challenge-archive.py')
@@ -105,6 +105,19 @@ def rendered_fixture(source, site, baseurl=''):
                          f'<input data-flag-input id="flag-{c["id"]}" placeholder="{c["prefix"]}{{...}}">'
                          '<button type="submit" disabled>Check flag</button></form>')
             progress.append({'id': c['id'], 'page': baseurl + e['url'], 'title': e['post_title'], 'sha256': c['sha256'], 'salt': c['salt'], 'aliases': []})
+        if 'browser_practice' in e:
+            variants = ''.join(f'<option value="{v}">{v}</option>' for v in e['browser_practice']['variants'])
+            contents += (f'<h2 id="browser-practice">Browser practice</h2>'
+                         f'<section class="challenge-practice" data-challenge-practice data-runtime="{e["slug"]}" data-id="{ident}">'
+                         '<p>Public dummy reward: practice{local_dummy_reward}. Console: window.challengePractice.</p>'
+                         f'<select data-practice-variant disabled>{variants}</select>'
+                         '<button type="button" data-practice-start disabled>Start</button>'
+                         '<button type="button" data-practice-stop disabled>Stop</button>'
+                         '<button type="button" data-practice-reset disabled>Reset</button>'
+                         '<textarea data-practice-output readonly aria-label="Transcript"></textarea>'
+                         '<form><textarea data-practice-input disabled aria-label="Input"></textarea>'
+                         '<button type="submit" data-practice-send disabled>Send</button></form>'
+                         '<p data-practice-status>Stopped</p><noscript>Enable JavaScript for practice.</noscript></section>')
         contents += '<details data-archive-spoilers><summary>Sources and solutions (spoilers)</summary>'
         if 'organizer_download' in e:
             contents += block + anchor(e['organizer_download']['upstream_url'], 'Original organizer source (spoilers)')
@@ -124,6 +137,9 @@ def rendered_fixture(source, site, baseurl=''):
                 f'<script src="{baseurl}/assets/js/article.js?v=fixture"></script>')
         if 'checker' in e:
             html += f'<script src="{baseurl}/assets/js/challenge.js?v=fixture"></script>'
+        if 'browser_practice' in e:
+            html += (f'<script type="module" src="{baseurl}{gate.BROWSER_UI}?v=fixture"></script>'
+                     f'<link rel="stylesheet" href="{baseurl}{gate.BROWSER_CSS}?v=fixture">')
         write(html_path(site, e['url']), html + '</body></html>')
         metadata, _ = gate.front_matter((source/e['post_path']).read_text(), ident)
         posts.append({'title': e['post_title'], 'date': date, 'route': ORIGIN + baseurl + e['url'],
@@ -241,6 +257,12 @@ def main():
         for directory in ('challenges', gate.POST_ROOT, 'assets/challenges'):
             shutil.copytree(ROOT/directory, template/directory)
         write(template/'_data/authored_challenges.json', json.dumps(BASE))
+        # Membership-only stubs. These tests do not render the actual include,
+        # execute a module, or stand in for a real Jekyll build.
+        for path in ('_includes/challenge-browser.html', gate.BROWSER_UI.lstrip('/'), gate.BROWSER_CSS.lstrip('/')):
+            write(template/path, 'Synthetic integration membership fixture.\n')
+        for runtime in gate.BROWSER_RUNTIMES.values():
+            write(template/f'assets/js/challenge-practice/ports/{runtime}.mjs', '// Synthetic port membership fixture.\n')
 
         def check(label, **kwargs):
             run_case(template, root, label, **kwargs)
@@ -282,6 +304,37 @@ def main():
         cat('offline mode changed', lambda d: entry(d, OFFLINE).update(mode='interactive'), 'mode for')
         cat('fabricated service metadata', lambda d: entry(d).update(service_url='https://example.invalid/'), 'unsupported catalog fields')
         cat('offline checker missing', lambda d: entry(d, OFFLINE).pop('checker'), 'checker metadata')
+        cat('browser metadata missing', lambda d: entry(d).pop('browser_practice'), 'browser metadata allowlist')
+        for value in (None, False, True, 'desfunctional', {}, {'runtime': 'desfunctional'},
+                      {'runtime': 'idea', 'variants': ['default']},
+                      {'runtime': 'desfunctional', 'variants': 'default'},
+                      {'runtime': 'desfunctional', 'variants': ['default', 'released']}):
+            cat('invalid browser metadata ' + repr(value), lambda d, value=value: entry(d).update(browser_practice=value), 'browser metadata allowlist')
+        for key, value in (('reward', 'synthetic'), ('seed', 1), ('state', {}), ('module_url', 'https://example.invalid/a.mjs'),
+                           ('launch_path', '/wrong/'), ('answer', 'synthetic')):
+            cat('browser extra metadata ' + key, lambda d, key=key, value=value: entry(d)['browser_practice'].update({key: value}), 'browser metadata allowlist')
+        for runtime in ('../idea', '/assets/js/challenge-practice/ports/idea.mjs', 'https://example.invalid/a.mjs', '', None):
+            cat('browser unsafe runtime ' + repr(runtime), lambda d, runtime=runtime: entry(d)['browser_practice'].update(runtime=runtime), 'browser metadata allowlist')
+        for value in (None, False, {'runtime': 'mceliece', 'variants': ['default']}):
+            cat('offline browser metadata ' + repr(value), lambda d, value=value: entry(d, OFFLINE).update(browser_practice=value), 'offline browser metadata')
+        cat('Law variants reversed', lambda d: entry(d, LAW)['browser_practice'].update(variants=['released', 'corrected']), 'browser metadata allowlist')
+        for value in (False, None, 'true', 1, 0):
+            src('browser boolean ' + repr(value), lambda r, value=value: change_meta(r, 'challenge_browser', value),
+                'post metadata types' if value == 1 else 'post metadata')
+        src('browser flag missing', lambda r: replace(post_path(r), 'challenge_browser: true\n', ''), 'post metadata')
+        src('offline browser flag', lambda r: change_meta(r, 'challenge_browser', True, OFFLINE), 'unsupported post control')
+        src('browser include missing', lambda r: replace(post_path(r), '{% include challenge-browser.html %}', ''), 'source browser include')
+        src('browser include arguments', lambda r: replace(post_path(r), '{% include challenge-browser.html %}', '{% include challenge-browser.html runtime="idea" %}'), 'source browser include')
+        src('browser include duplicate', lambda r: replace(post_path(r), '{% include challenge-browser.html %}', '{% include challenge-browser.html %}\n{% include challenge-browser.html %}'), 'source browser include')
+        src('offline browser include', lambda r: replace(post_path(r, OFFLINE), '## Files', '{% include challenge-browser.html %}\n## Files'), 'source browser include')
+        src('browser heading missing', lambda r: replace(post_path(r), '## Browser practice', '## Practice'), 'source browser placement')
+        src('browser include after Files', lambda r: replace(post_path(r), '{% include challenge-browser.html %}\n\n## Files', '## Files\n\n{% include challenge-browser.html %}'), 'source browser placement')
+        src('direct browser form forbidden', lambda r: replace(post_path(r), '## Files', '<form data-practice-send></form>\n## Files'), 'source service/checker')
+        for path in ('_includes/challenge-browser.html', gate.BROWSER_UI.lstrip('/'), gate.BROWSER_CSS.lstrip('/'),
+                     'assets/js/challenge-practice/ports/desfunctional.mjs'):
+            src('missing integration file ' + path, lambda r, path=path: (r/path).unlink(),
+                'missing browser module' if '/ports/' in path else 'missing browser integration')
+            src('symlinked integration file ' + path, lambda r, path=path: move_and_symlink(r, r/path), 'symlink in')
         cat('interactive checker added', lambda d: entry(d).update(checker=copy.deepcopy(entry(d, OFFLINE)['checker'])), 'unverified checker')
         for key, value in (('id', 'authored-other'), ('sha256', '0'*63), ('sha256', 'G'*64),
                            ('salt', 'a'*31), ('salt', 'A'*32), ('prefix', 'flag'), ('prefix', 'ctf'), ('answer', 'synthetic')):
@@ -457,6 +510,45 @@ def main():
             check(label, rendered=mutate, reason=reason, baseurl=baseurl, render=True)
 
         check('valid synthetic rendered root', render=True, valid=True)
+        for old, new, reason in (
+            ('data-challenge-practice ', 'data-wrong-practice ', 'browser widget count'),
+            ('data-runtime="desfunctional"', 'data-runtime="idea"', 'browser widget binding'),
+            ('data-id="' + INTERACTIVE + '"', 'data-id="other"', 'browser widget binding'),
+            ('id="browser-practice"', 'id="wrong-heading"', 'browser heading'),
+            ('<form>', '<form action="https://example.invalid/">', 'browser form attributes'),
+            ('<form>', '<form name="practice">', 'browser form attributes'),
+            ('data-practice-input disabled', 'data-practice-input name="input" disabled', 'browser form attributes'),
+            ('data-practice-send disabled', 'data-practice-send formaction="/" disabled', 'browser form attributes'),
+            ('data-practice-start disabled', 'data-practice-start', 'browser button guard'),
+            ('data-practice-input disabled', 'data-practice-input', 'browser input guard'),
+            ('data-practice-output readonly', 'data-practice-output', 'browser output guard'),
+            ('aria-label="Transcript"', '', 'browser accessible name'),
+            ('data-practice-stop', 'data-wrong-stop', 'browser control count'),
+            ('value="default"', 'value="released"', 'browser variants'),
+            ('Public dummy reward', 'Reward', 'browser practice disclosure'),
+            ('<script type="module"', '<script type="text/javascript"', 'browser module placement/type'),
+            ('rel="stylesheet"', 'rel="modulepreload"', 'browser stylesheet placement/type'),
+        ):
+            rendered('browser rendered mutation ' + old + ' -> ' + new,
+                     lambda s, old=old, new=new: replace(article_path(s), old, new), reason)
+        rendered('Law released selected by default', lambda s: replace(article_path(s, LAW), 'value="released"', 'value="released" selected'), 'browser variants')
+        rendered('browser output adds pre block', lambda s: replace(article_path(s), '<p data-practice-status>', '<pre>Extra</pre><p data-practice-status>'), 'browser widget active/code markup')
+        rendered('browser inline handler', lambda s: replace(article_path(s), 'data-practice-start disabled', 'data-practice-start onclick="bad()" disabled'), 'browser form attributes')
+        rendered('browser script inside body', lambda s: replace(article_path(s), '</article>', '<script type="module" src="/assets/js/challenge-practice/ui.mjs"></script></article>'), 'fabricated service')
+        rendered('browser CSS inside body', lambda s: replace(article_path(s), '</article>', '<link rel="stylesheet" href="/assets/css/features/challenge-practice.css"></article>'), 'browser asset scope')
+        for resource in (f'<script type="module" src="{gate.BROWSER_UI}"></script>',
+                         f'<link rel="stylesheet" href="{gate.BROWSER_CSS}">'):
+            rendered('duplicate browser resource ' + resource, lambda s, resource=resource: replace(article_path(s), '</body>', resource + '</body>'), 'browser asset scope')
+            for route in (entry(BASE, OFFLINE)['url'], '/challenges/', '/archive.html', '/2021/04/08/challenges.html'):
+                rendered('browser resource outside intended pages ' + route + resource,
+                         lambda s, route=route, resource=resource: write(html_path(s, route), html_path(s, route).read_text() + resource), 'browser asset scope')
+        for resource in (f'<script type="module" src="/assets/js/challenge-practice/ports/idea.mjs"></script>',
+                         '<link rel="modulepreload" href="/assets/js/challenge-practice/worker.mjs">'):
+            rendered('eager port/Worker resource ' + resource, lambda s, resource=resource: replace(article_path(s), '</body>', resource + '</body>'), 'unexpected browser resource')
+        for path in (gate.BROWSER_UI, gate.BROWSER_CSS):
+            rendered('foreign browser resource ' + path, lambda s, path=path: replace(article_path(s), path, 'https://example.invalid' + path), 'unexpected browser resource')
+            rendered('browser resource missing ' + path, lambda s, path=path: replace(article_path(s), path, '/wrong-asset'), 'browser asset scope')
+            rendered('browser resource missing baseurl ' + path, lambda s, path=path: replace(article_path(s), '/preview' + path, path), 'browser asset scope', '/preview')
         check('valid synthetic rendered baseurl', render=True, baseurl='/preview', valid=True)
         check('rendered coauthors retained', catalog=lambda d: entry(d)['authors'].append('coauthor-fixture'), render=True, valid=True)
         rendered('wrong rendered section', lambda s: replace(article_path(s), 'section-tutorials', 'section-root'), 'article/tutorial section')

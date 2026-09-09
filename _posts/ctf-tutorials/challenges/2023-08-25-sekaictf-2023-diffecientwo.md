@@ -8,6 +8,7 @@ tags: ["challenges", "crypto"]
 challenge_id: "sekaictf-2023-diffecientwo"
 challenge_year: 2023
 challenge_checker: false
+challenge_browser: true
 permalink: "/challenges/sekaictf-2023/diffecientwo/"
 ---
 
@@ -25,15 +26,19 @@ permalink: "/challenges/sekaictf-2023/diffecientwo/"
 
 Read this challenge as [plain text]({{ '/challenges/sekaictf-2023/diffecientwo/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2023/diffecientwo/challenge.json' | relative_url }}).
 
+## Browser practice
+
+{% include challenge-browser.html %}
+
 ## Files
 
-The original challenge used an interactive service. No live server is connected to this post.
+These files describe the original interactive service. The browser practice above is local; no TCP endpoint or retired remote service is connected.
 
 <ul data-archive-files>
   <li><a href="{{ '/assets/challenges/sekaictf-2023-diffecientwo/diffecientwo.py' | relative_url }}" data-file-kind="handout">diffecientwo.py</a></li>
 </ul>
 
-Originally a service challenge. Recreating the service requires the organizer source; no live instance is provided here.
+The original remote service is retired. Browser practice runs locally with the public dummy reward practice{local_dummy_reward}; it does not award an event solve.
 
 ## Download
 

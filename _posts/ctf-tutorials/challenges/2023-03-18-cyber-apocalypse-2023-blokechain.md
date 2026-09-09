@@ -8,6 +8,7 @@ tags: ["challenges", "crypto"]
 challenge_id: "cyber-apocalypse-2023-blokechain"
 challenge_year: 2023
 challenge_checker: false
+challenge_browser: true
 permalink: "/challenges/cyber-apocalypse-2023/blokechain/"
 ---
 
@@ -23,9 +24,13 @@ Mine blocks against a private hash function and earn enough to destroy the vesse
 
 Read this challenge as [plain text]({{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.json' | relative_url }}).
 
+## Browser practice
+
+{% include challenge-browser.html %}
+
 ## Files
 
-The original challenge used an interactive service. No live server is connected to this post.
+These files describe the original interactive service. The browser practice above is local; no TCP endpoint or retired remote service is connected.
 
 <ul data-archive-files>
   <li><a href="{{ '/assets/challenges/cyber-apocalypse-2023-blokechain/crypto_blokechain.zip' | relative_url }}" data-file-kind="handout">crypto_blokechain.zip</a></li>
@@ -33,7 +38,7 @@ The original challenge used an interactive service. No live server is connected 
 
 The handout contains server.py and prints a placeholder when you win; it does not include the event flag.
 
-This copy comes from Cyberkarta's community archive, not an official HTB repository. No live instance is provided here.
+This copy comes from Cyberkarta's community archive, not an official HTB repository. The original remote service is retired; browser practice runs locally with a public dummy reward.
 
 ## Download
 

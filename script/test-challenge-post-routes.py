@@ -17,7 +17,7 @@ import unittest
 from urllib.parse import quote, unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "agent_out/challenge-posts/post-route-gates"
+OUT = ROOT / "agent_out/challenge-runtime/integration/post-route-gates"
 RETAINED = ROOT / "agent_out/challenge-posts/legacy-baseline.json"
 
 
@@ -285,10 +285,54 @@ class RouteTests(unittest.TestCase):
         tree = ast.parse((ROOT / "script/verify-site.py").read_text())
         comparisons = [node for node in ast.walk(tree) if isinstance(node, ast.Compare)]
         payload = next(node for node in comparisons if isinstance(node.left, ast.Tuple) and [item.id for item in node.left.elts] == ["forms", "challenge_scripts", "article_scripts", "code_frames", "math_expressions", "images"])
-        self.assertEqual(ast.literal_eval(payload.comparators[0]), (17, 13, 101, 356, 275, 104))
+        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 356, 275, 104))
         for name, expected in (("post_routes", 101), ("challenge_pages", 13), ("math_pages", 7)):
             count = next(node for node in comparisons if isinstance(node.left, ast.Call) and isinstance(node.left.func, ast.Name) and node.left.func.id == "len" and len(node.left.args) == 1 and isinstance(node.left.args[0], ast.Name) and node.left.args[0].id == name)
             self.assertEqual(ast.literal_eval(count.comparators[0]), expected)
+
+    def browser_scope_fixture(self):
+        return ('<article id="article-body"><section data-challenge-practice data-id="fixture-2031-example" data-runtime="example">'
+                '<form><textarea data-practice-input disabled></textarea><button type="submit" disabled>Send</button></form>'
+                '</section></article><script type="module" src="/assets/js/challenge-practice/ui.mjs?v=fixture"></script>'
+                '<link rel="stylesheet" href="/assets/css/features/challenge-practice.css?v=fixture">')
+
+    def check_browser_scope(self, text, entry):
+        audit = self.site["Audit"]()
+        audit.feed(text)
+        audit.close()
+        self.site["check_browser_scope"](audit, entry, "synthetic page")
+        return audit
+
+    def test_global_browser_scope_counts_forms_without_event_progress(self):
+        audit = self.check_browser_scope(self.browser_scope_fixture(), sample_entry())
+        self.assertEqual(audit.browser_forms, 1)
+        self.assertEqual(audit.forms, 0)
+        self.check_browser_scope('<article id="article-body"><p>No browser practice.</p></article>', None)
+
+    def test_global_browser_scope_rejects_off_target_forms_and_resources(self):
+        for text in (self.browser_scope_fixture(),
+                     '<script type="module" src="/assets/js/challenge-practice/ui.mjs"></script>',
+                     '<link rel="stylesheet" href="/assets/css/features/challenge-practice.css">'):
+            with self.subTest(text=text), self.assertRaisesRegex(SystemExit, "browser.*scope"):
+                self.check_browser_scope(text, None)
+
+    def test_global_browser_scope_rejects_resource_and_form_mutations(self):
+        mutations = [
+            ('type="module"', 'type="text/javascript"'),
+            ('/ui.mjs', '/worker.mjs'),
+            ('rel="stylesheet"', 'rel="modulepreload"'),
+            ('<form>', '<form action="/submit">'),
+            ('<form>', '<form name="practice">'),
+            ('data-practice-input', 'data-practice-input name="input"'),
+            ('<section data-challenge-practice', '<section data-wrong-practice'),
+            ('data-runtime="example"', 'data-runtime="other"'),
+            ('data-id="fixture-2031-example"', 'data-id="other"'),
+            ('</section>', '<pre>Extra frame</pre></section>'),
+            ('</article><script', '<script'),
+        ]
+        for old, new in mutations:
+            with self.subTest(old=old, new=new), self.assertRaisesRegex(SystemExit, "browser"):
+                self.check_browser_scope(self.browser_scope_fixture().replace(old, new), sample_entry())
 
     def heading_cli(self, *, stale=False, wrong_heading=False):
         entry = catalog_fixture(self.work)

@@ -8,6 +8,7 @@ tags: ["challenges", "crypto"]
 challenge_id: "sekaictf-2022-diffecient"
 challenge_year: 2022
 challenge_checker: false
+challenge_browser: true
 permalink: "/challenges/sekaictf-2022/diffecient/"
 ---
 
@@ -25,9 +26,13 @@ permalink: "/challenges/sekaictf-2022/diffecient/"
 
 Read this challenge as [plain text]({{ '/challenges/sekaictf-2022/diffecient/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2022/diffecient/challenge.json' | relative_url }}).
 
+## Browser practice
+
+{% include challenge-browser.html %}
+
 ## Files
 
-The original challenge used an interactive service. No live server is connected to this post.
+These files describe the original interactive service. The browser practice above is local; no TCP endpoint or retired remote service is connected.
 
 <ul data-archive-files>
   <li><a href="{{ '/assets/challenges/sekaictf-2022-diffecient/diffecient.py' | relative_url }}" data-file-kind="server-source">diffecient.py (archived server source)</a></li>

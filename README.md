@@ -199,7 +199,26 @@ curl -fLo chall.py https://deut-erium.github.io/assets/challenges/google-ctf-202
 
 Commands and JSON URL fields use the configured publishing origin and baseurl. For an unpublished local preview, substitute the loopback origin; JSON also supplies prefixed path fields for this purpose. Serve only generated output, never the checkout or all of `agent_out/`.
 
-Browser practice may use a public dummy reward. It does not need reward secrecy, encrypted unlocks or authoritative local scores. A browser port still needs to reproduce and test the challenge's actual computation and interaction. No browser runtime is included in this archive revision.
+Eleven interactive archive articles now offer **Browser practice**. Their catalog mode remains `interactive`, describing the original service's I/O. The `browser_practice` object names an allowlisted runtime and its variants; generated JSON also provides `launch_path` and `launch_url`, pointing to the article's Browser practice heading. Offline records have no browser-practice metadata. File URLs still refer to the unchanged local downloads.
+
+### Browser terminal and console API
+
+Choose Start on an interactive article to run its JavaScript port in a same-origin Web Worker. The UI module and scoped stylesheet load only on those eleven articles; the Worker and puzzle modules load only on Start. No retired service is contacted, and there is no TCP endpoint for netcat or an external solver. Each new session uses fresh browser entropy. Law and Order's selector offers `corrected` (default) and `released`; these match the separately labeled sources and are not interchangeable.
+
+On the article, the console exposes these methods on `window.challengePractice`:
+
+- `await window.challengePractice.start()` starts the selected variant.
+- `await window.challengePractice.send("1")` sends input. Strings accept LF or CRLF separators; a final newline terminates the last line without adding another blank line. An array such as `["1", "abc"]` sends literal lines without LF. An empty string sends one blank line. Unused lines are discarded on program exit.
+- `await window.challengePractice.stop()` terminates the Worker, including during setup or computation, and returns a session snapshot.
+- `await window.challengePractice.reset()` terminates the old session and clears the displayed transcript, returning an idle snapshot. Saved completion is kept. Start again for a fresh instance; old Worker replies are ignored.
+
+Await Start before sending input, and await each Send before sending another batch. Concurrent Start/Send operations are rejected rather than interleaved. Start and Send resolve at the next input wait or session end with `{output, state, solved}`; state is `awaiting-input` or `end`. Output contains only that operation's program text, without echoing input; setup status is separate. Stop, Reset, runtime errors and deadlines reject any in-flight operation, with partial output in `error.result`, instead of leaving its promise pending. The API does not accept a runtime URL, reward, RNG seed or injected puzzle state. Use the selector before Start to change Law and Order's variant.
+
+Use ASCII input for numeric parsers; Python Unicode-digit spellings are outside the browser contract. The transport accepts Unicode text, but individual ports may reject it. Limits count UTF-8 bytes: 2 MiB per input line, 4 MiB and 4096 lines per batch (including separators), and 8 MiB output per operation. The displayed transcript retains at most 1 MiB and shows a truncation notice. Setup status is capped at 1024 characters and four updates per second. These bounds are browser limits, not changes to puzzle parameters or query quotas. Original alarms terminate the Worker at the original point in the interaction, after setup where specified; there is no extra setup deadline. Stop also works during expensive setup.
+
+The reward is the public string `practice{local_dummy_reward}`. Completion means the port reached the original success predicate, which may leave the original loop running. It is local feedback, not an original event solve or an authoritative score. Completion timestamps are stored under `deuterium-browser-practice-v1`, keyed by full challenge ID plus `:` plus variant; no original answers are stored. Storage failures do not block practice. This storage is separate from `deuterium-solves`, encrypted unlocks and the unchanged `/challenges.json` progress index. The seven event checkers do not accept the dummy reward.
+
+CI runs every `script/test-practice-*.mjs` suite with retained public vectors and AST reference fixtures from `agent_out/challenge-runtime/integration/public-fixtures/`. Some suites inject deterministic entropy or known state to compare the port with the original; those are reference controls, not independent puzzle solves. The Bloom reference needs Python 3 and a C compiler, without extra Python packages or a live service. Source-mutation tests and synthetic HTML/Jekyll fixtures check metadata, allowlists and page scope; real builds and browser execution remain separate checks.
 
 When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register posts, outputs and updated data in the content manifest. Keep flags, generation inputs and solver scratch private. A browser hash check is local feedback, not proof of independent work or a trustworthy competition score. Check source alone, or pass a generated site directory:
 

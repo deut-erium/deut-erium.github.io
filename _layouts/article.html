@@ -7,6 +7,9 @@ layout: base
   {%- else -%}{%- assign _section_title = site.title -%}
 {%- endcase -%}
 {%- assign _source_path = page.source_path | default: page.path | replace: ' ', '%20' -%}
+{%- if page.challenge_browser == true -%}
+<link rel="stylesheet" href="{{ '/assets/css/features/challenge-practice.css' | relative_url }}?v={{ '/assets/css/features/challenge-practice.css' | asset_v }}">
+{%- endif -%}
 <main id="content" class="record-page section-record" itemscope itemtype="https://schema.org/Article">
   <header class="record-head">
     <div class="record-head__key"><span>{{ page.date | date: '%Y.%m.%d' }}</span><span>{{ _section_title }}</span></div>
@@ -32,6 +35,9 @@ layout: base
   <footer class="record-end"><p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p>{%- include qr-share.html -%}</footer>
 </main>
 <script defer src="{{ '/assets/js/article.js' | relative_url }}?v={{ '/assets/js/article.js' | asset_v }}"></script>
+{%- if page.challenge_browser == true -%}
+<script type="module" src="{{ '/assets/js/challenge-practice/ui.mjs' | relative_url }}?v={{ '/assets/js/challenge-practice/ui.mjs' | asset_v }}"></script>
+{%- endif -%}
 {%- if page.widgets -%}
   {%- assign _has_math_widgets = false -%}
   {%- for _widget in page.widgets -%}

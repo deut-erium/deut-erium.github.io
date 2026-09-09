@@ -1,0 +1,38 @@
+{%- assign _browser_entry = site.data.authored_challenges.entries | where: 'id', page.challenge_id | first -%}
+{%- if _browser_entry.browser_practice -%}
+{%- assign _browser_uid = 'browser-practice-' | append: _browser_entry.id -%}
+<div class="challenge-practice" data-challenge-practice data-runtime="{{ _browser_entry.browser_practice.runtime | escape }}" data-id="{{ _browser_entry.id | escape }}" role="group" aria-labelledby="{{ _browser_uid }}-title">
+  <p id="{{ _browser_uid }}-title"><strong>{{ _browser_entry.title | escape }} terminal</strong></p>
+  <p>Practice only. Rewards are public dummy values, not event flags. Completion is saved separately on this device when storage is available. Nothing runs until you choose Start.</p>
+  <div class="challenge-practice__controls">
+    <label for="{{ _browser_uid }}-variant">Version</label>
+    <select id="{{ _browser_uid }}-variant" data-practice-variant disabled>
+      {%- for _browser_variant in _browser_entry.browser_practice.variants -%}
+      <option value="{{ _browser_variant | escape }}">{{ _browser_variant | capitalize | escape }}</option>
+      {%- endfor -%}
+    </select>
+    <button type="button" data-practice-start disabled>Start</button>
+    <button type="button" data-practice-stop disabled>Stop</button>
+    <button type="button" data-practice-reset disabled>Reset</button>
+  </div>
+  <p data-practice-status role="status" aria-live="polite" aria-atomic="true">Browser practice needs JavaScript and module Worker support.</p>
+  <label for="{{ _browser_uid }}-output">Program output</label>
+  <textarea id="{{ _browser_uid }}-output" data-practice-output rows="14" readonly disabled spellcheck="false" wrap="off" aria-live="off"></textarea>
+  <form data-practice-form>
+    <label for="{{ _browser_uid }}-input">Input lines</label>
+    <textarea id="{{ _browser_uid }}-input" data-practice-input rows="3" disabled spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="{{ _browser_uid }}-help"></textarea>
+    <p id="{{ _browser_uid }}-help">Enter sends; Shift+Enter adds a line. Input is not echoed in program output. Stop interrupts computation; Reset clears the session without starting another.</p>
+    <button type="submit" data-practice-send disabled>Send</button>
+  </form>
+  <details>
+    <summary>Browser limits and console API</summary>
+    <p>Limits use UTF-8 bytes: 2 MiB per input line, 4 MiB and 4096 lines per batch (including separators), 8 MiB output per operation, and a 1 MiB visible transcript. Earlier output is replaced with a truncation notice. Setup progress is separate, capped at 1024 characters and four updates per second. Original challenge deadlines still apply after setup; there is no extra setup deadline.</p>
+    <p>The console API is <code>window.challengePractice</code>: <code>start()</code>, <code>send(stringOrLines)</code>, <code>stop()</code>, and <code>reset()</code>. Select the version above before starting. Start and Send resolve at the next input prompt or program exit with <code>{output, state, solved}</code>; output contains only that operation's program text. Concurrent operations are rejected. Stop, Reset, deadlines and Worker failures reject in-flight operations; terminal errors carry partial output in <code>error.result</code>.</p>
+    <p>Strings accept LF or CRLF; a final newline ends the last line without adding another blank line. An empty string sends one blank line. Arrays contain literal lines without LF. Unused lines are discarded if the program exits. Reset keeps saved completion. Public dummy rewards do not unlock the original answer checker.</p>
+    {%- if _browser_entry.slug == 'law-and-order' -%}
+    <p>Corrected is the default Law and Order source version; Released retains the archived released behavior. Completion is recorded separately for each version.</p>
+    {%- endif -%}
+  </details>
+  <noscript><p>JavaScript is disabled. This terminal cannot start; its controls remain disabled.</p></noscript>
+</div>
+{%- endif -%}

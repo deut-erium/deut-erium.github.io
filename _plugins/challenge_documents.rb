@@ -16,6 +16,15 @@ module DeuteriumSite
     EVENT_TEXT_FIELDS = %w[id series label starts_at date_source].freeze
     SPOILER_LINKS = %w[source_url archive_url solution_url].freeze
     STATIC_NOTE = "This is a static archive. No live challenge service or runtime simulation is provided here."
+    BROWSER_NOTE = "The original remote service is retired. Browser practice runs locally with the public dummy reward practice{local_dummy_reward}, not an event flag or authoritative score. No TCP endpoint is provided."
+    BROWSER_RUNTIMES = {
+      "google-ctf-2024-desfunctional" => "desfunctional", "google-ctf-2024-idea" => "idea",
+      "sekaictf-2022-diffecient" => "diffecient", "sekaictf-2023-diffecientwo" => "diffecientwo",
+      "sekaictf-2023-randsubware" => "randsubware", "sekaictf-2025-law-and-order" => "law-and-order",
+      "zh3r0-2021-b00tleg" => "b00tleg", "zh3r0-2021-chaos" => "chaos",
+      "zh3r0-2021-real-mersenne" => "real-mersenne", "zh3r0-2021-cheater-mind" => "cheater-mind",
+      "cyber-apocalypse-2023-blokechain" => "blokechain",
+    }.freeze
     SPOILER_WARNING = "Spoilers: organizer files and upstream source, archive, or solution links may reveal answers. Modified downloads are identified below."
     DIFFECIENT_TOKEN = "ARCHIVE_DIFFECIENT_URL"
 
@@ -167,6 +176,25 @@ module DeuteriumSite
       routes.map { |route| licenses.fetch(route) { invalid("unknown local license route") }.dup }
     end
 
+    def browser_record(entry, host, base, route)
+      if entry["mode"] == "offline"
+        invalid("offline entry cannot have browser_practice") if entry.key?("browser_practice")
+        return nil
+      end
+
+      practice = object(entry["browser_practice"], "entry.browser_practice")
+      runtime = BROWSER_RUNTIMES[entry["id"]]
+      unless runtime && entry["slug"] == runtime && practice["runtime"] == runtime
+        invalid("unsupported browser_practice runtime")
+      end
+      variants = runtime == "law-and-order" ? %w[corrected released] : %w[default]
+      invalid("unsupported browser_practice variants") unless practice["variants"] == variants
+      # Derive launch links from the validated article route, never catalog URLs.
+      { "runtime" => runtime.dup, "variants" => variants,
+        "launch_url" => "#{host}#{base}#{route}#browser-practice",
+        "launch_path" => "#{base}#{route}#browser-practice" }
+    end
+
     def records(site)
       catalog = site.data["authored_challenges"]
       return [] if catalog.nil?
@@ -198,6 +226,7 @@ module DeuteriumSite
         invalid("entry year does not match event") unless year == event["year"]
         mode = entry["mode"]
         invalid("unexpected challenge mode") unless %w[offline interactive].include?(mode)
+        browser = browser_record(entry, host, base, route)
         statement = text(entry["statement"], "entry.statement", empty: true)
         if statement.include?(DIFFECIENT_TOKEN)
           diffecient = ids.fetch("sekaictf-2022-diffecient") { invalid("missing Diffecient article for statement link") }
@@ -214,8 +243,9 @@ module DeuteriumSite
           spoilers[key] = http_url(entry[key], key) unless entry[key].nil?
         end
         notes = array(entry["notes"], "entry.notes").map { |note| text(note, "entry note") }
-        notes << STATIC_NOTE.dup unless notes.include?(STATIC_NOTE)
-        {
+        note = browser ? BROWSER_NOTE : STATIC_NOTE
+        notes << note.dup unless notes.include?(note)
+        record = {
           "id" => id.dup, "title" => text(entry["post_title"], "entry.post_title"),
           "challenge_name" => text(entry["title"], "entry.title"), "year" => year,
           "category" => text(entry["category"], "entry.category"),
@@ -228,6 +258,8 @@ module DeuteriumSite
           "notes" => notes, "files" => files, "spoilers" => spoilers,
           "licenses" => applicable_licenses(entry, licenses),
         }
+        record["browser_practice"] = browser if browser
+        record
       end.sort_by { |record| [-record.fetch("year"), record.fetch("challenge_name").downcase, record.fetch("id")] }
     end
 
@@ -254,6 +286,12 @@ module DeuteriumSite
                "JSON: #{record.fetch('json_url')}", "", "#{record.fetch('statement').fetch('label')}:",
                record.fetch("statement").fetch("text"), "", "Notes:"]
       lines.concat(record.fetch("notes").map { |note| "- #{note}" })
+      if (browser = record["browser_practice"])
+        lines.concat(["", "Browser practice: #{browser.fetch('launch_url')}",
+                      "Runtime: #{browser.fetch('runtime')}",
+                      "Variants: #{browser.fetch('variants').join(', ')} (first is default)",
+                      "Mode describes the original interactive I/O. Start practice from the article, not a TCP client."])
+      end
       lines.concat(["", "Challenge files (primary):"])
       lines << "No player handout is available in this archive." if record.fetch("files").empty?
       record.fetch("files").each { |file| lines.concat(file_lines(file)) }

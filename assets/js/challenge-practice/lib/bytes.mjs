@@ -5,7 +5,8 @@ export function fromHex(text){
   return Uint8Array.from(text.replace(/[\t\n\v\f\r ]/g,'').match(/../g)||[],v=>parseInt(v,16));
 }
 export function integer(text,base=10){
-  let s=String(text).trim(),negative=false;
+  // Python int() accepts Unicode whitespace, but not a BOM or ASCII FS/GS/RS/US.
+  let s=String(text).replace(/^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g,''),negative=false;
   if(s[0]==='-'||s[0]==='+'){negative=s[0]==='-';s=s.slice(1);}
   if(base===16){if(!/^(?:0[xX]_?)?[0-9a-fA-F](?:_?[0-9a-fA-F])*$/.test(s))throw Error('invalid literal for int() with base 16');s=s.replace(/^0[xX]_?/,'').replaceAll('_','');return (negative?-1n:1n)*BigInt('0x'+s);}
   if(base!==10||!/^\d(?:_?\d)*$/.test(s))throw Error('invalid literal for int() with base 10');

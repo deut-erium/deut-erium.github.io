@@ -154,6 +154,16 @@ PRACTICE_IDS = {'assignment000001-0', 'assignment000001-1', 'assignment000001-2'
 PRACTICE_URLS = {'/2021/04/08/challenges.html', '/2021/07/25/injection.html',
                  '/2021/07/25/wiki-mersenne.html', '/2021/07/25/untwist-me.html',
                  '/2021/07/25/mersenne-seed-recovery.html'}
+BROWSER_RUNTIMES = {
+    'google-ctf-2024-desfunctional': 'desfunctional', 'google-ctf-2024-idea': 'idea',
+    'sekaictf-2022-diffecient': 'diffecient', 'sekaictf-2023-diffecientwo': 'diffecientwo',
+    'sekaictf-2023-randsubware': 'randsubware', 'sekaictf-2025-law-and-order': 'law-and-order',
+    'zh3r0-2021-b00tleg': 'b00tleg', 'zh3r0-2021-chaos': 'chaos',
+    'zh3r0-2021-real-mersenne': 'real-mersenne', 'zh3r0-2021-cheater-mind': 'cheater-mind',
+    'cyber-apocalypse-2023-blokechain': 'blokechain',
+}
+BROWSER_UI = '/assets/js/challenge-practice/ui.mjs'
+BROWSER_CSS = '/assets/css/features/challenge-practice.css'
 SPOILER_KEYS = ('archive_url', 'source_url', 'solution_url', 'credit_url', 'contributor_url')
 PIN = re.compile(r'^https://(?:raw\.githubusercontent\.com/[^/]+/[^/]+/|github\.com/[^/]+/[^/]+/(?:blob|tree)/)[0-9a-f]{40}(?:/|#|$)')
 FLAG = re.compile(r'(?:CTF|SEKAI|HTB|zh3r0|flag)\{(?!\.\.\.\})', re.I)
@@ -423,6 +433,78 @@ def organizer_disclosure(page, details, e):
                     if any(url in str(v) for v in n.attrs.values())), 'organizer URL outside disclosure for ' + e['id'])
 
 
+def browser_metadata(e):
+    ident = e['id']
+    if ident in OFFLINE:
+        require('browser_practice' not in e, 'offline browser metadata for ' + ident)
+        return None
+    runtime = BROWSER_RUNTIMES.get(ident)
+    expected = {'runtime': runtime, 'variants': ['corrected', 'released'] if runtime == 'law-and-order' else ['default']}
+    require(runtime is not None and e.get('browser_practice') == expected, 'browser metadata allowlist for ' + ident)
+    return expected
+
+
+def browser_widget(page, article, e):
+    ident = e['id']
+    widgets = page.nodes(attr='data-challenge-practice')
+    require(len(widgets) == int(ident in BROWSER_RUNTIMES), 'browser widget count for ' + ident)
+    if not widgets:
+        return
+    widget = widgets[0]
+    require(widget.tag in {'section', 'div'} and widget.inside('article') and
+            not widget.inside('details', 'data-archive-spoilers') and
+            'challenge-practice' in widget.attrs.get('class', '').split() and
+            widget.attrs.get('data-runtime') == e['browser_practice']['runtime'] and
+            widget.attrs.get('data-id') == ident, 'browser widget binding for ' + ident)
+    headings = [n for n in article.nodes('h2') if n.attrs.get('id') == 'browser-practice']
+    require(len(headings) == 1 and headings[0].text().strip() == 'Browser practice', 'browser heading for ' + ident)
+    require(not any(widget.nodes(t) for t in ('pre', 'script', 'iframe', 'object', 'embed')),
+            'browser widget active/code markup for ' + ident)
+    forms = widget.nodes('form')
+    require(len(forms) == 1 and 'action' not in forms[0].attrs and 'name' not in forms[0].attrs and
+            all('name' not in n.attrs and 'formaction' not in n.attrs and
+                not any(k.startswith('on') or k in {'data-answer', 'data-service-url'} for k in n.attrs)
+                for n in [widget, *widget.nodes()]), 'browser form attributes for ' + ident)
+    for control in ('start', 'stop', 'reset', 'send', 'input', 'output', 'status', 'variant'):
+        require(len(widget.nodes(attr='data-practice-' + control)) == 1, 'browser control count for ' + ident)
+    for control in ('start', 'stop', 'reset', 'send'):
+        button = widget.nodes(attr='data-practice-' + control)[0]
+        require(button.tag == 'button' and 'disabled' in button.attrs and
+                button.attrs.get('type') == ('submit' if control == 'send' else 'button'), 'browser button guard for ' + ident)
+    require(widget.nodes(attr='data-practice-send')[0].inside('form'), 'browser send form for ' + ident)
+    input_node = widget.nodes(attr='data-practice-input')[0]
+    output = widget.nodes(attr='data-practice-output')[0]
+    require(input_node.tag == 'textarea' and input_node.inside('form') and 'disabled' in input_node.attrs,
+            'browser input guard for ' + ident)
+    require(output.tag == 'textarea' and 'readonly' in output.attrs, 'browser output guard for ' + ident)
+    for node in (input_node, output):
+        labels = [n for n in widget.nodes('label') if n.attrs.get('for') == node.attrs.get('id') and n.text().strip()]
+        require(node.attrs.get('aria-label', '').strip() or labels, 'browser accessible name for ' + ident)
+    select = widget.nodes(attr='data-practice-variant')[0]
+    require(select.tag == 'select' and 'disabled' in select.attrs and
+            [n.attrs.get('value') for n in select.nodes('option')] == e['browser_practice']['variants'] and
+            all('selected' not in n.attrs for n in select.nodes('option')[1:]), 'browser variants for ' + ident)
+    require(widget.nodes('noscript') and 'public dummy' in widget.text().lower() and
+            'window.challengePractice' in widget.text(), 'browser practice disclosure for ' + ident)
+
+
+def browser_assets(page, intended, baseurl='', label='page'):
+    scripts = [n for n in page.nodes('script') if urlsplit(n.attrs.get('src', '')).path == baseurl + BROWSER_UI]
+    styles = [n for n in page.nodes('link') if urlsplit(n.attrs.get('href', '')).path == baseurl + BROWSER_CSS]
+    require(len(scripts) == len(styles) == int(intended), 'browser asset scope for ' + label)
+    require(all(n.attrs.get('type') == 'module' and not n.inside('article') for n in scripts), 'browser module placement/type for ' + label)
+    require(all(n.attrs.get('rel') == 'stylesheet' and not n.inside('article') for n in styles), 'browser stylesheet placement/type for ' + label)
+    # Ports and Worker entrypoints must load only on explicit Start, not as HTML resources.
+    allowed = {baseurl + BROWSER_UI, baseurl + BROWSER_CSS} if intended else set()
+    for node in page.nodes():
+        for key in ('src', 'href'):
+            parsed = urlsplit(node.attrs.get(key, ''))
+            path = parsed.path
+            if '/assets/js/challenge-practice/' in path or path.endswith(BROWSER_CSS):
+                require(not parsed.scheme and not parsed.netloc and path in allowed and node in scripts + styles,
+                        'unexpected browser resource for ' + label)
+
+
 def check_source_post(e, event):
     ident = e['id']
     path = safe_path(ROOT, e['post_path'], 'post ' + ident)
@@ -433,8 +515,11 @@ def check_source_post(e, event):
     required = {'layout': 'article', 'title': e['post_title'], 'section': 'tutorials',
                 'challenge_id': ident, 'challenge_year': e['year'],
                 'challenge_checker': ident in OFFLINE, 'permalink': e['url']}
+    if ident in BROWSER_RUNTIMES:
+        required['challenge_browser'] = True
     require(all(metadata.get(k) == v for k, v in required.items()), 'post metadata for ' + ident)
-    require(type(metadata['challenge_checker']) is bool and type(metadata['challenge_year']) is int, 'post metadata types for ' + ident)
+    require(type(metadata['challenge_checker']) is bool and type(metadata['challenge_year']) is int and
+            ('challenge_browser' not in metadata or type(metadata['challenge_browser']) is bool), 'post metadata types for ' + ident)
     require(datetime.fromisoformat(metadata['date']) == datetime.fromisoformat(event['starts_at']), 'post date for ' + ident)
     require(isinstance(metadata.get('description'), str) and metadata['description'].strip(), 'description for ' + ident)
     tags = metadata.get('tags')
@@ -452,7 +537,13 @@ def check_source_post(e, event):
     details = page.nodes('details', 'data-archive-spoilers')
     require(len(details) == 1 and 'open' not in details[0].attrs, 'source spoiler disclosure for ' + ident)
     includes = re.findall(r'\{%\s*include\s+([^%]+?)\s*%\}', body)
-    require(all(s.split()[0] in {'challenge.html', 'challenge-sources.html'} for s in includes), 'unsupported source include for ' + ident)
+    require(all(s.split()[0] in {'challenge.html', 'challenge-sources.html', 'challenge-browser.html'} for s in includes), 'unsupported source include for ' + ident)
+    browsers = [s for s in includes if s.split()[0] == 'challenge-browser.html']
+    require(browsers == (['challenge-browser.html'] if ident in BROWSER_RUNTIMES else []), 'source browser include for ' + ident)
+    if browsers:
+        headings = re.findall(r'^## Browser practice$', body, re.M)
+        require(len(headings) == 1 and body.index('## Browser practice') < body.index('{% include challenge-browser.html %}') < body.index('## Files'),
+                'source browser placement for ' + ident)
     checkers = [s for s in includes if s.split()[0] == 'challenge.html']
     require(len(checkers) == int(ident in OFFLINE), 'source checker count for ' + ident)
     if checkers:
@@ -507,7 +598,7 @@ def verify_source():
     post_paths, metadata = set(), {}
     allowed_keys = {'id', 'event_id', 'slug', 'title', 'post_title', 'url', 'authors', 'category', 'statement', 'statement_label',
                     'files', 'notes', 'practice_url', 'repository', 'revision', 'license', 'contributor_note',
-                    'solution_note', 'editorial_note', 'year', 'post_path', 'mode', 'checker', 'organizer_download', *SPOILER_KEYS}
+                    'solution_note', 'editorial_note', 'year', 'post_path', 'mode', 'checker', 'organizer_download', 'browser_practice', *SPOILER_KEYS}
     for e in entries:
         ident, event = e['id'], next(x for x in events if x['id'] == e['event_id'])
         require(e.keys() <= allowed_keys, 'unsupported catalog fields for ' + ident)
@@ -533,6 +624,10 @@ def verify_source():
                     re.fullmatch(r'[0-9a-f]{32}', c['salt']), 'checker metadata for ' + ident)
         else:
             require('checker' not in e, 'unverified checker for ' + ident)
+        practice = browser_metadata(e)
+        if practice:
+            module = safe_path(ROOT, 'assets/js/challenge-practice/ports/' + practice['runtime'] + '.mjs', 'browser module')
+            require(module.is_file(), 'missing browser module for ' + ident)
         for f in downloads(e):
             integrity(f, ident)
         require(len({f['download_name'] for f in downloads(e)}) == len(downloads(e)), 'duplicate download names for ' + ident)
@@ -573,6 +668,8 @@ def verify_source():
     require(len(law['files']) == 2 and law['files'][0]['sha256'] != law['files'][1]['sha256'], 'Law and Order versions')
     law_warning(' '.join(law['notes']), 'catalog')
     require(sum(len(e['files']) for e in entries) == 26, 'primary file inventory')
+    for path in ('_includes/challenge-browser.html', BROWSER_UI.lstrip('/'), BROWSER_CSS.lstrip('/')):
+        require(safe_path(ROOT, path, 'browser integration').is_file(), 'missing browser integration ' + path)
     return catalog, metadata
 
 
@@ -667,9 +764,11 @@ def verify_rendered(site, baseurl, catalog, metadata):
             matching = [n for n in page.nodes('a') if n.attrs.get('href') == url]
             require(matching and all(n.inside('details', 'data-archive-spoilers') for n in matching), 'spoiler link outside disclosure for ' + ident)
         forms = page.nodes('form')
-        require(len(forms) == int(ident in OFFLINE), 'checker count for ' + ident)
-        if forms:
-            form, c = forms[0], e['checker']
+        checkers = page.nodes('form', 'data-flag-check')
+        require(len(forms) == 1 and len(checkers) == int(ident in OFFLINE), 'checker count for ' + ident)
+        browser_widget(page, article, e)
+        if checkers:
+            form, c = checkers[0], e['checker']
             require(form.inside('article') and 'data-flag-check' in form.attrs and 'data-answer' not in form.attrs and
                     form.attrs.get('action', '') in {'', '#'} and
                     all(form.attrs.get(k) == v for k, v in {'data-sha256': c['sha256'], 'data-salt': c['salt'],
@@ -701,6 +800,13 @@ def verify_rendered(site, baseurl, catalog, metadata):
                                                     'local link ' + ident).is_file(), 'broken local link for ' + ident)
         if e['slug'] == 'law-and-order':
             law_warning(' '.join(n.text() for n in article.nodes('p')), 'rendered post')
+    intended = {e['url'].lstrip('/') + 'index.html' for e in entries if e['id'] in BROWSER_RUNTIMES}
+    for path in site.rglob('*.html'):
+        rel = path.relative_to(site).as_posix()
+        page = Page(safe_path(site, rel, 'browser scope').read_text())
+        browser_assets(page, rel in intended, baseurl, rel)
+        if rel not in intended:
+            require(not page.nodes(attr='data-challenge-practice'), 'browser widget outside intended page')
     hosted_files(site, catalog)
     _, assignments = load('/ctf-tutorials/assignments.html')
     require(all(baseurl + p['url'] in hrefs(assignments) for p in catalog['practice']), 'legacy practice listing')
@@ -736,7 +842,8 @@ def verify_rendered(site, baseurl, catalog, metadata):
     sitemap = ET.fromstring(safe_path(site, 'sitemap.xml', 'sitemap').read_text())
     locations = [n.text for n in sitemap.iter() if n.tag.rsplit('}', 1)[-1] == 'loc']
     require(all(locations.count(ORIGIN + baseurl + e['url']) == 1 for e in entries), 'archive sitemap coverage')
-    return {'rendered_entries': 18, 'practice_checkers': 7, 'authored_checkers': 7, 'posts': len(posts), 'baseurl': baseurl}
+    return {'rendered_entries': 18, 'practice_checkers': 7, 'authored_checkers': 7,
+            'browser_practice_forms': 11, 'posts': len(posts), 'baseurl': baseurl}
 
 
 def verify(site=None, baseurl=''):
@@ -744,7 +851,8 @@ def verify(site=None, baseurl=''):
         catalog, metadata = verify_source()
         result = {'status': 'pass', 'source_entries': 18, 'file_links': 26, 'original_files': 21,
                   'fixed_outputs': 5, 'organizer_practice_files': 1, 'licenses': 3,
-                  'download_commands': 63, 'representation_commands': 36, 'offline_checkers': 7}
+                  'download_commands': 63, 'representation_commands': 36, 'offline_checkers': 7,
+                  'browser_practice_entries': 11}
         if site is not None:
             result.update(verify_rendered(Path(site), baseurl, catalog, metadata))
         return result

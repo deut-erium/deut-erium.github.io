@@ -17,7 +17,7 @@ require_relative "../_plugins/challenges_index"
 class ChallengeDocumentsTest < Minitest::Test
   Documents = DeuteriumSite::ChallengeDocuments
   ROOT = File.expand_path("..", __dir__)
-  SCRATCH = File.join(ROOT, "agent_out/challenge-hosting/documents/fixtures")
+  SCRATCH = File.join(ROOT, "agent_out/challenge-runtime/integration/documents/fixtures")
   PUBLIC_CATALOG = File.read(File.join(ROOT, "_data/authored_challenges.json"), encoding: "UTF-8").freeze
   HOST = "https://fixture.invalid:8443"
   RECORD_KEYS = %w[id title challenge_name year category authors mode event article_url article_path
@@ -58,6 +58,10 @@ class ChallengeDocumentsTest < Minitest::Test
     Documents.records(unit_site(baseurl, **overrides))
   end
 
+  def record_keys(entry)
+    (RECORD_KEYS + (entry["mode"] == "interactive" ? ["browser_practice"] : [])).sort
+  end
+
   def write(path, bytes, root: @source)
     full = File.join(root, path.delete_prefix("/"))
     FileUtils.mkdir_p(File.dirname(full))
@@ -76,6 +80,7 @@ class ChallengeDocumentsTest < Minitest::Test
 
   def install_fixture
     write("_layouts/shell.html", "---\n---\n<html><script>LAYOUT_SENTINEL</script>{{ content }}</html>")
+    write("_includes/challenge-browser.html", File.read(File.join(ROOT, "_includes/challenge-browser.html")))
     write("scoreboard/index.html", '<script id="scoreboard-known" type="application/json">[]</script>')
     @catalog.fetch("entries").each do |entry|
       # Preserve public ids, routes, names and descriptions, never real graders.
@@ -88,7 +93,13 @@ class ChallengeDocumentsTest < Minitest::Test
         }
         body += %(\n\n<form data-flag-check data-sha256="#{checker.fetch('sha256')}" data-salt="#{checker.fetch('salt')}"><input data-flag-input id="flag-#{checker.fetch('id')}"></form>)
       end
-      header = { "title" => entry.fetch("post_title"), "permalink" => entry.fetch("url") }
+      if entry["browser_practice"]
+        # Real include with synthetic article content, not a release build.
+        # Practice forms must never enter the event progress index.
+        body += "\n\n## Browser practice\n\n{% include challenge-browser.html %}"
+      end
+      header = { "title" => entry.fetch("post_title"), "permalink" => entry.fetch("url"),
+                 "challenge_id" => entry.fetch("id"), "challenge_browser" => entry.key?("browser_practice") }
       write(entry.fetch("post_path"), "#{header.to_yaml}---\n#{body}\n")
       (entry.fetch("files") + [entry["organizer_download"]].compact).each { |file| install_file(file) }
     end
@@ -116,6 +127,7 @@ class ChallengeDocumentsTest < Minitest::Test
       s.process
       index = JSON.parse(read_output("/challenges/index.json"))
       assert_equal 18, index.size
+      assert_equal 11, index.count { |row| row.key?("browser_practice") }
       assert_equal 37, document_bytes.size
       assert_equal 18, s.posts.docs.size
       assert_equal before, JSON.generate(@catalog)
@@ -123,18 +135,42 @@ class ChallengeDocumentsTest < Minitest::Test
       index.each do |record|
         entry = expected.fetch(record.fetch("id"))
         route = entry.fetch("url")
-        assert_equal RECORD_KEYS, record.keys.sort
+        assert_equal record_keys(entry), record.keys.sort
         assert_equal entry.fetch("post_title"), record.fetch("title")
         assert_equal entry.fetch("title"), record.fetch("challenge_name")
         assert_equal @catalog.fetch("events").find { |event| event["id"] == entry["event_id"] }, record.fetch("event")
         assert_equal record, JSON.parse(read_output(route + "challenge.json"))
+        article = read_output(route + "index.html")
+        assert_equal 1, article.scan(/<form\b/).length
+        assert_equal (entry["mode"] == "interactive" ? 1 : 0), article.scan(/\bdata-challenge-practice\b/).length
+        if entry["browser_practice"]
+          assert_includes article, %(data-runtime="#{entry.fetch('slug')}")
+          assert_includes article, %(data-id="#{entry.fetch('id')}")
+          assert_equal entry.fetch("browser_practice").fetch("variants"), article.scan(/<option value="([^"]+)"/).flatten
+          refute_match(/<pre\b|data-flag-check/, article)
+        end
         text = read_output(route + "challenge.txt")
         assert text.valid_encoding?
         assert text.start_with?(entry.fetch("post_title") + "\n")
         assert_includes text, "Authors: #{entry.fetch('authors').join(', ')}"
         assert_includes text, "Mode: #{entry.fetch('mode')}"
         assert_includes text, record.fetch("statement").fetch("text")
-        assert_includes text, "No live challenge service"
+        if entry["mode"] == "interactive"
+          browser = record.fetch("browser_practice")
+          assert_equal %w[launch_path launch_url runtime variants], browser.keys.sort
+          assert_equal entry.fetch("browser_practice").fetch("runtime"), browser.fetch("runtime")
+          assert_equal entry.fetch("browser_practice").fetch("variants"), browser.fetch("variants")
+          assert_equal baseurl + route + "#browser-practice", browser.fetch("launch_path")
+          assert_equal HOST + browser.fetch("launch_path"), browser.fetch("launch_url")
+          assert_includes text, browser.fetch("launch_url")
+          assert_includes text, "public dummy reward practice{local_dummy_reward}"
+          assert_includes text, "original remote service is retired"
+          assert_includes text, "No TCP endpoint"
+          refute_includes text, Documents::STATIC_NOTE
+        else
+          refute record.key?("browser_practice")
+          assert_includes text, "No live challenge service"
+        end
         assert_includes text, "SPOILERS - organizer files and solutions"
         refute_match(/<html|<script|LAYOUT_SENTINEL|\{%|\{\{/, text)
         %w[article text json].each do |kind|
@@ -277,18 +313,73 @@ class ChallengeDocumentsTest < Minitest::Test
     @catalog.fetch("licenses").each { |license| license.merge!(extras) }
     @catalog.fetch("entries").each do |entry|
       entry.merge!(extras)
+      entry["browser_practice"]&.merge!(extras.reject { |key, _| key == "runtime" })
+      entry["browser_practice"]&.merge!("launch_path" => SENTINEL, "launch_url" => SENTINEL,
+                                       "module_url" => SENTINEL, "reward" => SENTINEL, "seed" => SENTINEL)
       entry["license"]&.merge!(extras)
       (entry.fetch("files") + [entry["organizer_download"]].compact).each { |file| file.merge!(extras) }
     end
     rows = records
     refute_includes Documents.json_bytes(rows), SENTINEL
     rows.each do |row|
-      assert_equal RECORD_KEYS, row.keys.sort
+      assert_equal record_keys(row), row.keys.sort
       refute_includes Documents.plain_text(row), SENTINEL
     end
     # Even a whitelisted field cannot smuggle an arbitrary nested object.
     @catalog.fetch("entries").first["authors"] = [extras]
     assert_invalid(/author/) { records }
+  end
+
+  def test_browser_metadata_is_required_and_runtime_variants_are_allowlisted
+    first = -> { @catalog.fetch("entries").first }
+    mutations = [
+      -> { first.call.delete("browser_practice") },
+      -> { first.call["browser_practice"] = nil },
+      -> { first.call["browser_practice"] = false },
+      -> { first.call["browser_practice"] = "desfunctional" },
+      -> { first.call["browser_practice"] = {} },
+      -> { first.call["browser_practice"]["runtime"] = "idea" },
+      -> { first.call["browser_practice"]["runtime"] = "../idea" },
+      -> { first.call["browser_practice"]["runtime"] = "https://fixture.invalid/idea.mjs" },
+      -> { first.call["browser_practice"]["runtime"] = { "module" => SENTINEL } },
+      -> { first.call["browser_practice"]["variants"] = "default" },
+      -> { first.call["browser_practice"]["variants"] = ["released"] },
+      -> { first.call["browser_practice"]["variants"] = ["default", "default"] },
+      -> { first.call["slug"] = "idea" },
+      -> { first.call["id"] = "unknown-runtime" },
+      -> { @catalog.fetch("entries").find { |e| e["slug"] == "law-and-order" }["browser_practice"]["variants"].reverse! },
+      -> { @catalog.fetch("entries").find { |e| e["mode"] == "offline" }["browser_practice"] = nil },
+      -> { @catalog.fetch("entries").find { |e| e["mode"] == "offline" }["browser_practice"] = first.call["browser_practice"] },
+    ]
+    mutations.each do |mutate|
+      @catalog = JSON.parse(PUBLIC_CATALOG)
+      mutate.call
+      assert_invalid(/browser_practice/) { records }
+    end
+  end
+
+  def test_real_article_layout_loads_browser_assets_only_for_boolean_true
+    # Actual layout, synthetic content and dependencies; not a release build.
+    write("_layouts/article.html", File.read(File.join(ROOT, "_layouts/article.html")))
+    write("_layouts/base.html", "---\n---\n<!doctype html><html><body>{{ content }}</body></html>")
+    write("_includes/qr-share.html", "")
+    [true, false, "true", 1, nil].each_with_index do |flag, i|
+      header = { "layout" => "article", "title" => "Synthetic article #{i}", "challenge_browser" => flag }
+      write("fixture-#{i}.html", "#{header.to_yaml}---\n<p>Synthetic body.</p>")
+    end
+    ["", "/preview"].each do |baseurl|
+      site(baseurl).process
+      5.times do |i|
+        html = read_output("/fixture-#{i}.html")
+        body = html[/<article\b.*?<\/article>/m]
+        refute_nil body
+        refute_match(/<script|<link/, body)
+        assert_equal (i.zero? ? 1 : 0), html.scan(%r{<script type="module" src="#{baseurl}/assets/js/challenge-practice/ui\.mjs\?}).length
+        assert_equal (i.zero? ? 1 : 0), html.scan(%r{<link rel="stylesheet" href="#{baseurl}/assets/css/features/challenge-practice\.css\?}).length
+        assert_equal 1, html.scan(%r{<script defer src="#{baseurl}/assets/js/article\.js\?}).length
+        assert_includes html, 'aria-label="Article navigation"'
+      end
+    end
   end
 
   def test_missing_catalog_is_a_noop_and_empty_catalog_emits_an_empty_array

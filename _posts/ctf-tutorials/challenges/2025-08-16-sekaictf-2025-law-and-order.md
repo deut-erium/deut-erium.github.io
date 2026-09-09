@@ -8,6 +8,7 @@ tags: ["challenges", "crypto"]
 challenge_id: "sekaictf-2025-law-and-order"
 challenge_year: 2025
 challenge_checker: false
+challenge_browser: true
 permalink: "/challenges/sekaictf-2025/law-and-order/"
 ---
 
@@ -23,9 +24,13 @@ permalink: "/challenges/sekaictf-2025/law-and-order/"
 
 Read this challenge as [plain text]({{ '/challenges/sekaictf-2025/law-and-order/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2025/law-and-order/challenge.json' | relative_url }}).
 
+## Browser practice
+
+{% include challenge-browser.html %}
+
 ## Files
 
-The original challenge used an interactive service. No live server is connected to this post.
+These files describe the original interactive service. The browser practice above is local; no TCP endpoint or retired remote service is connected.
 
 <ul data-archive-files>
   <li><a href="{{ '/assets/challenges/sekaictf-2025-law-and-order/released-chall.py' | relative_url }}" data-file-kind="handout">chall.py (released handout, incorrect version)</a></li>
@@ -34,7 +39,7 @@ The original challenge used an interactive service. No live server is connected 
 
 The organizers report that the released handout was an incorrect version. The archived server source and solution are for the corrected version; they do not match the released handout.
 
-Originally a service challenge. No live instance is provided here.
+The original remote service is retired. Browser practice offers corrected (default) and released variants with a public dummy reward.
 
 ## Download
 
