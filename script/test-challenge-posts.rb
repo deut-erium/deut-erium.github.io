@@ -15,6 +15,7 @@ require "jekyll"
 require "open3"
 require_relative "../_plugins/section_metadata"
 require_relative "../_plugins/challenges_index"
+require_relative "../_plugins/qr_share"
 
 class ChallengePostsTest < Minitest::Test
   ROOT = File.expand_path("..", __dir__)
@@ -398,6 +399,22 @@ class ChallengePostsTest < Minitest::Test
     assert_equal ["1", "2"], hints.map { |hint| hint["data-hint"] }
     assert_equal ["first clue", "second clue"], hints.map(&:text)
     assert hints.all? { |hint| hint.key?("hidden") && hint["data-hint-for"] == "hint-fixture" }
+  end
+
+  def test_qr_payload_and_asset_link_respect_baseurl
+    ['', '/preview'].each do |baseurl|
+      s = site(baseurl)
+      url = '/challenges/fixture/example/'
+      target = "https://fixture.invalid#{baseurl}#{url}"
+      assert_equal target, Deuterium::QRShare.canonical_url(s, url)
+      rendered = Liquid::Template.parse('{% qr_url %}|{% qr_href %}|{% qr_svg %}').render!(
+        {}, registers: { site: s, page: { 'url' => url } })
+      url_text, asset, svg = rendered.split('|', 3)
+      assert_equal target, url_text
+      assert_equal "#{baseurl}/qr/challenges-fixture-example.svg", asset
+      assert_includes svg, "QR code linking to #{target}"
+      assert_equal Deuterium::QRShare.svg_inline(s, url), svg
+    end
   end
 
   def test_global_feed_preserves_tied_archive_order_and_item_ids

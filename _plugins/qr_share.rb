@@ -36,7 +36,7 @@ module Deuterium
         page_url = page_url.to_s
         return nil if page_url.empty?
 
-        "#{origin(site)}#{page_url}"
+        "#{origin(site)}#{site&.baseurl}#{page_url}"
       end
 
       # Filesystem-safe asset name derived from the route. Underscores, dots,
@@ -130,7 +130,8 @@ module Deuterium
         page = context.registers[:page] || {}
         return "" if page["url"].to_s.empty?
 
-        Deuterium::QRShare.asset_href(page["url"])
+        href = "#{context.registers[:site]&.baseurl}#{Deuterium::QRShare.asset_href(page['url'])}"
+        Deuterium::QRShare.escape_html(href)
       end
     end
 
