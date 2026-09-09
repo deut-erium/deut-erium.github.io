@@ -16,6 +16,8 @@ key: assignment000001
 Challenges are the way to get quick hands on tasks and challenges made by me.  
 There will be plenty of hands-on experience through a guided set of static challenges.  
 <!--more-->
+For my event challenges, see the [CTF challenge archive]({{ '/challenges/' | relative_url }}).
+
 There will be a couple of jeopardy style tasks which you are supposed to do. On completing a task, you will recieve a flag which you can submit in the text box to verify the correctness of you solution.  
 If done correctly, the message `Absolutely correct! 🥳` should pop up. `Incorrect, try harder 🥺` will pop up otherwise. So be careful while submitting.  
 Also note that all the flags would be case sensitive.

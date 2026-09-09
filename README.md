@@ -179,6 +179,19 @@ New files under `locked/` require source-commit, byte-count and hash registratio
 
 Run `bundle exec ruby script/test-unlisted-pages.rb` for the offline Jekyll publication checks. The asset-bundler suite also tests an unlisted producer/WebCrypto image roundtrip. No example article is published by either test.
 
+## Authored challenge archive
+
+`/challenges/` lists event challenges from `_data/authored_challenges.json`. Each entry has a normal page under `challenges/`, outside the posts collection. The existing Assignments URL lists local practice variants and links to the event archive. Keep those variants' routes and checker IDs unchanged.
+
+File links point to pinned public repository revisions. Player handouts, archived server source and spoiler-bearing organizer files have separate labels. Law and Order retains both the incorrect released handout and corrected source, with an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. These pages do not host challenge services or verify placeholder flags.
+
+When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register the new pages and updated data in the content manifest. Check source alone, or pass a generated site directory:
+
+```sh
+python3 script/verify-challenge-archive.py
+python3 script/verify-challenge-archive.py agent_out/release/site
+```
+
 ## Locked posts with private images and attachments
 
 Keep the HTML body and its assets outside the checkout, or together under the top-level `agent_out/` directory. Pass `--embed-assets` to the encryptor to bundle local assets in memory before encryption. No bundled plaintext file is written by this mode.

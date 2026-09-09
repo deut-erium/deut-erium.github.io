@@ -1,0 +1,26 @@
+---
+layout: page
+title: Challenges
+description: Challenges I wrote for Google CTF, SekaiCTF, zh3r0 and Hack The Box.
+section: tutorials
+permalink: /challenges/
+---
+<p>{{ site.data.authored_challenges.entries.size }} event challenges. Each page links the archived files, with solutions kept in a separate spoiler section.</p>
+{%- assign _series = site.data.authored_challenges.events | group_by: 'series' -%}
+{%- for _group in _series -%}
+<section data-challenge-series="{{ _group.name | escape }}">
+  <h2>{{ _group.name | escape }}</h2>
+  {%- for _event in _group.items -%}
+    <h3>{{ _event.label | escape }}</h3>
+    {%- assign _entries = site.data.authored_challenges.entries | where: 'event_id', _event.id -%}
+    <ul data-challenge-event="{{ _event.id | escape }}">
+      {%- for _entry in _entries -%}
+      <li><a href="{{ _entry.url | relative_url }}" data-archive-entry="{{ _entry.id | escape }}">{{ _entry.title | escape }}</a>{% if _entry.category != 'Cryptography' %} ({{ _entry.category | escape }}){% endif %}</li>
+      {%- endfor -%}
+    </ul>
+  {%- endfor -%}
+</section>
+{%- endfor -%}
+<h2>Practice challenges</h2>
+<p>These have their own flags and local checks.</p>
+{% include practice-challenges.html %}

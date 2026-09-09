@@ -49,6 +49,7 @@ jobs:
           set -euo pipefail
           python3 script/verify-imported-content.py
           python3 script/verify-static-app.py
+          python3 script/verify-challenge-archive.py
           node --test script/test-tetris-practice.mjs script/test-tetrasquares-urls.mjs
           node --test script/test-css-rule-selectors.mjs
           node --test script/test-cookie-banner.mjs
@@ -77,6 +78,7 @@ jobs:
           cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
 
           python3 script/verify-site.py "$out/a"
+          python3 script/verify-challenge-archive.py "$out/a"
           python3 script/test-tetrasquares-site.py "$out/a"
           python3 script/verify-code-parity.py "$out/a"
           python3 script/verify-heading-parity.py "$out/a"
