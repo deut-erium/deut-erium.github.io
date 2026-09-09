@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "Diffecientwo"
+title: "Challenge archive: SekaiCTF 2023 - Diffecientwo"
 description: "SekaiCTF 2023 - Cryptography."
 date: "2023-08-25T16:00:00+00:00"
 section: "tutorials"
@@ -23,12 +23,14 @@ permalink: "/challenges/sekaictf-2023/diffecientwo/"
 >
 > We have decided to change our policies and to achieve better marketing, we are offering free API KEY to customers sharing `#SEKAICTF #DEUTERIUM #DIFFECIENTWO #CRYPTO` on *LonelyFans* (our premium business partner).
 
+Read this challenge as [plain text]({{ '/challenges/sekaictf-2023/diffecientwo/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2023/diffecientwo/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2023/4dc0f1fb2836c64b3a502e2538ba32530996b8c9/crypto/diffecientwo/dist/diffecientwo.py" data-file-kind="handout">diffecientwo.py</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2023-diffecientwo/diffecientwo.py' | relative_url }}" data-file-kind="handout">diffecientwo.py</a></li>
 </ul>
 
 Originally a service challenge. Recreating the service requires the organizer source; no live instance is provided here.
@@ -38,8 +40,12 @@ Originally a service challenge. Recreating the service requires the organizer so
 ```sh
 mkdir -p sekaictf-2023-diffecientwo
 cd sekaictf-2023-diffecientwo
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/sekaictf-2023/diffecientwo/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/sekaictf-2023/diffecientwo/challenge.json' | absolute_url }}"
 curl --fail --location --output diffecientwo.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2023/4dc0f1fb2836c64b3a502e2538ba32530996b8c9/crypto/diffecientwo/dist/diffecientwo.py"
+  "{{ '/assets/challenges/sekaictf-2023-diffecientwo/diffecientwo.py' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "Blokechain"
+title: "Challenge archive: HTB Cyber Apocalypse 2023 - Blokechain"
 description: "Hack The Box 2023 - Cryptography."
 date: "2023-03-18T13:00:00+00:00"
 section: "tutorials"
@@ -21,12 +21,14 @@ permalink: "/challenges/cyber-apocalypse-2023/blokechain/"
 
 Mine blocks against a private hash function and earn enough to destroy the vessels.
 
+Read this challenge as [plain text]({{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/cyberkarta/HTBCyberApocalypse2023/d3fc66c54303eb6f2a6cd831c786f054bb8214c6/crypto_blokechain.zip" data-file-kind="handout">crypto_blokechain.zip</a></li>
+  <li><a href="{{ '/assets/challenges/cyber-apocalypse-2023-blokechain/crypto_blokechain.zip' | relative_url }}" data-file-kind="handout">crypto_blokechain.zip</a></li>
 </ul>
 
 The handout contains server.py and prints a placeholder when you win; it does not include the event flag.
@@ -38,8 +40,12 @@ This copy comes from Cyberkarta's community archive, not an official HTB reposit
 ```sh
 mkdir -p cyber-apocalypse-2023-blokechain
 cd cyber-apocalypse-2023-blokechain
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/cyber-apocalypse-2023/blokechain/challenge.json' | absolute_url }}"
 curl --fail --location --output crypto_blokechain.zip \
-  "https://raw.githubusercontent.com/cyberkarta/HTBCyberApocalypse2023/d3fc66c54303eb6f2a6cd831c786f054bb8214c6/crypto_blokechain.zip"
+  "{{ '/assets/challenges/cyber-apocalypse-2023-blokechain/crypto_blokechain.zip' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Offline mutations of copied public sources and synthetic rendered contracts.
 
-The HTML fixtures test the gate, not Jekyll or a browser. No challenge download,
-answer file, legacy article body, dependency installation or build is needed.
+The HTML fixtures test the gate, not Jekyll or a browser. Only public mirrored downloads are copied; they are never executed. No answer
+file, legacy article body, dependency installation or build is needed.
 """
 import copy
+import hashlib
 from html import escape
 import importlib.util
 import json
@@ -13,9 +14,10 @@ import re
 import shutil
 import sys
 import tempfile
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'agent_out/challenge-posts/archive-gates'
+OUT = ROOT/'agent_out/challenge-hosting/archive-gates'
 OUT.mkdir(parents=True, exist_ok=True)
 sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location('archive_check', ROOT/'script/verify-challenge-archive.py')
@@ -83,7 +85,12 @@ def rendered_fixture(source, site, baseurl=''):
         contents += ''.join('<p>' + escape(note) + '</p>' for note in e['notes'])
         contents += '<ul>' + ''.join('<li>' + anchor(baseurl + f['url'] if f['url'].startswith('/') else f['url'], f['label'],
                                                     f'data-file-kind="{f["kind"]}"') + '</li>' for f in e['files']) + '</ul>'
-        files = e['files'] + ([e['organizer_download']] if 'organizer_download' in e else [])
+        contents += ''.join(anchor(baseurl + route, 'Terminal representation') for route in gate.terminal_routes(e))
+        # Stand-ins establish link/inventory coverage, not the separate terminal schema.
+        for route in gate.terminal_routes(e):
+            write(html_path(site, route), '{}\n' if route.endswith('.json') else e['post_title'] + '\n')
+        files = gate.downloads(e) + [{'url': e['url'] + name, 'download_name': name}
+                                    for name in ('challenge.txt', 'challenge.json')]
         code = 'mkdir -p ' + ident + '\ncd ' + ident + '\n'
         for f in files:
             url = ORIGIN + baseurl + f['url'] if f['url'].startswith('/') else f['url']
@@ -94,23 +101,24 @@ def rendered_fixture(source, site, baseurl=''):
         if 'checker' in e:
             c = e['checker']
             contents += (f'<form data-flag-check data-sha256="{c["sha256"]}" data-salt="{c["salt"]}" '
-                         f'data-flag-prefix="{c["prefix"]}" data-challenge-title="{escape(e["title"], quote=True)}">'
+                         f'data-flag-prefix="{c["prefix"]}" data-challenge-title="{escape(e["post_title"], quote=True)}">'
                          f'<input data-flag-input id="flag-{c["id"]}" placeholder="{c["prefix"]}{{...}}">'
                          '<button type="submit" disabled>Check flag</button></form>')
-            progress.append({'id': c['id'], 'page': baseurl + e['url'], 'title': e['title'], 'sha256': c['sha256'], 'salt': c['salt'], 'aliases': []})
+            progress.append({'id': c['id'], 'page': baseurl + e['url'], 'title': e['post_title'], 'sha256': c['sha256'], 'salt': c['salt'], 'aliases': []})
         contents += '<details data-archive-spoilers><summary>Sources and solutions (spoilers)</summary>'
         if 'organizer_download' in e:
-            contents += block
+            contents += block + anchor(e['organizer_download']['upstream_url'], 'Original organizer source (spoilers)')
         for key in ('archive_url', 'source_url', 'solution_url', 'credit_url', 'contributor_url'):
             if e.get(key):
                 contents += anchor(e[key], key)
         if e.get('license'):
             contents += anchor(e['license']['url'], e['license']['name'])
+            contents += ''.join(anchor(baseurl + url, 'Local license') for url in e['license']['local_urls'])
         contents += '</details>' + anchor(baseurl + '/challenges/', 'All challenges') + anchor(baseurl + '/ctf-tutorials/', 'Tutorials')
         if e.get('practice_url'):
             contents += anchor(baseurl + e['practice_url'], 'Practice variant')
         html = (f'<html><head><link rel="canonical" href="{ORIGIN}{baseurl}{e["url"]}"></head>'
-                f'<body class="layout-article section-tutorials"><h1>{escape(e["title"])}</h1>'
+                f'<body class="layout-article section-tutorials"><h1>{escape(e["post_title"])}</h1>'
                 f'<dl><dt>Event began</dt><dd><time datetime="{date}">{date[:10]}</time></dd></dl>'
                 f'<article id="article-body"><div data-challenge-archive="{ident}">{contents}</div></article>'
                 f'<script src="{baseurl}/assets/js/article.js?v=fixture"></script>')
@@ -118,16 +126,17 @@ def rendered_fixture(source, site, baseurl=''):
             html += f'<script src="{baseurl}/assets/js/challenge.js?v=fixture"></script>'
         write(html_path(site, e['url']), html + '</body></html>')
         metadata, _ = gate.front_matter((source/e['post_path']).read_text(), ident)
-        posts.append({'title': e['title'], 'date': date, 'route': ORIGIN + baseurl + e['url'],
+        posts.append({'title': e['post_title'], 'date': date, 'route': ORIGIN + baseurl + e['url'],
                       'section': 'tutorials', 'tags': metadata['tags'], 'description': metadata['description'], 'has_code': True, 'has_math': False})
-        rows.append('<li data-record data-section="tutorials">' + anchor(baseurl + e['url'], e['title']) + '</li>')
+        rows.append('<li data-record data-section="tutorials">' + anchor(baseurl + e['url'], e['post_title']) + '</li>')
     catalog = ''
     for year in (2025, 2024, 2023, 2022, 2021):
         catalog += f'<section data-challenge-year="{year}"><h2>{year}</h2>'
         for e in sorted((e for e in data['entries'] if e['year'] == year), key=lambda e: e['title'].lower()):
-            catalog += anchor(baseurl + e['url'], e['title'], f'data-archive-entry="{e["id"]}"')
+            catalog += anchor(baseurl + e['url'], e['post_title'], f'data-archive-entry="{e["id"]}"')
         catalog += '</section>'
     write(site/'challenges/index.html', catalog)
+    write(site/'challenges/index.json', '{}\n')
     for route in ('/archive.html', '/ctf-tutorials/', '/ctf-tutorials/archive.html'):
         write(html_path(site, route), '<ol>' + ''.join(rows) + '</ol>' + anchor(baseurl + '/challenges/', 'Challenges'))
     for route in ('/WriteUps/', '/ramblings/'):
@@ -169,6 +178,32 @@ def mutate_json(path, function):
     data = json.loads(path.read_text())
     function(data)
     path.write_text(json.dumps(data))
+
+
+def co_mutate_bytes(root, select):
+    """Change an artifact and its advertised hash/length, but never the gate pins."""
+    path = root/'_data/authored_challenges.json'
+    data = json.loads(path.read_text())
+    record = select(data)
+    payload = b'synthetic co-mutated artifact\n'
+    (root/record['url'].lstrip('/')).write_bytes(payload)
+    record.update(bytes=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    path.write_text(json.dumps(data))
+
+
+def move_and_symlink(root, path):
+    # Targets are public fixture copies, never private files or external paths.
+    target = root/'symlink-target'
+    path.rename(target)
+    path.symlink_to(target, target_is_directory=target.is_dir())
+
+
+def remove_source_command(path, name):
+    text = path.read_text()
+    pattern = r'^curl[^\n]*--output ' + re.escape(name) + r' \\\n[^\n]*\n'
+    changed, count = re.subn(pattern, '', text, flags=re.M)
+    assert count == 1, 'fixture command target missing'
+    path.write_text(changed)
 
 
 def run_case(template, root, label, catalog=None, source=None, rendered=None, valid=False, reason=None, baseurl='', render=False):
@@ -258,8 +293,8 @@ def main():
         cat('unpinned archive', lambda d: entry(d).update(archive_url=entry(d)['archive_url'].replace(entry(d)['revision'], 'main')), 'unpinned archive_url')
         cat('unpinned credit', lambda d: entry(d, LAW).update(credit_url='https://github.com/example/repo/blob/main/README.md'), 'unpinned credit_url')
         cat('wrong declared revision', lambda d: entry(d).update(revision='0'*40), 'declared revision')
-        cat('foreign handout URL', lambda d: entry(d)['files'][0].update(url='https://example.invalid/file.py'), 'original file URLs/roles')
-        cat('changed pinned handout URL', lambda d: entry(d)['files'][0].update(url=entry(d)['files'][0]['url'].replace('chall.py', 'other.py')), 'original file URLs/roles')
+        cat('foreign handout URL', lambda d: entry(d)['files'][0].update(url='https://example.invalid/file.py'), 'original local URL')
+        cat('changed pinned handout URL', lambda d: entry(d)['files'][0].update(url=entry(d)['files'][0]['url'].replace('chall.py', 'other.py')), 'original local URL')
         cat('server source mislabeled handout', lambda d: entry(d, FIXED)['files'][0].update(kind='handout'), 'original file URLs/roles')
         cat('handout mislabeled server source', lambda d: entry(d)['files'][0].update(kind='server-source'), 'original file URLs/roles')
         cat('unexpected file role', lambda d: entry(d)['files'][0].update(kind='answer'), 'original file URLs/roles')
@@ -276,8 +311,8 @@ def main():
         cat('organizer source missing', lambda d: entry(d, BOOTLEG).pop('organizer_download'), 'organizer download membership')
         cat('organizer source on another post', lambda d: entry(d).update(organizer_download=entry(d, BOOTLEG)['organizer_download']), 'organizer download membership')
         cat('wrong organizer URL', lambda d: entry(d, BOOTLEG)['organizer_download'].update(url='https://example.invalid/challenge.py'), 'organizer source role')
-        cat('organizer source relabeled handout', lambda d: entry(d, BOOTLEG)['files'].append(dict(entry(d, BOOTLEG)['organizer_download'], kind='handout', label='handout')), 'original file URLs/roles')
-        cat('Law versions conflated', lambda d: entry(d, LAW)['files'][1].update(sha256=entry(d, LAW)['files'][0]['sha256']), 'Law and Order versions')
+        cat('organizer source relabeled handout', lambda d: entry(d, BOOTLEG)['files'].append(dict(entry(d, BOOTLEG).pop('organizer_download'), kind='handout', label='handout')), 'original file URLs/roles')
+        cat('Law versions conflated', lambda d: entry(d, LAW)['files'][1].update(sha256=entry(d, LAW)['files'][0]['sha256']), 'original file integrity pins')
         cat('Law warning removed', lambda d: entry(d, LAW).update(notes=['A challenge.']), 'Law and Order warning')
         for key, value in (('layout', 'challenge_archive'), ('section', 'root'), ('permalink', '/bad/'),
                            ('date', '2024-06-22T18:00:00+00:00'), ('date', 'not-a-date'),
@@ -301,9 +336,9 @@ def main():
         src('offline checker unbound hash', lambda r: replace(post_path(r, OFFLINE), 'hash=event_challenge.checker.sha256', 'hash=page.sha256hash'), 'source checker binding')
         src('offline checker removed', lambda r: replace(post_path(r, OFFLINE), re.search(r'{% include challenge.html .*?%}', post_path(r, OFFLINE).read_text())[0], ''), 'source checker count')
         src('source file role mismatch', lambda r: replace(post_path(r), 'data-file-kind="handout"', 'data-file-kind="server-source"'), 'source file links')
-        src('wrong curl URL', lambda r: replace(post_path(r), '\n  "https://raw.githubusercontent.com/', '\n  "https://example.invalid/'), 'download commands')
+        src('wrong curl URL', lambda r: replace(post_path(r), "' | absolute_url }}", "-wrong' | absolute_url }}"), 'download commands')
         src('wrong curl output name', lambda r: replace(post_path(r), '--output chall.py', '--output other.py'), 'download commands')
-        src('duplicate curl command', lambda r: replace(post_path(r), '\n```\n', '\ncurl --output chall.py "' + entry(BASE)['files'][0]['url'] + '"\n```\n'), 'download commands')
+        src('duplicate curl command', lambda r: replace(post_path(r), '\n```\n', '\ncurl --output chall.py "' + ORIGIN + entry(BASE)['files'][0]['url'] + '"\n```\n'), 'download commands')
         for option in ('-T local.txt', '-F x=y', '--data x', '-d x', '-X POST', '--request PUT', '-X PATCH', '--json x', '--config local.cfg'):
             src('upload/config curl option ' + option, lambda r, option=option: replace(post_path(r), 'curl --fail', 'curl ' + option + ' --fail'), 'non-GET curl' if option.startswith(('-X', '--request')) else 'unsafe curl argument')
         src('shell command chaining', lambda r: replace(post_path(r), 'cd ' + INTERACTIVE, 'cd ' + INTERACTIVE + '; echo bad'), 'download directory')
@@ -316,11 +351,107 @@ def main():
         src('Law labels cannot replace source warning', lambda r: replace(post_path(r, LAW), entry(BASE, LAW)['notes'][0], ''), 'Law and Order warning')
         src('organizer link exposed outside spoiler', lambda r: replace(post_path(r, BOOTLEG), '## Files', anchor(entry(BASE, BOOTLEG)['organizer_download']['url'], 'Source') + '\n## Files'), 'organizer URL outside disclosure')
         src('fixed output changed on disk', lambda r: (r/f'assets/challenges/{FIXED}/output.txt').write_bytes(b'synthetic corruption\n'), 'local output integrity')
-        src('fixed output missing on disk', lambda r: (r/f'assets/challenges/{FIXED}/output.txt').unlink(), 'missing or symlinked fixed output')
+        src('fixed output missing on disk', lambda r: (r/f'assets/challenges/{FIXED}/output.txt').unlink(), 'missing local download')
         src('unexpected post file', lambda r: write(r/gate.POST_ROOT/'unexpected.txt', 'fixture'), 'unexpected challenge post files')
         src('old empty stub reintroduced', lambda r: write(r/'challenges/event/stub.md', '---\n---\n'), 'unexpected old archive source files')
         src('unexpected local output', lambda r: write(r/'assets/challenges/stray.txt', 'fixture'), 'unexpected local output files')
         src('flag in catalog source', lambda r: write(r/'challenges/index.html', 'CTF{synthetic-test-value}'), 'flag in catalog source')
+
+        # Hosting and descriptive-title regressions. Every co-mutation uses the
+        # real public fixture bytes plus editable metadata, not patched baselines.
+        with patch.object(gate, 'no_flags', wraps=gate.no_flags) as scan:
+            check('original placeholders and license prose excluded from flag scan', valid=True)
+        scanned = [call.args[1] for call in scan.call_args_list]
+        assert sorted(scanned) == sorted(['public metadata', 'catalog source'] +
+               ['post ' + e['id'] for e in BASE['entries']] + ['fixed output for ' + ident for ident in gate.FIXED])
+        check('license record order remains editable', catalog=lambda d: d['licenses'].reverse(), valid=True)
+        check('public dummy reward prose accepted', source=lambda r: replace(post_path(r, BOOTLEG),
+              '## Files', 'Public reward: practice{local_dummy_reward}.\n\n## Files'), valid=True)
+        for ident in (INTERACTIVE, FIXED, BOOTLEG, 'cyber-apocalypse-2023-blokechain'):
+            cat('short display title rejected ' + ident, lambda d, ident=ident: entry(d, ident).update(post_title=entry(d, ident)['title']), 'descriptive post title')
+        cat('post title missing', lambda d: entry(d).pop('post_title'), 'malformed input')
+        cat('co-mutated event series and post title', lambda d: (d['events'][0].update(series='Other event'),
+            entry(d).update(post_title='Challenge archive: Other event 2024 - desfunctional')), 'descriptive post title')
+        src('front matter uses short identity', lambda r: change_meta(r, 'title', entry(BASE)['title']), 'post metadata')
+        cat('unexpected top-level catalog control', lambda d: d.update(service_url='https://example.invalid/'), 'unsupported catalog controls')
+        for key, value in (('upstream_url', 'https://example.invalid/chall.py'),
+                           ('upstream_url', entry(BASE)['files'][0]['upstream_url'].replace(entry(BASE)['revision'], 'main'))):
+            cat('original provenance changed ' + value, lambda d, key=key, value=value: entry(d)['files'][0].update({key: value}), 'original file URLs/roles')
+        cat('original provenance missing', lambda d: entry(d)['files'][0].pop('upstream_url'), 'original file URLs/roles')
+        cat('original file claims modification', lambda d: entry(d)['files'][0].update(modification='Replaced the reward.'), 'original file fields/modification')
+        cat('original file extra metadata', lambda d: entry(d)['files'][0].update(command='python chall.py'), 'original file fields/modification')
+        cat('fixed output claims upstream origin', lambda d: entry(d, FIXED)['files'][1].update(upstream_url=entry(d, FIXED)['files'][0]['upstream_url']), 'fixed instance fields')
+        for url in ('/assets/challenges/../chall.py', '/assets/challenges/%2e%2e/chall.py',
+                    '//assets/challenges/chall.py', '/assets/challenges/other/chall.py',
+                    entry(BASE)['files'][0]['url'] + '?x=1', entry(BASE)['files'][0]['url'] + '#fragment'):
+            cat('invalid local download path ' + url, lambda d, url=url: entry(d)['files'][0].update(url=url), 'original local URL')
+        for name in ('..', '../chall.py', 'sub/chall.py', 'sub\\chall.py', '%2e%2e', 'challenge.txt'):
+            cat('unsafe or unapproved download name ' + name, lambda d, name=name: entry(d)['files'][0].update(download_name=name),
+                'original file integrity pins' if name == 'challenge.txt' else 'download name')
+        for e in BASE['entries']:
+            for index, f in enumerate(e['files']):
+                reason = 'fixed instance metadata' if f['kind'] == 'fixed-instance' else 'original file integrity pins'
+                src('co-mutated bytes and metadata ' + e['id'] + '/' + f['download_name'],
+                    lambda r, ident=e['id'], index=index: co_mutate_bytes(r, lambda d: entry(d, ident)['files'][index]), reason)
+        for index, f in enumerate(BASE['licenses']):
+            src('co-mutated license bytes and metadata ' + f['id'],
+                lambda r, index=index: co_mutate_bytes(r, lambda d: d['licenses'][index]), 'license metadata pins')
+        src('co-mutated organizer practice bytes and metadata',
+            lambda r: co_mutate_bytes(r, lambda d: entry(d, BOOTLEG)['organizer_download']), 'organizer practice integrity pin')
+        for field, value in (('kind', 'handout'), ('download_name', 'challenge.py'),
+                             ('upstream_url', 'https://example.invalid/challenge.py'), ('upstream_bytes', 1),
+                             ('upstream_sha256', '0'*64), ('sha256', '0'*64),
+                             ('modification', 'Unchanged original source.'), ('modification', '')):
+            reason = ('organizer source role' if field in {'kind', 'download_name'} else
+                      'organizer upstream provenance' if field.startswith('upstream_') else
+                      'organizer practice integrity pin' if field == 'sha256' else 'organizer modification')
+            cat('organizer practice metadata ' + field + ' ' + str(value),
+                lambda d, field=field, value=value: entry(d, BOOTLEG)['organizer_download'].update({field: value}), reason)
+        cat('organizer modification missing', lambda d: entry(d, BOOTLEG)['organizer_download'].pop('modification'), 'organizer source fields')
+        cat('organizer checker fabricated', lambda d: entry(d, BOOTLEG).update(checker=entry(d, OFFLINE)['checker']), 'unverified checker')
+        for field in ('id', 'name', 'url', 'upstream_url', 'sha256', 'bytes'):
+            cat('license metadata changed ' + field, lambda d, field=field: d['licenses'][0].update({field: 1 if field == 'bytes' else 'wrong'}), 'license metadata pins')
+        cat('license missing', lambda d: d['licenses'].pop(), 'license inventory')
+        cat('license duplicated', lambda d: d['licenses'].__setitem__(1, copy.deepcopy(d['licenses'][0])), 'license metadata pins')
+        cat('license extra fields', lambda d: d['licenses'][0].update(modification='Unchanged'), 'license metadata pins')
+        cat('license byte count boolean', lambda d: d['licenses'][0].update(bytes=True), 'license integrity metadata')
+        cat('license record null', lambda d: d['licenses'].__setitem__(0, None), 'license integrity metadata')
+        cat('applicable license missing', lambda d: entry(d).pop('license'), 'applicable license metadata')
+        cat('applicable license copies missing', lambda d: entry(d)['license'].pop('local_urls'), 'applicable license metadata')
+        cat('applicable license copy wrong', lambda d: entry(d)['license'].update(local_urls=[d['licenses'][1]['url']]), 'applicable license metadata')
+        cat('applicable license copies incomplete', lambda d: entry(d, FIXED)['license']['local_urls'].pop(), 'applicable license metadata')
+        cat('unverified license added', lambda d: entry(d, BOOTLEG).update(license=entry(d)['license']), 'applicable license metadata')
+        for f, label in ((entry(BASE)['files'][0], 'original'), (entry(BASE, BOOTLEG)['organizer_download'], 'organizer'),
+                         (BASE['licenses'][0], 'license')):
+            src(label + ' missing on disk', lambda r, f=f: (r/f['url'].lstrip('/')).unlink(), 'missing local download')
+            src(label + ' corrupted on disk', lambda r, f=f: (r/f['url'].lstrip('/')).write_bytes(b'corruption'), 'local output integrity')
+        for path in (entry(BASE)['files'][0]['url'].lstrip('/'), entry(BASE, FIXED)['files'][1]['url'].lstrip('/'),
+                     entry(BASE, BOOTLEG)['organizer_download']['url'].lstrip('/'), BASE['licenses'][0]['url'].lstrip('/'),
+                     'assets/challenges/' + INTERACTIVE, 'assets/challenges/licenses', 'assets/challenges',
+                     entry(BASE)['post_path'], gate.POST_ROOT, '_data/authored_challenges.json'):
+            src('source symlink rejected ' + path, lambda r, path=path: move_and_symlink(r, r/path), 'symlink in')
+        src('dangling artifact symlink', lambda r: (r/'assets/challenges/dangling').symlink_to('missing'), 'symlink in')
+        src('extra empty artifact directory', lambda r: (r/'assets/challenges/empty').mkdir(), 'unexpected local output directories')
+        src('source primary URL missing relative filter', lambda r: replace(post_path(r),
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | relative_url }}", entry(BASE)['files'][0]['url']), 'source file links')
+        src('source primary URL uses absolute filter', lambda r: replace(post_path(r),
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | relative_url }}",
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | absolute_url }}"), 'source file links')
+        src('source primary download reverted upstream', lambda r: replace(post_path(r),
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | absolute_url }}", entry(BASE)['files'][0]['upstream_url']), 'download commands')
+        src('source commands omit absolute filter', lambda r: replace(post_path(r), '| absolute_url', '| relative_url'), 'unsafe curl argument')
+        src('source command hardcodes root origin', lambda r: replace(post_path(r),
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | absolute_url }}", ORIGIN + entry(BASE)['files'][0]['url']), 'download commands')
+        src('source bash fence instead of sh', lambda r: replace(post_path(r), '```sh', '```bash'), 'download block')
+        src('source second sh fence', lambda r: replace(post_path(r), '## Files', '```sh\necho fixture\n```\n\n## Files'), 'download block')
+        src('source return link lost', lambda r: replace(post_path(r), "'/challenges/' | relative_url", "'/missing/' | relative_url"), 'source return links')
+        for name in ('challenge.txt', 'challenge.json'):
+            src('source terminal command missing ' + name, lambda r, name=name: remove_source_command(post_path(r), name), 'download commands')
+            src('source terminal output wrong ' + name, lambda r, name=name: replace(post_path(r), '--output ' + name, '--output wrong-' + name), 'download commands')
+            src('source terminal link missing ' + name, lambda r, name=name: replace(post_path(r),
+                "'" + entry(BASE)['url'] + name + "' | relative_url", "'/missing/' | relative_url"), 'source terminal links')
+        src('upstream organizer link exposed outside disclosure', lambda r: replace(post_path(r, BOOTLEG), '## Files',
+            anchor(entry(BASE, BOOTLEG)['organizer_download']['upstream_url'], 'Original source') + '\n## Files'), 'organizer URL outside disclosure')
 
         def rendered(label, mutate, reason, baseurl=''):
             check(label, rendered=mutate, reason=reason, baseurl=baseurl, render=True)
@@ -330,7 +461,7 @@ def main():
         check('rendered coauthors retained', catalog=lambda d: entry(d)['authors'].append('coauthor-fixture'), render=True, valid=True)
         rendered('wrong rendered section', lambda s: replace(article_path(s), 'section-tutorials', 'section-root'), 'article/tutorial section')
         rendered('wrong rendered layout', lambda s: replace(article_path(s), 'layout-article', 'layout-page'), 'article/tutorial section')
-        rendered('wrong rendered title', lambda s: replace(article_path(s), '<h1>desfunctional</h1>', '<h1>Other</h1>'), 'heading for')
+        rendered('wrong rendered title', lambda s: replace(article_path(s), '<h1>' + entry(BASE)['post_title'] + '</h1>', '<h1>Other</h1>'), 'heading for')
         rendered('missing rendered marker', lambda s: replace(article_path(s), 'data-challenge-archive', 'data-wrong-marker'), 'entry marker')
         rendered('synthetic flag split across elements', lambda s: replace(article_path(s), '</article>', '<p>CTF<span>{synthetic-test-value}</span></p></article>'), 'flag in rendered post')
         rendered('published label restored', lambda s: replace(article_path(s), '<dt>Event began</dt>', '<dt>Published</dt>'), 'event date label')
@@ -387,6 +518,41 @@ def main():
         rendered('index count reduced', lambda s: mutate_json(s/'index.json', lambda p: p.pop()), 'post index count')
         rendered('JSONL differs', lambda s: write(s/'index.jsonl', '{}\n'), 'post JSONL parity')
         rendered('sitemap entry missing', lambda s: replace(s/'sitemap.xml', ORIGIN + entry(BASE)['url'], ORIGIN + '/wrong/'), 'archive sitemap coverage')
+        rendered('catalog short identity instead of post title', lambda s: replace(s/'challenges/index.html', entry(BASE)['post_title'], entry(BASE)['title']), 'alphabetical catalog membership')
+        rendered('progress short identity instead of post title', lambda s: mutate_json(s/'challenges.json', lambda p: p[0].update(title=entry(BASE, OFFLINE)['title'])), 'authored progress entry')
+        rendered('post index short identity instead of post title', lambda s: mutate_json(s/'index.json', lambda p: p[0].update(title=entry(BASE)['title'])), 'post index metadata')
+        rendered('original rendered link lacks baseurl', lambda s: replace(article_path(s), 'href="/preview/assets/challenges/', 'href="/assets/challenges/'), 'file links', '/preview')
+        rendered('original rendered link reverted upstream', lambda s: replace(article_path(s),
+            'href="' + entry(BASE)['files'][0]['url'] + '"', 'href="' + entry(BASE)['files'][0]['upstream_url'] + '"'), 'file links')
+        rendered('missing upstream organizer spoiler link', lambda s: replace(article_path(s, BOOTLEG),
+            entry(BASE, BOOTLEG)['organizer_download']['upstream_url'], 'https://example.invalid/'), 'spoiler link outside disclosure')
+        rendered('upstream organizer link exposed', lambda s: replace(article_path(s, BOOTLEG), '</article>',
+            anchor(entry(BASE, BOOTLEG)['organizer_download']['upstream_url'], 'Original source') + '</article>'), 'spoiler link outside disclosure')
+        rendered('missing local license link', lambda s: replace(article_path(s), 'href="' + BASE['licenses'][0]['url'] + '"', 'href="/wrong-license.txt"'), 'spoiler link outside disclosure')
+        rendered('local license link lacks baseurl', lambda s: replace(article_path(s), 'href="/preview/assets/challenges/licenses/', 'href="/assets/challenges/licenses/'), 'spoiler link outside disclosure', '/preview')
+        for name in ('challenge.txt', 'challenge.json'):
+            route = entry(BASE)['url'] + name
+            rendered('rendered terminal artifact missing ' + name, lambda s, route=route: html_path(s, route).unlink(), 'unexpected rendered archive files')
+            rendered('rendered terminal link missing ' + name, lambda s, route=route: replace(article_path(s), 'href="' + route + '"', 'href="/wrong"'), 'rendered terminal links')
+            rendered('rendered terminal link lacks baseurl ' + name, lambda s, route=route: replace(article_path(s), 'href="/preview' + route + '"', 'href="' + route + '"'), 'rendered terminal links', '/preview')
+            rendered('rendered terminal command lacks baseurl ' + name, lambda s, route=route: replace(article_path(s), ORIGIN + '/preview' + route, ORIGIN + route), 'download commands', '/preview')
+            rendered('rendered terminal command output wrong ' + name, lambda s, name=name: replace(article_path(s), '--output ' + name, '--output wrong-' + name), 'download commands')
+        rendered('rendered catalog JSON missing', lambda s: (s/'challenges/index.json').unlink(), 'unexpected rendered archive files')
+        rendered('unregistered terminal format', lambda s: write(html_path(s, entry(BASE)['url'] + 'challenge.xml'), '<fixture/>'), 'unexpected rendered archive files')
+        rendered('broken local body link', lambda s: replace(article_path(s), '</article>', anchor('/missing-local-file.txt', 'Missing') + '</article>'), 'broken local link')
+        for path in (entry(BASE)['files'][0]['url'].lstrip('/'), BASE['licenses'][0]['url'].lstrip('/'),
+                     'assets/challenges/' + INTERACTIVE, 'assets/challenges/licenses',
+                     entry(BASE)['url'].lstrip('/') + 'challenge.txt', entry(BASE)['url'].lstrip('/'),
+                     'challenges/index.json'):
+            rendered('rendered symlink rejected ' + path, lambda s, path=path: move_and_symlink(s, s/path), 'symlink in')
+        for f, label in ((entry(BASE)['files'][0], 'original'), (entry(BASE, BOOTLEG)['organizer_download'], 'organizer'),
+                         (BASE['licenses'][0], 'license')):
+            rendered('rendered ' + label + ' corrupted', lambda s, f=f: (s/f['url'].lstrip('/')).write_bytes(b'corruption'), 'local output integrity')
+        rendered('rendered original missing', lambda s: (s/entry(BASE)['files'][0]['url'].lstrip('/')).unlink(), 'broken local link')
+        rendered('rendered license missing', lambda s: (s/BASE['licenses'][0]['url'].lstrip('/')).unlink(), 'broken local link')
+        rendered('extra empty rendered artifact directory', lambda s: (s/'assets/challenges/empty').mkdir(), 'unexpected local output directories')
+        rendered('unexpanded rendered command', lambda s: replace(article_path(s), ORIGIN + entry(BASE)['files'][0]['url'],
+            "{{ '" + entry(BASE)['files'][0]['url'] + "' | absolute_url }}"), 'unexpanded rendered commands')
     gate.ROOT = ROOT
     counts = {layer: sum(r['layer'] == layer for r in RESULTS) for layer in ('source', 'synthetic-rendered')}
     report = {'pass': True, 'cases': len(RESULTS), 'counts': counts,

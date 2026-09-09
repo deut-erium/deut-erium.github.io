@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "real_mersenne"
+title: "Challenge archive: zh3r0 CTF V2 2021 - real_mersenne"
 description: "zh3r0 CTF 2021 - Cryptography."
 date: "2021-06-04T10:30:00+00:00"
 section: "tutorials"
@@ -21,12 +21,14 @@ permalink: "/challenges/zh3r0-2021/real-mersenne/"
 
 > Do you believe in games of luck? I hope you make your guesses real or you'll be floating around,
 
+Read this challenge as [plain text]({{ '/challenges/zh3r0-2021/real-mersenne/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/zh3r0-2021/real-mersenne/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/zh3r0/zh3r0-ctf/7fd08591b088215d58aefdc3b0f64c4a9de80f5d/V2/crypto/real_mersenne/public/challenge.py" data-file-kind="handout">challenge.py</a></li>
+  <li><a href="{{ '/assets/challenges/zh3r0-2021-real-mersenne/challenge.py' | relative_url }}" data-file-kind="handout">challenge.py</a></li>
 </ul>
 
 Originally a service challenge. The handout omits the secret module; no live instance is provided here.
@@ -36,8 +38,12 @@ Originally a service challenge. The handout omits the secret module; no live ins
 ```sh
 mkdir -p zh3r0-2021-real-mersenne
 cd zh3r0-2021-real-mersenne
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/zh3r0-2021/real-mersenne/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/zh3r0-2021/real-mersenne/challenge.json' | absolute_url }}"
 curl --fail --location --output challenge.py \
-  "https://raw.githubusercontent.com/zh3r0/zh3r0-ctf/7fd08591b088215d58aefdc3b0f64c4a9de80f5d/V2/crypto/real_mersenne/public/challenge.py"
+  "{{ '/assets/challenges/zh3r0-2021-real-mersenne/challenge.py' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

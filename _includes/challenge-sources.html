@@ -5,6 +5,10 @@
   <li><a href="{{ _source_challenge.source_url | escape }}">Original description or source</a></li>
   {%- if _source_challenge.credit_url -%}<li><a href="{{ _source_challenge.credit_url | escape }}">Event credits</a></li>{%- endif -%}
   {%- if _source_challenge.license -%}<li><a href="{{ _source_challenge.license.url | escape }}">{{ _source_challenge.license.name | escape }}</a></li>{%- endif -%}
+  {%- for _license_url in _source_challenge.license.local_urls -%}
+  {%- assign _license = site.data.authored_challenges.licenses | where: 'url', _license_url | first -%}
+  <li><a href="{{ _license.url | relative_url }}">Local {{ _license.name | escape }} license</a></li>
+  {%- endfor -%}
 </ul>
 {%- if _source_challenge.contributor_note -%}<p><a href="{{ _source_challenge.contributor_url | escape }}">{{ _source_challenge.contributor_note | escape }}</a></p>{%- endif -%}
 {%- if _source_challenge.solution_note -%}<p>{{ _source_challenge.solution_note | escape }}</p>{%- endif -%}

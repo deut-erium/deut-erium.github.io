@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "import numpy as MT"
+title: "Challenge archive: zh3r0 CTF V2 2021 - import numpy as MT"
 description: "zh3r0 CTF 2021 - Cryptography."
 date: "2021-06-04T10:30:00+00:00"
 section: "tutorials"
@@ -21,10 +21,12 @@ permalink: "/challenges/zh3r0-2021/import-numpy-as-mt/"
 
 > Python is so slow! Lets use nUmPy tO MAkE iT FaSTer. Only if there was a module for crypto in it :(
 
+Read this challenge as [plain text]({{ '/challenges/zh3r0-2021/import-numpy-as-mt/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/zh3r0-2021/import-numpy-as-mt/challenge.json' | relative_url }}).
+
 ## Files
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/zh3r0/zh3r0-ctf/7fd08591b088215d58aefdc3b0f64c4a9de80f5d/V2/crypto/import_numpy_as_MT/public/challenge.py" data-file-kind="handout">challenge.py</a></li>
+  <li><a href="{{ '/assets/challenges/zh3r0-2021-import-numpy-as-mt/challenge.py' | relative_url }}" data-file-kind="handout">challenge.py</a></li>
   <li><a href="{{ '/assets/challenges/zh3r0-2021-import-numpy-as-mt/output.txt' | relative_url }}" data-file-kind="fixed-instance">Fixed instance (output.txt)</a></li>
 </ul>
 
@@ -39,8 +41,12 @@ This fixed output was generated for the post with the unchanged original program
 ```sh
 mkdir -p zh3r0-2021-import-numpy-as-mt
 cd zh3r0-2021-import-numpy-as-mt
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/zh3r0-2021/import-numpy-as-mt/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/zh3r0-2021/import-numpy-as-mt/challenge.json' | absolute_url }}"
 curl --fail --location --output challenge.py \
-  "https://raw.githubusercontent.com/zh3r0/zh3r0-ctf/7fd08591b088215d58aefdc3b0f64c4a9de80f5d/V2/crypto/import_numpy_as_MT/public/challenge.py"
+  "{{ '/assets/challenges/zh3r0-2021-import-numpy-as-mt/challenge.py' | absolute_url }}"
 curl --fail --location --output output.txt \
   "{{ '/assets/challenges/zh3r0-2021-import-numpy-as-mt/output.txt' | absolute_url }}"
 ```

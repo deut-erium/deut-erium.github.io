@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "Some Trick"
+title: "Challenge archive: SekaiCTF 2024 - Some Trick"
 description: "SekaiCTF 2024 - Cryptography."
 date: "2024-08-23T16:00:00+00:00"
 section: "tutorials"
@@ -21,10 +21,12 @@ permalink: "/challenges/sekaictf-2024/some-trick/"
 
 > Bob and Alice found a futuristic version of opunssl and replaced all their needs for doofy wellmen.
 
+Read this challenge as [plain text]({{ '/challenges/sekaictf-2024/some-trick/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2024/some-trick/challenge.json' | relative_url }}).
+
 ## Files
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2024/e7c9183860a846dd2c4e0d1fd5d5a1fe468e1244/crypto/some-trick/dist/sometrick.py" data-file-kind="handout">sometrick.py</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2024-some-trick/sometrick.py' | relative_url }}" data-file-kind="handout">sometrick.py</a></li>
   <li><a href="{{ '/assets/challenges/sekaictf-2024-some-trick/output.txt' | relative_url }}" data-file-kind="fixed-instance">Fixed instance (output.txt)</a></li>
 </ul>
 
@@ -37,8 +39,12 @@ This fixed output was generated for the post with the unchanged original program
 ```sh
 mkdir -p sekaictf-2024-some-trick
 cd sekaictf-2024-some-trick
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/sekaictf-2024/some-trick/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/sekaictf-2024/some-trick/challenge.json' | absolute_url }}"
 curl --fail --location --output sometrick.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2024/e7c9183860a846dd2c4e0d1fd5d5a1fe468e1244/crypto/some-trick/dist/sometrick.py"
+  "{{ '/assets/challenges/sekaictf-2024-some-trick/sometrick.py' | absolute_url }}"
 curl --fail --location --output output.txt \
   "{{ '/assets/challenges/sekaictf-2024-some-trick/output.txt' | absolute_url }}"
 ```

@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "FaILProof Revenge"
+title: "Challenge archive: SekaiCTF 2022 - FaILProof Revenge"
 description: "SekaiCTF 2022 - Cryptography."
 date: "2022-09-30T16:00:00+00:00"
 section: "tutorials"
@@ -21,10 +21,12 @@ permalink: "/challenges/sekaictf-2022/failproof-revenge/"
 
 > I am sure it's failproof now, I have increased the security levels too!
 
+Read this challenge as [plain text]({{ '/challenges/sekaictf-2022/failproof-revenge/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2022/failproof-revenge/challenge.json' | relative_url }}).
+
 ## Files
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2022/383b16da68c438c5d516e6f00b2716210141f7a4/crypto/failproof-revenge/challenge/app/source.py" data-file-kind="server-source">source.py (archived server source)</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2022-failproof-revenge/source.py' | relative_url }}" data-file-kind="server-source">source.py (archived server source)</a></li>
   <li><a href="{{ '/assets/challenges/sekaictf-2022-failproof-revenge/output.txt' | relative_url }}" data-file-kind="fixed-instance">Fixed instance (output.txt)</a></li>
 </ul>
 
@@ -37,8 +39,12 @@ This fixed output was generated for the post with the unchanged original program
 ```sh
 mkdir -p sekaictf-2022-failproof-revenge
 cd sekaictf-2022-failproof-revenge
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/sekaictf-2022/failproof-revenge/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/sekaictf-2022/failproof-revenge/challenge.json' | absolute_url }}"
 curl --fail --location --output source.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2022/383b16da68c438c5d516e6f00b2716210141f7a4/crypto/failproof-revenge/challenge/app/source.py"
+  "{{ '/assets/challenges/sekaictf-2022-failproof-revenge/source.py' | absolute_url }}"
 curl --fail --location --output output.txt \
   "{{ '/assets/challenges/sekaictf-2022-failproof-revenge/output.txt' | absolute_url }}"
 ```

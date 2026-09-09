@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "FaILProof"
+title: "Challenge archive: SekaiCTF 2022 - FaILProof"
 description: "SekaiCTF 2022 - Cryptography."
 date: "2022-09-30T16:00:00+00:00"
 section: "tutorials"
@@ -21,10 +21,12 @@ permalink: "/challenges/sekaictf-2022/failproof/"
 
 > I have designed a failproof encryption system with possibly arbitrarily small public keys. I will be as famous as Et Al one day, but only if I can somehow figure out a decryption mechanism...
 
+Read this challenge as [plain text]({{ '/challenges/sekaictf-2022/failproof/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2022/failproof/challenge.json' | relative_url }}).
+
 ## Files
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2022/383b16da68c438c5d516e6f00b2716210141f7a4/crypto/failproof/challenge/app/source.py" data-file-kind="server-source">source.py (archived server source)</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2022-failproof/source.py' | relative_url }}" data-file-kind="server-source">source.py (archived server source)</a></li>
   <li><a href="{{ '/assets/challenges/sekaictf-2022-failproof/output.txt' | relative_url }}" data-file-kind="fixed-instance">Fixed instance (output.txt)</a></li>
 </ul>
 
@@ -37,8 +39,12 @@ This fixed output was generated for the post with the unchanged original program
 ```sh
 mkdir -p sekaictf-2022-failproof
 cd sekaictf-2022-failproof
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/sekaictf-2022/failproof/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/sekaictf-2022/failproof/challenge.json' | absolute_url }}"
 curl --fail --location --output source.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2022/383b16da68c438c5d516e6f00b2716210141f7a4/crypto/failproof/challenge/app/source.py"
+  "{{ '/assets/challenges/sekaictf-2022-failproof/source.py' | absolute_url }}"
 curl --fail --location --output output.txt \
   "{{ '/assets/challenges/sekaictf-2022-failproof/output.txt' | absolute_url }}"
 ```

@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "IDEA"
+title: "Challenge archive: Google CTF 2024 - IDEA"
 description: "Google CTF 2024 - Cryptography."
 date: "2024-06-21T18:00:00+00:00"
 section: "tutorials"
@@ -22,12 +22,14 @@ permalink: "/challenges/google-ctf-2024/idea/"
 > We have a new idea about a cipher which we think may provide pretty good privacy
 > So bruce for impact as we may patent our new proposed encryption standard
 
+Read this challenge as [plain text]({{ '/challenges/google-ctf-2024/idea/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/google-ctf-2024/idea/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-idea/attachments/chall.py" data-file-kind="handout">chall.py</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-idea/chall.py' | relative_url }}" data-file-kind="handout">chall.py</a></li>
 </ul>
 
 Originally a service challenge. Recreating the service requires the organizer source; no live instance is provided here.
@@ -37,8 +39,12 @@ Originally a service challenge. Recreating the service requires the organizer so
 ```sh
 mkdir -p google-ctf-2024-idea
 cd google-ctf-2024-idea
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/google-ctf-2024/idea/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/google-ctf-2024/idea/challenge.json' | absolute_url }}"
 curl --fail --location --output chall.py \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-idea/attachments/chall.py"
+  "{{ '/assets/challenges/google-ctf-2024-idea/chall.py' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "desfunctional"
+title: "Challenge archive: Google CTF 2024 - desfunctional"
 description: "Google CTF 2024 - Cryptography."
 date: "2024-06-21T18:00:00+00:00"
 section: "tutorials"
@@ -23,12 +23,14 @@ permalink: "/challenges/google-ctf-2024/desfunctional/"
 > for DES encryption and decryption but there seem to be some errors
 > unexpectedly creeping in the key. It is getting frustrating, please help
 
+Read this challenge as [plain text]({{ '/challenges/google-ctf-2024/desfunctional/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/google-ctf-2024/desfunctional/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-desfunctional/attachments/chall.py" data-file-kind="handout">chall.py</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-desfunctional/chall.py' | relative_url }}" data-file-kind="handout">chall.py</a></li>
 </ul>
 
 Originally a service challenge. Recreating the service requires the organizer source; no live instance is provided here.
@@ -38,8 +40,12 @@ Originally a service challenge. Recreating the service requires the organizer so
 ```sh
 mkdir -p google-ctf-2024-desfunctional
 cd google-ctf-2024-desfunctional
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/google-ctf-2024/desfunctional/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/google-ctf-2024/desfunctional/challenge.json' | absolute_url }}"
 curl --fail --location --output chall.py \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-desfunctional/attachments/chall.py"
+  "{{ '/assets/challenges/google-ctf-2024-desfunctional/chall.py' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

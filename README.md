@@ -183,13 +183,23 @@ Run `bundle exec ruby script/test-unlisted-pages.rb` for the offline Jekyll publ
 
 `/challenges/` groups event challenges by year, newest first. Every entry is an article under `_posts/ctf-tutorials/challenges/`, listed in Tutorials and the normal post indexes. Its existing `/challenges/<event>/<name>/` permalink remains valid. Posts use the verified event start date for ordering; the article labels it "Event began", not the precise release time of that particular challenge. Dates and source links are in `_data/authored_challenges.json`.
 
-Each post includes curl commands. Original file links use pinned repository revisions. Five output-only generators now have fixed instances under `assets/challenges/`, generated with the unchanged original code and event flags, then independently solved. They are labeled as new outputs rather than competition recordings. The seven offline assignments use salted SHA-256 checks; only hashes and salts enter the published tree. Existing practice variants keep their routes, seven checker IDs, flags and progress separate.
+Posts have descriptive titles such as "Challenge archive: Google CTF 2024 - IDEA". All 27 challenge downloads are hosted under `assets/challenges/` (about 173 KiB), with three local license texts. The 21 original primary files are byte-identical mirrors; their pinned upstream URLs and hashes remain in the catalog. Five output-only generators have fixed instances produced with the unchanged original code and event flags, then independently solved. They are labeled as new outputs rather than competition recordings. Seven offline assignments use salted SHA-256 checks. Existing practice variants keep their routes, seven checker IDs, flags and progress separate.
 
-Player handouts, archived server source and spoiler-bearing organizer files have separate labels. b00tleg withheld its source during the event; its curl command stays inside the spoiler disclosure because that code contains answers. Law and Order retains the incorrect released handout and corrected source, with distinct download names and an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. No retired service is contacted or placeholder flag checked.
+Player handouts, archived server source and spoiler-bearing organizer files have separate labels. b00tleg withheld its source during the event; its local organizer practice copy stays in the spoiler disclosure because it contains level answers. Only its final reward was replaced with a public dummy flag, and its original upstream hash and modification are recorded. Law and Order retains the incorrect released handout and corrected source, with distinct download names and an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. No retired service is contacted or dummy reward accepted by an original event checker.
 
 The root Atom feed uses `feed.xml` so challenges sharing an event start keep the archive's order. Existing Atom item IDs are preserved. Section feeds retain their 20-post window.
 
-The download commands for new output files use the site's configured publishing origin and baseurl. In a local preview, replace that origin with the loopback server's address. Upstream file commands work independently of deployment. Serve only generated output, never the checkout or all of `agent_out/`.
+The challenge itself is also curlable. `/challenges/index.json` contains all 18 records; each article has `challenge.json` and `challenge.txt` alongside its HTML. The text version contains the prompt, notes and file URLs/hashes without the page shell. JSON separates primary files from organizer spoilers. These are generated static files, with no content negotiation or server process required. `/challenges.json` remains the separate progress index.
+
+```sh
+curl -fsS https://deut-erium.github.io/challenges/index.json | jq '.[].title'
+curl -fsS https://deut-erium.github.io/challenges/google-ctf-2024/idea/challenge.txt
+curl -fLo chall.py https://deut-erium.github.io/assets/challenges/google-ctf-2024-idea/chall.py
+```
+
+Commands and JSON URL fields use the configured publishing origin and baseurl. For an unpublished local preview, substitute the loopback origin; JSON also supplies prefixed path fields for this purpose. Serve only generated output, never the checkout or all of `agent_out/`.
+
+Browser practice may use a public dummy reward. It does not need reward secrecy, encrypted unlocks or authoritative local scores. A browser port still needs to reproduce and test the challenge's actual computation and interaction. No browser runtime is included in this archive revision.
 
 When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register posts, outputs and updated data in the content manifest. Keep flags, generation inputs and solver scratch private. A browser hash check is local feedback, not proof of independent work or a trustworthy competition score. Check source alone, or pass a generated site directory:
 

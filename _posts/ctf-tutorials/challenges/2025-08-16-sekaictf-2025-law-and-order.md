@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "Law and Order"
+title: "Challenge archive: SekaiCTF 2025 - Law and Order"
 description: "SekaiCTF 2025 - Cryptography."
 date: "2025-08-16T01:00:00+00:00"
 section: "tutorials"
@@ -21,13 +21,15 @@ permalink: "/challenges/sekaictf-2025/law-and-order/"
 
 > My friends were the FROST to implement sharing signatures for flag and ensured to always include me but somehow it's still not working?
 
+Read this challenge as [plain text]({{ '/challenges/sekaictf-2025/law-and-order/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/sekaictf-2025/law-and-order/challenge.json' | relative_url }}).
+
 ## Files
 
 The original challenge used an interactive service. No live server is connected to this post.
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2025/683dd81ae520581add40ec21c4819866e28cbde4/crypto/law-and-order/dist/chall.py" data-file-kind="handout">chall.py (released handout, incorrect version)</a></li>
-  <li><a href="https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2025/683dd81ae520581add40ec21c4819866e28cbde4/crypto/law-and-order/challenge/app/chall.py" data-file-kind="server-source">chall.py (corrected server source)</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2025-law-and-order/released-chall.py' | relative_url }}" data-file-kind="handout">chall.py (released handout, incorrect version)</a></li>
+  <li><a href="{{ '/assets/challenges/sekaictf-2025-law-and-order/corrected-chall.py' | relative_url }}" data-file-kind="server-source">chall.py (corrected server source)</a></li>
 </ul>
 
 The organizers report that the released handout was an incorrect version. The archived server source and solution are for the corrected version; they do not match the released handout.
@@ -39,10 +41,14 @@ Originally a service challenge. No live instance is provided here.
 ```sh
 mkdir -p sekaictf-2025-law-and-order
 cd sekaictf-2025-law-and-order
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/sekaictf-2025/law-and-order/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/sekaictf-2025/law-and-order/challenge.json' | absolute_url }}"
 curl --fail --location --output released-chall.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2025/683dd81ae520581add40ec21c4819866e28cbde4/crypto/law-and-order/dist/chall.py"
+  "{{ '/assets/challenges/sekaictf-2025-law-and-order/released-chall.py' | absolute_url }}"
 curl --fail --location --output corrected-chall.py \
-  "https://raw.githubusercontent.com/project-sekai-ctf/sekaictf-2025/683dd81ae520581add40ec21c4819866e28cbde4/crypto/law-and-order/challenge/app/chall.py"
+  "{{ '/assets/challenges/sekaictf-2025-law-and-order/corrected-chall.py' | absolute_url }}"
 ```
 
 <details data-archive-spoilers>

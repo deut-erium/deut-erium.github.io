@@ -5,7 +5,7 @@ description: Challenges I wrote for Google CTF, SekaiCTF, zh3r0 and Hack The Box
 section: tutorials
 permalink: /challenges/
 ---
-<p>{{ site.data.authored_challenges.entries.size }} challenges I've written. Each has its own tutorial post, files and download commands. The offline challenges have local flag checks.</p>
+<p>{{ site.data.authored_challenges.entries.size }} challenges I've written. Each has its own tutorial post and locally hosted files. The offline challenges have local flag checks. You can also read the <a href="{{ '/challenges/index.json' | relative_url }}">JSON catalog</a>, or each challenge's plain-text and JSON versions.</p>
 {%- assign _years = site.data.authored_challenges.events | map: 'year' | uniq | sort | reverse -%}
 {%- for _year in _years -%}
 <section data-challenge-year="{{ _year }}">
@@ -14,7 +14,7 @@ permalink: /challenges/
   <ul>
     {%- for _entry in _entries -%}
     {%- assign _event = site.data.authored_challenges.events | where: 'id', _entry.event_id | first -%}
-    <li><a href="{{ _entry.url | relative_url }}" data-archive-entry="{{ _entry.id | escape }}">{{ _entry.title | escape }}</a> - {{ _event.series | escape }}{% if _entry.event_id == 'cyber-apocalypse-2023' %}, Cyber Apocalypse{% endif %}{% if _entry.category != 'Cryptography' %} ({{ _entry.category | escape }}){% endif %}{% if _entry.mode == 'offline' %} - offline{% endif %}</li>
+    <li><a href="{{ _entry.url | relative_url }}" data-archive-entry="{{ _entry.id | escape }}">{{ _entry.post_title | escape }}</a>{% if _entry.category != 'Cryptography' %} ({{ _entry.category | escape }}){% endif %}{% if _entry.mode == 'offline' %} - offline{% endif %}</li>
     {%- endfor -%}
   </ul>
 </section>

@@ -1,6 +1,6 @@
 ---
 layout: "article"
-title: "McEliece"
+title: "Challenge archive: Google CTF 2024 - McEliece"
 description: "Google CTF 2024 - Cryptography."
 date: "2024-06-21T18:00:00+00:00"
 section: "tutorials"
@@ -24,13 +24,15 @@ permalink: "/challenges/google-ctf-2024/mceliece/"
 >
 > NOTE: The .sobj files were generated using Sage 10.4. It should be fine to use Sage 9.7 or onwards to parse the files.
 
+Read this challenge as [plain text]({{ '/challenges/google-ctf-2024/mceliece/challenge.txt' | relative_url }}) or [JSON]({{ '/challenges/google-ctf-2024/mceliece/challenge.json' | relative_url }}).
+
 ## Files
 
 <ul data-archive-files>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/chall.sage" data-file-kind="handout">chall.sage</a></li>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/flag_enc.sobj" data-file-kind="handout">flag_enc.sobj</a></li>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/params.sobj" data-file-kind="handout">params.sobj</a></li>
-  <li><a href="https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/pubkey.sobj" data-file-kind="handout">pubkey.sobj</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-mceliece/chall.sage' | relative_url }}" data-file-kind="handout">chall.sage</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-mceliece/flag_enc.sobj' | relative_url }}" data-file-kind="handout">flag_enc.sobj</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-mceliece/params.sobj' | relative_url }}" data-file-kind="handout">params.sobj</a></li>
+  <li><a href="{{ '/assets/challenges/google-ctf-2024-mceliece/pubkey.sobj' | relative_url }}" data-file-kind="handout">pubkey.sobj</a></li>
 </ul>
 
 ## Download
@@ -38,14 +40,18 @@ permalink: "/challenges/google-ctf-2024/mceliece/"
 ```sh
 mkdir -p google-ctf-2024-mceliece
 cd google-ctf-2024-mceliece
+curl --fail --location --output challenge.txt \
+  "{{ '/challenges/google-ctf-2024/mceliece/challenge.txt' | absolute_url }}"
+curl --fail --location --output challenge.json \
+  "{{ '/challenges/google-ctf-2024/mceliece/challenge.json' | absolute_url }}"
 curl --fail --location --output chall.sage \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/chall.sage"
+  "{{ '/assets/challenges/google-ctf-2024-mceliece/chall.sage' | absolute_url }}"
 curl --fail --location --output flag_enc.sobj \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/flag_enc.sobj"
+  "{{ '/assets/challenges/google-ctf-2024-mceliece/flag_enc.sobj' | absolute_url }}"
 curl --fail --location --output params.sobj \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/params.sobj"
+  "{{ '/assets/challenges/google-ctf-2024-mceliece/params.sobj' | absolute_url }}"
 curl --fail --location --output pubkey.sobj \
-  "https://raw.githubusercontent.com/google/google-ctf/067421eb7e918c29e39f187fac5a0f0d72a6ab83/2024/quals/crypto-mceliece/attachments/pubkey.sobj"
+  "{{ '/assets/challenges/google-ctf-2024-mceliece/pubkey.sobj' | absolute_url }}"
 ```
 
 ## Check your flag
