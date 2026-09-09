@@ -83,6 +83,12 @@ def verify(site=None, baseurl=''):
         for f in e['files']:
             require(f['url'].startswith(prefix), 'file outside declared revision for ' + ident)
             require(f['kind'] in {'handout', 'server-source'}, 'file role for ' + ident)
+            path = urlsplit(f['url']).path
+            if f['kind'] == 'handout':
+                require(any('/'+part+'/' in path for part in ['attachments','public','dist']) or
+                        (ident == 'cyber-apocalypse-2023-blokechain' and path.endswith('/crypto_blokechain.zip')), 'organizer source mislabeled as handout for ' + ident)
+            else:
+                require('/challenge/app/' in path, 'unexpected server source path for ' + ident)
             require(f['bytes'] > 0 and re.fullmatch(r'[0-9a-f]{64}', f['sha256']), 'file integrity metadata for ' + ident)
         path = f"challenges/{e['event_id']}/{e['slug']}.md"
         source_paths.add(path)
