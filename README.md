@@ -181,11 +181,15 @@ Run `bundle exec ruby script/test-unlisted-pages.rb` for the offline Jekyll publ
 
 ## Authored challenge archive
 
-`/challenges/` lists event challenges from `_data/authored_challenges.json`. Each entry has a normal page under `challenges/`, outside the posts collection. The existing Assignments URL lists local practice variants and links to the event archive. Keep those variants' routes and checker IDs unchanged.
+`/challenges/` groups event challenges by year, newest first. Every entry is an article under `_posts/ctf-tutorials/challenges/`, listed in Tutorials and the normal post indexes. Its existing `/challenges/<event>/<name>/` permalink remains valid. Posts use the verified event start date for ordering; the article labels it "Event began", not the precise release time of that particular challenge. Dates and source links are in `_data/authored_challenges.json`.
 
-File links point to pinned public repository revisions. Player handouts, archived server source and spoiler-bearing organizer files have separate labels. Law and Order retains both the incorrect released handout and corrected source, with an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. These pages do not host challenge services or verify placeholder flags.
+Each post includes curl commands. Original file links use pinned repository revisions. Five output-only generators now have fixed instances under `assets/challenges/`, generated with the unchanged original code and event flags, then independently solved. They are labeled as new outputs rather than competition recordings. The seven offline assignments use salted SHA-256 checks; only hashes and salts enter the published tree. Existing practice variants keep their routes, seven checker IDs, flags and progress separate.
 
-When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register the new pages and updated data in the content manifest. Check source alone, or pass a generated site directory:
+Player handouts, archived server source and spoiler-bearing organizer files have separate labels. b00tleg withheld its source during the event; its curl command stays inside the spoiler disclosure because that code contains answers. Law and Order retains the incorrect released handout and corrected source, with distinct download names and an explicit warning. Blokechain uses the author-supplied Cyberkarta mirror. No retired service is contacted or placeholder flag checked.
+
+The download commands for new output files use the site's configured publishing origin and baseurl. In a local preview, replace that origin with the loopback server's address. Upstream file commands work independently of deployment. Serve only generated output, never the checkout or all of `agent_out/`.
+
+When adding entries, preserve creator/coauthor credits, distinguish writeup authors from challenge creators, and record the source revision and file hashes. Register posts, outputs and updated data in the content manifest. Keep flags, generation inputs and solver scratch private. A browser hash check is local feedback, not proof of independent work or a trustworthy competition score. Check source alone, or pass a generated site directory:
 
 ```sh
 python3 script/verify-challenge-archive.py

@@ -1,0 +1,11 @@
+{%- assign _source_challenge = site.data.authored_challenges.entries | where: 'id', page.challenge_id | first -%}
+<ul>
+  <li><a href="{{ _source_challenge.archive_url | escape }}">Full archive</a> (may contain flags).</li>
+  {%- if _source_challenge.solution_url -%}<li><a href="{{ _source_challenge.solution_url | escape }}">Solution</a></li>{%- endif -%}
+  <li><a href="{{ _source_challenge.source_url | escape }}">Original description or source</a></li>
+  {%- if _source_challenge.credit_url -%}<li><a href="{{ _source_challenge.credit_url | escape }}">Event credits</a></li>{%- endif -%}
+  {%- if _source_challenge.license -%}<li><a href="{{ _source_challenge.license.url | escape }}">{{ _source_challenge.license.name | escape }}</a></li>{%- endif -%}
+</ul>
+{%- if _source_challenge.contributor_note -%}<p><a href="{{ _source_challenge.contributor_url | escape }}">{{ _source_challenge.contributor_note | escape }}</a></p>{%- endif -%}
+{%- if _source_challenge.solution_note -%}<p>{{ _source_challenge.solution_note | escape }}</p>{%- endif -%}
+{%- if _source_challenge.editorial_note -%}<p>{{ _source_challenge.editorial_note | escape }}</p>{%- endif -%}

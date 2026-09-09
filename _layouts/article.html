@@ -14,7 +14,7 @@ layout: base
     {%- if page.description -%}<p class="record-head__abstract" itemprop="description">{{ page.description }}</p>{%- endif -%}
     <dl class="record-facts">
       <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
-      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+      <div><dt>{% if page.challenge_id %}Event began{% else %}Published{% endif %}</dt><dd><time{% unless page.challenge_id %} itemprop="datePublished"{% endunless %} datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
     </dl>
     {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
     <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>
@@ -46,4 +46,4 @@ layout: base
 <script defer src="{{ '/assets/widgets/js/' | append: _widget | append: '.js' | relative_url }}?v={{ '/assets/widgets/js/' | append: _widget | append: '.js' | asset_v }}"></script>
   {%- endfor -%}
 {%- endif -%}
-{%- if page.sha256hash -%}<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>{%- endif -%}
+{%- if page.sha256hash or page.challenge_checker -%}<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>{%- endif -%}

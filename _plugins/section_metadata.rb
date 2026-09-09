@@ -43,6 +43,13 @@ module DeuteriumSite
         end
         output_path = source_path.sub(/\.(?:md|markdown)\z/i, ".html")
         post.data["permalink"] = "/#{output_path}"
+      elsif top_level == "ctf-tutorials" && post.data["challenge_id"]
+        # These are posts in the tutorials collection, but existing archive
+        # links keep their original destinations rather than gaining redirects.
+        route = post.data["permalink"].to_s
+        unless route.match?(%r{\A/challenges/[a-z0-9-]+/[a-z0-9-]+/\z})
+          raise "invalid authored challenge permalink: #{relative}"
+        end
       elsif top_level == "ramblings" || top_level == "ctf-tutorials"
         filename = File.basename(source_path).sub(/\.(?:md|markdown)\z/i, "")
         match = /\A(?<year>\d{4}|\d{2})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.+)\z/.match(filename)
