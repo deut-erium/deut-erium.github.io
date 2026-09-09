@@ -3,6 +3,7 @@
   <li><a href="{{ _source_challenge.archive_url | escape }}">Full archive</a> (may contain flags).</li>
   {%- if _source_challenge.solution_url -%}<li><a href="{{ _source_challenge.solution_url | escape }}">Solution</a></li>{%- endif -%}
   <li><a href="{{ _source_challenge.source_url | escape }}">Original description or source</a></li>
+  {%- if _source_challenge.organizer_download -%}<li><a href="{{ _source_challenge.organizer_download.upstream_url | escape }}">Original organizer source (includes answers and the original reward)</a></li>{%- endif -%}
   {%- if _source_challenge.credit_url -%}<li><a href="{{ _source_challenge.credit_url | escape }}">Event credits</a></li>{%- endif -%}
   {%- if _source_challenge.license -%}<li><a href="{{ _source_challenge.license.url | escape }}">{{ _source_challenge.license.name | escape }}</a></li>{%- endif -%}
   {%- for _license_url in _source_challenge.license.local_urls -%}
