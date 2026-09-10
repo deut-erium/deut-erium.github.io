@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reject local scratch and editor-session files from the Git index."""
+"""Reject private answers, local scratch, and editor files from the Git index."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN_ROOTS = {"agent_out", ".vimsessions"}
+FORBIDDEN_PREFIXES = ("agent_out/", ".vimsessions/", "assigments/flags/")
 
 
 def git_paths(*args: str) -> list[str]:
@@ -19,7 +19,7 @@ def git_paths(*args: str) -> list[str]:
 
 
 tracked = git_paths("ls-files")
-forbidden = sorted(path for path in tracked if path.split("/", 1)[0] in FORBIDDEN_ROOTS)
+forbidden = sorted(path for path in tracked if path.startswith(FORBIDDEN_PREFIXES))
 ignored = sorted(git_paths("ls-files", "-ci", "--exclude-standard"))
 if forbidden or ignored:
     raise SystemExit(

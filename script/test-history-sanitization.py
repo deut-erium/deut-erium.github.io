@@ -159,6 +159,23 @@ class HistorySanitizationTests(unittest.TestCase):
         self.assertIn("ref-reachable objects", result.stderr)
         self.assertIn('"type": "tag"', result.stderr)
 
+    def test_forbidden_braced_value_in_blob_fails(self) -> None:
+        value = b"flag{punctuation-is-not-a-plain_token!}"
+        (self.repo / "answer.txt").write_bytes(value + b"\n")
+        git(self.repo, "add", "answer.txt")
+        git(self.repo, "commit", "-m", "Add answer fixture")
+        self.manifest["forbidden_value_hashes"] = [{
+            "bytes": len(value),
+            "sha256": hashlib.sha256(value).hexdigest(),
+            "source": "fixture",
+        }]
+        self.write_manifest()
+
+        result = self.verify()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("ref-reachable objects", result.stderr)
+        self.assertIn('"type": "blob"', result.stderr)
+
     def test_unreachable_forbidden_object_id_fails(self) -> None:
         tree = git(self.repo, "rev-parse", "HEAD^{tree}")
         detached = commit_tree(self.repo, tree, self.merge_commit, message="Detached unsafe tip")

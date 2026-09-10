@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = Path(__file__).with_name("history-sanitization.json")
 OID = re.compile(r"[0-9a-f]{40}")
 TOKEN = re.compile(rb"[A-Za-z0-9_-]{8,128}")
+BRACED_VALUE = re.compile(rb"[A-Za-z0-9_]{2,32}\{[^{}\r\n]{1,256}\}")
 SCANNED_KINDS = {"blob", "commit", "tag"}
 
 
@@ -82,7 +83,7 @@ def load_manifest(path: Path) -> dict[str, object]:
             raise SystemExit("invalid forbidden-value hash entry")
         length = item.get("bytes")
         digest = item.get("sha256")
-        if not isinstance(length, int) or length < 8 or length > 128:
+        if not isinstance(length, int) or length < 8 or length > 288:
             raise SystemExit("invalid forbidden-value length")
         if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
             raise SystemExit("invalid forbidden-value digest")
@@ -159,7 +160,8 @@ def scan_forbidden_values(
 
             counts[kind] += 1
             byte_counts[kind] += size
-            for token in TOKEN.findall(data):
+            candidates = {*TOKEN.findall(data), *BRACED_VALUE.findall(data)}
+            for token in candidates:
                 if len(token) not in forbidden_lengths:
                     continue
                 digest = hashlib.sha256(token).hexdigest()

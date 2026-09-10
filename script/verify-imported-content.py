@@ -67,11 +67,14 @@ for rel, item in expected.items():
         changed.append(rel)
 
 protected_roots = ("_posts", "locked", "challenges", "assets/challenges", "assigments", "ctf-tutorials/assigments")
+private_local_prefixes = ("assigments/flags/",)
+if any(rel.startswith(private_local_prefixes) for rel in expected):
+    raise SystemExit("private local content must not appear in the imported-content manifest")
 actual_protected = {
     path.relative_to(ROOT).as_posix()
     for root_name in protected_roots
     for path in (ROOT / root_name).rglob("*")
-    if path.is_file()
+    if path.is_file() and not path.relative_to(ROOT).as_posix().startswith(private_local_prefixes)
 }
 expected_protected = {
     rel for rel in expected
