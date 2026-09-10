@@ -15,7 +15,7 @@
         {%- assign skin_file = skin_number | append: '-' | append: theme.id | append: '.css' -%}
         {%- assign skin_path = '/assets/css/skins/' | append: skin_file -%}
         {%- assign skin_hash = skin_path | asset_v -%}
-        {%- assign skin_href_entry = skin_path | append: '?v=' | append: skin_hash -%}
+        {%- assign skin_href_entry = skin_path | relative_url | append: '?v=' | append: skin_hash -%}
         {{ theme.id | jsonify }}: {{ skin_href_entry | jsonify }}{% unless forloop.last %},{% endunless %}
       {%- endunless -%}
     {%- endfor -%}
@@ -83,14 +83,8 @@
   window.__deuteriumTheme = { colorKey, skinKey, defaultSkin, skinFiles, skinBase, skin, skinHref, syncControls };
 
   if (skinHref) {
+    // Keep the selected stylesheet early; CSS requests only the font faces used.
     document.write('<link rel="preload" as="style" href="' + skinHref + '">');
-    {%- assign bootstrap_path = '/assets/js/theme-bootstrap.js' -%}
-    {%- assign bootstrap_version = '/' | asset_v -%}
-    {%- assign bootstrap_src = bootstrap_path | relative_url | append: '?v=' | append: bootstrap_version -%}
-    const bootstrap = document.createElement('script');
-    bootstrap.src = {{ bootstrap_src | jsonify }};
-    bootstrap.defer = true;
-    document.head.appendChild(bootstrap);
   }
 })();
 </script>

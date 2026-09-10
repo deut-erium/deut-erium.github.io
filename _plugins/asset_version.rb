@@ -23,10 +23,8 @@ module Jekyll
     end
     private
 
-    # The global version covers every css/js asset plus the theme data that
-    # feeds rendered assets (skin font preloads, theme list), so editing the
-    # data always produces fresh URLs for assets whose rendered content
-    # depends on it (assets/js/theme-bootstrap.js is versioned globally).
+    # The global version covers every css/js asset and the theme list.
+    # Skin stylesheet URLs use their own content hashes.
     def version_for(site)
       @version_for ||= {}
       @version_for[site.source] ||= begin
@@ -46,7 +44,6 @@ module Jekyll
         h.update(IO.binread(f))
       end
       if site
-        h.update(site.data.fetch('theme_font_preloads', {}).to_json)
         h.update(site.data.fetch('themes', []).to_json)
       end
       h.hexdigest[0, 8]
