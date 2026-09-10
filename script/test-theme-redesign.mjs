@@ -374,6 +374,9 @@ async function open(input, job, failFonts = false) {
         await page.waitForSelector('#cookie-banner', { hidden: true });
         network.dismissedCookieNotices++;
       }
+      // A real dismissal click otherwise leaves the pointer over later footer
+      // captures. Compare neutral hover states, without changing page styles.
+      await page.mouse.move(0, 0);
     };
     await navigate();
     return { context, page, network, cdp, navigate };
