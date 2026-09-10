@@ -12,30 +12,32 @@ import { parseArgs } from 'node:util';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { inflateSync } from 'node:zlib';
-import { families, displayFaces, skinFiles, repo, hash, within, freshOutput } from './test-theme-redesign-static.mjs';
+import { families, displayFaces, skinFiles, repo, hash, within, freshOutput, RPN, readRegistry, loadThemes, selectThemes, checkProvenance, checkSkin, themeManifest } from './test-theme-redesign-static.mjs';
 
 const ORIGIN = 'https://theme-regression.invalid';
-const RPN = 'rpn-garden';
-const defaults = { themes: [...Object.keys(families), RPN], widths: [320, 390, 768, 1440, 1920], modes: ['light', 'dark'], pages: ['home', 'archive', 'about', 'article'] };
+const defaults = { themes: readRegistry(), widths: [320, 390, 768, 1440, 1920], modes: ['light', 'dark'], pages: ['home', 'archive', 'about', 'article'] };
 const { values: opt } = parseArgs({ options: {
   help: { type: 'boolean', short: 'h' }, site: { type: 'string' }, before: { type: 'string' }, out: { type: 'string' },
   themes: { type: 'string', default: defaults.themes.join(',') }, widths: { type: 'string', default: defaults.widths.join(',') },
   modes: { type: 'string', default: 'light,dark' }, pages: { type: 'string', default: defaults.pages.join(',') },
   article: { type: 'string', default: '/2026/03/03/unfaithful-claims-breaking-6-zkvms.html' }, baseurl: { type: 'string', default: '' },
-  chrome: { type: 'string' }, puppeteer: { type: 'string' }, axe: { type: 'string', default: 'auto' },
+  'runtime-libs': { type: 'string' }, chrome: { type: 'string' }, puppeteer: { type: 'string' }, axe: { type: 'string', default: 'auto' },
   concurrency: { type: 'string', default: '3' }, 'no-screenshots': { type: 'boolean' }, 'no-fallback': { type: 'boolean' },
-  provisional: { type: 'boolean' },
+  provisional: { type: 'boolean' }, 'all-screenshots': { type: 'boolean' }, 'cold-only': { type: 'boolean' },
 } });
 if (opt.help) {
   console.log(`node script/test-theme-redesign.mjs --site GENERATED --before GENERATED --out agent_out/theme-redesign/FRESH
-Default: five redesigned themes plus RPN, 320/390/768/1440/1920, light/dark,
-home/archive/About/long article: 240 cases. Each records cold fonts, warms used
+Default: all 47 redesigned themes plus unchanged RPN, 320/390/768/1440/1920, light/dark,
+home/archive/About/long article: 1920 cases. Each records cold fonts, warms used
 optional faces, then reloads for layout, focus and CDP rendered-font checks.
 --themes id,id --widths 390,1440 --modes light,dark --pages home,article
 --article /route.html --baseurl /prefix --concurrency 1..6
---chrome PATH --puppeteer PATH (cached only); --axe auto|off|LOCAL_JS
+--chrome PATH --puppeteer PATH (cached only); --runtime-libs DIR,DIR
+--axe auto|off|LOCAL_JS. No implicit runtime libraries from prior artifacts.
 --no-screenshots --no-fallback reduce coverage and are recorded.
 --provisional labels fixture or baseline-only diagnosis, never integrated.
+--all-screenshots captures every selected width. --cold-only requires
+--provisional, skips optional-font warming and labels font coverage partial.
 Screenshots cover all selected themes/pages/modes at mobile and wide widths,
 including article and footer views. RPN additionally compares stable regions
 against --before using decoded pixels and computed geometry/paint/rendered fonts.
@@ -48,7 +50,8 @@ const list = (value, allowed, name, map = s => s) => {
   const result = [...new Set(value.split(',').map(map))];
   assert.ok(result.length && result.every(v => allowed(v)), `Invalid --${name}`); return result;
 };
-const themes = list(opt.themes, t => defaults.themes.includes(t), 'themes');
+const themes = selectThemes(opt.themes, defaults.themes);
+assert.ok(!opt['cold-only'] || opt.provisional, '--cold-only requires --provisional');
 const widths = list(opt.widths, w => Number.isInteger(w) && w >= 240 && w <= 2560, 'widths', Number);
 const modes = list(opt.modes, m => defaults.modes.includes(m), 'modes');
 const pages = list(opt.pages, p => defaults.pages.includes(p), 'pages');
@@ -70,13 +73,14 @@ function generatedSite(arg) {
   const root = fs.realpathSync(path.resolve(repo, arg));
   assert.ok(root !== repo && !within(root, repo), 'Never serve the checkout or its parent');
   assert.ok(fs.statSync(root).isDirectory(), 'Generated directory required');
-  for (const marker of ['.git', '_config.yml', '_posts', '_layouts', 'Gemfile', 'script']) assert.ok(!fs.existsSync(path.join(root, marker)), `Source tree marker in generated root: ${marker}`);
+  for (const marker of ['.git', '_config.yml', '_posts', '_layouts', '_includes', '_data', 'Gemfile', 'script', 'package.json', 'package-lock.json']) assert.ok(!fs.existsSync(path.join(root, marker)), `Source tree marker in generated root: ${marker}`);
   assert.ok(!within(root, out), 'Output must not be inside generated input');
   const files = new Map();
   const add = (relative, route = '/' + relative) => {
     assert.ok(!relative.split('/').some(p => p.startsWith('.')), 'Dotfile in allowlist');
     const file = path.join(root, relative), real = fs.realpathSync(file);
     assert.ok(within(root, real) && fs.statSync(real).isFile(), 'Generated file realpath escape');
+    assert.equal(real, file, 'No generated file symlinks');
     files.set(base + route, { file: real, relative, type: mime[path.extname(relative)] });
   };
   for (const route of new Set(['/', ...pages.map(p => routes[p])])) {
@@ -89,7 +93,7 @@ function generatedSite(arg) {
   // types. Never map arbitrary paths, source files, notices or unknown binaries.
   const walk = relative => {
     const dir = path.join(root, relative);
-    assert.ok(within(root, fs.realpathSync(dir)), 'Generated asset directory escape');
+    assert.equal(fs.realpathSync(dir), dir, 'No generated asset directory symlinks');
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
       if (e.name.startsWith('.')) continue;
       const rel = `${relative}/${e.name}`;
@@ -233,7 +237,9 @@ async function measure(page) {
     const cells = controls.map(e => ({ ...rect(e), slot: e.dataset.toySlot, enabled: !e.disabled, ancestorsInFlow: [e, e.parentElement, e.parentElement.parentElement].every(p => !['absolute', 'fixed'].includes(getComputedStyle(p).position)) }));
     const footerLinks = [...document.querySelectorAll('.site-footer__links a')].map(link);
     const footerOverlap = groups.some((a, i) => groups.slice(i + 1).some(b => overlap(rect(a), rect(b)))) || cells.some((a, i) => cells.slice(i + 1).some(b => overlap(a, b)));
-    return { skin: document.documentElement.dataset.skin || 'rpn-garden', mode: document.documentElement.dataset.theme, picker: document.querySelector('#skin-picker')?.value,
+    const grid = e => e && getComputedStyle(e).gridArea;
+    const rootStyle = getComputedStyle(document.documentElement);
+    return { pageGrid: { body: getComputedStyle(document.body).display, mainArea: grid(document.querySelector('#content')), footerArea: grid(document.querySelector('#site-footer')), articleToken: rootStyle.getPropertyValue('--article-page-area').trim(), footerToken: rootStyle.getPropertyValue('--footer-page-area').trim() }, skin: document.documentElement.dataset.skin || 'rpn-garden', mode: document.documentElement.dataset.theme, picker: document.querySelector('#skin-picker')?.value,
       viewportOverflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - innerWidth,
       header: box('.site-header'), main: box('#content'), footer: box('#site-footer'), headerOverlap: overlap(box('.site-header'), box('#content')),
       nav, navOverlap, navOrder: visualOrder(navNodes), badLabels: badLabels.slice(0, 20), escaped, scroll, prose,
@@ -317,6 +323,10 @@ function issuesFor(m, job) {
   require(JSON.stringify(m.nav.map(n => n.path)) === JSON.stringify(['/', '/archive.html', '/WriteUps/', '/ctf-tutorials/', '/ramblings/', '/about.html'].map(p => base + p)), 'navigation-destinations-or-order');
   require(m.nav.every(n => n.visible), 'hidden-navigation'); require(!m.navOverlap, 'navigation-overlap'); require(m.navOrder.join(',') === '0,1,2,3,4,5', 'navigation-visual-order');
   if (job.page === 'home') require(m.home?.domOrder && m.home?.visualOrder, 'publications-before-posts');
+  if (job.theme === 'margin-of-error') {
+    require(m.pageGrid.articleToken === 'folio' && m.pageGrid.footerToken === 'footer', 'margin-placement-tokens');
+    if (['grid', 'inline-grid'].includes(m.pageGrid.body)) require(m.pageGrid.mainArea.split(' / ')[0] === 'folio' && m.pageGrid.footerArea.split(' / ')[0] === 'footer', 'margin-body-grid-placement');
+  }
   if (job.theme === 'stack-underflow' && ['home', 'archive'].includes(job.page)) require(m.rowType.length && m.rowType.every(r => r.title >= r.metadata * 1.15), 'receipt-title-hierarchy');
   if (job.page === 'article') {
     require(m.prose.length > 0, 'missing-long-prose');
@@ -335,7 +345,7 @@ function issuesFor(m, job) {
 let browser, site, before, axeSource, fatal;
 const results = [], fallbackResults = [], comparisons = [];
 const started = new Date().toISOString();
-const shotWidths = new Set([widths.includes(390) ? 390 : Math.min(...widths), widths.includes(1440) ? 1440 : Math.max(...widths)]);
+const shotWidths = new Set(opt['all-screenshots'] ? widths : [widths.includes(390) ? 390 : Math.min(...widths), widths.includes(1440) ? 1440 : Math.max(...widths)]);
 const jobs = themes.flatMap(theme => widths.flatMap(width => modes.flatMap(mode => pages.map(page => ({ theme, width, mode, page })))));
 const fullMatrix = Object.entries(defaults).every(([k, values]) => JSON.stringify([...({ themes, widths, modes, pages }[k])].sort()) === JSON.stringify([...values].sort()));
 const keyOf = job => `${job.theme}-${job.width}-${job.mode}-${job.page}`;
@@ -448,7 +458,7 @@ async function compareRpn(afterContext, dir, job, afterFonts) {
   const priorDir = dir + '/before'; fs.mkdirSync(path.join(out, priorDir));
   const prior = await open(before, job);
   try {
-    await warmOptional(prior.page); await prior.navigate();
+    if (!opt['cold-only']) { await warmOptional(prior.page); await prior.navigate(); }
     const baselineFonts = await renderedFonts(prior.page, prior.cdp);
     const a = await stableRegions(prior, priorDir, job), b = await stableRegions(afterContext, dir, job);
     const result = { key: keyOf(job), method: 'Exact decoded RGBA pixels and separate computed geometry/paint signatures; CDP actual fonts, not source hashes.', issues: [], regions: [], fontsEqual: JSON.stringify(baselineFonts) === JSON.stringify(afterFonts) };
@@ -490,8 +500,8 @@ async function runCase(job, fallback = false) {
         result.coldScreenshots = await screenshots(c.page, dir + '/cold', job, true);
       }
     }
-    if (!fallback) { checkpoint('optional-font-warming'); result.warming = await warmOptional(c.page); checkpoint('warm-navigation'); await c.navigate(); }
-    checkpoint('warm-rendered-fonts'); result.fonts = await renderedFonts(c.page, c.cdp);
+    if (!fallback && !opt['cold-only']) { checkpoint('optional-font-warming'); result.warming = await warmOptional(c.page); checkpoint('warm-navigation'); await c.navigate(); }
+    checkpoint(opt['cold-only'] || fallback ? 'settled-rendered-fonts' : 'warm-rendered-fonts'); result.fonts = await renderedFonts(c.page, c.cdp);
     checkpoint('layout'); result.metrics = await measure(c.page); result.issues.push(...issuesFor(result.metrics, job));
     if (fallback) {
       if (!c.network.failedFonts) result.issues.push('failure-control-did-not-block-a-selected-font');
@@ -499,7 +509,7 @@ async function runCase(job, fallback = false) {
     } else if (job.theme !== RPN) {
       const selected = result.fonts.filter(r => families[job.theme].includes(r.family));
       if (!selected.length) result.issues.push('no-selected-font-samples');
-      for (const row of selected) if (!usedSelectedFace(row)) result.issues.push(`selected-font-not-rendered:${row.selector}:${row.family}`);
+      for (const row of selected) if ((!opt['cold-only'] || row.family === displayFaces[job.theme]) && !usedSelectedFace(row)) result.issues.push(`selected-font-not-rendered:${row.selector}:${row.family}`);
       if (!selected.some(r => /h1|brand/.test(r.selector)) || !selected.some(r => /lede|prose|article-body|note/.test(r.selector))) result.issues.push('missing-display-or-body-font-coverage');
       const unexpected = result.fonts.filter(r => !families[job.theme].includes(r.family));
       if (unexpected.length) result.issues.push('sample-inherits-unselected-font-stack');
@@ -530,15 +540,25 @@ async function runCase(job, fallback = false) {
 }
 
 try {
+  loadThemes();
   write('confinement-controls.json', confinementControls());
   site = generatedSite(opt.site); before = generatedSite(opt.before);
+  // Validate the actual generated CSS and font bytes, not just today's checkout.
+  const fontIndex = checkProvenance(site.root);
+  write('source-contracts.json', { manifest: themeManifest, manifestSha256: hash(fs.readFileSync(path.join(repo, themeManifest))), skins: themes.filter(t => t !== RPN).map(t => checkSkin(site.root, t, fontIndex)) });
   if (site.root === before.root && !opt.provisional) throw new Error('Identical site and baseline require --provisional; this is not integration');
   const require = createRequire(import.meta.url);
   const modulePath = path.resolve(repo, opt.puppeteer || '.toolchain/verify/lighthouse-node_modules/puppeteer-core');
   const imported = await import(pathToFileURL(require.resolve(modulePath)).href), puppeteer = imported.default || imported;
   const chrome = path.resolve(repo, opt.chrome || '.toolchain/verify/browser/chrome-linux64/chrome');
   assert.ok(fs.existsSync(chrome), 'Cached Chromium missing; no installs permitted');
-  const libs = ['agent_out/mastermind-game/browser-runtime/root/usr/lib/x86_64-linux-gnu', 'agent_out/mastermind-game/browser-runtime/root/lib/x86_64-linux-gnu', '.toolchain/verify/browser/sysroot/usr/lib/x86_64-linux-gnu'].map(p => path.join(repo, p)).filter(p => fs.existsSync(p));
+  const libs = opt['runtime-libs'] === undefined
+    ? ['.toolchain/verify/browser/sysroot/usr/lib/x86_64-linux-gnu'].map(p => path.join(repo, p)).filter(p => fs.existsSync(p))
+    : opt['runtime-libs'].split(',').map(p => {
+      assert.ok(p.trim() && !/[\0:]/.test(p), 'Invalid runtime library directory');
+      const dir = fs.realpathSync(path.resolve(repo, p));
+      assert.ok(fs.statSync(dir).isDirectory(), 'Runtime library directory required'); return dir;
+    });
   const runtime = path.join(out, 'runtime'); fs.mkdirSync(runtime);
   const cwd = process.cwd(); process.chdir(runtime);
   try {
@@ -550,7 +570,7 @@ try {
   const axePath = axePaths.find(p => fs.existsSync(p)); if (axePath) axeSource = fs.readFileSync(axePath, 'utf8');
   if (!axePath && !['off', 'auto'].includes(opt.axe)) throw new Error('Requested local axe script missing');
   const inventory = input => [...input.files.values()].filter(e => e.relative.endsWith('.html') || e.relative === 'assets/css/main.css' || Object.values(skinFiles).includes(e.relative)).map(e => ({ path: e.relative, sha256: hash(fs.readFileSync(e.file)) }));
-  write('run.json', { started, provisional: !!opt.provisional, options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random draws are not mocked. An offered cookie notice is dismissed via its real Reject button and recorded; no overlay masking. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
+  write('run.json', { started, provisional: !!opt.provisional, partial: !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'], options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random draws are not mocked. An offered cookie notice is dismissed via its real Reject button and recorded; no overlay masking. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
   let cursor = 0;
   await Promise.all(Array.from({ length: concurrency }, async () => {
     while (cursor < jobs.length) {
@@ -560,8 +580,9 @@ try {
     }
   }));
   if (!opt['no-fallback']) {
-    // One mobile and one wide home/article per selected skin and mode. Separate
-    // font-failure scenarios do not inflate the 240 generated-page matrix count.
+    // Representative mobile/wide home/article cases, or every screenshot width
+    // with --all-screenshots, per selected skin and mode. Separate
+    // font-failure scenarios are counted separately from the selected page matrix.
     const faultJobs = jobs.filter(j => j.theme !== RPN && ['home', 'article'].includes(j.page) && shotWidths.has(j.width));
     cursor = 0;
     await Promise.all(Array.from({ length: concurrency }, async () => { while (cursor < faultJobs.length) fallbackResults.push(await runCase(faultJobs[cursor++], true)); }));
@@ -574,15 +595,16 @@ finally {
   const counts = {};
   for (const r of failures) for (const code of r.issues) counts[code] = (counts[code] || 0) + 1;
   const status = fatal || failures.length || results.length !== jobs.length ? 'failed' : 'passed';
-  const summary = { status, provisional: !!opt.provisional, started, ended: new Date().toISOString(), planned: jobs.length, completed: results.filter(r => r.completed).length, passed: results.filter(r => r.pass).length, failed: results.filter(r => !r.pass).length, fullMatrix, integrationClaim: !opt.provisional && fullMatrix && !opt['no-screenshots'] && !opt['no-fallback'] && status === 'passed', fatal,
+  const partial = !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'];
+  const summary = { status, partial, coverage: partial ? 'partial' : 'all-47-plus-rpn', provisional: !!opt.provisional, started, ended: new Date().toISOString(), planned: jobs.length, completed: results.filter(r => r.completed).length, passed: results.filter(r => r.pass).length, failed: results.filter(r => !r.pass).length, fullMatrix, integrationClaim: !opt.provisional && fullMatrix && !opt['no-screenshots'] && !opt['no-fallback'] && !opt['cold-only'] && status === 'passed', fatal,
     failureCounts: counts, failures: failures.slice(0, 30).map(r => ({ key: r.key, directory: r.directory, issues: r.issues, error: r.error })), omittedFailures: Math.max(0, failures.length - 30),
     fallback: { status: opt['no-fallback'] ? 'skipped' : fallbackResults.length ? fallbackResults.every(r => r.pass) ? 'passed' : 'failed' : 'not-applicable-or-incomplete', cases: fallbackResults.length, failed: fallbackResults.filter(r => !r.pass).length },
     coldFonts: { casesWithFallback: results.filter(r => r.coldFallback?.length).length, casesWithLayoutIssues: results.filter(r => r.coldLayout?.issues.length).length, policy: 'Cold optional fallback is not a warmed-font failure. Cold layout failures are recorded separately with a cold: prefix.' },
     rpn: { cases: comparisons.length, changed: comparisons.filter(c => c.issues.length).length, styleRegionsCompared: comparisons.reduce((n, c) => n + c.regions.filter(r => r.styleCompared).length, 0), pixelRegionsCompared: comparisons.reduce((n, c) => n + c.regions.filter(r => r.pixelCompared).length, 0), limitedRegions: comparisons.reduce((n, c) => n + c.regions.filter(r => r.limitation).length, 0), method: 'Decoded RGBA exact pixel comparison, separate computed style/geometry and CDP font comparisons. Unstable channels are not masked or called pixel passes.' },
     screenshots: { disabled: !!opt['no-screenshots'], widths: [...shotWidths], files: [...results, ...fallbackResults].reduce((n, r) => n + (r.screenshots?.length || 0) + (r.coldScreenshots?.length || 0), 0), rpnRepeatRegions: 'Stored in per-case folders; not included in viewport screenshot count.' },
     axe: Object.fromEntries([...new Set(results.map(r => r.axe?.status || 'not-reached'))].map(s => [s, results.filter(r => (r.axe?.status || 'not-reached') === s).length])),
-    coverageLimits: [!fullMatrix && 'Subset selected; not full redesign coverage.', opt.provisional && 'Provisional input; integrated output not tested.', opt['no-screenshots'] && 'Pixel checks and actual screenshots disabled.', opt['no-fallback'] && 'Failure fallback scenarios disabled.', !axeSource && 'Axe unavailable or explicitly disabled; no accessibility pass.', results.some(r => r.axe?.incomplete?.length) && 'Axe has incomplete contrast results; these are not accessibility passes.', !themes.includes(RPN) && 'RPN baseline comparison not selected.'].filter(Boolean),
+    coverageLimits: [opt['cold-only'] && 'Optional-font warming and its rendered-face assertions skipped; display faces still required cold.', !fullMatrix && 'Subset selected; not full redesign coverage.', opt.provisional && 'Provisional input; integrated output not tested.', opt['no-screenshots'] && 'Pixel checks and actual screenshots disabled.', opt['no-fallback'] && 'Failure fallback scenarios disabled.', !axeSource && 'Axe unavailable or explicitly disabled; no accessibility pass.', results.some(r => r.axe?.incomplete?.length) && 'Axe has incomplete contrast results; these are not accessibility passes.', !themes.includes(RPN) && 'RPN baseline comparison not selected.'].filter(Boolean),
   };
-  write('summary.json', summary); console.log(JSON.stringify({ status, planned: jobs.length, passed: summary.passed, failed: summary.failed, out: path.relative(repo, out) }));
+  write('summary.json', summary); console.log(JSON.stringify({ status, partial, provisional: !!opt.provisional, planned: jobs.length, passed: summary.passed, failed: summary.failed, out: path.relative(repo, out) }));
   if (status === 'failed') process.exitCode = 1;
 }

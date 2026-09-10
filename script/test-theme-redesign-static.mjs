@@ -9,18 +9,60 @@ import { fileURLToPath } from 'node:url';
 import { rules, split, declarations, groupRule, alternatives, ownership, ownedDeclaration, footerSelector } from './test-article-css.mjs';
 
 export const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-// These are release expectations, deliberately independent of ignored font-choices.json.
-export const families = Object.freeze({
-  'proof-bonbons': ['Modak', 'Nunito', 'Fira Mono'],
-  'the-exploit-grimoire': ['Grenze Gotisch', 'Literata', 'IBM Plex Mono'],
-  'mercury-keyspace': ['Michroma', 'Manrope', 'Martian Mono', 'Literata'],
-  'stack-underflow': ['VT323', 'Zilla Slab', 'IBM Plex Sans', 'IBM Plex Mono'],
-  'crowd-signal': ['Honk', 'Chivo', 'JetBrains Mono'],
-});
-// Only short-heading display faces swap after a cold download. Keep reading,
-// code and all pre-existing global faces on the optional-loading policy.
-export const displayFaces = Object.freeze(Object.fromEntries(Object.entries(families).map(([skin, names]) => [skin, names[0]])));
-export const skinFiles = Object.fromEntries(Object.keys(families).map((s, i) => [s, `assets/css/skins/${['02', '03', '12', '31', '47'][i]}-${s}.css`]));
+// Expectations come only from source-controlled metadata, not ignored review
+// artifacts. Loading is explicit so --help and isolated validator controls work
+// even while the font worker is preparing the manifest.
+export const RPN = 'rpn-garden';
+export const themeManifest = 'assets/fonts/theme-library/themes.json';
+export let families, displayFaces, skinFiles;
+export function readRegistry(root = repo) {
+  const text = fs.readFileSync(path.join(root, '_data/themes.yml'), 'utf8');
+  const ids = [...text.matchAll(/^- id: ([a-z0-9]+(?:-[a-z0-9]+)*)\s*$/gm)].map(m => m[1]);
+  assert.equal((text.match(/^- /gm) || []).length, ids.length, 'Unsupported theme registry entry');
+  assert.equal(ids.length, 48, 'Registry must contain 47 redesigns plus RPN');
+  assert.equal(new Set(ids).size, ids.length, 'Duplicate registry ID');
+  assert.equal(ids[0], RPN, 'RPN must remain the default registry entry');
+  assert.match(text, /^- id: rpn-garden\n  name: RPN Garden\n  default: true(?:\n|$)/);
+  assert.equal((text.match(/default:/g) || []).length, 1, 'Only RPN may be default');
+  return ids;
+}
+export function validateThemes(document, registry, files) {
+  assert.ok(document && typeof document === 'object' && !Array.isArray(document), 'themes.json must be keyed by theme ID');
+  const byId = new Map(), usedFiles = new Set();
+  for (const [id, row] of Object.entries(document)) {
+    assert.ok(registry.includes(id) && id !== RPN, `Unknown manifest theme: ${id}`);
+    assert.ok(row && typeof row === 'object' && !Array.isArray(row), `Invalid theme entry: ${id}`);
+    assert.match(row.file, new RegExp(`^[0-9]{2}-${id}\\.css$`), 'Unsafe or mismatched skin basename');
+    const file = `assets/css/skins/${row.file}`;
+    assert.ok(files.includes(file) && !usedFiles.has(file), `Missing or duplicate skin file: ${file}`);
+    assert.ok(Array.isArray(row.families) && row.families.length >= 2 && row.families.every(f => typeof f === 'string' && /^[A-Za-z0-9][A-Za-z0-9 .-]*$/.test(f) && f.trim() === f), `Invalid families: ${id}`);
+    assert.equal(new Set(row.families).size, row.families.length, `Duplicate family: ${id}`);
+    assert.ok(row.families.includes(row.display), `Display family not selected: ${id}`);
+    assert.equal(typeof row.existing, 'boolean', `Missing existing-implementation annotation: ${id}`);
+    // The annotation records prior approval, not current completion or coverage.
+    // Never filter the default matrix by it.
+    byId.set(id, Object.freeze({ ...row, id, file, families: Object.freeze([...row.families]) })); usedFiles.add(file);
+  }
+  assert.deepEqual([...byId.keys()].sort(), registry.filter(id => id !== RPN).sort(), 'Manifest must cover every non-RPN registry entry');
+  assert.deepEqual([...usedFiles].sort(), [...files].sort(), 'Skin directory and manifest differ');
+  return Object.freeze(Object.fromEntries(registry.filter(id => id !== RPN).map(id => [id, byId.get(id)])));
+}
+export function loadThemes(root = repo) {
+  const file = path.join(root, themeManifest);
+  assert.ok(fs.existsSync(file), `Missing committed ${themeManifest}; no artifact or five-theme fallback`);
+  assert.equal(fs.realpathSync(file), path.resolve(file), 'Theme manifest cannot be a symlink');
+  const files = fs.readdirSync(path.join(root, 'assets/css/skins')).filter(f => f.endsWith('.css')).map(f => `assets/css/skins/${f}`);
+  const config = validateThemes(JSON.parse(fs.readFileSync(file, 'utf8')), readRegistry(root), files);
+  families = Object.freeze(Object.fromEntries(Object.entries(config).map(([id, row]) => [id, row.families])));
+  displayFaces = Object.freeze(Object.fromEntries(Object.entries(config).map(([id, row]) => [id, row.display])));
+  skinFiles = Object.freeze(Object.fromEntries(Object.entries(config).map(([id, row]) => [id, row.file])));
+  return config;
+}
+export function selectThemes(value, allowed) {
+  const selected = value === undefined ? [...allowed] : value.split(',').map(s => s.trim());
+  assert.ok(selected.length && selected.every(id => allowed.includes(id)) && new Set(selected).size === selected.length, 'Invalid or duplicate --themes');
+  return selected;
+}
 export const hash = b => createHash('sha256').update(b).digest('hex');
 export const within = (root, file) => file === root || file.startsWith(root + path.sep);
 export function freshOutput(arg) {
@@ -115,12 +157,15 @@ export function checkSvg(text, label) {
   assert.ok(uses.every(id => ['path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon'].includes(idTags.get(id))), `SVG use must reference a simple shape, not a recursive container: ${label}`);
   return ids;
 }
-export function checkProvenance(root) {
+export function checkProvenance(root, selectedFamilies = Object.values(families).flat()) {
   const read = file => fs.readFileSync(file);
   const manifestPath = 'assets/fonts/theme-library/PROVENANCE.json';
-  const manifest = JSON.parse(fs.readFileSync(path.join(root, manifestPath), 'utf8'));
+  const manifestFile = path.join(root, manifestPath);
+  assert.equal(fs.realpathSync(manifestFile), manifestFile, 'No font provenance or parent-directory symlinks');
+  assert.ok(fs.lstatSync(manifestFile).isFile(), 'Regular font provenance file required');
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
   assert.ok(Array.isArray(manifest.files) && manifest.files.length, 'Empty production font provenance');
-  const index = new Map(), allowed = new Set(Object.values(families).flat());
+  const index = new Map(), allowed = new Set(selectedFamilies);
   for (const entry of manifest.files) {
     assert.ok(allowed.has(entry.family), `Unselected installed family: ${entry.family}`);
     assert.ok(/^assets\/fonts\/theme-library\/[\w-]+\/[\w.-]+$/.test(entry.path), `Unsafe provenance path: ${entry.path}`);
@@ -144,14 +189,30 @@ export function checkProvenance(root) {
   const visit = dir => { for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, e.name); assert.ok(!e.isSymbolicLink(), 'No symlinks in installed fonts');
     if (e.isDirectory()) visit(file);
-    else if (file !== path.join(root, manifestPath) && file !== path.join(root, 'assets/fonts/theme-library/README.md')) assert.ok(index.has(path.relative(root, file).split(path.sep).join('/')), `Unpinned installed font artifact: ${file}`);
+    else if (file !== path.join(root, manifestPath) && file !== path.join(root, 'assets/fonts/theme-library/README.md') && file !== path.join(root, themeManifest)) assert.ok(index.has(path.relative(root, file).split(path.sep).join('/')), `Unpinned installed font artifact: ${file}`);
   } };
   visit(path.join(root, 'assets/fonts/theme-library'));
+  if (fs.existsSync(path.join(root, themeManifest))) {
+    const document = JSON.parse(fs.readFileSync(path.join(root, themeManifest), 'utf8'));
+    const config = validateThemes(document, [RPN, ...Object.keys(families)], Object.values(skinFiles));
+    const expected = Object.keys(families).map(id => ({ id, file: skinFiles[id], display: displayFaces[id], families: families[id] }));
+    assert.deepEqual(Object.values(config).map(({ id, file, display, families }) => ({ id, file, display, families })).sort((a, b) => a.id.localeCompare(b.id)), expected.sort((a, b) => a.id.localeCompare(b.id)), 'Generated theme metadata differs from source expectations');
+  }
   return index;
+}
+export function checkMarginPlacement(css, skin) {
+  if (skin !== 'margin-of-error') return;
+  const all = [...walkRules(css)], root = /^html\[data-skin=(?:"margin-of-error"|'margin-of-error'|margin-of-error)\](?::root)?$/;
+  const tokens = new Map(all.filter(r => !r.ancestors.length && root.test(r.prelude)).flatMap(r => declarations(r.body).map(d => [d.prop, d.value])));
+  assert.equal(tokens.get('--article-page-area'), 'folio', 'Margin of Error must retain the article placement hook');
+  assert.equal(tokens.get('--footer-page-area'), 'footer', 'Margin of Error must retain the footer placement hook');
+  const bodyGrid = all.some(r => split(r.prelude).some(sel => /\] body$/.test(sel)) && declarations(r.body).some(d => d.prop === 'display' && /^(?:inline-)?grid(?:\s*!important)?$/.test(d.value)));
+  if (bodyGrid) assert.ok(all.some(r => !r.ancestors.length && split(r.prelude).some(sel => /\] \.page-shell(?:--wide)?$/.test(sel)) && declarations(r.body).some(d => d.prop === 'grid-area' && d.value === 'folio')), 'Margin of Error body grid needs a wide page folio placement hook');
 }
 export function checkSkin(root, skin, index, cssOverride) {
   const file = skinFiles[skin], css = cssOverride ?? fs.readFileSync(path.join(root, file), 'utf8');
   checkScope(css, skin);
+  checkMarginPlacement(css, skin);
   assert.doesNotMatch(css, /Cycle (?:two|three) corrective pass|Theme (?:Chango|Pixelify)|--bonbon-|--grimoire-|--mercury-|--stack-/i, 'Legacy generation remains');
   const declared = new Set(), assets = new Set(), fontPaths = new Set(), baseTokens = new Map();
   let ruleCount = 0;
@@ -177,7 +238,10 @@ export function checkSkin(root, skin, index, cssOverride) {
       assert.ok(!footerSelector(sel) && !/#site-footer\b/.test(sel), `Footer selectors belong to the component: ${sel}`);
       const kind = ownership(sel);
       for (const d of ds) {
-        assert.ok(!(kind && ownedDeclaration(kind, d.prop)) && !wideOwned(sel, d.prop), `Competing geometry: ${sel} { ${d.prop} }`);
+        // Page-shell placement in Margin's body grid is outside the wide
+        // component's internal track ownership. No other geometry is exempt.
+        const marginPlacement = skin === 'margin-of-error' && /\.page-shell(?:--wide)?$/.test(sel) && d.prop === 'grid-area' && d.value === 'folio';
+        assert.ok(!(kind && ownedDeclaration(kind, d.prop)) && (!wideOwned(sel, d.prop) || marginPlacement), `Competing geometry: ${sel} { ${d.prop} }`);
         if (d.prop === 'content') assert.match(d.value, /^(?:none|normal|""|'')\s*(?:!important)?$/, `Visible pseudo-copy: ${sel}`);
         if (/^text-decoration(?:-line)?$/.test(d.prop) && /\bunderline\b/.test(d.value) && /!important/.test(d.value)) {
           assert.match(sel, /\.(?:prose|article__content|record-|masthead|page-|home-|archive-|site-nav|site-header)|#(?:content|article-body)/, `Forced underline can reach footer links: ${sel}`);
@@ -208,7 +272,7 @@ export function checkSkin(root, skin, index, cssOverride) {
   assert.ok(assets.size, `Missing local decorative SVG: ${file}`);
   return { skin, file, rules: ruleCount, families: [...declared], fontFiles: fontPaths.size, decorativeAssets: [...assets], sha256: hash(css) };
 }
-function checkNoGlobalLibrary(root) {
+export function checkNoGlobalLibrary(root) {
   // Existing RPN/shared faces are intentionally preserved. The release does not
   // install a global font catalog, even under renamed URLs or new family names.
   const nativeGlobal = new Set(['Atkinson Hyperlegible', 'Silkscreen', 'Theme Bungee', 'Theme Chango', 'Theme Climate', 'Theme Doto', 'Theme Fascinate', 'Theme Monoton', 'Theme Pixelify', 'Theme Glitch', 'Theme Unbounded', 'Theme Computer Modern', 'Theme Euler Fraktur', 'Theme Formal Script']);
@@ -231,15 +295,20 @@ function checkNoGlobalLibrary(root) {
       if (!rel.startsWith('assets/css/skins/')) assert.ok(nativeGlobal.has(family), `Unapproved global catalog face: ${rel}: ${family}`);
     }
   }
-  return { checkedFiles: files.length, policy: 'Selected library faces only in the five lazy skin files; no global library sheet or preload.' };
+  return { checkedFiles: files.length, policy: 'Selected library faces only in registered lazy skin files; no global library sheet or preload.' };
 }
 async function main() {
-  const { values: opt } = parseArgs({ options: { out: { type: 'string' }, help: { type: 'boolean' }, 'negative-control': { type: 'string' } } });
-  if (opt.help) { console.log('node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/FRESH\nOptional --negative-control unscoped|missing-font|corrupt-font must exit nonzero. No build, network or source writes.'); return; }
+  const { values: opt } = parseArgs({ options: { out: { type: 'string' }, themes: { type: 'string' }, help: { type: 'boolean' }, 'negative-control': { type: 'string' } } });
+  if (opt.help) { console.log('node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/FRESH\nOptional --themes id,id labels partial skin coverage. Defaults: all 47 skins; RPN rendering is checked by the browser matrix.\nOptional --negative-control unscoped|missing-font|corrupt-font must exit nonzero. No build, network or source writes.'); return; }
   const out = freshOutput(opt.out || `agent_out/theme-redesign/static-${Date.now()}`);
-  const summary = { status: 'failed', controls: [], skins: [], failures: [], limitations: ['Static contracts do not prove rendering, contrast or aesthetic quality.'] };
+  const summary = { status: 'failed', partial: true, controls: [], skins: [], failures: [], limitations: ['Static contracts do not prove rendering, contrast or aesthetic quality.'] };
   const check = (name, fn) => { try { return fn(); } catch (e) { summary.failures.push({ check: name, error: String(e.message).slice(0, 1600) }); return null; } };
   try {
+    const config = loadThemes(), themes = selectThemes(opt.themes, Object.keys(config));
+    summary.themes = themes; summary.partial = themes.length !== Object.keys(config).length;
+    summary.coverage = summary.partial ? 'partial' : 'all-47-skins';
+    summary.manifest = { path: themeManifest, sha256: hash(fs.readFileSync(path.join(repo, themeManifest))) };
+    summary.rpn = 'Source global-loading policy checked; unchanged rendering requires the browser comparison.';
     assert.ok(!opt['negative-control'] || ['unscoped', 'missing-font', 'corrupt-font'].includes(opt['negative-control']), 'Unknown negative control');
     for (const text of ['body { color: red; }', 'html[data-skin="proof-bonbons"] .a, body { color:red }', '@media screen { body { color:red } }']) {
       assert.throws(() => checkScope(text, 'proof-bonbons'), /Unscoped/);
@@ -270,15 +339,15 @@ async function main() {
       summary.controls.push(`${mode}: physical fixture rejected by production provenance validator`);
     }
     const index = check('installed-font-provenance', () => checkProvenance(controlRoots[opt['negative-control']] || repo));
-    for (const skin of Object.keys(families)) {
-      const css = opt['negative-control'] === 'unscoped' && skin === 'proof-bonbons' ? fs.readFileSync(path.join(repo, skinFiles[skin]), 'utf8') + '\nbody { color: red; }' : undefined;
+    for (const skin of themes) {
+      const css = opt['negative-control'] === 'unscoped' && skin === themes[0] ? fs.readFileSync(path.join(repo, skinFiles[skin]), 'utf8') + '\nbody { color: red; }' : undefined;
       const result = check(skin, () => checkSkin(repo, skin, index || new Map(), css)); if (result) summary.skins.push(result);
     }
     if (index && !opt['negative-control']) {
-      const css = fs.readFileSync(path.join(repo, skinFiles['proof-bonbons']), 'utf8');
-      for (const mutated of [css.replace('font-display: swap', 'font-display: optional'), css.replace('font-display: optional', 'font-display: swap')]) {
+      const skin = themes[0], css = fs.readFileSync(path.join(repo, skinFiles[skin]), 'utf8');
+      for (const mutated of [css.replace(/font-display\s*:\s*swap\b/, 'font-display: optional'), css.replace(/font-display\s*:\s*optional\b/, 'font-display: swap')]) {
         assert.notEqual(mutated, css);
-        assert.throws(() => checkSkin(repo, 'proof-bonbons', index, mutated), /Unexpected font loading policy/);
+        assert.throws(() => checkSkin(repo, skin, index, mutated), /Unexpected font loading policy/);
       }
       summary.controls.push('display lockout and reading-font swap policy mutations rejected');
     }
@@ -286,7 +355,7 @@ async function main() {
     summary.status = summary.failures.length ? 'failed' : 'passed';
   } catch (e) { summary.failures.push({ check: 'infrastructure', error: String(e.stack).slice(0, 2000) }); }
   fs.writeFileSync(path.join(out, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
-  console.log(JSON.stringify({ status: summary.status, skins: summary.skins.length, failures: summary.failures.length, out: path.relative(repo, out) }));
+  console.log(JSON.stringify({ status: summary.status, coverage: summary.coverage, partial: summary.partial, skins: summary.skins.length, failures: summary.failures.length, out: path.relative(repo, out) }));
   if (summary.status !== 'passed') process.exitCode = 1;
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

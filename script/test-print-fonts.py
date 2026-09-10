@@ -98,14 +98,23 @@ class PrintFontTests(unittest.TestCase):
         self.assertEqual(installed, native_files | selected_files)
 
     def test_selected_theme_font_evidence(self):
-        # These skins have no Atkinson reference; others still use it, so the
-        # face must remain available through CSS, not be deleted globally.
-        for filename in ("29-unknown-at-rf-0-73.css", "30-collision-atlas.css",
-                         "36-margin-of-error.css", "45-magnetic-index.css"):
-            css = source("assets/css/skins/" + filename)
-            self.assertNotIn("Atkinson Hyperlegible", css)
-            self.assertIn('"Theme Computer Modern"', css)
-        self.assertIn('"Atkinson Hyperlegible"', source("assets/css/skins/01-grid-meltdown.css"))
+        # Screen font evidence follows the committed manifest. Print still uses
+        # its original serif, tested independently below.
+        output = subprocess.run(
+            ["node", "--input-type=module", "-e",
+             "import {loadThemes} from './script/test-theme-redesign-static.mjs';"
+             "console.log(JSON.stringify(loadThemes()));"],
+            cwd=ROOT, text=True, capture_output=True, check=True, timeout=30)
+        themes = json.loads(output.stdout)
+        self.assertEqual(len(themes), 47)
+        for theme in themes.values():
+            found = faces(source(theme["file"]))
+            self.assertEqual({face["font-family"].strip('\"\'') for face in found},
+                             set(theme["families"]), theme["id"])
+            for face in found:
+                family = face["font-family"].strip('\"\'')
+                self.assertEqual(face["font-display"],
+                                 "swap" if family == theme["display"] else "optional")
 
     def test_one_small_print_sheet(self):
         css = source("assets/css/print.css")
