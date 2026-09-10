@@ -4217,3 +4217,8 @@ html[data-skin="key-exchange-kiosk"] :is(.site-header,
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
+
+/* The retired six-area nav must not create an extra tablet column. */
+@media (min-width: 44.01rem) and (max-width: 54rem) {
+  html[data-skin="key-exchange-kiosk"] .site-nav { grid-template-areas: none; }
+}
