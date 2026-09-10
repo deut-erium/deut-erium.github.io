@@ -3,7 +3,7 @@
  * Offline generated-site regression matrix. Never builds or serves the checkout.
  * node script/test-theme-redesign.mjs --site GENERATED --before GENERATED_BASELINE
  *   --out agent_out/theme-redesign/FRESH
- * See --help for subsets. No network, installs, geometry overrides or remote logs.
+ * See --help for subsets. No network, installs, generated-page overrides or remote logs.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,7 +43,10 @@ including article and footer views. RPN additionally compares stable regions
 against --before using decoded pixels and computed geometry/paint/rendered fonts.
 Axe is optional and reports skipped/incomplete/error separately. No WCAG claim.
 Generated files only, intercepted at a private .invalid origin. No HTTP server,
-external requests, DNS, background network, installs or geometry changes.`);
+external requests, DNS, background network or installs. Geometry controls use
+isolated synthetic documents; generated pages are never restyled. All redesigned
+themes require visible nonempty brand scope. Article utility/contents collisions
+are checked at the top and after scrolling to the article body.`);
   process.exit(0);
 }
 const list = (value, allowed, name, map = s => s) => {
@@ -179,7 +182,11 @@ function pixelDifference(a, b) {
 async function measure(page) {
   return page.evaluate(() => {
     const round = n => Math.round(n * 100) / 100;
-    const visible = e => !!e && !!e.getClientRects().length && !['hidden', 'collapse'].includes(getComputedStyle(e).visibility) && getComputedStyle(e).display !== 'none';
+    // Chromium can retain layout boxes for unpainted descendants of closed
+    // native details. checkVisibility respects that rendering state, including
+    // nested details and the still-painted first summary. It does not reject
+    // offscreen boxes or excuse overflow hidden by an arbitrary HTML ancestor.
+    const visible = e => !!e && !!e.getClientRects().length && e.checkVisibility({ opacityProperty: true, visibilityProperty: true });
     const name = e => e.id ? '#' + e.id : e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className ? '.' + e.className.trim().split(/\s+/).slice(0, 3).join('.') : '');
     const rect = e => {
       if (!e) return null; const r = e.getBoundingClientRect(), s = getComputedStyle(e);
@@ -239,7 +246,31 @@ async function measure(page) {
     const footerOverlap = groups.some((a, i) => groups.slice(i + 1).some(b => overlap(rect(a), rect(b)))) || cells.some((a, i) => cells.slice(i + 1).some(b => overlap(a, b)));
     const grid = e => e && getComputedStyle(e).gridArea;
     const rootStyle = getComputedStyle(document.documentElement);
-    return { pageGrid: { body: getComputedStyle(document.body).display, mainArea: grid(document.querySelector('#content')), footerArea: grid(document.querySelector('#site-footer')), articleToken: rootStyle.getPropertyValue('--article-page-area').trim(), footerToken: rootStyle.getPropertyValue('--footer-page-area').trim() }, skin: document.documentElement.dataset.skin || 'rpn-garden', mode: document.documentElement.dataset.theme, picker: document.querySelector('#skin-picker')?.value,
+    // Compare actual clickable fragments, clipped to the viewport and local
+    // scrollports. A TOC container's empty space is not a clickable link, and
+    // links scrolled out of its overflow:auto box cannot collide with the dock.
+    const clickRects = e => {
+      if (!visible(e)) return [];
+      return [...e.getClientRects()].map(r => {
+        let left = Math.max(0, r.left), right = Math.min(innerWidth, r.right), top = Math.max(0, r.top), bottom = Math.min(innerHeight, r.bottom);
+        for (let p = e.parentElement; p; p = p.parentElement) {
+          const s = getComputedStyle(p), pr = p.getBoundingClientRect();
+          if (['hidden', 'clip', 'auto', 'scroll'].includes(s.overflowX)) { left = Math.max(left, pr.left + p.clientLeft); right = Math.min(right, pr.left + p.clientLeft + p.clientWidth); }
+          if (['hidden', 'clip', 'auto', 'scroll'].includes(s.overflowY)) { top = Math.max(top, pr.top + p.clientTop); bottom = Math.min(bottom, pr.top + p.clientTop + p.clientHeight); }
+        }
+        return { left, right, top, bottom };
+      }).filter(r => r.right > r.left && r.bottom > r.top);
+    };
+    const targets = selector => [...document.querySelectorAll(selector)].map(e => ({ selector: name(e), ...(e.hasAttribute('href') ? { href: e.getAttribute('href') } : {}), rects: clickRects(e) }));
+    const buttons = targets('.skin-dice, .theme-toggle, .site-share__btn'), contents = targets('.record-toc a[href]');
+    const utilityOverlaps = [];
+    for (const button of buttons) for (const link of contents) for (const a of button.rects) for (const b of link.rects) {
+      const left = Math.max(a.left, b.left), right = Math.min(a.right, b.right), top = Math.max(a.top, b.top), bottom = Math.min(a.bottom, b.bottom);
+      if (right - left > 1 && bottom - top > 1) utilityOverlaps.push({ button: button.selector, link: link.href, width: round(right - left), height: round(bottom - top), hit: name(document.elementFromPoint((left + right) / 2, (top + bottom) / 2) || document.documentElement) });
+    }
+    const scope = document.querySelector('.site-brand__scope');
+    return { brandScope: scope ? { ...rect(scope), text: scope.innerText.trim() } : null,
+      articleUtility: { scrollY: round(scrollY), buttons, contents, overlaps: utilityOverlaps }, pageGrid: { body: getComputedStyle(document.body).display, mainArea: grid(document.querySelector('#content')), footerArea: grid(document.querySelector('#site-footer')), articleToken: rootStyle.getPropertyValue('--article-page-area').trim(), footerToken: rootStyle.getPropertyValue('--footer-page-area').trim() }, skin: document.documentElement.dataset.skin || 'rpn-garden', mode: document.documentElement.dataset.theme, picker: document.querySelector('#skin-picker')?.value,
       viewportOverflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - innerWidth,
       header: box('.site-header'), main: box('#content'), footer: box('#site-footer'), headerOverlap: overlap(box('.site-header'), box('#content')),
       nav, navOverlap, navOrder: visualOrder(navNodes), badLabels: badLabels.slice(0, 20), escaped, scroll, prose,
@@ -252,6 +283,22 @@ async function measure(page) {
       pseudoCopy: [...document.querySelectorAll('.site-footer, .site-footer *')].flatMap(e => ['::before', '::after'].map(p => ({ selector: name(e) + p, content: getComputedStyle(e, p).content }))).filter(p => !['none', 'normal', '""', "''"].includes(p.content)).slice(0, 12),
     };
   });
+}
+// Use real scrolling, in both cold and warmed layouts. Restore the top before
+// picker, focus and screenshots; never move or restyle source elements.
+async function layoutMetrics(page, job) {
+  await page.evaluate(() => scrollTo(0, 0));
+  const metrics = await measure(page);
+  if (job.page === 'article') {
+    metrics.articleUtilityViews = [{ position: 'top', ...metrics.articleUtility }];
+    await page.evaluate(async () => {
+      document.querySelector('#article-body').scrollIntoView({ block: 'start', behavior: 'instant' });
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    });
+    metrics.articleUtilityViews.push({ position: 'article-body', ...(await measure(page)).articleUtility });
+    await page.evaluate(() => scrollTo(0, 0));
+  }
+  return metrics;
 }
 const fontSelectors = ['.site-brand__name', '.site-nav > a', '.masthead h1', '.index-heading h1', '.page-heading h1', '.record-head h1', '.masthead__lede', '.page-prose p', '#article-body > p', '#article-body pre code', '.site-footer__note'];
 async function renderedFonts(page, cdp) {
@@ -316,6 +363,7 @@ function issuesFor(m, job) {
   const issues = [];
   const require = (yes, code) => { if (!yes) issues.push(code); };
   require(m.skin === job.theme && m.mode === job.mode && m.picker === job.theme, 'theme-selection');
+  if (job.theme !== RPN) require(m.brandScope?.visible && m.brandScope.width > 0 && m.brandScope.height > 0 && m.brandScope.text.length > 0, 'missing-visible-brand-scope');
   require(m.viewportOverflow <= 1, 'viewport-overflow'); require(!m.escaped.length, 'uncontained-overflow');
   require(m.scroll.every(s => s.moved), 'local-scroll-stuck'); require(!m.badLabels.length, 'title-or-label-bounds');
   require(m.header && m.main && m.footer && !m.headerOverlap, 'header-main-geometry');
@@ -329,6 +377,8 @@ function issuesFor(m, job) {
   }
   if (job.theme === 'stack-underflow' && ['home', 'archive'].includes(job.page)) require(m.rowType.length && m.rowType.every(r => r.title >= r.metadata * 1.15), 'receipt-title-hierarchy');
   if (job.page === 'article') {
+    require(m.articleUtilityViews?.length === 2 && m.articleUtilityViews.every(v => v.buttons.length === 3 && v.contents.length > 0), 'article-utility-coverage');
+    for (const view of m.articleUtilityViews || []) require(!view.overlaps.length, `article-utility-contents-overlap:${view.position}`);
     require(m.prose.length > 0, 'missing-long-prose');
     const widths = m.prose.map(p => p.width).sort((a, b) => a - b), median = widths[Math.floor(widths.length / 2)];
     require(m.prose.every(p => Number.isFinite(p.ch) && p.ch <= 100), 'article-over-100ch');
@@ -342,7 +392,85 @@ function issuesFor(m, job) {
   return issues;
 }
 
-let browser, site, before, axeSource, fatal;
+// Isolated synthetic documents test the checker, never the generated site.
+// No source file is overlaid and every request in this context is aborted.
+async function geometryControls() {
+  const context = await browser.createBrowserContext(), page = await context.newPage(), rows = [];
+  const geometry = ['viewport-overflow', 'uncontained-overflow', 'title-or-label-bounds'];
+  const job = { theme: 'proof-bonbons', mode: 'light', width: 768, page: 'home' };
+  const record = (name, metrics) => {
+    const row = { name, issues: issuesFor(metrics, job).filter(c => geometry.includes(c)), brandScope: metrics.brandScope, escaped: metrics.escaped, badLabels: metrics.badLabels, articleUtility: metrics.articleUtility };
+    rows.push(row); write('geometry-controls.json', rows); return row;
+  };
+  const fixture = async (content, css = '') => {
+    await page.setContent(`<!doctype html><html><head><style>body { margin: 0; } .skin-menu__panel { position: fixed; left: calc(100vw + 20px); top: 100px; width: 180px; } #skin-picker { width: 160px; } ${css}</style></head><body><header class="site-header">${content}</header><main id="content"></main><footer id="site-footer"></footer></body></html>`);
+  };
+  const menu = '<details class="skin-menu"><summary><span>Theme</span></summary><div class="skin-menu__panel"><label for="skin-picker">Visual theme</label><select id="skin-picker"><option>Control</option></select></div></details>';
+  try {
+    await page.setViewport({ width: 768, height: 1000 });
+    await page.setBypassServiceWorker(true); await page.setRequestInterception(true);
+    page.on('request', request => { void request.abort('blockedbyclient'); });
+    await fixture(menu);
+    // First lay out the panel, then close it. Its cached select rect is not
+    // evidence of paint. Keyboard focus and the real opened-picker check agree.
+    await page.click('.skin-menu summary'); await page.click('.skin-menu summary');
+    const closed = record('closed-details-offscreen-select', await measure(page));
+    assert.deepEqual(closed.issues, []);
+    await page.keyboard.press('Tab');
+    const badPicker = await pickerCheck(page);
+    rows.push({ name: 'opened-picker-outside-bounds', picker: badPicker }); write('geometry-controls.json', rows);
+    assert.ok(badPicker.open && !badPicker.panelBounds && !badPicker.pickerBounds);
+    await page.click('.skin-menu summary');
+    const opened = record('opened-details-offscreen-select', await measure(page));
+    assert.ok(opened.issues.includes('uncontained-overflow') && opened.issues.includes('title-or-label-bounds'));
+    assert.ok(opened.escaped.some(e => e.selector === '#skin-picker'));
+    await fixture(menu, '.skin-menu__panel { left: 20px; }');
+    await page.keyboard.press('Tab'); const goodPicker = await pickerCheck(page);
+    rows.push({ name: 'opened-picker-in-bounds', picker: goodPicker }); write('geometry-controls.json', rows);
+    assert.ok(goodPicker.open && goodPicker.panelBounds && goodPicker.pickerBounds && goodPicker.notCovered && goodPicker.focus);
+    await fixture('<details><summary>Outer</summary><details open><summary>Inner</summary><h1 style="position:fixed;left:900px">Hidden nested title</h1></details></details>');
+    assert.deepEqual(record('closed-outer-hides-open-inner', await measure(page)).issues, []);
+    await fixture('<details><summary><span class="site-brand__name" style="position:relative;left:900px">Painted summary</span></summary><summary><h1 style="position:fixed;left:1200px">Hidden second summary</h1></summary></details>');
+    const summary = record('closed-details-first-summary-still-painted', await measure(page));
+    assert.ok(summary.issues.includes('title-or-label-bounds'));
+    assert.ok(summary.badLabels.some(e => e.selector === 'span.site-brand__name'));
+    assert.ok(!summary.badLabels.some(e => e.selector === 'h1'));
+    await fixture('<h1 style="width:900px">Genuine page overflow</h1>');
+    assert.deepEqual(record('genuine-page-overflow', await measure(page)).issues.sort(), [...geometry].sort());
+    await fixture('<div style="overflow:hidden;width:100px"><h1 style="width:900px">Clipped HTML title</h1></div>');
+    const clipped = record('arbitrary-html-clip-does-not-excuse-overflow', await measure(page));
+    assert.ok(clipped.issues.includes('uncontained-overflow') && clipped.issues.includes('title-or-label-bounds'));
+    for (const [name, html, valid] of [
+      ['visible-scope', '<span class="site-brand__scope">Research notes</span>', true],
+      ['missing-scope', '', false], ['empty-scope', '<span class="site-brand__scope" style="display:block;width:100px;height:20px"> </span>', false],
+      ['hidden-scope', '<span class="site-brand__scope" style="display:none">Research notes</span>', false],
+      ['transparent-scope-ancestor', '<div style="opacity:0"><span class="site-brand__scope">Research notes</span></div>', false],
+    ]) {
+      await fixture(html); const metrics = await measure(page); record(name, metrics);
+      for (const theme of defaults.themes.filter(t => t !== RPN)) assert.equal(issuesFor(metrics, { ...job, theme }).includes('missing-visible-brand-scope'), !valid, `${name}: ${theme}`);
+      assert.ok(!issuesFor(metrics, { ...job, theme: RPN }).includes('missing-visible-brand-scope'));
+    }
+    const dock = '<button class="skin-dice">Dice</button><button class="theme-toggle">Mode</button><button class="site-share__btn">Share</button>';
+    const toc = '<details class="record-toc" open><summary>Contents</summary><a href="#entry">Entry</a></details>';
+    const css = '.skin-dice { position:fixed;left:240px;top:110px;width:40px;height:40px;z-index:2; } .record-toc { position:fixed;left:200px;top:80px;width:300px;height:150px; } .record-toc a { display:block;height:80px; }';
+    await fixture(dock + toc, css);
+    assert.ok(record('clickable-toc-link-collision', await measure(page)).articleUtility.overlaps.some(o => o.button === 'button.skin-dice' && o.link === '#entry'));
+    await fixture(dock + toc, css + ' .record-toc a { width:20px; }');
+    assert.deepEqual(record('toc-container-empty-space-is-not-a-link', await measure(page)).articleUtility.overlaps, []);
+    await fixture(dock + toc, css + ' .record-toc { height:20px;overflow:auto; }');
+    assert.deepEqual(record('toc-link-clipped-by-scrollport', await measure(page)).articleUtility.overlaps, []);
+    await fixture(dock + toc + '<div id="article-body" style="position:absolute;top:1000px;height:2000px">Article</div>', css + ' .record-toc { position:absolute;top:1080px; }');
+    const scrolled = await layoutMetrics(page, { ...job, page: 'article' });
+    rows.push({ name: 'body-scroll-exposes-collision', views: scrolled.articleUtilityViews }); write('geometry-controls.json', rows);
+    assert.deepEqual(scrolled.articleUtilityViews[0].overlaps, []);
+    assert.ok(scrolled.articleUtilityViews[1].overlaps.length);
+    assert.ok(issuesFor(scrolled, { ...job, page: 'article' }).includes('article-utility-contents-overlap:article-body'));
+    assert.equal(await page.evaluate(() => scrollY), 0);
+  } finally { await context.close(); }
+  return rows.length;
+}
+
+let browser, site, before, axeSource, fatal, geometryControlCount = 0;
 const results = [], fallbackResults = [], comparisons = [];
 const started = new Date().toISOString();
 const shotWidths = new Set(opt['all-screenshots'] ? widths : [widths.includes(390) ? 390 : Math.min(...widths), widths.includes(1440) ? 1440 : Math.max(...widths)]);
@@ -492,8 +620,8 @@ async function runCase(job, fallback = false) {
     if (!fallback) {
       result.coldDisplaySamples = result.coldFonts.filter(r => r.family === displayFaces[job.theme]);
       for (const row of result.coldDisplaySamples) if (!usedSelectedFace(row)) result.issues.push(`cold-display-not-rendered:${row.selector}:${row.family}`);
-      checkpoint('cold-layout'); const metrics = await measure(c.page), issues = issuesFor(metrics, job);
-      result.coldLayout = { issues, viewportOverflow: metrics.viewportOverflow, prose: metrics.prose, cells: metrics.cells };
+      checkpoint('cold-layout'); const metrics = await layoutMetrics(c.page, job), issues = issuesFor(metrics, job);
+      result.coldLayout = { issues, viewportOverflow: metrics.viewportOverflow, prose: metrics.prose, cells: metrics.cells, brandScope: metrics.brandScope, articleUtilityViews: metrics.articleUtilityViews };
       result.issues.push(...issues.map(code => 'cold:' + code));
       if (issues.length) {
         write(`${dir}/cold-layout.json`, metrics); fs.mkdirSync(path.join(out, dir, 'cold'));
@@ -502,7 +630,7 @@ async function runCase(job, fallback = false) {
     }
     if (!fallback && !opt['cold-only']) { checkpoint('optional-font-warming'); result.warming = await warmOptional(c.page); checkpoint('warm-navigation'); await c.navigate(); }
     checkpoint(opt['cold-only'] || fallback ? 'settled-rendered-fonts' : 'warm-rendered-fonts'); result.fonts = await renderedFonts(c.page, c.cdp);
-    checkpoint('layout'); result.metrics = await measure(c.page); result.issues.push(...issuesFor(result.metrics, job));
+    checkpoint('layout'); result.metrics = await layoutMetrics(c.page, job); result.issues.push(...issuesFor(result.metrics, job));
     if (fallback) {
       if (!c.network.failedFonts) result.issues.push('failure-control-did-not-block-a-selected-font');
       if (result.fonts.some(r => families[job.theme]?.includes(r.family) && usedSelectedFace(r))) result.issues.push('selected-font-rendered-despite-failure-control');
@@ -566,11 +694,12 @@ try {
       env: { PATH: '/usr/bin:/bin', LANG: 'C.UTF-8', TZ: 'UTC', HOME: runtime, TMPDIR: '.', XDG_CACHE_HOME: path.join(runtime, 'cache'), XDG_CONFIG_HOME: path.join(runtime, 'config'), LD_LIBRARY_PATH: libs.join(':') },
       args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-background-networking', '--dns-prefetch-disable', '--disable-client-side-phishing-detection', '--disable-component-update', '--disable-domain-reliability', '--disable-sync', '--disable-breakpad', '--disable-crash-reporter', '--no-first-run', '--disable-default-apps', '--disable-quic', '--disable-features=MediaRouter,OptimizationHints,AutofillServerCommunication,CertificateTransparencyComponentUpdater', '--host-resolver-rules=MAP * ~NOTFOUND', '--proxy-server=http://127.0.0.1:9', '--proxy-bypass-list=<-loopback>', '--force-webrtc-ip-handling-policy=disable_non_proxied_udp', '--lang=en-US'] });
   } finally { process.chdir(cwd); }
+  geometryControlCount = await geometryControls();
   const axePaths = opt.axe === 'off' ? [] : opt.axe === 'auto' ? ['.toolchain/verify/lighthouse-node_modules/axe-core/axe.min.js', '.toolchain/node_modules/axe-core/axe.min.js'].map(p => path.join(repo, p)) : [path.resolve(repo, opt.axe)];
   const axePath = axePaths.find(p => fs.existsSync(p)); if (axePath) axeSource = fs.readFileSync(axePath, 'utf8');
   if (!axePath && !['off', 'auto'].includes(opt.axe)) throw new Error('Requested local axe script missing');
   const inventory = input => [...input.files.values()].filter(e => e.relative.endsWith('.html') || e.relative === 'assets/css/main.css' || Object.values(skinFiles).includes(e.relative)).map(e => ({ path: e.relative, sha256: hash(fs.readFileSync(e.file)) }));
-  write('run.json', { started, provisional: !!opt.provisional, partial: !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'], options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random draws are not mocked. An offered cookie notice is dismissed via its real Reject button and recorded; no overlay masking. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
+  write('run.json', { started, provisional: !!opt.provisional, partial: !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'], options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Article utility/contents checks compare clickable rectangles at top and article-body scroll positions, not every possible scroll position or open popover.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random draws are not mocked. An offered cookie notice is dismissed via its real Reject button and recorded; no overlay masking. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
   let cursor = 0;
   await Promise.all(Array.from({ length: concurrency }, async () => {
     while (cursor < jobs.length) {
@@ -597,6 +726,7 @@ finally {
   const status = fatal || failures.length || results.length !== jobs.length ? 'failed' : 'passed';
   const partial = !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'];
   const summary = { status, partial, coverage: partial ? 'partial' : 'all-47-plus-rpn', provisional: !!opt.provisional, started, ended: new Date().toISOString(), planned: jobs.length, completed: results.filter(r => r.completed).length, passed: results.filter(r => r.pass).length, failed: results.filter(r => !r.pass).length, fullMatrix, integrationClaim: !opt.provisional && fullMatrix && !opt['no-screenshots'] && !opt['no-fallback'] && !opt['cold-only'] && status === 'passed', fatal,
+    geometryControls: { completed: geometryControlCount, evidence: 'geometry-controls.json', scope: 'Isolated synthetic documents, not generated-site cases.' },
     failureCounts: counts, failures: failures.slice(0, 30).map(r => ({ key: r.key, directory: r.directory, issues: r.issues, error: r.error })), omittedFailures: Math.max(0, failures.length - 30),
     fallback: { status: opt['no-fallback'] ? 'skipped' : fallbackResults.length ? fallbackResults.every(r => r.pass) ? 'passed' : 'failed' : 'not-applicable-or-incomplete', cases: fallbackResults.length, failed: fallbackResults.filter(r => !r.pass).length },
     coldFonts: { casesWithFallback: results.filter(r => r.coldFallback?.length).length, casesWithLayoutIssues: results.filter(r => r.coldLayout?.issues.length).length, policy: 'Cold optional fallback is not a warmed-font failure. Cold layout failures are recorded separately with a cold: prefix.' },
