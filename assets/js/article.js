@@ -5,7 +5,7 @@
   if (!content) return;
 
   const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-  const initialOverflowUpdates = [];
+  const overflowUpdates = [];
   const announce = async (node, message, isCurrent = () => true) => {
     node.textContent = '';
     await nextFrame();
@@ -50,7 +50,7 @@
     };
     if ('ResizeObserver' in window) new ResizeObserver(updateOverflow).observe(pre);
     else addEventListener('resize', updateOverflow);
-    initialOverflowUpdates.push(updateOverflow);
+    overflowUpdates.push(updateOverflow);
 
     let copyAttempt = 0;
     const removeFallback = () => frame.querySelector('.code-frame__fallback')?.remove();
@@ -113,9 +113,7 @@
     });
   });
 
-  requestAnimationFrame(() => {
-    initialOverflowUpdates.forEach((update) => update());
-  });
+  requestAnimationFrame(() => overflowUpdates.forEach((update) => update()));
 
   const article = document.querySelector('.js-article-content');
   if (!article) return;
@@ -144,14 +142,12 @@
   });
 
   const toc = document.querySelector('.js-toc-root');
-  const tocBox = toc && toc.closest('details');
+  const tocBox = toc?.closest('details');
   if (!toc) return;
   if (tocBox && !tocBox.hasAttribute('data-toc-enhanced')) {
     if (!matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
     tocBox.setAttribute('data-toc-enhanced', '');
   }
-  // The article layout owns its build-time links. Other layouts still use the
-  // legacy fallback until they adopt the filter; never replace a static list.
   if (toc.hasAttribute('data-toc-built')) return;
   if (!headings.length) {
     if (tocBox) tocBox.hidden = true;

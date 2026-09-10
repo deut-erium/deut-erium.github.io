@@ -40,7 +40,11 @@ function fixture({ present = true, src = '/nested/blog/assets/js/features/toybox
     },
     head: { appendChild(script) { scripts.push(script); } },
   };
-  const window = {};
+  const events = new Map();
+  const window = {
+    addEventListener(type, handler) { events.set(type, handler); },
+    dispatch(type) { events.get(type)?.(); },
+  };
   const unexpected = () => assert.fail('Footer must not schedule timers, frames, requests or random draws');
   const context = vm.createContext({
     document, window, setTimeout: unexpected, setInterval: unexpected,
@@ -98,6 +102,19 @@ test('idle initialization is idempotent, enables controls and never loads toybox
   assert.ok(p.buttons.every(b => !b.disabled));
   assert.match(p.status.textContent, /change the page/);
   assert.equal(p.window.__dtToyPending, undefined);
+});
+
+test('pagehide discards a pending first press without preventing later activation', () => {
+  for (const consume of [true, false]) {
+    const p = fixture(); p.run(); p.click(p.buttons[0]);
+    p.window.dispatch('pagehide');
+    assert.equal(p.window.__dtToyPending, undefined);
+    p.install(consume); p.scripts[0].onload();
+    assert.deepEqual(p.calls, []);
+    p.click(p.buttons[2]);
+    assert.deepEqual(p.calls, [2]);
+    assert.equal(p.scripts.length, 1);
+  }
 });
 
 test('missing footer or URL leaves no listener or request', () => {

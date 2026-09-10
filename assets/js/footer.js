@@ -98,6 +98,13 @@
     }
   }, true);
 
+  // The lazy script may finish while this document is in the back/forward
+  // cache. Keep the download, but never replay a choice from before departure.
+  window.addEventListener('pagehide', () => {
+    delete window.__dtToyPending;
+    say(readyMessage);
+  });
+
   buttons.forEach((button) => { button.disabled = false; });
   say(readyMessage);
 })();
