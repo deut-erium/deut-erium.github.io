@@ -28,6 +28,23 @@ The release command performs one Jekyll build for the root blog, WriteUps, tutor
 
 Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets. Mathematics and syntax highlighting are generated before publication.
 
+## Article layout checks
+
+Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply their colors and typography rather than separate copies of that geometry. The three mystery buttons keep their order, load toys only after a press, and explain their disabled state without JavaScript.
+
+Both article and writeup layouts build contents links from the final heading IDs. Duplicate targets are omitted. Unsupported HTML produces a build warning and omits contents without changing the article. JavaScript adds heading permalinks and code controls; it is not required for the contents links.
+
+Fonts load through the selected stylesheet, without a separate preload list. Print uses a static print-media stylesheet. Decorative animations observe visibility and reduced motion; game and challenge loops are separate.
+
+```sh
+node --test script/test-footer.mjs script/test-decorations.mjs script/test-font-preloads.mjs
+node script/test-article-css.mjs
+ruby script/test-article-contents.rb
+python3 script/test-print-fonts.py
+```
+
+The optional `script/test-article-layout.mjs` browser check serves only a supplied generated site and blocks external requests. Its `--help` lists the theme matrix, prefix builds, no-JavaScript checks and comparison options. It requires a locally available Chromium and Puppeteer; the native CI checks do not download a browser.
+
 ## API
 
 The build publishes a curl-able index of every post at `/index.json` (a JSON array) and `/index.jsonl` (one object per line). Entries are ordered newest first and are bodyless. Each entry has `title`, `date` (ISO 8601), `route` (absolute URL), `section` (`writeups`, `tutorials`, `ramblings`, or `root`), `tags`, `description`, `has_math` (mirrors the `mathjax` front matter), and `has_code` (fenced code blocks present).

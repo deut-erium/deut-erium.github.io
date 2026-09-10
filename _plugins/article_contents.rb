@@ -23,7 +23,7 @@ module DeuteriumSite
       BLOCK = %w[address article aside blockquote details div dl fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header hgroup hr main menu nav ol p pre section summary table ul xmp].freeze
       HTML = (VOID + RAW + BLOCK + %w[html head body a abbr acronym b bdi bdo big button caption cite code data datalist dd del dfn dt em i ins kbd label legend li map mark meter noscript object optgroup option output picture progress q rb rp rt rtc ruby s samp select slot small span strong sub sup tbody td template tfoot th thead time tr tt u var video audio canvas dialog search]).freeze
       SVG = %w[svg g path rect circle ellipse line polyline polygon defs use symbol title desc clipPath mask linearGradient radialGradient stop].map(&:downcase).freeze
-      MATH = %w[math semantics annotation mrow mi mo mn mtext mspace ms msup msub msubsup mfrac msqrt mroot munder mover munderover mtable mtr mtd mpadded mphantom menclose].freeze
+      MATH = %w[math semantics annotation mstyle mrow mi mo mn mtext mspace ms msup msub msubsup mfrac msqrt mroot munder mover munderover mtable mtr mtd mpadded mphantom menclose].freeze
       TABLE = { "table" => %w[caption colgroup thead tbody tfoot], "colgroup" => %w[col], "thead" => %w[tr], "tbody" => %w[tr], "tfoot" => %w[tr], "tr" => %w[td th] }.freeze
 
       def self.parse(source)
@@ -37,6 +37,7 @@ module DeuteriumSite
         root = Node.new(:root, nil, {}, [])
         @stack = [root]
         @noscript_end = nil
+        @closed_paragraphs = 0
         until @src.eos?
           raise Uncertain, "HTML nesting limit" if @stack.length > 256
           raise Uncertain, "scripting-dependent markup" if @noscript_end && @src.pos > @noscript_end
@@ -46,12 +47,22 @@ module DeuteriumSite
           elsif @src.scan(/<!doctype html\s*>/i)
             raise Uncertain, "misplaced doctype" unless @stack.length == 1
           elsif @src.scan(%r{</([A-Za-z][A-Za-z0-9:-]*)[\t\n\f\r ]*>})
+            if @src[1].downcase == "p" && @stack.last.value != "p" && @closed_paragraphs > 0 && !foreign?
+              @closed_paragraphs -= 1
+              next # HTML creates an empty, ID-less paragraph here.
+            end
             raise Uncertain, "unbalanced HTML" unless @stack.length > 1 && @stack.last.value == @src[1].downcase
             @noscript_end = nil if @stack.last.value == "noscript"
             @stack.pop
           elsif @src.scan(/<([A-Za-z][A-Za-z0-9:-]*)/)
             tag = @src[1].downcase
             attrs, closed = attributes
+            # A direct nested paragraph closes the previous paragraph. No
+            # inline formatting is reconstructed and every ID remains unique.
+            if tag == "p" && @stack.last.value == "p" && !foreign?
+              @stack.pop
+              @closed_paragraphs += 1
+            end
             validate(tag, closed)
             node = Node.new(:html_element, tag, attrs, [])
             @stack.last.children << node

@@ -124,6 +124,10 @@ assert.call(render.call('<h2 id="rcdata">X<textarea>&#10;&#10;A</textarea>Z</h2>
   assert.call(render.call(input) == "", "unsupported parser state was linked: #{input[0, 100]}")
 end
 
+assert.call(render.call('<math><mstyle><mi>x</mi></mstyle></math><h2 id="section">Section</h2>').include?('href="#section"'), 'MathML styling discarded contents')
+assert.call(render.call('<p id="outer"><p id="inner">Text</p></p><h2 id="section">Section</h2>').include?('href="#section"'), 'direct nested paragraphs discarded contents')
+assert.call(render.call('<p id="section"><p>Text</p></p><h2 id="section">Section</h2>').empty?, 'implicitly closed paragraph lost its ID')
+
 legacy_literal = Struct.new(:output, :data, :output_ext).new(contents::SLOT.dup, { 'layout' => 'page' }, '.html')
 contents.finalize(legacy_literal)
 assert.call(legacy_literal.output == contents::SLOT, 'contents hook modified an unowned layout')
