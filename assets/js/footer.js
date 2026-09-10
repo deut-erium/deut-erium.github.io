@@ -11,18 +11,20 @@
   if (!buttons.length || !restore || !status || !src) return;
   footer.dataset.footerReady = 'true';
 
-  const readyMessage = 'These buttons change the page.';
   let loading = null;
   let lastButton = buttons[0];
   const api = () => typeof window.__dtToy?.go === 'function' ? window.__dtToy : null;
-  const say = (message) => { status.textContent = message; };
+  const say = (message, error = false) => {
+    status.textContent = message;
+    status.dataset.error = String(error);
+  };
   const run = (slot) => {
     delete window.__dtToyPending;
     try {
       api().go(slot);
-      say(readyMessage);
+      say('');
     } catch (_) {
-      say('The page toy could not start. Try another button or put everything back.');
+      say('The page toy could not start. Try another button or put everything back.', true);
     }
   };
 
@@ -54,7 +56,7 @@
       settle();
       script.remove();
       delete window.__dtToyPending;
-      say('Page toys could not load. Press a mystery button to retry.');
+      say('Page toys could not load. Press a mystery button to retry.', true);
     };
     script.onerror = fail;
     script.onload = () => {
@@ -64,7 +66,7 @@
         return;
       }
       settle();
-      say(readyMessage);
+      say('');
       // Older toybox builds consume pending themselves; API-only builds may not.
       if (typeof window.__dtToyPending === 'number') run(window.__dtToyPending);
     };
@@ -90,10 +92,10 @@
       try {
         if (typeof window.__dtToy?.restore !== 'function') throw new Error('Missing restore API');
         window.__dtToy.restore();
-        say('Everything is back the way it was.');
+        say('');
         if (restore.hidden && hadFocus) lastButton.focus();
       } catch (_) {
-        say('The page could not be restored. Reload to put everything back.');
+        say('The page could not be restored. Reload to put everything back.', true);
       }
     }
   }, true);
@@ -102,9 +104,9 @@
   // cache. Keep the download, but never replay a choice from before departure.
   window.addEventListener('pagehide', () => {
     delete window.__dtToyPending;
-    say(readyMessage);
+    say('');
   });
 
   buttons.forEach((button) => { button.disabled = false; });
-  say(readyMessage);
+  say('');
 })();
