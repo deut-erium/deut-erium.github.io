@@ -5,6 +5,7 @@ No build, downloads, or request-byte claims. Browser fixtures contain no scripts
 all requests are blocked. Browser scratch files stay under agent_out/.
 """
 import gzip
+import json
 from html.parser import HTMLParser
 import re
 from pathlib import Path
@@ -68,6 +69,7 @@ class PrintFontTests(unittest.TestCase):
         found = faces(source("assets/css/main.css"))
         self.assertEqual(len(found), 16)
         weights = {}
+        native_files = set()
         for face in found:
             family = face["font-family"].strip('"')
             weights.setdefault(family, set()).add(face.get("font-weight", "400"))
@@ -76,12 +78,24 @@ class PrintFontTests(unittest.TestCase):
             url = re.search(r'url\("([^"\n]+)"\)', face["src"]).group(1)
             font = ROOT / "assets/css" / url
             self.assertTrue(font.is_file(), url)
+            native_files.add(font.resolve())
             self.assertEqual(font.read_bytes()[:4], b"wOF2", url)
         self.assertEqual(weights["Atkinson Hyperlegible"], {"400", "700"})
         self.assertEqual(weights["Silkscreen"], {"400", "700"})
         self.assertEqual(weights["Theme Doto"], {"700 900"})
         self.assertEqual(weights["Theme Unbounded"], {"600 900"})
-        self.assertEqual(len(list((ROOT / "assets/fonts").rglob("*.woff2"))), 16)
+        self.assertEqual(len(native_files), 16)
+        # The original global faces stay unchanged. Selected skins may declare
+        # additional, explicitly inventoried fonts without preloading them.
+        adopted = json.loads(source("assets/fonts/theme-library/PROVENANCE.json"))
+        selected_files = {(ROOT / entry["path"]).resolve() for entry in adopted["files"]
+                          if entry["path"].endswith(".woff2")}
+        self.assertTrue(selected_files)
+        self.assertTrue(all(path.is_relative_to(ROOT / "assets/fonts/theme-library")
+                            for path in selected_files))
+        self.assertFalse(native_files & selected_files)
+        installed = {path.resolve() for path in (ROOT / "assets/fonts").rglob("*.woff2")}
+        self.assertEqual(installed, native_files | selected_files)
 
     def test_selected_theme_font_evidence(self):
         # These skins have no Atkinson reference; others still use it, so the

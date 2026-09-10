@@ -55,6 +55,26 @@ node script/test-theme-page-placement.mjs --site GENERATED_BUILD --out agent_out
 node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-layout/browser
 ```
 
+## Theme redesign checks
+
+Proof Bonbons, The Exploit Grimoire, Mercury Keyspace, Stack Underflow and Crowd Signal use separate page designs and selected local font families. Their styles remain scoped to their own theme IDs. RPN Garden and the other skins retain their existing styles. The adopted font files, licenses and provenance are in `assets/fonts/theme-library/`; only the selected skin declares its faces.
+
+The static check validates skin scope, shared geometry ownership, local font hashes/licenses and decorative SVGs. It runs in CI without a browser. It does not score visual quality.
+
+```sh
+node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/static-NEW
+```
+
+The optional browser matrix needs two generated builds and cached Chromium/Puppeteer. Use a new output directory on each run:
+
+```sh
+node script/test-theme-redesign.mjs \
+  --site GENERATED_AFTER --before GENERATED_BEFORE \
+  --out agent_out/theme-redesign/browser-NEW
+```
+
+Its default 240 cases cover six themes, four page types, five widths and both modes. It checks real rendered fonts, layout, focus, footer cells and selected contrast, with separate font-failure cases. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
+
 ## API
 
 The build publishes a curl-able index of every post at `/index.json` (a JSON array) and `/index.jsonl` (one object per line). Entries are ordered newest first and are bodyless. Each entry has `title`, `date` (ISO 8601), `route` (absolute URL), `section` (`writeups`, `tutorials`, `ramblings`, or `root`), `tags`, `description`, `has_math` (mirrors the `mathjax` front matter), and `has_code` (fenced code blocks present).
