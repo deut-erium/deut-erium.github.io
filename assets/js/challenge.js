@@ -1,12 +1,14 @@
 /* Challenge engine v2: emphatic verdicts, salted SHA-256 grading, hint ladder. */
 (() => {
 'use strict';
-const K='deuterium-solves',A='deuterium-attempts',H='deuterium-hints',M='deuterium-challenge-mute',P='flag-check__',F=/^flag\{[^{}]+\}$/,T=' ✓',D=document,ce=t=>D.createElement(t),L=localStorage;
-const get=(k,d)=>{try{return JSON.parse(L.getItem(k))??d}catch(_){return d}};
-const put=(k,v)=>{try{L.setItem(k,JSON.stringify(v))}catch(_){}};
+const K='deuterium-solves',A='deuterium-attempts',H='deuterium-hints',M='deuterium-challenge-mute',P='flag-check__',T=' ✓',D=document,ce=t=>D.createElement(t);
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(_){return d}};
+const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}};
 const num=k=>{try{return +sessionStorage.getItem(k)||0}catch(_){return 0}};
 const set=(k,v)=>{try{sessionStorage.setItem(k,v)}catch(_){}};
-D.head.appendChild(Object.assign(ce('link'),{rel:'stylesheet',href:'/assets/css/features/challenge.css?v='+window.__deuteriumAssetVersion}));
+const css=new URL('../css/features/challenge.css',D.currentScript.src);
+css.searchParams.set('v',window.__deuteriumAssetVersion||'');
+D.head.appendChild(Object.assign(ce('link'),{rel:'stylesheet',href:css.href}));
 const Q=matchMedia('(prefers-reduced-motion:reduce)');
 let mute=!!get(M,0),ac;
 const chime=()=>{if(mute)return;try{
@@ -50,6 +52,9 @@ const solves=get(K,{}),tries=get(A,{}),spent=get(H,{});
 D.querySelectorAll('[data-flag-check]').forEach((f)=>{
 const i=f.querySelector('[data-flag-input]'),b=f.querySelector('button[type="submit"]'),o=f.querySelector('output');
 if(!i||!b||!o)return;
+const prefix=f.dataset.flagPrefix||'flag';
+const escapedPrefix=prefix.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const F=new RegExp('^'+escapedPrefix+'\\{[^{}]+\\}$');
 const id=i.id?i.id.slice(5):(f.dataset.sha256||f.dataset.answer||'challenge');
 const v=ce('p');v.className=P+'verdict';v.setAttribute('role','status');v.setAttribute('aria-live','polite');
 f.insertBefore(v,o);
@@ -87,7 +92,7 @@ if(ok){
 const at=new Date().toISOString();solves[id]={at,flag:x};put(K,solves);
 i.classList.remove('is-bad');done(f,v,o,at,true);
 D.dispatchEvent(new CustomEvent('deuterium:solved',{detail:{id,at}}));return;}
-if(!F.test(x)){wrong('is-format','WRONG FORMAT - flags look like flag{...} (lowercase, one pair of braces). Attempt '+att+'.');att>2&&tease();}
+if(!F.test(x)){wrong('is-format','WRONG FORMAT - flags look like '+prefix+'{...} (case-sensitive, one pair of braces). Attempt '+att+'.');att>2&&tease();}
 else if(att>2){wrong('is-again','WRONG AGAIN - attempt '+att+'.'+(hs.length?' A hint is available below.':''));tease();}
 else wrong('is-wrong','WRONG FLAG - attempt '+att+'.');
 }catch(_){a===n&&(v.className=P+'verdict is-format',v.textContent='Could not check the flag. Try again.');}

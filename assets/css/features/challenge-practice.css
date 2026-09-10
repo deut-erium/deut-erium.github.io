@@ -1,0 +1,108 @@
+/* Only the opt-in browser terminal; reuse the site's colors and type. */
+.challenge-practice {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 2px solid var(--navy, #18263b);
+  border-radius: .4rem;
+  color: var(--ink, #18263b);
+  background: var(--paper, #fffdf7);
+}
+
+.challenge-practice .challenge-practice__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem;
+}
+
+.challenge-practice label {
+  display: block;
+  margin: .5rem 0;
+  font-weight: 700;
+}
+
+.challenge-practice button,
+.challenge-practice select {
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding: .35rem .75rem;
+  border: 2px solid var(--navy, #18263b);
+  border-radius: .3rem;
+  color: var(--ink, #18263b);
+  background: var(--paper-low, #f1ede2);
+  font: inherit;
+}
+
+.challenge-practice button:not(:disabled),
+.challenge-practice select:not(:disabled) {
+  cursor: pointer;
+}
+
+.challenge-practice button:disabled,
+.challenge-practice select:disabled,
+.challenge-practice [data-practice-input]:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.challenge-practice textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: .65rem;
+  border: 1px solid var(--navy, #18263b);
+  border-radius: .25rem;
+  color: var(--ink, #18263b);
+  background: var(--paper-low, #f1ede2);
+  font-family: var(--mono, monospace);
+  font-size: .9rem;
+  line-height: 1.5;
+  overflow: auto;
+  overscroll-behavior: contain;
+  resize: vertical;
+  tab-size: 4;
+}
+
+.challenge-practice [data-practice-output] {
+  height: 22rem;
+  min-height: 8rem;
+  max-height: 36rem;
+  white-space: pre;
+}
+
+.challenge-practice [data-practice-input] {
+  height: 6rem;
+  min-height: 4rem;
+  max-height: 16rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.challenge-practice [data-practice-status] {
+  min-height: 1.5em;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.challenge-practice form,
+.challenge-practice details {
+  margin-top: 1rem;
+}
+
+.challenge-practice details p,
+.challenge-practice form p {
+  font-size: .9em;
+}
+
+.challenge-practice button:focus-visible,
+.challenge-practice select:focus-visible,
+.challenge-practice textarea:focus-visible,
+.challenge-practice summary:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}

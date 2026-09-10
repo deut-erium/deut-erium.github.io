@@ -17,7 +17,11 @@ const dismiss = () => {
 };
 const sheet = D.createElement('link');
 sheet.rel = 'stylesheet';
-sheet.href = '/assets/css/features/cookie-banner.css?v=' + (window.__deuteriumAssetVersion || '');
+const css = D.currentScript?.src
+  ? new URL('../../css/features/cookie-banner.css', D.currentScript.src)
+  : null;
+if (css) css.searchParams.set('v', window.__deuteriumAssetVersion || '');
+sheet.href = css ? css.href : '/assets/css/features/cookie-banner.css?v=' + (window.__deuteriumAssetVersion || '');
 sheet.onload = () => requestAnimationFrame(reveal);
 D.head.appendChild(sheet);
 const fallback = setTimeout(reveal, 400);

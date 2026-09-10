@@ -1,0 +1,36 @@
+/* The resume generator inherits the active blog theme. */
+.resume-disclosure { margin: 1.5rem 0 2rem; }
+.resume-disclosure > summary { display: inline-block; box-sizing: border-box; padding: .7rem 1rem; color: var(--lcd-ink); background: var(--lcd); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; font: 700 1rem var(--mono); list-style: none; }
+.resume-disclosure > summary::-webkit-details-marker { display: none; }
+.resume-disclosure > summary:hover { box-shadow: 1px 1px 0 var(--ink); transform: translate(2px, 2px); }
+.resume-disclosure > summary:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
+.resume-disclosure[open] > summary { margin-bottom: 1.25rem; }
+.resume-workshop > h2 { margin-top: 0; }
+.resume-builder { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1.25rem; margin: 1.25rem 0 2rem; align-items: start; }
+#resume-form { margin: 0; min-width: 0; }
+#resume-form label { display: block; padding: .55rem .8rem; margin: 0; border: 1px solid var(--rule); border-bottom: 0; background: var(--paper-low); font: .85rem var(--mono); }
+#resume-form textarea, #resume-form button { box-sizing: border-box; max-width: 100%; padding: .7rem .8rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 0; font: inherit; }
+#resume-form textarea { display: block; width: 100%; resize: vertical; min-height: 19rem; font: .87rem/1.55 var(--mono); }
+#resume-form textarea::placeholder { color: var(--muted); opacity: .9; }
+.resume-solve-action { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: .75rem; }
+#resume-form button { background: var(--lcd); color: var(--lcd-ink); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); font-family: var(--mono); font-weight: bold; cursor: pointer; }
+#resume-form button:hover:not(:disabled) { box-shadow: 1px 1px 0 var(--ink); transform: translate(1px, 1px); }
+#resume-form button:disabled { opacity: .6; cursor: wait; }
+#resume-status { display: block; min-height: 1.7em; margin-top: .85rem; color: var(--muted); font: .83rem/1.7 var(--mono); }
+#resume-status[data-state="ready"] { color: var(--ink); }
+#resume-status[data-state="error"] { color: var(--link); }
+#resume-result { min-width: 0; border: 1px solid var(--rule); }
+.resume-preview-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding: .55rem .65rem; background: var(--paper-low); font: .75rem/1.5 var(--mono); }
+#page-count { color: var(--muted); }
+#download[hidden] { display: none; }
+#preview { width: 100%; max-height: 38rem; overflow: auto; scrollbar-gutter: stable; padding: .5rem; background: var(--paper-low); }
+#preview > p { font-size: .8rem; }
+#preview text { white-space: pre; }
+#preview svg { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 0 .65rem; background: #fff; color-scheme: light; border: 1px solid var(--rule); box-sizing: border-box; }
+#preview svg:last-child { margin-bottom: 0; }
+#resume-form :is(textarea, button):focus-visible, #resume-result :is(a, #preview):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+@media (max-width: 800px) {
+  .resume-builder { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+  #resume-form textarea { min-height: 17rem; }
+  #preview { max-height: 32rem; }
+}
