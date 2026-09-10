@@ -90,7 +90,7 @@ In Liar, choose and lock your secret. When the computer guesses, edit a temporar
 
 The cap applies separately on **every turn**. You can choose different positions next time, and changing fewer than the cap is allowed. Nothing is spent across the game. The computer knows the cap, but receives neither the original secret nor your temporary row.
 
-With four positions and six colors, two changes per turn can already hide every score clue: a legal temporary row can always report two Exact matches and zero Misplaced matches. The [constant-reply construction](https://github.com/deut-erium/deut-erium.github.io/blob/a180e16355802407e907fbdf69ebfd40bf56389e/agent_out/mastermind-analysis/CAP-STRENGTHENING.md) shows why the computer can be forced to search code by code. A round limit is a game goal, not a promise that the computer can always solve within it.
+With four positions and six colors, two changes per turn can already hide every score clue: a legal temporary row can always report two Exact matches and zero Misplaced matches. The constant-reply construction shows why the computer can be forced to search code by code. A round limit is a game goal, not a promise that the computer can always solve within it.
 
 A reported pair must be attainable for the particular guess under ordinary scoring. An all-red guess cannot have misplaced matches. Three exact and one misplaced is impossible for any four-position guess: if three pegs are in place, there is nowhere else for the fourth to belong. Merely checking that the two counts sum to at most four would miss this.
 
@@ -222,7 +222,7 @@ The first two misreads changed a peg but left the reply correct. The third reply
 
 The last guess matched the fixed secret on query 11. The referee stopped before sampling another reply. This run was selected for a short example with incorrect feedback, not as a typical game.
 
-The [recorded transcript](https://github.com/deut-erium/deut-erium.github.io/blob/b0162fd002bed5851b43d4f45e29c527c6c62228/agent_out/mastermind-publish/experiments/primary/REPLAY.md) uses seed **3934693235** and the E/T-agreement baseline. Its solver saw only guesses, reported replies and win/non-win outcomes. The temporary rows and truthful counts shown here were withheld during selection. This is a batch replay, not a sequence promised by the playable opponent.
+The recorded transcript uses seed **3934693235** and the E/T-agreement baseline. Its solver saw only guesses, reported replies and win/non-win outcomes. The temporary rows and truthful counts shown here were withheld during selection. This is a batch replay, not a sequence promised by the playable opponent.
 
 ## What a channel-aware solver would need
 
@@ -242,16 +242,8 @@ The default round has 16 guesses. Round settings change the size, mutation proba
 
 {%- include masatermind.html heading="p" panel="p" -%}
 
-## Reproducing the results
+## How the results were checked
 
 The batch experiments use cached scores and incremental costs. Their checks compare every issued guess with independently accumulated costs and sample complete transcripts against the reference referee and ordered candidate lists. All actual wins, non-repeats and spent allowances were checked. A second run reproduced the deterministic result files byte for byte; timing logs are separate. The playable opponent uses a different, position-cap-aware query rule, so these tables are not measurements of its performance.
 
-The [experiment code and retained results](https://github.com/deut-erium/deut-erium.github.io/tree/b0162fd002bed5851b43d4f45e29c527c6c62228/agent_out/mastermind-publish/experiments) document the seeds, opponent, cap, intervals, and verification. To rerun after checking out the repository:
-
-```sh
-D=agent_out/mastermind-publish/experiments
-node "$D/experiment.mjs" "$D/rerun"
-node "$D/validate.mjs" "$D/rerun" "$D/rerun-checks"
-```
-
-Those are local policy experiments, not browser-speed measurements. The honest-game bound, random-error results, and behavior against an adversarial player answer different questions. Keeping them separate makes it possible to tell whether a solver learned from a reply, merely survived it, or finally reached the secret by trying codes.
+The experiment code, full transcripts, and timing logs are retained outside the public repository. The published result and curve CSVs contain the data used in the tables and figures. These are local policy experiments, not browser-speed measurements. The honest-game bound, random-error results, and behavior against an adversarial player answer different questions. Keeping them separate makes it possible to tell whether a solver learned from a reply, merely survived it, or finally reached the secret by trying codes.
