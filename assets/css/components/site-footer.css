@@ -1,0 +1,198 @@
+/* Footer geometry lives here, not in skins. The ID also beats older skin
+   selectors when a theme stylesheet is swapped after this file loads. */
+html #site-footer.site-footer,
+html #site-footer.site-footer * {
+  box-sizing: border-box !important;
+  position: static;
+  inset: auto;
+  float: none;
+  grid-area: auto;
+  order: 0;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  height: auto !important;
+  min-height: 0;
+  min-block-size: 0;
+  max-height: none;
+  margin: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0;
+  color: var(--footer-ink, CanvasText) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  font-family: var(--body, system-ui, sans-serif);
+  font-size: 1rem !important;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5 !important;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: start;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+
+html #site-footer.site-footer::before,
+html #site-footer.site-footer::after,
+html #site-footer.site-footer *::before,
+html #site-footer.site-footer *::after {
+  content: none !important;
+  animation: none !important;
+}
+
+html #site-footer.site-footer {
+  --footer-ink: var(--ink, CanvasText);
+  --footer-paper: var(--paper, Canvas);
+  display: block;
+  width: min(calc(100% - 2rem), var(--page, 92rem)) !important;
+  max-width: var(--page, 92rem) !important;
+  margin: 1.5rem auto 1rem !important;
+  border: 1px solid var(--rule, currentColor) !important;
+  border-radius: .5rem;
+  background: var(--footer-paper, Canvas) !important;
+}
+
+/* Collision Atlas uses --ink and --paper for the same light ink in dark
+   mode. Its panel tokens are the actual paired text and surface colors. */
+html[data-skin="collision-atlas"] #site-footer.site-footer {
+  --footer-ink: var(--ca-ink, CanvasText);
+  --footer-paper: var(--ca-panel, Canvas);
+}
+
+html #site-footer.site-footer .site-footer__inner {
+  display: flex !important;
+  flex-flow: row wrap !important;
+  align-items: start !important;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1rem !important;
+}
+
+html #site-footer.site-footer .site-footer__contact {
+  flex: 1 1 28rem;
+}
+
+html #site-footer.site-footer .site-footer__toys {
+  flex: 0 1 24rem;
+}
+
+html #site-footer.site-footer :is(.site-footer__note, .site-footer__status) {
+  display: block;
+  min-height: 0 !important;
+  max-width: 100% !important;
+}
+
+html #site-footer.site-footer :is(.site-footer__links, .site-footer__mysteries) {
+  display: flex !important;
+  flex-flow: row wrap !important;
+  align-items: center;
+  align-content: start;
+  justify-content: flex-start !important;
+  gap: .5rem;
+}
+
+html #site-footer.site-footer .site-footer__links {
+  margin-top: .5rem;
+}
+
+html #site-footer.site-footer :is(.site-footer__links a, button) {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-width: 44px;
+  min-height: 44px !important;
+  padding: .5rem !important;
+  border: 1px solid currentColor !important;
+  border-radius: .25rem;
+  font: inherit;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+html #site-footer.site-footer .site-footer__links a {
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+
+html #site-footer.site-footer .site-footer__mystery {
+  flex: 0 0 44px;
+  width: 44px !important;
+  font-weight: 700;
+}
+
+/* Reserve the restore control's space even while toybox hides it. The three
+   question marks never move when an effect starts or finishes. */
+html #site-footer.site-footer .site-footer__restore-slot {
+  display: block;
+  flex: 1 1 12rem;
+  min-height: 44px;
+}
+
+html #site-footer.site-footer .site-footer__status {
+  margin-top: .5rem;
+}
+
+html #site-footer.site-footer :is(.site-footer__links a, button):is(:hover, :focus-visible),
+html #site-footer.site-footer .site-footer__mystery[aria-pressed="true"] {
+  color: var(--footer-paper, Canvas) !important;
+  background: var(--footer-ink, CanvasText) !important;
+  border-color: var(--footer-ink, CanvasText) !important;
+}
+
+html #site-footer.site-footer :is(a, button):focus-visible {
+  outline: 3px solid var(--footer-ink, CanvasText) !important;
+  outline-offset: 3px;
+}
+
+html #site-footer.site-footer button:disabled {
+  color: var(--footer-ink, CanvasText) !important;
+  background: transparent !important;
+  border-style: dashed !important;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+html #site-footer.site-footer [hidden] {
+  display: none !important;
+}
+
+@media (forced-colors: active) {
+  html #site-footer.site-footer,
+  html #site-footer.site-footer * {
+    color: CanvasText !important;
+    border-color: CanvasText !important;
+  }
+
+  html #site-footer.site-footer {
+    background: Canvas !important;
+  }
+
+  html #site-footer.site-footer :is(a, button):focus-visible {
+    outline-color: Highlight !important;
+  }
+
+  html #site-footer.site-footer :is(a, button):is(:hover, :focus-visible),
+  html #site-footer.site-footer .site-footer__mystery[aria-pressed="true"] {
+    color: HighlightText !important;
+    background: Highlight !important;
+    border-color: Highlight !important;
+  }
+}
+
+@media print {
+  html #site-footer.site-footer {
+    display: none !important;
+  }
+}

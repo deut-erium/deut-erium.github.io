@@ -1,20 +1,28 @@
-<footer class="site-footer">
+<link rel="stylesheet" href="{{ '/assets/css/components/site-footer.css' | relative_url }}?v={{ '/assets/css/components/site-footer.css' | asset_v }}">
+<footer id="site-footer" class="site-footer" data-toybox-src="{{ '/assets/js/features/toybox.js' | relative_url }}?v={{ '/assets/js/features/toybox.js' | asset_v }}">
   <div class="site-footer__inner">
-    <p class="site-footer__note">Are you really sure that you want to reach me?</p>
-    <div class="site-footer__mysteries">
-      <button class="site-footer__mystery" type="button" data-toy-slot="0" aria-label="Mystery button 1. Something will happen." aria-pressed="false">?</button>
-      <button class="site-footer__mystery" type="button" data-toy-slot="1" aria-label="Mystery button 2. Something will happen." aria-pressed="false">?</button>
-      <button class="site-footer__mystery" type="button" data-toy-slot="2" aria-label="Mystery button 3. Something will happen." aria-pressed="false">?</button>
-      <button class="site-footer__restore" type="button" hidden>put everything back</button>
+    <div class="site-footer__contact">
+      <p class="site-footer__note">Are you really sure that you want to reach me?</p>
+      <nav class="site-footer__links" aria-label="Social and subscription links">
+        <a rel="me" href="{{ site.author.github }}">GitHub</a>
+        <a rel="me" href="{{ site.author.twitter }}">Twitter</a>
+        <a rel="me" href="{{ site.author.linkedin }}">LinkedIn</a>
+        <a href="https://discord.com/users/{{ site.author.discord_id }}">Discord</a>
+        <a href="mailto:{{ site.author.email }}">Email</a>
+        <a href="{{ '/feed.xml' | relative_url }}">Feed</a>
+      </nav>
     </div>
-    <nav class="site-footer__links" aria-label="Social and subscription links">
-      <a rel="me" href="{{ site.author.github }}">GitHub</a>
-      <a rel="me" href="{{ site.author.twitter }}">Twitter</a>
-      <a rel="me" href="{{ site.author.linkedin }}">LinkedIn</a>
-      <a href="https://discord.com/users/{{ site.author.discord_id }}">Discord</a>
-      <a href="mailto:{{ site.author.email }}">Email</a>
-      <a href="{{ '/feed.xml' | relative_url }}">Feed</a>
-    </nav>
+    <div class="site-footer__toys" role="group" aria-label="Page toys" aria-describedby="site-footer-toy-status">
+      <div class="site-footer__mysteries">
+        <button class="site-footer__mystery" type="button" data-toy-slot="0" aria-label="Mystery button 1. Something will happen." aria-pressed="false" disabled>?</button>
+        <button class="site-footer__mystery" type="button" data-toy-slot="1" aria-label="Mystery button 2. Something will happen." aria-pressed="false" disabled>?</button>
+        <button class="site-footer__mystery" type="button" data-toy-slot="2" aria-label="Mystery button 3. Something will happen." aria-pressed="false" disabled>?</button>
+        <span class="site-footer__restore-slot">
+          <button class="site-footer__restore" type="button" hidden>put everything back</button>
+        </span>
+      </div>
+      <p id="site-footer-toy-status" class="site-footer__status" role="status" aria-live="polite" aria-atomic="true">Mystery buttons need JavaScript to load.</p>
+    </div>
   </div>
 </footer>
-<script>(function(){var P=window,q=function(b){var s=+b.getAttribute('data-toy-slot');P.__dtToyPending=s;if(P.__dtToy)return P.__dtToy.go(s);if(b.q)return;b.q=1;var e=document.createElement('script');e.src='/assets/js/features/toybox.js'+(P.__deuteriumAssetVersion?'?v='+P.__deuteriumAssetVersion:'');document.head.appendChild(e)};var ms=[].slice.call(document.querySelectorAll('.site-footer__mystery'));ms.forEach(function(b){b.onclick=function(){q(b)}});var par=ms[0]&&ms[0].parentNode;if(par&&ms.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){setInterval(function(){var i=Math.floor(Math.random()*ms.length),j=(i+1)%ms.length,a=ms[i],b=ms[j];if(!a||!b||a===b||a.parentNode!==par)return;a.classList.add('is-winking');b.classList.add('is-winking');var nx=b.nextSibling===a?b:b.nextSibling;par.insertBefore(a,b);par.insertBefore(b,nx);setTimeout(function(){a.classList.remove('is-winking');b.classList.remove('is-winking')},550)},9000+Math.floor(Math.random()*5000))}})();</script>
+<script defer src="{{ '/assets/js/footer.js' | relative_url }}?v={{ '/assets/js/footer.js' | asset_v }}"></script>
