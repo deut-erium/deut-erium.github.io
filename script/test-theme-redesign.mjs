@@ -237,6 +237,10 @@ async function measure(page) {
       viewportOverflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - innerWidth,
       header: box('.site-header'), main: box('#content'), footer: box('#site-footer'), headerOverlap: overlap(box('.site-header'), box('#content')),
       nav, navOverlap, navOrder: visualOrder(navNodes), badLabels: badLabels.slice(0, 20), escaped, scroll, prose,
+      rowType: [...document.querySelectorAll('.record-row')].slice(0, 12).map(row => ({
+        title: parseFloat(getComputedStyle(row.querySelector('.record-row__title')).fontSize),
+        metadata: Math.max(...[...row.querySelectorAll('.record-row__date, .record-row__event, .record-row__primitive')].map(e => parseFloat(getComputedStyle(e).fontSize))),
+      })),
       home: cards && records ? { domOrder: !!(cards.compareDocumentPosition(records) & Node.DOCUMENT_POSITION_FOLLOWING), visualOrder: cards.getBoundingClientRect().bottom <= records.getBoundingClientRect().top + 1, cards: [...cards.querySelectorAll('a')].map(e => new URL(e.href).pathname), posts: [...records.querySelectorAll('.record-row__link')].map(e => new URL(e.href).pathname) } : null,
       cells, footerLinks, footerOverlap, footerOrder: visualOrder(groups),
       pseudoCopy: [...document.querySelectorAll('.site-footer, .site-footer *')].flatMap(e => ['::before', '::after'].map(p => ({ selector: name(e) + p, content: getComputedStyle(e, p).content }))).filter(p => !['none', 'normal', '""', "''"].includes(p.content)).slice(0, 12),
@@ -313,6 +317,7 @@ function issuesFor(m, job) {
   require(JSON.stringify(m.nav.map(n => n.path)) === JSON.stringify(['/', '/archive.html', '/WriteUps/', '/ctf-tutorials/', '/ramblings/', '/about.html'].map(p => base + p)), 'navigation-destinations-or-order');
   require(m.nav.every(n => n.visible), 'hidden-navigation'); require(!m.navOverlap, 'navigation-overlap'); require(m.navOrder.join(',') === '0,1,2,3,4,5', 'navigation-visual-order');
   if (job.page === 'home') require(m.home?.domOrder && m.home?.visualOrder, 'publications-before-posts');
+  if (job.theme === 'stack-underflow' && ['home', 'archive'].includes(job.page)) require(m.rowType.length && m.rowType.every(r => r.title >= r.metadata * 1.15), 'receipt-title-hierarchy');
   if (job.page === 'article') {
     require(m.prose.length > 0, 'missing-long-prose');
     const widths = m.prose.map(p => p.width).sort((a, b) => a - b), median = widths[Math.floor(widths.length / 2)];
