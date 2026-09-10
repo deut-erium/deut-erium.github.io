@@ -1,66 +1,51 @@
 ---
-layout: article
-tags: welcome introduction
-excerpt_separator: <!--more-->
-titles:
-  # @start locale config
-  en      : &EN       About
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  关于
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  關於
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       소개
-  ko-KR   : *KO
-  fr      : &FR       À propos
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
-key: page-about
-aside:
-  toc: true
-sidebar:
-  nav: aboutnav
+layout: page
+title: About
+description: "Himanshu Sheoran, also known as deuterium: cryptography research, security engineering and CTFs."
+stylesheets:
+  - /assets/resume/resume.css
 ---
 
-<div class="item">
-  <div class="item__image">
-    <img class="image image--lg" src="Circle-limit-IV.webp"/>
-  </div>
-  <div class="item__content">
-    <p>
-      Hi, I am Himanshu Sheoran (alias deuterium), I am currently a Security and Privacy Engineer at Google. I used to be an RnD engineer at VMware CarbonBlack.  
-      I have completed my Bachelor's Of Technology in Computer Science and Engineering with majors and a crush on cybersecurity.
-    </p>
-    <p>
-      I have been playing a lot of <a href="https://deut-erium.github.io/ctf-tutorials/2021/04/04/What-Are-CTFs.html">CTFs</a>, nowadays with <a href="https://ctftime.org/team/169557">Project Sekai</a> and <a href="https://ctftime.org/team/116018">zh3r0</a> 
-      where I can be found doing crypto tasks. My areas of interests include Cryptography, Reverse Engineering, Binary Exploitation, SMT/SAT solvers and programming in general.
-    </p>
-    <p>
-        In case you find some deuterium with a profile picture, with the same love for escher, <a href="https://deut-erium.github.io/pyfractal/">fractals</a>) and metal, its probably me.
-    </p>
-  </div>
+<div class="resume-profile">
+  <p>I'm Himanshu Sheoran, also known as deuterium. I lead cryptographic research, engineering and audits at <a href="https://osec.io/">OtterSec</a>. Before that, I worked on confidential computing at Google until November 2024 and helped lead Google CTF crypto in 2024. I also play cryptography CTFs.</p>
+  <p>If you run into another deuterium with an Escher avatar and a love of <a href="https://deut-erium.github.io/pyfractal/">fractals</a> and metal, it's probably me.</p>
+
+  <details id="resume-details" class="resume-disclosure">
+    <summary>Hire me?</summary>
+    <div class="resume-workshop" aria-labelledby="resume-heading">
+      <h2 id="resume-heading">Resume</h2>
+      <p>Oh no, my resume doesn't seem to satisfy your HR filters? No worries, add all your roles and responsibilities and keywords here.</p>
+
+      <div class="resume-solver">
+        <form id="resume-form">
+          <label for="request">hr_filters.txt</label>
+          <textarea id="request" rows="12" maxlength="12000" spellcheck="false" placeholder="Must have 10 years of experience with a framework released last Tuesday.
+Required: 15 years of production Rust experience, starting before Rust 1.0.
+Can explain elliptic curves to a submarine crew during an active kraken incident.
+Must rotate signing keys without waking the kraken.
+Has deployed zero-knowledge proofs to a TI-84 calculator at planetary scale.
+Can debug Byzantine consensus by reading packet captures and tea leaves.
+Must know every programming language, including the ones we invent during the interview.
+Available 25 hours a day across Earth, Mars and the Byzantine fault domain.
+Willing to relocate to /dev/null; compensation includes exposure and one company hoodie."></textarea>
+          <div class="resume-solve-action">
+            <button id="compile" type="submit" disabled>Build tailored PDF</button>
+          </div>
+          <output id="resume-status" role="status" aria-live="polite">Preparing the resume...</output>
+        </form>
+        <section id="resume-result" aria-label="Resume preview">
+          <header class="resume-preview-head">
+            <span>resume.pdf <span id="page-count"></span></span>
+            <a id="download" download hidden>Download resume</a>
+          </header>
+          <div id="preview" tabindex="0" role="region" aria-label="Resume pages. Scroll to read the full document."><p>Open this section to prepare the preview.</p></div>
+        </section>
+      </div>
+      <noscript><p>The resume generator needs JavaScript. Contact me through one of the links below and I will send the PDF.</p></noscript>
+    </div>
+  </details>
+
+  <p>HACK THE PLANET.</p>
+  <p>PS: <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">DO NOT CLICK</a></p>
 </div>
-
-This personal blog is aimed towards documenting my interests, research and interesting finds.
-
-## CV
-Enthusiastic employer with interest evoking challenging problems? [Hire Me](/assets/resume.pdf)
-
-## Contact
-Always feel free to DM(direct message) on [discord](https://discord.com/users/650776387535503372), Username: deut_erium.   
-Or any other convenient medium of choice linked below.
-
-HACK THE PLANET :metal: :metal: :metal:
-
-## PS: [DO NOT CLICK](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
-
+<script type="module" src="{{ '/assets/resume/app.mjs' | relative_url }}?v={{ '/' | asset_v }}"></script>

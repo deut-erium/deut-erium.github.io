@@ -656,9 +656,10 @@ for rel in ("archive.html", "WriteUps/index.html", "ctf-tutorials/index.html", "
 if len(pages) < 139 or len(shell_pages) < 134: fail(f"HTML count regression: all={len(pages)} shell={len(shell_pages)}")
 # Eighteen challenge posts add article scripts and one download code frame each;
 # seven also add an event checker, eleven add browser practice forms. Existing
-# checker/article scripts, download frames, math and image counts stay fixed.
+# checker/article scripts, download frames and math counts stay fixed. The About
+# page's retired profile card accounts for the one removed content image.
 if browser_forms != 11: fail(f"browser practice form count drift: {browser_forms}")
-if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (28, 13, 101, 356, 275, 104):
+if (forms, challenge_scripts, article_scripts, code_frames, math_expressions, images) != (28, 13, 101, 356, 275, 103):
     fail(f"content scoping drift: forms={forms} challenge_js={challenge_scripts} article_js={article_scripts} code_frames={code_frames} math={math_expressions} images={images}")
 if len(challenge_pages) != 13: fail(f"challenge page count drift: {len(challenge_pages)}")
 if theme_scripts != len(shell_pages): fail(f"theme script scoping drift: {theme_scripts} != {len(shell_pages)}")
@@ -840,8 +841,15 @@ main_css = (ROOT / "assets/css/main.css").read_text(encoding="utf-8")
 if 'url("../images/circle-limit-iv-mark.webp")' not in main_css:
     fail("Circle Limit IV brand style missing")
 about_text = (ROOT / "about.html").read_text(encoding="utf-8")
-if 'class="item about-profile"' not in about_text or "M. C. Escher&#39;s Circle Limit IV" not in about_text:
-    fail("Circle Limit IV About profile drift")
+if '<details id="resume-details" class="resume-disclosure">' not in about_text or "<summary>Hire me?</summary>" not in about_text:
+    fail("collapsible resume missing from About page")
+if '<details id="resume-details" class="resume-disclosure" open' in about_text:
+    fail("About resume is open by default")
+for stale in ('/assets/resume.pdf', 'id="ottersec-work"', 'id="ottersec-projects"', 'candidate := deuterium', 'ready to overfit'):
+    if stale in about_text:
+        fail(f"stale resume content on About page: {stale}")
+if (ROOT / "assets/resume.pdf").exists():
+    fail("stale static resume PDF remains in build")
 
 for path in ROOT.rglob("*"):
     if path.is_file() and (path.suffix == ".map" or "sourceMappingURL=" in path.read_text(encoding="utf-8", errors="ignore")):
