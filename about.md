@@ -2,6 +2,7 @@
 layout: page
 title: About
 description: "Himanshu Sheoran, also known as deuterium: cryptography research, security engineering and CTFs."
+page_width: wide
 stylesheets:
   - /assets/resume/resume.css
 ---
