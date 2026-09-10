@@ -38,7 +38,6 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/favicon-16x16.png' | relative_url }}">
 <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
 {% include theme-bootstrap.html %}
-<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/atkinson-hyperlegible/700.woff2' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ '/assets/css/main.css' | asset_v }}">
 <script>
   if (window.__deuteriumTheme.skinHref) {
@@ -55,6 +54,7 @@
 {%- endif -%}
 {%- if page.widgets -%}<link rel="stylesheet" href="{{ '/assets/widgets/osec-widgets.css' | relative_url }}?v={{ '/assets/widgets/osec-widgets.css' | asset_v }}">{%- endif -%}
 {%- for _stylesheet in page.stylesheets -%}<link rel="stylesheet" href="{{ _stylesheet | relative_url }}?v={{ _stylesheet | asset_v }}">{%- endfor -%}
+<link id="print-stylesheet" rel="stylesheet" media="print" href="{{ '/assets/css/print.css' | relative_url }}?v={{ '/assets/css/print.css' | asset_v }}">
 <script>window.__deuteriumAssetVersion = {{ '/' | asset_v | jsonify }};</script>
 <script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ '/assets/js/theme.js' | asset_v }}"></script>
 <script defer src="{{ '/assets/js/share.js' | relative_url }}?v={{ '/assets/js/share.js' | asset_v }}"></script>
