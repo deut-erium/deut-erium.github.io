@@ -125,8 +125,14 @@
     if (frame) block.dataset.lang = frame.dataset.language;
   });
 
-  const headings = [...article.querySelectorAll('h2[id], h3[id], h4[id]')];
+  const idCounts = new Map();
+  document.querySelectorAll('[id]').forEach((node) => {
+    idCounts.set(node.id, (idCounts.get(node.id) || 0) + 1);
+  });
+  const headings = [...article.querySelectorAll('h2[id], h3[id], h4[id]')].filter((heading) =>
+    heading.id && idCounts.get(heading.id) === 1 && heading.textContent.trim());
   headings.forEach((heading) => {
+    if (heading.querySelector('.heading-anchor')) return;
     const title = heading.textContent.trim();
     heading.dataset.tocTitle = title;
     const anchor = document.createElement('a');
@@ -139,12 +145,18 @@
 
   const toc = document.querySelector('.js-toc-root');
   const tocBox = toc && toc.closest('details');
-  if (tocBox && !headings.length) {
-    tocBox.hidden = true;
+  if (!toc) return;
+  if (tocBox && !tocBox.hasAttribute('data-toc-enhanced')) {
+    if (!matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
+    tocBox.setAttribute('data-toc-enhanced', '');
+  }
+  // The article layout owns its build-time links. Other layouts still use the
+  // legacy fallback until they adopt the filter; never replace a static list.
+  if (toc.hasAttribute('data-toc-built')) return;
+  if (!headings.length) {
+    if (tocBox) tocBox.hidden = true;
     return;
   }
-  if (!toc || !headings.length) return;
-  if (tocBox && !matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
 
   toc.textContent = '';
   const list = document.createElement('ol');
