@@ -1957,6 +1957,13 @@ html[data-skin="margin-of-error"][data-theme="dark"] {
   background: var(--mo-canvas);
 }
 
+/* Bind shared components to the desktop page grid. On the narrower block
+   layout these placement tokens have no effect. */
+html[data-skin="margin-of-error"] {
+  --article-page-area: folio;
+  --footer-page-area: footer;
+}
+
 html[data-skin="margin-of-error"] body {
   display: grid;
   grid-template-columns: clamp(7.5rem, 12vw, 11rem) minmax(0, 66rem) minmax(12rem, 13rem);
@@ -2156,7 +2163,7 @@ html[data-skin="margin-of-error"] .tag-line a,
 html[data-skin="margin-of-error"] .quick-filters a,
 html[data-skin="margin-of-error"] .pagination :is(a, span) {
   display: inline-flex;
-  width: 100%;
+  width: auto;
   min-height: 2.8rem;
   align-items: center;
   justify-content: center;
@@ -2173,6 +2180,14 @@ html[data-skin="margin-of-error"] .pagination :is(a, span) {
   text-align: left;
   text-decoration: none;
   text-transform: none;
+}
+
+/* Dock controls fill their track; article tags and actions size to text. */
+html[data-skin="margin-of-error"] .site-nav a[data-route],
+html[data-skin="margin-of-error"] .site-nav .theme-toggle,
+html[data-skin="margin-of-error"] .site-nav .skin-menu summary,
+html[data-skin="margin-of-error"] .skin-randomizer {
+  width: 100%;
 }
 
 html[data-skin="margin-of-error"] .site-nav a[data-route="home"],

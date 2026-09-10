@@ -30,7 +30,7 @@ Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. 
 
 ## Article layout checks
 
-Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply footer colors, borders, accents and typography through `--footer-*` properties rather than copies of the geometry. The three mystery buttons keep their order and load toys only after a press. Restore occupies a row only while a toy is active; idle helper text is not displayed. Disabled controls have a screen-reader explanation without JavaScript.
+Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply footer colors, borders, accents and typography through `--footer-*` properties rather than copies of the geometry. Themes with body grids can assign `--article-page-area` and `--footer-page-area` without overriding the shared components. The three mystery buttons keep their order and load toys only after a press. Restore occupies a row only while a toy is active; idle helper text is not displayed. Disabled controls have a screen-reader explanation without JavaScript.
 
 Both article and writeup layouts build contents links from the final heading IDs. Duplicate targets are omitted. Unsupported HTML produces a build warning and omits contents without changing the article. JavaScript adds heading permalinks and code controls; it is not required for the contents links.
 
@@ -44,6 +44,12 @@ python3 script/test-print-fonts.py
 ```
 
 The optional `script/test-article-layout.mjs` browser check serves only a supplied generated site and blocks external requests. Its `--help` lists the theme matrix, prefix builds, no-JavaScript checks and comparison options. It requires a locally available Chromium and Puppeteer; the native CI checks do not download a browser.
+
+The optional wide-screen page-placement check covers Margin of Error on both sides of its desktop breakpoint, with local Chromium/Puppeteer already available:
+
+```sh
+node script/test-theme-page-placement.mjs --site GENERATED_BUILD --out agent_out/theme-redesign/placement
+```
 
 ## API
 

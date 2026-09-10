@@ -297,5 +297,12 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   assert.equal(declarationsLeft, 0, 'Article geometry remains in legacy owner rules');
   const component = fs.readFileSync('assets/css/components/article-layout.css', 'utf8');
   assert.ok(rules(component).every(r => r.prelude === '@media screen'), 'Article component must be screen-only');
+  // Shared width ownership must not erase placement in a skin's body grid.
+  const footer = fs.readFileSync('assets/css/components/site-footer.css', 'utf8');
+  const margin = fs.readFileSync('assets/css/skins/36-margin-of-error.css', 'utf8');
+  assert.match(component, /grid-area:\s*var\(--article-page-area, auto\)/);
+  assert.match(footer, /grid-area:\s*var\(--footer-page-area, auto\)/);
+  assert.match(margin, /--article-page-area:\s*folio;/);
+  assert.match(margin, /--footer-page-area:\s*footer;/);
   console.log(`${legacyFiles.length} legacy stylesheets: no footer branches or competing owned geometry.${before ? ' Non-owned declarations, specificity and print projections match the snapshot.' : ' Supply --before=SNAPSHOT to check projection parity.'}`);
 }
