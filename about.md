@@ -7,7 +7,7 @@ stylesheets:
 ---
 
 <div class="resume-profile">
-  <p>I'm Himanshu Sheoran, also known as deuterium. I lead cryptographic research, engineering and audits at <a href="https://osec.io/">OtterSec</a>. Before that, I worked on confidential computing at Google until November 2024 and helped lead Google CTF crypto in 2024. I also play cryptography CTFs.</p>
+  <p>I'm Himanshu Sheoran, also known as deuterium. I lead cryptographic research, engineering and audits at <a href="https://osec.io/">OtterSec</a>. Previously, I worked on Google's confidential computing, trying to encrypt VMs for some reason, and VMware's (actually RIP) Carbon Black XDR (a corpo way to say antivirus). Gallivanting through this site, you have probably figured out that I love cryptography, CTFs, and hammering anything and everything with SMT solvers.</p>
   <p>If you run into another deuterium with an Escher avatar and a love of <a href="https://deut-erium.github.io/pyfractal/">fractals</a> and metal, it's probably me.</p>
 
   <details id="resume-details" class="resume-disclosure">
