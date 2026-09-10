@@ -6,4 +6,6 @@ The Computer Modern, Euler Fraktur, and Formal Script files share the LyX font n
 
 The selected redesign faces in `theme-library/` have their own `PROVENANCE.json`, with per-file source URLs, access times and hashes. Each family retains its license and metadata; only the selected skin declares its faces.
 
+Cut, Paste, Factor uses a Google-served Rubik Dirt subset for its fixed uppercase/lowercase wordmark. Its original full Latin binary remains preserved; the skin declares only the wordmark range. See the theme-library README for scope and provenance.
+
 All fonts are served locally; pages do not fetch font resources from third parties.
