@@ -75,6 +75,16 @@ node script/test-theme-redesign.mjs \
 
 Its default 1,920 cases cover all 48 themes, four page types, five widths and both modes. It checks settled cold-navigation display fonts, warmed reading/code fonts, layout, visible header descriptions, article utility/contents clearance, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
 
+Run an additional sweep of the redesigned themes between the narrow and wide layouts. The intermediate utility strip keeps the buttons out of the article rail; RPN remains protected.
+
+```sh
+THEMES=$(node -p "Object.keys(require('./assets/fonts/theme-library/themes.json')).join(',')")
+node script/test-theme-redesign.mjs \
+  --site GENERATED_AFTER --before GENERATED_BEFORE --themes "$THEMES" \
+  --widths 1119,1280 --pages home,article --all-screenshots \
+  --out agent_out/theme-redesign/intermediate-NEW
+```
+
 ## API
 
 The build publishes a curl-able index of every post at `/index.json` (a JSON array) and `/index.jsonl` (one object per line). Entries are ordered newest first and are bodyless. Each entry has `title`, `date` (ISO 8601), `route` (absolute URL), `section` (`writeups`, `tutorials`, `ramblings`, or `root`), `tags`, `description`, `has_math` (mirrors the `mathjax` front matter), and `has_code` (fenced code blocks present).
