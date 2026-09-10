@@ -135,10 +135,8 @@ html[data-skin="the-impossible-proof"] .skip-link {
 }
 
 html[data-skin="the-impossible-proof"] .site-header,
-html[data-skin="the-impossible-proof"] .site-footer,
 html[data-skin="the-impossible-proof"] .home-shell,
 html[data-skin="the-impossible-proof"] .archive-shell,
-html[data-skin="the-impossible-proof"] .record-page,
 html[data-skin="the-impossible-proof"] .page-shell,
 html[data-skin="the-impossible-proof"] .error-shell {
   position: relative;
@@ -152,9 +150,18 @@ html[data-skin="the-impossible-proof"] .error-shell {
   border: 3px solid var(--ink);
   box-shadow: 0 0 0 3px var(--chalk), .54rem .62rem 0 var(--ink);
 }
+html[data-skin="the-impossible-proof"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 7%, #16161317 7.1% 7.24%, transparent 7.35% 92.65%, #16161317 92.76% 92.9%, transparent 93%),
+    repeating-linear-gradient(26deg, #1616130a 0 1px, transparent 1px 12px),
+    linear-gradient(145deg, transparent 0 47%, #a63d2f0e 47.1% 53%, transparent 53.1%);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 0 3px var(--chalk), .54rem .62rem 0 var(--ink);
+}
 
-html[data-skin="the-impossible-proof"] .site-header,
-html[data-skin="the-impossible-proof"] .site-footer {
+html[data-skin="the-impossible-proof"] .site-header {
   color: var(--chalk);
   background-color: var(--ink);
   background-image:
@@ -167,21 +174,14 @@ html[data-skin="the-impossible-proof"] .site-header {
   border-bottom: 8px double var(--chalk);
 }
 
-html[data-skin="the-impossible-proof"] .site-footer {
-  margin-bottom: 1.45rem;
-  border-top: 8px double var(--chalk);
-}
-
 html[data-skin="the-impossible-proof"] .home-shell,
 html[data-skin="the-impossible-proof"] .archive-shell,
-html[data-skin="the-impossible-proof"] .record-page,
 html[data-skin="the-impossible-proof"] .page-shell,
 html[data-skin="the-impossible-proof"] .error-shell {
   padding: clamp(1.15rem, 3vw, 2.8rem);
 }
 
-html[data-skin="the-impossible-proof"] .site-header::before,
-html[data-skin="the-impossible-proof"] .site-footer::before {
+html[data-skin="the-impossible-proof"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -195,8 +195,7 @@ html[data-skin="the-impossible-proof"] .site-footer::before {
   opacity: .82;
 }
 
-html[data-skin="the-impossible-proof"] .site-header__inner,
-html[data-skin="the-impossible-proof"] .site-footer__inner {
+html[data-skin="the-impossible-proof"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -244,8 +243,7 @@ html[data-skin="the-impossible-proof"] .record-actions a,
 html[data-skin="the-impossible-proof"] .tag-line a,
 html[data-skin="the-impossible-proof"] .quick-filters a,
 html[data-skin="the-impossible-proof"] .pagination a,
-html[data-skin="the-impossible-proof"] .pagination span,
-html[data-skin="the-impossible-proof"] .site-footer__links a {
+html[data-skin="the-impossible-proof"] .pagination span {
   min-height: 2.7rem;
   color: var(--chalk);
   background: var(--ink);
@@ -290,9 +288,7 @@ html[data-skin="the-impossible-proof"] .tag-line a:focus-visible,
 html[data-skin="the-impossible-proof"] .quick-filters a:hover,
 html[data-skin="the-impossible-proof"] .quick-filters a:focus-visible,
 html[data-skin="the-impossible-proof"] .pagination a:hover,
-html[data-skin="the-impossible-proof"] .pagination a:focus-visible,
-html[data-skin="the-impossible-proof"] .site-footer__links a:hover,
-html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
+html[data-skin="the-impossible-proof"] .pagination a:focus-visible {
   color: var(--ink);
   background: var(--chalk);
   border-color: var(--vermilion);
@@ -333,17 +329,26 @@ html[data-skin="the-impossible-proof"] .skin-randomizer {
   border-color: var(--ink);
 }
 
-html[data-skin="the-impossible-proof"] .masthead,
-html[data-skin="the-impossible-proof"] .record-grid {
+html[data-skin="the-impossible-proof"] .masthead {
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 html[data-skin="the-impossible-proof"] .masthead__copy,
 html[data-skin="the-impossible-proof"] .index-heading,
 html[data-skin="the-impossible-proof"] .page-heading,
-html[data-skin="the-impossible-proof"] .record-head,
 html[data-skin="the-impossible-proof"] .error-shell {
   position: relative;
+  isolation: isolate;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, transparent 0 4%, #1616131c 4.1% 4.24%, transparent 4.35% 95.65%, #1616131c 95.76% 95.9%, transparent 96%),
+    repeating-linear-gradient(26deg, #16161309 0 1px, transparent 1px 10px),
+    var(--paper);
+  border: 5px double var(--ink);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--graphite);
+}
+html[data-skin="the-impossible-proof"] .record-head {
   isolation: isolate;
   color: var(--ink);
   background:
@@ -412,9 +417,13 @@ html[data-skin="the-impossible-proof"] .record-head h1 i {
 
 html[data-skin="the-impossible-proof"] .masthead__lede,
 html[data-skin="the-impossible-proof"] .index-heading > p:last-child,
-html[data-skin="the-impossible-proof"] .page-heading > p:last-child,
-html[data-skin="the-impossible-proof"] .record-head__abstract {
+html[data-skin="the-impossible-proof"] .page-heading > p:last-child {
   max-width: 58ch;
+  font-family: var(--body);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+html[data-skin="the-impossible-proof"] .record-head__abstract {
   font-family: var(--body);
   font-size: 1.12rem;
   font-weight: 700;
@@ -1031,43 +1040,29 @@ html[data-skin="the-impossible-proof"] .error-shell > p {
   color: var(--ink);
 }
 
-html[data-skin="the-impossible-proof"] .site-footer__note,
-html[data-skin="the-impossible-proof"] .site-footer a {
-  color: var(--chalk);
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__note a:hover,
-html[data-skin="the-impossible-proof"] .site-footer__note a:focus-visible {
-  color: var(--vermilion-light);
-}
-
 @media (max-width: 44rem) {
   html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .page-shell,
-  html[data-skin="the-impossible-proof"] .error-shell {
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
     border-width: 3px;
     box-shadow: 0 0 0 2px var(--chalk);
   }
 
-  html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer {
+  html[data-skin="the-impossible-proof"] .site-header {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  html[data-skin="the-impossible-proof"] .site-header::before,
-  html[data-skin="the-impossible-proof"] .site-footer::before {
+  html[data-skin="the-impossible-proof"] .site-header::before {
     left: auto;
     right: 4%;
     width: .65rem;
   }
 
-  html[data-skin="the-impossible-proof"] .site-header__inner,
-  html[data-skin="the-impossible-proof"] .site-footer__inner {
+  html[data-skin="the-impossible-proof"] .site-header__inner {
     padding: .9rem;
   }
 
@@ -1137,26 +1132,25 @@ html[data-skin="the-impossible-proof"] .site-footer__note a:focus-visible {
 
 @media (forced-colors: active) {
   html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .page-shell,
-  html[data-skin="the-impossible-proof"] .error-shell,
-  html[data-skin="the-impossible-proof"] .masthead__copy,
-  html[data-skin="the-impossible-proof"] .index-heading,
-  html[data-skin="the-impossible-proof"] .page-heading,
-  html[data-skin="the-impossible-proof"] .record-head,
-  html[data-skin="the-impossible-proof"] .home-shell > .record-index,
-  html[data-skin="the-impossible-proof"] .archive-tools,
-  html[data-skin="the-impossible-proof"] .archive-groups,
-  html[data-skin="the-impossible-proof"] .page-prose,
-  html[data-skin="the-impossible-proof"] .article__content,
-  html[data-skin="the-impossible-proof"] .record-end,
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index,
-  html[data-skin="the-impossible-proof"] .code-frame,
-  html[data-skin="the-impossible-proof"] .code-frame__bar,
-  html[data-skin="the-impossible-proof"] .code-frame__status {
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell,
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .record-head,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end,
+html[data-skin="the-impossible-proof"] .record-grid > .record-index,
+html[data-skin="the-impossible-proof"] .code-frame,
+html[data-skin="the-impossible-proof"] .code-frame__bar,
+html[data-skin="the-impossible-proof"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1406,104 +1400,27 @@ html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="the-impossible-proof"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vw, 3.5rem);
-  align-items: start;
-}
-
-html[data-skin="the-impossible-proof"] .record-page > .record-head {
-  display: grid;
-  grid-column: 1 / span 9;
-  grid-template-columns: minmax(0, 1.2fr) minmax(16rem, .8fr);
-  gap: 1.25rem clamp(1rem, 3vw, 2.5rem);
-  margin: 0;
-}
-
 html[data-skin="the-impossible-proof"] .record-head__key,
 html[data-skin="the-impossible-proof"] .record-head h1 {
-  grid-column: 1 / -1;
   margin: 0;
 }
 
 html[data-skin="the-impossible-proof"] .record-head__abstract {
-  grid-column: 1;
   margin: 0;
 }
 
 html[data-skin="the-impossible-proof"] .record-head .record-facts {
-  grid-column: 2;
-  grid-row: 3 / span 2;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding-top: 0;
   border-top: 0;
 }
 
 html[data-skin="the-impossible-proof"] .record-head .tag-line {
-  grid-column: 1;
   margin-top: 0;
-  align-self: end;
 }
 
 html[data-skin="the-impossible-proof"] .record-head .record-actions {
-  grid-column: 1;
   margin-top: 0;
-}
-
-html[data-skin="the-impossible-proof"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 3rem);
-  justify-content: stretch;
-  margin: 0;
-}
-
-html[data-skin="the-impossible-proof"] .record-grid > .article__content {
-  grid-column: 1 / span 8;
-  width: auto;
-  max-width: min(100%, var(--reading));
-  margin: 0;
-  justify-self: start;
-}
-
-html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-  grid-column: 9 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  align-self: start;
-}
-
-html[data-skin="the-impossible-proof"] .record-page > .record-end {
-  grid-column: 3 / -1;
-  margin: 0;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem clamp(1rem, 3vw, 3.5rem);
-  align-items: center;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__note {
-  grid-column: 1 / span 7;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__links {
-  display: grid;
-  grid-column: 8 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-  justify-content: stretch;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__links a {
-  min-width: 0;
-  padding-inline: .35rem;
 }
 
 @media (max-width: 76rem) {
@@ -1518,9 +1435,6 @@ html[data-skin="the-impossible-proof"] .site-footer__links a {
     border-bottom: 4px double var(--vermilion);
   }
 
-  html[data-skin="the-impossible-proof"] .record-page > .record-head {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 56rem) {
@@ -1534,24 +1448,14 @@ html[data-skin="the-impossible-proof"] .site-footer__links a {
     grid-column: 1 / span 7;
   }
 
-  html[data-skin="the-impossible-proof"] .record-grid > .article__content {
-    grid-column: 1 / span 9;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-    grid-column: 10 / -1;
-  }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="the-impossible-proof"] .site-header__inner,
-  html[data-skin="the-impossible-proof"] .site-footer__inner,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-impossible-proof"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
@@ -1577,29 +1481,20 @@ html[data-skin="the-impossible-proof"] .site-footer__links a {
   }
 
   html[data-skin="the-impossible-proof"] .home-shell > .masthead,
-  html[data-skin="the-impossible-proof"] .home-shell > .record-index,
-  html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty,
-  html[data-skin="the-impossible-proof"] .record-page > .record-head,
-  html[data-skin="the-impossible-proof"] .record-page > .record-grid,
-  html[data-skin="the-impossible-proof"] .record-page > .record-end,
-  html[data-skin="the-impossible-proof"] .record-grid > .article__content,
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index,
-  html[data-skin="the-impossible-proof"] .site-footer__note,
-  html[data-skin="the-impossible-proof"] .site-footer__links {
-    grid-column: 1;
-  }
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
+  grid-column: 1;
+}
 
-  html[data-skin="the-impossible-proof"] .masthead,
-  html[data-skin="the-impossible-proof"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-impossible-proof"] .masthead {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-impossible-proof"] .archive-tools .quick-filters,
-  html[data-skin="the-impossible-proof"] .archive-tools .all-tags__grid,
-  html[data-skin="the-impossible-proof"] .site-footer__links {
+html[data-skin="the-impossible-proof"] .archive-tools .all-tags__grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1612,20 +1507,9 @@ html[data-skin="the-impossible-proof"] .site-footer__links a {
     grid-column: 1;
   }
 
-  html[data-skin="the-impossible-proof"] .record-head__key,
-  html[data-skin="the-impossible-proof"] .record-head h1,
-  html[data-skin="the-impossible-proof"] .record-head__abstract,
-  html[data-skin="the-impossible-proof"] .record-head .record-facts,
-  html[data-skin="the-impossible-proof"] .record-head .tag-line,
-  html[data-skin="the-impossible-proof"] .record-head .record-actions {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
   html[data-skin="the-impossible-proof"] .record-head .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 0;
-  }
+  margin-top: 0;
+}
 }
 
 /* Final remediation: The Impossible Proof */
@@ -1803,8 +1687,6 @@ html[data-skin="the-impossible-proof"] .tag-line a,
 html[data-skin="the-impossible-proof"] .quick-filters a,
 html[data-skin="the-impossible-proof"] .pagination a,
 html[data-skin="the-impossible-proof"] .pagination span,
-html[data-skin="the-impossible-proof"] .site-footer__note,
-html[data-skin="the-impossible-proof"] .site-footer__links a,
 html[data-skin="the-impossible-proof"] .eyebrow,
 html[data-skin="the-impossible-proof"] .record-row__date,
 html[data-skin="the-impossible-proof"] .record-row__event,
@@ -1836,10 +1718,8 @@ html[data-skin="the-impossible-proof"] .code-frame__fallback {
 }
 
 html[data-skin="the-impossible-proof"] .site-header,
-html[data-skin="the-impossible-proof"] .site-footer,
 html[data-skin="the-impossible-proof"] .home-shell,
 html[data-skin="the-impossible-proof"] .archive-shell,
-html[data-skin="the-impossible-proof"] .record-page,
 html[data-skin="the-impossible-proof"] .page-shell,
 html[data-skin="the-impossible-proof"] .error-shell {
   position: relative;
@@ -1854,9 +1734,19 @@ html[data-skin="the-impossible-proof"] .error-shell {
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="the-impossible-proof"] .record-page {
+  isolation: isolate;
+  color: var(--text);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 6%, color-mix(in srgb, var(--text) 8%, transparent) 6% calc(6% + 1px), transparent calc(6% + 1px) calc(94% - 1px), color-mix(in srgb, var(--text) 8%, transparent) calc(94% - 1px) 94%, transparent 94%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 3%, transparent) 0 1px, transparent 1px 2.1rem);
+  border: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="the-impossible-proof"] .site-header,
-html[data-skin="the-impossible-proof"] .site-footer {
+html[data-skin="the-impossible-proof"] .site-header {
   color: var(--header-fg);
   background-color: var(--header-bg);
   background-image:
@@ -1870,14 +1760,8 @@ html[data-skin="the-impossible-proof"] .site-header {
   border-bottom: .4rem solid var(--break);
 }
 
-html[data-skin="the-impossible-proof"] .site-footer {
-  margin-bottom: 1.25rem;
-  border-top: .4rem solid var(--break);
-}
-
 html[data-skin="the-impossible-proof"] .home-shell,
 html[data-skin="the-impossible-proof"] .archive-shell,
-html[data-skin="the-impossible-proof"] .record-page,
 html[data-skin="the-impossible-proof"] .page-shell,
 html[data-skin="the-impossible-proof"] .error-shell {
   margin-top: 1.25rem;
@@ -1885,8 +1769,7 @@ html[data-skin="the-impossible-proof"] .error-shell {
   padding: clamp(1rem, 2.4vw, 2.5rem);
 }
 
-html[data-skin="the-impossible-proof"] .site-header__inner,
-html[data-skin="the-impossible-proof"] .site-footer__inner {
+html[data-skin="the-impossible-proof"] .site-header__inner {
   position: relative;
   z-index: 1;
   min-width: 0;
@@ -1951,8 +1834,7 @@ html[data-skin="the-impossible-proof"] .record-actions a,
 html[data-skin="the-impossible-proof"] .tag-line a,
 html[data-skin="the-impossible-proof"] .quick-filters a,
 html[data-skin="the-impossible-proof"] .pagination a,
-html[data-skin="the-impossible-proof"] .pagination span,
-html[data-skin="the-impossible-proof"] .site-footer__links a {
+html[data-skin="the-impossible-proof"] .pagination span {
   min-width: 0;
   min-height: 2.75rem;
   padding: .55rem .7rem;
@@ -2158,9 +2040,17 @@ html[data-skin="the-impossible-proof"] .skin-randomizer:focus-visible {
 html[data-skin="the-impossible-proof"] .masthead h1,
 html[data-skin="the-impossible-proof"] .index-heading h1,
 html[data-skin="the-impossible-proof"] .page-heading h1,
-html[data-skin="the-impossible-proof"] .record-head h1,
 html[data-skin="the-impossible-proof"] .error-shell h1 {
   max-width: 23ch;
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.04;
+  text-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .record-head h1 {
   color: var(--heading);
   font-family: var(--display);
   font-size: clamp(2rem, 4vw, 3.5rem);
@@ -2206,9 +2096,15 @@ html[data-skin="the-impossible-proof"] .record-end nav span {
 
 html[data-skin="the-impossible-proof"] .masthead__lede,
 html[data-skin="the-impossible-proof"] .index-heading > p:last-child,
-html[data-skin="the-impossible-proof"] .page-heading > p:last-child,
-html[data-skin="the-impossible-proof"] .record-head__abstract {
+html[data-skin="the-impossible-proof"] .page-heading > p:last-child {
   max-width: 60ch;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+html[data-skin="the-impossible-proof"] .record-head__abstract {
   color: var(--text);
   font-family: var(--body);
   font-size: 1.125rem;
@@ -2237,10 +2133,17 @@ html[data-skin="the-impossible-proof"] .home-shell > .masthead {
 
 html[data-skin="the-impossible-proof"] .masthead__copy,
 html[data-skin="the-impossible-proof"] .index-heading,
-html[data-skin="the-impossible-proof"] .page-heading,
-html[data-skin="the-impossible-proof"] .record-head {
+html[data-skin="the-impossible-proof"] .page-heading {
   min-width: 0;
   padding: clamp(1rem, 2.5vw, 2.25rem);
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .record-head {
   color: var(--text);
   background: transparent;
   border: 0;
@@ -2273,8 +2176,7 @@ html[data-skin="the-impossible-proof"] .action,
 html[data-skin="the-impossible-proof"] .record-actions a,
 html[data-skin="the-impossible-proof"] .tag-line a,
 html[data-skin="the-impossible-proof"] .quick-filters a,
-html[data-skin="the-impossible-proof"] .pagination a,
-html[data-skin="the-impossible-proof"] .site-footer__links a {
+html[data-skin="the-impossible-proof"] .pagination a {
   color: var(--control-fg);
   background: var(--control-bg);
   border-color: var(--text);
@@ -2303,9 +2205,7 @@ html[data-skin="the-impossible-proof"] .home-shell > .record-index {
 html[data-skin="the-impossible-proof"] .home-shell > .record-index,
 html[data-skin="the-impossible-proof"] .archive-tools,
 html[data-skin="the-impossible-proof"] .archive-groups,
-html[data-skin="the-impossible-proof"] .page-prose,
-html[data-skin="the-impossible-proof"] .article__content,
-html[data-skin="the-impossible-proof"] .record-end {
+html[data-skin="the-impossible-proof"] .page-prose {
   min-width: 0;
   padding: clamp(1rem, 2.2vw, 2rem);
   color: var(--text);
@@ -2315,6 +2215,20 @@ html[data-skin="the-impossible-proof"] .record-end {
   border-bottom: 2px solid var(--text);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end {
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  padding: clamp(1rem, 2.2vw, 2rem);
 }
 
 html[data-skin="the-impossible-proof"] .home-shell > .record-index,
@@ -2613,26 +2527,14 @@ html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
 }
 
 /* Article: a caption, reading frame, and later-DOM margin index. */
-html[data-skin="the-impossible-proof"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vw, 3.5rem);
-  align-items: start;
-}
 
 html[data-skin="the-impossible-proof"] .record-page > .record-head {
-  display: grid;
-  grid-column: 2 / span 10;
-  grid-template-columns: minmax(0, 1.3fr) minmax(13rem, .7fr);
-  gap: 1.15rem clamp(1rem, 2.5vw, 2.5rem);
-  margin: 0;
   border-top: 2px solid var(--text);
   border-bottom: 2px solid var(--text);
 }
 
 html[data-skin="the-impossible-proof"] .record-head__key,
 html[data-skin="the-impossible-proof"] .record-head h1 {
-  grid-column: 1 / -1;
   margin: 0;
 }
 
@@ -2642,14 +2544,10 @@ html[data-skin="the-impossible-proof"] .record-head__key {
 }
 
 html[data-skin="the-impossible-proof"] .record-head__abstract {
-  grid-column: 1;
   margin: 0;
 }
 
 html[data-skin="the-impossible-proof"] .record-head .record-facts {
-  grid-column: 2;
-  grid-row: 3 / span 3;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .75rem;
   margin: 0;
   padding: 0 0 0 1rem;
@@ -2682,35 +2580,10 @@ html[data-skin="the-impossible-proof"] .record-facts dd {
 
 html[data-skin="the-impossible-proof"] .record-head .tag-line,
 html[data-skin="the-impossible-proof"] .record-head .record-actions {
-  grid-column: 1;
   margin-top: 0;
 }
 
-html[data-skin="the-impossible-proof"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vw, 3.5rem);
-  justify-content: stretch;
-  margin: 0;
-}
-
-html[data-skin="the-impossible-proof"] .record-grid > .article__content {
-  grid-column: 2 / span 7;
-  width: 100%;
-  max-width: min(100%, var(--reading));
-  margin: 0;
-  justify-self: start;
-}
-
 html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 10 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 0 0 1rem;
   color: var(--text);
   background: var(--paper-low);
   border: 0;
@@ -2765,12 +2638,6 @@ html[data-skin="the-impossible-proof"] .related-records h2 {
   padding: 0 .8rem;
   color: var(--text);
   font-size: 1.5rem;
-}
-
-html[data-skin="the-impossible-proof"] .record-page > .record-end {
-  grid-column: 2 / span 10;
-  max-width: none;
-  margin: 0;
 }
 
 html[data-skin="the-impossible-proof"] .record-end > p a,
@@ -3187,51 +3054,6 @@ html[data-skin="the-impossible-proof"] .error-shell > nav {
 }
 
 /* Footer: a final citation strip with normal link order. */
-html[data-skin="the-impossible-proof"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem clamp(1.25rem, 3vw, 3.5rem);
-  align-items: center;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__note {
-  grid-column: 1 / span 7;
-  max-width: none;
-  margin: 0;
-  color: var(--header-fg);
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__note a {
-  color: var(--header-fg);
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__note a:hover,
-html[data-skin="the-impossible-proof"] .site-footer__note a:focus-visible {
-  color: var(--focus-dark);
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__links {
-  display: grid;
-  grid-column: 9 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-  justify-content: stretch;
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__links a {
-  width: 100%;
-  color: var(--header-fg);
-  background: var(--header-bg);
-  border-color: var(--header-fg);
-}
-
-html[data-skin="the-impossible-proof"] .site-footer__links a:hover,
-html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
-  color: var(--control-hover-fg);
-  background: var(--control-hover-bg);
-  border-color: var(--control-hover-fg);
-  outline-color: var(--focus-control);
-}
 
 @media (max-width: 70rem) {
   html[data-skin="the-impossible-proof"] .site-header__inner {
@@ -3262,22 +3084,6 @@ html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
     grid-column: 7 / -1;
   }
 
-  html[data-skin="the-impossible-proof"] .record-page > .record-head {
-    grid-column: 1 / -1;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .article__content {
-    grid-column: 1 / span 8;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-    grid-column: 10 / -1;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-page > .record-end {
-    grid-column: 1 / -1;
-  }
-
   html[data-skin="the-impossible-proof"] .page-shell > .page-heading {
     grid-column: 1 / span 5;
   }
@@ -3289,39 +3095,35 @@ html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
 
 @media (max-width: 44rem) {
   html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .page-shell,
-  html[data-skin="the-impossible-proof"] .error-shell {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 1rem;
-    border-width: 2px;
-  }
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1rem;
+  border-width: 2px;
+}
+html[data-skin="the-impossible-proof"] .record-page {
+  border-width: 2px;
+}
 
-  html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer {
+  html[data-skin="the-impossible-proof"] .site-header {
     border-inline-width: 0;
   }
 
-  html[data-skin="the-impossible-proof"] .site-header__inner,
-  html[data-skin="the-impossible-proof"] .site-footer__inner {
+  html[data-skin="the-impossible-proof"] .site-header__inner {
     padding: 1rem;
   }
 
   html[data-skin="the-impossible-proof"] .site-nav,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .record-page > .record-grid,
-  html[data-skin="the-impossible-proof"] .page-shell,
-  html[data-skin="the-impossible-proof"] .error-shell,
-  html[data-skin="the-impossible-proof"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-impossible-proof"] .site-nav a[data-route],
   html[data-skin="the-impossible-proof"] .skin-menu {
@@ -3342,74 +3144,48 @@ html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="the-impossible-proof"] .site-nav a[data-route],
-  html[data-skin="the-impossible-proof"] .theme-toggle,
-  html[data-skin="the-impossible-proof"] .skin-menu summary,
-  html[data-skin="the-impossible-proof"] .skin-randomizer,
-  html[data-skin="the-impossible-proof"] .action,
-  html[data-skin="the-impossible-proof"] .record-actions a,
-  html[data-skin="the-impossible-proof"] .tag-line a,
-  html[data-skin="the-impossible-proof"] .quick-filters a,
-  html[data-skin="the-impossible-proof"] .pagination a,
-  html[data-skin="the-impossible-proof"] .pagination span,
-  html[data-skin="the-impossible-proof"] .site-footer__links a {
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span {
     font-size: 1rem;
   }
 
-  html[data-skin="the-impossible-proof"] .masthead,
-  html[data-skin="the-impossible-proof"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-impossible-proof"] .masthead {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-impossible-proof"] .home-shell > .masthead,
-  html[data-skin="the-impossible-proof"] .home-shell > .record-index,
-  html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
-  html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty,
-  html[data-skin="the-impossible-proof"] .record-page > .record-head,
-  html[data-skin="the-impossible-proof"] .record-page > .record-grid,
-  html[data-skin="the-impossible-proof"] .record-page > .record-end,
-  html[data-skin="the-impossible-proof"] .record-grid > .article__content,
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index,
-  html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
-  html[data-skin="the-impossible-proof"] .page-shell > .page-prose,
-  html[data-skin="the-impossible-proof"] .site-footer__note,
-  html[data-skin="the-impossible-proof"] .site-footer__links,
-  html[data-skin="the-impossible-proof"] .error-code,
-  html[data-skin="the-impossible-proof"] .error-shell > .eyebrow,
-  html[data-skin="the-impossible-proof"] .error-shell > h1,
-  html[data-skin="the-impossible-proof"] .error-shell > p,
-  html[data-skin="the-impossible-proof"] .error-shell > nav,
-  html[data-skin="the-impossible-proof"] .error-shell > :not(.error-code):not(.eyebrow):not(h1):not(p):not(nav) {
-    grid-column: 1;
-    grid-row: auto;
-  }
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty,
+html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose,
+html[data-skin="the-impossible-proof"] .error-code,
+html[data-skin="the-impossible-proof"] .error-shell > .eyebrow,
+html[data-skin="the-impossible-proof"] .error-shell > h1,
+html[data-skin="the-impossible-proof"] .error-shell > p,
+html[data-skin="the-impossible-proof"] .error-shell > nav,
+html[data-skin="the-impossible-proof"] .error-shell > :not(.error-code):not(.eyebrow):not(h1):not(p):not(nav) {
+  grid-column: 1;
+  grid-row: auto;
+}
 
-  html[data-skin="the-impossible-proof"] .record-head .record-facts,
-  html[data-skin="the-impossible-proof"] .quick-filters,
-  html[data-skin="the-impossible-proof"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-impossible-proof"] .record-head__key,
-  html[data-skin="the-impossible-proof"] .record-head h1,
-  html[data-skin="the-impossible-proof"] .record-head__abstract,
-  html[data-skin="the-impossible-proof"] .record-head .record-facts,
-  html[data-skin="the-impossible-proof"] .record-head .tag-line,
-  html[data-skin="the-impossible-proof"] .record-head .record-actions {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  html[data-skin="the-impossible-proof"] .quick-filters {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-impossible-proof"] .record-head .record-facts {
-    margin-top: 0;
-    padding-left: 0;
-    border-left: 0;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-    position: static;
-  }
+  margin-top: 0;
+  border-left: 0;
+}
 
   html[data-skin="the-impossible-proof"] .record-row__link {
     grid-template-columns: minmax(0, 1fr);
@@ -3486,28 +3262,27 @@ html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
 
 @media (forced-colors: active) {
   html[data-skin="the-impossible-proof"] body,
-  html[data-skin="the-impossible-proof"] .site-header,
-  html[data-skin="the-impossible-proof"] .site-footer,
-  html[data-skin="the-impossible-proof"] .home-shell,
-  html[data-skin="the-impossible-proof"] .archive-shell,
-  html[data-skin="the-impossible-proof"] .record-page,
-  html[data-skin="the-impossible-proof"] .page-shell,
-  html[data-skin="the-impossible-proof"] .error-shell,
-  html[data-skin="the-impossible-proof"] .masthead__copy,
-  html[data-skin="the-impossible-proof"] .index-heading,
-  html[data-skin="the-impossible-proof"] .page-heading,
-  html[data-skin="the-impossible-proof"] .record-head,
-  html[data-skin="the-impossible-proof"] .home-shell > .record-index,
-  html[data-skin="the-impossible-proof"] .archive-tools,
-  html[data-skin="the-impossible-proof"] .archive-groups,
-  html[data-skin="the-impossible-proof"] .page-prose,
-  html[data-skin="the-impossible-proof"] .article__content,
-  html[data-skin="the-impossible-proof"] .record-end,
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index,
-  html[data-skin="the-impossible-proof"] .prose .code-frame,
-  html[data-skin="the-impossible-proof"] .code-frame__bar,
-  html[data-skin="the-impossible-proof"] .code-frame__status,
-  html[data-skin="the-impossible-proof"] .prose .katex-display {
+html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell,
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .record-head,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end,
+html[data-skin="the-impossible-proof"] .record-grid > .record-index,
+html[data-skin="the-impossible-proof"] .prose .code-frame,
+html[data-skin="the-impossible-proof"] .code-frame__bar,
+html[data-skin="the-impossible-proof"] .code-frame__status,
+html[data-skin="the-impossible-proof"] .prose .katex-display {
     color: CanvasText !important;
     background: Canvas !important;
     background-image: none !important;
@@ -3517,19 +3292,18 @@ html[data-skin="the-impossible-proof"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="the-impossible-proof"] .site-nav a,
-  html[data-skin="the-impossible-proof"] .theme-toggle,
-  html[data-skin="the-impossible-proof"] .skin-menu summary,
-  html[data-skin="the-impossible-proof"] .skin-menu select,
-  html[data-skin="the-impossible-proof"] .skin-randomizer,
-  html[data-skin="the-impossible-proof"] .action,
-  html[data-skin="the-impossible-proof"] .record-actions a,
-  html[data-skin="the-impossible-proof"] .tag-line a,
-  html[data-skin="the-impossible-proof"] .quick-filters a,
-  html[data-skin="the-impossible-proof"] .pagination a,
-  html[data-skin="the-impossible-proof"] .pagination span,
-  html[data-skin="the-impossible-proof"] .site-footer__links a,
-  html[data-skin="the-impossible-proof"] .code-frame__actions button,
-  html[data-skin="the-impossible-proof"] .record-end nav a {
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-menu select,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span,
+html[data-skin="the-impossible-proof"] .code-frame__actions button,
+html[data-skin="the-impossible-proof"] .record-end nav a {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -3566,22 +3340,16 @@ html[data-skin="the-impossible-proof"][data-theme="dark"] {
   --focus-selected: #ffd166;
 }
 
-html[data-skin="the-impossible-proof"] .site-footer__note a:focus-visible {
-  outline-color: var(--focus-dark);
-}
-
 html[data-skin="the-impossible-proof"] body {
   background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 4%, transparent) 0 1px, transparent 1px 1.9rem);
 }
 
-html[data-skin="the-impossible-proof"] .site-header::before,
-html[data-skin="the-impossible-proof"] .site-footer::before {
+html[data-skin="the-impossible-proof"] .site-header::before {
   display: none;
   content: none;
 }
 
-html[data-skin="the-impossible-proof"] .site-header,
-html[data-skin="the-impossible-proof"] .site-footer {
+html[data-skin="the-impossible-proof"] .site-header {
   background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--header-fg) 5%, transparent) 0 1px, transparent 1px 2.1rem);
 }
 
@@ -3636,9 +3404,6 @@ html[data-skin="the-impossible-proof"] .record-row__link:focus-visible {
 }
 
 html[data-skin="the-impossible-proof"] .record-head .record-facts {
-  grid-column: 1 / -1;
-  grid-row: auto;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
   padding: .75rem 0 0;
   border-top: 2px solid var(--text);
   border-left: 0;
@@ -3650,11 +3415,6 @@ html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(n) {
   padding: .65rem .75rem;
   border-top: 1px solid var(--rule);
   border-left: 0;
-}
-
-html[data-skin="the-impossible-proof"] .record-grid > .article__content {
-  width: min(100%, 72ch);
-  max-width: 72ch;
 }
 
 html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
@@ -3707,7 +3467,6 @@ html[data-skin="the-impossible-proof"] .tag-line a,
 html[data-skin="the-impossible-proof"] .quick-filters a,
 html[data-skin="the-impossible-proof"] .pagination a,
 html[data-skin="the-impossible-proof"] .pagination span,
-html[data-skin="the-impossible-proof"] .site-footer__links a,
 html[data-skin="the-impossible-proof"] .code-frame__actions button {
   align-self: start;
   min-height: 0;
@@ -3744,33 +3503,17 @@ html[data-skin="the-impossible-proof"] .record-toc a[aria-current="location"] {
 }
 
 @media (max-width: 64rem) {
-  html[data-skin="the-impossible-proof"] .record-page > .record-grid,
   html[data-skin="the-impossible-proof"] .page-shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .article__content,
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index,
-  html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
-  html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
-    grid-column: 1;
-    width: 100%;
-    max-width: 72ch;
-  }
-
-  html[data-skin="the-impossible-proof"] .record-grid > .record-index {
-    position: static;
-  }
+  grid-template-columns: minmax(0, 1fr);
 }
 
-@media (max-width: 56rem) {
-  html[data-skin="the-impossible-proof"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
+  grid-column: 1;
+  width: 100%;
+  max-width: 72ch;
+}
 
-  html[data-skin="the-impossible-proof"] .record-head .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {

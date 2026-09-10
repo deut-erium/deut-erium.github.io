@@ -96,13 +96,14 @@ html[data-skin="proof-bonbons"] .skip-link {
 }
 
 html[data-skin="proof-bonbons"] .site-header,
-html[data-skin="proof-bonbons"] .site-footer,
 html[data-skin="proof-bonbons"] .home-shell,
 html[data-skin="proof-bonbons"] .archive-shell,
-html[data-skin="proof-bonbons"] .record-page,
 html[data-skin="proof-bonbons"] .page-shell,
 html[data-skin="proof-bonbons"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid var(--bonbon-plum);
+}
+html[data-skin="proof-bonbons"] .record-page {
   border: 5px solid var(--bonbon-plum);
 }
 
@@ -174,8 +175,7 @@ html[data-skin="proof-bonbons"] .record-actions a,
 html[data-skin="proof-bonbons"] .tag-line a,
 html[data-skin="proof-bonbons"] .quick-filters a,
 html[data-skin="proof-bonbons"] .pagination a,
-html[data-skin="proof-bonbons"] .pagination span,
-html[data-skin="proof-bonbons"] .site-footer__links a {
+html[data-skin="proof-bonbons"] .pagination span {
   min-height: 2.65rem;
   padding: .48rem .68rem;
   color: #ffffff;
@@ -260,9 +260,7 @@ html[data-skin="proof-bonbons"] .tag-line a:focus-visible,
 html[data-skin="proof-bonbons"] .quick-filters a:hover,
 html[data-skin="proof-bonbons"] .quick-filters a:focus-visible,
 html[data-skin="proof-bonbons"] .pagination a:hover,
-html[data-skin="proof-bonbons"] .pagination a:focus-visible,
-html[data-skin="proof-bonbons"] .site-footer__links a:hover,
-html[data-skin="proof-bonbons"] .site-footer__links a:focus-visible {
+html[data-skin="proof-bonbons"] .pagination a:focus-visible {
   color: var(--bonbon-plum);
   background: var(--bonbon-mint);
   border-color: var(--bonbon-plum);
@@ -279,9 +277,17 @@ html[data-skin="proof-bonbons"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="proof-bonbons"] .home-shell,
 html[data-skin="proof-bonbons"] .archive-shell,
-html[data-skin="proof-bonbons"] .record-page,
 html[data-skin="proof-bonbons"] .page-shell {
   padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--bonbon-pink);
+  background-image:
+    radial-gradient(#ffffffc4 0 .2rem, transparent .22rem),
+    linear-gradient(135deg, transparent 47%, #ff7fb642 48% 52%, transparent 53%);
+  background-size: 2.5rem 2.5rem, 1rem 1rem;
+  border-radius: 2.25rem 1rem 2.1rem 1.15rem;
+  box-shadow: .8rem .9rem 0 var(--bonbon-plum), inset 0 .35rem 0 #ffffff8c;
+}
+html[data-skin="proof-bonbons"] .record-page {
   background-color: var(--bonbon-pink);
   background-image:
     radial-gradient(#ffffffc4 0 .2rem, transparent .22rem),
@@ -331,9 +337,18 @@ html[data-skin="proof-bonbons"] .masthead .eyebrow {
 html[data-skin="proof-bonbons"] .masthead h1,
 html[data-skin="proof-bonbons"] .index-heading h1,
 html[data-skin="proof-bonbons"] .page-heading h1,
-html[data-skin="proof-bonbons"] .record-head h1,
 html[data-skin="proof-bonbons"] .error-shell h1 {
   max-width: 12ch;
+  margin: .35rem 0;
+  color: var(--bonbon-grape);
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 6.7vw, 6.8rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .82;
+  text-shadow: .14rem .18rem 0 #ffffff, .32rem .38rem 0 var(--bonbon-rose);
+}
+html[data-skin="proof-bonbons"] .record-head h1 {
   margin: .35rem 0;
   color: var(--bonbon-grape);
   font-family: var(--display);
@@ -346,9 +361,15 @@ html[data-skin="proof-bonbons"] .error-shell h1 {
 
 html[data-skin="proof-bonbons"] .masthead__lede,
 html[data-skin="proof-bonbons"] .index-heading > p:last-child,
-html[data-skin="proof-bonbons"] .page-heading > p:last-child,
-html[data-skin="proof-bonbons"] .record-head__abstract {
+html[data-skin="proof-bonbons"] .page-heading > p:last-child {
   max-width: 55ch;
+  color: var(--bonbon-plum);
+  font-family: var(--body);
+  font-size: clamp(1.07rem, 1.55vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="proof-bonbons"] .record-head__abstract {
   color: var(--bonbon-plum);
   font-family: var(--body);
   font-size: clamp(1.07rem, 1.55vw, 1.25rem);
@@ -568,7 +589,6 @@ html[data-skin="proof-bonbons"] .archive-empty {
 }
 
 html[data-skin="proof-bonbons"] .record-head {
-  padding: clamp(1.6rem, 4vw, 4.5rem);
   background-color: var(--bonbon-pink);
   background-image:
     radial-gradient(#ffffff 0 .25rem, transparent .27rem),
@@ -598,10 +618,6 @@ html[data-skin="proof-bonbons"] .record-head__key span {
 html[data-skin="proof-bonbons"] .record-head__key span + span {
   color: var(--bonbon-plum);
   background: var(--bonbon-lemon);
-}
-
-html[data-skin="proof-bonbons"] .record-head__abstract {
-  max-width: 62ch;
 }
 
 html[data-skin="proof-bonbons"] .record-facts {
@@ -645,11 +661,9 @@ html[data-skin="proof-bonbons"] .record-actions a:last-child {
   background: var(--bonbon-lemon);
 }
 
-html[data-skin="proof-bonbons"] .record-grid {
-  gap: 1.8rem;
+html[data-skin="proof-bonbons"] .article__content {
+  border-left: .9rem solid var(--bonbon-mint);
 }
-
-html[data-skin="proof-bonbons"] .article__content,
 html[data-skin="proof-bonbons"] .page-prose {
   max-width: var(--reading);
   padding: clamp(1.25rem, 3vw, 3rem);
@@ -924,38 +938,6 @@ html[data-skin="proof-bonbons"] .error-shell h1 {
   color: var(--bonbon-lemon);
 }
 
-html[data-skin="proof-bonbons"] .site-footer {
-  color: #fff7fe;
-  background-color: var(--bonbon-plum);
-  background-image: radial-gradient(#ff7fb66b 0 .14rem, transparent .16rem);
-  background-size: 1.1rem 1.1rem;
-  border-radius: 1.7rem .7rem 1.5rem .8rem;
-  box-shadow: .65rem .75rem 0 var(--bonbon-hot);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__inner {
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note {
-  font-family: var(--body);
-}
-
-html[data-skin="proof-bonbons"] .site-footer a {
-  color: var(--bonbon-mint);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links a {
-  color: var(--bonbon-plum);
-  background: var(--bonbon-lemon);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links a:hover,
-html[data-skin="proof-bonbons"] .site-footer__links a:focus-visible {
-  color: var(--bonbon-plum);
-  background: var(--bonbon-mint);
-}
-
 html[data-skin="proof-bonbons"][data-theme="dark"] {
   --bench: #170c22;
   --shell: #442349;
@@ -1041,27 +1023,6 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
   background: var(--paper);
 }
 
-@media (min-width: 76rem) {
-  html[data-skin="proof-bonbons"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="proof-bonbons"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="proof-bonbons"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 68rem) {
   html[data-skin="proof-bonbons"] .site-header__inner {
     grid-template-columns: 1fr;
@@ -1088,26 +1049,23 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
 
 @media (max-width: 44rem) {
   html[data-skin="proof-bonbons"] .site-header,
-  html[data-skin="proof-bonbons"] .site-footer,
-  html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell,
-  html[data-skin="proof-bonbons"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+html[data-skin="proof-bonbons"] .home-shell,
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .page-shell,
+html[data-skin="proof-bonbons"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="proof-bonbons"] .site-header {
     margin-top: 0;
     border-radius: 0 0 1.5rem 1.1rem;
-  }
-
-  html[data-skin="proof-bonbons"] .site-footer {
-    margin-bottom: 0;
-    border-radius: 1.4rem 1rem 0 0;
   }
 
   html[data-skin="proof-bonbons"] .site-nav {
@@ -1129,14 +1087,16 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-    border-radius: 0;
-  }
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .page-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+  border-radius: 0;
+}
+html[data-skin="proof-bonbons"] .record-page {
+  border-radius: 0;
+}
 
   html[data-skin="proof-bonbons"] .masthead,
   html[data-skin="proof-bonbons"] .index-heading,
@@ -1154,11 +1114,10 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="proof-bonbons"] .masthead__copy,
-  html[data-skin="proof-bonbons"] .index-heading,
-  html[data-skin="proof-bonbons"] .page-heading,
-  html[data-skin="proof-bonbons"] .record-head {
-    padding: 1.15rem;
-  }
+html[data-skin="proof-bonbons"] .index-heading,
+html[data-skin="proof-bonbons"] .page-heading {
+  padding: 1.15rem;
+}
 
   html[data-skin="proof-bonbons"] .masthead h1,
   html[data-skin="proof-bonbons"] .index-heading h1,
@@ -1186,15 +1145,13 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
     font-size: 1rem;
   }
 
-  html[data-skin="proof-bonbons"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .article__content,
-  html[data-skin="proof-bonbons"] .page-prose {
-    padding: 1rem;
-    border-left-width: .65rem;
-  }
+  html[data-skin="proof-bonbons"] .article__content {
+  border-left-width: .65rem;
+}
+html[data-skin="proof-bonbons"] .page-prose {
+  padding: 1rem;
+  border-left-width: .65rem;
+}
 
   html[data-skin="proof-bonbons"] .prose {
     font-size: 1.125rem;
@@ -1212,9 +1169,6 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
     font-size: 1.4rem;
   }
 
-  html[data-skin="proof-bonbons"] .site-footer__inner {
-    padding: .85rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1225,24 +1179,23 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__fallback {
 
 @media (forced-colors: active) {
   html[data-skin="proof-bonbons"] .site-header,
-  html[data-skin="proof-bonbons"] .site-footer,
-  html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell,
-  html[data-skin="proof-bonbons"] .error-shell,
-  html[data-skin="proof-bonbons"] .masthead,
-  html[data-skin="proof-bonbons"] .index-heading,
-  html[data-skin="proof-bonbons"] .page-heading,
-  html[data-skin="proof-bonbons"] .record-head,
-  html[data-skin="proof-bonbons"] .home-shell > .record-index,
-  html[data-skin="proof-bonbons"] .archive-tools,
-  html[data-skin="proof-bonbons"] .archive-groups,
-  html[data-skin="proof-bonbons"] .page-prose,
-  html[data-skin="proof-bonbons"] .article__content,
-  html[data-skin="proof-bonbons"] .record-end,
-  html[data-skin="proof-bonbons"] .record-grid > .record-index,
-  html[data-skin="proof-bonbons"] .prose .code-frame {
+html[data-skin="proof-bonbons"] .home-shell,
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .record-page,
+html[data-skin="proof-bonbons"] .page-shell,
+html[data-skin="proof-bonbons"] .error-shell,
+html[data-skin="proof-bonbons"] .masthead,
+html[data-skin="proof-bonbons"] .index-heading,
+html[data-skin="proof-bonbons"] .page-heading,
+html[data-skin="proof-bonbons"] .record-head,
+html[data-skin="proof-bonbons"] .home-shell > .record-index,
+html[data-skin="proof-bonbons"] .archive-tools,
+html[data-skin="proof-bonbons"] .archive-groups,
+html[data-skin="proof-bonbons"] .page-prose,
+html[data-skin="proof-bonbons"] .article__content,
+html[data-skin="proof-bonbons"] .record-end,
+html[data-skin="proof-bonbons"] .record-grid > .record-index,
+html[data-skin="proof-bonbons"] .prose .code-frame {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -1662,82 +1615,18 @@ html[data-skin="proof-bonbons"] .archive-groups .record-list {
   margin-bottom: 1.5rem;
 }
 
-html[data-skin="proof-bonbons"] .record-page {
-  display: grid;
-  grid-template-areas:
-    "head"
-    "body"
-    "end";
-  gap: clamp(1.2rem, 2.6vw, 2.5rem);
-  align-items: start;
-  margin-top: 0;
-}
-
-html[data-skin="proof-bonbons"] .record-page > .record-head {
-  display: grid;
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags facts"
-    "actions facts";
-  grid-template-columns: minmax(0, 1.35fr) minmax(14rem, .65fr);
-  gap: 0 1.5rem;
-  grid-area: head;
-  margin: 0;
-}
-
-html[data-skin="proof-bonbons"] .record-head > .record-head__key {
-  grid-area: key;
-}
-
-html[data-skin="proof-bonbons"] .record-head > h1 {
-  grid-area: title;
-}
-
-html[data-skin="proof-bonbons"] .record-head > .record-head__abstract {
-  grid-area: abstract;
-}
-
 html[data-skin="proof-bonbons"] .record-head > .record-facts {
-  grid-area: facts;
-  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   margin: 0;
 }
 
-html[data-skin="proof-bonbons"] .record-head > .tag-line {
-  grid-area: tags;
-}
-
-html[data-skin="proof-bonbons"] .record-head > .record-actions {
-  grid-area: actions;
-}
-
-html[data-skin="proof-bonbons"] .record-page > .record-grid {
-  grid-area: body;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-  gap: clamp(1rem, 2.4vw, 2.25rem);
-  justify-content: stretch;
-  margin-top: 0;
-}
-
 html[data-skin="proof-bonbons"] .record-grid > .article__content {
-  min-height: 36rem;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3.25rem);
   border-top: .55rem solid var(--bonbon-lemon);
   border-right: 5px solid var(--bonbon-plum);
   border-bottom: 5px solid var(--bonbon-plum);
 }
 
 html[data-skin="proof-bonbons"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  align-self: start;
-  width: auto;
-  margin: 0;
-  padding: 1.15rem;
   border-radius: 1.8rem .65rem 1.55rem .75rem;
 }
 
@@ -1749,50 +1638,6 @@ html[data-skin="proof-bonbons"] .record-grid > .record-index .related-records {
 
 html[data-skin="proof-bonbons"] .record-grid > .record-index .related-records h2 {
   font-size: clamp(1.65rem, 2.4vw, 2.15rem);
-}
-
-html[data-skin="proof-bonbons"] .record-page > .record-end {
-  grid-area: end;
-  margin-top: 0;
-}
-
-html[data-skin="proof-bonbons"] .site-footer {
-  margin-top: clamp(1.5rem, 4vw, 4rem);
-  margin-bottom: 1.25rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(18rem, .7fr);
-  gap: 1rem 2rem;
-  align-items: center;
-  padding: 1.35rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note {
-  margin: 0;
-  padding: .8rem 1rem;
-  color: var(--bonbon-plum);
-  background: var(--bonbon-lemon);
-  border: 3px solid var(--bonbon-plum);
-  border-radius: 1.1rem .55rem 1rem .65rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note a {
-  color: var(--bonbon-grape);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links a {
-  min-width: 0;
-  min-height: 4rem;
-  padding: .5rem;
-  line-height: 1.15;
 }
 
 @media (max-width: 70rem) {
@@ -1824,9 +1669,6 @@ html[data-skin="proof-bonbons"] .site-footer__links a {
     position: static;
   }
 
-  html[data-skin="proof-bonbons"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr) minmax(13rem, .65fr);
-  }
 }
 
 @media (max-width: 56rem) {
@@ -1846,44 +1688,15 @@ html[data-skin="proof-bonbons"] .site-footer__links a {
       "empty";
   }
 
-  html[data-skin="proof-bonbons"] .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="proof-bonbons"] .record-page > .record-head {
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
   html[data-skin="proof-bonbons"] .record-head > .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 1.4rem;
-  }
+  margin-top: 1.4rem;
+}
 
-  html[data-skin="proof-bonbons"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .record-grid > .article__content {
-    min-height: 0;
-  }
-
-  html[data-skin="proof-bonbons"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 40rem) {
   html[data-skin="proof-bonbons"] .home-shell .record-list,
-  html[data-skin="proof-bonbons"] .archive-groups .record-list,
-  html[data-skin="proof-bonbons"] .site-footer__links {
+html[data-skin="proof-bonbons"] .archive-groups .record-list {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1901,19 +1714,15 @@ html[data-skin="proof-bonbons"] .site-footer__links a {
     min-height: 24rem;
   }
 
-  html[data-skin="proof-bonbons"] .record-head > .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {
   html[data-skin="proof-bonbons"] .site-nav > a[data-route],
-  html[data-skin="proof-bonbons"] .site-nav > .theme-toggle,
-  html[data-skin="proof-bonbons"] .site-nav > .skin-menu summary,
-  html[data-skin="proof-bonbons"] .site-nav > .skin-menu .skin-randomizer,
-  html[data-skin="proof-bonbons"] .home-shell .record-row__link,
-  html[data-skin="proof-bonbons"] .archive-groups .record-row__link,
-  html[data-skin="proof-bonbons"] .site-footer__note {
+html[data-skin="proof-bonbons"] .site-nav > .theme-toggle,
+html[data-skin="proof-bonbons"] .site-nav > .skin-menu summary,
+html[data-skin="proof-bonbons"] .site-nav > .skin-menu .skin-randomizer,
+html[data-skin="proof-bonbons"] .home-shell .record-row__link,
+html[data-skin="proof-bonbons"] .archive-groups .record-row__link {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -2025,14 +1834,18 @@ html[data-skin="proof-bonbons"] .skip-link {
 }
 
 html[data-skin="proof-bonbons"] .site-header,
-html[data-skin="proof-bonbons"] .site-footer,
 html[data-skin="proof-bonbons"] .home-shell,
 html[data-skin="proof-bonbons"] .archive-shell,
-html[data-skin="proof-bonbons"] .record-page,
 html[data-skin="proof-bonbons"] .page-shell,
 html[data-skin="proof-bonbons"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   min-width: 0;
+  color: var(--pb-ink);
+  border: 3px solid var(--pb-rule);
+  border-radius: .75rem;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-page {
   color: var(--pb-ink);
   border: 3px solid var(--pb-rule);
   border-radius: .75rem;
@@ -2128,8 +1941,7 @@ html[data-skin="proof-bonbons"] .record-actions a,
 html[data-skin="proof-bonbons"] .tag-line a,
 html[data-skin="proof-bonbons"] .quick-filters a,
 html[data-skin="proof-bonbons"] .pagination a,
-html[data-skin="proof-bonbons"] .pagination span,
-html[data-skin="proof-bonbons"] .site-footer__links a {
+html[data-skin="proof-bonbons"] .pagination span {
   min-width: 0;
   min-height: 3rem;
   padding: .55rem .65rem;
@@ -2224,8 +2036,7 @@ html[data-skin="proof-bonbons"] .archive-year > header span,
 html[data-skin="proof-bonbons"] .all-tags summary,
 html[data-skin="proof-bonbons"] .record-toc summary,
 html[data-skin="proof-bonbons"] .pagination__position,
-html[data-skin="proof-bonbons"] .record-end nav span,
-html[data-skin="proof-bonbons"] .site-footer__note {
+html[data-skin="proof-bonbons"] .record-end nav span {
   color: var(--pb-ink);
   font-family: var(--keys);
   font-size: var(--pb-text-min);
@@ -2262,9 +2073,7 @@ html[data-skin="proof-bonbons"] .tag-line a:focus-visible,
 html[data-skin="proof-bonbons"] .quick-filters a:hover,
 html[data-skin="proof-bonbons"] .quick-filters a:focus-visible,
 html[data-skin="proof-bonbons"] .pagination a:hover,
-html[data-skin="proof-bonbons"] .pagination a:focus-visible,
-html[data-skin="proof-bonbons"] .site-footer__links a:hover,
-html[data-skin="proof-bonbons"] .site-footer__links a:focus-visible {
+html[data-skin="proof-bonbons"] .pagination a:focus-visible {
   color: var(--pb-current-ink);
   background: var(--pb-current-bg);
   border-color: var(--pb-rule);
@@ -2290,8 +2099,7 @@ html[data-skin="proof-bonbons"] .action:active,
 html[data-skin="proof-bonbons"] .record-actions a:active,
 html[data-skin="proof-bonbons"] .tag-line a:active,
 html[data-skin="proof-bonbons"] .quick-filters a:active,
-html[data-skin="proof-bonbons"] .pagination a:active,
-html[data-skin="proof-bonbons"] .site-footer__links a:active {
+html[data-skin="proof-bonbons"] .pagination a:active {
   color: var(--pb-current-ink);
   background: var(--pb-current-bg);
   border-style: double;
@@ -2306,7 +2114,6 @@ html[data-skin="proof-bonbons"] .pagination span[aria-disabled="true"] {
 
 html[data-skin="proof-bonbons"] .home-shell,
 html[data-skin="proof-bonbons"] .archive-shell,
-html[data-skin="proof-bonbons"] .record-page,
 html[data-skin="proof-bonbons"] .page-shell {
   display: grid;
   gap: clamp(1rem, 2vw, 2rem);
@@ -2317,18 +2124,19 @@ html[data-skin="proof-bonbons"] .page-shell {
   background-image: radial-gradient(circle at .75rem .75rem, #5b2c861c 0 .1rem, transparent .12rem);
   background-size: 1.5rem 1.5rem;
 }
+html[data-skin="proof-bonbons"] .record-page {
+  background-color: var(--pb-board);
+  background-image: radial-gradient(circle at .75rem .75rem, #5b2c861c 0 .1rem, transparent .12rem);
+  background-size: 1.5rem 1.5rem;
+}
 
 html[data-skin="proof-bonbons"] .masthead,
 html[data-skin="proof-bonbons"] .index-heading,
 html[data-skin="proof-bonbons"] .page-heading,
-html[data-skin="proof-bonbons"] .record-head,
 html[data-skin="proof-bonbons"] .home-shell > .record-index,
 html[data-skin="proof-bonbons"] .archive-tools,
 html[data-skin="proof-bonbons"] .archive-groups,
-html[data-skin="proof-bonbons"] .article__content,
-html[data-skin="proof-bonbons"] .page-prose,
-html[data-skin="proof-bonbons"] .record-end,
-html[data-skin="proof-bonbons"] .record-grid > .record-index {
+html[data-skin="proof-bonbons"] .page-prose {
   min-width: 0;
   color: var(--pb-ink);
   background: var(--pb-surface);
@@ -2336,6 +2144,20 @@ html[data-skin="proof-bonbons"] .record-grid > .record-index {
   border: 3px solid var(--pb-rule);
   border-radius: .5rem;
   box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-head,
+html[data-skin="proof-bonbons"] .article__content,
+html[data-skin="proof-bonbons"] .record-end,
+html[data-skin="proof-bonbons"] .record-grid > .record-index {
+  color: var(--pb-ink);
+  background: var(--pb-surface);
+  background-image: none;
+  border: 3px solid var(--pb-rule);
+  border-radius: .5rem;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="proof-bonbons"] .masthead {
@@ -2416,7 +2238,6 @@ html[data-skin="proof-bonbons"] .error-shell h1 {
 }
 
 html[data-skin="proof-bonbons"] .record-head h1 {
-  max-width: 18ch;
   margin: .25rem 0;
   color: var(--pb-heading);
   font-family: var(--display);
@@ -2429,9 +2250,15 @@ html[data-skin="proof-bonbons"] .record-head h1 {
 
 html[data-skin="proof-bonbons"] .masthead__lede,
 html[data-skin="proof-bonbons"] .index-heading > p:last-child,
-html[data-skin="proof-bonbons"] .page-heading > p:last-child,
-html[data-skin="proof-bonbons"] .record-head__abstract {
+html[data-skin="proof-bonbons"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--pb-ink);
+  font-family: var(--body);
+  font-size: max(1.125rem, var(--pb-text-min));
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="proof-bonbons"] .record-head__abstract {
   color: var(--pb-ink);
   font-family: var(--body);
   font-size: max(1.125rem, var(--pb-text-min));
@@ -2787,38 +2614,10 @@ html[data-skin="proof-bonbons"] .home-shell .record-list {
   margin-top: .75rem;
 }
 
-html[data-skin="proof-bonbons"] .record-page {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="proof-bonbons"] .record-page > .record-head,
-html[data-skin="proof-bonbons"] .record-page > .record-grid,
-html[data-skin="proof-bonbons"] .record-page > .record-end {
-  grid-area: auto;
-  margin: 0;
-}
-
 html[data-skin="proof-bonbons"] .record-head {
-  display: grid;
-  grid-template-areas:
-    "key key"
-    "title title"
-    "abstract abstract"
-    "facts facts"
-    "tags actions";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: .85rem 1.25rem;
-  padding: clamp(1.25rem, 2.5vw, 2rem);
   border-top-width: .65rem;
   border-top-color: var(--pb-flavor);
 }
-
-html[data-skin="proof-bonbons"] .record-head > .record-head__key { grid-area: key; }
-html[data-skin="proof-bonbons"] .record-head > h1 { grid-area: title; }
-html[data-skin="proof-bonbons"] .record-head > .record-head__abstract { grid-area: abstract; }
-html[data-skin="proof-bonbons"] .record-head > .record-facts { grid-area: facts; }
-html[data-skin="proof-bonbons"] .record-head > .tag-line { grid-area: tags; }
-html[data-skin="proof-bonbons"] .record-head > .record-actions { grid-area: actions; }
 
 html[data-skin="proof-bonbons"] .record-head__key {
   display: flex;
@@ -2838,7 +2637,6 @@ html[data-skin="proof-bonbons"] .record-head__key span {
 
 html[data-skin="proof-bonbons"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: .6rem;
   margin: 0;
   padding: .7rem;
@@ -2882,32 +2680,12 @@ html[data-skin="proof-bonbons"] .record-actions a {
   min-height: 3rem;
 }
 
-html[data-skin="proof-bonbons"] .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
-  gap: clamp(1rem, 2vw, 2rem);
-  align-items: start;
-  justify-content: stretch;
-  margin: 0;
-}
-
 html[data-skin="proof-bonbons"] .record-grid > .article__content {
-  min-height: 0;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   border-left-width: .65rem;
   border-left-color: var(--pb-flavor);
-  overflow: visible;
 }
 
 html[data-skin="proof-bonbons"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--pb-ink);
   background: var(--pb-surface);
 }
@@ -2959,11 +2737,13 @@ html[data-skin="proof-bonbons"] .record-grid > .record-index .related-records h2
 }
 
 html[data-skin="proof-bonbons"] .record-end {
+  border-top-width: .6rem;
+  border-top-color: var(--pb-flavor);
+}
+html[data-skin="proof-bonbons"] .record-end:not(:where(.record-page, .record-page *)) {
   max-width: none;
   margin: 0;
   padding: clamp(1rem, 2vw, 1.5rem);
-  border-top-width: .6rem;
-  border-top-color: var(--pb-flavor);
 }
 
 html[data-skin="proof-bonbons"] .record-end > p {
@@ -3281,57 +3061,6 @@ html[data-skin="proof-bonbons"] .error-shell nav {
   gap: .65rem;
 }
 
-html[data-skin="proof-bonbons"] .site-footer {
-  margin-top: clamp(1rem, 3vw, 2rem);
-  margin-bottom: 1rem;
-  color: var(--pb-ink);
-  background: var(--pb-surface);
-  background-image: none;
-  border-top-width: .6rem;
-  border-top-color: var(--pb-current-bg);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .85fr);
-  gap: 1rem 1.5rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note {
-  max-width: none;
-  margin: 0;
-  padding: .7rem .8rem;
-  color: var(--pb-ink);
-  background: var(--pb-surface-low);
-  border: 3px solid var(--pb-rule);
-  border-radius: .4rem;
-  text-transform: none;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note a,
-html[data-skin="proof-bonbons"] .site-footer a {
-  color: var(--pb-link);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__note a:hover,
-html[data-skin="proof-bonbons"] .site-footer__note a:focus-visible {
-  color: var(--pb-current-ink);
-  background: var(--pb-current-bg);
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="proof-bonbons"] .site-footer__links a {
-  min-height: 3.5rem;
-}
-
-
 html[data-skin="proof-bonbons"] .home-shell .record-row,
 html[data-skin="proof-bonbons"] .archive-groups .record-row {
   border-bottom: 2px dashed var(--pb-rule);
@@ -3390,25 +3119,6 @@ html[data-skin="proof-bonbons"] .record-actions a:last-child {
   background: var(--pb-control-bg);
 }
 
-html[data-skin="proof-bonbons"] .record-page > .record-head {
-  grid-template-areas:
-    "key key"
-    "title title"
-    "abstract abstract"
-    "facts facts"
-    "tags actions";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: .85rem 1.25rem;
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-}
-
-html[data-skin="proof-bonbons"] .record-page > .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
-  gap: clamp(1rem, 2vw, 2rem);
-  margin: 0;
-}
-
 html[data-skin="proof-bonbons"][data-theme="dark"] .site-nav > a[data-route],
 html[data-skin="proof-bonbons"][data-theme="dark"] .theme-toggle,
 html[data-skin="proof-bonbons"][data-theme="dark"] .skin-menu summary,
@@ -3419,7 +3129,6 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .record-actions a,
 html[data-skin="proof-bonbons"][data-theme="dark"] .tag-line a,
 html[data-skin="proof-bonbons"][data-theme="dark"] .quick-filters a,
 html[data-skin="proof-bonbons"][data-theme="dark"] .pagination a,
-html[data-skin="proof-bonbons"][data-theme="dark"] .site-footer__links a,
 html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__actions button,
 html[data-skin="proof-bonbons"][data-theme="dark"] .record-end nav a {
   color: var(--pb-control-ink);
@@ -3445,8 +3154,6 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .quick-filters a:hover,
 html[data-skin="proof-bonbons"][data-theme="dark"] .quick-filters a:focus-visible,
 html[data-skin="proof-bonbons"][data-theme="dark"] .pagination a:hover,
 html[data-skin="proof-bonbons"][data-theme="dark"] .pagination a:focus-visible,
-html[data-skin="proof-bonbons"][data-theme="dark"] .site-footer__links a:hover,
-html[data-skin="proof-bonbons"][data-theme="dark"] .site-footer__links a:focus-visible,
 html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__actions button:hover,
 html[data-skin="proof-bonbons"][data-theme="dark"] .code-frame__actions button:focus-visible,
 html[data-skin="proof-bonbons"][data-theme="dark"] .record-end nav a:hover,
@@ -3528,10 +3235,9 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
 
 @media (max-width: 56rem) {
   html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="proof-bonbons"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="proof-bonbons"] .home-shell > .masthead,
   html[data-skin="proof-bonbons"] .home-shell > .index-heading,
@@ -3543,10 +3249,9 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
     grid-column: 1;
   }
 
-  html[data-skin="proof-bonbons"] .archive-shell > .archive-tools,
-  html[data-skin="proof-bonbons"] .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="proof-bonbons"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="proof-bonbons"] .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -3556,67 +3261,28 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  html[data-skin="proof-bonbons"] .record-head {
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .record-page > .record-head {
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="proof-bonbons"] .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 40rem) {
   html[data-skin="proof-bonbons"] .site-header,
-  html[data-skin="proof-bonbons"] .site-footer,
-  html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell,
-  html[data-skin="proof-bonbons"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 3px;
-    border-radius: 0;
-    box-shadow: none;
-  }
+html[data-skin="proof-bonbons"] .home-shell,
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .page-shell,
+html[data-skin="proof-bonbons"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 3px;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-page {
+  border-width: 3px;
+  border-radius: 0;
+  box-shadow: none;
+}
 
   html[data-skin="proof-bonbons"] .site-header {
     margin-top: 0;
-    border-top-width: .5rem;
-  }
-
-  html[data-skin="proof-bonbons"] .site-footer {
-    margin-bottom: 0;
     border-top-width: .5rem;
   }
 
@@ -3630,27 +3296,32 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
   }
 
   html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell {
-    padding: .75rem;
-  }
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .page-shell {
+  padding: .75rem;
+}
 
   html[data-skin="proof-bonbons"] .masthead__copy,
-  html[data-skin="proof-bonbons"] .index-heading,
-  html[data-skin="proof-bonbons"] .page-heading,
-  html[data-skin="proof-bonbons"] .record-head,
-  html[data-skin="proof-bonbons"] .home-shell > .record-index,
-  html[data-skin="proof-bonbons"] .archive-tools,
-  html[data-skin="proof-bonbons"] .archive-groups,
-  html[data-skin="proof-bonbons"] .article__content,
-  html[data-skin="proof-bonbons"] .page-prose,
-  html[data-skin="proof-bonbons"] .record-end,
-  html[data-skin="proof-bonbons"] .record-grid > .record-index {
-    padding: 1rem;
-    border-width: 3px;
-    box-shadow: none;
-  }
+html[data-skin="proof-bonbons"] .index-heading,
+html[data-skin="proof-bonbons"] .page-heading,
+html[data-skin="proof-bonbons"] .home-shell > .record-index,
+html[data-skin="proof-bonbons"] .archive-tools,
+html[data-skin="proof-bonbons"] .archive-groups,
+html[data-skin="proof-bonbons"] .page-prose {
+  padding: 1rem;
+  border-width: 3px;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-head,
+html[data-skin="proof-bonbons"] .article__content,
+html[data-skin="proof-bonbons"] .record-end,
+html[data-skin="proof-bonbons"] .record-grid > .record-index {
+  border-width: 3px;
+  box-shadow: none;
+}
+html[data-skin="proof-bonbons"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="proof-bonbons"] .masthead h1,
   html[data-skin="proof-bonbons"] .index-heading h1,
@@ -3730,15 +3401,9 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
   html[data-skin="proof-bonbons"] .record-row__event::before { content: "Event"; }
   html[data-skin="proof-bonbons"] .record-row__primitive::before { content: "Topic"; }
 
-  html[data-skin="proof-bonbons"] .record-facts,
-  html[data-skin="proof-bonbons"] .all-tags__grid,
-  html[data-skin="proof-bonbons"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-bonbons"] .record-head > .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="proof-bonbons"] .all-tags__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="proof-bonbons"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
@@ -3776,31 +3441,30 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
 
 @media (forced-colors: active) {
   html[data-skin="proof-bonbons"] .site-header,
-  html[data-skin="proof-bonbons"] .site-footer,
-  html[data-skin="proof-bonbons"] .home-shell,
-  html[data-skin="proof-bonbons"] .archive-shell,
-  html[data-skin="proof-bonbons"] .record-page,
-  html[data-skin="proof-bonbons"] .page-shell,
-  html[data-skin="proof-bonbons"] .error-shell,
-  html[data-skin="proof-bonbons"] .masthead,
-  html[data-skin="proof-bonbons"] .masthead__copy,
-  html[data-skin="proof-bonbons"] .index-heading,
-  html[data-skin="proof-bonbons"] .page-heading,
-  html[data-skin="proof-bonbons"] .record-head,
-  html[data-skin="proof-bonbons"] .home-shell > .record-index,
-  html[data-skin="proof-bonbons"] .archive-tools,
-  html[data-skin="proof-bonbons"] .archive-groups,
-  html[data-skin="proof-bonbons"] .page-prose,
-  html[data-skin="proof-bonbons"] .article__content,
-  html[data-skin="proof-bonbons"] .record-end,
-  html[data-skin="proof-bonbons"] .record-grid > .record-index,
-  html[data-skin="proof-bonbons"] .skin-menu__panel,
-  html[data-skin="proof-bonbons"] .record-row__link,
-  html[data-skin="proof-bonbons"] .record-facts > div,
-  html[data-skin="proof-bonbons"] .prose .code-frame,
-  html[data-skin="proof-bonbons"] .prose .code-frame pre,
-  html[data-skin="proof-bonbons"] .prose th,
-  html[data-skin="proof-bonbons"] .prose td {
+html[data-skin="proof-bonbons"] .home-shell,
+html[data-skin="proof-bonbons"] .archive-shell,
+html[data-skin="proof-bonbons"] .record-page,
+html[data-skin="proof-bonbons"] .page-shell,
+html[data-skin="proof-bonbons"] .error-shell,
+html[data-skin="proof-bonbons"] .masthead,
+html[data-skin="proof-bonbons"] .masthead__copy,
+html[data-skin="proof-bonbons"] .index-heading,
+html[data-skin="proof-bonbons"] .page-heading,
+html[data-skin="proof-bonbons"] .record-head,
+html[data-skin="proof-bonbons"] .home-shell > .record-index,
+html[data-skin="proof-bonbons"] .archive-tools,
+html[data-skin="proof-bonbons"] .archive-groups,
+html[data-skin="proof-bonbons"] .page-prose,
+html[data-skin="proof-bonbons"] .article__content,
+html[data-skin="proof-bonbons"] .record-end,
+html[data-skin="proof-bonbons"] .record-grid > .record-index,
+html[data-skin="proof-bonbons"] .skin-menu__panel,
+html[data-skin="proof-bonbons"] .record-row__link,
+html[data-skin="proof-bonbons"] .record-facts > div,
+html[data-skin="proof-bonbons"] .prose .code-frame,
+html[data-skin="proof-bonbons"] .prose .code-frame pre,
+html[data-skin="proof-bonbons"] .prose th,
+html[data-skin="proof-bonbons"] .prose td {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3809,18 +3473,17 @@ html[data-skin="proof-bonbons"][data-theme="dark"] .prose .code-frame__gutter {
   }
 
   html[data-skin="proof-bonbons"] .site-nav > a[data-route],
-  html[data-skin="proof-bonbons"] .theme-toggle,
-  html[data-skin="proof-bonbons"] .skin-menu summary,
-  html[data-skin="proof-bonbons"] .skin-menu select,
-  html[data-skin="proof-bonbons"] .skin-randomizer,
-  html[data-skin="proof-bonbons"] .action,
-  html[data-skin="proof-bonbons"] .record-actions a,
-  html[data-skin="proof-bonbons"] .tag-line a,
-  html[data-skin="proof-bonbons"] .quick-filters a,
-  html[data-skin="proof-bonbons"] .pagination a,
-  html[data-skin="proof-bonbons"] .site-footer__links a,
-  html[data-skin="proof-bonbons"] .code-frame__actions button,
-  html[data-skin="proof-bonbons"] .record-end nav a {
+html[data-skin="proof-bonbons"] .theme-toggle,
+html[data-skin="proof-bonbons"] .skin-menu summary,
+html[data-skin="proof-bonbons"] .skin-menu select,
+html[data-skin="proof-bonbons"] .skin-randomizer,
+html[data-skin="proof-bonbons"] .action,
+html[data-skin="proof-bonbons"] .record-actions a,
+html[data-skin="proof-bonbons"] .tag-line a,
+html[data-skin="proof-bonbons"] .quick-filters a,
+html[data-skin="proof-bonbons"] .pagination a,
+html[data-skin="proof-bonbons"] .code-frame__actions button,
+html[data-skin="proof-bonbons"] .record-end nav a {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3896,7 +3559,12 @@ html[data-skin="proof-bonbons"] .all-tags__grid a small {
   border-radius: 999px;
 }
 
-html[data-skin="proof-bonbons"] .record-grid > .article__content,
+html[data-skin="proof-bonbons"] .record-grid > .article__content {
+  background: var(--pb-surface);
+  border: 0;
+  border-top: .45rem solid var(--pb-flavor);
+  border-radius: 0;
+}
 html[data-skin="proof-bonbons"] .page-prose {
   width: min(100%, 72ch);
   max-width: 72ch;
@@ -4017,16 +3685,11 @@ html[data-skin="proof-bonbons"] .error-code i {
   color: var(--pb-current-ink);
 }
 
-html[data-skin="proof-bonbons"] .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-}
-
 html[data-skin="proof-bonbons"] .site-nav > a[data-route],
 html[data-skin="proof-bonbons"] .skin-menu summary,
 html[data-skin="proof-bonbons"] .skin-menu select,
 html[data-skin="proof-bonbons"] .skin-randomizer,
-html[data-skin="proof-bonbons"] .code-frame__actions button,
-html[data-skin="proof-bonbons"] .site-footer__links a {
+html[data-skin="proof-bonbons"] .code-frame__actions button {
   height: auto;
   min-height: 2.75rem !important;
   padding-block: .35rem !important;
@@ -4044,14 +3707,6 @@ html[data-skin="proof-bonbons"] .site-footer__links a {
     grid-column: 1 / -1;
   }
 
-  html[data-skin="proof-bonbons"] .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="proof-bonbons"] .record-grid,
-  html[data-skin="proof-bonbons"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 40rem) {
@@ -4068,9 +3723,6 @@ html[data-skin="proof-bonbons"] .site-footer__links a {
     width: auto;
   }
 
-  html[data-skin="proof-bonbons"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {

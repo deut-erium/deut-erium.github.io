@@ -164,13 +164,14 @@ html[data-skin="proof-by-confetti"] .skip-link {
 }
 
 html[data-skin="proof-by-confetti"] .site-header,
-html[data-skin="proof-by-confetti"] .site-footer,
 html[data-skin="proof-by-confetti"] .home-shell,
 html[data-skin="proof-by-confetti"] .archive-shell,
-html[data-skin="proof-by-confetti"] .record-page,
 html[data-skin="proof-by-confetti"] .page-shell,
 html[data-skin="proof-by-confetti"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 4px solid var(--confetti-ink);
+}
+html[data-skin="proof-by-confetti"] .record-page {
   border: 4px solid var(--confetti-ink);
 }
 
@@ -284,8 +285,7 @@ html[data-skin="proof-by-confetti"] .record-actions a,
 html[data-skin="proof-by-confetti"] .tag-line a,
 html[data-skin="proof-by-confetti"] .quick-filters a,
 html[data-skin="proof-by-confetti"] .pagination a,
-html[data-skin="proof-by-confetti"] .pagination span,
-html[data-skin="proof-by-confetti"] .site-footer__links a {
+html[data-skin="proof-by-confetti"] .pagination span {
   min-height: 2.55rem;
   padding: .47rem .66rem;
   color: var(--confetti-white);
@@ -409,9 +409,7 @@ html[data-skin="proof-by-confetti"] .tag-line a:focus-visible,
 html[data-skin="proof-by-confetti"] .quick-filters a:hover,
 html[data-skin="proof-by-confetti"] .quick-filters a:focus-visible,
 html[data-skin="proof-by-confetti"] .pagination a:hover,
-html[data-skin="proof-by-confetti"] .pagination a:focus-visible,
-html[data-skin="proof-by-confetti"] .site-footer__links a:hover,
-html[data-skin="proof-by-confetti"] .site-footer__links a:focus-visible {
+html[data-skin="proof-by-confetti"] .pagination a:focus-visible {
   color: var(--confetti-ink);
   background: var(--confetti-teal);
   box-shadow: .08rem .1rem 0 var(--confetti-pink);
@@ -428,13 +426,21 @@ html[data-skin="proof-by-confetti"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="proof-by-confetti"] .home-shell,
 html[data-skin="proof-by-confetti"] .archive-shell,
-html[data-skin="proof-by-confetti"] .record-page,
 html[data-skin="proof-by-confetti"] .page-shell,
 html[data-skin="proof-by-confetti"] .error-shell {
   position: relative;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   padding: clamp(1rem, 3vw, 2.75rem);
+  background-color: var(--confetti-purple);
+  background-image:
+    radial-gradient(#fff8e33d 1.15px, transparent 1.4px),
+    linear-gradient(58deg, transparent 0 48%, #ff5d8f4f 48.5% 51.5%, transparent 52%);
+  background-size: .72rem .72rem, 3.1rem 3.1rem;
+  border-radius: 1.5rem .45rem 1.7rem .55rem;
+  box-shadow: .62rem .74rem 0 var(--confetti-ink), 1rem 1.15rem 0 #ff5d8f4d;
+}
+html[data-skin="proof-by-confetti"] .record-page {
   background-color: var(--confetti-purple);
   background-image:
     radial-gradient(#fff8e33d 1.15px, transparent 1.4px),
@@ -459,8 +465,7 @@ html[data-skin="proof-by-confetti"] .page-shell::before {
   transform: rotate(-8deg);
 }
 
-html[data-skin="proof-by-confetti"] .masthead,
-html[data-skin="proof-by-confetti"] .record-grid {
+html[data-skin="proof-by-confetti"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.4rem);
 }
 
@@ -474,9 +479,20 @@ html[data-skin="proof-by-confetti"] .masthead {
 
 html[data-skin="proof-by-confetti"] .masthead__copy,
 html[data-skin="proof-by-confetti"] .index-heading,
-html[data-skin="proof-by-confetti"] .page-heading,
-html[data-skin="proof-by-confetti"] .record-head {
+html[data-skin="proof-by-confetti"] .page-heading {
   position: relative;
+  isolation: isolate;
+  color: var(--confetti-ink);
+  background-color: var(--confetti-yellow);
+  background-image:
+    radial-gradient(#21134036 1.25px, transparent 1.5px),
+    linear-gradient(55deg, transparent 0 48%, #fff8e37d 48.4% 51.6%, transparent 52%);
+  background-size: .72rem .72rem, 2.7rem 2.7rem;
+  border: 4px solid var(--confetti-ink);
+  border-radius: 1.55rem .4rem 1.45rem .5rem;
+  box-shadow: .38rem .45rem 0 var(--confetti-pink);
+}
+html[data-skin="proof-by-confetti"] .record-head {
   isolation: isolate;
   color: var(--confetti-ink);
   background-color: var(--confetti-yellow);
@@ -579,17 +595,24 @@ html[data-skin="proof-by-confetti"] .masthead h1 {
 
 html[data-skin="proof-by-confetti"] .index-heading h1,
 html[data-skin="proof-by-confetti"] .page-heading h1,
-html[data-skin="proof-by-confetti"] .record-head h1,
 html[data-skin="proof-by-confetti"] .error-shell h1 {
   max-width: 13ch;
+  font-size: clamp(2.4rem, 5.9vw, 5.9rem);
+}
+html[data-skin="proof-by-confetti"] .record-head h1 {
   font-size: clamp(2.4rem, 5.9vw, 5.9rem);
 }
 
 html[data-skin="proof-by-confetti"] .masthead__lede,
 html[data-skin="proof-by-confetti"] .index-heading > p:last-child,
-html[data-skin="proof-by-confetti"] .page-heading > p:last-child,
-html[data-skin="proof-by-confetti"] .record-head__abstract {
+html[data-skin="proof-by-confetti"] .page-heading > p:last-child {
   max-width: 57ch;
+  font-family: var(--body);
+  font-size: clamp(1.06rem, 1.5vw, 1.24rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="proof-by-confetti"] .record-head__abstract {
   font-family: var(--body);
   font-size: clamp(1.06rem, 1.5vw, 1.24rem);
   font-weight: 700;
@@ -620,9 +643,7 @@ html[data-skin="proof-by-confetti"] .masthead__actions .action--primary {
 html[data-skin="proof-by-confetti"] .home-shell > .record-index,
 html[data-skin="proof-by-confetti"] .archive-tools,
 html[data-skin="proof-by-confetti"] .archive-groups,
-html[data-skin="proof-by-confetti"] .page-prose,
-html[data-skin="proof-by-confetti"] .article__content,
-html[data-skin="proof-by-confetti"] .record-end {
+html[data-skin="proof-by-confetti"] .page-prose {
   position: relative;
   color: var(--ink);
   background-color: var(--paper);
@@ -633,6 +654,21 @@ html[data-skin="proof-by-confetti"] .record-end {
   border: 4px solid var(--confetti-ink);
   border-radius: 1.25rem .38rem 1.1rem .52rem;
   box-shadow: .4rem .48rem 0 var(--confetti-ink);
+}
+html[data-skin="proof-by-confetti"] .article__content,
+html[data-skin="proof-by-confetti"] .record-end {
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(#7146d721 1.1px, transparent 1.35px),
+    linear-gradient(90deg, transparent 0 1.15rem, #ff5d8f29 1.15rem 1.27rem, transparent 1.27rem);
+  background-size: .74rem .74rem, auto;
+  border: 4px solid var(--confetti-ink);
+  border-radius: 1.25rem .38rem 1.1rem .52rem;
+  box-shadow: .4rem .48rem 0 var(--confetti-ink);
+}
+html[data-skin="proof-by-confetti"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
 }
 
 html[data-skin="proof-by-confetti"] .section-heading {
@@ -791,10 +827,6 @@ html[data-skin="proof-by-confetti"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="proof-by-confetti"] .record-head {
-  padding: clamp(1.4rem, 3.8vw, 3.7rem);
-}
-
 html[data-skin="proof-by-confetti"] .record-head__key {
   align-items: center;
   justify-content: flex-start;
@@ -922,7 +954,9 @@ html[data-skin="proof-by-confetti"] .related-records h2 {
   text-shadow: .12rem .15rem 0 var(--confetti-ink), .2rem .24rem 0 var(--confetti-pink);
 }
 
-html[data-skin="proof-by-confetti"] .article__content,
+html[data-skin="proof-by-confetti"] .article__content {
+  border-left: .78rem solid var(--confetti-pink);
+}
 html[data-skin="proof-by-confetti"] .page-prose {
   overflow: hidden;
   border-left: .78rem solid var(--confetti-pink);
@@ -1290,56 +1324,6 @@ html[data-skin="proof-by-confetti"] .error-shell > p {
   font-weight: 700;
 }
 
-html[data-skin="proof-by-confetti"] .site-footer {
-  position: relative;
-  isolation: isolate;
-  margin-bottom: 1.4rem;
-  overflow: hidden;
-  color: var(--confetti-white);
-  background-color: var(--confetti-ink);
-  background-image: radial-gradient(#fffaf02d 1.15px, transparent 1.4px);
-  background-size: .75rem .75rem;
-  border-radius: .7rem 1.8rem .52rem 2.3rem;
-  box-shadow: .58rem .7rem 0 var(--confetti-ink);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer::after {
-  position: absolute;
-  z-index: -1;
-  right: 6%;
-  bottom: -4rem;
-  width: 12rem;
-  height: 12rem;
-  pointer-events: none;
-  content: "";
-  background: var(--confetti-pink);
-  border: 4px solid var(--confetti-white);
-  border-radius: 50%;
-  box-shadow: -4.5rem -1rem 0 -2.2rem var(--confetti-teal);
-  opacity: .88;
-  transform: rotate(17deg);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note,
-html[data-skin="proof-by-confetti"] .site-footer a {
-  color: var(--confetti-white);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note a {
-  color: var(--confetti-yellow);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a {
-  color: var(--confetti-ink);
-  background: var(--confetti-yellow);
-}
-
 html[data-skin="proof-by-confetti"][data-theme="dark"] .site-header,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .home-shell,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .archive-shell,
@@ -1350,7 +1334,6 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .page-shell {
 }
 
 html[data-skin="proof-by-confetti"][data-theme="dark"] .site-header,
-html[data-skin="proof-by-confetti"][data-theme="dark"] .site-footer,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .masthead,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-grid > .record-index {
   border-color: var(--confetti-ink);
@@ -1491,7 +1474,6 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .tag-line a:nth-child(odd
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-actions a:last-child,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .skin-randomizer,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .archive-empty,
-html[data-skin="proof-by-confetti"][data-theme="dark"] .site-footer__links a,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .code-frame__bar,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .code-frame__actions button,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .code-frame__actions button:last-child,
@@ -1513,28 +1495,6 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-child(even) {
   color: var(--confetti-white);
-}
-
-@media (min-width: 76rem) {
-  html[data-skin="proof-by-confetti"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="proof-by-confetti"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="proof-by-confetti"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-
 }
 
 @media (max-width: 68rem) {
@@ -1562,29 +1522,27 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-c
 
 @media (max-width: 44rem) {
   html[data-skin="proof-by-confetti"] .site-header,
-  html[data-skin="proof-by-confetti"] .site-footer,
-  html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .page-shell,
-  html[data-skin="proof-by-confetti"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    border-radius: 0;
-    box-shadow: none;
-  }
+html[data-skin="proof-by-confetti"] .home-shell,
+html[data-skin="proof-by-confetti"] .archive-shell,
+html[data-skin="proof-by-confetti"] .page-shell,
+html[data-skin="proof-by-confetti"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="proof-by-confetti"] .record-page {
+  border-width: 4px;
+  border-radius: 0;
+  box-shadow: none;
+}
 
   html[data-skin="proof-by-confetti"] .site-header {
     margin-top: 0;
   }
 
-  html[data-skin="proof-by-confetti"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="proof-by-confetti"] .site-header__inner,
-  html[data-skin="proof-by-confetti"] .site-footer__inner {
+  html[data-skin="proof-by-confetti"] .site-header__inner {
     padding: .8rem;
   }
 
@@ -1615,14 +1573,13 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-c
   }
 
   html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .page-shell,
-  html[data-skin="proof-by-confetti"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .8rem;
-  }
+html[data-skin="proof-by-confetti"] .archive-shell,
+html[data-skin="proof-by-confetti"] .page-shell,
+html[data-skin="proof-by-confetti"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .8rem;
+}
 
   html[data-skin="proof-by-confetti"] .masthead,
   html[data-skin="proof-by-confetti"] .masthead__copy,
@@ -1641,11 +1598,10 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-c
   }
 
   html[data-skin="proof-by-confetti"] .masthead__copy,
-  html[data-skin="proof-by-confetti"] .index-heading,
-  html[data-skin="proof-by-confetti"] .page-heading,
-  html[data-skin="proof-by-confetti"] .record-head {
-    padding: 1.2rem;
-  }
+html[data-skin="proof-by-confetti"] .index-heading,
+html[data-skin="proof-by-confetti"] .page-heading {
+  padding: 1.2rem;
+}
 
   html[data-skin="proof-by-confetti"] .masthead h1 {
     font-size: clamp(2.35rem, 13vw, 4.1rem);
@@ -1676,15 +1632,13 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-c
     font-size: 1rem;
   }
 
-  html[data-skin="proof-by-confetti"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-by-confetti"] .article__content,
-  html[data-skin="proof-by-confetti"] .page-prose {
-    padding: 1rem;
-    border-left-width: .62rem;
-  }
+  html[data-skin="proof-by-confetti"] .article__content {
+  border-left-width: .62rem;
+}
+html[data-skin="proof-by-confetti"] .page-prose {
+  padding: 1rem;
+  border-left-width: .62rem;
+}
 
   html[data-skin="proof-by-confetti"] .prose {
     font-size: 1.1rem;
@@ -1734,26 +1688,25 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-c
 
 @media (forced-colors: active) {
   html[data-skin="proof-by-confetti"] .site-header,
-  html[data-skin="proof-by-confetti"] .site-footer,
-  html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .page-shell,
-  html[data-skin="proof-by-confetti"] .error-shell,
-  html[data-skin="proof-by-confetti"] .masthead__copy,
-  html[data-skin="proof-by-confetti"] .index-heading,
-  html[data-skin="proof-by-confetti"] .page-heading,
-  html[data-skin="proof-by-confetti"] .record-head,
-  html[data-skin="proof-by-confetti"] .home-shell > .record-index,
-  html[data-skin="proof-by-confetti"] .archive-tools,
-  html[data-skin="proof-by-confetti"] .archive-groups,
-  html[data-skin="proof-by-confetti"] .page-prose,
-  html[data-skin="proof-by-confetti"] .article__content,
-  html[data-skin="proof-by-confetti"] .record-end,
-  html[data-skin="proof-by-confetti"] .record-grid > .record-index,
-  html[data-skin="proof-by-confetti"] .code-frame,
-  html[data-skin="proof-by-confetti"] .code-frame__bar,
-  html[data-skin="proof-by-confetti"] .code-frame__status {
+html[data-skin="proof-by-confetti"] .home-shell,
+html[data-skin="proof-by-confetti"] .archive-shell,
+html[data-skin="proof-by-confetti"] .record-page,
+html[data-skin="proof-by-confetti"] .page-shell,
+html[data-skin="proof-by-confetti"] .error-shell,
+html[data-skin="proof-by-confetti"] .masthead__copy,
+html[data-skin="proof-by-confetti"] .index-heading,
+html[data-skin="proof-by-confetti"] .page-heading,
+html[data-skin="proof-by-confetti"] .record-head,
+html[data-skin="proof-by-confetti"] .home-shell > .record-index,
+html[data-skin="proof-by-confetti"] .archive-tools,
+html[data-skin="proof-by-confetti"] .archive-groups,
+html[data-skin="proof-by-confetti"] .page-prose,
+html[data-skin="proof-by-confetti"] .article__content,
+html[data-skin="proof-by-confetti"] .record-end,
+html[data-skin="proof-by-confetti"] .record-grid > .record-index,
+html[data-skin="proof-by-confetti"] .code-frame,
+html[data-skin="proof-by-confetti"] .code-frame__bar,
+html[data-skin="proof-by-confetti"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -2053,66 +2006,13 @@ html[data-skin="proof-by-confetti"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="proof-by-confetti"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(16rem, .62fr) minmax(0, 2.38fr);
-  grid-template-areas:
-    "head grid"
-    "end grid";
-  gap: var(--confetti-board-gap);
-  align-items: start;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-head {
-  grid-area: head;
-  margin: 0;
-  padding: 1.35rem;
-  position: sticky;
-  top: 1rem;
-}
-
 html[data-skin="proof-by-confetti"] .record-page > .record-head h1 {
   font-size: clamp(2.3rem, 4vw, 4.25rem);
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-head .record-facts {
-  grid-template-columns: minmax(0, 1fr);
 }
 
 html[data-skin="proof-by-confetti"] .record-page > .record-head .tag-line,
 html[data-skin="proof-by-confetti"] .record-page > .record-head .record-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem);
-  gap: var(--confetti-board-gap);
-  align-items: start;
-  margin: 0;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-  grid-column: 2;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  position: sticky;
-  top: 1rem;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-end {
-  grid-area: end;
-  margin: 0;
-  padding: 1rem;
 }
 
 html[data-skin="proof-by-confetti"] .record-page > .record-end nav {
@@ -2121,65 +2021,12 @@ html[data-skin="proof-by-confetti"] .record-page > .record-end nav {
   gap: .7rem;
 }
 
-html[data-skin="proof-by-confetti"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, .85fr);
-  grid-template-areas: "note links";
-  gap: var(--confetti-board-gap);
-  align-items: center;
-  padding: 1rem 1.25rem;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note {
-  grid-area: note;
-  max-width: 42rem;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links {
-  display: grid;
-  grid-area: links;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-  justify-content: stretch;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a {
-  min-height: 4rem;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(2) {
-  color: var(--confetti-ink);
-  background: var(--confetti-pink);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(3) {
-  color: var(--confetti-ink);
-  background: var(--confetti-teal);
-}
-
-@media (max-width: 78rem) {
-  html[data-skin="proof-by-confetti"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-
-  html[data-skin="proof-by-confetti"] .record-page > .record-head {
-    position: static;
-  }
-
-}
-
 @media (max-width: 56rem) {
   html[data-skin="proof-by-confetti"] .site-header__inner,
-  html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="proof-by-confetti"] .home-shell,
+html[data-skin="proof-by-confetti"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="proof-by-confetti"] .site-header__inner {
     grid-template-areas:
@@ -2220,10 +2067,6 @@ html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(3) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-    html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
   html[data-skin="proof-by-confetti"] .archive-shell {
     grid-template-areas:
       "heading"
@@ -2248,32 +2091,12 @@ html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(3) {
     grid-column: auto;
   }
 
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content,
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="proof-by-confetti"] .site-footer__inner {
-    grid-template-areas:
-      "note"
-      "links";
-  }
-
-  html[data-skin="proof-by-confetti"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
 }
 
 @media (forced-colors: active) {
   html[data-skin="proof-by-confetti"] .site-nav a[data-route],
-  html[data-skin="proof-by-confetti"] .site-nav .skin-menu summary,
-  html[data-skin="proof-by-confetti"] .archive-shell .archive-year,
-  html[data-skin="proof-by-confetti"] .site-footer__links a {
+html[data-skin="proof-by-confetti"] .site-nav .skin-menu summary,
+html[data-skin="proof-by-confetti"] .archive-shell .archive-year {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -2466,9 +2289,7 @@ html[data-skin="proof-by-confetti"] .code-frame__label strong,
 html[data-skin="proof-by-confetti"] .code-frame__label small,
 html[data-skin="proof-by-confetti"] .code-frame__actions button,
 html[data-skin="proof-by-confetti"] .code-frame__gutter,
-html[data-skin="proof-by-confetti"] .code-frame__status,
-html[data-skin="proof-by-confetti"] .site-footer__note,
-html[data-skin="proof-by-confetti"] .site-footer__links a {
+html[data-skin="proof-by-confetti"] .code-frame__status {
   font-size: 1rem;
 }
 
@@ -2483,15 +2304,18 @@ html[data-skin="proof-by-confetti"] .skip-link {
 }
 
 html[data-skin="proof-by-confetti"] .site-header,
-html[data-skin="proof-by-confetti"] .site-footer,
 html[data-skin="proof-by-confetti"] .home-shell,
 html[data-skin="proof-by-confetti"] .archive-shell,
-html[data-skin="proof-by-confetti"] .record-page,
 html[data-skin="proof-by-confetti"] .page-shell,
 html[data-skin="proof-by-confetti"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   min-width: 0;
   margin-inline: auto;
+  border: 3px solid var(--pc-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="proof-by-confetti"] .record-page {
   border: 3px solid var(--pc-rule);
   border-radius: 0;
   box-shadow: none;
@@ -2580,8 +2404,7 @@ html[data-skin="proof-by-confetti"] .action,
 html[data-skin="proof-by-confetti"] .record-actions a,
 html[data-skin="proof-by-confetti"] .tag-line a,
 html[data-skin="proof-by-confetti"] .quick-filters a,
-html[data-skin="proof-by-confetti"] .pagination a,
-html[data-skin="proof-by-confetti"] .site-footer__links a {
+html[data-skin="proof-by-confetti"] .pagination a {
   display: inline-flex;
   min-width: 0;
   min-height: 3rem;
@@ -2753,7 +2576,6 @@ html[data-skin="proof-by-confetti"] .skin-randomizer:focus-visible {
 /* Board shells retain each route's reading order rather than the calculator layout. */
 html[data-skin="proof-by-confetti"] .home-shell,
 html[data-skin="proof-by-confetti"] .archive-shell,
-html[data-skin="proof-by-confetti"] .record-page,
 html[data-skin="proof-by-confetti"] .page-shell,
 html[data-skin="proof-by-confetti"] .error-shell {
   display: grid;
@@ -2768,6 +2590,12 @@ html[data-skin="proof-by-confetti"] .error-shell {
   border-color: var(--pc-rule);
   overflow: visible;
 }
+html[data-skin="proof-by-confetti"] .record-page {
+  color: var(--pc-ink);
+  background: var(--pc-paper);
+  background-image: linear-gradient(90deg, transparent 0 2.75rem, color-mix(in srgb, var(--pc-pink) 45%, transparent) 2.75rem 2.9rem, transparent 2.9rem);
+  border-color: var(--pc-rule);
+}
 
 html[data-skin="proof-by-confetti"] .home-shell::before,
 html[data-skin="proof-by-confetti"] .archive-shell::before,
@@ -2779,14 +2607,10 @@ html[data-skin="proof-by-confetti"] .page-shell::before {
 html[data-skin="proof-by-confetti"] .masthead,
 html[data-skin="proof-by-confetti"] .index-heading,
 html[data-skin="proof-by-confetti"] .page-heading,
-html[data-skin="proof-by-confetti"] .record-head,
 html[data-skin="proof-by-confetti"] .home-shell > .record-index,
 html[data-skin="proof-by-confetti"] .archive-tools,
 html[data-skin="proof-by-confetti"] .archive-groups,
-html[data-skin="proof-by-confetti"] .page-prose,
-html[data-skin="proof-by-confetti"] .article__content,
-html[data-skin="proof-by-confetti"] .record-end,
-html[data-skin="proof-by-confetti"] .record-grid > .record-index {
+html[data-skin="proof-by-confetti"] .page-prose {
   min-width: 0;
   margin: 0;
   color: var(--pc-ink);
@@ -2794,6 +2618,21 @@ html[data-skin="proof-by-confetti"] .record-grid > .record-index {
   border: 3px solid var(--pc-rule);
   border-radius: 0;
   box-shadow: none;
+  overflow: visible;
+}
+html[data-skin="proof-by-confetti"] .record-head,
+html[data-skin="proof-by-confetti"] .article__content,
+html[data-skin="proof-by-confetti"] .record-end,
+html[data-skin="proof-by-confetti"] .record-grid > .record-index {
+  color: var(--pc-ink);
+  background: var(--pc-paper);
+  border: 3px solid var(--pc-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="proof-by-confetti"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  margin: 0;
   overflow: visible;
 }
 
@@ -2817,7 +2656,6 @@ html[data-skin="proof-by-confetti"] .record-end nav span {
 html[data-skin="proof-by-confetti"] .masthead h1,
 html[data-skin="proof-by-confetti"] .index-heading h1,
 html[data-skin="proof-by-confetti"] .page-heading h1,
-html[data-skin="proof-by-confetti"] .record-head h1,
 html[data-skin="proof-by-confetti"] .error-shell h1 {
   max-width: 16ch;
   margin: 0;
@@ -2830,12 +2668,29 @@ html[data-skin="proof-by-confetti"] .error-shell h1 {
   text-shadow: none;
   transform: none;
 }
+html[data-skin="proof-by-confetti"] .record-head h1 {
+  margin: 0;
+  color: var(--pc-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.08;
+  text-shadow: none;
+}
 
 html[data-skin="proof-by-confetti"] .masthead__lede,
 html[data-skin="proof-by-confetti"] .index-heading > p:last-child,
-html[data-skin="proof-by-confetti"] .page-heading > p:last-child,
-html[data-skin="proof-by-confetti"] .record-head__abstract {
+html[data-skin="proof-by-confetti"] .page-heading > p:last-child {
   max-width: 60ch;
+  margin: 1rem 0 0;
+  color: var(--pc-ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="proof-by-confetti"] .record-head__abstract {
   margin: 1rem 0 0;
   color: var(--pc-ink);
   font-family: var(--body);
@@ -3318,10 +3173,6 @@ html[data-skin="proof-by-confetti"] .archive-empty {
 
 /* Article: a full specimen label, eight-column argument frame, and four-column rail. */
 html[data-skin="proof-by-confetti"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-  position: static;
   color: var(--pc-ink);
   background: var(--pc-paper);
 }
@@ -3354,13 +3205,11 @@ html[data-skin="proof-by-confetti"] .record-head__key span + span {
 }
 
 html[data-skin="proof-by-confetti"] .record-head h1 {
-  max-width: 20ch;
   color: var(--pc-heading);
 }
 
 html[data-skin="proof-by-confetti"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: .5rem;
   margin: 1rem 0 0;
   padding: 0;
@@ -3416,33 +3265,11 @@ html[data-skin="proof-by-confetti"] .record-actions a:last-child {
   background: var(--pc-teal);
 }
 
-html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--pc-board-gap);
-  align-items: start;
-  justify-content: stretch;
-  margin: 0;
-}
-
 html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content {
-  grid-column: span 8;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1rem, 2.5vw, 2rem);
   border-left: .65rem solid var(--pc-pink);
-  overflow: visible;
 }
 
 html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-  grid-column: span 4;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
-  position: static;
   color: var(--pc-code-text);
   background: var(--pc-selected-surface);
 }
@@ -3495,13 +3322,6 @@ html[data-skin="proof-by-confetti"] .related-records h2 {
   font-size: clamp(1.35rem, 2vw, 1.8rem);
   line-height: 1.2;
   text-shadow: none;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
 }
 
 html[data-skin="proof-by-confetti"] .record-end nav {
@@ -3980,83 +3800,6 @@ html[data-skin="proof-by-confetti"] .error-shell nav {
 }
 
 /* Footer: note first, then its existing links in a four-column action rail. */
-html[data-skin="proof-by-confetti"] .site-footer {
-  margin-bottom: 1rem;
-  color: var(--pc-code-text);
-  background: var(--pc-code-surface);
-  background-image: linear-gradient(135deg, transparent 0 47%, #ff8cad 47% 50%, transparent 50% 100%);
-  background-size: 2.75rem 2.75rem;
-  overflow: visible;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer::after {
-  display: none;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--pc-board-gap);
-  align-items: center;
-  /* keep the right edge clear for the fixed dice/toggle dock */
-  padding: 1rem 4.5rem 1rem 1rem;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note {
-  grid-column: span 8;
-  max-width: none;
-  margin: 0;
-  color: var(--pc-code-text);
-  font-family: var(--body);
-  line-height: 1.5;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note a {
-  color: var(--pc-yellow);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__note a:hover,
-html[data-skin="proof-by-confetti"] .site-footer__note a:focus-visible {
-  color: var(--pc-bright-text);
-  background: var(--pc-yellow);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links {
-  display: grid;
-  grid-column: span 4;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-  justify-content: stretch;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a {
-  min-height: 3.5rem;
-  color: var(--pc-bright-text);
-  background: var(--pc-yellow);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(2) {
-  color: var(--pc-bright-text);
-  background: var(--pc-pink);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:nth-child(3) {
-  color: var(--pc-bright-text);
-  background: var(--pc-teal);
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:hover,
-html[data-skin="proof-by-confetti"] .site-footer__links a:focus-visible {
-  color: var(--pc-selected-text);
-  background: var(--pc-selected-surface);
-  transform: none;
-}
-
-html[data-skin="proof-by-confetti"] .site-footer__links a:focus-visible,
-html[data-skin="proof-by-confetti"] .site-footer__note a:focus-visible {
-  --pc-focus: var(--pc-yellow);
-  --pc-focus-halo: var(--pc-code-surface);
-}
 
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div,
 html[data-skin="proof-by-confetti"][data-theme="dark"] .record-facts > div:nth-child(n) {
@@ -4112,63 +3855,41 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .prose .info {
       "tags";
   }
 
-  html[data-skin="proof-by-confetti"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content,
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-    grid-column: 1 / -1;
-  }
-
   html[data-skin="proof-by-confetti"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="proof-by-confetti"] .site-footer__note,
-  html[data-skin="proof-by-confetti"] .site-footer__links {
-    grid-column: 1 / -1;
   }
 
 }
 
 @media (max-width: 44rem) {
   html[data-skin="proof-by-confetti"] .site-header,
-  html[data-skin="proof-by-confetti"] .site-footer,
-  html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .page-shell,
-  html[data-skin="proof-by-confetti"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 3px;
-  }
+html[data-skin="proof-by-confetti"] .home-shell,
+html[data-skin="proof-by-confetti"] .archive-shell,
+html[data-skin="proof-by-confetti"] .page-shell,
+html[data-skin="proof-by-confetti"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 3px;
+}
+html[data-skin="proof-by-confetti"] .record-page {
+  border-width: 3px;
+}
 
   html[data-skin="proof-by-confetti"] .site-header {
     margin-top: 0;
   }
 
-  html[data-skin="proof-by-confetti"] .site-footer {
-    margin-bottom: 0;
-  }
-
   html[data-skin="proof-by-confetti"] .home-shell,
-  html[data-skin="proof-by-confetti"] .archive-shell,
-  html[data-skin="proof-by-confetti"] .record-page,
-  html[data-skin="proof-by-confetti"] .page-shell,
-  html[data-skin="proof-by-confetti"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 1rem;
-  }
+html[data-skin="proof-by-confetti"] .archive-shell,
+html[data-skin="proof-by-confetti"] .page-shell,
+html[data-skin="proof-by-confetti"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1rem;
+}
 
   html[data-skin="proof-by-confetti"] .site-header__inner {
     padding: .75rem;
-  }
-
-  html[data-skin="proof-by-confetti"] .site-footer__inner {
-    padding: .75rem 4.5rem .75rem .75rem;
   }
 
   html[data-skin="proof-by-confetti"] .site-brand__scope {
@@ -4179,11 +3900,6 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .prose .info {
   html[data-skin="proof-by-confetti"] .archive-shell .archive-year > header {
     align-items: start;
     flex-direction: column;
-  }
-
-  html[data-skin="proof-by-confetti"] .record-facts,
-  html[data-skin="proof-by-confetti"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="proof-by-confetti"] .quick-filters {
@@ -4240,16 +3956,38 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .prose .info {
     background: Canvas;
   }
 
-  html[data-skin="proof-by-confetti"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading,
-    .page-heading, .record-head, .record-index, .archive-tools,
-    .archive-groups, .archive-year, .article__content, .page-prose, .record-end,
-    .record-row, .record-row__link, .record-facts > div, .prose .info,
-    .prose blockquote, .prose th, .prose td, .code-frame, .code-frame__bar,
-    .code-frame__viewport, .code-frame pre, .code-frame__gutter,
-    .code-frame__status, .prose .katex-display
-  ) {
+  html[data-skin="proof-by-confetti"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.record-index,
+.archive-tools,
+.archive-groups,
+.archive-year,
+.article__content,
+.page-prose,
+.record-end,
+.record-row,
+.record-row__link,
+.record-facts > div,
+.prose .info,
+.prose blockquote,
+.prose th,
+.prose td,
+.code-frame,
+.code-frame__bar,
+.code-frame__viewport,
+.code-frame pre,
+.code-frame__gutter,
+.code-frame__status,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4257,12 +3995,19 @@ html[data-skin="proof-by-confetti"][data-theme="dark"] .prose .info {
     box-shadow: none;
   }
 
-  html[data-skin="proof-by-confetti"] :is(
-    .site-nav a, .theme-toggle, .skin-menu summary, .skin-menu select,
-    .skin-randomizer, .action, .record-actions a, .tag-line a,
-    .quick-filters a, .pagination a, .all-tags__grid a,
-    .record-end nav a, .site-footer__links a, .code-frame__actions button
-  ) {
+  html[data-skin="proof-by-confetti"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.all-tags__grid a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     background-image: none;
@@ -4372,7 +4117,10 @@ html[data-skin="proof-by-confetti"] .record-row__link:focus-visible {
   box-shadow: inset 0 -.35rem 0 var(--pc-teal);
 }
 
-html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content,
+html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content {
+  border-top: .5rem solid var(--pc-pink);
+  border-left: 3px solid var(--pc-rule);
+}
 html[data-skin="proof-by-confetti"] .page-shell > .page-prose {
   width: min(100%, 76ch);
   max-width: 76ch;
@@ -4434,20 +4182,17 @@ html[data-skin="proof-by-confetti"] .prose .code-frame__gutter {
 
 @media (max-width: 70rem) {
   html[data-skin="proof-by-confetti"] .home-shell > .record-index,
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content,
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index,
-  html[data-skin="proof-by-confetti"] .page-shell > .page-prose {
-    grid-column: 1 / -1;
-  }
+html[data-skin="proof-by-confetti"] .page-shell > .page-prose {
+  grid-column: 1 / -1;
+}
 
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content,
   html[data-skin="proof-by-confetti"] .page-shell > .page-prose {
-    width: 100%;
-    max-width: none;
-  }
+  width: 100%;
+  max-width: none;
+}
 
 }
 
@@ -4504,50 +4249,6 @@ html[data-skin="proof-by-confetti"] body .error-shell h1 {
 }
 
 /* Rendered feedback correction: Proof by Confetti */
-html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "article"
-    "index";
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  min-width: 0;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid > .record-index {
-  display: block;
-  grid-area: index;
-  min-width: 0;
-  width: 100%;
-  max-width: none;
-  position: static;
-  inset: auto;
-}
-
-@media (min-width: 75.0625rem) {
-  html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-    grid-template-columns: minmax(40rem, 1fr) minmax(18rem, 22rem);
-    grid-template-areas: "article index";
-  }
-
-}
 
 /* The sticky head card shared column 1 with the full-width board and both
    painted into each other. Stack head, board, and end vertically instead. */
-html[data-skin="proof-by-confetti"] .record-page {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "head"
-    "grid"
-    "end";
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-head {
-  position: static;
-}
-
-html[data-skin="proof-by-confetti"] .record-page > .record-grid {
-  grid-column: auto;
-}

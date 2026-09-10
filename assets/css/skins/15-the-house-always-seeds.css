@@ -103,7 +103,6 @@ html[data-skin="the-house-always-seeds"] .skip-link {
 }
 
 html[data-skin="the-house-always-seeds"] .site-header,
-html[data-skin="the-house-always-seeds"] .site-footer,
 html[data-skin="the-house-always-seeds"] .home-shell,
 html[data-skin="the-house-always-seeds"] .archive-shell,
 html[data-skin="the-house-always-seeds"] .record-page,
@@ -122,8 +121,7 @@ html[data-skin="the-house-always-seeds"] .site-header {
   margin-top: 1.7rem;
 }
 
-html[data-skin="the-house-always-seeds"] .site-header::before,
-html[data-skin="the-house-always-seeds"] .site-footer::before {
+html[data-skin="the-house-always-seeds"] .site-header::before {
   position: absolute;
   inset: 5px;
   pointer-events: none;
@@ -176,7 +174,6 @@ html[data-skin="the-house-always-seeds"] .tag-line a,
 html[data-skin="the-house-always-seeds"] .quick-filters a,
 html[data-skin="the-house-always-seeds"] .pagination a,
 html[data-skin="the-house-always-seeds"] .pagination span,
-html[data-skin="the-house-always-seeds"] .site-footer__links a,
 html[data-skin="the-house-always-seeds"] .skin-menu summary,
 html[data-skin="the-house-always-seeds"] .skin-randomizer,
 html[data-skin="the-house-always-seeds"] .skin-menu select {
@@ -206,8 +203,6 @@ html[data-skin="the-house-always-seeds"] .quick-filters a:hover,
 html[data-skin="the-house-always-seeds"] .quick-filters a:focus-visible,
 html[data-skin="the-house-always-seeds"] .pagination a:hover,
 html[data-skin="the-house-always-seeds"] .pagination a:focus-visible,
-html[data-skin="the-house-always-seeds"] .site-footer__links a:hover,
-html[data-skin="the-house-always-seeds"] .site-footer__links a:focus-visible,
 html[data-skin="the-house-always-seeds"] .skin-menu summary:hover,
 html[data-skin="the-house-always-seeds"] .skin-menu summary:focus-visible,
 html[data-skin="the-house-always-seeds"] .skin-randomizer:hover,
@@ -258,14 +253,12 @@ html[data-skin="the-house-always-seeds"] .skin-randomizer {
 
 html[data-skin="the-house-always-seeds"] .home-shell,
 html[data-skin="the-house-always-seeds"] .archive-shell,
-html[data-skin="the-house-always-seeds"] .record-page,
 html[data-skin="the-house-always-seeds"] .page-shell,
 html[data-skin="the-house-always-seeds"] .error-shell {
   padding: clamp(1.25rem, 3vw, 3rem);
 }
 
-html[data-skin="the-house-always-seeds"] .masthead,
-html[data-skin="the-house-always-seeds"] .record-grid {
+html[data-skin="the-house-always-seeds"] .masthead {
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
 
@@ -285,9 +278,11 @@ html[data-skin="the-house-always-seeds"] .error-shell {
 
 html[data-skin="the-house-always-seeds"] .masthead__copy,
 html[data-skin="the-house-always-seeds"] .index-heading,
-html[data-skin="the-house-always-seeds"] .page-heading,
-html[data-skin="the-house-always-seeds"] .record-head {
+html[data-skin="the-house-always-seeds"] .page-heading {
   position: relative;
+  isolation: isolate;
+}
+html[data-skin="the-house-always-seeds"] .record-head {
   isolation: isolate;
 }
 
@@ -801,36 +796,18 @@ html[data-skin="the-house-always-seeds"] .error-shell > p {
   color: var(--ink);
 }
 
-html[data-skin="the-house-always-seeds"] .site-footer {
-  position: relative;
-  margin-bottom: 1.7rem;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  padding: 1.2rem 1.35rem;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note,
-html[data-skin="the-house-always-seeds"] .site-footer a {
-  color: #fff7dc;
-}
-
 @media (max-width: 44rem) {
   html[data-skin="the-house-always-seeds"] .site-header,
-  html[data-skin="the-house-always-seeds"] .site-footer,
-  html[data-skin="the-house-always-seeds"] .home-shell,
-  html[data-skin="the-house-always-seeds"] .archive-shell,
-  html[data-skin="the-house-always-seeds"] .record-page,
-  html[data-skin="the-house-always-seeds"] .page-shell,
-  html[data-skin="the-house-always-seeds"] .error-shell {
+html[data-skin="the-house-always-seeds"] .home-shell,
+html[data-skin="the-house-always-seeds"] .archive-shell,
+html[data-skin="the-house-always-seeds"] .record-page,
+html[data-skin="the-house-always-seeds"] .page-shell,
+html[data-skin="the-house-always-seeds"] .error-shell {
     border-width: 6px;
     box-shadow: none;
   }
 
-  html[data-skin="the-house-always-seeds"] .site-header,
-  html[data-skin="the-house-always-seeds"] .site-footer {
+  html[data-skin="the-house-always-seeds"] .site-header {
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -1548,16 +1525,6 @@ html[data-skin="the-house-always-seeds"] .archive-shell > .archive-empty {
 }
 
 html[data-skin="the-house-always-seeds"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, .38fr);
-  grid-template-areas:
-    "head head"
-    "grid grid"
-    "end .";
-  gap: var(--house-board-gap);
-  width: min(calc(100% - 2rem), 96rem);
-  margin: clamp(1.4rem, 4vw, 4rem) auto;
-  padding: 0;
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -1565,12 +1532,6 @@ html[data-skin="the-house-always-seeds"] .record-page {
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(14rem, .65fr);
-  gap: .85rem var(--house-board-gap);
-  margin: 0;
-  padding: clamp(1.2rem, 3.2vw, 3rem);
   color: #1b1712;
   background:
     linear-gradient(90deg, #1b17120d 1px, transparent 1px) 0 0 / 2rem 2rem,
@@ -1589,34 +1550,26 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head::before {
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__key,
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > h1,
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__abstract {
-  grid-column: 1;
   margin: 0;
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__key {
-  align-self: end;
   color: var(--orange);
   border-bottom: 3px solid var(--house-line);
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > h1 {
-  max-width: 12ch;
   color: #1b1712;
   font-size: clamp(2.8rem, 5.8vw, 5.8rem);
   text-shadow: 2px 2px 0 var(--yellow);
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__abstract {
-  align-self: start;
-  max-width: 48ch;
   color: #1b1712;
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts {
-  grid-column: 2;
-  grid-row: 1 / span 3;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   align-content: stretch;
   margin: 0;
@@ -1651,7 +1604,6 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-f
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .tag-line,
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-actions {
-  grid-column: 1 / -1;
   margin: .15rem 0 0;
 }
 
@@ -1681,21 +1633,7 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-a
   border-color: var(--house-line);
 }
 
-html[data-skin="the-house-always-seeds"] .record-page > .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, 1.62fr) minmax(14rem, .58fr);
-  gap: var(--house-board-gap);
-  align-items: start;
-  margin: 0;
-}
-
 html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.15rem, 3vw, 2.8rem);
   border: 3px solid var(--house-line);
   border-left: .7rem solid var(--cyan);
   border-radius: 0;
@@ -1703,13 +1641,6 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article_
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-index {
-  grid-column: 2;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: #fff7dc;
   background: var(--house-line);
   border: 3px solid var(--house-line);
@@ -1739,11 +1670,6 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-i
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-end {
-  grid-area: end;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: #1b1712;
   background: #fff7dc;
   border: 3px solid var(--house-line);
@@ -1777,87 +1703,6 @@ html[data-skin="the-house-always-seeds"] .page-shell > .page-prose {
   border-radius: 0;
 }
 
-html[data-skin="the-house-always-seeds"] .site-footer {
-  width: min(calc(100% - 2rem), 96rem);
-  margin: 0 auto clamp(1rem, 3vw, 2.75rem);
-  overflow: hidden;
-  color: #1b1712;
-  background: #fff7dc;
-  border: 3px solid var(--house-line);
-  border-top: .55rem solid var(--cyan);
-  border-radius: 0;
-  box-shadow: .48rem .54rem 0 var(--house-line);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer::before {
-  display: none;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, .75fr);
-  gap: 1rem var(--house-board-gap);
-  align-items: center;
-  padding: 1.1rem 1.2rem 0;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note,
-html[data-skin="the-house-always-seeds"] .site-footer__note a {
-  color: #1b1712;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note {
-  max-width: 48rem;
-  margin: 0;
-  padding-left: .8rem;
-  border-left: .4rem solid var(--pink);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .4rem;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a {
-  min-width: 0;
-  min-height: 3.2rem;
-  padding-inline: .3rem;
-  color: #1b1712;
-  background: var(--yellow);
-  border: 2px solid var(--house-line);
-  border-radius: .1rem;
-  box-shadow: .14rem .18rem 0 var(--house-line);
-  font-size: .61rem;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a:nth-child(2) {
-  background: var(--pink);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a:nth-child(3) {
-  background: var(--cyan);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a:hover,
-html[data-skin="the-house-always-seeds"] .site-footer__links a:focus-visible {
-  color: #1b1712;
-  background: #fff7dc;
-  border-color: var(--house-line);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
-  grid-column: 1 / -1;
-  height: clamp(2.8rem, 6vw, 4.5rem);
-  margin-inline: -1.2rem;
-  content: "";
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, transparent 0 7%, var(--house-line) 7% 10%, transparent 10% 20%, var(--house-line) 20% 23%, transparent 23% 35%, var(--house-line) 35% 38%, transparent 38% 50%, var(--house-line) 50% 53%, transparent 53% 64%, var(--house-line) 64% 67%, transparent 67% 79%, var(--house-line) 79% 82%, transparent 82% 93%, var(--house-line) 93% 96%, transparent 96%),
-    repeating-linear-gradient(90deg, #fffdf0 0 calc(12.5% - 2px), var(--house-line) calc(12.5% - 2px) 12.5%);
-  border-top: 3px solid var(--house-line);
-}
-
 @media (max-width: 70rem) {
   html[data-skin="the-house-always-seeds"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -1868,10 +1713,9 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
   }
 
   html[data-skin="the-house-always-seeds"] .home-shell,
-  html[data-skin="the-house-always-seeds"] .archive-shell,
-  html[data-skin="the-house-always-seeds"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-house-always-seeds"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-house-always-seeds"] .home-shell {
     grid-template-areas:
@@ -1888,10 +1732,9 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
       "empty";
   }
 
-  html[data-skin="the-house-always-seeds"] .archive-shell > .archive-tools,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="the-house-always-seeds"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="the-house-always-seeds"] .archive-shell > .archive-groups {
     grid-template-columns: minmax(0, 1fr);
@@ -1901,49 +1744,16 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
     grid-column: auto;
   }
 
-  html[data-skin="the-house-always-seeds"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__key,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > h1,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__abstract,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .tag-line,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-actions,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article__content,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-index {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 48rem) {
   html[data-skin="the-house-always-seeds"] .site-header,
-  html[data-skin="the-house-always-seeds"] .home-shell,
-  html[data-skin="the-house-always-seeds"] .archive-shell,
-  html[data-skin="the-house-always-seeds"] .record-page,
-  html[data-skin="the-house-always-seeds"] .page-shell,
-  html[data-skin="the-house-always-seeds"] .site-footer {
-    width: 100%;
-    margin-inline: 0;
-  }
+html[data-skin="the-house-always-seeds"] .home-shell,
+html[data-skin="the-house-always-seeds"] .archive-shell,
+html[data-skin="the-house-always-seeds"] .page-shell {
+  width: 100%;
+  margin-inline: 0;
+}
 
   html[data-skin="the-house-always-seeds"] .site-header {
     margin-top: 0;
@@ -1971,12 +1781,11 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
   }
 
   html[data-skin="the-house-always-seeds"] .home-shell,
-  html[data-skin="the-house-always-seeds"] .archive-shell,
-  html[data-skin="the-house-always-seeds"] .record-page,
-  html[data-skin="the-house-always-seeds"] .page-shell {
-    margin-block: 0;
-    padding: .8rem;
-  }
+html[data-skin="the-house-always-seeds"] .archive-shell,
+html[data-skin="the-house-always-seeds"] .page-shell {
+  margin-block: 0;
+  padding: .8rem;
+}
 
   html[data-skin="the-house-always-seeds"] .home-shell > .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -2002,33 +1811,13 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
   }
 
   html[data-skin="the-house-always-seeds"] .record-page > .record-head {
-    padding: 1rem;
-    border-left-width: .5rem;
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  border-left-width: .5rem;
+}
 
   html[data-skin="the-house-always-seeds"] .record-page > .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-house-always-seeds"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__inner {
-    padding-inline: .8rem;
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
-    margin-inline: -.8rem;
-  }
 }
 
 /* Final remediation: The House Always Seeds */
@@ -2144,57 +1933,46 @@ html[data-skin="the-house-always-seeds"] :focus-visible {
   outline-offset: 4px;
 }
 
-html[data-skin="the-house-always-seeds"] :is(
-  .skip-link,
-  .site-brand__scope,
-  .eyebrow,
-  .site-nav > :is(a, .skin-menu > summary),
-  .skin-menu__panel :is(label, select, .skin-randomizer),
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .all-tags__grid :is(a, small),
-  .pagination :is(a, span, .pagination__position),
-  .section-heading > p,
-  .record-row :is(.record-row__title, .record-row__date, .record-row__event, .record-row__primitive),
-  .archive-search :is(label, input, p),
-  .archive-year > header span,
-  .record-head__key,
-  .record-facts :is(dt, dd),
-  .all-tags summary,
-  .record-toc summary,
-  .toc-fallback,
-  .related-records a,
-  .record-end nav span,
-  .prose th,
-  .site-footer :is(.site-footer__note, a),
-  .code-frame__label :is(strong, small),
-  .code-frame__actions button,
-  .code-frame__gutter,
-  .code-frame__status,
-  .code-frame__fallback
-) {
+html[data-skin="the-house-always-seeds"] :is(.skip-link,
+.site-brand__scope,
+.eyebrow,
+.site-nav > :is(a, .skin-menu > summary),
+.skin-menu__panel :is(label, select, .skin-randomizer),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags__grid :is(a, small),
+.pagination :is(a, span, .pagination__position),
+.section-heading > p,
+.record-row :is(.record-row__title, .record-row__date, .record-row__event, .record-row__primitive),
+.archive-search :is(label, input, p),
+.archive-year > header span,
+.record-head__key,
+.record-facts :is(dt, dd),
+.all-tags summary,
+.record-toc summary,
+.toc-fallback,
+.related-records a,
+.record-end nav span,
+.prose th,
+.code-frame__label :is(strong, small),
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback) {
   font-size: var(--house-ui) !important;
 }
 
-html[data-skin="the-house-always-seeds"] :is(
-  .site-header,
-  .site-header__inner,
-  .site-nav,
-  .skin-menu,
-  .site-footer,
-  .site-footer__inner,
-  .masthead,
-  .masthead__copy,
-  .record-page,
-  .record-head,
-  .record-grid,
-  .article__content,
-  .page-prose,
-  .code-frame,
-  .code-frame__viewport
-) {
+html[data-skin="the-house-always-seeds"] .site-header,
+html[data-skin="the-house-always-seeds"] .site-header__inner,
+html[data-skin="the-house-always-seeds"] .site-nav,
+html[data-skin="the-house-always-seeds"] .skin-menu,
+html[data-skin="the-house-always-seeds"] .masthead,
+html[data-skin="the-house-always-seeds"] .masthead__copy,
+html[data-skin="the-house-always-seeds"] .page-prose,
+html[data-skin="the-house-always-seeds"] .code-frame,
+html[data-skin="the-house-always-seeds"] .code-frame__viewport {
   min-width: 0;
   overflow: visible;
 }
@@ -2298,7 +2076,13 @@ html[data-skin="the-house-always-seeds"] .site-nav > :is(a, .skin-menu) {
 html[data-skin="the-house-always-seeds"] .site-nav > a,
 html[data-skin="the-house-always-seeds"] .site-nav > .skin-menu > summary,
 html[data-skin="the-house-always-seeds"] .skin-menu__panel :is(select, .skin-randomizer),
-html[data-skin="the-house-always-seeds"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .all-tags__grid a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="the-house-always-seeds"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags__grid a,
+.pagination a,
+.pagination span) {
   display: inline-flex;
   min-height: 3rem;
   align-items: center;
@@ -2418,26 +2202,23 @@ html[data-skin="the-house-always-seeds"] .pagination span[aria-disabled="true"] 
   opacity: 1;
 }
 
-html[data-skin="the-house-always-seeds"] :is(
-  .site-nav > a[data-route],
-  .theme-toggle,
-  .skin-menu > summary,
-  .skin-menu__panel :is(select, .skin-randomizer),
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .all-tags__grid a,
-  .pagination a,
-  .record-row__link,
-  .record-end nav a,
-  .site-footer__links a,
-  .prose a,
-  .record-toc a,
-  .related-records a,
-  .heading-anchor,
-  .code-frame__actions button
-):hover {
+html[data-skin="the-house-always-seeds"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu > summary,
+.skin-menu__panel :is(select, .skin-randomizer),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags__grid a,
+.pagination a,
+.record-row__link,
+.record-end nav a,
+.prose a,
+.record-toc a,
+.related-records a,
+.heading-anchor,
+.code-frame__actions button):hover {
   color: var(--house-selected-fg);
   background: var(--house-selected-bg);
   border-color: var(--house-selected-fg);
@@ -2457,12 +2238,18 @@ html[data-skin="the-house-always-seeds"] :is(
 /* Home table: limit slip, ledger, and chip rack. */
 html[data-skin="the-house-always-seeds"] .home-shell,
 html[data-skin="the-house-always-seeds"] .archive-shell,
-html[data-skin="the-house-always-seeds"] .record-page,
 html[data-skin="the-house-always-seeds"] .page-shell,
 html[data-skin="the-house-always-seeds"] .error-shell {
   width: min(calc(100% - 2rem), var(--house-page));
   margin: clamp(1rem, 3vw, 3rem) auto;
   padding: 0;
+  color: var(--house-code-fg);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-house-always-seeds"] .record-page {
   color: var(--house-code-fg);
   background: transparent;
   border: 0;
@@ -2502,10 +2289,16 @@ html[data-skin="the-house-always-seeds"] .home-shell > .masthead::after {
 
 html[data-skin="the-house-always-seeds"] .masthead__copy,
 html[data-skin="the-house-always-seeds"] .index-heading,
-html[data-skin="the-house-always-seeds"] .page-heading,
-html[data-skin="the-house-always-seeds"] .record-head {
+html[data-skin="the-house-always-seeds"] .page-heading {
   min-height: 0;
   padding: 0;
+  color: var(--house-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-house-always-seeds"] .record-head {
   color: var(--house-ink);
   background: transparent;
   border: 0;
@@ -2522,13 +2315,10 @@ html[data-skin="the-house-always-seeds"] :is(.eyebrow, .record-head__key, .archi
   text-transform: uppercase;
 }
 
-html[data-skin="the-house-always-seeds"] :is(
-  .masthead h1,
-  .index-heading h1,
-  .page-heading h1,
-  .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="the-house-always-seeds"] .masthead h1,
+html[data-skin="the-house-always-seeds"] .index-heading h1,
+html[data-skin="the-house-always-seeds"] .page-heading h1,
+html[data-skin="the-house-always-seeds"] .error-shell h1 {
   max-width: 22ch;
   margin: 0;
   color: var(--house-heading);
@@ -2540,9 +2330,30 @@ html[data-skin="the-house-always-seeds"] :is(
   text-shadow: none;
   overflow-wrap: anywhere;
 }
+html[data-skin="the-house-always-seeds"] .record-head h1 {
+  margin: 0;
+  color: var(--house-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: .01em;
+  text-shadow: none;
+  overflow-wrap: anywhere;
+}
 
-html[data-skin="the-house-always-seeds"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="the-house-always-seeds"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-house-always-seeds"] .index-heading > p:last-child,
+html[data-skin="the-house-always-seeds"] .page-heading > p:last-child {
   max-width: 60ch;
+  margin: 1rem 0 0;
+  color: var(--house-ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+html[data-skin="the-house-always-seeds"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 1rem 0 0;
   color: var(--house-ink);
   font-family: var(--body);
@@ -2911,19 +2722,8 @@ html[data-skin="the-house-always-seeds"] .archive-shell > .archive-empty {
 }
 
 /* Article table hand: ticket, reading sheet, and dealer tray. */
-html[data-skin="the-house-always-seeds"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--house-gap);
-}
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(16rem, .8fr);
-  gap: 1rem var(--house-gap);
-  margin: 0;
-  padding: clamp(1rem, 2.5vw, 2rem);
   color: var(--house-ink);
   background: var(--house-surface);
   border: 6px double var(--house-selected-bg);
@@ -2935,7 +2735,6 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head {
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__key,
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > h1,
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__abstract {
-  grid-column: 1;
   margin: 0;
 }
 
@@ -2947,19 +2746,12 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-h
   border-bottom: 2px solid var(--house-rule);
 }
 
-html[data-skin="the-house-always-seeds"] .record-page > .record-head > h1 {
-  max-width: 18ch;
-}
-
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-head__abstract {
   margin-top: 0;
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts {
-  grid-column: 2;
-  grid-row: 1 / span 3;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .5rem;
   align-content: start;
   margin: 0;
@@ -2992,8 +2784,8 @@ html[data-skin="the-house-always-seeds"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="the-house-always-seeds"] .record-page > .record-head > :is(.tag-line, .record-actions) {
-  grid-column: 1 / -1;
+html[data-skin="the-house-always-seeds"] .record-page > .record-head > .tag-line,
+html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-actions {
   margin: 0;
   padding-top: .9rem;
 }
@@ -3013,22 +2805,7 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-head > :is(.tag-
   border-color: var(--house-selected-fg);
 }
 
-html[data-skin="the-house-always-seeds"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 46rem) minmax(16rem, 19rem);
-  gap: var(--house-gap);
-  align-items: start;
-  justify-content: center;
-  margin: 0;
-}
-
 html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  width: 100%;
-  max-width: 46rem;
-  margin: 0;
-  padding: clamp(1rem, 3vw, 2.5rem);
   color: var(--house-ink);
   background: var(--house-surface);
   border: 6px double var(--house-selected-bg);
@@ -3038,13 +2815,6 @@ html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article_
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-index {
-  grid-column: 2;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: 19rem;
-  margin: 0;
-  padding: 1rem;
   color: var(--house-code-fg);
   background: var(--house-code-bg);
   border: 6px double var(--house-selected-bg);
@@ -3085,11 +2855,6 @@ html[data-skin="the-house-always-seeds"] .related-records h2 {
 }
 
 html[data-skin="the-house-always-seeds"] .record-page > .record-end {
-  grid-column: 1 / span 8;
-  width: 100%;
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: 1rem;
   color: var(--house-ink);
   background: var(--house-surface);
   border: 6px double var(--house-selected-bg);
@@ -3234,12 +2999,14 @@ html[data-skin="the-house-always-seeds"] .error-shell nav {
 
 /* Reading sheet, code inserts, and calculation strips. */
 html[data-skin="the-house-always-seeds"] .prose {
-  min-width: 0;
   color: var(--house-ink);
   font-family: var(--body);
   font-size: 1.125rem;
   line-height: 1.7;
   overflow-wrap: anywhere;
+}
+html[data-skin="the-house-always-seeds"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="the-house-always-seeds"] .prose :is(h1, h2, h3, h4, h5, h6) {
@@ -3463,110 +3230,34 @@ html[data-skin="the-house-always-seeds"] .prose .katex-display {
 }
 
 /* Cashier strip. */
-html[data-skin="the-house-always-seeds"] .site-footer {
-  width: min(calc(100% - 2rem), var(--house-page));
-  margin: 0 auto clamp(1rem, 2vw, 2rem);
-  overflow: visible;
-  color: var(--house-code-fg);
-  background: var(--house-code-bg);
-  border: 6px double var(--house-selected-bg);
-  border-radius: 0;
-  box-shadow: none;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer::before {
-  display: none;
-  content: none;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note {
-  max-width: 52rem;
-  margin: 0;
-  padding-left: .75rem;
-  color: var(--house-code-fg);
-  border-left: .35rem solid var(--house-rule);
-  line-height: 1.5;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note a {
-  color: var(--house-selected-bg);
-  text-decoration-color: var(--house-selected-bg);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  justify-content: flex-end;
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a {
-  min-height: 3rem;
-  color: var(--house-code-fg);
-  background: transparent;
-  border-color: var(--house-selected-bg);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__links a:hover,
-html[data-skin="the-house-always-seeds"] .site-footer__links a:focus-visible,
-html[data-skin="the-house-always-seeds"] .site-footer__note a:hover,
-html[data-skin="the-house-always-seeds"] .site-footer__note a:focus-visible {
-  color: var(--house-selected-fg);
-  background: var(--house-selected-bg);
-  border-color: var(--house-selected-fg);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
-  grid-column: 1 / -1;
-  height: .5rem;
-  margin: 0;
-  content: "";
-  pointer-events: none;
-  background: repeating-linear-gradient(90deg, transparent 0 .8rem, var(--house-selected-bg) .8rem 1rem);
-  border-top: 1px solid var(--house-rule);
-}
 
 @media (max-width: 70rem) {
   html[data-skin="the-house-always-seeds"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-house-always-seeds"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-house-always-seeds"] .home-shell,
+html[data-skin="the-house-always-seeds"] .archive-shell,
+html[data-skin="the-house-always-seeds"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  html[data-skin="the-house-always-seeds"] .home-shell > :is(.masthead, .index-heading, .record-index),
-  html[data-skin="the-house-always-seeds"] .archive-shell > :is(.index-heading--archive, .archive-tools, .archive-groups, .archive-empty),
-  html[data-skin="the-house-always-seeds"] .record-page > :is(.record-head, .record-grid, .record-end),
-  html[data-skin="the-house-always-seeds"] .page-shell > :is(.page-heading, .page-prose) {
-    grid-column: 1;
-  }
+  html[data-skin="the-house-always-seeds"] .home-shell > .masthead,
+html[data-skin="the-house-always-seeds"] .home-shell > .index-heading,
+html[data-skin="the-house-always-seeds"] .home-shell > .record-index,
+html[data-skin="the-house-always-seeds"] .archive-shell > .index-heading--archive,
+html[data-skin="the-house-always-seeds"] .archive-shell > .archive-tools,
+html[data-skin="the-house-always-seeds"] .archive-shell > .archive-groups,
+html[data-skin="the-house-always-seeds"] .archive-shell > .archive-empty,
+html[data-skin="the-house-always-seeds"] .page-shell > .page-heading,
+html[data-skin="the-house-always-seeds"] .page-shell > .page-prose {
+  grid-column: 1;
+}
 
-  html[data-skin="the-house-always-seeds"] .archive-shell > .archive-tools,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .record-index {
-    position: static;
-    max-width: none;
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 46rem);
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-grid > :is(.article__content, .record-index) {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-end {
-    max-width: 46rem;
-  }
+  html[data-skin="the-house-always-seeds"] .archive-shell > .archive-tools {
+  position: static;
+  max-width: none;
+}
 
   html[data-skin="the-house-always-seeds"] .page-shell > .page-heading {
     display: block;
@@ -3574,10 +3265,14 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
 }
 
 @media (max-width: 48rem) {
-  html[data-skin="the-house-always-seeds"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-inline: 0;
-  }
+  html[data-skin="the-house-always-seeds"] .site-header,
+html[data-skin="the-house-always-seeds"] .home-shell,
+html[data-skin="the-house-always-seeds"] .archive-shell,
+html[data-skin="the-house-always-seeds"] .page-shell,
+html[data-skin="the-house-always-seeds"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+}
 
   html[data-skin="the-house-always-seeds"] .site-header {
     margin-top: 0;
@@ -3639,44 +3334,19 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
   html[data-skin="the-house-always-seeds"] .archive-shell .archive-year .record-row__primitive { grid-area: primitive; justify-self: start; text-align: left; }
 
   html[data-skin="the-house-always-seeds"] .archive-shell .quick-filters,
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > .record-facts,
-  html[data-skin="the-house-always-seeds"] .record-end nav {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-house-always-seeds"] .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-house-always-seeds"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    border-left-width: .45rem;
-  }
-
-  html[data-skin="the-house-always-seeds"] .record-page > .record-head > :is(.record-head__key, h1, .record-head__abstract, .record-facts, .tag-line, .record-actions) {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  border-left-width: .45rem;
+}
 
   html[data-skin="the-house-always-seeds"] .record-page > .record-grid > .article__content,
   html[data-skin="the-house-always-seeds"] .page-shell > .page-prose {
     border-left-width: .45rem;
   }
 
-  html[data-skin="the-house-always-seeds"] .site-footer {
-    margin-bottom: 0;
-    border-inline-width: 0;
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__links {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    justify-content: stretch;
-  }
-
-  html[data-skin="the-house-always-seeds"] .site-footer__links a {
-    width: 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3697,7 +3367,28 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
   }
 
   html[data-skin="the-house-always-seeds"] body,
-  html[data-skin="the-house-always-seeds"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .index-heading, .page-heading, .record-head, .record-index, .archive-tools, .archive-groups, .archive-year, .article__content, .page-prose, .record-end, .record-grid > .record-index, .code-frame, .code-frame__bar, .code-frame__status, .prose .katex-display) {
+html[data-skin="the-house-always-seeds"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.index-heading,
+.page-heading,
+.record-head,
+.record-index,
+.archive-tools,
+.archive-groups,
+.archive-year,
+.article__content,
+.page-prose,
+.record-end,
+.record-grid > .record-index,
+.code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose .katex-display) {
     color: CanvasText !important;
     background: Canvas !important;
     border-color: CanvasText !important;
@@ -3705,7 +3396,19 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
     text-shadow: none !important;
   }
 
-  html[data-skin="the-house-always-seeds"] :is(.site-nav > a, .theme-toggle, .skin-menu > summary, .skin-menu__panel :is(select, .skin-randomizer), .action, .record-actions a, .tag-line a, .quick-filters a, .all-tags__grid a, .pagination a, .pagination span, .record-end nav a, .site-footer__links a, .code-frame__actions button) {
+  html[data-skin="the-house-always-seeds"] :is(.site-nav > a,
+.theme-toggle,
+.skin-menu > summary,
+.skin-menu__panel :is(select, .skin-randomizer),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags__grid a,
+.pagination a,
+.pagination span,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -3718,7 +3421,10 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
     border-color: HighlightText !important;
   }
 
-  html[data-skin="the-house-always-seeds"] :is(.prose a, .record-end > p a, .record-toc a, .related-records a, .site-footer__note a) {
+  html[data-skin="the-house-always-seeds"] :is(.prose a,
+.record-end > p a,
+.record-toc a,
+.related-records a) {
     color: LinkText !important;
     background: transparent !important;
   }
@@ -3727,8 +3433,14 @@ html[data-skin="the-house-always-seeds"] .site-footer__inner::after {
     outline-color: Highlight !important;
   }
 
-  html[data-skin="the-house-always-seeds"] :is(.site-header, .site-footer, .masthead, .record-head, .error-shell, .site-footer__inner)::before,
-  html[data-skin="the-house-always-seeds"] :is(.site-header, .site-footer, .masthead, .record-head, .error-shell, .site-footer__inner)::after {
+  html[data-skin="the-house-always-seeds"] :is(.site-header,
+.masthead,
+.record-head,
+.error-shell)::before,
+html[data-skin="the-house-always-seeds"] :is(.site-header,
+.masthead,
+.record-head,
+.error-shell)::after {
     display: none !important;
     content: none !important;
   }
@@ -3912,26 +3624,23 @@ html[data-skin="the-house-always-seeds"] .archive-shell .archive-year .record-ro
   border-left: 0;
 }
 
-html[data-skin="the-house-always-seeds"] :is(
-  .site-nav > a[data-route],
-  .theme-toggle,
-  .skin-menu > summary,
-  .skin-menu__panel :is(select, .skin-randomizer),
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .all-tags__grid a,
-  .pagination a,
-  .record-row__link,
-  .record-end nav a,
-  .site-footer__links a,
-  .prose a,
-  .record-toc a,
-  .related-records a,
-  .heading-anchor,
-  .code-frame__actions button
-):hover {
+html[data-skin="the-house-always-seeds"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu > summary,
+.skin-menu__panel :is(select, .skin-randomizer),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags__grid a,
+.pagination a,
+.record-row__link,
+.record-end nav a,
+.prose a,
+.record-toc a,
+.related-records a,
+.heading-anchor,
+.code-frame__actions button):hover {
   box-shadow: inset 0 -.3rem 0 var(--house-rule);
 }
 
@@ -3953,13 +3662,6 @@ html[data-skin="the-house-always-seeds"] .page-shell > .page-prose {
 html[data-skin="the-house-always-seeds"] .prose blockquote {
   border: 0;
   border-block: 2px solid var(--house-rule);
-}
-
-html[data-skin="the-house-always-seeds"] .site-footer__note {
-  padding-left: 0;
-  padding-top: .75rem;
-  border-left: 0;
-  border-top: 2px solid var(--house-rule);
 }
 
 html[data-skin="the-house-always-seeds"] .record-facts dd,
@@ -4005,8 +3707,7 @@ html[data-skin="the-house-always-seeds"][data-theme="dark"] .code-frame__actions
   }
 
   html[data-skin="the-house-always-seeds"][data-theme="dark"] .masthead__actions .action:focus-visible,
-  html[data-skin="the-house-always-seeds"] .site-footer :is(.site-footer__links a, .site-footer__note a):focus-visible,
-  html[data-skin="the-house-always-seeds"] .prose .code-frame pre:focus-visible {
+html[data-skin="the-house-always-seeds"] .prose .code-frame pre:focus-visible {
     outline-color: var(--house-selected-bg) !important;
   }
 
@@ -4044,7 +3745,6 @@ html[data-skin="the-house-always-seeds"][data-theme="dark"] .code-frame__actions
     background-color: #793016 !important;
   }
 }
-
 
 /* Section headings sit directly on the felt rather than on a paper card. */
 html[data-skin="the-house-always-seeds"] .index-heading--section :is(.eyebrow, h1, p) {

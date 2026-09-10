@@ -144,10 +144,8 @@ html[data-skin="the-boundary-repeats"] .skip-link {
 }
 
 html[data-skin="the-boundary-repeats"] .site-header,
-html[data-skin="the-boundary-repeats"] .site-footer,
 html[data-skin="the-boundary-repeats"] .home-shell,
 html[data-skin="the-boundary-repeats"] .archive-shell,
-html[data-skin="the-boundary-repeats"] .record-page,
 html[data-skin="the-boundary-repeats"] .page-shell,
 html[data-skin="the-boundary-repeats"] .error-shell {
   position: relative;
@@ -161,9 +159,18 @@ html[data-skin="the-boundary-repeats"] .error-shell {
   border-radius: 0;
   box-shadow: 0 0 0 3px var(--atlas-paper), .55rem .62rem 0 var(--atlas-ink);
 }
+html[data-skin="the-boundary-repeats"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 6%, #163b3614 6.1% 6.22%, transparent 6.34% 93.66%, #163b3614 93.78% 93.9%, transparent 94%),
+    repeating-radial-gradient(ellipse at 75% 42%, #3f7c7812 0 1px, transparent 1px 1rem);
+  border: 3px solid var(--atlas-ink);
+  border-radius: 0;
+  box-shadow: 0 0 0 3px var(--atlas-paper), .55rem .62rem 0 var(--atlas-ink);
+}
 
-html[data-skin="the-boundary-repeats"] .site-header,
-html[data-skin="the-boundary-repeats"] .site-footer {
+html[data-skin="the-boundary-repeats"] .site-header {
   color: var(--atlas-paper);
   background-color: var(--atlas-ink);
   background-image:
@@ -176,21 +183,14 @@ html[data-skin="the-boundary-repeats"] .site-header {
   border-bottom: .72rem solid var(--atlas-lime);
 }
 
-html[data-skin="the-boundary-repeats"] .site-footer {
-  margin-bottom: 1.4rem;
-  border-top: .72rem solid var(--atlas-coral);
-}
-
 html[data-skin="the-boundary-repeats"] .home-shell,
 html[data-skin="the-boundary-repeats"] .archive-shell,
-html[data-skin="the-boundary-repeats"] .record-page,
 html[data-skin="the-boundary-repeats"] .page-shell,
 html[data-skin="the-boundary-repeats"] .error-shell {
   padding: clamp(1.15rem, 3vw, 2.8rem);
 }
 
-html[data-skin="the-boundary-repeats"] .site-header::before,
-html[data-skin="the-boundary-repeats"] .site-footer::before {
+html[data-skin="the-boundary-repeats"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -203,8 +203,7 @@ html[data-skin="the-boundary-repeats"] .site-footer::before {
   border-inline: 1px solid #f2e8cf66;
 }
 
-html[data-skin="the-boundary-repeats"] .site-header__inner,
-html[data-skin="the-boundary-repeats"] .site-footer__inner {
+html[data-skin="the-boundary-repeats"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -252,8 +251,7 @@ html[data-skin="the-boundary-repeats"] .record-actions a,
 html[data-skin="the-boundary-repeats"] .tag-line a,
 html[data-skin="the-boundary-repeats"] .quick-filters a,
 html[data-skin="the-boundary-repeats"] .pagination a,
-html[data-skin="the-boundary-repeats"] .pagination span,
-html[data-skin="the-boundary-repeats"] .site-footer__links a {
+html[data-skin="the-boundary-repeats"] .pagination span {
   min-height: 2.7rem;
   color: var(--atlas-paper);
   background: var(--atlas-ink);
@@ -298,9 +296,7 @@ html[data-skin="the-boundary-repeats"] .tag-line a:focus-visible,
 html[data-skin="the-boundary-repeats"] .quick-filters a:hover,
 html[data-skin="the-boundary-repeats"] .quick-filters a:focus-visible,
 html[data-skin="the-boundary-repeats"] .pagination a:hover,
-html[data-skin="the-boundary-repeats"] .pagination a:focus-visible,
-html[data-skin="the-boundary-repeats"] .site-footer__links a:hover,
-html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
+html[data-skin="the-boundary-repeats"] .pagination a:focus-visible {
   color: var(--atlas-paper);
   background: var(--atlas-coral-deep);
   border-color: var(--atlas-lime);
@@ -347,19 +343,28 @@ html[data-skin="the-boundary-repeats"] .skin-randomizer {
   border-color: var(--atlas-ink);
 }
 
-html[data-skin="the-boundary-repeats"] .masthead,
-html[data-skin="the-boundary-repeats"] .record-grid {
+html[data-skin="the-boundary-repeats"] .masthead {
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 html[data-skin="the-boundary-repeats"] .masthead__copy,
 html[data-skin="the-boundary-repeats"] .index-heading,
 html[data-skin="the-boundary-repeats"] .page-heading,
-html[data-skin="the-boundary-repeats"] .record-head,
 html[data-skin="the-boundary-repeats"] .error-shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: var(--atlas-ink);
+  background:
+    linear-gradient(90deg, var(--atlas-paper) 0 8%, transparent 8% 100%),
+    repeating-radial-gradient(ellipse at 80% 45%, #3f7c7825 0 1px, transparent 1px 1rem),
+    var(--atlas-lime);
+  border: 5px solid var(--atlas-ink);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--atlas-ink);
+}
+html[data-skin="the-boundary-repeats"] .record-head {
+  isolation: isolate;
   color: var(--atlas-ink);
   background:
     linear-gradient(90deg, var(--atlas-paper) 0 8%, transparent 8% 100%),
@@ -427,9 +432,13 @@ html[data-skin="the-boundary-repeats"] .record-head h1 i {
 
 html[data-skin="the-boundary-repeats"] .masthead__lede,
 html[data-skin="the-boundary-repeats"] .index-heading > p:last-child,
-html[data-skin="the-boundary-repeats"] .page-heading > p:last-child,
-html[data-skin="the-boundary-repeats"] .record-head__abstract {
+html[data-skin="the-boundary-repeats"] .page-heading > p:last-child {
   max-width: 58ch;
+  font-family: var(--body);
+  font-size: 1.13rem;
+  font-weight: 700;
+}
+html[data-skin="the-boundary-repeats"] .record-head__abstract {
   font-family: var(--body);
   font-size: 1.13rem;
   font-weight: 700;
@@ -1069,43 +1078,29 @@ html[data-skin="the-boundary-repeats"] .error-shell > p {
   color: var(--atlas-ink);
 }
 
-html[data-skin="the-boundary-repeats"] .site-footer__note,
-html[data-skin="the-boundary-repeats"] .site-footer a {
-  color: var(--atlas-paper);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note a:hover,
-html[data-skin="the-boundary-repeats"] .site-footer__note a:focus-visible {
-  color: var(--atlas-lime);
-}
-
 @media (max-width: 44rem) {
   html[data-skin="the-boundary-repeats"] .site-header,
-  html[data-skin="the-boundary-repeats"] .site-footer,
-  html[data-skin="the-boundary-repeats"] .home-shell,
-  html[data-skin="the-boundary-repeats"] .archive-shell,
-  html[data-skin="the-boundary-repeats"] .record-page,
-  html[data-skin="the-boundary-repeats"] .page-shell,
-  html[data-skin="the-boundary-repeats"] .error-shell {
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .record-page,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell {
     border-width: 3px;
     box-shadow: 0 0 0 2px var(--atlas-paper);
   }
 
-  html[data-skin="the-boundary-repeats"] .site-header,
-  html[data-skin="the-boundary-repeats"] .site-footer {
+  html[data-skin="the-boundary-repeats"] .site-header {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  html[data-skin="the-boundary-repeats"] .site-header::before,
-  html[data-skin="the-boundary-repeats"] .site-footer::before {
+  html[data-skin="the-boundary-repeats"] .site-header::before {
     right: 4%;
     left: auto;
     width: .65rem;
   }
 
-  html[data-skin="the-boundary-repeats"] .site-header__inner,
-  html[data-skin="the-boundary-repeats"] .site-footer__inner {
+  html[data-skin="the-boundary-repeats"] .site-header__inner {
     padding: .9rem;
   }
 
@@ -1175,26 +1170,25 @@ html[data-skin="the-boundary-repeats"] .site-footer__note a:focus-visible {
 
 @media (forced-colors: active) {
   html[data-skin="the-boundary-repeats"] .site-header,
-  html[data-skin="the-boundary-repeats"] .site-footer,
-  html[data-skin="the-boundary-repeats"] .home-shell,
-  html[data-skin="the-boundary-repeats"] .archive-shell,
-  html[data-skin="the-boundary-repeats"] .record-page,
-  html[data-skin="the-boundary-repeats"] .page-shell,
-  html[data-skin="the-boundary-repeats"] .error-shell,
-  html[data-skin="the-boundary-repeats"] .masthead__copy,
-  html[data-skin="the-boundary-repeats"] .index-heading,
-  html[data-skin="the-boundary-repeats"] .page-heading,
-  html[data-skin="the-boundary-repeats"] .record-head,
-  html[data-skin="the-boundary-repeats"] .home-shell > .record-index,
-  html[data-skin="the-boundary-repeats"] .archive-tools,
-  html[data-skin="the-boundary-repeats"] .archive-groups,
-  html[data-skin="the-boundary-repeats"] .page-prose,
-  html[data-skin="the-boundary-repeats"] .article__content,
-  html[data-skin="the-boundary-repeats"] .record-end,
-  html[data-skin="the-boundary-repeats"] .record-grid > .record-index,
-  html[data-skin="the-boundary-repeats"] .code-frame,
-  html[data-skin="the-boundary-repeats"] .code-frame__bar,
-  html[data-skin="the-boundary-repeats"] .code-frame__status {
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .record-page,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell,
+html[data-skin="the-boundary-repeats"] .masthead__copy,
+html[data-skin="the-boundary-repeats"] .index-heading,
+html[data-skin="the-boundary-repeats"] .page-heading,
+html[data-skin="the-boundary-repeats"] .record-head,
+html[data-skin="the-boundary-repeats"] .home-shell > .record-index,
+html[data-skin="the-boundary-repeats"] .archive-tools,
+html[data-skin="the-boundary-repeats"] .archive-groups,
+html[data-skin="the-boundary-repeats"] .page-prose,
+html[data-skin="the-boundary-repeats"] .article__content,
+html[data-skin="the-boundary-repeats"] .record-end,
+html[data-skin="the-boundary-repeats"] .record-grid > .record-index,
+html[data-skin="the-boundary-repeats"] .code-frame,
+html[data-skin="the-boundary-repeats"] .code-frame__bar,
+html[data-skin="the-boundary-repeats"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1238,10 +1232,8 @@ html[data-skin="the-boundary-repeats"] body {
 }
 
 html[data-skin="the-boundary-repeats"] .site-header,
-html[data-skin="the-boundary-repeats"] .site-footer,
 html[data-skin="the-boundary-repeats"] .home-shell,
 html[data-skin="the-boundary-repeats"] .archive-shell,
-html[data-skin="the-boundary-repeats"] .record-page,
 html[data-skin="the-boundary-repeats"] .page-shell,
 html[data-skin="the-boundary-repeats"] .error-shell {
   width: min(100%, 104rem);
@@ -1724,28 +1716,12 @@ html[data-skin="the-boundary-repeats"] .archive-shell > .archive-empty {
 }
 
 html[data-skin="the-boundary-repeats"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas:
-    "head head head head head head head head head head head head"
-    "grid grid grid grid grid grid grid grid grid grid grid grid"
-    "end end end end end end end end end end end end";
-  gap: var(--atlas-gutter);
-  align-items: start;
-  margin-block: 0 var(--atlas-gap);
-  padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
-  overflow: visible;
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-head {
-  position: relative;
-  grid-area: head;
-  min-height: 23rem;
-  margin: 0;
-  padding: clamp(1.5rem, 4vw, 4rem);
   color: var(--atlas-paper);
   background:
     linear-gradient(90deg, #f2e8cf1f 1px, transparent 1px),
@@ -1770,7 +1746,6 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-head::after {
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-head__key,
 html[data-skin="the-boundary-repeats"] .record-page > .record-head h1,
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-head__abstract {
-  position: relative;
   z-index: 1;
   color: var(--atlas-paper);
 }
@@ -1780,20 +1755,12 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-head_
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-head h1 {
-  max-width: 13ch;
   font-size: clamp(3rem, 6.5vw, 6.3rem);
   text-shadow: 4px 4px 0 var(--atlas-coral-deep);
 }
 
-html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-head__abstract {
-  max-width: 62ch;
-}
-
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts {
-  position: relative;
   z-index: 1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-right: 2rem;
   border-top-color: var(--atlas-lime);
 }
 
@@ -1817,28 +1784,10 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .tag-line,
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-actions {
-  position: relative;
   z-index: 1;
-  margin-right: 2rem;
-}
-
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-  gap: var(--atlas-gutter);
-  align-items: start;
-  justify-content: stretch;
-  margin: 0;
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
-  position: relative;
-  grid-column: 1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.5rem, 3vw, 3rem) clamp(1.35rem, 4vw, 4rem);
   background:
     linear-gradient(90deg, transparent 0 3.5rem, #163b3624 3.55rem 3.66rem, transparent 3.71rem),
     var(--atlas-paper);
@@ -1865,7 +1814,6 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__c
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content > * {
   position: relative;
-  margin-left: 3.3rem;
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content > h2 {
@@ -1874,13 +1822,6 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__c
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--atlas-paper);
   background:
     repeating-radial-gradient(ellipse at 60% 42%, transparent 0 1.3rem, #f2e8cf1e 1.35rem 1.42rem, transparent 1.48rem 2.6rem),
@@ -1921,11 +1862,6 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-ind
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-end {
-  grid-area: end;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1.25rem;
   color: var(--atlas-paper);
   background: var(--atlas-land-deep);
   border: 3px solid var(--atlas-ink);
@@ -1943,66 +1879,8 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-end nav a {
   box-shadow: .2rem .24rem 0 var(--atlas-ink);
 }
 
-html[data-skin="the-boundary-repeats"] .site-footer {
-  margin-block: var(--atlas-gap) .2rem;
-  color: var(--atlas-ink);
-  background: transparent;
-  border: 0;
-  border-top: 2px solid var(--atlas-ink);
-  box-shadow: none;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer::before {
-  display: none;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(20rem, .9fr);
-  grid-template-areas: "note links";
-  gap: var(--atlas-gap);
-  align-items: center;
-  padding: 1rem 0 .2rem;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note {
-  grid-area: note;
-  max-width: 52rem;
-  color: var(--atlas-ink);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note a {
-  color: var(--atlas-coral-deep);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links {
-  display: grid;
-  grid-area: links;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a {
-  min-height: 3.4rem;
-  color: var(--atlas-paper);
-  background: var(--atlas-ink);
-  border-color: var(--atlas-ink);
-  box-shadow: .18rem .2rem 0 var(--atlas-land);
-  font-size: .6rem;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(2) {
-  color: var(--atlas-ink);
-  background: var(--atlas-lime);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
-  background: var(--atlas-coral-deep);
-}
-
 @media (max-width: 66rem) {
-  html[data-skin="the-boundary-repeats"] .site-header__inner,
-  html[data-skin="the-boundary-repeats"] .site-footer__inner {
+  html[data-skin="the-boundary-repeats"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2012,17 +1890,10 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
       "nav";
   }
 
-  html[data-skin="the-boundary-repeats"] .site-footer__inner {
-    grid-template-areas:
-      "note"
-      "links";
-  }
-
   html[data-skin="the-boundary-repeats"] .home-shell,
-  html[data-skin="the-boundary-repeats"] .archive-shell,
-  html[data-skin="the-boundary-repeats"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-boundary-repeats"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-boundary-repeats"] .home-shell {
     grid-template-areas:
@@ -2039,17 +1910,6 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
       "empty";
   }
 
-  html[data-skin="the-boundary-repeats"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
   html[data-skin="the-boundary-repeats"] .archive-shell .archive-year:nth-child(n) {
     grid-column: span 6;
   }
@@ -2061,14 +1921,12 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-boundary-repeats"] .site-header,
-  html[data-skin="the-boundary-repeats"] .site-footer,
-  html[data-skin="the-boundary-repeats"] .home-shell,
-  html[data-skin="the-boundary-repeats"] .archive-shell,
-  html[data-skin="the-boundary-repeats"] .record-page,
-  html[data-skin="the-boundary-repeats"] .page-shell,
-  html[data-skin="the-boundary-repeats"] .error-shell {
-    width: 100%;
-  }
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell {
+  width: 100%;
+}
 
   html[data-skin="the-boundary-repeats"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
@@ -2093,10 +1951,9 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-boundary-repeats"] .home-shell > .masthead,
-  html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-boundary-repeats"] .home-shell > .masthead .masthead__copy {
     min-height: 20rem;
@@ -2121,61 +1978,32 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
     grid-column: 1;
   }
 
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head {
-    min-height: 0;
-    padding: 1.4rem;
-  }
-
   html[data-skin="the-boundary-repeats"] .record-page > .record-head h1 {
     font-size: clamp(2.65rem, 13vw, 4.2rem);
   }
 
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-right: 1.4rem;
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head .tag-line,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-actions {
-    margin-right: 1.4rem;
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-    grid-column: 1;
-  }
-
   html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
-    padding-inline: 1rem;
-    border-left-width: .5rem;
-  }
+  border-left-width: .5rem;
+}
 
   html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content::before {
     display: none;
   }
 
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content > * {
-    margin-left: 0;
-  }
-
-  html[data-skin="the-boundary-repeats"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {
   html[data-skin="the-boundary-repeats"] .site-header,
-  html[data-skin="the-boundary-repeats"] .site-footer,
-  html[data-skin="the-boundary-repeats"] .home-shell,
-  html[data-skin="the-boundary-repeats"] .archive-shell,
-  html[data-skin="the-boundary-repeats"] .record-page,
-  html[data-skin="the-boundary-repeats"] .home-shell > .masthead,
-  html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools,
-  html[data-skin="the-boundary-repeats"] .archive-shell .archive-year,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index,
-  html[data-skin="the-boundary-repeats"] .record-page > .record-end {
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .record-page,
+html[data-skin="the-boundary-repeats"] .home-shell > .masthead,
+html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools,
+html[data-skin="the-boundary-repeats"] .archive-shell .archive-year,
+html[data-skin="the-boundary-repeats"] .record-page > .record-head,
+html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content,
+html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index,
+html[data-skin="the-boundary-repeats"] .record-page > .record-end {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -2183,8 +2011,7 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-boundary-repeats"] .site-nav a[data-route],
-  html[data-skin="the-boundary-repeats"] .site-nav .skin-menu summary,
-  html[data-skin="the-boundary-repeats"] .site-footer__links a {
+html[data-skin="the-boundary-repeats"] .site-nav .skin-menu summary {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -2329,51 +2156,47 @@ html[data-skin="the-boundary-repeats"] a:hover {
   text-decoration-thickness: .15em;
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .skip-link,
-  .site-brand__scope,
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-menu__panel label,
-  .skin-menu select,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination,
-  .pagination a,
-  .pagination span,
-  .eyebrow,
-  .archive-search label,
-  .archive-search input,
-  .archive-search p,
-  .all-tags summary,
-  .all-tags__grid a,
-  .record-row__date,
-  .record-row__title,
-  .record-row__event,
-  .record-row__primitive,
-  .record-facts dt,
-  .record-facts dd,
-  .record-head__key,
-  .record-toc summary,
-  .record-toc a,
-  .related-records a,
-  .toc-fallback,
-  .record-end nav span,
-  .site-footer__note,
-  .site-footer__links a,
-  .prose th,
-  .prose td,
-  .code-frame__label strong,
-  .code-frame__label small,
-  .code-frame__actions button,
-  .code-frame__gutter,
-  .code-frame__status,
-  .code-frame__fallback
-) {
+html[data-skin="the-boundary-repeats"] :is(.skip-link,
+.site-brand__scope,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination,
+.pagination a,
+.pagination span,
+.eyebrow,
+.archive-search label,
+.archive-search input,
+.archive-search p,
+.all-tags summary,
+.all-tags__grid a,
+.record-row__date,
+.record-row__title,
+.record-row__event,
+.record-row__primitive,
+.record-facts dt,
+.record-facts dd,
+.record-head__key,
+.record-toc summary,
+.record-toc a,
+.related-records a,
+.toc-fallback,
+.record-end nav span,
+.prose th,
+.prose td,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback) {
   font-size: var(--br-text-floor);
 }
 
@@ -2400,44 +2223,38 @@ html[data-skin="the-boundary-repeats"] .skip-link {
   font-size: var(--br-text-floor);
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .site-header,
-  .site-footer,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell,
-  .masthead,
-  .masthead__copy,
-  .index-heading,
-  .page-heading,
-  .record-head,
-  .home-shell > .record-index,
-  .archive-tools,
-  .archive-groups,
-  .archive-year,
-  .article__content,
-  .page-prose,
-  .record-grid > .record-index,
-  .record-end,
-  .site-footer__inner,
-  .code-frame
-) {
+html[data-skin="the-boundary-repeats"] :is(.site-header, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.home-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.archive-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] .home-shell > .record-index,
+html[data-skin="the-boundary-repeats"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.archive-year, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.code-frame, :not(*):nth-child(n):nth-child(n)) {
   overflow: visible;
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .site-header,
-  .site-footer,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="the-boundary-repeats"] .site-header,
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell {
   width: min(100%, 104rem);
   margin-inline: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-boundary-repeats"] .record-page {
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -2449,8 +2266,7 @@ html[data-skin="the-boundary-repeats"] .site-header {
   border-bottom: 2px solid var(--br-heading);
 }
 
-html[data-skin="the-boundary-repeats"] .site-header::before,
-html[data-skin="the-boundary-repeats"] .site-footer::before {
+html[data-skin="the-boundary-repeats"] .site-header::before {
   display: none;
 }
 
@@ -2651,13 +2467,10 @@ html[data-skin="the-boundary-repeats"] .skin-randomizer:focus-visible {
   border-color: var(--br-accent);
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell {
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
   gap: var(--atlas-gutter);
@@ -2666,14 +2479,17 @@ html[data-skin="the-boundary-repeats"] :is(
   padding: 0;
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .masthead__copy,
-  .index-heading,
-  .page-heading,
-  .record-head,
-  .error-shell
-) {
+html[data-skin="the-boundary-repeats"] .masthead__copy,
+html[data-skin="the-boundary-repeats"] .index-heading,
+html[data-skin="the-boundary-repeats"] .page-heading,
+html[data-skin="the-boundary-repeats"] .error-shell {
   min-height: 0;
+  color: var(--br-heading);
+  background: var(--br-paper-raised);
+  border: 3px solid var(--br-heading);
+  box-shadow: .38rem .42rem 0 var(--br-land);
+}
+html[data-skin="the-boundary-repeats"] .record-head {
   color: var(--br-heading);
   background: var(--br-paper-raised);
   border: 3px solid var(--br-heading);
@@ -2712,13 +2528,10 @@ html[data-skin="the-boundary-repeats"] :is(
   text-transform: uppercase;
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .masthead h1,
-  .index-heading h1,
-  .page-heading h1,
-  .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="the-boundary-repeats"] .masthead h1,
+html[data-skin="the-boundary-repeats"] .index-heading h1,
+html[data-skin="the-boundary-repeats"] .page-heading h1,
+html[data-skin="the-boundary-repeats"] .error-shell h1 {
   position: relative;
   z-index: 1;
   max-width: 18ch;
@@ -2731,16 +2544,31 @@ html[data-skin="the-boundary-repeats"] :is(
   line-height: 1.02;
   text-shadow: none;
 }
+html[data-skin="the-boundary-repeats"] .record-head h1 {
+  z-index: 1;
+  margin: 0;
+  color: var(--br-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: 1.02;
+  text-shadow: none;
+}
 
-html[data-skin="the-boundary-repeats"] :is(
-  .masthead__lede,
-  .index-heading > p:last-child,
-  .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="the-boundary-repeats"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-boundary-repeats"] .index-heading > p:last-child,
+html[data-skin="the-boundary-repeats"] .page-heading > p:last-child {
   position: relative;
   z-index: 1;
   max-width: 60ch;
+  color: var(--br-text);
+  font-size: max(1.125rem, 18px);
+  font-weight: 400;
+  line-height: 1.6;
+}
+html[data-skin="the-boundary-repeats"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
+  z-index: 1;
   color: var(--br-text);
   font-size: max(1.125rem, 18px);
   font-weight: 400;
@@ -2845,20 +2673,27 @@ html[data-skin="the-boundary-repeats"] :is(
   box-shadow: .15rem .18rem 0 var(--br-accent);
 }
 
-html[data-skin="the-boundary-repeats"] :is(
-  .home-shell > .record-index,
-  .archive-tools,
-  .archive-groups,
-  .page-prose,
-  .article__content,
-  .record-end
-) {
+html[data-skin="the-boundary-repeats"] .home-shell > .record-index,
+html[data-skin="the-boundary-repeats"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   margin: 0;
   color: var(--br-text);
   background: var(--br-paper);
   border: 3px solid var(--br-heading);
   box-shadow: .35rem .4rem 0 var(--br-land);
+}
+html[data-skin="the-boundary-repeats"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-boundary-repeats"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--br-text);
+  background: var(--br-paper);
+  border: 3px solid var(--br-heading);
+  box-shadow: .35rem .4rem 0 var(--br-land);
+}
+html[data-skin="the-boundary-repeats"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+  margin: 0;
 }
 
 html[data-skin="the-boundary-repeats"] .home-shell > .record-index {
@@ -3131,9 +2966,6 @@ html[data-skin="the-boundary-repeats"] .archive-empty {
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-head {
-  grid-column: 1 / span 5;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   color: var(--br-code-text);
   background: var(--br-code-bg);
   border-color: var(--br-heading);
@@ -3149,9 +2981,7 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-head_
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .65rem;
-  margin-right: 0;
   padding-top: 1rem;
   border-top: 2px solid var(--br-accent);
 }
@@ -3201,26 +3031,7 @@ html[data-skin="the-boundary-repeats"] .record-facts dd {
   line-height: 1.4;
 }
 
-html[data-skin="the-boundary-repeats"] .record-page > .record-head :is(.tag-line, .record-actions) {
-  margin-right: 0;
-}
-
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-  grid-column: 6 / -1;
-  display: grid;
-  grid-template-columns: repeat(11, minmax(0, 1fr));
-  gap: var(--atlas-gap);
-  align-items: start;
-  margin: 0;
-}
-
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
-  position: relative;
-  grid-column: 1 / span 8;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   color: var(--br-text);
   background: var(--br-paper-raised);
   border: 3px solid var(--br-heading);
@@ -3237,18 +3048,7 @@ html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__c
   background: repeating-linear-gradient(90deg, var(--br-accent) 0 .6rem, var(--br-coral) .6rem 1.2rem);
 }
 
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content > * {
-  margin-left: 0;
-}
-
 html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 9 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--br-code-text);
   background: var(--br-code-bg);
   border: 3px solid var(--br-heading);
@@ -3303,10 +3103,6 @@ html[data-skin="the-boundary-repeats"] .record-index .related-records h2 {
 }
 
 html[data-skin="the-boundary-repeats"] .record-page > .record-end {
-  grid-column: 6 / -1;
-  width: auto;
-  max-width: none;
-  padding: 1.25rem;
   color: var(--br-on-land);
   background: var(--br-land);
   border-color: var(--br-heading);
@@ -3611,102 +3407,25 @@ html[data-skin="the-boundary-repeats"] .error-shell > p {
   color: var(--br-heading);
 }
 
-html[data-skin="the-boundary-repeats"] .site-footer {
-  margin-block: var(--atlas-gap) .25rem;
-  border-top: 2px solid var(--br-heading);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
-  gap: var(--atlas-gap);
-  align-items: center;
-  padding: 1rem 0;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note {
-  grid-column: 1 / span 6;
-  margin: 0;
-  padding: .9rem;
-  color: var(--br-code-text);
-  background: var(--br-code-bg);
-  border: 2px solid var(--br-heading);
-  box-shadow: .25rem .3rem 0 var(--br-land);
-  line-height: 1.5;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note a {
-  color: var(--br-accent);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__note a:hover,
-html[data-skin="the-boundary-repeats"] .site-footer__note a:focus-visible {
-  color: var(--br-code-text);
-  background: var(--br-coral);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links {
-  grid-column: 7 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-  justify-content: stretch;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a {
-  min-height: 3.25rem;
-  color: var(--br-code-text);
-  background: var(--br-code-bg);
-  border: 2px solid var(--br-heading);
-  box-shadow: .15rem .18rem 0 var(--br-land);
-  font-family: var(--keys);
-  font-weight: 800;
-  line-height: 1.25;
-  text-align: center;
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(2) {
-  color: var(--br-accent-text);
-  background: var(--br-accent);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a:nth-child(3) {
-  color: var(--br-on-coral);
-  background: var(--br-coral);
-}
-
-html[data-skin="the-boundary-repeats"] .site-footer__links a:hover,
-html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
-  color: var(--br-accent-text);
-  background: var(--br-accent);
-  border-color: var(--br-heading);
-  box-shadow: .15rem .18rem 0 var(--br-coral);
-}
-
 @media (max-width: 70rem) {
-  html[data-skin="the-boundary-repeats"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-boundary-repeats"] .home-shell,
+html[data-skin="the-boundary-repeats"] .archive-shell,
+html[data-skin="the-boundary-repeats"] .page-shell,
+html[data-skin="the-boundary-repeats"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  html[data-skin="the-boundary-repeats"] .home-shell > :is(.masthead, .record-index),
-  html[data-skin="the-boundary-repeats"] .archive-shell > :is(.index-heading, .archive-tools, .archive-groups, .archive-empty),
-  html[data-skin="the-boundary-repeats"] .record-page > :is(.record-head, .record-grid, .record-end),
-  html[data-skin="the-boundary-repeats"] .page-shell > :is(.page-heading, .page-prose) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > :is(.article__content, .record-index) {
-    grid-column: 1;
-  }
+  html[data-skin="the-boundary-repeats"] .home-shell > .masthead,
+html[data-skin="the-boundary-repeats"] .home-shell > .record-index,
+html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading,
+html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools,
+html[data-skin="the-boundary-repeats"] .archive-shell > .archive-groups,
+html[data-skin="the-boundary-repeats"] .archive-shell > .archive-empty,
+html[data-skin="the-boundary-repeats"] .page-shell > .page-heading,
+html[data-skin="the-boundary-repeats"] .page-shell > .page-prose {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="the-boundary-repeats"] .error-shell > :not(.error-code),
   html[data-skin="the-boundary-repeats"] .error-code {
@@ -3724,15 +3443,12 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
     padding: .5rem;
   }
 
-  html[data-skin="the-boundary-repeats"] .site-header__inner,
-  html[data-skin="the-boundary-repeats"] .site-footer__inner {
+  html[data-skin="the-boundary-repeats"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="the-boundary-repeats"] .site-brand,
-  html[data-skin="the-boundary-repeats"] .site-nav,
-  html[data-skin="the-boundary-repeats"] .site-footer__note,
-  html[data-skin="the-boundary-repeats"] .site-footer__links {
+html[data-skin="the-boundary-repeats"] .site-nav {
     grid-column: 1;
   }
 
@@ -3748,10 +3464,6 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
 
   html[data-skin="the-boundary-repeats"] .site-nav .skin-menu__panel {
     margin-top: .55rem;
-  }
-
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools {
@@ -3792,29 +3504,27 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
   html[data-skin="the-boundary-repeats"] .record-row__event::before { content: "Event"; }
   html[data-skin="the-boundary-repeats"] .record-row__primitive::before { content: "Topic"; }
 
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content,
-  html[data-skin="the-boundary-repeats"] .page-shell > .page-prose {
-    padding: 1rem;
-    border-left-width: .5rem;
-    box-shadow: inset 0 0 0 .25rem var(--br-paper), .25rem .3rem 0 var(--br-land);
-  }
+  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
+  border-left-width: .5rem;
+  box-shadow: inset 0 0 0 .25rem var(--br-paper), .25rem .3rem 0 var(--br-land);
+}
+html[data-skin="the-boundary-repeats"] .page-shell > .page-prose {
+  padding: 1rem;
+  border-left-width: .5rem;
+  box-shadow: inset 0 0 0 .25rem var(--br-paper), .25rem .3rem 0 var(--br-land);
+}
 
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head,
   html[data-skin="the-boundary-repeats"] .page-shell > .page-heading,
-  html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading {
-    padding: 1.25rem;
-  }
+html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading {
+  padding: 1.25rem;
+}
 
-  html[data-skin="the-boundary-repeats"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 23rem) {
-  html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts,
   html[data-skin="the-boundary-repeats"] .archive-shell .quick-filters {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  grid-template-columns: minmax(0, 1fr);
+}
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3842,58 +3552,52 @@ html[data-skin="the-boundary-repeats"] .site-footer__links a:focus-visible {
     background: Canvas;
   }
 
-  html[data-skin="the-boundary-repeats"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .home-shell > .record-index,
-    .archive-tools,
-    .archive-groups,
-    .archive-year,
-    .article__content,
-    .page-prose,
-    .record-grid > .record-index,
-    .record-end,
-    .prose .info,
-    .prose blockquote,
-    .prose .katex-display,
-    .prose .code-frame,
-    .code-frame__bar,
-    .code-frame__status,
-    .prose th,
-    .prose td,
-    .record-facts > div
-  ) {
+  html[data-skin="the-boundary-repeats"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.archive-year,
+.article__content,
+.page-prose,
+.record-grid > .record-index,
+.record-end,
+.prose .info,
+.prose blockquote,
+.prose .katex-display,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose th,
+.prose td,
+.record-facts > div) {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
     box-shadow: none;
   }
 
-  html[data-skin="the-boundary-repeats"] :is(
-    .site-nav a,
-    .theme-toggle,
-    .skin-menu summary,
-    .skin-menu select,
-    .skin-randomizer,
-    .action,
-    .record-actions a,
-    .tag-line a,
-    .quick-filters a,
-    .pagination a,
-    .site-footer__links a,
-    .code-frame__actions button,
-    .record-end nav a
-  ) {
+  html[data-skin="the-boundary-repeats"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button,
+.record-end nav a) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3993,48 +3697,18 @@ html[data-skin="the-boundary-repeats"] :is(
   font-size: clamp(2rem, 3.5vw, 3.5rem) !important;
   line-height: 1.08 !important;
 }
-html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading,
-html[data-skin="the-boundary-repeats"] .record-page > .record-head {
+html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading {
   min-height: 0;
   align-content: start;
 }
-html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading h1,
-html[data-skin="the-boundary-repeats"] .record-page > .record-head h1 {
+html[data-skin="the-boundary-repeats"] .archive-shell > .index-heading h1 {
   max-width: 18ch;
   font-size: clamp(2rem, 3.25vw, 3.25rem) !important;
 }
-html[data-skin="the-boundary-repeats"] .record-page {
-  grid-template-areas: none;
+html[data-skin="the-boundary-repeats"] .record-page > .record-head h1 {
+  font-size: clamp(2rem, 3.25vw, 3.25rem) !important;
 }
-html[data-skin="the-boundary-repeats"] .record-page > .record-head {
-  grid-area: auto;
-  grid-column: 1 / span 5;
-  grid-row: 1;
-}
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-  grid-area: auto;
-  grid-column: 6 / -1;
-  grid-row: 1;
-  grid-template-columns: minmax(65ch, 8fr) minmax(16rem, 3fr);
-}
-html[data-skin="the-boundary-repeats"] .record-page > .record-end {
-  grid-area: auto;
-  grid-column: 6 / -1;
-  grid-row: 2;
-}
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  inline-size: min(100%, 76ch);
-  max-inline-size: 76ch;
-  justify-self: start;
-}
-html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-  grid-column: 2;
-  min-width: 16rem;
-}
-html[data-skin="the-boundary-repeats"] .record-page > .record-head .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-}
+
 html[data-skin="the-boundary-repeats"] :is(
   .home-shell > .record-index,
   .archive-shell > .archive-tools,
@@ -4055,10 +3729,11 @@ html[data-skin="the-boundary-repeats"] :is(
 html[data-skin="the-boundary-repeats"] .archive-shell > .archive-tools {
   border-top-color: var(--br-land);
 }
-html[data-skin="the-boundary-repeats"] :is(
-  .record-page > .record-grid > .article__content,
-  .page-shell > .page-prose
-) {
+html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .article__content {
+  border-top: 3px solid var(--br-heading);
+  border-bottom: 1px solid var(--br-rule);
+}
+html[data-skin="the-boundary-repeats"] :is(.page-shell > .page-prose, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
   padding: clamp(1.25rem, 3vw, 2.5rem) 0;
   border-top: 3px solid var(--br-heading);
   border-bottom: 1px solid var(--br-rule);
@@ -4136,32 +3811,7 @@ html[data-skin="the-boundary-repeats"] .prose blockquote {
 html[data-skin="the-boundary-repeats"] .prose .code-frame__gutter {
   border-right: 0;
 }
-@media (max-width: 96rem) {
-  html[data-skin="the-boundary-repeats"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  html[data-skin="the-boundary-repeats"] .record-page > :is(
-    .record-head,
-    .record-grid,
-    .record-end
-  ) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > :is(
-    .article__content,
-    .record-index
-  ) {
-    grid-column: 1;
-  }
-  html[data-skin="the-boundary-repeats"] .record-page > .record-grid > .record-index {
-    position: static;
-    min-width: 0;
-  }
-}
+
 @media (forced-colors: active) {
   html[data-skin="the-boundary-repeats"] .prose .highlight :is(.c, .c1, .cm, .cp, .cs) {
     color: GrayText !important;
@@ -4319,3 +3969,6 @@ html[data-skin="the-boundary-repeats"] .record-row__primitive {
     text-align: left;
   }
 }
+
+/* Contents inherits the rail foreground, not the small-label palette. */
+html[data-skin="the-boundary-repeats"] .record-grid .record-toc summary { color: inherit !important; }

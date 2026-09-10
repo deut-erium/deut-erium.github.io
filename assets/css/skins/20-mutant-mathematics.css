@@ -147,10 +147,8 @@ html[data-skin="mutant-mathematics"] .skip-link {
 }
 
 html[data-skin="mutant-mathematics"] .site-header,
-html[data-skin="mutant-mathematics"] .site-footer,
 html[data-skin="mutant-mathematics"] .home-shell,
 html[data-skin="mutant-mathematics"] .archive-shell,
-html[data-skin="mutant-mathematics"] .record-page,
 html[data-skin="mutant-mathematics"] .page-shell,
 html[data-skin="mutant-mathematics"] .error-shell {
   position: relative;
@@ -166,9 +164,20 @@ html[data-skin="mutant-mathematics"] .error-shell {
   border-radius: 0;
   box-shadow: 0 0 0 4px var(--hazard-black), .58rem .65rem 0 #030804;
 }
+html[data-skin="mutant-mathematics"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, #d7ff350c 1px, transparent 1px),
+    linear-gradient(#d7ff350c 1px, transparent 1px),
+    linear-gradient(115deg, transparent 0 48%, #ff6a220d 48.2% 51%, transparent 51.2%);
+  background-size: 1.55rem 1.55rem, 1.55rem 1.55rem, 7rem 7rem;
+  border: 4px solid var(--safety);
+  border-radius: 0;
+  box-shadow: 0 0 0 4px var(--hazard-black), .58rem .65rem 0 #030804;
+}
 
-html[data-skin="mutant-mathematics"] .site-header,
-html[data-skin="mutant-mathematics"] .site-footer {
+html[data-skin="mutant-mathematics"] .site-header {
   color: var(--phosphor);
   background-color: var(--hazard-black);
 }
@@ -178,21 +187,14 @@ html[data-skin="mutant-mathematics"] .site-header {
   border-bottom-width: .8rem;
 }
 
-html[data-skin="mutant-mathematics"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-width: .8rem;
-}
-
 html[data-skin="mutant-mathematics"] .home-shell,
 html[data-skin="mutant-mathematics"] .archive-shell,
-html[data-skin="mutant-mathematics"] .record-page,
 html[data-skin="mutant-mathematics"] .page-shell,
 html[data-skin="mutant-mathematics"] .error-shell {
   padding: clamp(1.1rem, 3vw, 2.8rem);
 }
 
-html[data-skin="mutant-mathematics"] .site-header::before,
-html[data-skin="mutant-mathematics"] .site-footer::before {
+html[data-skin="mutant-mathematics"] .site-header::before {
   position: absolute;
   z-index: -1;
   right: 0;
@@ -207,12 +209,7 @@ html[data-skin="mutant-mathematics"] .site-header::before {
   top: 0;
 }
 
-html[data-skin="mutant-mathematics"] .site-footer::before {
-  bottom: 0;
-}
-
-html[data-skin="mutant-mathematics"] .site-header__inner,
-html[data-skin="mutant-mathematics"] .site-footer__inner {
+html[data-skin="mutant-mathematics"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -260,8 +257,7 @@ html[data-skin="mutant-mathematics"] .record-actions a,
 html[data-skin="mutant-mathematics"] .tag-line a,
 html[data-skin="mutant-mathematics"] .quick-filters a,
 html[data-skin="mutant-mathematics"] .pagination a,
-html[data-skin="mutant-mathematics"] .pagination span,
-html[data-skin="mutant-mathematics"] .site-footer__links a {
+html[data-skin="mutant-mathematics"] .pagination span {
   min-height: 2.75rem;
   color: var(--phosphor-pale);
   background: var(--hazard-black);
@@ -306,9 +302,7 @@ html[data-skin="mutant-mathematics"] .tag-line a:focus-visible,
 html[data-skin="mutant-mathematics"] .quick-filters a:hover,
 html[data-skin="mutant-mathematics"] .quick-filters a:focus-visible,
 html[data-skin="mutant-mathematics"] .pagination a:hover,
-html[data-skin="mutant-mathematics"] .pagination a:focus-visible,
-html[data-skin="mutant-mathematics"] .site-footer__links a:hover,
-html[data-skin="mutant-mathematics"] .site-footer__links a:focus-visible {
+html[data-skin="mutant-mathematics"] .pagination a:focus-visible {
   color: var(--hazard-black);
   background: var(--phosphor);
   border-color: var(--hazard-black);
@@ -355,19 +349,31 @@ html[data-skin="mutant-mathematics"] .skin-randomizer {
   border-color: var(--hazard-black);
 }
 
-html[data-skin="mutant-mathematics"] .masthead,
-html[data-skin="mutant-mathematics"] .record-grid {
+html[data-skin="mutant-mathematics"] .masthead {
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 html[data-skin="mutant-mathematics"] .masthead__copy,
 html[data-skin="mutant-mathematics"] .index-heading,
 html[data-skin="mutant-mathematics"] .page-heading,
-html[data-skin="mutant-mathematics"] .record-head,
 html[data-skin="mutant-mathematics"] .error-shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: var(--hazard-black);
+  background-color: var(--phosphor);
+  background-image:
+    linear-gradient(90deg, #1017131c 1px, transparent 1px),
+    linear-gradient(#1017131c 1px, transparent 1px),
+    radial-gradient(circle at 82% 18%, #29d9cf7a 0 .55rem, transparent .6rem);
+  background-size: 1.45rem 1.45rem, 1.45rem 1.45rem, 6rem 6rem;
+  border: 5px solid var(--hazard-black);
+  border-left: 1.1rem solid var(--safety);
+  border-radius: 0;
+  box-shadow: .38rem .45rem 0 var(--hazard-black);
+}
+html[data-skin="mutant-mathematics"] .record-head {
+  isolation: isolate;
   color: var(--hazard-black);
   background-color: var(--phosphor);
   background-image:
@@ -417,9 +423,17 @@ html[data-skin="mutant-mathematics"] .record-end nav span {
 html[data-skin="mutant-mathematics"] .masthead h1,
 html[data-skin="mutant-mathematics"] .index-heading h1,
 html[data-skin="mutant-mathematics"] .page-heading h1,
-html[data-skin="mutant-mathematics"] .record-head h1,
 html[data-skin="mutant-mathematics"] .error-shell h1 {
   max-width: 17ch;
+  color: var(--hazard-black);
+  font-family: var(--display);
+  font-size: clamp(2.15rem, 5.25vw, 4.7rem);
+  font-weight: 900;
+  letter-spacing: -.09em;
+  line-height: .91;
+  text-shadow: 3px 3px 0 #ff6a2266;
+}
+html[data-skin="mutant-mathematics"] .record-head h1 {
   color: var(--hazard-black);
   font-family: var(--display);
   font-size: clamp(2.15rem, 5.25vw, 4.7rem);
@@ -431,9 +445,14 @@ html[data-skin="mutant-mathematics"] .error-shell h1 {
 
 html[data-skin="mutant-mathematics"] .masthead__lede,
 html[data-skin="mutant-mathematics"] .index-heading > p:last-child,
-html[data-skin="mutant-mathematics"] .page-heading > p:last-child,
-html[data-skin="mutant-mathematics"] .record-head__abstract {
+html[data-skin="mutant-mathematics"] .page-heading > p:last-child {
   max-width: 58ch;
+  font-family: var(--body);
+  font-size: clamp(1.08rem, 1.8vw, 1.32rem);
+  font-weight: 700;
+  line-height: 1.52;
+}
+html[data-skin="mutant-mathematics"] .record-head__abstract {
   font-family: var(--body);
   font-size: clamp(1.08rem, 1.8vw, 1.32rem);
   font-weight: 700;
@@ -449,8 +468,7 @@ html[data-skin="mutant-mathematics"] .tag-line {
 html[data-skin="mutant-mathematics"] .home-shell > .record-index,
 html[data-skin="mutant-mathematics"] .archive-tools,
 html[data-skin="mutant-mathematics"] .archive-groups,
-html[data-skin="mutant-mathematics"] .page-prose,
-html[data-skin="mutant-mathematics"] .record-end {
+html[data-skin="mutant-mathematics"] .page-prose {
   position: relative;
   color: var(--ink);
   background-color: var(--paper);
@@ -459,6 +477,18 @@ html[data-skin="mutant-mathematics"] .record-end {
   border: 4px solid var(--hazard-black);
   border-radius: 0;
   box-shadow: .38rem .45rem 0 var(--hazard-black);
+}
+html[data-skin="mutant-mathematics"] .record-end {
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: linear-gradient(90deg, #56634416 1px, transparent 1px);
+  background-size: 2.2rem 100%;
+  border: 4px solid var(--hazard-black);
+  border-radius: 0;
+  box-shadow: .38rem .45rem 0 var(--hazard-black);
+}
+html[data-skin="mutant-mathematics"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
 }
 
 html[data-skin="mutant-mathematics"] .home-shell > .record-index,
@@ -675,10 +705,6 @@ html[data-skin="mutant-mathematics"] .record-head__key {
 
 html[data-skin="mutant-mathematics"] .record-head__key span:last-child {
   color: #0b5a5d;
-}
-
-html[data-skin="mutant-mathematics"] .record-head h1 {
-  max-width: 18ch;
 }
 
 html[data-skin="mutant-mathematics"] .record-facts {
@@ -1167,58 +1193,39 @@ html[data-skin="mutant-mathematics"] .error-shell h1 {
   max-width: 15ch;
 }
 
-html[data-skin="mutant-mathematics"] .site-footer__note {
-  color: var(--phosphor-pale);
-  font-size: .96rem;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer a {
-  color: var(--specimen);
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links a {
-  color: var(--phosphor-pale);
-}
-
 @media (max-width: 68rem) {
-  html[data-skin="mutant-mathematics"] .site-header__inner,
-  html[data-skin="mutant-mathematics"] .site-footer__inner {
+  html[data-skin="mutant-mathematics"] .site-header__inner {
     align-items: stretch;
     flex-direction: column;
   }
 
-  html[data-skin="mutant-mathematics"] .site-nav,
-  html[data-skin="mutant-mathematics"] .site-footer__links {
+  html[data-skin="mutant-mathematics"] .site-nav {
     justify-content: flex-start;
   }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="mutant-mathematics"] .site-header,
-  html[data-skin="mutant-mathematics"] .site-footer,
-  html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 3px;
-    box-shadow: none;
-  }
+html[data-skin="mutant-mathematics"] .home-shell,
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 3px;
+  box-shadow: none;
+}
+html[data-skin="mutant-mathematics"] .record-page {
+  border-width: 3px;
+  box-shadow: none;
+}
 
   html[data-skin="mutant-mathematics"] .site-header {
     margin-top: 0;
     border-bottom-width: .6rem;
   }
 
-  html[data-skin="mutant-mathematics"] .site-footer {
-    margin-bottom: 0;
-    border-top-width: .6rem;
-  }
-
-  html[data-skin="mutant-mathematics"] .site-header__inner,
-  html[data-skin="mutant-mathematics"] .site-footer__inner {
+  html[data-skin="mutant-mathematics"] .site-header__inner {
     padding: 1rem;
   }
 
@@ -1250,27 +1257,32 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
   }
 
   html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell {
-    padding: .8rem;
-  }
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell {
+  padding: .8rem;
+}
 
   html[data-skin="mutant-mathematics"] .masthead__copy,
-  html[data-skin="mutant-mathematics"] .index-heading,
-  html[data-skin="mutant-mathematics"] .page-heading,
-  html[data-skin="mutant-mathematics"] .record-head,
-  html[data-skin="mutant-mathematics"] .home-shell > .record-index,
-  html[data-skin="mutant-mathematics"] .archive-tools,
-  html[data-skin="mutant-mathematics"] .archive-groups,
-  html[data-skin="mutant-mathematics"] .page-prose,
-  html[data-skin="mutant-mathematics"] .article__content,
-  html[data-skin="mutant-mathematics"] .record-end {
-    padding: 1rem;
-    border-width: 3px;
-    box-shadow: .25rem .3rem 0 var(--hazard-black);
-  }
+html[data-skin="mutant-mathematics"] .index-heading,
+html[data-skin="mutant-mathematics"] .page-heading,
+html[data-skin="mutant-mathematics"] .home-shell > .record-index,
+html[data-skin="mutant-mathematics"] .archive-tools,
+html[data-skin="mutant-mathematics"] .archive-groups,
+html[data-skin="mutant-mathematics"] .page-prose {
+  padding: 1rem;
+  border-width: 3px;
+  box-shadow: .25rem .3rem 0 var(--hazard-black);
+}
+html[data-skin="mutant-mathematics"] .record-head,
+html[data-skin="mutant-mathematics"] .article__content,
+html[data-skin="mutant-mathematics"] .record-end {
+  border-width: 3px;
+  box-shadow: .25rem .3rem 0 var(--hazard-black);
+}
+html[data-skin="mutant-mathematics"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="mutant-mathematics"] .masthead__copy,
   html[data-skin="mutant-mathematics"] .index-heading,
@@ -1362,26 +1374,25 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
 
 @media (forced-colors: active) {
   html[data-skin="mutant-mathematics"] .site-header,
-  html[data-skin="mutant-mathematics"] .site-footer,
-  html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell,
-  html[data-skin="mutant-mathematics"] .masthead__copy,
-  html[data-skin="mutant-mathematics"] .index-heading,
-  html[data-skin="mutant-mathematics"] .page-heading,
-  html[data-skin="mutant-mathematics"] .record-head,
-  html[data-skin="mutant-mathematics"] .home-shell > .record-index,
-  html[data-skin="mutant-mathematics"] .archive-tools,
-  html[data-skin="mutant-mathematics"] .archive-groups,
-  html[data-skin="mutant-mathematics"] .page-prose,
-  html[data-skin="mutant-mathematics"] .article__content,
-  html[data-skin="mutant-mathematics"] .record-end,
-  html[data-skin="mutant-mathematics"] .record-grid > .record-index,
-  html[data-skin="mutant-mathematics"] .code-frame,
-  html[data-skin="mutant-mathematics"] .code-frame__bar,
-  html[data-skin="mutant-mathematics"] .code-frame__status {
+html[data-skin="mutant-mathematics"] .home-shell,
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .record-page,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell,
+html[data-skin="mutant-mathematics"] .masthead__copy,
+html[data-skin="mutant-mathematics"] .index-heading,
+html[data-skin="mutant-mathematics"] .page-heading,
+html[data-skin="mutant-mathematics"] .record-head,
+html[data-skin="mutant-mathematics"] .home-shell > .record-index,
+html[data-skin="mutant-mathematics"] .archive-tools,
+html[data-skin="mutant-mathematics"] .archive-groups,
+html[data-skin="mutant-mathematics"] .page-prose,
+html[data-skin="mutant-mathematics"] .article__content,
+html[data-skin="mutant-mathematics"] .record-end,
+html[data-skin="mutant-mathematics"] .record-grid > .record-index,
+html[data-skin="mutant-mathematics"] .code-frame,
+html[data-skin="mutant-mathematics"] .code-frame__bar,
+html[data-skin="mutant-mathematics"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1563,53 +1574,6 @@ html[data-skin="mutant-mathematics"] .skin-randomizer {
   box-shadow: .2rem .24rem 0 var(--safety-low);
 }
 
-html[data-skin="mutant-mathematics"] .site-footer {
-  overflow: visible;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(22rem, .85fr);
-  grid-template-areas: "note links";
-  gap: 1.2rem 2rem;
-  align-items: end;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__note {
-  display: grid;
-  grid-area: note;
-  gap: .5rem;
-  margin: 0;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__note::before {
-  content: "FIELD STATION / PUBLIC RECORD";
-  color: var(--safety);
-  font-family: var(--keys);
-  font-size: .68rem;
-  font-weight: 900;
-  letter-spacing: .07em;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links {
-  display: grid;
-  grid-area: links;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .4rem;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links a {
-  min-height: 4.4rem;
-  padding: .55rem;
-  box-shadow: none;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links a:nth-child(2) {
-  color: var(--hazard-black);
-  background: var(--phosphor);
-  border-color: var(--hazard-black);
-}
-
 html[data-skin="mutant-mathematics"] .home-shell {
   display: grid;
   grid-template-columns: minmax(17rem, .72fr) minmax(0, 1.5fr);
@@ -1756,40 +1720,15 @@ html[data-skin="mutant-mathematics"] .archive-shell .archive-year > .record-list
   grid-row: 2;
 }
 
-html[data-skin="mutant-mathematics"] .record-page {
-  display: grid;
-  gap: clamp(1.2rem, 2.8vw, 2.6rem);
-}
-
-html[data-skin="mutant-mathematics"] .record-page > .record-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.42fr) minmax(13rem, .58fr);
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags actions";
-  gap: 1rem clamp(1.2rem, 3vw, 2.8rem);
-  align-items: start;
-}
-
 html[data-skin="mutant-mathematics"] .record-page .record-head__key {
-  grid-area: key;
   margin: 0;
 }
 
-html[data-skin="mutant-mathematics"] .record-page .record-head h1 {
-  grid-area: title;
-}
-
 html[data-skin="mutant-mathematics"] .record-page .record-head__abstract {
-  grid-area: abstract;
   margin: 0;
 }
 
 html[data-skin="mutant-mathematics"] .record-page .record-facts {
-  grid-area: facts;
-  grid-template-columns: minmax(0, 1fr);
   gap: .65rem;
   margin: 0;
   padding: .75rem;
@@ -1828,39 +1767,6 @@ html[data-skin="mutant-mathematics"] .record-page .record-actions a {
   padding: .55rem;
 }
 
-html[data-skin="mutant-mathematics"] .record-page > .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
-  grid-template-areas: "article index";
-  gap: clamp(1rem, 2.4vw, 2rem);
-  justify-content: stretch;
-  margin: 0;
-  align-items: start;
-}
-
-html[data-skin="mutant-mathematics"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  position: sticky;
-  top: 1rem;
-}
-
-html[data-skin="mutant-mathematics"] .record-page > .record-end {
-  display: grid;
-  grid-template-columns: minmax(0, .75fr) minmax(16rem, 1.25fr);
-  gap: 1rem;
-  margin: 0;
-  align-items: center;
-}
-
 html[data-skin="mutant-mathematics"] .record-page > .record-end > p {
   margin: 0;
 }
@@ -1875,13 +1781,6 @@ html[data-skin="mutant-mathematics"] .record-page > .record-end nav {
   html[data-skin="mutant-mathematics"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: none;
-  }
-
-  html[data-skin="mutant-mathematics"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "note"
-      "links";
   }
 
   html[data-skin="mutant-mathematics"] .site-nav {
@@ -1920,10 +1819,9 @@ html[data-skin="mutant-mathematics"] .record-page > .record-end nav {
   }
 
   html[data-skin="mutant-mathematics"] .home-shell > .masthead,
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="mutant-mathematics"] .home-shell .masthead__copy {
     min-height: 0;
@@ -1960,33 +1858,13 @@ html[data-skin="mutant-mathematics"] .record-page > .record-end nav {
     transform: none;
   }
 
-  html[data-skin="mutant-mathematics"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
-
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
   html[data-skin="mutant-mathematics"] .record-page .record-actions,
-  html[data-skin="mutant-mathematics"] .record-page > .record-end,
-  html[data-skin="mutant-mathematics"] .record-page > .record-end nav {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="mutant-mathematics"] .record-page > .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 }
 
 @media (max-width: 34rem) {
-  html[data-skin="mutant-mathematics"] .site-footer__links,
   html[data-skin="mutant-mathematics"] .archive-shell .quick-filters {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2131,25 +2009,20 @@ html[data-skin="mutant-mathematics"] .skip-link {
 }
 
 html[data-skin="mutant-mathematics"] .site-header,
-html[data-skin="mutant-mathematics"] .site-footer,
 html[data-skin="mutant-mathematics"] .home-shell,
 html[data-skin="mutant-mathematics"] .archive-shell,
-html[data-skin="mutant-mathematics"] .record-page,
 html[data-skin="mutant-mathematics"] .page-shell,
 html[data-skin="mutant-mathematics"] .error-shell,
 html[data-skin="mutant-mathematics"] .masthead,
-html[data-skin="mutant-mathematics"] .article__content,
 html[data-skin="mutant-mathematics"] .page-prose,
-html[data-skin="mutant-mathematics"] .record-grid,
 html[data-skin="mutant-mathematics"] .record-index,
 html[data-skin="mutant-mathematics"] .archive-tools,
 html[data-skin="mutant-mathematics"] .archive-groups,
-html[data-skin="mutant-mathematics"] .record-end {
+html[data-skin="mutant-mathematics"] .record-end:not(:where(.record-page, .record-page *)) {
   overflow: visible;
 }
 
-html[data-skin="mutant-mathematics"] .site-header,
-html[data-skin="mutant-mathematics"] .site-footer {
+html[data-skin="mutant-mathematics"] .site-header {
   width: min(86rem, calc(100% - 2rem));
   margin: 1rem auto;
   color: var(--mm-code-text);
@@ -2163,18 +2036,15 @@ html[data-skin="mutant-mathematics"] .site-footer {
 }
 
 html[data-skin="mutant-mathematics"] .site-header::before,
-html[data-skin="mutant-mathematics"] .site-footer::before,
 html[data-skin="mutant-mathematics"] .site-nav a[data-route]::before,
 html[data-skin="mutant-mathematics"] .site-nav > .theme-toggle::before,
 html[data-skin="mutant-mathematics"] .site-nav > .skin-menu summary::before,
-html[data-skin="mutant-mathematics"] .skin-menu__panel::before,
-html[data-skin="mutant-mathematics"] .site-footer__note::before {
+html[data-skin="mutant-mathematics"] .skin-menu__panel::before {
   content: none;
   font-size: 1rem;
 }
 
-html[data-skin="mutant-mathematics"] .site-header__inner,
-html[data-skin="mutant-mathematics"] .site-footer__inner {
+html[data-skin="mutant-mathematics"] .site-header__inner {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -2238,7 +2108,6 @@ html[data-skin="mutant-mathematics"] .tag-line a,
 html[data-skin="mutant-mathematics"] .quick-filters a,
 html[data-skin="mutant-mathematics"] .pagination a,
 html[data-skin="mutant-mathematics"] .pagination span,
-html[data-skin="mutant-mathematics"] .site-footer__links a,
 html[data-skin="mutant-mathematics"] .record-end nav a,
 html[data-skin="mutant-mathematics"] .code-frame__actions button {
   min-height: 2.75rem;
@@ -2342,16 +2211,14 @@ html[data-skin="mutant-mathematics"] .skin-menu select:focus-visible {
 html[data-skin="mutant-mathematics"] .skin-randomizer,
 html[data-skin="mutant-mathematics"] .action--primary,
 html[data-skin="mutant-mathematics"] .record-actions a:last-child,
-html[data-skin="mutant-mathematics"] .tag-line a:nth-child(odd),
-html[data-skin="mutant-mathematics"] .site-footer__links a:nth-child(2) {
+html[data-skin="mutant-mathematics"] .tag-line a:nth-child(odd) {
   color: var(--mm-on-selected);
   background: var(--mm-selected);
   border-color: var(--mm-on-selected);
 }
 
 html[data-skin="mutant-mathematics"] .tag-line a:nth-child(odd),
-html[data-skin="mutant-mathematics"] .record-actions a:last-child,
-html[data-skin="mutant-mathematics"] .site-footer__links a:nth-child(2) {
+html[data-skin="mutant-mathematics"] .record-actions a:last-child {
   color: var(--mm-code-text);
   background: var(--mm-code-bg);
   border-color: var(--mm-signal);
@@ -2375,8 +2242,6 @@ html[data-skin="mutant-mathematics"] .quick-filters a:hover,
 html[data-skin="mutant-mathematics"] .quick-filters a:focus-visible,
 html[data-skin="mutant-mathematics"] .pagination a:hover,
 html[data-skin="mutant-mathematics"] .pagination a:focus-visible,
-html[data-skin="mutant-mathematics"] .site-footer__links a:hover,
-html[data-skin="mutant-mathematics"] .site-footer__links a:focus-visible,
 html[data-skin="mutant-mathematics"] .record-end nav a:hover,
 html[data-skin="mutant-mathematics"] .record-end nav a:focus-visible,
 html[data-skin="mutant-mathematics"] .code-frame__actions button:hover,
@@ -2424,7 +2289,6 @@ html[data-skin="mutant-mathematics"] :is(
 
 html[data-skin="mutant-mathematics"] .home-shell,
 html[data-skin="mutant-mathematics"] .archive-shell,
-html[data-skin="mutant-mathematics"] .record-page,
 html[data-skin="mutant-mathematics"] .page-shell,
 html[data-skin="mutant-mathematics"] .error-shell {
   width: min(86rem, calc(100% - 2rem));
@@ -2441,14 +2305,31 @@ html[data-skin="mutant-mathematics"] .error-shell {
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="mutant-mathematics"] .record-page {
+  color: var(--mm-text);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 
 html[data-skin="mutant-mathematics"] .masthead__copy,
 html[data-skin="mutant-mathematics"] .index-heading,
-html[data-skin="mutant-mathematics"] .page-heading,
-html[data-skin="mutant-mathematics"] .record-head {
+html[data-skin="mutant-mathematics"] .page-heading {
   position: relative;
   isolation: isolate;
   padding: clamp(1rem, 2.4vw, 2rem);
+  color: var(--mm-on-signal);
+  background-color: var(--mm-signal);
+  background-image: linear-gradient(90deg, #14211918 1px, transparent 1px);
+  background-size: 1.5rem 100%;
+  border: 2px solid var(--mm-on-signal);
+  border-left: .65rem solid var(--mm-register);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="mutant-mathematics"] .record-head {
+  isolation: isolate;
   color: var(--mm-on-signal);
   background-color: var(--mm-signal);
   background-image: linear-gradient(90deg, #14211918 1px, transparent 1px);
@@ -2509,9 +2390,17 @@ html[data-skin="mutant-mathematics"] .record-end nav span {
 html[data-skin="mutant-mathematics"] .masthead h1,
 html[data-skin="mutant-mathematics"] .index-heading h1,
 html[data-skin="mutant-mathematics"] .page-heading h1,
-html[data-skin="mutant-mathematics"] .record-head h1,
 html[data-skin="mutant-mathematics"] .error-shell h1 {
   max-width: 17ch;
+  color: inherit;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.2vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -.065em;
+  line-height: 1.02;
+  text-shadow: none;
+}
+html[data-skin="mutant-mathematics"] .record-head h1 {
   color: inherit;
   font-family: var(--display);
   font-size: clamp(2.25rem, 4.2vw, 4rem);
@@ -2523,9 +2412,13 @@ html[data-skin="mutant-mathematics"] .error-shell h1 {
 
 html[data-skin="mutant-mathematics"] .masthead__lede,
 html[data-skin="mutant-mathematics"] .index-heading > p:last-child,
-html[data-skin="mutant-mathematics"] .page-heading > p:last-child,
-html[data-skin="mutant-mathematics"] .record-head__abstract {
+html[data-skin="mutant-mathematics"] .page-heading > p:last-child {
   max-width: 58ch;
+  font-size: 1.125rem !important;
+  font-weight: 650;
+  line-height: 1.55;
+}
+html[data-skin="mutant-mathematics"] .record-head__abstract {
   font-size: 1.125rem !important;
   font-weight: 650;
   line-height: 1.55;
@@ -2581,9 +2474,7 @@ html[data-skin="mutant-mathematics"] .home-shell > .record-index {
 html[data-skin="mutant-mathematics"] .home-shell > .record-index,
 html[data-skin="mutant-mathematics"] .archive-tools,
 html[data-skin="mutant-mathematics"] .archive-groups,
-html[data-skin="mutant-mathematics"] .page-prose,
-html[data-skin="mutant-mathematics"] .article__content,
-html[data-skin="mutant-mathematics"] .record-end {
+html[data-skin="mutant-mathematics"] .page-prose {
   position: relative;
   padding: clamp(1rem, 2.4vw, 2rem);
   color: var(--mm-text);
@@ -2593,6 +2484,20 @@ html[data-skin="mutant-mathematics"] .record-end {
   border-left: .45rem solid var(--mm-register);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="mutant-mathematics"] .article__content,
+html[data-skin="mutant-mathematics"] .record-end {
+  color: var(--mm-text);
+  background-color: var(--mm-paper);
+  background-image: repeating-linear-gradient(180deg, transparent 0 2rem, #71826d22 2rem 2.06rem);
+  border: 2px solid var(--mm-text);
+  border-left: .45rem solid var(--mm-register);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="mutant-mathematics"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
+  padding: clamp(1rem, 2.4vw, 2rem);
 }
 
 html[data-skin="mutant-mathematics"] .section-heading {
@@ -2881,21 +2786,7 @@ html[data-skin="mutant-mathematics"] .archive-empty {
   font-weight: 800;
 }
 
-html[data-skin="mutant-mathematics"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(14rem, .5fr);
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags actions";
-  gap: 1rem 1.5rem;
-  margin: 0;
-}
-
 html[data-skin="mutant-mathematics"] .record-page .record-head__key {
-  grid-area: key;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem 1rem;
@@ -2910,14 +2801,13 @@ html[data-skin="mutant-mathematics"] .record-page .record-head__key span:last-ch
   color: inherit;
 }
 
-html[data-skin="mutant-mathematics"] .record-page .record-head h1 { grid-area: title; }
-html[data-skin="mutant-mathematics"] .record-page .record-head__abstract { grid-area: abstract; margin: 0; }
+html[data-skin="mutant-mathematics"] .record-page .record-head__abstract {
+  margin: 0;
+}
 html[data-skin="mutant-mathematics"] .record-page .tag-line { grid-area: tags; margin: 0; }
 
 html[data-skin="mutant-mathematics"] .record-page .record-facts {
-  grid-area: facts;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .5rem;
   margin: 0;
   padding: .75rem;
@@ -2951,33 +2841,11 @@ html[data-skin="mutant-mathematics"] .record-page .record-actions {
 }
 
 html[data-skin="mutant-mathematics"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas: none;
-  gap: 1rem;
-  margin: 0;
   background: transparent;
   border: 0;
 }
 
-html[data-skin="mutant-mathematics"] .record-page > .record-grid > .article__content {
-  grid-area: auto;
-  grid-column: 3 / span 7;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-}
-
 html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-  grid-area: auto;
-  grid-column: 10 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
-  position: sticky;
-  top: 1rem;
   color: var(--mm-code-text);
   background-color: var(--mm-code-bg);
   background-image: linear-gradient(90deg, var(--mm-bench-rule) 1px, transparent 1px);
@@ -3026,11 +2894,6 @@ html[data-skin="mutant-mathematics"] .related-records h2 {
 }
 
 html[data-skin="mutant-mathematics"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, .75fr) minmax(16rem, 1.25fr);
-  gap: 1rem;
-  margin: 0;
   border-bottom: .45rem solid var(--mm-register);
 }
 
@@ -3048,11 +2911,13 @@ html[data-skin="mutant-mathematics"] .record-end nav a {
 }
 
 html[data-skin="mutant-mathematics"] .prose {
-  max-width: 68ch;
   color: var(--mm-text);
   font-family: var(--body);
   font-size: 1.125rem;
   line-height: 1.7;
+}
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) {
+  max-width: 68ch;
 }
 
 html[data-skin="mutant-mathematics"] .prose h1,
@@ -3061,12 +2926,19 @@ html[data-skin="mutant-mathematics"] .prose h3,
 html[data-skin="mutant-mathematics"] .prose h4,
 html[data-skin="mutant-mathematics"] .prose h5,
 html[data-skin="mutant-mathematics"] .prose h6 {
-  max-width: 100%;
   color: var(--mm-heading);
   font-family: var(--display);
   font-weight: 900;
   letter-spacing: -.035em;
   line-height: 1.15;
+}
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h1,
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h2,
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h3,
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h4,
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h5,
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) h6 {
+  max-width: 100%;
 }
 
 html[data-skin="mutant-mathematics"] .prose h1,
@@ -3150,10 +3022,12 @@ html[data-skin="mutant-mathematics"] .prose code {
 
 html[data-skin="mutant-mathematics"] .prose table {
   display: block;
-  width: 100%;
-  max-width: 100%;
   overflow-x: auto;
   font-size: 1rem !important;
+}
+html[data-skin="mutant-mathematics"] .prose:not(:where(.record-page, .record-page *)) table {
+  width: 100%;
+  max-width: 100%;
 }
 
 html[data-skin="mutant-mathematics"] .prose th,
@@ -3375,47 +3249,13 @@ html[data-skin="mutant-mathematics"] .error-shell > nav {
   gap: .5rem;
 }
 
-html[data-skin="mutant-mathematics"] .site-footer__inner {
-  grid-template-areas: none;
-  align-items: center;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__note {
-  grid-area: auto;
-  grid-column: 1 / span 7;
-  display: block;
-  margin: 0;
-  color: var(--mm-code-text);
-  font-size: 1rem !important;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__note a {
-  color: var(--mm-code-text);
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links {
-  grid-area: auto;
-  grid-column: 8 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="mutant-mathematics"] .site-footer__links a {
-  justify-content: center;
-  text-align: center;
-}
-
 @media (max-width: 60rem) {
-  html[data-skin="mutant-mathematics"] .site-header__inner,
-  html[data-skin="mutant-mathematics"] .site-footer__inner {
+  html[data-skin="mutant-mathematics"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="mutant-mathematics"] .site-brand,
-  html[data-skin="mutant-mathematics"] .site-nav,
-  html[data-skin="mutant-mathematics"] .site-footer__note,
-  html[data-skin="mutant-mathematics"] .site-footer__links {
+html[data-skin="mutant-mathematics"] .site-nav {
     grid-column: 1;
   }
 
@@ -3436,51 +3276,30 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
   }
 
   html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="mutant-mathematics"] .home-shell > .masthead,
-  html[data-skin="mutant-mathematics"] .home-shell > .record-index,
-  html[data-skin="mutant-mathematics"] .archive-shell > .index-heading,
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-groups,
-  html[data-skin="mutant-mathematics"] .record-page > .record-head,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .article__content,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index,
-  html[data-skin="mutant-mathematics"] .record-page > .record-end,
-  html[data-skin="mutant-mathematics"] .page-shell > .page-heading,
-  html[data-skin="mutant-mathematics"] .page-shell > .page-prose {
-    grid-column: 1;
-  }
+html[data-skin="mutant-mathematics"] .home-shell > .record-index,
+html[data-skin="mutant-mathematics"] .archive-shell > .index-heading,
+html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
+html[data-skin="mutant-mathematics"] .archive-shell > .archive-groups,
+html[data-skin="mutant-mathematics"] .page-shell > .page-heading,
+html[data-skin="mutant-mathematics"] .page-shell > .page-prose {
+  grid-column: 1;
+}
 
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="mutant-mathematics"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
+  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="mutant-mathematics"] .record-page .record-actions,
-  html[data-skin="mutant-mathematics"] .record-page > .record-end,
-  html[data-skin="mutant-mathematics"] .record-end nav,
-  html[data-skin="mutant-mathematics"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="mutant-mathematics"] .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="mutant-mathematics"] .archive-year,
   html[data-skin="mutant-mathematics"] .archive-shell .archive-year {
@@ -3542,14 +3361,12 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
 
 @media (max-width: 34rem) {
   html[data-skin="mutant-mathematics"] .site-header,
-  html[data-skin="mutant-mathematics"] .site-footer,
-  html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell {
-    width: min(100% - 1rem, 86rem);
-  }
+html[data-skin="mutant-mathematics"] .home-shell,
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell {
+  width: min(100% - 1rem, 86rem);
+}
 
   html[data-skin="mutant-mathematics"] .quick-filters,
   html[data-skin="mutant-mathematics"] .all-tags__grid,
@@ -3557,10 +3374,9 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="mutant-mathematics"] .masthead__copy,
-  html[data-skin="mutant-mathematics"] .record-head {
-    padding-right: 1rem;
-  }
+  html[data-skin="mutant-mathematics"] .masthead__copy {
+  padding-right: 1rem;
+}
 
   html[data-skin="mutant-mathematics"] .masthead__copy::before,
   html[data-skin="mutant-mathematics"] .record-head::before {
@@ -3590,27 +3406,26 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
 
 @media (forced-colors: active) {
   html[data-skin="mutant-mathematics"] body,
-  html[data-skin="mutant-mathematics"] .site-header,
-  html[data-skin="mutant-mathematics"] .site-footer,
-  html[data-skin="mutant-mathematics"] .home-shell,
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page,
-  html[data-skin="mutant-mathematics"] .page-shell,
-  html[data-skin="mutant-mathematics"] .error-shell,
-  html[data-skin="mutant-mathematics"] .masthead__copy,
-  html[data-skin="mutant-mathematics"] .index-heading,
-  html[data-skin="mutant-mathematics"] .page-heading,
-  html[data-skin="mutant-mathematics"] .record-head,
-  html[data-skin="mutant-mathematics"] .home-shell > .record-index,
-  html[data-skin="mutant-mathematics"] .archive-tools,
-  html[data-skin="mutant-mathematics"] .archive-groups,
-  html[data-skin="mutant-mathematics"] .article__content,
-  html[data-skin="mutant-mathematics"] .page-prose,
-  html[data-skin="mutant-mathematics"] .record-end,
-  html[data-skin="mutant-mathematics"] .record-grid > .record-index,
-  html[data-skin="mutant-mathematics"] .prose .code-frame,
-  html[data-skin="mutant-mathematics"] .code-frame__bar,
-  html[data-skin="mutant-mathematics"] .code-frame__status {
+html[data-skin="mutant-mathematics"] .site-header,
+html[data-skin="mutant-mathematics"] .home-shell,
+html[data-skin="mutant-mathematics"] .archive-shell,
+html[data-skin="mutant-mathematics"] .record-page,
+html[data-skin="mutant-mathematics"] .page-shell,
+html[data-skin="mutant-mathematics"] .error-shell,
+html[data-skin="mutant-mathematics"] .masthead__copy,
+html[data-skin="mutant-mathematics"] .index-heading,
+html[data-skin="mutant-mathematics"] .page-heading,
+html[data-skin="mutant-mathematics"] .record-head,
+html[data-skin="mutant-mathematics"] .home-shell > .record-index,
+html[data-skin="mutant-mathematics"] .archive-tools,
+html[data-skin="mutant-mathematics"] .archive-groups,
+html[data-skin="mutant-mathematics"] .article__content,
+html[data-skin="mutant-mathematics"] .page-prose,
+html[data-skin="mutant-mathematics"] .record-end,
+html[data-skin="mutant-mathematics"] .record-grid > .record-index,
+html[data-skin="mutant-mathematics"] .prose .code-frame,
+html[data-skin="mutant-mathematics"] .code-frame__bar,
+html[data-skin="mutant-mathematics"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -3621,11 +3436,18 @@ html[data-skin="mutant-mathematics"] .site-footer__links a {
     color: LinkText;
   }
 
-  html[data-skin="mutant-mathematics"] :is(
-    .site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-randomizer,
-    .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a,
-    .pagination span, .site-footer__links a, .record-end nav a, .code-frame__actions button
-  ) {
+  html[data-skin="mutant-mathematics"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3680,9 +3502,13 @@ html[data-skin="mutant-mathematics"] .code-frame__actions button[aria-pressed="t
 html[data-skin="mutant-mathematics"] .masthead h1,
 html[data-skin="mutant-mathematics"] .index-heading h1,
 html[data-skin="mutant-mathematics"] .page-heading h1,
-html[data-skin="mutant-mathematics"] .record-head h1,
 html[data-skin="mutant-mathematics"] .error-shell h1 {
   max-width: 18ch;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+html[data-skin="mutant-mathematics"] .record-head h1 {
   font-size: clamp(2rem, 3.2vw, 3rem);
   overflow-wrap: anywhere;
   word-break: normal;
@@ -3753,37 +3579,24 @@ html[data-skin="mutant-mathematics"] .prose .code-frame__gutter {
   border-right: 0;
 }
 
-html[data-skin="mutant-mathematics"] .record-page > .record-head {
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags tags"
-    "actions actions";
-}
-
 html[data-skin="mutant-mathematics"] .record-page .record-actions {
   min-width: 0;
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 }
 
 @media (max-width: 72rem) {
-  html[data-skin="mutant-mathematics"] .archive-shell,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="mutant-mathematics"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-groups,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .article__content,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-    grid-column: 1;
-  }
+html[data-skin="mutant-mathematics"] .archive-shell > .archive-groups {
+  grid-column: 1;
+}
 
-  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools,
-  html[data-skin="mutant-mathematics"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="mutant-mathematics"] .archive-shell > .archive-tools {
+  position: static;
+}
 }
 
 @media (forced-colors: active) {
@@ -3834,18 +3647,6 @@ html[data-skin="mutant-mathematics"] .record-page .record-actions {
   html[data-skin="mutant-mathematics"] .highlight .err {
     color: HighlightText !important;
     background: Highlight !important;
-  }
-}
-
-@media (max-width: 60rem) {
-  html[data-skin="mutant-mathematics"] .record-page > .record-head {
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
   }
 }
 

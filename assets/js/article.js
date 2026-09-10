@@ -5,7 +5,7 @@
   if (!content) return;
 
   const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-  const initialOverflowUpdates = [];
+  const overflowUpdates = [];
   const announce = async (node, message, isCurrent = () => true) => {
     node.textContent = '';
     await nextFrame();
@@ -50,7 +50,7 @@
     };
     if ('ResizeObserver' in window) new ResizeObserver(updateOverflow).observe(pre);
     else addEventListener('resize', updateOverflow);
-    initialOverflowUpdates.push(updateOverflow);
+    overflowUpdates.push(updateOverflow);
 
     let copyAttempt = 0;
     const removeFallback = () => frame.querySelector('.code-frame__fallback')?.remove();
@@ -113,9 +113,7 @@
     });
   });
 
-  requestAnimationFrame(() => {
-    initialOverflowUpdates.forEach((update) => update());
-  });
+  requestAnimationFrame(() => overflowUpdates.forEach((update) => update()));
 
   const article = document.querySelector('.js-article-content');
   if (!article) return;
@@ -125,8 +123,14 @@
     if (frame) block.dataset.lang = frame.dataset.language;
   });
 
-  const headings = [...article.querySelectorAll('h2[id], h3[id], h4[id]')];
+  const idCounts = new Map();
+  document.querySelectorAll('[id]').forEach((node) => {
+    idCounts.set(node.id, (idCounts.get(node.id) || 0) + 1);
+  });
+  const headings = [...article.querySelectorAll('h2[id], h3[id], h4[id]')].filter((heading) =>
+    heading.id && idCounts.get(heading.id) === 1 && heading.textContent.trim());
   headings.forEach((heading) => {
+    if (heading.querySelector('.heading-anchor')) return;
     const title = heading.textContent.trim();
     heading.dataset.tocTitle = title;
     const anchor = document.createElement('a');
@@ -138,13 +142,17 @@
   });
 
   const toc = document.querySelector('.js-toc-root');
-  const tocBox = toc && toc.closest('details');
-  if (tocBox && !headings.length) {
-    tocBox.hidden = true;
+  const tocBox = toc?.closest('details');
+  if (!toc) return;
+  if (tocBox && !tocBox.hasAttribute('data-toc-enhanced')) {
+    if (!matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
+    tocBox.setAttribute('data-toc-enhanced', '');
+  }
+  if (toc.hasAttribute('data-toc-built')) return;
+  if (!headings.length) {
+    if (tocBox) tocBox.hidden = true;
     return;
   }
-  if (!toc || !headings.length) return;
-  if (tocBox && !matchMedia('(min-width: 68.01rem)').matches) tocBox.open = false;
 
   toc.textContent = '';
   const list = document.createElement('ol');

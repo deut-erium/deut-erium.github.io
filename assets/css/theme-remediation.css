@@ -32,9 +32,7 @@ html .prose .heading-anchor {
 }
 
 html[data-skin] .site-header,
-html[data-skin] .site-footer,
 html[data-skin] .masthead,
-html[data-skin] .article__content,
 html[data-skin] .page-prose {
   overflow: visible;
 }
@@ -90,21 +88,6 @@ html[data-skin="root-in-seven"][data-theme="dark"] .index-map__links a:nth-child
 html[data-skin="root-in-seven"][data-theme="dark"] .index-map__links a:nth-child(4n + 2),
 html[data-skin="root-in-seven"][data-theme="dark"] .index-map__links a:nth-child(4n + 2) :is(span, strong) {
   color: #121828 !important;
-}
-
-html[data-skin="magnetic-index"] .site-footer__inner {
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "note"
-    "links";
-}
-
-html[data-skin="magnetic-index"] .site-footer__note {
-  grid-area: note;
-}
-
-html[data-skin="magnetic-index"] .site-footer__links {
-  grid-area: links;
 }
 
 /* A single dark code surface lets the complete Rouge palette stay legible. */
@@ -289,11 +272,6 @@ html[data-theme="dark"] .theme-toggle .theme-toggle__icon--sun {
 
 /* A desktop article reserves a readable prose track. Narrow screens stack the
    navigation rail and let code scroll inside its own frame, not the page. */
-@media (min-width: 70rem) {
-  html[data-skin] .record-page .article__content {
-    min-width: 0;
-  }
-}
 
 html[data-skin] .prose .code-frame__viewport,
 html[data-skin] .prose .code-frame pre {
@@ -332,53 +310,11 @@ html[data-skin] .prose .code-frame.is-wrapped pre code {
   }
 }
 
-@media (max-width: 70rem) {
-  html[data-skin] .record-page .record-grid {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-
-  html[data-skin] .record-page .record-grid > .record-index {
-    position: static !important;
-    width: 100%;
-  }
-}
-
 @media (max-width: 44rem) {
-  /* Footer contract. Skins lay the footer out as decorative grids
-     (staff bars, ledger columns); at phone widths those grids do not
-     collapse: a one-line note stretched to 1000px and link pills
-     forced one-per-row. At <=44rem every skin stacks once, wraps
-     links inline, and the note returns to its natural height. */
-  html[data-skin] .site-footer__inner {
-    display: flex !important;
-    flex-direction: column !important;
-    grid-template-columns: none !important;
-    grid-template-areas: none !important;
-    align-items: stretch !important;
-  }
-
-  html[data-skin] .site-footer__note {
-    height: auto !important;
-    min-height: 0 !important;
-    max-width: none !important;
-  }
-
-  html[data-skin] .site-footer__links {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    grid-template-columns: none !important;
-    justify-content: flex-start !important;
-  }
-
-  html[data-skin] .site-footer__links a {
-    width: auto !important;
-  }
+  html[data-skin] .record-columns,
+html[data-skin] .record-row__link {
+  min-width: 0;
 }
-
-@media (max-width: 44rem) {
-  html[data-skin] :is(.record-columns, .record-row__link, .record-facts, .site-footer__links) {
-    min-width: 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -427,7 +363,10 @@ html[data-skin] :is(main > style, main > script) {
   display: none !important;
 }
 
-html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin] .home-shell,
+html[data-skin] .archive-shell,
+html[data-skin] .page-shell,
+html[data-skin] .error-shell {
   box-sizing: border-box !important;
   width: min(calc(100% - 2rem), 96rem) !important;
   max-width: 96rem !important;
@@ -438,7 +377,7 @@ html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .err
 /* The chrome shares the main shells' page width so the header and footer
    align with the body at every zoom level and viewport. Twin Blades and
    Margin of Error keep their rail layouts. */
-html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header, .site-footer) {
+html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header) {
   box-sizing: border-box !important;
   width: min(calc(100% - 2rem), 96rem) !important;
   max-width: 96rem !important;
@@ -447,7 +386,7 @@ html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]
 
 /* Below 54rem the main shells go full bleed; the chrome follows them. */
 @media (max-width: 54rem) {
-  html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header, .site-footer) {
+  html[data-skin]:not([data-skin="twin-blades"]):not([data-skin="margin-of-error"]) :is(.site-header) {
     width: 100% !important;
     margin-inline: 0 !important;
   }
@@ -518,22 +457,18 @@ html[data-skin="twin-blades"] .site-brand__name {
   font-size: clamp(1.3rem, 2vw, 1.9rem) !important;
 }
 
-html[data-skin] :is(.home-shell, .archive-shell, .record-page) {
+html[data-skin] .home-shell,
+html[data-skin] .archive-shell {
   display: block !important;
   grid-template: none !important;
 }
 
-html[data-skin] :is(
-  .home-shell > .masthead,
-  .home-shell > .record-index,
-  .archive-shell > .index-heading,
-  .archive-shell > .archive-tools,
-  .archive-shell > .archive-groups,
-  .archive-shell > .record-end,
-  .record-page > .record-head,
-  .record-page > .record-grid,
-  .record-page > .record-end
-) {
+html[data-skin] .home-shell > .masthead,
+html[data-skin] .home-shell > .record-index,
+html[data-skin] .archive-shell > .index-heading,
+html[data-skin] .archive-shell > .archive-tools,
+html[data-skin] .archive-shell > .archive-groups,
+html[data-skin] .archive-shell > .record-end {
   position: relative !important;
   inset: auto !important;
   box-sizing: border-box !important;
@@ -547,62 +482,6 @@ html[data-skin] :is(
   grid-row: auto !important;
 }
 
-html[data-skin] .record-page > .record-head {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem) !important;
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags tags"
-    "actions actions" !important;
-  gap: clamp(.75rem, 1.5vw, 1.25rem) clamp(1rem, 2.5vw, 2rem) !important;
-  align-items: start !important;
-}
-
-html[data-skin] .record-head > .record-head__key { grid-area: key !important; }
-html[data-skin] .record-head > h1 { grid-area: title !important; }
-html[data-skin] .record-head > .record-head__abstract { grid-area: abstract !important; }
-html[data-skin] .record-head > .record-facts { grid-area: facts !important; }
-html[data-skin] .record-head > .tag-line { grid-area: tags !important; }
-html[data-skin] .record-head > .record-actions { grid-area: actions !important; }
-
-html[data-skin] .record-page > .record-grid {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem) !important;
-  grid-template-areas: "article rail" !important;
-  gap: clamp(1.25rem, 2.5vw, 2.5rem) !important;
-  align-items: start !important;
-}
-
-html[data-skin] .record-grid > .article__content {
-  grid-area: article !important;
-  grid-column: auto !important;
-  grid-row: auto !important;
-  box-sizing: border-box !important;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin-inline: 0 !important;
-  transform: none !important;
-  justify-self: stretch !important;
-  align-self: start !important;
-}
-
-html[data-skin] .record-grid > .record-index {
-  grid-area: rail !important;
-  grid-column: auto !important;
-  grid-row: auto !important;
-  box-sizing: border-box !important;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin-inline: 0 !important;
-  transform: none !important;
-  justify-self: stretch !important;
-  align-self: start !important;
-}
-
 html[data-skin] :is(.site-brand__name, .masthead h1, .index-heading h1, .page-heading h1, .record-head h1) {
   overflow-wrap: normal !important;
   word-break: normal !important;
@@ -610,25 +489,12 @@ html[data-skin] :is(.site-brand__name, .masthead h1, .index-heading h1, .page-he
 }
 
 @media (max-width: 54rem) {
-  html[data-skin] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100% !important;
-  }
-
-  html[data-skin] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions" !important;
-  }
-
-  html[data-skin] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-areas: "article" "rail" !important;
-  }
+  html[data-skin] .home-shell,
+html[data-skin] .archive-shell,
+html[data-skin] .page-shell,
+html[data-skin] .error-shell {
+  width: 100% !important;
+}
 
   html[data-skin] .record-row__link {
     display: grid !important;
@@ -671,8 +537,12 @@ html[data-skin] .skip-link:focus-visible {
   transform: translateY(.75rem) !important;
 }
 
-html[data-skin] .article__content :is(h1, h2, h3, h4, h5, h6) {
-  max-width: 100% !important;
+html[data-skin] .article__content h1,
+html[data-skin] .article__content h2,
+html[data-skin] .article__content h3,
+html[data-skin] .article__content h4,
+html[data-skin] .article__content h5,
+html[data-skin] .article__content h6 {
   overflow-wrap: anywhere !important;
   word-break: break-word !important;
 }
@@ -686,32 +556,32 @@ html[data-skin] .record-row__date {
 @media (max-width: 54rem) {
   /* On narrow screens the controls occupy a reserved top strip and scroll
      away with the document instead of covering article text. */
-  html[data-skin] body {
+  html body {
     position: relative;
     padding-top: 3.35rem !important;
   }
 
-  html[data-skin] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  html :is(.skin-dice, .theme-toggle, .site-share__btn) {
     position: absolute !important;
     top: .4rem !important;
     bottom: auto !important;
   }
 
-  html[data-skin] .skin-dice {
+  html .skin-dice {
     right: 3.65rem !important;
   }
 
-  html[data-skin] .theme-toggle {
+  html .theme-toggle {
     right: .6rem !important;
   }
 
-  html[data-skin] .site-share__btn {
+  html .site-share__btn {
     right: 6.7rem !important;
   }
 
   /* The popover stays anchored to the viewport even while the button rides
      the top strip. */
-  html[data-skin] .site-share__popover {
+  html .site-share__popover {
     bottom: auto !important;
     top: 3.4rem !important;
     right: .6rem !important;

@@ -138,10 +138,8 @@ html[data-skin="palace-of-excess"] .skip-link {
 }
 
 html[data-skin="palace-of-excess"] .site-header,
-html[data-skin="palace-of-excess"] .site-footer,
 html[data-skin="palace-of-excess"] .home-shell,
 html[data-skin="palace-of-excess"] .archive-shell,
-html[data-skin="palace-of-excess"] .record-page,
 html[data-skin="palace-of-excess"] .page-shell,
 html[data-skin="palace-of-excess"] .error-shell {
   position: relative;
@@ -155,9 +153,19 @@ html[data-skin="palace-of-excess"] .error-shell {
   border: 10px double var(--gold);
   box-shadow: 0 0 0 3px var(--peacock), .65rem .72rem 0 var(--peacock-deep);
 }
+html[data-skin="palace-of-excess"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    radial-gradient(ellipse at 50% 0, #fff8 0 19%, transparent 19.4%),
+    radial-gradient(circle at 1px 1px, #fff8 1px, transparent 1.2px),
+    linear-gradient(90deg, #d89a281e 0 1px, transparent 1px 100%);
+  background-size: auto, 13px 13px, 3.5rem 100%;
+  border: 10px double var(--gold);
+  box-shadow: 0 0 0 3px var(--peacock), .65rem .72rem 0 var(--peacock-deep);
+}
 
-html[data-skin="palace-of-excess"] .site-header,
-html[data-skin="palace-of-excess"] .site-footer {
+html[data-skin="palace-of-excess"] .site-header {
   color: var(--peacock-deep);
 }
 
@@ -166,22 +174,18 @@ html[data-skin="palace-of-excess"] .site-header {
   border-radius: 4.6rem 4.6rem .65rem .65rem / 2.6rem 2.6rem .65rem .65rem;
 }
 
-html[data-skin="palace-of-excess"] .site-footer {
-  margin-bottom: 1.75rem;
-  border-radius: .65rem .65rem 4.6rem 4.6rem / .65rem .65rem 2.6rem 2.6rem;
-}
-
 html[data-skin="palace-of-excess"] .home-shell,
 html[data-skin="palace-of-excess"] .archive-shell,
-html[data-skin="palace-of-excess"] .record-page,
 html[data-skin="palace-of-excess"] .page-shell,
 html[data-skin="palace-of-excess"] .error-shell {
   padding: clamp(1.3rem, 3vw, 3rem);
   border-radius: .65rem;
 }
+html[data-skin="palace-of-excess"] .record-page {
+  border-radius: .65rem;
+}
 
-html[data-skin="palace-of-excess"] .site-header::before,
-html[data-skin="palace-of-excess"] .site-footer::before {
+html[data-skin="palace-of-excess"] .site-header::before {
   position: absolute;
   z-index: 0;
   inset: .45rem;
@@ -194,8 +198,7 @@ html[data-skin="palace-of-excess"] .site-footer::before {
   border-radius: inherit;
 }
 
-html[data-skin="palace-of-excess"] .site-header__inner,
-html[data-skin="palace-of-excess"] .site-footer__inner {
+html[data-skin="palace-of-excess"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2.25rem;
@@ -243,8 +246,7 @@ html[data-skin="palace-of-excess"] .record-actions a,
 html[data-skin="palace-of-excess"] .tag-line a,
 html[data-skin="palace-of-excess"] .quick-filters a,
 html[data-skin="palace-of-excess"] .pagination a,
-html[data-skin="palace-of-excess"] .pagination span,
-html[data-skin="palace-of-excess"] .site-footer__links a {
+html[data-skin="palace-of-excess"] .pagination span {
   min-height: 2.8rem;
   color: var(--rose-pale);
   background: var(--peacock);
@@ -289,9 +291,7 @@ html[data-skin="palace-of-excess"] .tag-line a:focus-visible,
 html[data-skin="palace-of-excess"] .quick-filters a:hover,
 html[data-skin="palace-of-excess"] .quick-filters a:focus-visible,
 html[data-skin="palace-of-excess"] .pagination a:hover,
-html[data-skin="palace-of-excess"] .pagination a:focus-visible,
-html[data-skin="palace-of-excess"] .site-footer__links a:hover,
-html[data-skin="palace-of-excess"] .site-footer__links a:focus-visible {
+html[data-skin="palace-of-excess"] .pagination a:focus-visible {
   color: var(--peacock-deep);
   background: var(--jade-pale);
   border-color: var(--peacock);
@@ -338,17 +338,28 @@ html[data-skin="palace-of-excess"] .skin-randomizer {
   border-color: var(--peacock);
 }
 
-html[data-skin="palace-of-excess"] .masthead,
-html[data-skin="palace-of-excess"] .record-grid {
+html[data-skin="palace-of-excess"] .masthead {
   gap: clamp(1.3rem, 3vw, 2.6rem);
 }
 
 html[data-skin="palace-of-excess"] .masthead__copy,
 html[data-skin="palace-of-excess"] .index-heading,
 html[data-skin="palace-of-excess"] .page-heading,
-html[data-skin="palace-of-excess"] .record-head,
 html[data-skin="palace-of-excess"] .error-shell {
   position: relative;
+  isolation: isolate;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 50% 0, #f6b6cc70 0 17%, transparent 17.5%),
+    linear-gradient(90deg, #2bbcb126 0 1px, transparent 1px 100%),
+    radial-gradient(circle at 1px 1px, #d89a2835 1px, transparent 1.2px);
+  background-size: auto, 3.5rem 100%, 14px 14px;
+  border: 9px double var(--gold);
+  border-radius: 5.2rem 5.2rem .6rem .6rem / 3rem 3rem .6rem .6rem;
+  box-shadow: 0 0 0 2px var(--peacock), .48rem .55rem 0 var(--peacock);
+}
+html[data-skin="palace-of-excess"] .record-head {
   isolation: isolate;
   color: var(--ink);
   background-color: var(--paper);
@@ -1028,17 +1039,7 @@ html[data-skin="palace-of-excess"] .error-code i {
   box-shadow: 0 0 0 2px var(--gold);
 }
 
-html[data-skin="palace-of-excess"] .site-footer__note,
-html[data-skin="palace-of-excess"] .site-footer a {
-  color: var(--peacock-deep);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links {
-  gap: .55rem;
-}
-
 html[data-skin="palace-of-excess"][data-theme="dark"] .site-header,
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-footer,
 html[data-skin="palace-of-excess"][data-theme="dark"] .home-shell,
 html[data-skin="palace-of-excess"][data-theme="dark"] .archive-shell,
 html[data-skin="palace-of-excess"][data-theme="dark"] .record-page,
@@ -1049,16 +1050,13 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .page-shell {
     linear-gradient(90deg, #d89a2826 0 1px, transparent 1px 100%);
 }
 
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-header,
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-footer {
+html[data-skin="palace-of-excess"][data-theme="dark"] .site-header {
   color: var(--ink);
 }
 
 html[data-skin="palace-of-excess"][data-theme="dark"] .site-brand,
 html[data-skin="palace-of-excess"][data-theme="dark"] .site-brand__name,
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-brand__scope,
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-footer__note,
-html[data-skin="palace-of-excess"][data-theme="dark"] .site-footer a {
+html[data-skin="palace-of-excess"][data-theme="dark"] .site-brand__scope {
   color: var(--ink);
 }
 
@@ -1121,40 +1119,39 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .record-facts > div:nth-ch
 }
 
 @media (max-width: 68rem) {
-  html[data-skin="palace-of-excess"] .site-header__inner,
-  html[data-skin="palace-of-excess"] .site-footer__inner {
+  html[data-skin="palace-of-excess"] .site-header__inner {
     align-items: stretch;
   }
 
-  html[data-skin="palace-of-excess"] .site-nav,
-  html[data-skin="palace-of-excess"] .site-footer__links {
+  html[data-skin="palace-of-excess"] .site-nav {
     justify-content: flex-start;
   }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="palace-of-excess"] .site-header,
-  html[data-skin="palace-of-excess"] .site-footer,
-  html[data-skin="palace-of-excess"] .home-shell,
-  html[data-skin="palace-of-excess"] .archive-shell,
-  html[data-skin="palace-of-excess"] .record-page,
-  html[data-skin="palace-of-excess"] .page-shell,
-  html[data-skin="palace-of-excess"] .error-shell {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-width: 6px;
-    border-radius: .25rem;
-    box-shadow: 0 0 0 2px var(--peacock);
-  }
+html[data-skin="palace-of-excess"] .home-shell,
+html[data-skin="palace-of-excess"] .archive-shell,
+html[data-skin="palace-of-excess"] .page-shell,
+html[data-skin="palace-of-excess"] .error-shell {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-width: 6px;
+  border-radius: .25rem;
+  box-shadow: 0 0 0 2px var(--peacock);
+}
+html[data-skin="palace-of-excess"] .record-page {
+  border-width: 6px;
+  border-radius: .25rem;
+  box-shadow: 0 0 0 2px var(--peacock);
+}
 
-  html[data-skin="palace-of-excess"] .site-header::before,
-  html[data-skin="palace-of-excess"] .site-footer::before {
+  html[data-skin="palace-of-excess"] .site-header::before {
     inset: .25rem;
   }
 
-  html[data-skin="palace-of-excess"] .site-header__inner,
-  html[data-skin="palace-of-excess"] .site-footer__inner {
+  html[data-skin="palace-of-excess"] .site-header__inner {
     padding: .9rem;
   }
 
@@ -1179,28 +1176,33 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .record-facts > div:nth-ch
   }
 
   html[data-skin="palace-of-excess"] .home-shell,
-  html[data-skin="palace-of-excess"] .archive-shell,
-  html[data-skin="palace-of-excess"] .record-page,
-  html[data-skin="palace-of-excess"] .page-shell,
-  html[data-skin="palace-of-excess"] .error-shell {
-    padding: .85rem;
-  }
+html[data-skin="palace-of-excess"] .archive-shell,
+html[data-skin="palace-of-excess"] .page-shell,
+html[data-skin="palace-of-excess"] .error-shell {
+  padding: .85rem;
+}
 
   html[data-skin="palace-of-excess"] .masthead__copy,
-  html[data-skin="palace-of-excess"] .index-heading,
-  html[data-skin="palace-of-excess"] .page-heading,
-  html[data-skin="palace-of-excess"] .record-head,
-  html[data-skin="palace-of-excess"] .home-shell > .record-index,
-  html[data-skin="palace-of-excess"] .archive-tools,
-  html[data-skin="palace-of-excess"] .archive-groups,
-  html[data-skin="palace-of-excess"] .page-prose,
-  html[data-skin="palace-of-excess"] .article__content,
-  html[data-skin="palace-of-excess"] .record-end,
-  html[data-skin="palace-of-excess"] .record-grid > .record-index {
-    padding: 1rem;
-    border-width: 5px;
-    box-shadow: 0 0 0 2px var(--peacock);
-  }
+html[data-skin="palace-of-excess"] .index-heading,
+html[data-skin="palace-of-excess"] .page-heading,
+html[data-skin="palace-of-excess"] .home-shell > .record-index,
+html[data-skin="palace-of-excess"] .archive-tools,
+html[data-skin="palace-of-excess"] .archive-groups,
+html[data-skin="palace-of-excess"] .page-prose {
+  padding: 1rem;
+  border-width: 5px;
+  box-shadow: 0 0 0 2px var(--peacock);
+}
+html[data-skin="palace-of-excess"] .record-head,
+html[data-skin="palace-of-excess"] .article__content,
+html[data-skin="palace-of-excess"] .record-end,
+html[data-skin="palace-of-excess"] .record-grid > .record-index {
+  border-width: 5px;
+  box-shadow: 0 0 0 2px var(--peacock);
+}
+html[data-skin="palace-of-excess"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="palace-of-excess"] .masthead__copy,
   html[data-skin="palace-of-excess"] .index-heading,
@@ -1254,37 +1256,34 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .record-facts > div:nth-ch
 
 @media (max-width: 23rem) {
   html[data-skin="palace-of-excess"] .site-nav,
-  html[data-skin="palace-of-excess"] .site-footer__links,
-  html[data-skin="palace-of-excess"] .masthead__actions,
-  html[data-skin="palace-of-excess"] .record-actions,
-  html[data-skin="palace-of-excess"] .tag-line {
+html[data-skin="palace-of-excess"] .masthead__actions,
+html[data-skin="palace-of-excess"] .record-actions,
+html[data-skin="palace-of-excess"] .tag-line {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="palace-of-excess"] .site-nav a,
-  html[data-skin="palace-of-excess"] .site-nav .skin-menu,
-  html[data-skin="palace-of-excess"] .site-footer__links a,
-  html[data-skin="palace-of-excess"] .masthead__actions .action,
-  html[data-skin="palace-of-excess"] .record-actions a,
-  html[data-skin="palace-of-excess"] .tag-line a {
+html[data-skin="palace-of-excess"] .site-nav .skin-menu,
+html[data-skin="palace-of-excess"] .masthead__actions .action,
+html[data-skin="palace-of-excess"] .record-actions a,
+html[data-skin="palace-of-excess"] .tag-line a {
     width: 100%;
   }
 }
 
 @media (prefers-contrast: more) {
   html[data-skin="palace-of-excess"] .site-nav a,
-  html[data-skin="palace-of-excess"] .theme-toggle,
-  html[data-skin="palace-of-excess"] .skin-menu summary,
-  html[data-skin="palace-of-excess"] .skin-randomizer,
-  html[data-skin="palace-of-excess"] .action,
-  html[data-skin="palace-of-excess"] .record-actions a,
-  html[data-skin="palace-of-excess"] .tag-line a,
-  html[data-skin="palace-of-excess"] .quick-filters a,
-  html[data-skin="palace-of-excess"] .pagination a,
-  html[data-skin="palace-of-excess"] .site-footer__links a,
-  html[data-skin="palace-of-excess"] .record-row__link,
-  html[data-skin="palace-of-excess"] .all-tags__grid a {
+html[data-skin="palace-of-excess"] .theme-toggle,
+html[data-skin="palace-of-excess"] .skin-menu summary,
+html[data-skin="palace-of-excess"] .skin-randomizer,
+html[data-skin="palace-of-excess"] .action,
+html[data-skin="palace-of-excess"] .record-actions a,
+html[data-skin="palace-of-excess"] .tag-line a,
+html[data-skin="palace-of-excess"] .quick-filters a,
+html[data-skin="palace-of-excess"] .pagination a,
+html[data-skin="palace-of-excess"] .record-row__link,
+html[data-skin="palace-of-excess"] .all-tags__grid a {
     text-decoration: underline;
   }
 }
@@ -1302,26 +1301,25 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .record-facts > div:nth-ch
 
 @media (forced-colors: active) {
   html[data-skin="palace-of-excess"] .site-header,
-  html[data-skin="palace-of-excess"] .site-footer,
-  html[data-skin="palace-of-excess"] .home-shell,
-  html[data-skin="palace-of-excess"] .archive-shell,
-  html[data-skin="palace-of-excess"] .record-page,
-  html[data-skin="palace-of-excess"] .page-shell,
-  html[data-skin="palace-of-excess"] .error-shell,
-  html[data-skin="palace-of-excess"] .masthead__copy,
-  html[data-skin="palace-of-excess"] .index-heading,
-  html[data-skin="palace-of-excess"] .page-heading,
-  html[data-skin="palace-of-excess"] .record-head,
-  html[data-skin="palace-of-excess"] .home-shell > .record-index,
-  html[data-skin="palace-of-excess"] .archive-tools,
-  html[data-skin="palace-of-excess"] .archive-groups,
-  html[data-skin="palace-of-excess"] .page-prose,
-  html[data-skin="palace-of-excess"] .article__content,
-  html[data-skin="palace-of-excess"] .record-end,
-  html[data-skin="palace-of-excess"] .record-grid > .record-index,
-  html[data-skin="palace-of-excess"] .code-frame,
-  html[data-skin="palace-of-excess"] .code-frame__bar,
-  html[data-skin="palace-of-excess"] .code-frame__status {
+html[data-skin="palace-of-excess"] .home-shell,
+html[data-skin="palace-of-excess"] .archive-shell,
+html[data-skin="palace-of-excess"] .record-page,
+html[data-skin="palace-of-excess"] .page-shell,
+html[data-skin="palace-of-excess"] .error-shell,
+html[data-skin="palace-of-excess"] .masthead__copy,
+html[data-skin="palace-of-excess"] .index-heading,
+html[data-skin="palace-of-excess"] .page-heading,
+html[data-skin="palace-of-excess"] .record-head,
+html[data-skin="palace-of-excess"] .home-shell > .record-index,
+html[data-skin="palace-of-excess"] .archive-tools,
+html[data-skin="palace-of-excess"] .archive-groups,
+html[data-skin="palace-of-excess"] .page-prose,
+html[data-skin="palace-of-excess"] .article__content,
+html[data-skin="palace-of-excess"] .record-end,
+html[data-skin="palace-of-excess"] .record-grid > .record-index,
+html[data-skin="palace-of-excess"] .code-frame,
+html[data-skin="palace-of-excess"] .code-frame__bar,
+html[data-skin="palace-of-excess"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1700,47 +1698,15 @@ html[data-skin="palace-of-excess"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="palace-of-excess"] .record-page {
-  display: grid;
-  grid-template-areas:
-    "head"
-    "reading"
-    "end";
-  gap: clamp(1.2rem, 3vw, 2.7rem);
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(15rem, .7fr);
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags actions";
-  gap: .9rem clamp(1rem, 2.5vw, 2.2rem);
-  align-items: start;
-  margin: 0;
-}
-
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-head__key {
-  grid-area: key;
   margin: 0;
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-head h1 {
-  grid-area: title;
-  align-self: end;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-head__abstract {
-  grid-area: abstract;
   margin: 0;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
-  grid-area: facts;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding: .35rem;
   border: 4px double var(--jade-low);
@@ -1748,49 +1714,11 @@ html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line,
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
-  min-width: 0;
   margin: 0;
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line {
-  grid-area: tags;
-  align-self: end;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
-  grid-area: actions;
   justify-content: flex-end;
-  align-self: end;
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-grid {
-  grid-area: reading;
-  display: grid;
-  grid-template-columns: minmax(0, 1.48fr) minmax(15rem, .52fr);
-  grid-template-areas: "article index";
-  gap: clamp(1.1rem, 2.5vw, 2.4rem);
-  justify-content: stretch;
-  margin: 0;
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.2rem, 3vw, 2.5rem);
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  align-self: start;
-  position: sticky;
-  top: 1rem;
-  max-height: calc(100vh - 2rem);
-  overflow: auto;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index .record-toc {
@@ -1803,57 +1731,8 @@ html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index .
   border-top: 4px double var(--gold);
 }
 
-html[data-skin="palace-of-excess"] .record-page > .record-end {
-  grid-area: end;
-  width: min(100%, 72rem);
-  max-width: none;
-  margin: 0 auto;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(17rem, .85fr);
-  gap: 1rem clamp(1rem, 3vw, 3rem);
-  align-items: center;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__note {
-  min-width: 0;
-  margin: 0;
-  padding: .8rem 1rem;
-  border-left: .6rem solid var(--jade-low);
-  border-right: .6rem solid var(--gold);
-  text-align: center;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a {
-  min-width: 0;
-  min-height: 4.25rem;
-  padding: .5rem;
-  border-radius: 2.4rem 2.4rem .35rem .35rem;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(2) {
-  color: var(--peacock-deep);
-  background: var(--jade-pale);
-  border-color: var(--peacock);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(3) {
-  color: var(--peacock-deep);
-  background: var(--gold-pale);
-  border-color: var(--peacock);
-}
-
 @media (max-width: 62rem) {
-  html[data-skin="palace-of-excess"] .site-header__inner,
-  html[data-skin="palace-of-excess"] .site-footer__inner {
+  html[data-skin="palace-of-excess"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1897,32 +1776,10 @@ html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(3) {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
-
   html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
     justify-content: flex-start;
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index {
-    position: static;
-    max-height: none;
-  }
 }
 
 @media (max-width: 44rem) {
@@ -1962,18 +1819,6 @@ html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(3) {
     grid-column: auto;
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="palace-of-excess"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="palace-of-excess"] .site-footer__links a {
-    min-height: 3.1rem;
-    border-radius: .35rem;
-  }
 }
 
 @media (max-width: 30rem) {
@@ -1995,16 +1840,14 @@ html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(3) {
     min-height: 3rem;
   }
 
-  html[data-skin="palace-of-excess"] .archive-shell > .archive-tools .quick-filters,
-  html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="palace-of-excess"] .archive-shell > .archive-tools .quick-filters {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions,
-  html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line {
+  display: grid;
+}
 }
 
 /* Final remediation: Palace of Excess */
@@ -2086,19 +1929,35 @@ html[data-skin="palace-of-excess"] :is(
   font-size: max(1rem, 1em);
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .masthead__copy, .index-heading, .page-heading,
-  .record-head, .home-shell > .record-index, .archive-tools,
-  .archive-groups, .page-prose, .article__content, .record-end,
-  .record-grid > .record-index
-) {
+html[data-skin="palace-of-excess"] :is(.site-header, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.home-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] .home-shell > .record-index,
+html[data-skin="palace-of-excess"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   overflow: visible;
   background-image: none;
   box-shadow: none;
 }
+html[data-skin="palace-of-excess"] :is(.record-page, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.record-head, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.record-end, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] .record-grid > .record-index {
+  background-image: none;
+  box-shadow: none;
+}
+html[data-skin="palace-of-excess"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  overflow: visible;
+}
 
-html[data-skin="palace-of-excess"] :is(.site-header, .site-footer)::before,
+html[data-skin="palace-of-excess"] :is(.site-header)::before,
 html[data-skin="palace-of-excess"] :is(.masthead__copy, .index-heading, .page-heading, .record-head)::after {
   content: none;
 }
@@ -2140,15 +1999,17 @@ html[data-skin="palace-of-excess"] .skip-link {
 }
 
 html[data-skin="palace-of-excess"] .site-header,
-html[data-skin="palace-of-excess"] .site-footer,
 html[data-skin="palace-of-excess"] .home-shell,
 html[data-skin="palace-of-excess"] .archive-shell,
-html[data-skin="palace-of-excess"] .record-page,
 html[data-skin="palace-of-excess"] .page-shell,
 html[data-skin="palace-of-excess"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   min-width: 0;
   margin-inline: auto;
+  border: 0;
+  border-radius: 0;
+}
+html[data-skin="palace-of-excess"] .record-page {
   border: 0;
   border-radius: 0;
 }
@@ -2229,7 +2090,6 @@ html[data-skin="palace-of-excess"] .tag-line a,
 html[data-skin="palace-of-excess"] .quick-filters a,
 html[data-skin="palace-of-excess"] .pagination a,
 html[data-skin="palace-of-excess"] .pagination span,
-html[data-skin="palace-of-excess"] .site-footer__links a,
 html[data-skin="palace-of-excess"] .code-frame__actions button {
   display: inline-flex;
   min-width: 0;
@@ -2252,19 +2112,29 @@ html[data-skin="palace-of-excess"] .code-frame__actions button {
   text-decoration: none;
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer,
-  .action, .record-actions a, .tag-line a, .quick-filters a,
-  .pagination a, .site-footer__links a, .code-frame__actions button
-) {
+html[data-skin="palace-of-excess"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button) {
   --palace-focus-ring: var(--palace-focus-on-dark);
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer,
-  .action, .record-actions a, .tag-line a, .quick-filters a,
-  .pagination a, .site-footer__links a, .code-frame__actions button
-):focus-visible {
+html[data-skin="palace-of-excess"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button):focus-visible {
   outline-color: var(--palace-focus-ring) !important;
 }
 
@@ -2407,12 +2277,16 @@ html[data-skin="palace-of-excess"] .skin-randomizer {
   --palace-focus-ring: var(--palace-focus-on-light);
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .site-nav a:hover, .theme-toggle:hover, .skin-menu summary:hover,
-  .skin-randomizer:hover, .action:hover, .record-actions a:hover,
-  .tag-line a:hover, .quick-filters a:hover, .pagination a:hover,
-  .site-footer__links a:hover, .code-frame__actions button:hover
-) {
+html[data-skin="palace-of-excess"] :is(.site-nav a:hover,
+.theme-toggle:hover,
+.skin-menu summary:hover,
+.skin-randomizer:hover,
+.action:hover,
+.record-actions a:hover,
+.tag-line a:hover,
+.quick-filters a:hover,
+.pagination a:hover,
+.code-frame__actions button:hover) {
   --palace-focus-ring: var(--palace-focus-on-light);
   color: var(--palace-current-ink);
   background: var(--palace-jade-pale);
@@ -2447,7 +2321,6 @@ html[data-skin="palace-of-excess"] :is(
 
 html[data-skin="palace-of-excess"] .home-shell,
 html[data-skin="palace-of-excess"] .archive-shell,
-html[data-skin="palace-of-excess"] .record-page,
 html[data-skin="palace-of-excess"] .page-shell,
 html[data-skin="palace-of-excess"] .error-shell {
   display: grid;
@@ -2457,14 +2330,28 @@ html[data-skin="palace-of-excess"] .error-shell {
   color: var(--palace-ink);
   background: transparent;
 }
+html[data-skin="palace-of-excess"] .record-page {
+  color: var(--palace-ink);
+  background: transparent;
+}
 
 html[data-skin="palace-of-excess"] .masthead,
 html[data-skin="palace-of-excess"] .index-heading,
-html[data-skin="palace-of-excess"] .page-heading,
-html[data-skin="palace-of-excess"] .record-head {
+html[data-skin="palace-of-excess"] .page-heading {
   position: relative;
   isolation: isolate;
   min-width: 0;
+  color: var(--palace-ink);
+  background:
+    linear-gradient(90deg, var(--palace-jade) 0 .3rem, transparent .3rem calc(100% - .3rem), var(--palace-gold) calc(100% - .3rem)),
+    radial-gradient(circle at 1px 1px, rgb(18 56 66 / 14%) 1px, transparent 1.2px),
+    var(--palace-surface);
+  background-size: auto, 14px 14px, auto;
+  border-block: 6px double var(--palace-gold);
+  box-shadow: inset 0 0 0 2px var(--palace-jade);
+}
+html[data-skin="palace-of-excess"] .record-head {
+  isolation: isolate;
   color: var(--palace-ink);
   background:
     linear-gradient(90deg, var(--palace-jade) 0 .3rem, transparent .3rem calc(100% - .3rem), var(--palace-gold) calc(100% - .3rem)),
@@ -2486,11 +2373,22 @@ html[data-skin="palace-of-excess"] .masthead::before {
   border-radius: 50% 50% .25rem .25rem / 4rem 4rem .25rem .25rem;
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .masthead h1, .index-heading h1, .page-heading h1, .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="palace-of-excess"] .masthead h1,
+html[data-skin="palace-of-excess"] .index-heading h1,
+html[data-skin="palace-of-excess"] .page-heading h1,
+html[data-skin="palace-of-excess"] .error-shell h1 {
   max-width: 20ch;
+  margin: 0;
+  color: var(--palace-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4.25rem);
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+  text-shadow: 2px 2px 0 var(--palace-surface);
+}
+html[data-skin="palace-of-excess"] .record-head h1 {
   margin: 0;
   color: var(--palace-heading);
   font-family: var(--display);
@@ -2516,11 +2414,16 @@ html[data-skin="palace-of-excess"] :is(
   text-transform: uppercase;
 }
 
-html[data-skin="palace-of-excess"] :is(
-  .masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="palace-of-excess"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="palace-of-excess"] .index-heading > p:last-child,
+html[data-skin="palace-of-excess"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--palace-ink);
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.6;
+}
+html[data-skin="palace-of-excess"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--palace-ink);
   font-size: clamp(1.125rem, 1.5vw, 1.25rem);
   font-weight: 700;
@@ -2976,27 +2879,7 @@ html[data-skin="palace-of-excess"] .archive-empty {
   line-height: 1.4;
 }
 
-html[data-skin="palace-of-excess"] .record-page {
-  grid-template-areas: "head" "reading" "end";
-}
-
-html[data-skin="palace-of-excess"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(16rem, .7fr);
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags actions";
-  gap: .9rem clamp(1rem, 2.5vw, 2.25rem);
-  align-items: start;
-  margin: 0;
-  padding: clamp(1.5rem, 4vw, 3.25rem);
-}
-
 html[data-skin="palace-of-excess"] .record-head__key {
-  grid-area: key;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem 1.25rem;
@@ -3006,17 +2889,12 @@ html[data-skin="palace-of-excess"] .record-head__key {
   border-bottom: 2px solid var(--palace-gold);
 }
 
-html[data-skin="palace-of-excess"] .record-page > .record-head h1 { grid-area: title; }
-
 html[data-skin="palace-of-excess"] .record-head__abstract {
-  grid-area: abstract;
   margin: 0;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
-  grid-area: facts;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .65rem;
   margin: 0;
   padding: 0;
@@ -3034,18 +2912,12 @@ html[data-skin="palace-of-excess"] .record-facts dd {
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line {
-  grid-area: tags;
-  min-width: 0;
   margin: 0;
-  align-self: end;
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
-  grid-area: actions;
-  min-width: 0;
   margin: 0;
   justify-content: flex-end;
-  align-self: end;
 }
 
 html[data-skin="palace-of-excess"] .tag-line a {
@@ -3062,21 +2934,7 @@ html[data-skin="palace-of-excess"] .record-actions a:last-child {
   border-color: var(--palace-current-ink);
 }
 
-html[data-skin="palace-of-excess"] .record-page > .record-grid {
-  grid-area: reading;
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, .5fr);
-  grid-template-areas: "article index";
-  gap: clamp(1rem, 2.5vw, 2.5rem);
-  margin: 0;
-}
-
 html[data-skin="palace-of-excess"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
   color: var(--palace-ink);
   background: var(--palace-surface);
   border: 0;
@@ -3086,16 +2944,6 @@ html[data-skin="palace-of-excess"] .record-page > .record-grid > .article__conte
 }
 
 html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  width: auto;
-  max-width: none;
-  max-height: calc(100vh - 2rem);
-  align-self: start;
-  position: sticky;
-  top: 1rem;
-  margin: 0;
-  padding: .85rem;
-  overflow: auto;
   scroll-padding-block: 1rem;
   color: var(--palace-code-ink);
   background: var(--palace-code-surface);
@@ -3162,14 +3010,16 @@ html[data-skin="palace-of-excess"] .related-records h2 {
 }
 
 html[data-skin="palace-of-excess"] .record-end {
+  color: var(--palace-ink);
+  background: var(--palace-surface-muted);
+  border-top: 3px double var(--palace-gold);
+}
+html[data-skin="palace-of-excess"] .record-end:not(:where(.record-page, .record-page *)) {
   grid-area: end;
   width: min(100%, 72rem);
   max-width: none;
   margin: 0 auto;
   padding: clamp(1rem, 2.5vw, 2rem);
-  color: var(--palace-ink);
-  background: var(--palace-surface-muted);
-  border-top: 3px double var(--palace-gold);
 }
 
 html[data-skin="palace-of-excess"] .record-end > p {
@@ -3214,12 +3064,14 @@ html[data-skin="palace-of-excess"] .record-end nav span {
 }
 
 html[data-skin="palace-of-excess"] .prose {
-  min-width: 0;
   color: var(--palace-ink);
   font-family: var(--body);
   font-size: clamp(1.125rem, 1.5vw, 1.25rem);
   line-height: 1.72;
   overflow-wrap: anywhere;
+}
+html[data-skin="palace-of-excess"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="palace-of-excess"] :is(
@@ -3558,83 +3410,16 @@ html[data-skin="palace-of-excess"] .error-shell .action {
   margin: .3rem;
 }
 
-html[data-skin="palace-of-excess"] .site-footer {
-  margin-bottom: 1rem;
-  color: var(--palace-ink);
-  background: var(--palace-surface);
-  border-block: 6px double var(--palace-gold);
-  box-shadow: inset 0 2px 0 var(--palace-jade), inset 0 -2px 0 var(--palace-jade);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, .8fr);
-  gap: 1rem clamp(1rem, 3vw, 3rem);
-  align-items: center;
-  padding: 1rem clamp(1rem, 2.5vw, 2rem);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__note,
-html[data-skin="palace-of-excess"] .site-footer__note > a {
-  color: var(--palace-ink);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__note {
-  min-width: 0;
-  margin: 0;
-  padding: .75rem 1rem;
-  border-left: .4rem solid var(--palace-jade);
-  border-right: .4rem solid var(--palace-gold);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__note > a:hover,
-html[data-skin="palace-of-excess"] .site-footer__note > a:focus-visible {
-  color: var(--palace-link);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a {
-  min-height: 3.5rem;
-  color: var(--palace-code-ink);
-  background: var(--palace-code-surface);
-  border-color: var(--palace-gold);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(2) {
-  --palace-focus-ring: var(--palace-focus-on-light);
-  color: var(--palace-current-ink);
-  background: var(--palace-jade-pale);
-  border-color: var(--palace-border);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a:nth-child(3) {
-  --palace-focus-ring: var(--palace-focus-on-light);
-  color: var(--palace-current-ink);
-  background: var(--palace-current-surface);
-  border-color: var(--palace-current-ink);
-}
-
-html[data-skin="palace-of-excess"] .site-footer__links a:hover,
-html[data-skin="palace-of-excess"] .site-footer__links a:focus-visible {
-  color: var(--palace-current-ink);
-  background: var(--palace-jade-pale);
-  border-color: var(--palace-focus-on-light);
-  outline-color: var(--palace-focus-on-light) !important;
-}
-
-html[data-skin="palace-of-excess"][data-theme="dark"] :is(
-  .site-header, .site-footer, .masthead, .index-heading, .page-heading,
-  .record-head, .home-shell > .record-index, .archive-groups, .page-prose,
-  .article__content, .record-end
-) {
+html[data-skin="palace-of-excess"][data-theme="dark"] :is(.site-header,
+.masthead,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end) {
   color: var(--palace-ink);
   background-color: var(--palace-surface);
 }
@@ -3661,8 +3446,7 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
 }
 
 @media (max-width: 62rem) {
-  html[data-skin="palace-of-excess"] .site-header__inner,
-  html[data-skin="palace-of-excess"] .site-footer__inner {
+  html[data-skin="palace-of-excess"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -3704,52 +3488,32 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
-
   html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
     justify-content: flex-start;
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "article" "index";
-  }
-
-  html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index {
-    position: static;
-    max-height: none;
-  }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="palace-of-excess"] .site-header,
-  html[data-skin="palace-of-excess"] .site-footer,
-  html[data-skin="palace-of-excess"] .home-shell,
-  html[data-skin="palace-of-excess"] .archive-shell,
-  html[data-skin="palace-of-excess"] .record-page,
-  html[data-skin="palace-of-excess"] .page-shell,
-  html[data-skin="palace-of-excess"] .error-shell {
-    width: min(calc(100% - 1rem), var(--page));
-  }
+html[data-skin="palace-of-excess"] .home-shell,
+html[data-skin="palace-of-excess"] .archive-shell,
+html[data-skin="palace-of-excess"] .page-shell,
+html[data-skin="palace-of-excess"] .error-shell {
+  width: min(calc(100% - 1rem), var(--page));
+}
 
-  html[data-skin="palace-of-excess"] :is(
-    .site-header__inner, .site-footer__inner, .home-shell > .masthead,
-    .archive-shell > .index-heading, .record-page > .record-head,
-    .page-heading, .page-prose, .record-page > .record-grid > .article__content,
-    .archive-groups, .home-shell > .record-index, .archive-tools,
-    .record-end
-  ) {
-    padding: 1rem;
-  }
+  html[data-skin="palace-of-excess"] :is(.site-header__inner, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.home-shell > .masthead, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-shell > .index-heading, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-heading, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-prose, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.home-shell > .record-index, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  padding: 1rem;
+}
 
   html[data-skin="palace-of-excess"] .site-brand {
     min-height: auto;
@@ -3798,13 +3562,6 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
     gap: .35rem .7rem;
   }
 
-  html[data-skin="palace-of-excess"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="palace-of-excess"] .site-footer__links a {
-    min-height: 3rem;
-  }
 }
 
 @media (max-width: 30rem) {
@@ -3828,10 +3585,9 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
   }
 
   html[data-skin="palace-of-excess"] .quick-filters,
-  html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts,
-  html[data-skin="palace-of-excess"] .all-tags__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="palace-of-excess"] .all-tags__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="palace-of-excess"] .record-facts > div {
     aspect-ratio: auto;
@@ -3839,10 +3595,10 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
     text-align: left;
   }
 
-  html[data-skin="palace-of-excess"] .record-page > .record-head :is(.record-actions, .tag-line) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions,
+html[data-skin="palace-of-excess"] .record-page > .record-head .tag-line {
+  display: grid;
+}
 
   html[data-skin="palace-of-excess"] .record-row__link {
     grid-template-columns: minmax(0, 1fr);
@@ -3862,10 +3618,12 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
 }
 
 @media (prefers-contrast: more) {
-  html[data-skin="palace-of-excess"] :is(
-    a, .site-nav a, .action, .quick-filters a, .tag-line a,
-    .record-actions a, .site-footer__links a
-  ) {
+  html[data-skin="palace-of-excess"] :is(a,
+.site-nav a,
+.action,
+.quick-filters a,
+.tag-line a,
+.record-actions a) {
     text-decoration: underline;
   }
 }
@@ -3889,14 +3647,24 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
   }
 
   html[data-skin="palace-of-excess"] body,
-  html[data-skin="palace-of-excess"] :is(
-    .site-header, .site-footer, .masthead, .index-heading, .page-heading,
-    .record-head, .home-shell > .record-index, .archive-tools,
-    .archive-groups, .page-prose, .article__content, .record-end, .error-shell,
-    .record-page > .record-grid > .record-index, .prose .code-frame,
-    .prose .code-frame pre, .code-frame__bar, .code-frame__status,
-    .prose .katex-display
-  ) {
+html[data-skin="palace-of-excess"] :is(.site-header,
+.masthead,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.error-shell,
+.record-page > .record-grid > .record-index,
+.prose .code-frame,
+.prose .code-frame pre,
+.code-frame__bar,
+.code-frame__status,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -3904,12 +3672,19 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
     text-shadow: none;
   }
 
-  html[data-skin="palace-of-excess"] :is(
-    .site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer,
-    .action, .record-actions a, .tag-line a, .quick-filters a,
-    .pagination a, .site-footer__links a, .code-frame__actions button,
-    .record-end nav a, .skin-menu select, .archive-search input
-  ) {
+  html[data-skin="palace-of-excess"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button,
+.record-end nav a,
+.skin-menu select,
+.archive-search input) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3938,16 +3713,29 @@ html[data-skin="palace-of-excess"][data-theme="dark"] .all-tags summary:focus-vi
 }
 
 /* Cycle two corrective pass: Palace of Excess */
-html[data-skin="palace-of-excess"] :is(
-  .site-brand, .masthead, .index-heading, .page-heading, .record-head,
-  .home-shell > .record-index, .archive-tools, .archive-groups,
-  .record-page > .record-grid > .article__content,
-  .record-page > .record-grid > .record-index, .page-prose, .record-end
-) {
+html[data-skin="palace-of-excess"] :is(.site-brand, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.masthead, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.index-heading, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-heading, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.home-shell > .record-index, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] :is(.page-prose, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
   box-sizing: border-box;
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="palace-of-excess"] :is(.record-head, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="palace-of-excess"] .record-page > .record-grid > .article__content,
+html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index,
+html[data-skin="palace-of-excess"] :is(.record-end, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="palace-of-excess"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  box-sizing: border-box;
 }
 html[data-skin="palace-of-excess"] .site-brand {
   min-height: auto;
@@ -3966,10 +3754,10 @@ html[data-skin="palace-of-excess"] :is(
 html[data-skin="palace-of-excess"] .masthead::before {
   content: none;
 }
-html[data-skin="palace-of-excess"] :is(
-  .home-shell > .record-index, .archive-tools, .archive-groups,
-  .record-end, .site-footer__note
-) {
+html[data-skin="palace-of-excess"] :is(.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.record-end) {
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -4008,9 +3796,10 @@ html[data-skin="palace-of-excess"] .archive-year > header span {
 html[data-skin="palace-of-excess"] .archive-year .record-list {
   grid-column: auto;
 }
-html[data-skin="palace-of-excess"] :is(
-  .record-page > .record-grid > .article__content, .page-prose
-) {
+html[data-skin="palace-of-excess"] .record-page > .record-grid > .article__content {
+  border-block: 3px double var(--palace-gold);
+}
+html[data-skin="palace-of-excess"] :is(.page-prose, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
   width: 100%;
   max-inline-size: calc(76ch + clamp(2.5rem, 6vw, 5.5rem));
   justify-self: center;
@@ -4059,12 +3848,17 @@ html[data-skin="palace-of-excess"] :is(
   overflow-wrap: break-word;
   word-break: normal;
 }
-html[data-skin="palace-of-excess"] :is(
-  .site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer,
-  .action, .record-actions a, .tag-line a, .quick-filters a,
-  .pagination a, .pagination span, .site-footer__links a,
-  .code-frame__actions button
-) {
+html[data-skin="palace-of-excess"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.code-frame__actions button) {
   box-sizing: border-box;
   align-self: start;
   height: auto;
@@ -4082,9 +3876,7 @@ html[data-skin="palace-of-excess"] :is(
 html[data-skin="palace-of-excess"] .all-tags__grid small {
   font-size: 1.4rem !important;
 }
-html[data-skin="palace-of-excess"] .record-page > .record-head .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-}
+
 html[data-skin="palace-of-excess"] .record-facts > div {
   min-height: 7rem;
   aspect-ratio: auto;
@@ -4157,9 +3949,7 @@ html[data-skin="palace-of-excess"] .prose.article__content .highlight .err {
   }
 }
 @media (max-width: 72rem) {
-  html[data-skin="palace-of-excess"] :is(
-    .site-header__inner, .site-footer__inner
-  ) {
+  html[data-skin="palace-of-excess"] :is(.site-header__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
   html[data-skin="palace-of-excess"] .site-nav {
@@ -4170,27 +3960,11 @@ html[data-skin="palace-of-excess"] .prose.article__content .highlight .err {
       "source theme"
       "skin skin";
   }
-  html[data-skin="palace-of-excess"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
+
   html[data-skin="palace-of-excess"] .record-page > .record-head .record-actions {
     justify-content: flex-start;
   }
-  html[data-skin="palace-of-excess"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "article" "index";
-  }
-  html[data-skin="palace-of-excess"] .record-page > .record-grid > .record-index {
-    position: static;
-    max-height: none;
-  }
+
 }
 @media (max-width: 30rem) {
   html[data-skin="palace-of-excess"] .site-nav {
@@ -4210,3 +3984,6 @@ html[data-skin="palace-of-excess"] .prose.article__content .highlight .err {
     color: revert !important;
   }
 }
+
+/* Contents inherits the rail foreground, not the small-label palette. */
+html[data-skin="palace-of-excess"] .record-grid .record-toc summary { color: inherit !important; }

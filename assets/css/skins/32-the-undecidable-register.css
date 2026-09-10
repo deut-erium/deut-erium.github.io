@@ -100,8 +100,7 @@ html[data-skin="the-undecidable-register"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="the-undecidable-register"] .site-header,
-html[data-skin="the-undecidable-register"] .site-footer {
+html[data-skin="the-undecidable-register"] .site-header {
   position: relative;
   isolation: isolate;
   color: var(--bureau-paper-high);
@@ -120,13 +119,7 @@ html[data-skin="the-undecidable-register"] .site-header {
   margin-top: 1.5rem;
 }
 
-html[data-skin="the-undecidable-register"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-color: var(--bureau-red);
-}
-
-html[data-skin="the-undecidable-register"] .site-header::before,
-html[data-skin="the-undecidable-register"] .site-footer::before {
+html[data-skin="the-undecidable-register"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: -.72rem;
@@ -137,12 +130,7 @@ html[data-skin="the-undecidable-register"] .site-footer::before {
   background: repeating-linear-gradient(90deg, var(--bureau-sage-high) 0 .65rem, var(--bureau-paper-high) .65rem .78rem);
 }
 
-html[data-skin="the-undecidable-register"] .site-footer::before {
-  background: repeating-linear-gradient(90deg, var(--bureau-blue-high) 0 .65rem, var(--bureau-paper-high) .65rem .78rem);
-}
-
-html[data-skin="the-undecidable-register"] .site-header__inner,
-html[data-skin="the-undecidable-register"] .site-footer__inner {
+html[data-skin="the-undecidable-register"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -190,8 +178,7 @@ html[data-skin="the-undecidable-register"] .record-actions a,
 html[data-skin="the-undecidable-register"] .tag-line a,
 html[data-skin="the-undecidable-register"] .quick-filters a,
 html[data-skin="the-undecidable-register"] .pagination a,
-html[data-skin="the-undecidable-register"] .pagination span,
-html[data-skin="the-undecidable-register"] .site-footer__links a {
+html[data-skin="the-undecidable-register"] .pagination span {
   min-height: 2.55rem;
   color: var(--bureau-paper-high);
   background: var(--bureau-ink);
@@ -257,9 +244,7 @@ html[data-skin="the-undecidable-register"] .tag-line a:focus-visible,
 html[data-skin="the-undecidable-register"] .quick-filters a:hover,
 html[data-skin="the-undecidable-register"] .quick-filters a:focus-visible,
 html[data-skin="the-undecidable-register"] .pagination a:hover,
-html[data-skin="the-undecidable-register"] .pagination a:focus-visible,
-html[data-skin="the-undecidable-register"] .site-footer__links a:hover,
-html[data-skin="the-undecidable-register"] .site-footer__links a:focus-visible {
+html[data-skin="the-undecidable-register"] .pagination a:focus-visible {
   color: var(--bureau-paper-high);
   background: var(--bureau-red);
   border-color: var(--bureau-paper-high);
@@ -311,7 +296,6 @@ html[data-skin="the-undecidable-register"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="the-undecidable-register"] .home-shell,
 html[data-skin="the-undecidable-register"] .archive-shell,
-html[data-skin="the-undecidable-register"] .record-page,
 html[data-skin="the-undecidable-register"] .page-shell,
 html[data-skin="the-undecidable-register"] .error-shell {
   position: relative;
@@ -328,20 +312,44 @@ html[data-skin="the-undecidable-register"] .error-shell {
   border-radius: 0;
   box-shadow: .62rem .7rem 0 rgb(23 26 33 / 27%);
 }
+html[data-skin="the-undecidable-register"] .record-page {
+  isolation: isolate;
+  background-color: var(--bureau-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.1rem, rgb(185 53 53 / 43%) 2.1rem calc(2.1rem + 2px), transparent calc(2.1rem + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 1.1rem), rgb(40 85 166 / 56%) calc(100% - 1.1rem) calc(100% - .95rem), transparent calc(100% - .95rem)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(40 85 166 / 14%) 2.35rem calc(2.35rem + 1px));
+  border: 5px solid var(--bureau-ink);
+  border-top-width: .65rem;
+  border-top-color: var(--bureau-blue);
+  border-radius: 0;
+  box-shadow: .62rem .7rem 0 rgb(23 26 33 / 27%);
+}
 
-html[data-skin="the-undecidable-register"] .masthead,
-html[data-skin="the-undecidable-register"] .record-grid {
+html[data-skin="the-undecidable-register"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.7rem);
 }
 
 html[data-skin="the-undecidable-register"] .masthead__copy,
 html[data-skin="the-undecidable-register"] .index-heading,
-html[data-skin="the-undecidable-register"] .page-heading,
-html[data-skin="the-undecidable-register"] .record-head {
+html[data-skin="the-undecidable-register"] .page-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(1.25rem, 3vw, 2.7rem);
+  color: var(--bureau-paper-high);
+  background-color: var(--bureau-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.25rem, rgb(243 235 221 / 14%) 1.25rem calc(1.25rem + 1px), transparent calc(1.25rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(243 235 221 / 8%) 2.25rem calc(2.25rem + 1px));
+  border: 5px solid var(--bureau-ink);
+  border-top-color: var(--bureau-red);
+  border-right-color: var(--bureau-blue);
+  border-radius: 0;
+  box-shadow: .43rem .5rem 0 rgb(23 26 33 / 31%);
+}
+html[data-skin="the-undecidable-register"] .record-head {
+  isolation: isolate;
   color: var(--bureau-paper-high);
   background-color: var(--bureau-ink);
   background-image:
@@ -1079,15 +1087,6 @@ html[data-skin="the-undecidable-register"] .error-shell > p {
   color: var(--bureau-paper-high);
 }
 
-html[data-skin="the-undecidable-register"] .site-footer__note,
-html[data-skin="the-undecidable-register"] .site-footer a {
-  color: var(--bureau-paper-high);
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__note a {
-  color: var(--bureau-sage-high);
-}
-
 html[data-skin="the-undecidable-register"][data-theme="dark"] {
   color-scheme: dark;
   --bureau-paper: #101b29;
@@ -1142,7 +1141,6 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] body {
 }
 
 html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header,
-html[data-skin="the-undecidable-register"][data-theme="dark"] .site-footer,
 html[data-skin="the-undecidable-register"][data-theme="dark"] .masthead__copy,
 html[data-skin="the-undecidable-register"][data-theme="dark"] .index-heading,
 html[data-skin="the-undecidable-register"][data-theme="dark"] .page-heading,
@@ -1153,14 +1151,9 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .error-shell {
   box-shadow: .56rem .64rem 0 rgb(0 0 0 / 56%);
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header,
-html[data-skin="the-undecidable-register"][data-theme="dark"] .site-footer {
+html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header {
   border-color: var(--bureau-void);
   border-top-color: var(--bureau-blue);
-}
-
-html[data-skin="the-undecidable-register"][data-theme="dark"] .site-footer {
-  border-top-color: var(--bureau-red);
 }
 
 html[data-skin="the-undecidable-register"][data-theme="dark"] .home-shell,
@@ -1284,8 +1277,7 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .section-heading {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-undecidable-register"] .site-header,
-  html[data-skin="the-undecidable-register"] .site-footer {
+  html[data-skin="the-undecidable-register"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
@@ -1294,12 +1286,7 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .section-heading {
     margin-top: 0;
   }
 
-  html[data-skin="the-undecidable-register"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-undecidable-register"] .site-header::before,
-  html[data-skin="the-undecidable-register"] .site-footer::before {
+  html[data-skin="the-undecidable-register"] .site-header::before {
     left: 1rem;
   }
 
@@ -1567,7 +1554,6 @@ html[data-skin="the-undecidable-register"] .skin-randomizer:focus-visible {
 
 html[data-skin="the-undecidable-register"] .home-shell,
 html[data-skin="the-undecidable-register"] .archive-shell,
-html[data-skin="the-undecidable-register"] .record-page,
 html[data-skin="the-undecidable-register"] .page-shell {
   width: min(calc(100% - 2rem), 108rem);
   display: grid;
@@ -1656,56 +1642,8 @@ html[data-skin="the-undecidable-register"] .archive-groups .archive-year {
   border-left: 5px solid var(--bureau-blue);
 }
 
-html[data-skin="the-undecidable-register"] .record-page {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "head"
-    "grid"
-    "end";
-  align-items: start;
-}
-
 html[data-skin="the-undecidable-register"] .record-page > .record-head {
-  grid-area: head;
-  margin: 0;
   border-left: clamp(.75rem, 2vw, 1.35rem) solid var(--bureau-red);
-}
-
-html[data-skin="the-undecidable-register"] .record-page > .record-grid {
-  grid-area: grid;
-  width: 100%;
-  max-width: none;
-  display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(15rem, .55fr);
-  grid-template-areas: "article index";
-  gap: clamp(1rem, 2vw, 2rem);
-  justify-content: stretch;
-  margin-top: 0;
-}
-
-html[data-skin="the-undecidable-register"] .record-grid > .article__content {
-  grid-area: article;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="the-undecidable-register"] .record-grid > .record-index {
-  grid-area: index;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  align-self: start;
-  position: sticky;
-  top: 1rem;
-}
-
-html[data-skin="the-undecidable-register"] .record-page > .record-end {
-  grid-area: end;
-  width: min(100%, 78rem);
-  max-width: none;
-  margin: 0;
-  justify-self: center;
 }
 
 html[data-skin="the-undecidable-register"] .page-shell {
@@ -1725,49 +1663,6 @@ html[data-skin="the-undecidable-register"] .page-shell > .page-prose {
   width: 100%;
   max-width: none;
   margin: 0;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer {
-  width: min(calc(100% - 2rem), 108rem);
-  border-top-width: .72rem;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
-  gap: 0;
-  padding: 0;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__note {
-  display: grid;
-  min-height: 7rem;
-  align-content: center;
-  padding: 1.15rem 1.3rem;
-  border-right: 1px solid rgb(243 235 221 / 32%);
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  justify-content: stretch;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links a {
-  min-width: 0;
-  min-height: 7rem;
-  padding: .8rem .55rem;
-  border-width: 0 0 0 1px;
-  border-color: rgb(243 235 221 / 32%);
-  box-shadow: none;
-  font-size: .6rem;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links a:last-child {
-  color: var(--bureau-void);
-  background: var(--bureau-sage-high);
-  border-color: var(--bureau-ink);
 }
 
 html[data-skin="the-undecidable-register"][data-theme="dark"] .site-nav > a[data-route="archive"],
@@ -1793,11 +1688,10 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .skin-menu summary
   }
 
   html[data-skin="the-undecidable-register"] .home-shell,
-  html[data-skin="the-undecidable-register"] .archive-shell,
-  html[data-skin="the-undecidable-register"] .record-page,
-  html[data-skin="the-undecidable-register"] .page-shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-undecidable-register"] .archive-shell,
+html[data-skin="the-undecidable-register"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-undecidable-register"] .home-shell {
     grid-template-areas:
@@ -1817,42 +1711,21 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .skin-menu summary
       "groups";
   }
 
-  html[data-skin="the-undecidable-register"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="the-undecidable-register"] .record-grid > .record-index {
-    position: static;
-  }
-
   html[data-skin="the-undecidable-register"] .page-shell {
     grid-template-areas:
       "heading"
       "prose";
   }
 
-  html[data-skin="the-undecidable-register"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-undecidable-register"] .site-footer__note {
-    border-right: 0;
-    border-bottom: 1px solid rgb(243 235 221 / 32%);
-  }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="the-undecidable-register"] .site-header,
-  html[data-skin="the-undecidable-register"] .site-footer,
-  html[data-skin="the-undecidable-register"] .home-shell,
-  html[data-skin="the-undecidable-register"] .archive-shell,
-  html[data-skin="the-undecidable-register"] .record-page,
-  html[data-skin="the-undecidable-register"] .page-shell {
-    width: 100%;
-  }
+html[data-skin="the-undecidable-register"] .home-shell,
+html[data-skin="the-undecidable-register"] .archive-shell,
+html[data-skin="the-undecidable-register"] .page-shell {
+  width: 100%;
+}
 
   html[data-skin="the-undecidable-register"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
@@ -1871,8 +1744,7 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .skin-menu summary
     font-size: 1.25rem;
   }
 
-  html[data-skin="the-undecidable-register"] .archive-tools .quick-filters,
-  html[data-skin="the-undecidable-register"] .site-footer__links {
+  html[data-skin="the-undecidable-register"] .archive-tools .quick-filters {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1880,10 +1752,6 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .skin-menu summary
     min-height: 0;
   }
 
-  html[data-skin="the-undecidable-register"] .site-footer__links a {
-    min-height: 3rem;
-    border-width: 0 0 1px;
-  }
 }
 
 /* Final remediation: The Undecidable Register */
@@ -1981,28 +1849,44 @@ html[data-skin="the-undecidable-register"] body {
   line-height: 1.65;
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading,
-  .page-heading, .record-head, .record-grid, .record-grid > .record-index,
-  .article__content, .page-prose, .record-end, .skin-menu, .skin-menu__panel
-) {
+html[data-skin="the-undecidable-register"] :is(.site-header, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.home-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.archive-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.skin-menu, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.skin-menu__panel, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   overflow: visible;
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .skip-link, .site-brand__scope, .site-nav :is(a, button, summary),
-  .skin-menu :is(label, select, option), .skin-randomizer, .action,
-  .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span),
-  .site-footer :is(p, a), .eyebrow, .record-head__key,
-  .record-facts :is(dt, dd),
-  .record-row :is(time, span), .archive-search :is(label, input, p),
-  .all-tags :is(summary, a, small), .record-toc summary, .record-end nav span,
-  .prose :is(th, td, code, pre, kbd, samp, small),
-  .code-frame :is(button, small, strong, .code-frame__status,
-  .code-frame__fallback, .code-frame__gutter)
-) {
+html[data-skin="the-undecidable-register"] :is(.skip-link,
+.site-brand__scope,
+.site-nav :is(a, button, summary),
+.skin-menu :is(label, select, option),
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.eyebrow,
+.record-head__key,
+.record-facts :is(dt, dd),
+.record-row :is(time, span),
+.archive-search :is(label, input, p),
+.all-tags :is(summary, a, small),
+.record-toc summary,
+.record-end nav span,
+.prose :is(th, td, code, pre, kbd, samp, small),
+.code-frame :is(button, small, strong, .code-frame__status,
+  .code-frame__fallback, .code-frame__gutter)) {
   font-size: max(1rem, 16px);
 }
 
@@ -2011,11 +1895,21 @@ html[data-skin="the-undecidable-register"] :is(h1, h2, h3, h4, h5, h6) {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .masthead h1, .index-heading h1, .page-heading h1, .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="the-undecidable-register"] .masthead h1,
+html[data-skin="the-undecidable-register"] .index-heading h1,
+html[data-skin="the-undecidable-register"] .page-heading h1,
+html[data-skin="the-undecidable-register"] .error-shell h1 {
   max-width: 22ch;
+  margin: 0;
+  font-family: var(--formal);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  text-transform: none;
+  text-shadow: none;
+}
+html[data-skin="the-undecidable-register"] .record-head h1 {
   margin: 0;
   font-family: var(--formal);
   font-size: clamp(2rem, 4vw, 3.5rem);
@@ -2334,9 +2228,10 @@ html[data-skin="the-undecidable-register"] .skin-randomizer:focus-visible {
   border-color: var(--reg-current);
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .home-shell, .archive-shell, .record-page, .page-shell, .error-shell
-) {
+html[data-skin="the-undecidable-register"] .home-shell,
+html[data-skin="the-undecidable-register"] .archive-shell,
+html[data-skin="the-undecidable-register"] .page-shell,
+html[data-skin="the-undecidable-register"] .error-shell {
   position: relative;
   z-index: auto;
   width: min(calc(100% - 1.5rem), var(--page));
@@ -2355,14 +2250,35 @@ html[data-skin="the-undecidable-register"] :is(
   box-shadow: none;
   isolation: auto;
 }
+html[data-skin="the-undecidable-register"] .record-page {
+  z-index: auto;
+  color: var(--reg-ink);
+  background-color: var(--reg-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2rem, rgb(255 23 77 / 35%) 2rem calc(2rem + 2px), transparent calc(2rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.4rem, rgb(69 32 255 / 13%) 2.4rem calc(2.4rem + 1px));
+  border: 2px solid var(--reg-violet);
+  border-radius: 0;
+  box-shadow: none;
+  isolation: auto;
+}
 
-html[data-skin="the-undecidable-register"] :is(
-  .masthead__copy, .index-heading, .page-heading, .record-head
-) {
+html[data-skin="the-undecidable-register"] .masthead__copy,
+html[data-skin="the-undecidable-register"] .index-heading,
+html[data-skin="the-undecidable-register"] .page-heading {
   position: relative;
   min-width: 0;
   min-height: 0;
   padding: clamp(1.25rem, 3vw, 2.5rem);
+  color: var(--reg-ink);
+  background: var(--reg-panel);
+  border: 2px solid var(--reg-violet);
+  border-left: .55rem solid var(--reg-violet);
+  border-radius: 0;
+  box-shadow: none;
+  isolation: isolate;
+}
+html[data-skin="the-undecidable-register"] .record-head {
   color: var(--reg-ink);
   background: var(--reg-panel);
   border: 2px solid var(--reg-violet);
@@ -2416,11 +2332,17 @@ html[data-skin="the-undecidable-register"] .record-end nav span {
   text-transform: none;
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="the-undecidable-register"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-undecidable-register"] .index-heading > p:last-child,
+html[data-skin="the-undecidable-register"] .page-heading > p:last-child {
   max-width: 58ch;
+  color: var(--reg-ink);
+  font-family: var(--body);
+  font-size: max(1.125rem, 18px);
+  font-weight: 400;
+  line-height: 1.6;
+}
+html[data-skin="the-undecidable-register"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--reg-ink);
   font-family: var(--body);
   font-size: max(1.125rem, 18px);
@@ -2516,10 +2438,10 @@ html[data-skin="the-undecidable-register"] .home-shell > .record-index {
   grid-row: auto;
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .home-shell > .record-index, .archive-tools, .archive-groups,
-  .page-prose, .article__content, .record-end
-) {
+html[data-skin="the-undecidable-register"] .home-shell > .record-index,
+html[data-skin="the-undecidable-register"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   margin-top: 0;
   padding: clamp(1rem, 2.2vw, 2rem);
   color: var(--reg-ink);
@@ -2528,6 +2450,19 @@ html[data-skin="the-undecidable-register"] :is(
   border-top: 3px double var(--reg-violet);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="the-undecidable-register"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--reg-ink);
+  background: transparent;
+  border: 0;
+  border-top: 3px double var(--reg-violet);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-undecidable-register"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  margin-top: 0;
+  padding: clamp(1rem, 2.2vw, 2rem);
 }
 
 html[data-skin="the-undecidable-register"] .section-heading {
@@ -2820,14 +2755,7 @@ html[data-skin="the-undecidable-register"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="the-undecidable-register"] .record-page {
-  grid-template-areas: none;
-  align-items: start;
-}
-
 html[data-skin="the-undecidable-register"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  margin: 0;
   border-left-color: var(--reg-pink);
 }
 
@@ -2843,7 +2771,6 @@ html[data-skin="the-undecidable-register"] .record-head__key {
 
 html[data-skin="the-undecidable-register"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   margin: 1.25rem 0 0;
   padding: 0;
@@ -2883,42 +2810,13 @@ html[data-skin="the-undecidable-register"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="the-undecidable-register"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas: none;
-  gap: clamp(1rem, 2.5vw, 2rem);
-  width: 100%;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="the-undecidable-register"] .record-grid > .article__content {
-  grid-column: 1 / 9;
-  grid-row: auto;
-  width: 100%;
-  max-width: var(--reading);
-  margin: 0;
-  justify-self: start;
-}
-
 html[data-skin="the-undecidable-register"] .record-grid > .record-index {
-  grid-column: 9 / -1;
-  grid-row: auto;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--reg-ink);
   background: var(--reg-panel);
   border: 2px solid var(--reg-violet);
   border-top: .4rem solid var(--reg-cyan);
   border-radius: 0;
   box-shadow: none;
-  position: sticky;
-  top: 1rem;
-  align-self: start;
 }
 
 html[data-skin="the-undecidable-register"] .record-toc {
@@ -2973,13 +2871,6 @@ html[data-skin="the-undecidable-register"] .related-records h2 {
   margin-top: 1.25rem;
   color: var(--reg-ink);
   font-size: max(1.25rem, 20px);
-}
-
-html[data-skin="the-undecidable-register"] .record-page > .record-end {
-  grid-column: 2 / 12;
-  width: 100%;
-  max-width: none;
-  margin: 0;
 }
 
 html[data-skin="the-undecidable-register"] .record-end > p a,
@@ -3099,8 +2990,10 @@ html[data-skin="the-undecidable-register"] .prose tr:nth-child(even) td {
 
 html[data-skin="the-undecidable-register"] .prose table {
   display: block;
-  max-width: 100%;
   overflow-x: auto;
+}
+html[data-skin="the-undecidable-register"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
 }
 
 html[data-skin="the-undecidable-register"] .prose img:not(.emoji) {
@@ -3296,86 +3189,6 @@ html[data-skin="the-undecidable-register"] .error-shell > nav {
   margin-top: 1rem;
 }
 
-html[data-skin="the-undecidable-register"] .site-footer {
-  position: relative;
-  z-index: 1;
-  width: min(calc(100% - 1.5rem), var(--page));
-  margin: 0 auto 1rem;
-  color: var(--reg-ink);
-  background: var(--reg-paper);
-  border: 2px solid var(--reg-violet);
-  border-bottom: .45rem solid var(--reg-pink);
-  border-radius: 0;
-  box-shadow: none;
-  isolation: auto;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 0;
-  padding: 0;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__note {
-  grid-column: 1 / 8;
-  display: grid;
-  min-height: 6rem;
-  align-content: center;
-  margin: 0;
-  padding: 1rem 1.25rem;
-  color: var(--reg-ink);
-  background: var(--reg-panel);
-  border-right: 1px solid var(--reg-rule);
-  font-family: var(--body);
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__note a {
-  color: var(--reg-link);
-  background: transparent;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__note a:hover,
-html[data-skin="the-undecidable-register"] .site-footer__note a:focus-visible {
-  color: var(--reg-pink);
-  background: var(--reg-paper);
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links {
-  grid-column: 8 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links a {
-  display: grid;
-  min-width: 0;
-  min-height: 6rem;
-  align-content: center;
-  padding: .8rem;
-  color: var(--reg-link);
-  background: var(--reg-paper);
-  border: 0;
-  border-left: 1px solid var(--reg-rule);
-  border-radius: 0;
-  box-shadow: none;
-  font-family: var(--keys);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.35;
-  text-align: left;
-  text-decoration: none;
-  text-transform: none;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links a:hover,
-html[data-skin="the-undecidable-register"] .site-footer__links a:focus-visible {
-  color: var(--reg-on-current);
-  background: var(--reg-current);
-  border-color: var(--reg-current);
-}
-
 html[data-skin="the-undecidable-register"][data-theme="dark"] body {
   color: var(--reg-ink);
   background-color: var(--reg-canvas);
@@ -3384,10 +3197,12 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] body {
     repeating-linear-gradient(0deg, transparent 0 2.45rem, rgb(255 242 201 / 9%) 2.45rem calc(2.45rem + 1px));
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell
-) {
+html[data-skin="the-undecidable-register"][data-theme="dark"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell) {
   color: var(--reg-ink);
   background-color: var(--reg-paper);
   background-image:
@@ -3396,20 +3211,25 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
   border-color: var(--reg-violet);
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
-  .site-brand, .masthead__copy, .index-heading, .page-heading, .record-head,
-  .record-grid > .record-index, .site-footer__note,
-  .skin-menu__panel, .all-tags__grid a, .record-end nav a,
-  .prose :is(.info, blockquote), .prose .katex-display, .archive-search input
-) {
+html[data-skin="the-undecidable-register"][data-theme="dark"] :is(.site-brand,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.record-grid > .record-index,
+.skin-menu__panel,
+.all-tags__grid a,
+.record-end nav a,
+.prose :is(.info, blockquote),
+.prose .katex-display,
+.archive-search input) {
   color: var(--reg-ink);
   background-color: var(--reg-panel);
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
-  .site-nav > a[data-route], .theme-toggle, .skin-menu summary,
-  .site-footer__links a
-) {
+html[data-skin="the-undecidable-register"][data-theme="dark"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu summary) {
   color: var(--reg-ink);
   background: var(--reg-paper);
   border-color: var(--reg-rule);
@@ -3514,44 +3334,27 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  html[data-skin="the-undecidable-register"] :is(
-    .home-shell, .archive-shell, .record-page, .page-shell, .error-shell
-  ) {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-undecidable-register"] .home-shell,
+html[data-skin="the-undecidable-register"] .archive-shell,
+html[data-skin="the-undecidable-register"] .page-shell,
+html[data-skin="the-undecidable-register"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-undecidable-register"] .masthead {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-undecidable-register"] :is(
-    .masthead__copy, .home-shell > .record-index,
-    .archive-shell > .index-heading,
-    .archive-shell > .archive-tools, .archive-shell > .archive-groups,
-    .archive-shell > .archive-empty, .record-page > .record-head,
-    .record-page > .record-grid, .record-page > .record-end,
-    .page-shell > .page-heading, .page-shell > .page-prose
-  ) {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-undecidable-register"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-undecidable-register"] :is(
-    .record-grid > .article__content, .record-grid > .record-index
-  ) {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-undecidable-register"] .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="the-undecidable-register"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  html[data-skin="the-undecidable-register"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-undecidable-register"] .home-shell > .record-index,
+html[data-skin="the-undecidable-register"] .archive-shell > .index-heading,
+html[data-skin="the-undecidable-register"] .archive-shell > .archive-tools,
+html[data-skin="the-undecidable-register"] .archive-shell > .archive-groups,
+html[data-skin="the-undecidable-register"] .archive-shell > .archive-empty,
+html[data-skin="the-undecidable-register"] .page-shell > .page-heading,
+html[data-skin="the-undecidable-register"] .page-shell > .page-prose {
+  grid-column: 1;
+}
 
   html[data-skin="the-undecidable-register"] .record-facts > div:nth-child(2) {
     border-right: 0;
@@ -3574,36 +3377,20 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
     grid-column: 1;
   }
 
-  html[data-skin="the-undecidable-register"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-undecidable-register"] .site-footer__note,
-  html[data-skin="the-undecidable-register"] .site-footer__links {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-undecidable-register"] .site-footer__note {
-    border-right: 0;
-    border-bottom: 1px solid var(--reg-rule);
-  }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-undecidable-register"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell
-  ) {
-    width: 100%;
-    margin-inline: 0;
-  }
+  html[data-skin="the-undecidable-register"] .site-header,
+html[data-skin="the-undecidable-register"] .home-shell,
+html[data-skin="the-undecidable-register"] .archive-shell,
+html[data-skin="the-undecidable-register"] .page-shell,
+html[data-skin="the-undecidable-register"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+}
 
   html[data-skin="the-undecidable-register"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="the-undecidable-register"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="the-undecidable-register"] .site-nav {
@@ -3628,11 +3415,9 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
     width: min(100%, calc(100vw - 1rem));
   }
 
-  html[data-skin="the-undecidable-register"] .record-facts,
-  html[data-skin="the-undecidable-register"] .quick-filters,
-  html[data-skin="the-undecidable-register"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-undecidable-register"] .quick-filters {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-undecidable-register"] .record-facts > div {
     border-right: 0;
@@ -3678,12 +3463,6 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-undecidable-register"] .site-footer__links a {
-    min-height: 3.25rem;
-    border-left: 0;
-    border-bottom: 1px solid var(--reg-rule);
-  }
-
   html[data-skin="the-undecidable-register"] .prose .code-frame__viewport {
     grid-template-columns: 3.8rem minmax(0, 1fr);
   }
@@ -3695,26 +3474,46 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
 }
 
 @media (forced-colors: active) {
-  html[data-skin="the-undecidable-register"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell, .masthead__copy, .index-heading, .page-heading,
-    .record-head, .record-facts, .home-shell > .record-index,
-    .archive-tools, .archive-groups, .page-prose, .article__content,
-    .record-end, .record-grid > .record-index, .skin-menu__panel, .code-frame,
-    .code-frame__bar, .code-frame__status, .code-frame__fallback
-  ) {
+  html[data-skin="the-undecidable-register"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.record-facts,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-grid > .record-index,
+.skin-menu__panel,
+.code-frame,
+.code-frame__bar,
+.code-frame__status,
+.code-frame__fallback) {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
     box-shadow: none;
   }
 
-  html[data-skin="the-undecidable-register"] :is(
-    .site-nav > a[data-route], .theme-toggle, .skin-menu summary,
-    .skin-randomizer, .action, .record-actions a, .tag-line a,
-    .quick-filters a, .pagination :is(a, span), .site-footer__links a,
-    .code-frame__actions button, .archive-search input
-  ) {
+  html[data-skin="the-undecidable-register"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.code-frame__actions button,
+.archive-search input) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3890,19 +3689,6 @@ html[data-skin="the-undecidable-register"] .record-grid .code-frame__actions but
   border-color: var(--reg-on-current);
 }
 
-html[data-skin="the-undecidable-register"] .site-footer .site-footer__links a:last-child {
-  color: var(--reg-link);
-  background: var(--reg-paper);
-  border-color: var(--reg-rule);
-}
-
-html[data-skin="the-undecidable-register"] .site-footer .site-footer__links a:last-child:hover,
-html[data-skin="the-undecidable-register"] .site-footer .site-footer__links a:last-child:focus-visible {
-  color: var(--reg-on-current);
-  background: var(--reg-current);
-  border-color: var(--reg-current);
-}
-
 html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header .site-nav > a[data-route],
 html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header .theme-toggle,
 html[data-skin="the-undecidable-register"][data-theme="dark"] .site-header .skin-menu summary {
@@ -3937,8 +3723,7 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .record-page .reco
   border-color: var(--reg-rule);
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] .archive-shell .all-tags__grid a:nth-child(n),
-html[data-skin="the-undecidable-register"][data-theme="dark"] .site-footer .site-footer__links a:last-child {
+html[data-skin="the-undecidable-register"][data-theme="dark"] .archive-shell .all-tags__grid a:nth-child(n) {
   color: var(--reg-link);
   background: var(--reg-panel);
   border-color: var(--reg-rule);
@@ -3975,13 +3760,17 @@ html[data-skin="the-undecidable-register"][data-theme="dark"] .record-grid .code
 }
 
 @media (forced-colors: active) {
-  html[data-skin="the-undecidable-register"] :is(
-    .site-header .site-nav > a[data-route], .site-header .theme-toggle,
-    .site-header .skin-menu summary, .skin-randomizer, .action,
-    .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span),
-    .site-footer .site-footer__links a, .code-frame__actions button,
-    .archive-search input
-  ) {
+  html[data-skin="the-undecidable-register"] :is(.site-header .site-nav > a[data-route],
+.site-header .theme-toggle,
+.site-header .skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.code-frame__actions button,
+.archive-search input) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4044,10 +3833,10 @@ html[data-skin="the-undecidable-register"] .site-brand:focus-visible {
   color: var(--reg-ink);
 }
 
-html[data-skin="the-undecidable-register"] :is(
-  .prose a, .record-end > p a, .record-toc a, .related-records a,
-  .site-footer__note a
-):is(:hover, :focus-visible),
+html[data-skin="the-undecidable-register"] :is(.prose a,
+.record-end > p a,
+.record-toc a,
+.related-records a):is(:hover, :focus-visible),
 html[data-skin="the-undecidable-register"] :is(
   .all-tags summary, .record-toc summary
 ):is(:hover, :focus-visible) {
@@ -4070,14 +3859,6 @@ html[data-skin="the-undecidable-register"] .site-nav {
   align-self: start;
   gap: .25rem;
   padding: .25rem;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links {
-  align-self: start;
-}
-
-html[data-skin="the-undecidable-register"] .site-footer__links a {
-  min-height: 3.25rem;
 }
 
 html[data-skin="the-undecidable-register"] body {
@@ -4107,10 +3888,15 @@ html[data-skin="the-undecidable-register"] :is(
   );
 }
 
-html[data-skin="the-undecidable-register"][data-theme="dark"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .article__content, .page-prose, .record-end
-) {
+html[data-skin="the-undecidable-register"][data-theme="dark"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.article__content,
+.page-prose,
+.record-end) {
   background-image: repeating-linear-gradient(
     0deg,
     transparent 0 2.4rem,
@@ -4189,12 +3975,10 @@ html[data-skin="the-undecidable-register"] .prose .code-frame :is(
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-undecidable-register"] :is(
-    .record-grid > .article__content, .page-shell > .page-prose
-  ) {
-    max-width: none;
-    justify-self: stretch;
-  }
+  html[data-skin="the-undecidable-register"] .page-shell > .page-prose {
+  max-width: none;
+  justify-self: stretch;
+}
 }
 
 @media (max-width: 44rem) {

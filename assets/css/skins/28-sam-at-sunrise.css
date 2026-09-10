@@ -149,10 +149,8 @@ html[data-skin="sam-at-sunrise"] .skip-link {
 }
 
 html[data-skin="sam-at-sunrise"] .site-header,
-html[data-skin="sam-at-sunrise"] .site-footer,
 html[data-skin="sam-at-sunrise"] .home-shell,
 html[data-skin="sam-at-sunrise"] .archive-shell,
-html[data-skin="sam-at-sunrise"] .record-page,
 html[data-skin="sam-at-sunrise"] .page-shell,
 html[data-skin="sam-at-sunrise"] .error-shell {
   position: relative;
@@ -167,9 +165,19 @@ html[data-skin="sam-at-sunrise"] .error-shell {
   border-radius: 0;
   box-shadow: .5rem .62rem 0 var(--dawn-shadow);
 }
+html[data-skin="sam-at-sunrise"] .record-page {
+  isolation: isolate;
+  color: var(--ink);
+  background-color: var(--dawn-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 3.1%, var(--dawn-red) 3.1% 3.32%, transparent 3.32% 96.68%, var(--dawn-green) 96.68% 96.9%, transparent 96.9%),
+    repeating-linear-gradient(180deg, transparent 0 4.45rem, #d99a2830 4.5rem 4.57rem, transparent 4.62rem 8.95rem);
+  border: 5px double var(--dawn-indigo);
+  border-radius: 0;
+  box-shadow: .5rem .62rem 0 var(--dawn-shadow);
+}
 
-html[data-skin="sam-at-sunrise"] .site-header,
-html[data-skin="sam-at-sunrise"] .site-footer {
+html[data-skin="sam-at-sunrise"] .site-header {
   color: var(--dawn-paper-high);
   background-color: var(--dawn-indigo);
   background-image:
@@ -186,14 +194,7 @@ html[data-skin="sam-at-sunrise"] .site-header {
   border-bottom-color: var(--dawn-gold);
 }
 
-html[data-skin="sam-at-sunrise"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-width: .78rem;
-  border-top-color: var(--dawn-green);
-}
-
-html[data-skin="sam-at-sunrise"] .site-header::before,
-html[data-skin="sam-at-sunrise"] .site-footer::before {
+html[data-skin="sam-at-sunrise"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: 50%;
@@ -209,8 +210,7 @@ html[data-skin="sam-at-sunrise"] .site-footer::before {
   transform: translateY(-50%);
 }
 
-html[data-skin="sam-at-sunrise"] .site-header::after,
-html[data-skin="sam-at-sunrise"] .site-footer::after {
+html[data-skin="sam-at-sunrise"] .site-header::after {
   position: absolute;
   z-index: -1;
   top: 16%;
@@ -223,8 +223,7 @@ html[data-skin="sam-at-sunrise"] .site-footer::after {
   border-inline: 1px solid #f4ead28c;
 }
 
-html[data-skin="sam-at-sunrise"] .site-header__inner,
-html[data-skin="sam-at-sunrise"] .site-footer__inner {
+html[data-skin="sam-at-sunrise"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -271,8 +270,7 @@ html[data-skin="sam-at-sunrise"] .record-actions a,
 html[data-skin="sam-at-sunrise"] .tag-line a,
 html[data-skin="sam-at-sunrise"] .quick-filters a,
 html[data-skin="sam-at-sunrise"] .pagination a,
-html[data-skin="sam-at-sunrise"] .pagination span,
-html[data-skin="sam-at-sunrise"] .site-footer__links a {
+html[data-skin="sam-at-sunrise"] .pagination span {
   min-height: 2.65rem;
   color: var(--dawn-paper-high);
   background: var(--dawn-indigo);
@@ -317,9 +315,7 @@ html[data-skin="sam-at-sunrise"] .tag-line a:focus-visible,
 html[data-skin="sam-at-sunrise"] .quick-filters a:hover,
 html[data-skin="sam-at-sunrise"] .quick-filters a:focus-visible,
 html[data-skin="sam-at-sunrise"] .pagination a:hover,
-html[data-skin="sam-at-sunrise"] .pagination a:focus-visible,
-html[data-skin="sam-at-sunrise"] .site-footer__links a:hover,
-html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
+html[data-skin="sam-at-sunrise"] .pagination a:focus-visible {
   color: var(--dawn-paper-high);
   background: var(--dawn-red);
   border-color: var(--dawn-gold-high);
@@ -372,25 +368,33 @@ html[data-skin="sam-at-sunrise"] .skin-randomizer {
 
 html[data-skin="sam-at-sunrise"] .home-shell,
 html[data-skin="sam-at-sunrise"] .archive-shell,
-html[data-skin="sam-at-sunrise"] .record-page,
 html[data-skin="sam-at-sunrise"] .page-shell,
 html[data-skin="sam-at-sunrise"] .error-shell {
   padding: clamp(1.1rem, 3vw, 2.75rem);
 }
 
-html[data-skin="sam-at-sunrise"] .masthead,
-html[data-skin="sam-at-sunrise"] .record-grid {
+html[data-skin="sam-at-sunrise"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.6rem);
 }
 
 html[data-skin="sam-at-sunrise"] .masthead__copy,
 html[data-skin="sam-at-sunrise"] .index-heading,
 html[data-skin="sam-at-sunrise"] .page-heading,
-html[data-skin="sam-at-sunrise"] .record-head,
 html[data-skin="sam-at-sunrise"] .error-shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: var(--dawn-indigo);
+  background:
+    linear-gradient(90deg, var(--dawn-red) 0 .5rem, transparent .5rem calc(100% - .5rem), var(--dawn-green) calc(100% - .5rem)),
+    repeating-linear-gradient(180deg, transparent 0 4.1rem, #d99a2838 4.15rem 4.22rem, transparent 4.27rem 8.3rem),
+    var(--dawn-paper-high);
+  border: 5px double var(--dawn-indigo);
+  border-radius: 0;
+  box-shadow: .43rem .52rem 0 var(--dawn-shadow);
+}
+html[data-skin="sam-at-sunrise"] .record-head {
+  isolation: isolate;
   color: var(--dawn-indigo);
   background:
     linear-gradient(90deg, var(--dawn-red) 0 .5rem, transparent .5rem calc(100% - .5rem), var(--dawn-green) calc(100% - .5rem)),
@@ -496,9 +500,13 @@ html[data-skin="sam-at-sunrise"] .record-head h1 i {
 
 html[data-skin="sam-at-sunrise"] .masthead__lede,
 html[data-skin="sam-at-sunrise"] .index-heading > p:last-child,
-html[data-skin="sam-at-sunrise"] .page-heading > p:last-child,
-html[data-skin="sam-at-sunrise"] .record-head__abstract {
+html[data-skin="sam-at-sunrise"] .page-heading > p:last-child {
   max-width: 60ch;
+  font-family: var(--body);
+  font-size: 1.16rem;
+  font-weight: 700;
+}
+html[data-skin="sam-at-sunrise"] .record-head__abstract {
   font-family: var(--body);
   font-size: 1.16rem;
   font-weight: 700;
@@ -1147,37 +1155,6 @@ html[data-skin="sam-at-sunrise"] .error-shell > p {
   color: var(--dawn-indigo);
 }
 
-html[data-skin="sam-at-sunrise"] .site-footer__note,
-html[data-skin="sam-at-sunrise"] .site-footer a {
-  color: var(--dawn-paper-high);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__note a:hover,
-html[data-skin="sam-at-sunrise"] .site-footer__note a:focus-visible {
-  color: var(--dawn-gold-high);
-}
-
-@media (min-width: 76rem) {
-  html[data-skin="sam-at-sunrise"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="sam-at-sunrise"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 44rem) {
   html[data-skin="sam-at-sunrise"] body {
     font-size: 1.125rem;
@@ -1185,36 +1162,31 @@ html[data-skin="sam-at-sunrise"] .site-footer__note a:focus-visible {
   }
 
   html[data-skin="sam-at-sunrise"] .site-header,
-  html[data-skin="sam-at-sunrise"] .site-footer,
-  html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page,
-  html[data-skin="sam-at-sunrise"] .page-shell,
-  html[data-skin="sam-at-sunrise"] .error-shell {
+html[data-skin="sam-at-sunrise"] .home-shell,
+html[data-skin="sam-at-sunrise"] .archive-shell,
+html[data-skin="sam-at-sunrise"] .record-page,
+html[data-skin="sam-at-sunrise"] .page-shell,
+html[data-skin="sam-at-sunrise"] .error-shell {
     border-width: 3px;
     box-shadow: .2rem .25rem 0 var(--dawn-shadow);
   }
 
-  html[data-skin="sam-at-sunrise"] .site-header,
-  html[data-skin="sam-at-sunrise"] .site-footer {
+  html[data-skin="sam-at-sunrise"] .site-header {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  html[data-skin="sam-at-sunrise"] .site-header::before,
-  html[data-skin="sam-at-sunrise"] .site-footer::before {
+  html[data-skin="sam-at-sunrise"] .site-header::before {
     right: 4%;
     width: 5.5rem;
   }
 
-  html[data-skin="sam-at-sunrise"] .site-header::after,
-  html[data-skin="sam-at-sunrise"] .site-footer::after {
+  html[data-skin="sam-at-sunrise"] .site-header::after {
     left: 3%;
     width: .35rem;
   }
 
-  html[data-skin="sam-at-sunrise"] .site-header__inner,
-  html[data-skin="sam-at-sunrise"] .site-footer__inner {
+  html[data-skin="sam-at-sunrise"] .site-header__inner {
     padding: .85rem .9rem;
   }
 
@@ -1316,26 +1288,25 @@ html[data-skin="sam-at-sunrise"] .site-footer__note a:focus-visible {
 
 @media (forced-colors: active) {
   html[data-skin="sam-at-sunrise"] .site-header,
-  html[data-skin="sam-at-sunrise"] .site-footer,
-  html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page,
-  html[data-skin="sam-at-sunrise"] .page-shell,
-  html[data-skin="sam-at-sunrise"] .error-shell,
-  html[data-skin="sam-at-sunrise"] .masthead__copy,
-  html[data-skin="sam-at-sunrise"] .index-heading,
-  html[data-skin="sam-at-sunrise"] .page-heading,
-  html[data-skin="sam-at-sunrise"] .record-head,
-  html[data-skin="sam-at-sunrise"] .home-shell > .record-index,
-  html[data-skin="sam-at-sunrise"] .archive-tools,
-  html[data-skin="sam-at-sunrise"] .archive-groups,
-  html[data-skin="sam-at-sunrise"] .page-prose,
-  html[data-skin="sam-at-sunrise"] .article__content,
-  html[data-skin="sam-at-sunrise"] .record-end,
-  html[data-skin="sam-at-sunrise"] .record-grid > .record-index,
-  html[data-skin="sam-at-sunrise"] .code-frame,
-  html[data-skin="sam-at-sunrise"] .code-frame__bar,
-  html[data-skin="sam-at-sunrise"] .code-frame__status {
+html[data-skin="sam-at-sunrise"] .home-shell,
+html[data-skin="sam-at-sunrise"] .archive-shell,
+html[data-skin="sam-at-sunrise"] .record-page,
+html[data-skin="sam-at-sunrise"] .page-shell,
+html[data-skin="sam-at-sunrise"] .error-shell,
+html[data-skin="sam-at-sunrise"] .masthead__copy,
+html[data-skin="sam-at-sunrise"] .index-heading,
+html[data-skin="sam-at-sunrise"] .page-heading,
+html[data-skin="sam-at-sunrise"] .record-head,
+html[data-skin="sam-at-sunrise"] .home-shell > .record-index,
+html[data-skin="sam-at-sunrise"] .archive-tools,
+html[data-skin="sam-at-sunrise"] .archive-groups,
+html[data-skin="sam-at-sunrise"] .page-prose,
+html[data-skin="sam-at-sunrise"] .article__content,
+html[data-skin="sam-at-sunrise"] .record-end,
+html[data-skin="sam-at-sunrise"] .record-grid > .record-index,
+html[data-skin="sam-at-sunrise"] .code-frame,
+html[data-skin="sam-at-sunrise"] .code-frame__bar,
+html[data-skin="sam-at-sunrise"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1726,12 +1697,6 @@ html[data-skin="sam-at-sunrise"] .archive-shell > .archive-empty {
 }
 
 html[data-skin="sam-at-sunrise"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2.4rem);
-  width: min(calc(100% - 3rem), 104rem);
-  align-items: start;
-  padding: clamp(1rem, 2.8vw, 2.8rem);
   background-image:
     radial-gradient(circle at 15% 13%, transparent 0 6rem, #a83c2f44 6.08rem 6.2rem, transparent 6.28rem),
     repeating-linear-gradient(180deg, transparent 0 5.6rem, #d99a2836 5.66rem 5.74rem, transparent 5.8rem 11.4rem),
@@ -1739,13 +1704,6 @@ html[data-skin="sam-at-sunrise"] .record-page {
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-head {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 2;
-  display: grid;
-  align-content: start;
-  min-height: calc(100vh - 9rem);
-  margin: 0;
-  padding: clamp(1.25rem, 2.4vw, 2.3rem);
   border-left: .72rem solid var(--dawn-red);
 }
 
@@ -1758,7 +1716,6 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-head::after {
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-head h1 {
-  max-width: 8ch;
   font-size: clamp(2.9rem, 4.6vw, 5.5rem);
 }
 
@@ -1768,7 +1725,6 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-head .record-head__abstr
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-head .record-facts {
-  grid-template-columns: 1fr;
   gap: .55rem;
   margin-top: 1.25rem;
 }
@@ -1782,7 +1738,6 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-head .record-facts > div
 html[data-skin="sam-at-sunrise"] .record-page > .record-head .record-actions,
 html[data-skin="sam-at-sunrise"] .record-page > .record-head .tag-line {
   display: grid;
-  grid-template-columns: 1fr;
   gap: .5rem;
   margin-top: 1rem;
 }
@@ -1794,42 +1749,15 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-head .tag-line a {
   font-size: .57rem;
 }
 
-html[data-skin="sam-at-sunrise"] .record-page > .record-grid {
-  grid-column: 5 / -1;
-  grid-row: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, 17rem);
-  gap: clamp(1rem, 2vw, 2rem);
-  justify-content: stretch;
-  margin-top: 0;
-}
-
 html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3rem);
   border-left: .75rem solid var(--dawn-gold);
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1.1rem;
   border-top-color: var(--dawn-green);
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-end {
-  grid-column: 5 / -1;
-  grid-row: 2;
-  margin-top: 0;
-  padding: 1.1rem 1.25rem;
   border-top: .58rem solid var(--dawn-green);
 }
 
@@ -1837,67 +1765,6 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-end nav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .8rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer {
-  width: min(calc(100% - 3rem), 104rem);
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  overflow: visible;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem 1.6rem;
-  align-items: center;
-  padding: 1.25rem 1.6rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__note {
-  grid-column: 1 / span 7;
-  margin: 0;
-  padding-left: 1rem;
-  border-left: .42rem solid var(--dawn-gold);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links {
-  grid-column: 8 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a {
-  min-height: 3.35rem;
-  padding: .4rem;
-  border-width: 0 0 .38rem;
-  box-shadow: none;
-  font-size: .57rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(1) {
-  background: var(--dawn-green);
-  border-color: var(--dawn-gold);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(2) {
-  background: var(--dawn-red);
-  border-color: var(--dawn-gold-high);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(3) {
-  color: var(--dawn-indigo);
-  background: var(--dawn-gold-high);
-  border-color: var(--dawn-red);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:hover,
-html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
-  color: var(--dawn-paper-high);
-  background: var(--dawn-indigo);
-  border-color: var(--dawn-paper-high);
-  box-shadow: inset 0 -.1rem 0 var(--dawn-gold);
 }
 
 @media (max-width: 68rem) {
@@ -1910,22 +1777,18 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page {
-    display: block;
-  }
+html[data-skin="sam-at-sunrise"] .archive-shell {
+  display: block;
+}
 
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead,
-  html[data-skin="sam-at-sunrise"] .home-shell > .record-index,
-  html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading,
-  html[data-skin="sam-at-sunrise"] .archive-shell > .archive-tools,
-  html[data-skin="sam-at-sunrise"] .archive-shell > .archive-groups,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-head,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-end {
-    margin-top: 0;
-    margin-bottom: 1.25rem;
-  }
+html[data-skin="sam-at-sunrise"] .home-shell > .record-index,
+html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading,
+html[data-skin="sam-at-sunrise"] .archive-shell > .archive-tools,
+html[data-skin="sam-at-sunrise"] .archive-shell > .archive-groups {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
 
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead {
     grid-template-columns: minmax(0, 1fr) minmax(13rem, 17rem);
@@ -1941,38 +1804,20 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
     min-height: 0;
   }
 
-  html[data-skin="sam-at-sunrise"] .record-page > .record-head {
-    min-height: 0;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(12rem, 15rem);
-  }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__note {
-    grid-column: 1 / span 6;
-  }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__links {
-    grid-column: 7 / -1;
-  }
 }
 
 @media (max-width: 48rem) {
   html[data-skin="sam-at-sunrise"] .site-header,
-  html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page,
-  html[data-skin="sam-at-sunrise"] .site-footer {
-    width: min(calc(100% - 1.2rem), 104rem);
-  }
+html[data-skin="sam-at-sunrise"] .home-shell,
+html[data-skin="sam-at-sunrise"] .archive-shell {
+  width: min(calc(100% - 1.2rem), 104rem);
+}
 
   html[data-skin="sam-at-sunrise"] .site-header {
     margin-top: .6rem;
   }
 
-  html[data-skin="sam-at-sunrise"] .site-header__inner,
-  html[data-skin="sam-at-sunrise"] .site-footer__inner {
+  html[data-skin="sam-at-sunrise"] .site-header__inner {
     padding: .8rem;
   }
 
@@ -2001,10 +1846,9 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
   }
 
   html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page {
-    padding: .8rem;
-  }
+html[data-skin="sam-at-sunrise"] .archive-shell {
+  padding: .8rem;
+}
 
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead {
     display: block;
@@ -2044,42 +1888,10 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible {
     grid-column: auto;
   }
 
-  html[data-skin="sam-at-sunrise"] .record-page > .record-head,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-end {
-    display: block;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    margin: 0;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    position: static;
-    margin-top: 1rem;
-  }
-
   html[data-skin="sam-at-sunrise"] .record-page > .record-end nav {
     grid-template-columns: 1fr;
   }
 
-  html[data-skin="sam-at-sunrise"] .site-footer {
-    margin-top: .6rem;
-    margin-bottom: .6rem;
-  }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__inner {
-    display: block;
-  }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__note {
-    margin-bottom: 1rem;
-  }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__links {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 /* Final remediation: Sam at Sunrise */
@@ -2213,47 +2025,43 @@ html[data-skin="sam-at-sunrise"] a:hover {
 }
 
 /* Every rendered label and control keeps the shared 16px floor. */
-html[data-skin="sam-at-sunrise"] :is(
-  .skip-link,
-  .site-brand__scope,
-  small,
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-menu summary::after,
-  .skin-menu label,
-  .skin-menu select,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .pagination span,
-  .site-footer__note,
-  .site-footer__links a,
-  .eyebrow,
-  .record-head__key,
-  .archive-search label,
-  .all-tags summary,
-  .record-toc summary,
-  .record-facts dt,
-  .record-facts dd,
-  .record-row__date,
-  .record-row__event,
-  .record-row__primitive,
-  .archive-year > header span,
-  .pagination__position,
-  .prose :is(code, th, td),
-  .heading-anchor,
-  .code-frame__label,
-  .code-frame__label :is(strong, small),
-  .code-frame__actions button,
-  .code-frame__gutter,
-  .code-frame__status,
-  .code-frame__fallback,
-  .record-end nav span
-) {
+html[data-skin="sam-at-sunrise"] :is(.skip-link,
+.site-brand__scope,
+small,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu summary::after,
+.skin-menu label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.eyebrow,
+.record-head__key,
+.archive-search label,
+.all-tags summary,
+.record-toc summary,
+.record-facts dt,
+.record-facts dd,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.archive-year > header span,
+.pagination__position,
+.prose :is(code, th, td),
+.heading-anchor,
+.code-frame__label,
+.code-frame__label :is(strong, small),
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback,
+.record-end nav span) {
   font-size: 1rem !important;
 }
 
@@ -2290,9 +2098,7 @@ html[data-skin="sam-at-sunrise"] .site-header {
 }
 
 html[data-skin="sam-at-sunrise"] .site-header::before,
-html[data-skin="sam-at-sunrise"] .site-header::after,
-html[data-skin="sam-at-sunrise"] .site-footer::before,
-html[data-skin="sam-at-sunrise"] .site-footer::after {
+html[data-skin="sam-at-sunrise"] .site-header::after {
   position: absolute;
   z-index: 0;
   inset-block: 0;
@@ -2302,10 +2108,8 @@ html[data-skin="sam-at-sunrise"] .site-footer::after {
   background: repeating-linear-gradient(180deg, var(--score-red) 0 .55rem, var(--score-gold) .55rem 1.1rem, var(--score-green) 1.1rem 1.65rem, transparent 1.65rem 2.2rem);
 }
 
-html[data-skin="sam-at-sunrise"] .site-header::before,
-html[data-skin="sam-at-sunrise"] .site-footer::before { left: .8rem; }
-html[data-skin="sam-at-sunrise"] .site-header::after,
-html[data-skin="sam-at-sunrise"] .site-footer::after { right: .8rem; }
+html[data-skin="sam-at-sunrise"] .site-header::before { left: .8rem; }
+html[data-skin="sam-at-sunrise"] .site-header::after { right: .8rem; }
 
 html[data-skin="sam-at-sunrise"] .site-header__inner {
   position: relative;
@@ -2578,7 +2382,10 @@ html[data-skin="sam-at-sunrise"] .skin-randomizer:focus-visible {
 }
 
 /* Shared score field and headings. These containers remain open for menus and focus. */
-html[data-skin="sam-at-sunrise"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="sam-at-sunrise"] .home-shell,
+html[data-skin="sam-at-sunrise"] .archive-shell,
+html[data-skin="sam-at-sunrise"] .page-shell,
+html[data-skin="sam-at-sunrise"] .error-shell {
   position: relative;
   z-index: 0;
   isolation: auto;
@@ -2594,11 +2401,31 @@ html[data-skin="sam-at-sunrise"] :is(.home-shell, .archive-shell, .record-page, 
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="sam-at-sunrise"] .record-page {
+  z-index: 0;
+  isolation: auto;
+  color: var(--ink);
+  background: var(--surface);
+  border: 0;
+  border-inline: 1px solid color-mix(in srgb, var(--score-gold) 42%, transparent);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="sam-at-sunrise"] :is(.masthead__copy, .index-heading, .page-heading, .record-head) {
+html[data-skin="sam-at-sunrise"] .masthead__copy,
+html[data-skin="sam-at-sunrise"] .index-heading,
+html[data-skin="sam-at-sunrise"] .page-heading {
   min-width: 0;
   min-height: 0;
   overflow: visible;
+  color: var(--heading);
+  background: var(--surface-raised);
+  border: 0;
+  border-inline-start: .45rem solid var(--score-red);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="sam-at-sunrise"] .record-head {
   color: var(--heading);
   background: var(--surface-raised);
   border: 0;
@@ -2612,8 +2439,22 @@ html[data-skin="sam-at-sunrise"] :is(.masthead__copy, .index-heading, .page-head
   content: none;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="sam-at-sunrise"] .masthead h1,
+html[data-skin="sam-at-sunrise"] .index-heading h1,
+html[data-skin="sam-at-sunrise"] .page-heading h1,
+html[data-skin="sam-at-sunrise"] .error-shell h1 {
   max-width: 18ch;
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -.07em;
+  line-height: .98;
+  overflow-wrap: anywhere;
+  text-shadow: none;
+}
+html[data-skin="sam-at-sunrise"] .record-head h1 {
   margin: 0;
   color: var(--heading);
   font-family: var(--display);
@@ -2647,8 +2488,17 @@ html[data-skin="sam-at-sunrise"] .record-end nav span {
   text-transform: uppercase;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="sam-at-sunrise"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="sam-at-sunrise"] .index-heading > p:last-child,
+html[data-skin="sam-at-sunrise"] .page-heading > p:last-child {
   max-width: 60ch;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+}
+html[data-skin="sam-at-sunrise"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--ink);
   font-family: var(--body);
   font-size: clamp(1rem, 1.1vw, 1.125rem);
@@ -2746,7 +2596,12 @@ html[data-skin="sam-at-sunrise"] .tag-line {
   margin-top: 1.25rem;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="sam-at-sunrise"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span) {
   display: inline-flex;
   min-height: 3rem;
   align-items: center;
@@ -2766,13 +2621,21 @@ html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .q
   text-transform: uppercase;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):hover {
+html[data-skin="sam-at-sunrise"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):hover {
   color: var(--selected-fg);
   background: var(--selected-bg);
   border-color: var(--selected-fg);
 }
 
-html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):focus-visible {
+html[data-skin="sam-at-sunrise"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):focus-visible {
   outline-color: var(--focus-on-light);
 }
 
@@ -3091,25 +2954,13 @@ html[data-skin="sam-at-sunrise"] .archive-empty {
 }
 
 /* Article: compact work label, quiet reading paper, and a right-side cue rail. */
-html[data-skin="sam-at-sunrise"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2.25rem);
-  align-items: start;
-}
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-head {
-  grid-column: 1 / span 3;
-  grid-row: 1 / span 2;
-  display: block;
-  margin: 0;
-  padding: 1.25rem;
   border-inline-start-color: var(--score-red);
   border-top: .45rem solid var(--score-red);
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-head h1 {
-  max-width: 12ch;
   font-size: clamp(2.25rem, 4vw, 4.25rem);
 }
 
@@ -3129,7 +2980,6 @@ html[data-skin="sam-at-sunrise"] .record-head__abstract {
 
 html[data-skin="sam-at-sunrise"] .record-facts {
   display: grid;
-  grid-template-columns: 1fr;
   gap: .55rem;
   margin: 1.25rem 0 0;
   padding-top: .9rem;
@@ -3163,9 +3013,9 @@ html[data-skin="sam-at-sunrise"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="sam-at-sunrise"] .record-page > .record-head :is(.tag-line, .record-actions) {
+html[data-skin="sam-at-sunrise"] .record-page > .record-head .tag-line,
+html[data-skin="sam-at-sunrise"] .record-page > .record-head .record-actions {
   display: grid;
-  grid-template-columns: 1fr;
   gap: .55rem;
   margin-top: 1rem;
 }
@@ -3174,24 +3024,7 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-head :is(.tag-line a, .r
   min-height: 3rem;
 }
 
-html[data-skin="sam-at-sunrise"] .record-page > .record-grid {
-  grid-column: 4 / -1;
-  grid-row: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(13rem, 2fr);
-  gap: clamp(1rem, 2vw, 1.75rem);
-  min-width: 0;
-  margin: 0;
-}
-
 html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content {
-  grid-column: 1;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1.1rem, 2.8vw, 2.5rem);
-  overflow: visible;
   color: var(--ink);
   background: var(--surface-raised);
   border: 0;
@@ -3201,15 +3034,6 @@ html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  margin: 0;
-  padding: 1rem;
-  overflow: visible;
   color: var(--rail-fg);
   background: var(--rail);
   border: 0;
@@ -3262,13 +3086,6 @@ html[data-skin="sam-at-sunrise"] .related-records h2 {
 }
 
 html[data-skin="sam-at-sunrise"] .record-page > .record-end {
-  grid-column: 4 / -1;
-  grid-row: 2;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem 1.25rem;
-  overflow: visible;
   color: var(--ink);
   background: var(--surface-raised);
   border: 0;
@@ -3323,12 +3140,14 @@ html[data-skin="sam-at-sunrise"] .record-end nav a:focus-visible { outline-color
 
 /* Reading surface, code inserts, and math all use explicit foreground/background pairs. */
 html[data-skin="sam-at-sunrise"] .prose {
-  min-width: 0;
   color: var(--ink);
   font-family: var(--body);
   font-size: clamp(1rem, 1.1vw, 1.125rem);
   line-height: 1.72;
   overflow-wrap: break-word;
+}
+html[data-skin="sam-at-sunrise"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="sam-at-sunrise"] .prose :is(h1, h2, h3, h4, h5, h6) {
@@ -3618,85 +3437,12 @@ html[data-skin="sam-at-sunrise"] .error-shell > p { color: var(--ink); font-size
 html[data-skin="sam-at-sunrise"] .error-shell nav { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .5rem; }
 
 /* Footer: coda line first, then three equal exit measures. */
-html[data-skin="sam-at-sunrise"] .site-footer {
-  position: relative;
-  z-index: 0;
-  isolation: auto;
-  width: min(calc(100% - 2rem), var(--page));
-  margin: 1.25rem auto;
-  overflow: visible;
-  color: var(--rail-fg);
-  background: var(--rail);
-  border: 0;
-  border-top: .35rem solid var(--score-green);
-  border-bottom: .35rem solid var(--score-gold);
-  border-radius: 0;
-  box-shadow: none;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem 1.5rem;
-  align-items: center;
-  padding: 1rem 1.4rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__note {
-  grid-column: 1 / span 7;
-  margin: 0;
-  padding-inline-start: .85rem;
-  color: var(--rail-fg);
-  border-inline-start: .35rem solid var(--score-gold);
-  font-family: var(--body);
-  line-height: 1.5;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__note a { color: var(--rail-fg); }
-html[data-skin="sam-at-sunrise"] .site-footer__note a:hover { color: var(--score-gold); }
-html[data-skin="sam-at-sunrise"] .site-footer__note a:focus-visible { outline-color: var(--focus-on-dark); }
-
-html[data-skin="sam-at-sunrise"] .site-footer__links {
-  grid-column: 8 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a {
-  min-width: 0;
-  min-height: 3.25rem;
-  padding: .5rem;
-  color: var(--rail-fg);
-  background: transparent;
-  border-color: color-mix(in srgb, var(--rail-fg) 60%, transparent);
-  border-bottom: .35rem solid var(--score-gold);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:hover {
-  color: var(--heading);
-  background: var(--surface-raised);
-  border-color: var(--score-gold);
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-color: var(--focus-on-dark); }
 
 @media (max-width: 68rem) {
   html[data-skin="sam-at-sunrise"] .site-header__inner { grid-template-columns: 1fr; }
 
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead > .masthead__copy { grid-column: 1 / -1; }
 
-  html[data-skin="sam-at-sunrise"] .record-page > .record-head {
-    grid-column: 1 / span 4;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-end { grid-column: 5 / -1; }
-
-  html[data-skin="sam-at-sunrise"] .site-footer__note { grid-column: 1 / span 6; }
-  html[data-skin="sam-at-sunrise"] .site-footer__links { grid-column: 7 / -1; }
 }
 
 @media (max-width: 48rem) {
@@ -3705,17 +3451,23 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-c
     background-attachment: scroll;
   }
 
-  html[data-skin="sam-at-sunrise"] :is(.site-header, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .site-footer) {
-    width: min(calc(100% - 1rem), var(--page));
-    margin-block: .5rem;
-    padding: .9rem;
-    border-inline-width: 0;
-  }
+  html[data-skin="sam-at-sunrise"] .site-header,
+html[data-skin="sam-at-sunrise"] .home-shell,
+html[data-skin="sam-at-sunrise"] .archive-shell,
+html[data-skin="sam-at-sunrise"] .page-shell,
+html[data-skin="sam-at-sunrise"] .error-shell {
+  width: min(calc(100% - 1rem), var(--page));
+  margin-block: .5rem;
+  padding: .9rem;
+  border-inline-width: 0;
+}
+html[data-skin="sam-at-sunrise"] .record-page {
+  border-inline-width: 0;
+}
 
-  html[data-skin="sam-at-sunrise"] :is(.site-header, .site-footer) { padding: 0; }
+  html[data-skin="sam-at-sunrise"] :is(.site-header) { padding: 0; }
 
-  html[data-skin="sam-at-sunrise"] .site-header__inner,
-  html[data-skin="sam-at-sunrise"] .site-footer__inner { padding: .85rem; }
+  html[data-skin="sam-at-sunrise"] .site-header__inner { padding: .85rem; }
 
   html[data-skin="sam-at-sunrise"] .site-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3737,25 +3489,21 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-c
   }
 
   html[data-skin="sam-at-sunrise"] .home-shell,
-  html[data-skin="sam-at-sunrise"] .archive-shell,
-  html[data-skin="sam-at-sunrise"] .record-page,
-  html[data-skin="sam-at-sunrise"] .page-shell { display: block; }
+html[data-skin="sam-at-sunrise"] .archive-shell,
+html[data-skin="sam-at-sunrise"] .page-shell {
+  display: block;
+}
 
-  html[data-skin="sam-at-sunrise"] :is(
-    .home-shell > .masthead,
-    .home-shell > .record-index,
-    .archive-shell > .index-heading,
-    .archive-shell > .archive-tools,
-    .archive-shell > .archive-groups,
-    .record-page > .record-head,
-    .record-page > .record-grid,
-    .record-page > .record-end,
-    .page-shell > .page-heading,
-    .page-shell > .page-prose
-  ) {
-    width: 100%;
-    margin: 0 0 1rem;
-  }
+  html[data-skin="sam-at-sunrise"] .home-shell > .masthead,
+html[data-skin="sam-at-sunrise"] .home-shell > .record-index,
+html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading,
+html[data-skin="sam-at-sunrise"] .archive-shell > .archive-tools,
+html[data-skin="sam-at-sunrise"] .archive-shell > .archive-groups,
+html[data-skin="sam-at-sunrise"] .page-shell > .page-heading,
+html[data-skin="sam-at-sunrise"] .page-shell > .page-prose {
+  width: 100%;
+  margin: 0 0 1rem;
+}
 
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead { display: block; }
   html[data-skin="sam-at-sunrise"] .home-shell > .masthead::before {
@@ -3801,18 +3549,6 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-c
   html[data-skin="sam-at-sunrise"] .quick-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   html[data-skin="sam-at-sunrise"] .archive-shell > .archive-groups > .archive-year { padding-top: 1rem; }
 
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid { display: block; }
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    width: 100%;
-    margin: 0;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    position: static;
-    margin-top: 1rem;
-  }
-
   html[data-skin="sam-at-sunrise"] .record-end nav { grid-template-columns: 1fr; }
 
   html[data-skin="sam-at-sunrise"] .error-shell {
@@ -3823,9 +3559,6 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-c
   html[data-skin="sam-at-sunrise"] .error-code,
   html[data-skin="sam-at-sunrise"] .error-shell > :not(.error-code) { grid-column: 1; }
 
-  html[data-skin="sam-at-sunrise"] .site-footer__inner { display: block; }
-  html[data-skin="sam-at-sunrise"] .site-footer__note { margin-bottom: 1rem; }
-  html[data-skin="sam-at-sunrise"] .site-footer__links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 23rem) {
@@ -3841,8 +3574,7 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible { outline-c
       "picker";
   }
 
-  html[data-skin="sam-at-sunrise"] .quick-filters,
-  html[data-skin="sam-at-sunrise"] .site-footer__links { grid-template-columns: 1fr; }
+  html[data-skin="sam-at-sunrise"] .quick-filters { grid-template-columns: 1fr; }
 }
 
 /* Surface-aware focus states keep every outline distinct from its active fill. */
@@ -3860,11 +3592,19 @@ html[data-skin="sam-at-sunrise"] .site-nav > .theme-toggle[aria-pressed="true"]:
 html[data-skin="sam-at-sunrise"] .skin-randomizer:focus-visible { outline-color: var(--focus-on-dark); }
 html[data-skin="sam-at-sunrise"] .skin-randomizer:hover:focus-visible { outline-color: var(--selected-fg); }
 
-html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):focus-visible {
+html[data-skin="sam-at-sunrise"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):focus-visible {
   outline-color: var(--focus-on-dark);
 }
 
-html[data-skin="sam-at-sunrise"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):hover:focus-visible,
+html[data-skin="sam-at-sunrise"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):hover:focus-visible,
 html[data-skin="sam-at-sunrise"] :is(.action--primary, .quick-filters a[aria-current="true"], .record-actions a:last-child):focus-visible {
   outline-color: var(--selected-fg);
 }
@@ -3872,16 +3612,13 @@ html[data-skin="sam-at-sunrise"] :is(.action--primary, .quick-filters a[aria-cur
 html[data-skin="sam-at-sunrise"] .all-tags__grid a:focus-visible { outline-color: var(--focus-on-light); }
 html[data-skin="sam-at-sunrise"] .all-tags__grid a:hover:focus-visible { outline-color: var(--selected-fg); }
 
-html[data-skin="sam-at-sunrise"] .site-footer__links a:hover:focus-visible { outline-color: var(--focus-on-light); }
-
 html[data-skin="sam-at-sunrise"] .code-frame__actions button:hover:focus-visible,
 html[data-skin="sam-at-sunrise"] .code-frame__actions button[aria-pressed="true"]:focus-visible {
   outline-color: var(--selected-fg);
 }
 
 /* Remove inherited desktop hero reservations and retain the final title cap. */
-html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading,
-html[data-skin="sam-at-sunrise"] .record-page > .record-head {
+html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading {
   min-height: 0;
 }
 
@@ -3942,20 +3679,6 @@ html[data-skin="sam-at-sunrise"] .archive-shell > .archive-groups > .archive-yea
 
 html[data-skin="sam-at-sunrise"] .record-row:nth-child(n) { background: transparent; }
 
-html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(n) {
-  color: var(--rail-fg);
-  background: transparent;
-  border-color: color-mix(in srgb, var(--rail-fg) 60%, transparent);
-  border-bottom: .35rem solid var(--score-gold);
-  box-shadow: none;
-}
-
-html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(n):hover {
-  color: var(--heading);
-  background: var(--surface-raised);
-  border-color: var(--score-gold);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html[data-skin="sam-at-sunrise"],
   html[data-skin="sam-at-sunrise"] * ,
@@ -3969,29 +3692,26 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(n):hover {
 }
 
 @media (forced-colors: active) {
-  html[data-skin="sam-at-sunrise"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .home-shell > .record-index,
-    .archive-tools,
-    .article__content,
-    .page-prose,
-    .record-end,
-    .record-grid > .record-index,
-    .code-frame,
-    .code-frame__bar,
-    .code-frame__status,
-    .prose .katex-display
-  ) {
+  html[data-skin="sam-at-sunrise"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.article__content,
+.page-prose,
+.record-end,
+.record-grid > .record-index,
+.code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4000,20 +3720,17 @@ html[data-skin="sam-at-sunrise"] .site-footer__links a:nth-child(n):hover {
     text-shadow: none;
   }
 
-  html[data-skin="sam-at-sunrise"] :is(
-    .site-nav a,
-    .theme-toggle,
-    .skin-menu summary,
-    .skin-menu select,
-    .skin-randomizer,
-    .action,
-    .record-actions a,
-    .tag-line a,
-    .quick-filters a,
-    .pagination a,
-    .site-footer__links a,
-    .code-frame__actions button
-  ) {
+  html[data-skin="sam-at-sunrise"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4048,9 +3765,7 @@ html[data-skin="sam-at-sunrise"] body {
 }
 
 html[data-skin="sam-at-sunrise"] .site-header::before,
-html[data-skin="sam-at-sunrise"] .site-header::after,
-html[data-skin="sam-at-sunrise"] .site-footer::before,
-html[data-skin="sam-at-sunrise"] .site-footer::after {
+html[data-skin="sam-at-sunrise"] .site-header::after {
   display: none;
   content: none;
 }
@@ -4079,8 +3794,7 @@ html[data-skin="sam-at-sunrise"] .prose :is(.info, blockquote) {
   border-inline-start: 2px solid var(--heading);
 }
 
-html[data-skin="sam-at-sunrise"] .archive-shell > .archive-tools .archive-search p,
-html[data-skin="sam-at-sunrise"] .site-footer__note {
+html[data-skin="sam-at-sunrise"] .archive-shell > .archive-tools .archive-search p {
   padding-inline-start: 0;
   border-inline-start: 0;
 }
@@ -4089,21 +3803,36 @@ html[data-skin="sam-at-sunrise"] .prose .code-frame__gutter {
   border-inline-end: 0;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="sam-at-sunrise"] .masthead h1,
+html[data-skin="sam-at-sunrise"] .index-heading h1,
+html[data-skin="sam-at-sunrise"] .page-heading h1,
+html[data-skin="sam-at-sunrise"] .error-shell h1 {
   max-width: 22ch;
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[data-skin="sam-at-sunrise"] .record-head h1 {
   font-size: clamp(2rem, 3vw, 3.25rem);
   overflow-wrap: normal;
   word-break: normal;
 }
 
 html[data-skin="sam-at-sunrise"] .home-shell > .masthead .masthead__copy h1,
-html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading h1,
-html[data-skin="sam-at-sunrise"] .record-page > .record-head h1,
-html[data-skin="sam-at-sunrise"] .prose h1 {
+html[data-skin="sam-at-sunrise"] .archive-shell > .index-heading h1 {
   max-width: 22ch;
   font-size: clamp(2rem, 3vw, 3.25rem);
   overflow-wrap: normal;
   word-break: normal;
+}
+html[data-skin="sam-at-sunrise"] .record-page > .record-head h1,
+html[data-skin="sam-at-sunrise"] .prose h1 {
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[data-skin="sam-at-sunrise"] .prose:not(:where(.record-page, .record-page *)) h1 {
+  max-width: 22ch;
 }
 
 html[data-skin="sam-at-sunrise"] :is(.section-heading :is(h1, h2), .archive-year h2, .related-records h2) {
@@ -4144,35 +3873,8 @@ html[data-skin="sam-at-sunrise"] .record-facts > div {
   word-break: normal;
 }
 
-html[data-skin="sam-at-sunrise"] :is(.article__content, .page-prose) .prose {
+html[data-skin="sam-at-sunrise"] .page-prose .prose:not(:where(.record-page, .record-page *)) {
   max-width: 76ch;
-}
-
-@media (max-width: 96rem) {
-  html[data-skin="sam-at-sunrise"] .record-page {
-    display: block;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > :is(.record-head, .record-grid, .record-end) {
-    width: 100%;
-    margin: 0 0 1rem;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid {
-    display: block;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .article__content,
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-  }
-
-  html[data-skin="sam-at-sunrise"] .record-page > .record-grid > .record-index {
-    position: static;
-    margin-top: 1rem;
-  }
 }
 
 @media (max-width: 68rem) {
@@ -4223,9 +3925,6 @@ html[data-skin="sam-at-sunrise"] .site-nav > .theme-toggle:hover:focus-visible,
 html[data-skin="sam-at-sunrise"] .site-nav > .theme-toggle[aria-pressed="true"]:focus-visible,
 html[data-skin="sam-at-sunrise"] .site-nav > .skin-menu summary:focus-visible,
 html[data-skin="sam-at-sunrise"] .site-nav > .skin-menu[open] summary:focus-visible,
-html[data-skin="sam-at-sunrise"] .site-footer__note a:focus-visible,
-html[data-skin="sam-at-sunrise"] .site-footer__links a:focus-visible,
-html[data-skin="sam-at-sunrise"] .site-footer__links a:hover:focus-visible,
 html[data-skin="sam-at-sunrise"] .code-frame__actions button:focus-visible,
 html[data-skin="sam-at-sunrise"] .code-frame__actions button:hover:focus-visible,
 html[data-skin="sam-at-sunrise"] .code-frame__actions button[aria-pressed="true"]:focus-visible {

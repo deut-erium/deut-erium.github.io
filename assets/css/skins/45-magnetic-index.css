@@ -168,14 +168,15 @@ html[data-skin="magnetic-index"] .skip-link {
 }
 
 html[data-skin="magnetic-index"] .site-header,
-html[data-skin="magnetic-index"] .site-footer,
 html[data-skin="magnetic-index"] .home-shell,
 html[data-skin="magnetic-index"] .archive-shell,
-html[data-skin="magnetic-index"] .record-page,
 html[data-skin="magnetic-index"] .page-shell,
 html[data-skin="magnetic-index"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
   min-width: 0;
+  border-radius: 0;
+}
+html[data-skin="magnetic-index"] .record-page {
   border-radius: 0;
 }
 
@@ -207,8 +208,7 @@ html[data-skin="magnetic-index"] .site-header::before {
     repeating-linear-gradient(90deg, transparent 0 0.9rem, rgb(226 81 79 / 11%) 0.95rem 1rem, transparent 1.05rem 1.8rem);
 }
 
-html[data-skin="magnetic-index"] .site-header__inner,
-html[data-skin="magnetic-index"] .site-footer__inner {
+html[data-skin="magnetic-index"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 1.5rem;
@@ -252,8 +252,7 @@ html[data-skin="magnetic-index"] .site-brand__scope {
   line-height: 1.25;
 }
 
-html[data-skin="magnetic-index"] .site-nav,
-html[data-skin="magnetic-index"] .site-footer__links {
+html[data-skin="magnetic-index"] .site-nav {
   gap: 0.35rem;
 }
 
@@ -267,8 +266,7 @@ html[data-skin="magnetic-index"] .record-actions a,
 html[data-skin="magnetic-index"] .tag-line a,
 html[data-skin="magnetic-index"] .quick-filters a,
 html[data-skin="magnetic-index"] .pagination a,
-html[data-skin="magnetic-index"] .pagination span,
-html[data-skin="magnetic-index"] .site-footer__links a {
+html[data-skin="magnetic-index"] .pagination span {
   min-height: 2.8rem;
   padding: 0.58rem 0.72rem;
   color: #fae9df;
@@ -337,9 +335,7 @@ html[data-skin="magnetic-index"] .tag-line a:focus-visible,
 html[data-skin="magnetic-index"] .quick-filters a:hover,
 html[data-skin="magnetic-index"] .quick-filters a:focus-visible,
 html[data-skin="magnetic-index"] .pagination a:hover,
-html[data-skin="magnetic-index"] .pagination a:focus-visible,
-html[data-skin="magnetic-index"] .site-footer__links a:hover,
-html[data-skin="magnetic-index"] .site-footer__links a:focus-visible {
+html[data-skin="magnetic-index"] .pagination a:focus-visible {
   color: #fff2e7;
   background: var(--mag-red-hot);
   border-color: #ffb1a5;
@@ -387,7 +383,6 @@ html[data-skin="magnetic-index"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="magnetic-index"] .home-shell,
 html[data-skin="magnetic-index"] .archive-shell,
-html[data-skin="magnetic-index"] .record-page,
 html[data-skin="magnetic-index"] .page-shell,
 html[data-skin="magnetic-index"] .error-shell {
   position: relative;
@@ -395,6 +390,12 @@ html[data-skin="magnetic-index"] .error-shell {
   margin-top: 0;
   margin-bottom: 0;
   padding: clamp(1.5rem, 3.4vw, 3.8rem) 0 clamp(2.8rem, 5vw, 5.5rem);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+html[data-skin="magnetic-index"] .record-page {
+  isolation: isolate;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -417,8 +418,7 @@ html[data-skin="magnetic-index"] .page-shell::before {
     repeating-radial-gradient(ellipse at 100% 16%, transparent 0 4.25rem, rgb(37 23 32 / 9%) 4.32rem 4.42rem, transparent 4.5rem 8.7rem);
 }
 
-html[data-skin="magnetic-index"] .masthead,
-html[data-skin="magnetic-index"] .record-grid {
+html[data-skin="magnetic-index"] .masthead {
   position: relative;
   min-width: 0;
 }
@@ -474,11 +474,21 @@ html[data-skin="magnetic-index"] .masthead__copy {
 }
 
 html[data-skin="magnetic-index"] .index-heading,
-html[data-skin="magnetic-index"] .page-heading,
-html[data-skin="magnetic-index"] .record-head {
+html[data-skin="magnetic-index"] .page-heading {
   position: relative;
   overflow: hidden;
   padding: clamp(1.6rem, 3.8vw, 3.8rem);
+  color: #f8e9df;
+  background:
+    radial-gradient(ellipse at 89% 24%, transparent 0 4.2rem, rgb(201 173 163 / 20%) 4.28rem 4.35rem, transparent 4.43rem 6.7rem, rgb(226 81 79 / 15%) 6.78rem 6.85rem, transparent 6.93rem),
+    linear-gradient(90deg, transparent 0 6%, rgb(226 81 79 / 33%) 6.1% 6.28%, transparent 6.38% 100%),
+    linear-gradient(170deg, #33202a, #100a10 72%);
+  border-top: 1px solid #947875;
+  border-bottom: 0.4rem solid var(--mag-red);
+  border-radius: 0;
+  box-shadow: 0 1rem 2.2rem rgb(32 17 26 / 27%);
+}
+html[data-skin="magnetic-index"] .record-head {
   color: #f8e9df;
   background:
     radial-gradient(ellipse at 89% 24%, transparent 0 4.2rem, rgb(201 173 163 / 20%) 4.28rem 4.35rem, transparent 4.43rem 6.7rem, rgb(226 81 79 / 15%) 6.78rem 6.85rem, transparent 6.93rem),
@@ -524,9 +534,12 @@ html[data-skin="magnetic-index"] .record-row__primitive {
   text-transform: uppercase;
 }
 
-html[data-skin="magnetic-index"] .eyebrow,
-html[data-skin="magnetic-index"] .record-head__key {
+html[data-skin="magnetic-index"] .eyebrow {
   position: relative;
+  z-index: 1;
+  color: var(--yellow);
+}
+html[data-skin="magnetic-index"] .record-head__key {
   z-index: 1;
   color: var(--yellow);
 }
@@ -534,7 +547,6 @@ html[data-skin="magnetic-index"] .record-head__key {
 html[data-skin="magnetic-index"] .masthead h1,
 html[data-skin="magnetic-index"] .index-heading h1,
 html[data-skin="magnetic-index"] .page-heading h1,
-html[data-skin="magnetic-index"] .record-head h1,
 html[data-skin="magnetic-index"] .error-shell h1 {
   position: relative;
   z-index: 1;
@@ -546,14 +558,29 @@ html[data-skin="magnetic-index"] .error-shell h1 {
   line-height: 0.9;
   text-transform: uppercase;
 }
+html[data-skin="magnetic-index"] .record-head h1 {
+  z-index: 1;
+  font-family: var(--display);
+  font-size: clamp(2.75rem, 6vw, 5.7rem);
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
 
 html[data-skin="magnetic-index"] .masthead__lede,
 html[data-skin="magnetic-index"] .index-heading > p:last-child,
-html[data-skin="magnetic-index"] .page-heading > p:last-child,
-html[data-skin="magnetic-index"] .record-head__abstract {
+html[data-skin="magnetic-index"] .page-heading > p:last-child {
   position: relative;
   z-index: 1;
   max-width: 57ch;
+  color: #e1cdc3;
+  font-family: var(--body);
+  font-size: clamp(1.12rem, 1.55vw, 1.32rem);
+  line-height: 1.58;
+}
+html[data-skin="magnetic-index"] .record-head__abstract {
+  z-index: 1;
   color: #e1cdc3;
   font-family: var(--body);
   font-size: clamp(1.12rem, 1.55vw, 1.32rem);
@@ -571,9 +598,7 @@ html[data-skin="magnetic-index"] .tag-line {
 html[data-skin="magnetic-index"] .home-shell > .record-index,
 html[data-skin="magnetic-index"] .archive-tools,
 html[data-skin="magnetic-index"] .archive-groups,
-html[data-skin="magnetic-index"] .page-prose,
-html[data-skin="magnetic-index"] .article__content,
-html[data-skin="magnetic-index"] .record-end {
+html[data-skin="magnetic-index"] .page-prose {
   position: relative;
   min-width: 0;
   padding: clamp(1.25rem, 2.8vw, 2.7rem);
@@ -582,6 +607,19 @@ html[data-skin="magnetic-index"] .record-end {
   border-top: 0.4rem solid var(--mag-red);
   border-radius: 0;
   box-shadow: 0 0.9rem 1.8rem rgb(32 17 26 / 19%);
+}
+html[data-skin="magnetic-index"] .article__content,
+html[data-skin="magnetic-index"] .record-end {
+  background: var(--mag-stock);
+  border: 1px solid #9e827e;
+  border-top: 0.4rem solid var(--mag-red);
+  border-radius: 0;
+  box-shadow: 0 0.9rem 1.8rem rgb(32 17 26 / 19%);
+}
+html[data-skin="magnetic-index"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.8vw, 2.7rem);
 }
 
 html[data-skin="magnetic-index"] .home-shell > .record-index,
@@ -828,12 +866,7 @@ html[data-skin="magnetic-index"] .archive-empty {
   text-transform: uppercase;
 }
 
-html[data-skin="magnetic-index"] .record-head {
-  margin: 0;
-}
-
 html[data-skin="magnetic-index"] .record-head h1 {
-  max-width: 14ch;
   font-size: clamp(2.6rem, 5.7vw, 5.4rem);
 }
 
@@ -842,7 +875,6 @@ html[data-skin="magnetic-index"] .record-head__key {
 }
 
 html[data-skin="magnetic-index"] .record-facts {
-  position: relative;
   z-index: 1;
   gap: 0;
   margin-top: 1.75rem;
@@ -872,19 +904,7 @@ html[data-skin="magnetic-index"] .record-facts dd {
   font-size: 1rem;
 }
 
-html[data-skin="magnetic-index"] .record-grid {
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-  grid-template-areas: "article index";
-  gap: 1.2rem;
-  max-width: var(--page);
-  margin-top: 1.2rem;
-}
-
 html[data-skin="magnetic-index"] .article__content {
-  grid-area: article;
-  width: 100%;
-  max-width: none;
-  margin: 0;
   counter-reset: magnetic-splice;
 }
 
@@ -893,14 +913,6 @@ html[data-skin="magnetic-index"] .page-prose {
 }
 
 html[data-skin="magnetic-index"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-area: index;
-  align-self: start;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1.25rem 1.15rem 1.25rem 1.5rem;
   color: #f6e6dc;
   background:
     linear-gradient(90deg, var(--mag-red) 0 0.26rem, transparent 0.26rem),
@@ -960,7 +972,7 @@ html[data-skin="magnetic-index"] .related-records h2 {
   font-size: 1.7rem;
 }
 
-html[data-skin="magnetic-index"] .record-end {
+html[data-skin="magnetic-index"] .record-end:not(:where(.record-page, .record-page *)) {
   max-width: var(--page);
   margin-top: 1.2rem;
   margin-inline: auto;
@@ -1342,43 +1354,7 @@ html[data-skin="magnetic-index"] .error-shell > p {
   color: #f7e7de;
 }
 
-html[data-skin="magnetic-index"] .site-footer {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-  color: #e1cbc1;
-  background:
-    linear-gradient(90deg, transparent 0 8%, rgb(226 81 79 / 25%) 8.1% 8.25%, transparent 8.35% 100%),
-    linear-gradient(170deg, #26161f, #0d080d);
-  border-top: 0.35rem solid var(--mag-red);
-  border-bottom: 1px solid #725d61;
-  box-shadow: 0 0.9rem 2rem rgb(32 17 26 / 27%);
-}
-
-html[data-skin="magnetic-index"] .site-footer::before {
-  position: absolute;
-  top: 50%;
-  right: 13%;
-  width: min(14rem, 24%);
-  aspect-ratio: 1;
-  content: "";
-  border: 1px solid rgb(201 173 163 / 16%);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2.6rem rgb(226 81 79 / 4%);
-  transform: translateY(-50%);
-}
-
-html[data-skin="magnetic-index"] .site-footer__note,
-html[data-skin="magnetic-index"] .site-footer a {
-  color: #e1cbc1;
-}
-
-html[data-skin="magnetic-index"] .site-footer__note a {
-  color: #ffdcbd;
-}
-
 html[data-skin="magnetic-index"][data-theme="dark"] .site-header,
-html[data-skin="magnetic-index"][data-theme="dark"] .site-footer,
 html[data-skin="magnetic-index"][data-theme="dark"] .masthead,
 html[data-skin="magnetic-index"][data-theme="dark"] .index-heading,
 html[data-skin="magnetic-index"][data-theme="dark"] .page-heading,
@@ -1464,46 +1440,37 @@ html[data-skin="magnetic-index"][data-theme="dark"] .code-frame__status {
 
 @media (max-width: 46rem) {
   html[data-skin="magnetic-index"] .site-header,
-  html[data-skin="magnetic-index"] .site-footer,
-  html[data-skin="magnetic-index"] .home-shell,
-  html[data-skin="magnetic-index"] .archive-shell,
-  html[data-skin="magnetic-index"] .record-page,
-  html[data-skin="magnetic-index"] .page-shell,
-  html[data-skin="magnetic-index"] .error-shell {
-    width: calc(100% - 1.2rem);
-  }
+html[data-skin="magnetic-index"] .home-shell,
+html[data-skin="magnetic-index"] .archive-shell,
+html[data-skin="magnetic-index"] .page-shell,
+html[data-skin="magnetic-index"] .error-shell {
+  width: calc(100% - 1.2rem);
+}
 
   html[data-skin="magnetic-index"] .site-header {
     margin-top: 0.6rem;
   }
 
-  html[data-skin="magnetic-index"] .site-footer {
-    margin-bottom: 0.6rem;
-  }
-
-  html[data-skin="magnetic-index"] .site-header__inner,
-  html[data-skin="magnetic-index"] .site-footer__inner {
+  html[data-skin="magnetic-index"] .site-header__inner {
     padding: 0.8rem;
   }
 
-  html[data-skin="magnetic-index"] .site-nav,
-  html[data-skin="magnetic-index"] .site-footer__links {
+  html[data-skin="magnetic-index"] .site-nav {
     gap: 0.32rem;
     justify-content: flex-start;
   }
 
   html[data-skin="magnetic-index"] .site-nav a,
-  html[data-skin="magnetic-index"] .theme-toggle,
-  html[data-skin="magnetic-index"] .skin-menu summary,
-  html[data-skin="magnetic-index"] .skin-randomizer,
-  html[data-skin="magnetic-index"] .skin-menu select,
-  html[data-skin="magnetic-index"] .action,
-  html[data-skin="magnetic-index"] .record-actions a,
-  html[data-skin="magnetic-index"] .tag-line a,
-  html[data-skin="magnetic-index"] .quick-filters a,
-  html[data-skin="magnetic-index"] .pagination a,
-  html[data-skin="magnetic-index"] .pagination span,
-  html[data-skin="magnetic-index"] .site-footer__links a {
+html[data-skin="magnetic-index"] .theme-toggle,
+html[data-skin="magnetic-index"] .skin-menu summary,
+html[data-skin="magnetic-index"] .skin-randomizer,
+html[data-skin="magnetic-index"] .skin-menu select,
+html[data-skin="magnetic-index"] .action,
+html[data-skin="magnetic-index"] .record-actions a,
+html[data-skin="magnetic-index"] .tag-line a,
+html[data-skin="magnetic-index"] .quick-filters a,
+html[data-skin="magnetic-index"] .pagination a,
+html[data-skin="magnetic-index"] .pagination span {
     min-height: 2.7rem;
     font-size: 1rem;
   }
@@ -1531,26 +1498,23 @@ html[data-skin="magnetic-index"][data-theme="dark"] .code-frame__status {
   }
 
   html[data-skin="magnetic-index"] .home-shell,
-  html[data-skin="magnetic-index"] .archive-shell,
-  html[data-skin="magnetic-index"] .record-page,
-  html[data-skin="magnetic-index"] .page-shell,
-  html[data-skin="magnetic-index"] .error-shell {
-    padding-top: 1rem;
-    padding-bottom: 2.3rem;
-  }
+html[data-skin="magnetic-index"] .archive-shell,
+html[data-skin="magnetic-index"] .page-shell,
+html[data-skin="magnetic-index"] .error-shell {
+  padding-top: 1rem;
+  padding-bottom: 2.3rem;
+}
 
   html[data-skin="magnetic-index"] .masthead__copy,
-  html[data-skin="magnetic-index"] .index-heading,
-  html[data-skin="magnetic-index"] .page-heading,
-  html[data-skin="magnetic-index"] .record-head,
-  html[data-skin="magnetic-index"] .home-shell > .record-index,
-  html[data-skin="magnetic-index"] .archive-tools,
-  html[data-skin="magnetic-index"] .archive-groups,
-  html[data-skin="magnetic-index"] .page-prose,
-  html[data-skin="magnetic-index"] .article__content,
-  html[data-skin="magnetic-index"] .record-end {
-    padding: 1.1rem;
-  }
+html[data-skin="magnetic-index"] .index-heading,
+html[data-skin="magnetic-index"] .page-heading,
+html[data-skin="magnetic-index"] .home-shell > .record-index,
+html[data-skin="magnetic-index"] .archive-tools,
+html[data-skin="magnetic-index"] .archive-groups,
+html[data-skin="magnetic-index"] .page-prose,
+html[data-skin="magnetic-index"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1.1rem;
+}
 
   html[data-skin="magnetic-index"] .masthead h1,
   html[data-skin="magnetic-index"] .index-heading h1,
@@ -1588,15 +1552,6 @@ html[data-skin="magnetic-index"][data-theme="dark"] .code-frame__status {
     border-right: 0;
   }
 
-  html[data-skin="magnetic-index"] .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "article" "index";
-  }
-
-  html[data-skin="magnetic-index"] .record-grid > .record-index {
-    position: static;
-  }
-
   html[data-skin="magnetic-index"] .prose {
     font-size: 1.16rem;
   }
@@ -1613,8 +1568,7 @@ html[data-skin="magnetic-index"][data-theme="dark"] .code-frame__status {
 }
 
 @media (max-width: 27rem) {
-  html[data-skin="magnetic-index"] .site-nav,
-  html[data-skin="magnetic-index"] .site-footer__links {
+  html[data-skin="magnetic-index"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1644,21 +1598,20 @@ html[data-skin="magnetic-index"][data-theme="dark"] .code-frame__status {
 
 @media (forced-colors: active) {
   html[data-skin="magnetic-index"] .site-header,
-  html[data-skin="magnetic-index"] .site-footer,
-  html[data-skin="magnetic-index"] .masthead,
-  html[data-skin="magnetic-index"] .index-heading,
-  html[data-skin="magnetic-index"] .page-heading,
-  html[data-skin="magnetic-index"] .record-head,
-  html[data-skin="magnetic-index"] .home-shell > .record-index,
-  html[data-skin="magnetic-index"] .archive-tools,
-  html[data-skin="magnetic-index"] .archive-groups,
-  html[data-skin="magnetic-index"] .page-prose,
-  html[data-skin="magnetic-index"] .article__content,
-  html[data-skin="magnetic-index"] .record-end,
-  html[data-skin="magnetic-index"] .record-grid > .record-index,
-  html[data-skin="magnetic-index"] .code-frame,
-  html[data-skin="magnetic-index"] .code-frame__bar,
-  html[data-skin="magnetic-index"] .code-frame__status {
+html[data-skin="magnetic-index"] .masthead,
+html[data-skin="magnetic-index"] .index-heading,
+html[data-skin="magnetic-index"] .page-heading,
+html[data-skin="magnetic-index"] .record-head,
+html[data-skin="magnetic-index"] .home-shell > .record-index,
+html[data-skin="magnetic-index"] .archive-tools,
+html[data-skin="magnetic-index"] .archive-groups,
+html[data-skin="magnetic-index"] .page-prose,
+html[data-skin="magnetic-index"] .article__content,
+html[data-skin="magnetic-index"] .record-end,
+html[data-skin="magnetic-index"] .record-grid > .record-index,
+html[data-skin="magnetic-index"] .code-frame,
+html[data-skin="magnetic-index"] .code-frame__bar,
+html[data-skin="magnetic-index"] .code-frame__status {
     color: CanvasText !important;
     background: Canvas !important;
     border-color: CanvasText !important;
@@ -2117,71 +2070,19 @@ html[data-skin="magnetic-index"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="magnetic-index"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "head"
-    "record"
-    "end";
-  gap: 1.2rem;
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.22fr) minmax(15rem, 0.78fr);
-  grid-template-areas:
-    "key key"
-    "title title"
-    "abstract facts"
-    "tags actions";
-  column-gap: clamp(1rem, 3vw, 3.2rem);
-  row-gap: 0;
-  margin: 0;
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-head > .record-head__key {
-  grid-area: key;
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-head > h1 {
-  grid-area: title;
-}
-
 html[data-skin="magnetic-index"] .record-page > .record-head > .record-head__abstract {
-  grid-area: abstract;
-  align-self: start;
   margin-bottom: 0;
 }
 
 html[data-skin="magnetic-index"] .record-page > .record-head > .record-facts {
-  grid-area: facts;
-  align-self: start;
   margin-top: 1.75rem;
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-head > .tag-line {
-  grid-area: tags;
-  align-self: end;
-}
-
 html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions {
-  grid-area: actions;
-  align-self: end;
   justify-content: flex-end;
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-grid {
-  grid-area: record;
-  grid-template-columns: minmax(0, 1.48fr) minmax(15rem, 0.52fr);
-  grid-template-areas: "article index";
-  gap: 1.2rem;
-  margin: 0;
-}
-
 html[data-skin="magnetic-index"] .record-page > .record-grid > .article__content {
-  position: relative;
   border-top-color: var(--mag-red);
 }
 
@@ -2196,20 +2097,6 @@ html[data-skin="magnetic-index"] .record-page > .record-grid > .article__content
   background: repeating-linear-gradient(90deg, var(--mag-red) 0 1.2rem, var(--yellow) 1.2rem 1.42rem, #9e827e 1.42rem 2.5rem, transparent 2.5rem 2.78rem);
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-  top: 1rem;
-  padding-top: 1.35rem;
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-end {
-  grid-area: end;
-  display: grid;
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-  gap: 1.2rem;
-  align-items: end;
-  margin: 0;
-}
-
 html[data-skin="magnetic-index"] .record-page > .record-end > p {
   margin: 0;
 }
@@ -2218,58 +2105,12 @@ html[data-skin="magnetic-index"] .record-page > .record-end > nav {
   margin: 0;
 }
 
-html[data-skin="magnetic-index"] .site-footer {
-  margin-top: 0;
-  background:
-    linear-gradient(90deg, rgb(226 81 79 / 26%) 0 0.3rem, transparent 0.3rem 100%),
-    linear-gradient(170deg, #26161f, #0d080d);
-}
-
-html[data-skin="magnetic-index"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(17rem, 1.28fr);
-  grid-template-areas: "note links";
-  gap: 1.5rem;
-  align-items: center;
-  min-height: 7.2rem;
-  padding: 1rem 1.35rem;
-}
-
-html[data-skin="magnetic-index"] .site-footer__note {
-  grid-area: note;
-  margin: 0;
-  padding-left: 1.05rem;
-  border-left: 0.24rem solid var(--mag-red);
-}
-
-html[data-skin="magnetic-index"] .site-footer__links {
-  grid-area: links;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  justify-content: stretch;
-}
-
-html[data-skin="magnetic-index"] .site-footer__links a {
-  min-width: 0;
-  min-height: 3rem;
-  padding: 0.55rem 0.45rem;
-  border-right: 0;
-  font-size: 0.82rem;
-}
-
-html[data-skin="magnetic-index"] .site-footer__links a:last-child {
-  border-right: 1px solid #755a5e;
-}
-
 @media (max-width: 60rem) {
   html[data-skin="magnetic-index"] .site-header__inner,
-  html[data-skin="magnetic-index"] .home-shell,
-  html[data-skin="magnetic-index"] .archive-shell,
-  html[data-skin="magnetic-index"] .record-page,
-  html[data-skin="magnetic-index"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="magnetic-index"] .home-shell,
+html[data-skin="magnetic-index"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="magnetic-index"] .site-header__inner {
     gap: 0;
@@ -2341,10 +2182,9 @@ html[data-skin="magnetic-index"] .site-footer__links a:last-child {
   html[data-skin="magnetic-index"] .masthead__copy {
     min-height: 0;
   }
-  html[data-skin="magnetic-index"] .archive-shell > .archive-tools,
-  html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="magnetic-index"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="magnetic-index"] .archive-shell {
     grid-template-areas:
@@ -2354,42 +2194,14 @@ html[data-skin="magnetic-index"] .site-footer__links a:last-child {
       "empty";
   }
 
-  html[data-skin="magnetic-index"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
-
   html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions {
     justify-content: flex-start;
   }
 
-  html[data-skin="magnetic-index"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="magnetic-index"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="magnetic-index"] .site-footer__inner {
-    grid-template-areas:
-      "note"
-      "links";
-  }
 }
 
 @media (max-width: 34rem) {
-  html[data-skin="magnetic-index"] .archive-shell .quick-filters,
-  html[data-skin="magnetic-index"] .site-footer__links {
+  html[data-skin="magnetic-index"] .archive-shell .quick-filters {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2483,26 +2295,37 @@ html[data-skin="magnetic-index"] a:focus-visible {
   text-decoration-thickness: 0.16em;
 }
 
-html[data-skin="magnetic-index"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .masthead, .record-head, .record-grid,
-  .article__content, .page-prose, .record-index, .archive-tools,
-  .archive-groups, .record-end
-) {
+html[data-skin="magnetic-index"] .site-header,
+html[data-skin="magnetic-index"] .home-shell,
+html[data-skin="magnetic-index"] .archive-shell,
+html[data-skin="magnetic-index"] .page-shell,
+html[data-skin="magnetic-index"] .error-shell,
+html[data-skin="magnetic-index"] .masthead,
+html[data-skin="magnetic-index"] .page-prose,
+html[data-skin="magnetic-index"] .archive-tools,
+html[data-skin="magnetic-index"] .archive-groups,
+html[data-skin="magnetic-index"] .record-end:not(:where(.record-page, .record-page *)) {
   min-width: 0;
   overflow: visible;
+}
+html[data-skin="magnetic-index"] .record-index {
+  overflow: visible;
+}
+html[data-skin="magnetic-index"] .record-index:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 /* Cassette leader: the DOM order is also the visual and keyboard order. */
 html[data-skin="magnetic-index"] .site-header,
-html[data-skin="magnetic-index"] .site-footer,
 html[data-skin="magnetic-index"] .home-shell,
 html[data-skin="magnetic-index"] .archive-shell,
-html[data-skin="magnetic-index"] .record-page,
 html[data-skin="magnetic-index"] .page-shell,
 html[data-skin="magnetic-index"] .error-shell {
   width: min(calc(100% - 2rem), var(--mag-page));
   margin-inline: auto;
+  border-radius: 0;
+}
+html[data-skin="magnetic-index"] .record-page {
   border-radius: 0;
 }
 
@@ -2519,8 +2342,7 @@ html[data-skin="magnetic-index"] .site-header {
   box-shadow: 0 0.8rem 1.8rem rgb(32 20 25 / 20%);
 }
 
-html[data-skin="magnetic-index"] .site-header::before,
-html[data-skin="magnetic-index"] .site-footer::before {
+html[data-skin="magnetic-index"] .site-header::before {
   top: 50%;
   right: 3%;
   width: min(11rem, 18%);
@@ -2812,7 +2634,6 @@ html[data-skin="magnetic-index"] .skin-randomizer:focus-visible {
 /* The home page is one unspooled recording: leader, ribbon, then reel index. */
 html[data-skin="magnetic-index"] .home-shell,
 html[data-skin="magnetic-index"] .archive-shell,
-html[data-skin="magnetic-index"] .record-page,
 html[data-skin="magnetic-index"] .page-shell {
   position: relative;
   isolation: isolate;
@@ -2822,6 +2643,12 @@ html[data-skin="magnetic-index"] .page-shell {
   align-items: start;
   margin-block: 0;
   padding-block: clamp(1.25rem, 3vw, 3.25rem) clamp(2.5rem, 5vw, 5rem);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+html[data-skin="magnetic-index"] .record-page {
+  isolation: isolate;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -2924,9 +2751,17 @@ html[data-skin="magnetic-index"] .page-heading > p:last-child {
 html[data-skin="magnetic-index"] .masthead h1,
 html[data-skin="magnetic-index"] .index-heading h1,
 html[data-skin="magnetic-index"] .page-heading h1,
-html[data-skin="magnetic-index"] .record-head h1,
 html[data-skin="magnetic-index"] .error-shell h1 {
   max-width: 16ch;
+  color: var(--mag-heading);
+  font-family: var(--display);
+  font-size: clamp(2.3rem, 3.8vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+html[data-skin="magnetic-index"] .record-head h1 {
   color: var(--mag-heading);
   font-family: var(--display);
   font-size: clamp(2.3rem, 3.8vw, 4.2rem);
@@ -2942,9 +2777,12 @@ html[data-skin="magnetic-index"] .masthead h1 {
 
 html[data-skin="magnetic-index"] .masthead__lede,
 html[data-skin="magnetic-index"] .index-heading > p:last-child,
-html[data-skin="magnetic-index"] .page-heading > p:last-child,
-html[data-skin="magnetic-index"] .record-head__abstract {
+html[data-skin="magnetic-index"] .page-heading > p:last-child {
   max-width: 62ch;
+  font-size: max(1rem, 1.08rem);
+  line-height: 1.55;
+}
+html[data-skin="magnetic-index"] .record-head__abstract {
   font-size: max(1rem, 1.08rem);
   line-height: 1.55;
 }
@@ -2959,9 +2797,7 @@ html[data-skin="magnetic-index"] .tag-line {
 
 html[data-skin="magnetic-index"] .home-shell > .record-index,
 html[data-skin="magnetic-index"] .archive-groups,
-html[data-skin="magnetic-index"] .page-prose,
-html[data-skin="magnetic-index"] .article__content,
-html[data-skin="magnetic-index"] .record-end {
+html[data-skin="magnetic-index"] .page-prose {
   min-width: 0;
   margin: 0;
   padding: clamp(1.1rem, 2.5vw, 2.4rem);
@@ -2973,6 +2809,22 @@ html[data-skin="magnetic-index"] .record-end {
   border-top: 0.35rem solid var(--mag-oxide);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="magnetic-index"] .article__content,
+html[data-skin="magnetic-index"] .record-end {
+  color: var(--mag-text);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3.3rem, rgb(123 37 48 / 5%) 3.35rem 3.4rem),
+    var(--mag-surface);
+  border: 1px solid var(--mag-rule);
+  border-top: 0.35rem solid var(--mag-oxide);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="magnetic-index"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1.1rem, 2.5vw, 2.4rem);
 }
 
 html[data-skin="magnetic-index"] .section-heading,
@@ -3146,11 +2998,20 @@ html[data-skin="magnetic-index"] .archive-shell > .archive-empty {
 }
 
 html[data-skin="magnetic-index"] .index-heading,
-html[data-skin="magnetic-index"] .page-heading,
-html[data-skin="magnetic-index"] .record-head {
+html[data-skin="magnetic-index"] .page-heading {
   min-width: 0;
   margin: 0;
   padding: clamp(1.15rem, 2.7vw, 2.5rem);
+  color: var(--mag-code-text);
+  background:
+    linear-gradient(90deg, var(--mag-oxide) 0 0.32rem, transparent 0.32rem),
+    linear-gradient(145deg, #38242e, var(--mag-machine));
+  border: 1px solid var(--mag-rule);
+  border-bottom: 0.35rem solid var(--mag-oxide);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="magnetic-index"] .record-head {
   color: var(--mag-code-text);
   background:
     linear-gradient(90deg, var(--mag-oxide) 0 0.32rem, transparent 0.32rem),
@@ -3232,8 +3093,7 @@ html[data-skin="magnetic-index"] .pagination a,
 html[data-skin="magnetic-index"] .pagination span,
 html[data-skin="magnetic-index"] .action,
 html[data-skin="magnetic-index"] .record-actions a,
-html[data-skin="magnetic-index"] .tag-line a,
-html[data-skin="magnetic-index"] .site-footer__links a {
+html[data-skin="magnetic-index"] .tag-line a {
   min-block-size: 44px;
   min-width: 0;
   padding: 0.6rem 0.7rem;
@@ -3261,9 +3121,7 @@ html[data-skin="magnetic-index"] .action:focus-visible,
 html[data-skin="magnetic-index"] .record-actions a:hover,
 html[data-skin="magnetic-index"] .record-actions a:focus-visible,
 html[data-skin="magnetic-index"] .tag-line a:hover,
-html[data-skin="magnetic-index"] .tag-line a:focus-visible,
-html[data-skin="magnetic-index"] .site-footer__links a:hover,
-html[data-skin="magnetic-index"] .site-footer__links a:focus-visible {
+html[data-skin="magnetic-index"] .tag-line a:focus-visible {
   color: var(--mag-code-text);
   background: var(--mag-oxide);
   border-color: var(--mag-code-text);
@@ -3353,31 +3211,14 @@ html[data-skin="magnetic-index"] .archive-empty {
 }
 
 /* Article: a pale reading insert moving through the dark tape machine. */
-html[data-skin="magnetic-index"] .record-page {
-  grid-template-areas:
-    "head head head head head head head head head head head head"
-    "record record record record record record record record record record record record"
-    "end end end end end end end end end end end end";
+
+html[data-skin="magnetic-index"] .record-page > .record-head > .record-head__abstract {
+  margin: 0;
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(15rem, 0.7fr);
-  grid-template-areas:
-    "key key"
-    "title title"
-    "abstract facts"
-    "tags actions";
-  gap: 0.9rem clamp(1rem, 3vw, 2.5rem);
+html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions {
+  justify-content: end;
 }
-
-html[data-skin="magnetic-index"] .record-page > .record-head > .record-head__key { grid-area: key; }
-html[data-skin="magnetic-index"] .record-page > .record-head > h1 { grid-area: title; }
-html[data-skin="magnetic-index"] .record-page > .record-head > .record-head__abstract { grid-area: abstract; margin: 0; }
-html[data-skin="magnetic-index"] .record-page > .record-head > .record-facts { grid-area: facts; }
-html[data-skin="magnetic-index"] .record-page > .record-head > .tag-line { grid-area: tags; }
-html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions { grid-area: actions; justify-content: end; }
 
 html[data-skin="magnetic-index"] .record-head__key,
 html[data-skin="magnetic-index"] .record-facts dt {
@@ -3386,7 +3227,6 @@ html[data-skin="magnetic-index"] .record-facts dt {
 
 html[data-skin="magnetic-index"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
   margin: 0;
   border: 1px solid rgb(255 247 240 / 32%);
@@ -3408,24 +3248,7 @@ html[data-skin="magnetic-index"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-grid {
-  grid-area: record;
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(15rem, 3fr);
-  grid-template-areas: "article index";
-  gap: clamp(1rem, 2vw, 2rem);
-  width: 100%;
-  max-width: none;
-  margin: 0;
-}
-
 html[data-skin="magnetic-index"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: 100%;
-  max-width: none;
-  min-height: 0;
-  margin: 0;
-  padding: clamp(1.2rem, 3vw, 3rem);
   border-top-color: var(--mag-oxide);
 }
 
@@ -3438,13 +3261,6 @@ html[data-skin="magnetic-index"] .record-page > .record-grid > .article__content
 }
 
 html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-area: index;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1.15rem 1rem 1.15rem 1.35rem;
   color: var(--mag-code-text);
   background: var(--mag-machine);
   border: 1px solid var(--mag-rule);
@@ -3496,15 +3312,6 @@ html[data-skin="magnetic-index"] .related-records a:focus-visible {
 html[data-skin="magnetic-index"] .related-records h2 {
   color: var(--mag-code-text);
   font-size: clamp(1.35rem, 2.3vw, 1.8rem);
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-end {
-  grid-area: end;
-  display: grid;
-  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
-  gap: 1rem;
-  align-items: end;
-  max-width: none;
 }
 
 html[data-skin="magnetic-index"] .record-end > p,
@@ -3559,10 +3366,12 @@ html[data-skin="magnetic-index"] .page-shell > .page-prose {
 
 /* Reading, evidence, and mathematics have explicit surface pairs. */
 html[data-skin="magnetic-index"] .prose {
-  max-width: var(--mag-reading);
   color: var(--mag-text);
   font-size: max(1rem, 1.125rem);
   line-height: 1.7;
+}
+html[data-skin="magnetic-index"] .prose:not(:where(.record-page, .record-page *)) {
+  max-width: var(--mag-reading);
 }
 
 html[data-skin="magnetic-index"] .prose h1,
@@ -3678,8 +3487,10 @@ html[data-skin="magnetic-index"] .prose tr:nth-child(even) td {
 
 html[data-skin="magnetic-index"] .prose table {
   display: block;
-  max-width: 100%;
   overflow-x: auto;
+}
+html[data-skin="magnetic-index"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
 }
 
 html[data-skin="magnetic-index"] .prose .katex,
@@ -3898,79 +3709,51 @@ html[data-skin="magnetic-index"] .error-shell nav {
 }
 
 /* Footer closes the ribbon with named outbound cue tabs. */
-html[data-skin="magnetic-index"] .site-footer {
-  position: relative;
-  margin-bottom: 1rem;
-  color: var(--mag-code-text);
-  background:
-    linear-gradient(90deg, var(--mag-oxide) 0 0.35rem, transparent 0.35rem),
-    linear-gradient(145deg, #2f1e27, var(--mag-machine));
-  border: 1px solid var(--mag-rule);
-  border-top: 0.35rem solid var(--mag-oxide);
-  box-shadow: none;
-}
-
-html[data-skin="magnetic-index"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
-  align-items: center;
-  min-height: 0;
-  padding: 1rem 1.2rem;
-}
-
-html[data-skin="magnetic-index"] .site-footer__note {
-  grid-column: 1 / span 5;
-  margin: 0;
-  padding-left: 0.85rem;
-  color: var(--mag-code-text);
-  border-left: 0.25rem solid var(--mag-current-bg);
-  font-size: max(1rem, 16px);
-}
-
-html[data-skin="magnetic-index"] .site-footer__note a {
-  color: var(--mag-current-bg);
-}
-
-html[data-skin="magnetic-index"] .site-footer__note a:hover,
-html[data-skin="magnetic-index"] .site-footer__note a:focus-visible {
-  color: var(--mag-code-text);
-}
-
-html[data-skin="magnetic-index"] .site-footer__links {
-  grid-column: 6 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-}
-
-html[data-skin="magnetic-index"] .site-footer__links a {
-  border-right: 0;
-}
-
-html[data-skin="magnetic-index"] .site-footer__links a:last-child {
-  border-right: 1px solid var(--mag-rule);
-}
 
 /* Explicit floor for labels, metadata, controls, code labels, and generated cues. */
-html[data-skin="magnetic-index"] :is(
-  .site-brand__scope, .eyebrow, .site-nav > a[data-route], .theme-toggle,
-  .skin-menu summary, .skin-menu__panel label, .skin-menu select,
-  .skin-randomizer, .action, .record-actions a, .tag-line a,
-  .quick-filters a, .pagination a, .pagination span,
-  .record-row__date, .record-row__event, .record-row__primitive,
-  .archive-search label, .archive-search input, .archive-search p,
-  .all-tags summary, .all-tags__grid a, .all-tags__grid small,
-  .archive-year > header span, .record-facts dt, .record-facts dd,
-  .record-toc summary, .record-toc a, .related-records a, .toc-fallback,
-  .record-end, .site-footer__note, .site-footer__links a, .heading-anchor,
-  .prose code, .prose pre, .code-frame__label strong,
-  .code-frame__label small, .code-frame__actions button,
-  .code-frame__gutter, .code-frame__status, .code-frame__fallback,
-  .katex, .katex-display, .katex .mtext
-) {
+html[data-skin="magnetic-index"] :is(.site-brand__scope,
+.eyebrow,
+.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.archive-search label,
+.archive-search input,
+.archive-search p,
+.all-tags summary,
+.all-tags__grid a,
+.all-tags__grid small,
+.archive-year > header span,
+.record-facts dt,
+.record-facts dd,
+.record-toc summary,
+.record-toc a,
+.related-records a,
+.toc-fallback,
+.record-end,
+.heading-anchor,
+.prose code,
+.prose pre,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback,
+.katex,
+.katex-display,
+.katex .mtext) {
   font-size: max(1rem, 16px);
 }
 
@@ -3981,15 +3764,12 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
 }
 
 @media (max-width: 62rem) {
-  html[data-skin="magnetic-index"] .site-header__inner,
-  html[data-skin="magnetic-index"] .site-footer__inner {
+  html[data-skin="magnetic-index"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="magnetic-index"] .site-brand,
-  html[data-skin="magnetic-index"] .site-nav,
-  html[data-skin="magnetic-index"] .site-footer__note,
-  html[data-skin="magnetic-index"] .site-footer__links {
+html[data-skin="magnetic-index"] .site-nav {
     grid-column: 1 / -1;
   }
 
@@ -4033,56 +3813,29 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
   }
 
   html[data-skin="magnetic-index"] .home-shell,
-  html[data-skin="magnetic-index"] .archive-shell,
-  html[data-skin="magnetic-index"] .record-page,
-  html[data-skin="magnetic-index"] .page-shell {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-  }
+html[data-skin="magnetic-index"] .archive-shell,
+html[data-skin="magnetic-index"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+}
 
   html[data-skin="magnetic-index"] .home-shell > .masthead,
-  html[data-skin="magnetic-index"] .home-shell > .record-index,
-  html[data-skin="magnetic-index"] .archive-shell > .index-heading,
-  html[data-skin="magnetic-index"] .archive-shell > .archive-tools,
-  html[data-skin="magnetic-index"] .archive-shell > .archive-groups,
-  html[data-skin="magnetic-index"] .archive-shell > .archive-empty,
-  html[data-skin="magnetic-index"] .record-page > .record-head,
-  html[data-skin="magnetic-index"] .record-page > .record-grid,
-  html[data-skin="magnetic-index"] .record-page > .record-end,
-  html[data-skin="magnetic-index"] .page-shell > .page-heading,
-  html[data-skin="magnetic-index"] .page-shell > .page-prose {
-    grid-area: auto;
-  }
+html[data-skin="magnetic-index"] .home-shell > .record-index,
+html[data-skin="magnetic-index"] .archive-shell > .index-heading,
+html[data-skin="magnetic-index"] .archive-shell > .archive-tools,
+html[data-skin="magnetic-index"] .archive-shell > .archive-groups,
+html[data-skin="magnetic-index"] .archive-shell > .archive-empty,
+html[data-skin="magnetic-index"] .page-shell > .page-heading,
+html[data-skin="magnetic-index"] .page-shell > .page-prose {
+  grid-area: auto;
+}
 
-  html[data-skin="magnetic-index"] .archive-shell > .archive-tools,
-  html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="magnetic-index"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
+  html[data-skin="magnetic-index"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions {
     justify-content: start;
-  }
-
-  html[data-skin="magnetic-index"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="magnetic-index"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="magnetic-index"] .record-row__link {
@@ -4115,10 +3868,6 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
   html[data-skin="magnetic-index"] .record-row__event::before { content: "EVENT"; }
   html[data-skin="magnetic-index"] .record-row__primitive::before { content: "TOPIC"; }
 
-  html[data-skin="magnetic-index"] .site-footer__links {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   html[data-skin="magnetic-index"] .error-shell {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -4130,25 +3879,16 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
 
 @media (max-width: 34rem) {
   html[data-skin="magnetic-index"] .site-header,
-  html[data-skin="magnetic-index"] .site-footer,
-  html[data-skin="magnetic-index"] .home-shell,
-  html[data-skin="magnetic-index"] .archive-shell,
-  html[data-skin="magnetic-index"] .record-page,
-  html[data-skin="magnetic-index"] .page-shell,
-  html[data-skin="magnetic-index"] .error-shell {
-    width: min(calc(100% - 1rem), var(--mag-page));
-  }
-  html[data-skin="magnetic-index"] .record-facts,
+html[data-skin="magnetic-index"] .home-shell,
+html[data-skin="magnetic-index"] .archive-shell,
+html[data-skin="magnetic-index"] .page-shell,
+html[data-skin="magnetic-index"] .error-shell {
+  width: min(calc(100% - 1rem), var(--mag-page));
+}
   html[data-skin="magnetic-index"] .all-tags__grid,
-  html[data-skin="magnetic-index"] .quick-filters,
-  html[data-skin="magnetic-index"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="magnetic-index"] .site-footer__links a,
-  html[data-skin="magnetic-index"] .site-footer__links a:last-child {
-    border-right: 1px solid var(--mag-rule);
-  }
+html[data-skin="magnetic-index"] .quick-filters {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="magnetic-index"] .masthead h1,
   html[data-skin="magnetic-index"] .index-heading h1,
@@ -4194,13 +3934,25 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
   }
 
   html[data-skin="magnetic-index"] body,
-  html[data-skin="magnetic-index"] :is(
-    .site-header, .site-footer, .masthead, .index-heading, .page-heading,
-    .record-head, .home-shell > .record-index, .archive-tools, .archive-groups,
-    .page-prose, .article__content, .record-end, .record-index,
-    .error-shell, .prose .info, .prose .katex-display, .prose blockquote,
-    .prose .code-frame, .code-frame__bar, .code-frame__status
-  ) {
+html[data-skin="magnetic-index"] :is(.site-header,
+.masthead,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-index,
+.error-shell,
+.prose .info,
+.prose .katex-display,
+.prose blockquote,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status) {
     color: CanvasText !important;
     background: Canvas !important;
     border-color: CanvasText !important;
@@ -4211,11 +3963,18 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
     color: LinkText !important;
   }
 
-  html[data-skin="magnetic-index"] :is(
-    button, input, select, .site-nav > a[data-route], .skin-menu > summary,
-    .quick-filters a, .pagination a, .action, .record-actions a, .tag-line a,
-    .site-footer__links a, .record-end nav a, .code-frame__actions button
-  ) {
+  html[data-skin="magnetic-index"] :is(button,
+input,
+select,
+.site-nav > a[data-route],
+.skin-menu > summary,
+.quick-filters a,
+.pagination a,
+.action,
+.record-actions a,
+.tag-line a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -4239,11 +3998,13 @@ html[data-skin="magnetic-index"] .skin-menu summary::after {
     box-shadow: 0 0 0 6px Canvas !important;
   }
 
-  html[data-skin="magnetic-index"] :is(
-    .site-header::before, .site-footer::before, .home-shell::before,
-    .home-shell::after, .record-list::before, .record-row::before,
-    .archive-year::before, .error-shell::before
-  ) {
+  html[data-skin="magnetic-index"] :is(.site-header::before,
+.home-shell::before,
+.home-shell::after,
+.record-list::before,
+.record-row::before,
+.archive-year::before,
+.error-shell::before) {
     display: none;
   }
 }
@@ -4295,10 +4056,6 @@ html[data-skin="magnetic-index"] .error-shell {
   background: linear-gradient(145deg, #38242e, var(--mag-machine));
 }
 
-html[data-skin="magnetic-index"] .site-footer {
-  background: linear-gradient(145deg, #2f1e27, var(--mag-machine));
-}
-
 html[data-skin="magnetic-index"] .site-brand__text {
   padding-left: 0;
 }
@@ -4325,10 +4082,6 @@ html[data-skin="magnetic-index"] .archive-shell .archive-year::before {
   display: none;
 }
 
-html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-  padding: 1.15rem 1rem;
-}
-
 html[data-skin="magnetic-index"] .record-toc summary {
   padding-bottom: 0.65rem;
   border-bottom: 0.18rem solid var(--mag-current-bg);
@@ -4344,30 +4097,18 @@ html[data-skin="magnetic-index"] .prose blockquote {
   border-top: 0.28rem solid var(--mag-current-bg);
 }
 
-html[data-skin="magnetic-index"] .site-footer__note {
-  padding: 0.75rem 0 0;
-  border-left: 0;
-  border-top: 0.25rem solid var(--mag-current-bg);
-}
-
-html[data-skin="magnetic-index"] :is(
-  .masthead, .index-heading, .page-heading, .record-head,
-  .home-shell > .record-index, .archive-groups,
-  .archive-shell > .archive-tools,
-  .record-page > .record-grid > .article__content,
-  .record-page > .record-grid > .record-index,
-  .page-shell > .page-prose, .record-end, .site-footer
-) {
+html[data-skin="magnetic-index"] :is(.masthead,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-groups,
+.archive-shell > .archive-tools,
+.record-page > .record-grid > .article__content,
+.record-page > .record-grid > .record-index,
+.page-shell > .page-prose,
+.record-end) {
   border-inline: 0;
-}
-
-html[data-skin="magnetic-index"] .record-facts {
-  grid-template-columns: repeat(2, minmax(10rem, 1fr));
-}
-
-html[data-skin="magnetic-index"] .record-page > .record-grid > .article__content {
-  max-width: calc(var(--mag-reading) + clamp(2.4rem, 6vw, 6rem));
-  justify-self: start;
 }
 
 html[data-skin="magnetic-index"] .page-shell > .page-prose {
@@ -4376,31 +4117,11 @@ html[data-skin="magnetic-index"] .page-shell > .page-prose {
 }
 
 @media (max-width: 70rem) {
-  html[data-skin="magnetic-index"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
 
   html[data-skin="magnetic-index"] .record-page > .record-head > .record-actions {
     justify-content: start;
   }
 
-  html[data-skin="magnetic-index"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="magnetic-index"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
 }
 
 @media (max-width: 34rem) {
@@ -4411,9 +4132,6 @@ html[data-skin="magnetic-index"] .page-shell > .page-prose {
     font-size: clamp(2rem, 10vw, 3.1rem);
   }
 
-  html[data-skin="magnetic-index"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {
@@ -4475,18 +4193,6 @@ html[data-skin="magnetic-index"] .home-shell > .masthead :is(h1, .eyebrow) {
   overflow-wrap: normal;
   word-break: normal;
   hyphens: manual;
-}
-html[data-skin="magnetic-index"] .site-footer__links {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-}
-
-html[data-skin="magnetic-index"] .site-footer__inner {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="magnetic-index"] .site-footer__note,
-html[data-skin="magnetic-index"] .site-footer__links {
-  grid-column: 1 / -1;
 }
 
 html[data-skin="magnetic-index"] .home-shell :is(.masthead::before, .masthead::after, .record-list::before, .record-row::before) {

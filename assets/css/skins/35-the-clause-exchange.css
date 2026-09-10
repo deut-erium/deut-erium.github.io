@@ -100,8 +100,7 @@ html[data-skin="the-clause-exchange"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer {
+html[data-skin="the-clause-exchange"] .site-header {
   position: relative;
   isolation: isolate;
   color: var(--clause-paper-high);
@@ -120,13 +119,7 @@ html[data-skin="the-clause-exchange"] .site-header {
   margin-top: 1.5rem;
 }
 
-html[data-skin="the-clause-exchange"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-color: var(--clause-red);
-}
-
-html[data-skin="the-clause-exchange"] .site-header::before,
-html[data-skin="the-clause-exchange"] .site-footer::before {
+html[data-skin="the-clause-exchange"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: -.72rem;
@@ -137,12 +130,7 @@ html[data-skin="the-clause-exchange"] .site-footer::before {
   background: repeating-linear-gradient(90deg, var(--clause-sage-high) 0 .65rem, var(--clause-paper-high) .65rem .78rem);
 }
 
-html[data-skin="the-clause-exchange"] .site-footer::before {
-  background: repeating-linear-gradient(90deg, var(--clause-blue-high) 0 .65rem, var(--clause-paper-high) .65rem .78rem);
-}
-
-html[data-skin="the-clause-exchange"] .site-header__inner,
-html[data-skin="the-clause-exchange"] .site-footer__inner {
+html[data-skin="the-clause-exchange"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -190,8 +178,7 @@ html[data-skin="the-clause-exchange"] .record-actions a,
 html[data-skin="the-clause-exchange"] .tag-line a,
 html[data-skin="the-clause-exchange"] .quick-filters a,
 html[data-skin="the-clause-exchange"] .pagination a,
-html[data-skin="the-clause-exchange"] .pagination span,
-html[data-skin="the-clause-exchange"] .site-footer__links a {
+html[data-skin="the-clause-exchange"] .pagination span {
   min-height: 2.55rem;
   color: var(--clause-paper-high);
   background: var(--clause-ink);
@@ -257,9 +244,7 @@ html[data-skin="the-clause-exchange"] .tag-line a:focus-visible,
 html[data-skin="the-clause-exchange"] .quick-filters a:hover,
 html[data-skin="the-clause-exchange"] .quick-filters a:focus-visible,
 html[data-skin="the-clause-exchange"] .pagination a:hover,
-html[data-skin="the-clause-exchange"] .pagination a:focus-visible,
-html[data-skin="the-clause-exchange"] .site-footer__links a:hover,
-html[data-skin="the-clause-exchange"] .site-footer__links a:focus-visible {
+html[data-skin="the-clause-exchange"] .pagination a:focus-visible {
   color: var(--clause-paper-high);
   background: var(--clause-red);
   border-color: var(--clause-paper-high);
@@ -311,7 +296,6 @@ html[data-skin="the-clause-exchange"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="the-clause-exchange"] .home-shell,
 html[data-skin="the-clause-exchange"] .archive-shell,
-html[data-skin="the-clause-exchange"] .record-page,
 html[data-skin="the-clause-exchange"] .page-shell,
 html[data-skin="the-clause-exchange"] .error-shell {
   position: relative;
@@ -328,20 +312,44 @@ html[data-skin="the-clause-exchange"] .error-shell {
   border-radius: 0;
   box-shadow: .62rem .7rem 0 rgb(24 32 30 / 27%);
 }
+html[data-skin="the-clause-exchange"] .record-page {
+  isolation: isolate;
+  background-color: var(--clause-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.1rem, rgb(187 62 50 / 43%) 2.1rem calc(2.1rem + 2px), transparent calc(2.1rem + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 1.1rem), rgb(80 163 108 / 56%) calc(100% - 1.1rem) calc(100% - .95rem), transparent calc(100% - .95rem)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(80 163 108 / 14%) 2.35rem calc(2.35rem + 1px));
+  border: 5px solid var(--clause-ink);
+  border-top-width: .65rem;
+  border-top-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .62rem .7rem 0 rgb(24 32 30 / 27%);
+}
 
-html[data-skin="the-clause-exchange"] .masthead,
-html[data-skin="the-clause-exchange"] .record-grid {
+html[data-skin="the-clause-exchange"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.7rem);
 }
 
 html[data-skin="the-clause-exchange"] .masthead__copy,
 html[data-skin="the-clause-exchange"] .index-heading,
-html[data-skin="the-clause-exchange"] .page-heading,
-html[data-skin="the-clause-exchange"] .record-head {
+html[data-skin="the-clause-exchange"] .page-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(1.25rem, 3vw, 2.7rem);
+  color: var(--clause-paper-high);
+  background-color: var(--clause-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.25rem, rgb(248 241 205 / 14%) 1.25rem calc(1.25rem + 1px), transparent calc(1.25rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(248 241 205 / 8%) 2.25rem calc(2.25rem + 1px));
+  border: 5px solid var(--clause-ink);
+  border-top-color: var(--clause-red);
+  border-right-color: var(--clause-blue);
+  border-radius: 0;
+  box-shadow: .43rem .5rem 0 rgb(24 32 30 / 31%);
+}
+html[data-skin="the-clause-exchange"] .record-head {
+  isolation: isolate;
   color: var(--clause-paper-high);
   background-color: var(--clause-ink);
   background-image:
@@ -1075,15 +1083,6 @@ html[data-skin="the-clause-exchange"] .error-shell > p {
   color: var(--clause-paper-high);
 }
 
-html[data-skin="the-clause-exchange"] .site-footer__note,
-html[data-skin="the-clause-exchange"] .site-footer a {
-  color: var(--clause-paper-high);
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__note a {
-  color: var(--clause-sage-high);
-}
-
 html[data-skin="the-clause-exchange"][data-theme="dark"] {
   color-scheme: dark;
   --clause-paper: #172723;
@@ -1138,7 +1137,6 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] body {
 }
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
@@ -1149,14 +1147,9 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .error-shell {
   box-shadow: .56rem .64rem 0 rgb(0 0 0 / 56%);
 }
 
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header {
   border-color: var(--clause-void);
   border-top-color: var(--clause-blue);
-}
-
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
-  border-top-color: var(--clause-red);
 }
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell,
@@ -1279,8 +1272,7 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-clause-exchange"] .site-header,
-  html[data-skin="the-clause-exchange"] .site-footer {
+  html[data-skin="the-clause-exchange"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
@@ -1289,12 +1281,7 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .section-heading {
     margin-top: 0;
   }
 
-  html[data-skin="the-clause-exchange"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-clause-exchange"] .site-header::before,
-  html[data-skin="the-clause-exchange"] .site-footer::before {
+  html[data-skin="the-clause-exchange"] .site-header::before {
     left: 1rem;
   }
 
@@ -1399,15 +1386,13 @@ html[data-skin="the-clause-exchange"] body {
     linear-gradient(135deg, rgb(255 255 255 / 38%), transparent 42%);
 }
 
-html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer {
+html[data-skin="the-clause-exchange"] .site-header {
   background-image:
     linear-gradient(90deg, transparent 0 7%, rgb(209 154 53 / 92%) 7% calc(7% + .5rem), transparent calc(7% + .5rem) 89%, rgb(80 163 108 / 75%) 89% calc(89% + 2px), transparent calc(89% + 2px)),
     repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(248 241 205 / 8%) 1.2rem calc(1.2rem + 1px));
 }
 
-html[data-skin="the-clause-exchange"] .site-header::before,
-html[data-skin="the-clause-exchange"] .site-footer::before {
+html[data-skin="the-clause-exchange"] .site-header::before {
   width: clamp(7rem, 20vw, 15rem);
   background: repeating-linear-gradient(90deg, var(--clause-sage) 0 .72rem, var(--clause-paper-high) .72rem .85rem, var(--clause-blue) .85rem 1rem);
 }
@@ -1528,8 +1513,7 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .record-head {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-clause-exchange"] .site-header,
-  html[data-skin="the-clause-exchange"] .site-footer {
+  html[data-skin="the-clause-exchange"] .site-header {
     border-left-width: 3px;
     border-right-width: 3px;
   }
@@ -1565,8 +1549,7 @@ html[data-skin="the-clause-exchange"] body {
     linear-gradient(112deg, #c4c5b8, var(--clause-bench));
 }
 
-html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer {
+html[data-skin="the-clause-exchange"] .site-header {
   border: 6px double var(--clause-paper-high);
   border-top: .58rem solid var(--clause-sage);
   border-radius: .18rem;
@@ -1578,12 +1561,7 @@ html[data-skin="the-clause-exchange"] .site-footer {
     repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(248 241 205 / 7%) 1.2rem calc(1.2rem + 1px));
 }
 
-html[data-skin="the-clause-exchange"] .site-footer {
-  border-top-color: var(--clause-red);
-}
-
-html[data-skin="the-clause-exchange"] .site-header::before,
-html[data-skin="the-clause-exchange"] .site-footer::before {
+html[data-skin="the-clause-exchange"] .site-header::before {
   width: clamp(7rem, 20vw, 15rem);
   background: repeating-linear-gradient(90deg, var(--clause-sage) 0 .55rem, var(--clause-paper-high) .55rem .68rem, var(--clause-blue) .68rem .9rem, var(--clause-paper-high) .9rem 1.03rem);
 }
@@ -1728,7 +1706,6 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] body {
 }
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
@@ -1737,10 +1714,6 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .record-grid > .record-
   border-color: var(--clause-ink);
   border-top-color: var(--clause-sage);
   background-color: var(--clause-void);
-}
-
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
-  border-top-color: var(--clause-red);
 }
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell,
@@ -1767,12 +1740,11 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .record-end {
 
 @media (max-width: 44rem) {
   html[data-skin="the-clause-exchange"] .site-header,
-  html[data-skin="the-clause-exchange"] .site-footer,
-  html[data-skin="the-clause-exchange"] .home-shell,
-  html[data-skin="the-clause-exchange"] .archive-shell,
-  html[data-skin="the-clause-exchange"] .record-page,
-  html[data-skin="the-clause-exchange"] .page-shell,
-  html[data-skin="the-clause-exchange"] .error-shell {
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
     border-left-width: 4px;
     border-right-width: 4px;
   }
@@ -1798,10 +1770,8 @@ html[data-skin="the-clause-exchange"] {
 }
 
 html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer,
 html[data-skin="the-clause-exchange"] .home-shell,
-html[data-skin="the-clause-exchange"] .archive-shell,
-html[data-skin="the-clause-exchange"] .record-page {
+html[data-skin="the-clause-exchange"] .archive-shell {
   width: min(calc(100% - 2rem), 106rem);
 }
 
@@ -2221,10 +2191,6 @@ html[data-skin="the-clause-exchange"] .archive-shell .archive-year > header span
 }
 
 html[data-skin="the-clause-exchange"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--clause-bay-gap);
-  padding: clamp(1rem, 1.8vw, 1.7rem);
   background-color: #293b35;
   background-image:
     radial-gradient(circle at 1.1rem 1.1rem, rgb(209 154 53 / 62%) 0 .14rem, transparent .17rem),
@@ -2234,36 +2200,22 @@ html[data-skin="the-clause-exchange"] .record-page {
 }
 
 html[data-skin="the-clause-exchange"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: .9rem var(--clause-bay-gap);
-  margin: 0;
-  padding: clamp(1.25rem, 2.4vw, 2.2rem);
   border-left: .8rem solid var(--clause-red);
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-head__key {
-  grid-column: 1 / span 8;
   margin: 0;
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-head h1 {
-  grid-column: 1 / span 8;
-  max-width: 14ch;
   margin: 0;
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-head__abstract {
-  grid-column: 1 / span 8;
   margin: 0;
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-facts {
-  grid-column: 9 / -1;
-  grid-row: 1 / span 3;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-self: stretch;
   margin: 0;
   padding: .55rem;
   border: 3px solid rgb(248 241 205 / 52%);
@@ -2285,33 +2237,11 @@ html[data-skin="the-clause-exchange"] .record-page .record-actions {
   border-top: 3px double rgb(248 241 205 / 58%);
 }
 
-html[data-skin="the-clause-exchange"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--clause-bay-gap);
-  justify-content: stretch;
-  margin: 0;
-}
-
 html[data-skin="the-clause-exchange"] .record-page .article__content {
-  grid-column: 1 / span 8;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1.15rem, 2.25vw, 2.1rem);
   border-left: .75rem solid var(--clause-red);
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
-  grid-column: 9 / -1;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  align-self: start;
-  margin: 0;
-  padding: 1rem;
   border-top-color: var(--clause-sage);
 }
 
@@ -2329,13 +2259,6 @@ html[data-skin="the-clause-exchange"] .record-page .related-records h2 {
 }
 
 html[data-skin="the-clause-exchange"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(12rem, .8fr) minmax(0, 2.2fr);
-  gap: var(--clause-bay-gap);
-  align-items: center;
-  margin: 0;
-  padding: 1rem;
   border-top-color: var(--clause-sage);
 }
 
@@ -2359,87 +2282,22 @@ html[data-skin="the-clause-exchange"] .record-page .record-end nav a {
   min-height: 5rem;
 }
 
-html[data-skin="the-clause-exchange"] .site-footer {
-  padding: .45rem;
-  background-color: var(--clause-void);
-  border: 5px solid var(--clause-ink);
-  border-top-color: var(--clause-red);
-  box-shadow: .55rem .62rem 0 rgb(24 32 30 / 36%), inset 0 0 0 .22rem rgb(209 154 53 / 20%);
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(20rem, 1fr);
-  gap: var(--clause-bay-gap);
-  align-items: stretch;
-  padding: .6rem;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__note {
-  display: grid;
-  align-content: center;
-  min-height: 5.75rem;
-  margin: 0;
-  padding: .8rem 1rem;
-  color: var(--clause-paper-high);
-  background: linear-gradient(90deg, var(--clause-red) 0 .52rem, var(--clause-ink) .52rem 100%);
-  border: 2px solid var(--clause-bay-border);
-  font-size: .86rem;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-  justify-content: stretch;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links a {
-  min-width: 0;
-  min-height: 5.75rem;
-  padding: .55rem .4rem;
-  border: 2px solid var(--clause-bay-border);
-  border-bottom: .48rem solid var(--clause-blue);
-  box-shadow: inset 0 0 0 2px rgb(80 163 108 / 22%);
-  font-size: .58rem;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(2) {
-  border-bottom-color: var(--clause-sage-high);
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(3) {
-  color: var(--clause-ink);
-  background: var(--clause-sage-high);
-  border-color: var(--clause-ink);
-  border-bottom-color: var(--clause-red);
-}
-
 @media (max-width: 58rem) {
   html[data-skin="the-clause-exchange"] .site-header__inner,
-  html[data-skin="the-clause-exchange"] .site-footer__inner,
-  html[data-skin="the-clause-exchange"] .home-shell,
-  html[data-skin="the-clause-exchange"] .archive-shell,
-  html[data-skin="the-clause-exchange"] .record-page,
-  html[data-skin="the-clause-exchange"] .record-page > .record-head,
-  html[data-skin="the-clause-exchange"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-clause-exchange"] .site-brand,
-  html[data-skin="the-clause-exchange"] .site-nav,
-  html[data-skin="the-clause-exchange"] .home-shell > .masthead,
-  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
-  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
-  html[data-skin="the-clause-exchange"] .archive-shell > .archive-tools,
-  html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups,
-  html[data-skin="the-clause-exchange"] .record-page > .record-head,
-  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
-  html[data-skin="the-clause-exchange"] .record-page > .record-end,
-  html[data-skin="the-clause-exchange"] .record-page .article__content,
-  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
-    grid-column: 1 / -1;
-  }
+html[data-skin="the-clause-exchange"] .site-nav,
+html[data-skin="the-clause-exchange"] .home-shell > .masthead,
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups {
+  grid-column: 1 / -1;
+}
 
   html[data-skin="the-clause-exchange"] .site-brand {
     grid-row: auto;
@@ -2460,11 +2318,9 @@ html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-clause-exchange"] .home-shell > .masthead,
-  html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups,
-  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
-  html[data-skin="the-clause-exchange"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-clause-exchange"] .archive-shell > .archive-groups {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-clause-exchange"] .archive-shell > .index-heading {
     min-height: 0;
@@ -2474,31 +2330,21 @@ html[data-skin="the-clause-exchange"] .site-footer__links a:nth-child(3) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  html[data-skin="the-clause-exchange"] .record-page .record-head__key,
-  html[data-skin="the-clause-exchange"] .record-page .record-head h1,
-  html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
-  html[data-skin="the-clause-exchange"] .record-page .record-facts,
   html[data-skin="the-clause-exchange"] .record-page .tag-line,
-  html[data-skin="the-clause-exchange"] .record-page .record-actions {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
+html[data-skin="the-clause-exchange"] .record-page .record-actions {
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
 
-  html[data-skin="the-clause-exchange"] .record-page .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="the-clause-exchange"] .site-footer__links,
   html[data-skin="the-clause-exchange"] .record-page .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 30rem) {
-  html[data-skin="the-clause-exchange"] .record-page .record-facts,
   html[data-skin="the-clause-exchange"] .archive-shell .quick-filters {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  grid-template-columns: minmax(0, 1fr);
+}
 }
 
 /* Final remediation: The Clause Exchange */
@@ -2647,8 +2493,6 @@ html[data-skin="the-clause-exchange"] .code-frame__gutter,
 html[data-skin="the-clause-exchange"] .code-frame pre,
 html[data-skin="the-clause-exchange"] .code-frame__status,
 html[data-skin="the-clause-exchange"] .record-end,
-html[data-skin="the-clause-exchange"] .site-footer__note,
-html[data-skin="the-clause-exchange"] .site-footer__links a,
 html[data-skin="the-clause-exchange"] .heading-anchor {
   font-size: 1rem;
 }
@@ -2666,10 +2510,8 @@ html[data-skin="the-clause-exchange"] .prose h2::before {
 }
 
 html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer,
 html[data-skin="the-clause-exchange"] .home-shell,
 html[data-skin="the-clause-exchange"] .archive-shell,
-html[data-skin="the-clause-exchange"] .record-page,
 html[data-skin="the-clause-exchange"] .page-shell,
 html[data-skin="the-clause-exchange"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
@@ -2685,21 +2527,24 @@ html[data-skin="the-clause-exchange"] .error-shell {
   box-shadow: .45rem .45rem 0 rgb(16 19 29 / 30%);
   overflow: visible;
 }
+html[data-skin="the-clause-exchange"] .record-page {
+  color: var(--cx-code-text);
+  background: var(--cx-surface);
+  background-image: none;
+  border: 2px solid var(--cx-void);
+  border-top: .5rem solid var(--cx-signal-green);
+  border-radius: 0;
+  box-shadow: .45rem .45rem 0 rgb(16 19 29 / 30%);
+}
 
-html[data-skin="the-clause-exchange"] .site-header,
-html[data-skin="the-clause-exchange"] .site-footer {
+html[data-skin="the-clause-exchange"] .site-header {
   padding: .5rem;
   color: var(--cx-code-text);
   background: var(--cx-void);
   border-color: var(--cx-void);
 }
 
-html[data-skin="the-clause-exchange"] .site-footer {
-  border-top-color: var(--cx-signal-red);
-}
-
 html[data-skin="the-clause-exchange"] .site-header::before,
-html[data-skin="the-clause-exchange"] .site-footer::before,
 html[data-skin="the-clause-exchange"] .masthead__copy::after,
 html[data-skin="the-clause-exchange"] .index-heading::after,
 html[data-skin="the-clause-exchange"] .page-heading::after,
@@ -2708,8 +2553,7 @@ html[data-skin="the-clause-exchange"] .record-head::after {
   content: none;
 }
 
-html[data-skin="the-clause-exchange"] .site-header__inner,
-html[data-skin="the-clause-exchange"] .site-footer__inner {
+html[data-skin="the-clause-exchange"] .site-header__inner {
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
   gap: clamp(.75rem, 1.3vw, 1.3rem);
@@ -2777,8 +2621,7 @@ html[data-skin="the-clause-exchange"] .tag-line a,
 html[data-skin="the-clause-exchange"] .quick-filters a,
 html[data-skin="the-clause-exchange"] .pagination a,
 html[data-skin="the-clause-exchange"] .pagination span,
-html[data-skin="the-clause-exchange"] .record-end nav a,
-html[data-skin="the-clause-exchange"] .site-footer__links a {
+html[data-skin="the-clause-exchange"] .record-end nav a {
   min-width: 0;
   min-height: 2.75rem;
   padding: .55rem .65rem;
@@ -2891,9 +2734,7 @@ html[data-skin="the-clause-exchange"] .quick-filters a:focus-visible,
 html[data-skin="the-clause-exchange"] .pagination a:hover,
 html[data-skin="the-clause-exchange"] .pagination a:focus-visible,
 html[data-skin="the-clause-exchange"] .record-end nav a:hover,
-html[data-skin="the-clause-exchange"] .record-end nav a:focus-visible,
-html[data-skin="the-clause-exchange"] .site-footer__links a:hover,
-html[data-skin="the-clause-exchange"] .site-footer__links a:focus-visible {
+html[data-skin="the-clause-exchange"] .record-end nav a:focus-visible {
   color: var(--cx-selected-text);
   background: var(--cx-selected);
   border-color: var(--cx-selected-text);
@@ -2936,7 +2777,6 @@ html[data-skin="the-clause-exchange"] .pagination span[aria-disabled="true"] {
 
 html[data-skin="the-clause-exchange"] .home-shell,
 html[data-skin="the-clause-exchange"] .archive-shell,
-html[data-skin="the-clause-exchange"] .record-page,
 html[data-skin="the-clause-exchange"] .page-shell,
 html[data-skin="the-clause-exchange"] .error-shell {
   display: grid;
@@ -2945,8 +2785,7 @@ html[data-skin="the-clause-exchange"] .error-shell {
   align-items: start;
 }
 
-html[data-skin="the-clause-exchange"] .masthead,
-html[data-skin="the-clause-exchange"] .record-grid {
+html[data-skin="the-clause-exchange"] .masthead {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
@@ -2957,8 +2796,7 @@ html[data-skin="the-clause-exchange"] .record-grid {
 
 html[data-skin="the-clause-exchange"] .masthead__copy,
 html[data-skin="the-clause-exchange"] .index-heading,
-html[data-skin="the-clause-exchange"] .page-heading,
-html[data-skin="the-clause-exchange"] .record-head {
+html[data-skin="the-clause-exchange"] .page-heading {
   min-width: 0;
   min-height: 0;
   padding: clamp(1.15rem, 2.4vw, 2.2rem);
@@ -2970,6 +2808,15 @@ html[data-skin="the-clause-exchange"] .record-head {
   border-radius: 0;
   box-shadow: none;
   overflow: visible;
+}
+html[data-skin="the-clause-exchange"] .record-head {
+  color: var(--cx-text);
+  background: var(--cx-paper);
+  background-image: none;
+  border: 2px solid var(--cx-text);
+  border-left: .6rem solid var(--cx-signal-red);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 html[data-skin="the-clause-exchange"] .masthead__copy {
@@ -2997,9 +2844,19 @@ html[data-skin="the-clause-exchange"] .record-end nav span {
 html[data-skin="the-clause-exchange"] .masthead h1,
 html[data-skin="the-clause-exchange"] .index-heading h1,
 html[data-skin="the-clause-exchange"] .page-heading h1,
-html[data-skin="the-clause-exchange"] .record-head h1,
 html[data-skin="the-clause-exchange"] .error-shell h1 {
   max-width: 16ch;
+  margin: .25rem 0 .75rem;
+  color: var(--cx-heading);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 3.8vw, 3.75rem);
+  font-weight: 900;
+  letter-spacing: -.055em;
+  line-height: .98;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+html[data-skin="the-clause-exchange"] .record-head h1 {
   margin: .25rem 0 .75rem;
   color: var(--cx-heading);
   font-family: var(--display);
@@ -3078,15 +2935,25 @@ html[data-skin="the-clause-exchange"] .record-facts dt {
 html[data-skin="the-clause-exchange"] .home-shell > .record-index,
 html[data-skin="the-clause-exchange"] .archive-tools,
 html[data-skin="the-clause-exchange"] .archive-groups,
-html[data-skin="the-clause-exchange"] .page-prose,
-html[data-skin="the-clause-exchange"] .article__content,
-html[data-skin="the-clause-exchange"] .record-end {
+html[data-skin="the-clause-exchange"] .page-prose {
   min-width: 0;
   margin: 0;
   padding: clamp(1rem, 2vw, 1.75rem);
   border: 2px solid var(--cx-text);
   border-radius: 0;
   box-shadow: none;
+  overflow: visible;
+}
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .record-end {
+  border: 2px solid var(--cx-text);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-clause-exchange"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem);
   overflow: visible;
 }
 
@@ -3412,17 +3279,11 @@ html[data-skin="the-clause-exchange"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="the-clause-exchange"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
-  gap: .8rem clamp(.75rem, 1.3vw, 1.3rem);
-  margin: 0;
-}
-
 html[data-skin="the-clause-exchange"] .record-page .record-head__key,
 html[data-skin="the-clause-exchange"] .record-page .record-head h1,
-html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
+html[data-skin="the-clause-exchange"] .record-page .record-head__abstract {
+  margin: 0;
+}
 html[data-skin="the-clause-exchange"] .record-page .tag-line {
   grid-column: 1 / span 6;
   min-width: 0;
@@ -3436,18 +3297,9 @@ html[data-skin="the-clause-exchange"] .record-page .record-head__key {
   border-bottom: 1px solid var(--cx-rule);
 }
 
-html[data-skin="the-clause-exchange"] .record-page .record-head h1 {
-  max-width: 16ch;
-}
-
 html[data-skin="the-clause-exchange"] .record-page .record-facts {
-  grid-column: 7 / -1;
-  grid-row: 1 / span 3;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
-  align-self: stretch;
-  min-width: 0;
   margin: 0;
   padding: 0;
   background: var(--cx-void);
@@ -3468,17 +3320,7 @@ html[data-skin="the-clause-exchange"] .record-page .record-actions {
   margin: 0;
 }
 
-html[data-skin="the-clause-exchange"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
-  margin: 0;
-}
-
 html[data-skin="the-clause-exchange"] .record-page .article__content {
-  grid-column: 1 / span 10;
-  width: auto;
-  max-width: none;
-  margin: 0;
   color: var(--cx-text);
   background: var(--cx-paper);
   border-color: var(--cx-text);
@@ -3486,15 +3328,6 @@ html[data-skin="the-clause-exchange"] .record-page .article__content {
 }
 
 html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
-  grid-column: 11 / -1;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  min-width: 0;
-  align-self: start;
-  margin: 0;
-  padding: 1rem;
   color: var(--cx-code-text);
   background: var(--cx-void);
   border: 2px solid var(--cx-code-text);
@@ -3549,11 +3382,6 @@ html[data-skin="the-clause-exchange"] .related-records h2 {
 }
 
 html[data-skin="the-clause-exchange"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 10fr);
-  gap: clamp(.75rem, 1.3vw, 1.3rem);
-  align-items: center;
   color: var(--cx-code-text);
   background: var(--cx-void);
   border-color: var(--cx-code-text);
@@ -3649,11 +3477,13 @@ html[data-skin="the-clause-exchange"] .error-shell nav {
 }
 
 html[data-skin="the-clause-exchange"] .prose {
-  max-width: var(--reading);
   color: var(--cx-text);
   font-family: var(--body);
   font-size: 1.125rem;
   line-height: 1.7;
+}
+html[data-skin="the-clause-exchange"] .prose:not(:where(.record-page, .record-page *)) {
+  max-width: var(--reading);
 }
 
 html[data-skin="the-clause-exchange"] .prose h1,
@@ -3923,36 +3753,6 @@ html[data-skin="the-clause-exchange"] .highlight .gi { color: #b7ead0; }
 html[data-skin="the-clause-exchange"] .highlight .gh,
 html[data-skin="the-clause-exchange"] .highlight .gu { color: #d8eee1; font-weight: 700; }
 
-html[data-skin="the-clause-exchange"] .site-footer__note {
-  grid-column: 1 / span 6;
-  min-width: 0;
-  min-height: 0;
-  margin: 0;
-  padding: .8rem 1rem;
-  color: var(--cx-selected-text);
-  background: var(--cx-selected);
-  border-left: .55rem solid var(--cx-signal-red);
-  font-size: 1rem;
-  line-height: 1.45;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__note a {
-  color: var(--cx-link);
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links {
-  grid-column: 7 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-  min-width: 0;
-}
-
-html[data-skin="the-clause-exchange"] .site-footer__links a {
-  min-height: 4rem;
-  text-transform: none;
-}
-
 html[data-skin="the-clause-exchange"][data-theme="dark"] .masthead__copy,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .index-heading,
 html[data-skin="the-clause-exchange"][data-theme="dark"] .page-heading,
@@ -4121,10 +3921,6 @@ html[data-skin="the-clause-exchange"] .record-page .record-end nav {
   gap: .55rem;
 }
 
-html[data-skin="the-clause-exchange"] .site-footer__note a {
-  color: var(--cx-selected-text);
-}
-
 html[data-skin="the-clause-exchange"] .prose blockquote a {
   color: var(--cx-link);
 }
@@ -4135,17 +3931,12 @@ html[data-skin="the-clause-exchange"] .prose blockquote code {
   border-color: var(--cx-rule);
 }
 
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header,
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
+html[data-skin="the-clause-exchange"][data-theme="dark"] .site-header {
   color: var(--cx-code-text);
   background: var(--cx-void);
   border-color: var(--cx-void);
   border-top-color: var(--cx-signal-green);
   box-shadow: .45rem .45rem 0 rgb(0 0 0 / 40%);
-}
-
-html[data-skin="the-clause-exchange"][data-theme="dark"] .site-footer {
-  border-top-color: var(--cx-signal-red);
 }
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] .home-shell > .record-index,
@@ -4280,15 +4071,12 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
 }
 
 @media (max-width: 72rem) {
-  html[data-skin="the-clause-exchange"] .site-header__inner,
-  html[data-skin="the-clause-exchange"] .site-footer__inner {
+  html[data-skin="the-clause-exchange"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="the-clause-exchange"] .site-brand,
-  html[data-skin="the-clause-exchange"] .site-nav,
-  html[data-skin="the-clause-exchange"] .site-footer__note,
-  html[data-skin="the-clause-exchange"] .site-footer__links {
+html[data-skin="the-clause-exchange"] .site-nav {
     grid-column: 1;
   }
 
@@ -4302,78 +4090,51 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
   }
 }
 
-@media (max-width: 62rem) {
-  html[data-skin="the-clause-exchange"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-clause-exchange"] .record-page .article__content,
-  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index {
-    position: static;
-  }
-}
-
 @media (max-width: 48rem) {
   html[data-skin="the-clause-exchange"] .site-header,
-  html[data-skin="the-clause-exchange"] .site-footer,
-  html[data-skin="the-clause-exchange"] .home-shell,
-  html[data-skin="the-clause-exchange"] .archive-shell,
-  html[data-skin="the-clause-exchange"] .record-page,
-  html[data-skin="the-clause-exchange"] .page-shell,
-  html[data-skin="the-clause-exchange"] .error-shell {
-    width: 100%;
-    margin: 0;
-    padding: .85rem;
-    border-right-width: 0;
-    border-left-width: 0;
-    box-shadow: none;
-  }
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell {
+  width: 100%;
+  margin: 0;
+  padding: .85rem;
+  border-right-width: 0;
+  border-left-width: 0;
+  box-shadow: none;
+}
+html[data-skin="the-clause-exchange"] .record-page {
+  border-right-width: 0;
+  border-left-width: 0;
+  box-shadow: none;
+}
 
   html[data-skin="the-clause-exchange"] .site-nav,
-  html[data-skin="the-clause-exchange"] .home-shell,
-  html[data-skin="the-clause-exchange"] .archive-shell,
-  html[data-skin="the-clause-exchange"] .record-page,
-  html[data-skin="the-clause-exchange"] .page-shell,
-  html[data-skin="the-clause-exchange"] .error-shell,
-  html[data-skin="the-clause-exchange"] .masthead,
-  html[data-skin="the-clause-exchange"] .record-grid,
-  html[data-skin="the-clause-exchange"] .record-page > .record-head,
-  html[data-skin="the-clause-exchange"] .record-page > .record-grid,
-  html[data-skin="the-clause-exchange"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell,
+html[data-skin="the-clause-exchange"] .masthead {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-clause-exchange"] .site-brand,
-  html[data-skin="the-clause-exchange"] .site-nav,
-  html[data-skin="the-clause-exchange"] .masthead__copy,
-  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
-  html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
-  html[data-skin="the-clause-exchange"] .archive-tools,
-  html[data-skin="the-clause-exchange"] .archive-groups,
-  html[data-skin="the-clause-exchange"] .record-page > .record-head,
-  html[data-skin="the-clause-exchange"] .record-page .record-head__key,
-  html[data-skin="the-clause-exchange"] .record-page .record-head h1,
-  html[data-skin="the-clause-exchange"] .record-page .record-head__abstract,
-  html[data-skin="the-clause-exchange"] .record-page .record-facts,
-  html[data-skin="the-clause-exchange"] .record-page .tag-line,
-  html[data-skin="the-clause-exchange"] .record-page .record-actions,
-  html[data-skin="the-clause-exchange"] .record-page .article__content,
-  html[data-skin="the-clause-exchange"] .record-page .record-grid > .record-index,
-  html[data-skin="the-clause-exchange"] .record-page > .record-end,
-  html[data-skin="the-clause-exchange"] .page-shell > .page-heading,
-  html[data-skin="the-clause-exchange"] .page-shell > .page-prose,
-  html[data-skin="the-clause-exchange"] .error-shell > :not(nav),
-  html[data-skin="the-clause-exchange"] .error-shell nav {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  html[data-skin="the-clause-exchange"] .record-page .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+html[data-skin="the-clause-exchange"] .site-nav,
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-shell > .index-heading,
+html[data-skin="the-clause-exchange"] .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-groups,
+html[data-skin="the-clause-exchange"] .record-page .tag-line,
+html[data-skin="the-clause-exchange"] .record-page .record-actions,
+html[data-skin="the-clause-exchange"] .page-shell > .page-heading,
+html[data-skin="the-clause-exchange"] .page-shell > .page-prose,
+html[data-skin="the-clause-exchange"] .error-shell > :not(nav),
+html[data-skin="the-clause-exchange"] .error-shell nav {
+  grid-column: 1;
+  grid-row: auto;
+}
+
   html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(2) {
     border-right: 0;
   }
@@ -4421,14 +4182,10 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
     grid-row: 4;
   }
 
-  html[data-skin="the-clause-exchange"] .record-page > .record-end,
   html[data-skin="the-clause-exchange"] .record-end nav {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  html[data-skin="the-clause-exchange"] .site-footer__links {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 48rem) {
@@ -4444,12 +4201,10 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
 }
 
 @media (max-width: 23rem) {
-  html[data-skin="the-clause-exchange"] .record-page .record-facts,
   html[data-skin="the-clause-exchange"] .quick-filters,
-  html[data-skin="the-clause-exchange"] .site-footer__links,
-  html[data-skin="the-clause-exchange"] .pagination__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-clause-exchange"] .pagination__links {
+  grid-template-columns: minmax(0, 1fr);
+}
   html[data-skin="the-clause-exchange"] .record-facts > div {
     border-right: 0;
   }
@@ -4468,30 +4223,29 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
 
 @media (forced-colors: active) {
   html[data-skin="the-clause-exchange"] .site-header,
-  html[data-skin="the-clause-exchange"] .site-footer,
-  html[data-skin="the-clause-exchange"] .home-shell,
-  html[data-skin="the-clause-exchange"] .archive-shell,
-  html[data-skin="the-clause-exchange"] .record-page,
-  html[data-skin="the-clause-exchange"] .page-shell,
-  html[data-skin="the-clause-exchange"] .error-shell,
-  html[data-skin="the-clause-exchange"] .masthead__copy,
-  html[data-skin="the-clause-exchange"] .index-heading,
-  html[data-skin="the-clause-exchange"] .page-heading,
-  html[data-skin="the-clause-exchange"] .record-head,
-  html[data-skin="the-clause-exchange"] .home-shell > .record-index,
-  html[data-skin="the-clause-exchange"] .archive-tools,
-  html[data-skin="the-clause-exchange"] .archive-groups,
-  html[data-skin="the-clause-exchange"] .archive-year,
-  html[data-skin="the-clause-exchange"] .page-prose,
-  html[data-skin="the-clause-exchange"] .article__content,
-  html[data-skin="the-clause-exchange"] .record-end,
-  html[data-skin="the-clause-exchange"] .record-grid > .record-index,
-  html[data-skin="the-clause-exchange"] .prose .code-frame,
-  html[data-skin="the-clause-exchange"] .code-frame__bar,
-  html[data-skin="the-clause-exchange"] .code-frame__status,
-  html[data-skin="the-clause-exchange"] .skin-menu__panel,
-  html[data-skin="the-clause-exchange"] .skin-menu select,
-  html[data-skin="the-clause-exchange"] .record-row__link {
+html[data-skin="the-clause-exchange"] .home-shell,
+html[data-skin="the-clause-exchange"] .archive-shell,
+html[data-skin="the-clause-exchange"] .record-page,
+html[data-skin="the-clause-exchange"] .page-shell,
+html[data-skin="the-clause-exchange"] .error-shell,
+html[data-skin="the-clause-exchange"] .masthead__copy,
+html[data-skin="the-clause-exchange"] .index-heading,
+html[data-skin="the-clause-exchange"] .page-heading,
+html[data-skin="the-clause-exchange"] .record-head,
+html[data-skin="the-clause-exchange"] .home-shell > .record-index,
+html[data-skin="the-clause-exchange"] .archive-tools,
+html[data-skin="the-clause-exchange"] .archive-groups,
+html[data-skin="the-clause-exchange"] .archive-year,
+html[data-skin="the-clause-exchange"] .page-prose,
+html[data-skin="the-clause-exchange"] .article__content,
+html[data-skin="the-clause-exchange"] .record-end,
+html[data-skin="the-clause-exchange"] .record-grid > .record-index,
+html[data-skin="the-clause-exchange"] .prose .code-frame,
+html[data-skin="the-clause-exchange"] .code-frame__bar,
+html[data-skin="the-clause-exchange"] .code-frame__status,
+html[data-skin="the-clause-exchange"] .skin-menu__panel,
+html[data-skin="the-clause-exchange"] .skin-menu select,
+html[data-skin="the-clause-exchange"] .record-row__link {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -4499,18 +4253,17 @@ html[data-skin="the-clause-exchange"][data-theme="dark"] .prose th {
   }
 
   html[data-skin="the-clause-exchange"] .site-nav > a,
-  html[data-skin="the-clause-exchange"] .theme-toggle,
-  html[data-skin="the-clause-exchange"] .skin-menu summary,
-  html[data-skin="the-clause-exchange"] .skin-randomizer,
-  html[data-skin="the-clause-exchange"] .action,
-  html[data-skin="the-clause-exchange"] .record-actions a,
-  html[data-skin="the-clause-exchange"] .tag-line a,
-  html[data-skin="the-clause-exchange"] .quick-filters a,
-  html[data-skin="the-clause-exchange"] .pagination a,
-  html[data-skin="the-clause-exchange"] .pagination span,
-  html[data-skin="the-clause-exchange"] .record-end nav a,
-  html[data-skin="the-clause-exchange"] .site-footer__links a,
-  html[data-skin="the-clause-exchange"] .code-frame__actions button {
+html[data-skin="the-clause-exchange"] .theme-toggle,
+html[data-skin="the-clause-exchange"] .skin-menu summary,
+html[data-skin="the-clause-exchange"] .skin-randomizer,
+html[data-skin="the-clause-exchange"] .action,
+html[data-skin="the-clause-exchange"] .record-actions a,
+html[data-skin="the-clause-exchange"] .tag-line a,
+html[data-skin="the-clause-exchange"] .quick-filters a,
+html[data-skin="the-clause-exchange"] .pagination a,
+html[data-skin="the-clause-exchange"] .pagination span,
+html[data-skin="the-clause-exchange"] .record-end nav a,
+html[data-skin="the-clause-exchange"] .code-frame__actions button {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4556,8 +4309,7 @@ html[data-skin="the-clause-exchange"] .site-nav {
 
 html[data-skin="the-clause-exchange"] .site-nav > a,
 html[data-skin="the-clause-exchange"] .theme-toggle,
-html[data-skin="the-clause-exchange"] .skin-menu,
-html[data-skin="the-clause-exchange"] .site-footer__links a {
+html[data-skin="the-clause-exchange"] .skin-menu {
   align-self: start;
   min-height: 2.75rem;
 }
@@ -4606,18 +4358,12 @@ html[data-skin="the-clause-exchange"] .prose .katex-display {
   border: 2px solid var(--cx-text);
 }
 
-html[data-skin="the-clause-exchange"] .site-footer__note {
-  border: 2px solid var(--cx-selected-text);
-}
 html[data-skin="the-clause-exchange"] .record-facts > div:nth-child(n) {
   border-bottom: 1px solid var(--cx-code-text);
 }
 html[data-skin="the-clause-exchange"] .record-facts > div::after {
   display: none;
   content: none;
-}
-html[data-skin="the-clause-exchange"] .record-page .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
 }
 
 html[data-skin="the-clause-exchange"] .prose .code-frame__gutter {

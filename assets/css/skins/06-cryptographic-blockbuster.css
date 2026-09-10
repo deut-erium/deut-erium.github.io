@@ -97,13 +97,15 @@ html[data-skin="cryptographic-blockbuster"] .skip-link {
 }
 
 html[data-skin="cryptographic-blockbuster"] .site-header,
-html[data-skin="cryptographic-blockbuster"] .site-footer,
 html[data-skin="cryptographic-blockbuster"] .home-shell,
 html[data-skin="cryptographic-blockbuster"] .archive-shell,
-html[data-skin="cryptographic-blockbuster"] .record-page,
 html[data-skin="cryptographic-blockbuster"] .page-shell,
 html[data-skin="cryptographic-blockbuster"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid var(--film-rule);
+  border-radius: 0;
+}
+html[data-skin="cryptographic-blockbuster"] .record-page {
   border: 5px solid var(--film-rule);
   border-radius: 0;
 }
@@ -176,8 +178,7 @@ html[data-skin="cryptographic-blockbuster"] .record-actions a,
 html[data-skin="cryptographic-blockbuster"] .tag-line a,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a,
 html[data-skin="cryptographic-blockbuster"] .pagination a,
-html[data-skin="cryptographic-blockbuster"] .pagination span,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
+html[data-skin="cryptographic-blockbuster"] .pagination span {
   min-height: 2.65rem;
   padding: .52rem .7rem;
   color: var(--film-ink);
@@ -262,9 +263,7 @@ html[data-skin="cryptographic-blockbuster"] .tag-line a:focus-visible,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a:hover,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a:focus-visible,
 html[data-skin="cryptographic-blockbuster"] .pagination a:hover,
-html[data-skin="cryptographic-blockbuster"] .pagination a:focus-visible,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:hover,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible {
+html[data-skin="cryptographic-blockbuster"] .pagination a:focus-visible {
   color: var(--film-black);
   background: var(--film-red);
   border-color: var(--film-rule);
@@ -280,9 +279,15 @@ html[data-skin="cryptographic-blockbuster"] .quick-filters a[aria-current="true"
 
 html[data-skin="cryptographic-blockbuster"] .home-shell,
 html[data-skin="cryptographic-blockbuster"] .archive-shell,
-html[data-skin="cryptographic-blockbuster"] .record-page,
 html[data-skin="cryptographic-blockbuster"] .page-shell {
   padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 3.4%, #43051e14 3.4% 3.65%, transparent 3.65% 96.35%, #43051e14 96.35% 96.6%, transparent 96.6%),
+    linear-gradient(0deg, transparent 0 8rem, #43051e0b 8rem 8.12rem, transparent 8.12rem);
+  box-shadow: .8rem .9rem 0 var(--film-rule);
+}
+html[data-skin="cryptographic-blockbuster"] .record-page {
   background-color: var(--shell);
   background-image:
     linear-gradient(90deg, transparent 0 3.4%, #43051e14 3.4% 3.65%, transparent 3.65% 96.35%, #43051e14 96.35% 96.6%, transparent 96.6%),
@@ -329,9 +334,18 @@ html[data-skin="cryptographic-blockbuster"] .masthead .eyebrow {
 html[data-skin="cryptographic-blockbuster"] .masthead h1,
 html[data-skin="cryptographic-blockbuster"] .index-heading h1,
 html[data-skin="cryptographic-blockbuster"] .page-heading h1,
-html[data-skin="cryptographic-blockbuster"] .record-head h1,
 html[data-skin="cryptographic-blockbuster"] .error-shell h1 {
   max-width: 11ch;
+  margin: .25rem 0;
+  color: var(--film-ink);
+  font-family: var(--display);
+  font-size: clamp(3rem, 6.8vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -.13em;
+  line-height: .78;
+  text-transform: uppercase;
+}
+html[data-skin="cryptographic-blockbuster"] .record-head h1 {
   margin: .25rem 0;
   color: var(--film-ink);
   font-family: var(--display);
@@ -348,9 +362,15 @@ html[data-skin="cryptographic-blockbuster"] .masthead h1 {
 
 html[data-skin="cryptographic-blockbuster"] .masthead__lede,
 html[data-skin="cryptographic-blockbuster"] .index-heading > p:last-child,
-html[data-skin="cryptographic-blockbuster"] .page-heading > p:last-child,
-html[data-skin="cryptographic-blockbuster"] .record-head__abstract {
+html[data-skin="cryptographic-blockbuster"] .page-heading > p:last-child {
   max-width: 57ch;
+  color: var(--film-ink);
+  font-family: var(--body);
+  font-size: clamp(1.08rem, 1.55vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="cryptographic-blockbuster"] .record-head__abstract {
   color: var(--film-ink);
   font-family: var(--body);
   font-size: clamp(1.08rem, 1.55vw, 1.3rem);
@@ -386,7 +406,7 @@ html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
 html[data-skin="cryptographic-blockbuster"] .archive-tools,
 html[data-skin="cryptographic-blockbuster"] .archive-groups,
 html[data-skin="cryptographic-blockbuster"] .page-prose,
-html[data-skin="cryptographic-blockbuster"] .record-end {
+html[data-skin="cryptographic-blockbuster"] .record-end:not(:where(.record-page, .record-page *)) {
   padding: clamp(1.15rem, 2.5vw, 2.4rem);
 }
 
@@ -506,9 +526,18 @@ html[data-skin="cryptographic-blockbuster"] .pagination__position strong {
 }
 
 html[data-skin="cryptographic-blockbuster"] .index-heading,
-html[data-skin="cryptographic-blockbuster"] .page-heading,
-html[data-skin="cryptographic-blockbuster"] .record-head {
+html[data-skin="cryptographic-blockbuster"] .page-heading {
   padding: clamp(1.7rem, 4.4vw, 4.6rem);
+  color: var(--film-ink);
+  background-color: var(--film-paper);
+  background-image:
+    radial-gradient(circle at 94% 19%, var(--film-red) 0 6.35rem, transparent 6.42rem),
+    linear-gradient(146deg, transparent 0 68%, var(--film-yellow) 68% 78%, transparent 78%),
+    linear-gradient(90deg, var(--film-blue) 0 1.1rem, transparent 1.1rem);
+  border: 5px solid var(--film-rule);
+  box-shadow: .55rem .6rem 0 var(--film-blue);
+}
+html[data-skin="cryptographic-blockbuster"] .record-head {
   color: var(--film-ink);
   background-color: var(--film-paper);
   background-image:
@@ -526,8 +555,7 @@ html[data-skin="cryptographic-blockbuster"] .record-head__key {
 }
 
 html[data-skin="cryptographic-blockbuster"] .index-heading h1,
-html[data-skin="cryptographic-blockbuster"] .page-heading h1,
-html[data-skin="cryptographic-blockbuster"] .record-head h1 {
+html[data-skin="cryptographic-blockbuster"] .page-heading h1 {
   max-width: 12ch;
 }
 
@@ -606,10 +634,6 @@ html[data-skin="cryptographic-blockbuster"] .record-head__key span {
   border: 2px solid var(--film-rule);
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-head__abstract {
-  max-width: 61ch;
-}
-
 html[data-skin="cryptographic-blockbuster"] .record-facts {
   gap: 0;
   padding: 0;
@@ -650,11 +674,9 @@ html[data-skin="cryptographic-blockbuster"] .record-actions a:last-child {
   background: var(--film-red);
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-grid {
-  gap: 1.8rem;
+html[data-skin="cryptographic-blockbuster"] .article__content {
+  border-left: 1rem solid var(--film-blue);
 }
-
-html[data-skin="cryptographic-blockbuster"] .article__content,
 html[data-skin="cryptographic-blockbuster"] .page-prose {
   max-width: var(--reading);
   padding: clamp(1.3rem, 3.5vw, 3.5rem);
@@ -955,40 +977,6 @@ html[data-skin="cryptographic-blockbuster"] .error-shell h1 {
   text-shadow: 4px 4px 0 var(--film-blue);
 }
 
-html[data-skin="cryptographic-blockbuster"] .site-footer {
-  color: var(--film-paper);
-  background-color: var(--film-black);
-  background-image:
-    linear-gradient(135deg, transparent 0 75%, var(--film-red) 75% 85%, transparent 85%),
-    radial-gradient(circle at 6% 50%, var(--film-blue) 0 3.6rem, transparent 3.68rem);
-  border-color: var(--film-rule);
-  border-top-color: var(--film-yellow);
-  box-shadow: .75rem .8rem 0 var(--film-rule);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__inner {
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__note {
-  font-family: var(--body);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer a {
-  color: var(--film-yellow);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
-  color: var(--film-black);
-  background: var(--film-yellow);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:hover,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible {
-  color: var(--film-paper);
-  background: var(--film-blue);
-}
-
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] {
   --film-ink: #fff8e7;
   --film-rule: #fff4c9;
@@ -1139,27 +1127,6 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
   color: var(--film-ink);
 }
 
-@media (min-width: 76rem) {
-  html[data-skin="cryptographic-blockbuster"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 68rem) {
   html[data-skin="cryptographic-blockbuster"] .site-header__inner {
     grid-template-columns: 1fr;
@@ -1186,24 +1153,22 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
 
 @media (max-width: 44rem) {
   html[data-skin="cryptographic-blockbuster"] .site-header,
-  html[data-skin="cryptographic-blockbuster"] .site-footer,
-  html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page,
-  html[data-skin="cryptographic-blockbuster"] .page-shell,
-  html[data-skin="cryptographic-blockbuster"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="cryptographic-blockbuster"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="cryptographic-blockbuster"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="cryptographic-blockbuster"] .site-nav {
@@ -1235,29 +1200,34 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
   }
 
   html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page,
-  html[data-skin="cryptographic-blockbuster"] .page-shell,
-  html[data-skin="cryptographic-blockbuster"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-  }
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+}
 
   html[data-skin="cryptographic-blockbuster"] .masthead__copy,
-  html[data-skin="cryptographic-blockbuster"] .index-heading,
-  html[data-skin="cryptographic-blockbuster"] .page-heading,
-  html[data-skin="cryptographic-blockbuster"] .record-head,
-  html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
-  html[data-skin="cryptographic-blockbuster"] .archive-tools,
-  html[data-skin="cryptographic-blockbuster"] .archive-groups,
-  html[data-skin="cryptographic-blockbuster"] .page-prose,
-  html[data-skin="cryptographic-blockbuster"] .article__content,
-  html[data-skin="cryptographic-blockbuster"] .record-end {
-    padding: 1rem;
-    border-width: 4px;
-    box-shadow: 4px 4px 0 var(--film-red);
-  }
+html[data-skin="cryptographic-blockbuster"] .index-heading,
+html[data-skin="cryptographic-blockbuster"] .page-heading,
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] .archive-tools,
+html[data-skin="cryptographic-blockbuster"] .archive-groups,
+html[data-skin="cryptographic-blockbuster"] .page-prose {
+  padding: 1rem;
+  border-width: 4px;
+  box-shadow: 4px 4px 0 var(--film-red);
+}
+html[data-skin="cryptographic-blockbuster"] .record-head,
+html[data-skin="cryptographic-blockbuster"] .article__content,
+html[data-skin="cryptographic-blockbuster"] .record-end {
+  border-width: 4px;
+  box-shadow: 4px 4px 0 var(--film-red);
+}
+html[data-skin="cryptographic-blockbuster"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="cryptographic-blockbuster"] .article__content,
   html[data-skin="cryptographic-blockbuster"] .page-prose {
@@ -1357,27 +1327,26 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
 
 @media (forced-colors: active) {
   html[data-skin="cryptographic-blockbuster"] .site-header,
-  html[data-skin="cryptographic-blockbuster"] .site-footer,
-  html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page,
-  html[data-skin="cryptographic-blockbuster"] .page-shell,
-  html[data-skin="cryptographic-blockbuster"] .error-shell,
-  html[data-skin="cryptographic-blockbuster"] .masthead,
-  html[data-skin="cryptographic-blockbuster"] .masthead__copy,
-  html[data-skin="cryptographic-blockbuster"] .index-heading,
-  html[data-skin="cryptographic-blockbuster"] .page-heading,
-  html[data-skin="cryptographic-blockbuster"] .record-head,
-  html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
-  html[data-skin="cryptographic-blockbuster"] .archive-tools,
-  html[data-skin="cryptographic-blockbuster"] .archive-groups,
-  html[data-skin="cryptographic-blockbuster"] .page-prose,
-  html[data-skin="cryptographic-blockbuster"] .article__content,
-  html[data-skin="cryptographic-blockbuster"] .record-end,
-  html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index,
-  html[data-skin="cryptographic-blockbuster"] .code-frame,
-  html[data-skin="cryptographic-blockbuster"] .code-frame__bar,
-  html[data-skin="cryptographic-blockbuster"] .code-frame__status {
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .record-page,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell,
+html[data-skin="cryptographic-blockbuster"] .masthead,
+html[data-skin="cryptographic-blockbuster"] .masthead__copy,
+html[data-skin="cryptographic-blockbuster"] .index-heading,
+html[data-skin="cryptographic-blockbuster"] .page-heading,
+html[data-skin="cryptographic-blockbuster"] .record-head,
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] .archive-tools,
+html[data-skin="cryptographic-blockbuster"] .archive-groups,
+html[data-skin="cryptographic-blockbuster"] .page-prose,
+html[data-skin="cryptographic-blockbuster"] .article__content,
+html[data-skin="cryptographic-blockbuster"] .record-end,
+html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index,
+html[data-skin="cryptographic-blockbuster"] .code-frame,
+html[data-skin="cryptographic-blockbuster"] .code-frame__bar,
+html[data-skin="cryptographic-blockbuster"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1467,7 +1436,6 @@ html[data-skin="cryptographic-blockbuster"] .skip-link {
 }
 
 html[data-skin="cryptographic-blockbuster"] .site-header,
-html[data-skin="cryptographic-blockbuster"] .site-footer,
 html[data-skin="cryptographic-blockbuster"] .home-shell,
 html[data-skin="cryptographic-blockbuster"] .archive-shell,
 html[data-skin="cryptographic-blockbuster"] .record-page,
@@ -1529,8 +1497,7 @@ html[data-skin="cryptographic-blockbuster"] .record-actions a,
 html[data-skin="cryptographic-blockbuster"] .tag-line a,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a,
 html[data-skin="cryptographic-blockbuster"] .pagination a,
-html[data-skin="cryptographic-blockbuster"] .pagination span,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
+html[data-skin="cryptographic-blockbuster"] .pagination span {
   color: var(--film-cream);
   background: linear-gradient(165deg, #8d0d31, var(--film-maroon));
   border: 2px solid var(--film-gold);
@@ -1588,9 +1555,7 @@ html[data-skin="cryptographic-blockbuster"] .tag-line a:focus-visible,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a:hover,
 html[data-skin="cryptographic-blockbuster"] .quick-filters a:focus-visible,
 html[data-skin="cryptographic-blockbuster"] .pagination a:hover,
-html[data-skin="cryptographic-blockbuster"] .pagination a:focus-visible,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:hover,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible {
+html[data-skin="cryptographic-blockbuster"] .pagination a:focus-visible {
   color: var(--film-maroon);
   background: var(--film-gold);
   border-color: var(--film-cream);
@@ -2067,26 +2032,6 @@ html[data-skin="cryptographic-blockbuster"] .error-code {
   text-shadow: 3px 3px var(--film-crimson);
 }
 
-html[data-skin="cryptographic-blockbuster"] .site-footer {
-  color: var(--film-cream);
-  background:
-    radial-gradient(circle at 7% 50%, #f8ca3470 0 1.4rem, transparent 1.5rem),
-    repeating-linear-gradient(16deg, #fff4c91d 0 1px, transparent 1px 11px),
-    linear-gradient(110deg, var(--film-shadow), var(--film-maroon), var(--film-crimson));
-  border-top-color: var(--film-gold);
-  box-shadow: .65rem .75rem 0 var(--film-shadow);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer a {
-  color: var(--film-gold);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
-  color: var(--film-maroon);
-  background: var(--film-gold);
-  text-shadow: none;
-}
-
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] {
   --bench: #190316;
   --shell: #4b0624;
@@ -2178,12 +2123,11 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
 
 @media (max-width: 44rem) {
   html[data-skin="cryptographic-blockbuster"] .site-header,
-  html[data-skin="cryptographic-blockbuster"] .site-footer,
-  html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page,
-  html[data-skin="cryptographic-blockbuster"] .page-shell,
-  html[data-skin="cryptographic-blockbuster"] .error-shell {
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .record-page,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
     border-width: 5px;
   }
 
@@ -2241,24 +2185,23 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose code {
 
 @media (forced-colors: active) {
   html[data-skin="cryptographic-blockbuster"] .site-header,
-  html[data-skin="cryptographic-blockbuster"] .site-footer,
-  html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page,
-  html[data-skin="cryptographic-blockbuster"] .page-shell,
-  html[data-skin="cryptographic-blockbuster"] .error-shell,
-  html[data-skin="cryptographic-blockbuster"] .masthead,
-  html[data-skin="cryptographic-blockbuster"] .index-heading,
-  html[data-skin="cryptographic-blockbuster"] .page-heading,
-  html[data-skin="cryptographic-blockbuster"] .record-head,
-  html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
-  html[data-skin="cryptographic-blockbuster"] .archive-tools,
-  html[data-skin="cryptographic-blockbuster"] .archive-groups,
-  html[data-skin="cryptographic-blockbuster"] .article__content,
-  html[data-skin="cryptographic-blockbuster"] .page-prose,
-  html[data-skin="cryptographic-blockbuster"] .record-end,
-  html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index,
-  html[data-skin="cryptographic-blockbuster"] .prose .code-frame {
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .record-page,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell,
+html[data-skin="cryptographic-blockbuster"] .masthead,
+html[data-skin="cryptographic-blockbuster"] .index-heading,
+html[data-skin="cryptographic-blockbuster"] .page-heading,
+html[data-skin="cryptographic-blockbuster"] .record-head,
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] .archive-tools,
+html[data-skin="cryptographic-blockbuster"] .archive-groups,
+html[data-skin="cryptographic-blockbuster"] .article__content,
+html[data-skin="cryptographic-blockbuster"] .page-prose,
+html[data-skin="cryptographic-blockbuster"] .record-end,
+html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index,
+html[data-skin="cryptographic-blockbuster"] .prose .code-frame {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -2407,8 +2350,7 @@ html[data-skin="cryptographic-blockbuster"] .site-nav a[data-route][aria-current
 }
 
 html[data-skin="cryptographic-blockbuster"] .home-shell,
-html[data-skin="cryptographic-blockbuster"] .archive-shell,
-html[data-skin="cryptographic-blockbuster"] .record-page {
+html[data-skin="cryptographic-blockbuster"] .archive-shell {
   width: min(calc(100% - 3rem), 108rem);
   display: grid;
   gap: clamp(1.25rem, 2.6vw, 2.7rem);
@@ -2673,49 +2615,21 @@ html[data-skin="cryptographic-blockbuster"] .archive-shell .archive-year .record
   grid-area: primitive;
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-page {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "head"
-    "story"
-    "end";
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(1rem, 2vw, 2.5rem);
-  row-gap: 1.2rem;
-  min-height: 32rem;
-  padding: clamp(1.5rem, 4.5vw, 5rem);
-}
-
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__key {
-  grid-column: 1 / -1;
   margin: 0;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1 {
-  grid-column: 1 / 9;
-  align-self: end;
-  max-width: 10ch;
   margin: 0;
   font-size: clamp(4rem, 9.2vw, 10rem);
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__abstract {
-  grid-column: 1 / 8;
   margin: 0;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-facts {
-  grid-column: 9 / -1;
-  grid-row: 2 / span 2;
-  align-self: stretch;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
   margin: 0;
 }
 
@@ -2725,17 +2639,11 @@ html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .recor
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .tag-line {
-  grid-column: 1 / 8;
-  align-self: end;
   margin: 0;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-  grid-column: 9 / -1;
-  grid-row: 4;
   display: grid;
-  grid-template-columns: 1fr;
-  align-self: end;
   margin: 0;
 }
 
@@ -2743,33 +2651,6 @@ html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .recor
   display: grid;
   place-items: center;
   min-height: 3rem;
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-  grid-area: story;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, .32fr);
-  grid-template-areas: "article index";
-  gap: clamp(1.15rem, 2.7vw, 2.8rem);
-  align-items: start;
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.5rem, 4vw, 4.5rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  position: sticky;
-  top: 1rem;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1.35rem;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index .record-toc {
@@ -2782,15 +2663,6 @@ html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .recor
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index .related-records h2 {
   font-size: clamp(1.8rem, 2.5vw, 2.7rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-end {
-  grid-area: end;
-  display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  gap: 1.25rem;
-  align-items: center;
-  margin: 0;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-end p {
@@ -2809,50 +2681,6 @@ html[data-skin="cryptographic-blockbuster"] .record-page > .record-end nav a {
   align-content: center;
 }
 
-html[data-skin="cryptographic-blockbuster"] .site-footer {
-  width: min(calc(100% - 3rem), 108rem);
-  margin-inline: auto;
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, .8fr);
-  gap: 1.5rem;
-  align-items: center;
-  min-height: 9rem;
-  padding: 1.35rem clamp(1.25rem, 3vw, 3rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__note {
-  max-width: 45ch;
-  margin: 0;
-  padding-left: 1rem;
-  border-left: 5px solid var(--film-gold);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .6rem;
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
-  display: grid;
-  place-items: center;
-  min-height: 3.5rem;
-  padding: .55rem;
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:nth-child(2) {
-  color: var(--film-cream);
-  background: var(--film-crimson);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:nth-child(3) {
-  color: var(--film-maroon);
-  background: var(--film-rose);
-}
-
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav a[data-route="source"],
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav a[data-route="feed"],
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-toggle {
@@ -2861,10 +2689,9 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-
 
 @media (max-width: 72rem) {
   html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page {
-    width: min(calc(100% - 2rem), 70rem);
-  }
+html[data-skin="cryptographic-blockbuster"] .archive-shell {
+  width: min(calc(100% - 2rem), 70rem);
+}
 
   html[data-skin="cryptographic-blockbuster"] .home-shell {
     grid-template-columns: minmax(0, 1fr);
@@ -2896,26 +2723,14 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__abstract,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .tag-line {
-    grid-column: 1 / 8;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-facts,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-    grid-column: 8 / -1;
-  }
 }
 
 @media (max-width: 52rem) {
   html[data-skin="cryptographic-blockbuster"] .site-header,
-  html[data-skin="cryptographic-blockbuster"] .site-footer,
-  html[data-skin="cryptographic-blockbuster"] .home-shell,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell,
-  html[data-skin="cryptographic-blockbuster"] .record-page {
-    width: min(calc(100% - 1.25rem), 44rem);
-  }
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell {
+  width: min(calc(100% - 1.25rem), 44rem);
+}
 
   html[data-skin="cryptographic-blockbuster"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -2962,50 +2777,10 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-
     border-bottom: 4px solid var(--film-crimson);
   }
 
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 1rem;
-    min-height: 0;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__key,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__abstract,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-facts,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .tag-line,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
   html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1 {
     font-size: clamp(3.2rem, 14vw, 6rem);
   }
 
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-end,
-  html[data-skin="cryptographic-blockbuster"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 34rem) {
@@ -3022,13 +2797,10 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-
   }
 
   html[data-skin="cryptographic-blockbuster"] .archive-shell .quick-filters,
-  html[data-skin="cryptographic-blockbuster"] .archive-shell .all-tags__grid,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-facts,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-end nav,
-  html[data-skin="cryptographic-blockbuster"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="cryptographic-blockbuster"] .archive-shell .all-tags__grid,
+html[data-skin="cryptographic-blockbuster"] .record-page > .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index .record-row__link,
   html[data-skin="cryptographic-blockbuster"] .archive-shell .archive-year .record-row__link {
@@ -3049,9 +2821,8 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .site-nav .theme-
 
 @media (forced-colors: active) {
   html[data-skin="cryptographic-blockbuster"] .site-nav a[data-route],
-  html[data-skin="cryptographic-blockbuster"] .site-nav .theme-toggle,
-  html[data-skin="cryptographic-blockbuster"] .site-nav .skin-menu > summary,
-  html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
+html[data-skin="cryptographic-blockbuster"] .site-nav .theme-toggle,
+html[data-skin="cryptographic-blockbuster"] .site-nav .skin-menu > summary {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3142,7 +2913,11 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] body {
   background: #190316;
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="cryptographic-blockbuster"] .site-header,
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
   width: min(calc(100% - 3rem), var(--page));
   min-width: 0;
   margin-inline: auto;
@@ -3151,11 +2926,24 @@ html[data-skin="cryptographic-blockbuster"] :is(.site-header, .site-footer, .hom
   box-shadow: .45rem .45rem 0 var(--cb-shadow);
   overflow: visible;
 }
+html[data-skin="cryptographic-blockbuster"] .record-page {
+  border: 4px solid var(--cb-rule);
+  border-radius: 0;
+  box-shadow: .45rem .45rem 0 var(--cb-shadow);
+}
 
-html[data-skin="cryptographic-blockbuster"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   padding: clamp(1rem, 2.6vw, 2.75rem);
+  color: var(--cb-body-fg);
+  background: var(--cb-paper);
+  background-image: none;
+}
+html[data-skin="cryptographic-blockbuster"] .record-page {
   color: var(--cb-body-fg);
   background: var(--cb-paper);
   background-image: none;
@@ -3284,7 +3072,16 @@ html[data-skin="cryptographic-blockbuster"] .site-nav > .skin-menu {
   min-width: 0;
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.site-nav a, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="cryptographic-blockbuster"] :is(.site-nav a,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span) {
   display: inline-flex;
   min-width: 0;
   min-height: 3rem;
@@ -3394,8 +3191,22 @@ html[data-skin="cryptographic-blockbuster"] .masthead__actions .action--primary 
   border-color: var(--cb-current-fg);
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.site-nav a, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):hover,
-html[data-skin="cryptographic-blockbuster"] :is(.site-nav a, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):focus-visible {
+html[data-skin="cryptographic-blockbuster"] :is(.site-nav a,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):hover,
+html[data-skin="cryptographic-blockbuster"] :is(.site-nav a,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):focus-visible {
   color: var(--cb-hover-fg);
   background: var(--cb-hover-bg);
   border-color: var(--cb-hover-fg);
@@ -3504,8 +3315,7 @@ html[data-skin="cryptographic-blockbuster"] .masthead__copy {
 
 html[data-skin="cryptographic-blockbuster"] .masthead .eyebrow,
 html[data-skin="cryptographic-blockbuster"] .index-heading .eyebrow,
-html[data-skin="cryptographic-blockbuster"] .page-heading .eyebrow,
-html[data-skin="cryptographic-blockbuster"] .record-head__key {
+html[data-skin="cryptographic-blockbuster"] .page-heading .eyebrow {
   width: fit-content;
   max-width: 100%;
   margin: 0;
@@ -3513,9 +3323,29 @@ html[data-skin="cryptographic-blockbuster"] .record-head__key {
   color: var(--cb-accent-fg);
   background: var(--cb-accent);
 }
+html[data-skin="cryptographic-blockbuster"] .record-head__key {
+  margin: 0;
+  padding: .35rem .55rem;
+  color: var(--cb-accent-fg);
+  background: var(--cb-accent);
+}
 
-html[data-skin="cryptographic-blockbuster"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="cryptographic-blockbuster"] .masthead h1,
+html[data-skin="cryptographic-blockbuster"] .index-heading h1,
+html[data-skin="cryptographic-blockbuster"] .page-heading h1,
+html[data-skin="cryptographic-blockbuster"] .error-shell h1 {
   max-width: 11ch;
+  margin: 0;
+  color: inherit;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 5vw, 5.25rem);
+  font-weight: 900;
+  letter-spacing: -.08em;
+  line-height: .84;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+html[data-skin="cryptographic-blockbuster"] .record-head h1 {
   margin: 0;
   color: inherit;
   font-family: var(--display);
@@ -3531,8 +3361,18 @@ html[data-skin="cryptographic-blockbuster"] .masthead h1 {
   text-shadow: 4px 4px 0 var(--cb-crimson), 7px 7px 0 var(--cb-poster-deep);
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="cryptographic-blockbuster"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="cryptographic-blockbuster"] .index-heading > p:last-child,
+html[data-skin="cryptographic-blockbuster"] .page-heading > p:last-child {
   max-width: 62ch;
+  margin: 0;
+  color: inherit;
+  font-size: max(18px, 1.125rem);
+  font-weight: 700;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+html[data-skin="cryptographic-blockbuster"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 0;
   color: inherit;
   font-size: max(18px, 1.125rem);
@@ -3552,7 +3392,9 @@ html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index {
   grid-column: 1 / 10;
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.home-shell > .record-index, .archive-groups, .page-prose, .article__content, .record-end) {
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   color: var(--cb-body-fg);
   background: var(--cb-paper);
@@ -3561,8 +3403,23 @@ html[data-skin="cryptographic-blockbuster"] :is(.home-shell > .record-index, .ar
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="cryptographic-blockbuster"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--cb-body-fg);
+  background: var(--cb-paper);
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="cryptographic-blockbuster"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+}
 
-html[data-skin="cryptographic-blockbuster"] :is(.home-shell > .record-index, .archive-groups, .page-prose, .article__content, .record-end) {
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
   padding: clamp(1rem, 2.5vw, 2.5rem);
 }
 
@@ -3571,9 +3428,16 @@ html[data-skin="cryptographic-blockbuster"] .archive-groups {
   border-top: 5px solid var(--cb-rule);
 }
 
-html[data-skin="cryptographic-blockbuster"] .archive-tools,
-html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index {
+html[data-skin="cryptographic-blockbuster"] .archive-tools {
   min-width: 0;
+  color: var(--cb-poster-fg);
+  background: var(--cb-poster-deep);
+  background-image: none;
+  border: 4px solid var(--cb-accent);
+  border-radius: 0;
+  box-shadow: .35rem .35rem 0 var(--cb-shadow);
+}
+html[data-skin="cryptographic-blockbuster"] .record-grid > .record-index {
   color: var(--cb-poster-fg);
   background: var(--cb-poster-deep);
   background-image: none;
@@ -3747,8 +3611,7 @@ html[data-skin="cryptographic-blockbuster"] .archive-shell {
 }
 
 html[data-skin="cryptographic-blockbuster"] .index-heading,
-html[data-skin="cryptographic-blockbuster"] .page-heading,
-html[data-skin="cryptographic-blockbuster"] .record-head {
+html[data-skin="cryptographic-blockbuster"] .page-heading {
   position: relative;
   isolation: isolate;
   min-width: 0;
@@ -3759,6 +3622,15 @@ html[data-skin="cryptographic-blockbuster"] .record-head {
   border-radius: 0;
   box-shadow: .4rem .4rem 0 var(--cb-shadow);
   overflow: visible;
+}
+html[data-skin="cryptographic-blockbuster"] .record-head {
+  isolation: isolate;
+  color: var(--cb-poster-fg);
+  background: var(--cb-poster);
+  background-image: none;
+  border: 5px solid var(--cb-accent);
+  border-radius: 0;
+  box-shadow: .4rem .4rem 0 var(--cb-shadow);
 }
 
 html[data-skin="cryptographic-blockbuster"] .index-heading,
@@ -3897,22 +3769,8 @@ html[data-skin="cryptographic-blockbuster"] .archive-empty {
 }
 
 /* Article credits lead into a quiet programme leaf and cue sheet. */
-html[data-skin="cryptographic-blockbuster"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.6vw, 2.7rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem clamp(1rem, 2vw, 2rem);
-  padding: clamp(1.5rem, 4vw, 4.25rem);
-}
 
 html[data-skin="cryptographic-blockbuster"] .record-head__key {
-  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
@@ -3945,23 +3803,9 @@ html[data-skin="cryptographic-blockbuster"] .record-head__key span:first-child {
   text-align: center;
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1 {
-  grid-column: 1 / 9;
-  align-self: end;
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-head__abstract {
-  grid-column: 1 / 8;
-  align-self: start;
-}
-
 html[data-skin="cryptographic-blockbuster"] .record-facts {
-  grid-column: 9 / -1;
-  grid-row: 2 / span 2;
   display: grid;
-  grid-template-columns: 1fr;
   gap: 0;
-  min-width: 0;
   margin: 0;
   padding: 0;
   color: var(--cb-poster-fg);
@@ -4003,16 +3847,8 @@ html[data-skin="cryptographic-blockbuster"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .tag-line {
-  grid-column: 1 / 8;
-  align-self: end;
-}
-
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-  grid-column: 9 / -1;
   display: grid;
-  grid-template-columns: 1fr;
-  align-self: end;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-actions a,
@@ -4027,31 +3863,14 @@ html[data-skin="cryptographic-blockbuster"] .record-actions a:last-child {
   border-color: var(--cb-current-fg);
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, .32fr);
-  gap: clamp(1.25rem, 2.6vw, 2.7rem);
-  align-items: start;
-  min-width: 0;
+html[data-skin="cryptographic-blockbuster"] .article__content {
+  border-left: 1rem solid var(--cb-crimson);
 }
-
-html[data-skin="cryptographic-blockbuster"] .article__content,
 html[data-skin="cryptographic-blockbuster"] .page-prose {
   width: 100%;
   max-width: none;
   margin: 0;
   border-left: 1rem solid var(--cb-crimson);
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1.2rem;
-  overflow: visible;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-toc {
@@ -4103,13 +3922,15 @@ html[data-skin="cryptographic-blockbuster"] .related-records h2 {
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-end {
+  border-top: 5px solid var(--cb-rule);
+  border-bottom: 5px solid var(--cb-rule);
+}
+html[data-skin="cryptographic-blockbuster"] .record-end:not(:where(.record-page, .record-page *)) {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   gap: 1rem;
   align-items: center;
-  border-top: 5px solid var(--cb-rule);
-  border-bottom: 5px solid var(--cb-rule);
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-end > p {
@@ -4148,7 +3969,6 @@ html[data-skin="cryptographic-blockbuster"] .record-end nav a:focus-visible {
 
 /* Printed reading leaf: every text-bearing surface has an explicit final pair. */
 html[data-skin="cryptographic-blockbuster"] .prose {
-  min-width: 0;
   color: var(--cb-body-fg);
   background: transparent;
   font-family: var(--body);
@@ -4156,6 +3976,9 @@ html[data-skin="cryptographic-blockbuster"] .prose {
   font-weight: 400;
   line-height: 1.72;
   overflow-wrap: break-word;
+}
+html[data-skin="cryptographic-blockbuster"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="cryptographic-blockbuster"] .prose :is(h1, h2, h3, h4, h5, h6) {
@@ -4468,65 +4291,13 @@ html[data-skin="cryptographic-blockbuster"] .error-shell nav {
 }
 
 /* Footer is an end-credit strip; note remains before the link tickets. */
-html[data-skin="cryptographic-blockbuster"] .site-footer {
-  margin-bottom: 1.5rem;
-  color: var(--cb-poster-fg);
-  background: var(--cb-poster-deep);
-  background-image: none;
-  border-color: var(--cb-accent);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, .8fr);
-  gap: 1.25rem;
-  align-items: center;
-  padding: 1.25rem clamp(1rem, 3vw, 3rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__note {
-  max-width: 50ch;
-  margin: 0;
-  padding-left: 1rem;
-  color: var(--cb-poster-fg);
-  border-left: 5px solid var(--cb-accent);
-  font-size: max(16px, 1rem);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__note a,
-html[data-skin="cryptographic-blockbuster"] .site-footer__note a:visited {
-  color: var(--cb-accent);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a {
-  min-height: 3.4rem;
-  color: var(--cb-ticket-fg);
-  background: var(--cb-ticket-bg);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:nth-child(2) {
-  color: var(--cb-current-fg);
-  background: var(--cb-current-bg);
-  border-color: var(--cb-current-fg);
-}
-
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:hover,
-html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible {
-  color: var(--cb-hover-fg);
-  background: var(--cb-hover-bg);
-  border-color: var(--cb-hover-fg);
-}
 
 @media (max-width: 72rem) {
-  html[data-skin="cryptographic-blockbuster"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
-    width: min(calc(100% - 2rem), 70rem);
-  }
+  html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell {
+  width: min(calc(100% - 2rem), 70rem);
+}
 
   html[data-skin="cryptographic-blockbuster"] .home-shell,
   html[data-skin="cryptographic-blockbuster"] .archive-shell {
@@ -4538,10 +4309,9 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
     grid-column: 1;
   }
 
-  html[data-skin="cryptographic-blockbuster"] .archive-tools,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="cryptographic-blockbuster"] .archive-tools {
+  position: static;
+}
 
   html[data-skin="cryptographic-blockbuster"] .all-tags__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4549,9 +4319,13 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
 }
 
 @media (max-width: 52rem) {
-  html[data-skin="cryptographic-blockbuster"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: min(calc(100% - 1.25rem), 44rem);
-  }
+  html[data-skin="cryptographic-blockbuster"] .site-header,
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
+  width: min(calc(100% - 1.25rem), 44rem);
+}
 
   html[data-skin="cryptographic-blockbuster"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -4590,69 +4364,59 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
     border-bottom: 4px solid var(--cb-crimson);
   }
 
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > :is(.record-head__key, h1, .record-head__abstract, .record-facts, .tag-line, .record-actions) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   html[data-skin="cryptographic-blockbuster"] .record-facts > div:nth-child(odd) {
     border-right: 2px solid var(--cb-accent);
   }
 
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-end,
-  html[data-skin="cryptographic-blockbuster"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="cryptographic-blockbuster"] .record-end:not(:where(.record-page, .record-page *)) {
+  grid-template-columns: minmax(0, 1fr);
+}
 }
 
 @media (max-width: 34rem) {
-  html[data-skin="cryptographic-blockbuster"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+  html[data-skin="cryptographic-blockbuster"] .site-header,
+html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="cryptographic-blockbuster"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
-  html[data-skin="cryptographic-blockbuster"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    padding: .8rem;
-  }
+  html[data-skin="cryptographic-blockbuster"] .home-shell,
+html[data-skin="cryptographic-blockbuster"] .archive-shell,
+html[data-skin="cryptographic-blockbuster"] .page-shell,
+html[data-skin="cryptographic-blockbuster"] .error-shell {
+  padding: .8rem;
+}
 
   html[data-skin="cryptographic-blockbuster"] .site-nav,
-  html[data-skin="cryptographic-blockbuster"] .quick-filters,
-  html[data-skin="cryptographic-blockbuster"] .all-tags__grid,
-  html[data-skin="cryptographic-blockbuster"] .record-facts,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions,
-  html[data-skin="cryptographic-blockbuster"] .record-end nav,
-  html[data-skin="cryptographic-blockbuster"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="cryptographic-blockbuster"] .quick-filters,
+html[data-skin="cryptographic-blockbuster"] .all-tags__grid,
+html[data-skin="cryptographic-blockbuster"] .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="cryptographic-blockbuster"] .record-facts > div:nth-child(odd) {
     border-right: 0;
   }
 
   html[data-skin="cryptographic-blockbuster"] .masthead__copy,
-  html[data-skin="cryptographic-blockbuster"] :is(.index-heading, .page-heading, .record-page > .record-head),
-  html[data-skin="cryptographic-blockbuster"] :is(.home-shell > .record-index, .archive-groups, .page-prose, .article__content, .record-end) {
-    padding: 1rem;
-  }
+html[data-skin="cryptographic-blockbuster"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  padding: 1rem;
+}
 
   html[data-skin="cryptographic-blockbuster"] .article__content,
   html[data-skin="cryptographic-blockbuster"] .page-prose {
@@ -4721,7 +4485,30 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
     background: Canvas;
   }
 
-  html[data-skin="cryptographic-blockbuster"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .archive-groups, .article__content, .page-prose, .record-end, .record-grid > .record-index, .prose .code-frame, .code-frame__bar, .code-frame__status, .prose blockquote, .record-facts, .prose .katex-display) {
+  html[data-skin="cryptographic-blockbuster"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.article__content,
+.page-prose,
+.record-end,
+.record-grid > .record-index,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose blockquote,
+.record-facts,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4729,7 +4516,17 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
     box-shadow: none;
   }
 
-  html[data-skin="cryptographic-blockbuster"] :is(.site-nav a, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a, .code-frame__actions button, .record-end nav a) {
+  html[data-skin="cryptographic-blockbuster"] :is(.site-nav a,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button,
+.record-end nav a) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4742,7 +4539,8 @@ html[data-skin="cryptographic-blockbuster"] .site-footer__links a:focus-visible 
     border-color: HighlightText;
   }
 
-  html[data-skin="cryptographic-blockbuster"] :is(a, .prose a, .site-footer__note a) {
+  html[data-skin="cryptographic-blockbuster"] :is(a,
+.prose a) {
     color: LinkText;
   }
 
@@ -4800,9 +4598,13 @@ html[data-skin="cryptographic-blockbuster"] .home-shell {
   grid-template-areas: none;
 }
 
-html[data-skin="cryptographic-blockbuster"] .home-shell > :is(.masthead, .index-heading, .record-index),
-html[data-skin="cryptographic-blockbuster"] .archive-shell > :is(.index-heading, .archive-tools, .archive-groups, .archive-empty),
-html[data-skin="cryptographic-blockbuster"] .record-page > :is(.record-head, .record-grid, .record-end) {
+html[data-skin="cryptographic-blockbuster"] .home-shell > .masthead,
+html[data-skin="cryptographic-blockbuster"] .home-shell > .index-heading,
+html[data-skin="cryptographic-blockbuster"] .home-shell > .record-index,
+html[data-skin="cryptographic-blockbuster"] .archive-shell > .index-heading,
+html[data-skin="cryptographic-blockbuster"] .archive-shell > .archive-tools,
+html[data-skin="cryptographic-blockbuster"] .archive-shell > .archive-groups,
+html[data-skin="cryptographic-blockbuster"] .archive-shell > .archive-empty {
   grid-area: auto;
 }
 
@@ -4810,22 +4612,23 @@ html[data-skin="cryptographic-blockbuster"] .archive-shell {
   grid-template-areas: none;
 }
 
-html[data-skin="cryptographic-blockbuster"] .record-page,
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-  grid-template-areas: none;
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > :is(.article__content, .record-index) {
-  grid-area: auto;
-}
-
-html[data-skin="cryptographic-blockbuster"] :is(.masthead, .masthead__copy, .archive-shell > .index-heading--archive, .record-page > .record-head, .site-footer__inner) {
+html[data-skin="cryptographic-blockbuster"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="cryptographic-blockbuster"] .archive-shell > .index-heading--archive {
   min-height: 0;
   min-block-size: 0;
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="cryptographic-blockbuster"] .masthead h1,
+html[data-skin="cryptographic-blockbuster"] .index-heading h1,
+html[data-skin="cryptographic-blockbuster"] .page-heading h1,
+html[data-skin="cryptographic-blockbuster"] .error-shell h1 {
   max-inline-size: 14ch;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: .9;
+  overflow-wrap: break-word;
+}
+html[data-skin="cryptographic-blockbuster"] .record-head h1 {
   font-size: clamp(2rem, 4vw, 4rem);
   line-height: .9;
   overflow-wrap: break-word;
@@ -4840,7 +4643,6 @@ html[data-skin="cryptographic-blockbuster"] .prose h2 { font-size: clamp(1.55rem
 html[data-skin="cryptographic-blockbuster"] .prose h3 { font-size: clamp(1.35rem, 2.2vw, 1.875rem); }
 
 html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > h1 {
-  max-inline-size: 14ch;
   font-size: clamp(2rem, 4vw, 4rem);
   line-height: .9;
   overflow-wrap: break-word;
@@ -4851,15 +4653,14 @@ html[data-skin="cryptographic-blockbuster"] .archive-shell .archive-year > heade
   line-height: .9;
 }
 
-html[data-skin="cryptographic-blockbuster"] :is(.article__content, .page-prose) {
-  max-inline-size: 75ch;
+html[data-skin="cryptographic-blockbuster"] .article__content {
   border-left: 0;
   border-top: 5px solid var(--cb-rule);
 }
-
-html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .article__content {
-  max-width: 75ch;
+html[data-skin="cryptographic-blockbuster"] .page-prose {
   max-inline-size: 75ch;
+  border-left: 0;
+  border-top: 5px solid var(--cb-rule);
 }
 
 html[data-skin="cryptographic-blockbuster"] .masthead {
@@ -4868,11 +4669,6 @@ html[data-skin="cryptographic-blockbuster"] .masthead {
 
 html[data-skin="cryptographic-blockbuster"] .record-facts :is(dt, dd) {
   overflow-wrap: break-word;
-}
-
-html[data-skin="cryptographic-blockbuster"] .record-facts {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: none;
 }
 
 html[data-skin="cryptographic-blockbuster"] .record-facts > :is(div, div:nth-child(odd)) {
@@ -4940,14 +4736,8 @@ html[data-skin="cryptographic-blockbuster"] .prose .code-frame__gutter {
   border-right: 0;
 }
 
-html[data-skin="cryptographic-blockbuster"] .site-footer__note {
-  padding-left: 0;
-  padding-top: .8rem;
-  border-left: 0;
-  border-top: 4px solid var(--cb-accent);
-}
-
-html[data-skin="cryptographic-blockbuster"] :is(.all-tags__grid a, .record-end nav a, .site-footer__links a) {
+html[data-skin="cryptographic-blockbuster"] :is(.all-tags__grid a,
+.record-end nav a) {
   min-height: 3rem;
 }
 
@@ -4983,26 +4773,6 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose th a:is(:h
   color: var(--cb-accent);
 }
 
-@media (max-width: 72rem) {
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > :is(.record-head__key, h1, .record-head__abstract, .record-facts, .tag-line, .record-actions) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
-}
-
 @media (max-width: 52rem) {
   html[data-skin="cryptographic-blockbuster"] .site-nav {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5010,11 +4780,9 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose th a:is(:h
 }
 
 @media (max-width: 34rem) {
-  html[data-skin="cryptographic-blockbuster"] .site-nav,
-  html[data-skin="cryptographic-blockbuster"] .record-facts,
-  html[data-skin="cryptographic-blockbuster"] .record-page > .record-head > .record-actions {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="cryptographic-blockbuster"] .site-nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="cryptographic-blockbuster"] .record-facts > div {
     border-bottom: 2px solid var(--cb-accent);
@@ -5030,7 +4798,12 @@ html[data-skin="cryptographic-blockbuster"][data-theme="dark"] .prose th a:is(:h
     color: LinkText !important;
   }
 
-  html[data-skin="cryptographic-blockbuster"] :is(.record-facts, .archive-year > header, .article__content, .page-prose, .prose .info, .prose blockquote, .site-footer__note) {
+  html[data-skin="cryptographic-blockbuster"] :is(.record-facts,
+.archive-year > header,
+.article__content,
+.page-prose,
+.prose .info,
+.prose blockquote) {
     border-color: CanvasText;
   }
 }

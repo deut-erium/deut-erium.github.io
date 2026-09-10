@@ -100,8 +100,7 @@ html[data-skin="the-interlocking"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="the-interlocking"] .site-header,
-html[data-skin="the-interlocking"] .site-footer {
+html[data-skin="the-interlocking"] .site-header {
   position: relative;
   isolation: isolate;
   color: var(--signal-paper-high);
@@ -120,13 +119,7 @@ html[data-skin="the-interlocking"] .site-header {
   margin-top: 1.5rem;
 }
 
-html[data-skin="the-interlocking"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-color: var(--signal-red);
-}
-
-html[data-skin="the-interlocking"] .site-header::before,
-html[data-skin="the-interlocking"] .site-footer::before {
+html[data-skin="the-interlocking"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: -.72rem;
@@ -137,12 +130,7 @@ html[data-skin="the-interlocking"] .site-footer::before {
   background: repeating-linear-gradient(90deg, var(--signal-sage-high) 0 .65rem, var(--signal-paper-high) .65rem .78rem);
 }
 
-html[data-skin="the-interlocking"] .site-footer::before {
-  background: repeating-linear-gradient(90deg, var(--signal-blue-high) 0 .65rem, var(--signal-paper-high) .65rem .78rem);
-}
-
-html[data-skin="the-interlocking"] .site-header__inner,
-html[data-skin="the-interlocking"] .site-footer__inner {
+html[data-skin="the-interlocking"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -190,8 +178,7 @@ html[data-skin="the-interlocking"] .record-actions a,
 html[data-skin="the-interlocking"] .tag-line a,
 html[data-skin="the-interlocking"] .quick-filters a,
 html[data-skin="the-interlocking"] .pagination a,
-html[data-skin="the-interlocking"] .pagination span,
-html[data-skin="the-interlocking"] .site-footer__links a {
+html[data-skin="the-interlocking"] .pagination span {
   min-height: 2.55rem;
   color: var(--signal-paper-high);
   background: var(--signal-ink);
@@ -257,9 +244,7 @@ html[data-skin="the-interlocking"] .tag-line a:focus-visible,
 html[data-skin="the-interlocking"] .quick-filters a:hover,
 html[data-skin="the-interlocking"] .quick-filters a:focus-visible,
 html[data-skin="the-interlocking"] .pagination a:hover,
-html[data-skin="the-interlocking"] .pagination a:focus-visible,
-html[data-skin="the-interlocking"] .site-footer__links a:hover,
-html[data-skin="the-interlocking"] .site-footer__links a:focus-visible {
+html[data-skin="the-interlocking"] .pagination a:focus-visible {
   color: var(--signal-paper-high);
   background: var(--signal-red);
   border-color: var(--signal-paper-high);
@@ -311,7 +296,6 @@ html[data-skin="the-interlocking"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="the-interlocking"] .home-shell,
 html[data-skin="the-interlocking"] .archive-shell,
-html[data-skin="the-interlocking"] .record-page,
 html[data-skin="the-interlocking"] .page-shell,
 html[data-skin="the-interlocking"] .error-shell {
   position: relative;
@@ -328,20 +312,44 @@ html[data-skin="the-interlocking"] .error-shell {
   border-radius: 0;
   box-shadow: .62rem .7rem 0 rgb(6 21 43 / 27%);
 }
+html[data-skin="the-interlocking"] .record-page {
+  isolation: isolate;
+  background-color: var(--signal-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.1rem, rgb(255 59 107 / 43%) 2.1rem calc(2.1rem + 2px), transparent calc(2.1rem + 2px)),
+    linear-gradient(90deg, transparent calc(100% - 1.1rem), rgb(0 239 200 / 56%) calc(100% - 1.1rem) calc(100% - .95rem), transparent calc(100% - .95rem)),
+    repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(0 239 200 / 14%) 2.35rem calc(2.35rem + 1px));
+  border: 5px solid var(--signal-ink);
+  border-top-width: .65rem;
+  border-top-color: var(--signal-blue);
+  border-radius: 0;
+  box-shadow: .62rem .7rem 0 rgb(6 21 43 / 27%);
+}
 
-html[data-skin="the-interlocking"] .masthead,
-html[data-skin="the-interlocking"] .record-grid {
+html[data-skin="the-interlocking"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.7rem);
 }
 
 html[data-skin="the-interlocking"] .masthead__copy,
 html[data-skin="the-interlocking"] .index-heading,
-html[data-skin="the-interlocking"] .page-heading,
-html[data-skin="the-interlocking"] .record-head {
+html[data-skin="the-interlocking"] .page-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(1.25rem, 3vw, 2.7rem);
+  color: var(--signal-paper-high);
+  background-color: var(--signal-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.25rem, rgb(237 247 244 / 14%) 1.25rem calc(1.25rem + 1px), transparent calc(1.25rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(237 247 244 / 8%) 2.25rem calc(2.25rem + 1px));
+  border: 5px solid var(--signal-ink);
+  border-top-color: var(--signal-red);
+  border-right-color: var(--signal-blue);
+  border-radius: 0;
+  box-shadow: .43rem .5rem 0 rgb(6 21 43 / 31%);
+}
+html[data-skin="the-interlocking"] .record-head {
+  isolation: isolate;
   color: var(--signal-paper-high);
   background-color: var(--signal-ink);
   background-image:
@@ -1079,15 +1087,6 @@ html[data-skin="the-interlocking"] .error-shell > p {
   color: var(--signal-paper-high);
 }
 
-html[data-skin="the-interlocking"] .site-footer__note,
-html[data-skin="the-interlocking"] .site-footer a {
-  color: var(--signal-paper-high);
-}
-
-html[data-skin="the-interlocking"] .site-footer__note a {
-  color: var(--signal-sage-high);
-}
-
 html[data-skin="the-interlocking"][data-theme="dark"] {
   color-scheme: dark;
   --signal-paper: #071a32;
@@ -1142,7 +1141,6 @@ html[data-skin="the-interlocking"][data-theme="dark"] body {
 }
 
 html[data-skin="the-interlocking"][data-theme="dark"] .site-header,
-html[data-skin="the-interlocking"][data-theme="dark"] .site-footer,
 html[data-skin="the-interlocking"][data-theme="dark"] .masthead__copy,
 html[data-skin="the-interlocking"][data-theme="dark"] .index-heading,
 html[data-skin="the-interlocking"][data-theme="dark"] .page-heading,
@@ -1153,14 +1151,9 @@ html[data-skin="the-interlocking"][data-theme="dark"] .error-shell {
   box-shadow: .56rem .64rem 0 rgb(0 0 0 / 56%);
 }
 
-html[data-skin="the-interlocking"][data-theme="dark"] .site-header,
-html[data-skin="the-interlocking"][data-theme="dark"] .site-footer {
+html[data-skin="the-interlocking"][data-theme="dark"] .site-header {
   border-color: var(--signal-void);
   border-top-color: var(--signal-blue);
-}
-
-html[data-skin="the-interlocking"][data-theme="dark"] .site-footer {
-  border-top-color: var(--signal-red);
 }
 
 html[data-skin="the-interlocking"][data-theme="dark"] .home-shell,
@@ -1284,8 +1277,7 @@ html[data-skin="the-interlocking"][data-theme="dark"] .section-heading {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-interlocking"] .site-header,
-  html[data-skin="the-interlocking"] .site-footer {
+  html[data-skin="the-interlocking"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
@@ -1294,12 +1286,7 @@ html[data-skin="the-interlocking"][data-theme="dark"] .section-heading {
     margin-top: 0;
   }
 
-  html[data-skin="the-interlocking"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-interlocking"] .site-header::before,
-  html[data-skin="the-interlocking"] .site-footer::before {
+  html[data-skin="the-interlocking"] .site-header::before {
     left: 1rem;
   }
 
@@ -1404,15 +1391,13 @@ html[data-skin="the-interlocking"] body {
     linear-gradient(135deg, rgb(255 255 255 / 38%), transparent 42%);
 }
 
-html[data-skin="the-interlocking"] .site-header,
-html[data-skin="the-interlocking"] .site-footer {
+html[data-skin="the-interlocking"] .site-header {
   background-image:
     linear-gradient(90deg, transparent 0 7%, rgb(249 255 56 / 92%) 7% calc(7% + .5rem), transparent calc(7% + .5rem) 89%, rgb(0 239 200 / 75%) 89% calc(89% + 2px), transparent calc(89% + 2px)),
     repeating-linear-gradient(0deg, transparent 0 1.2rem, rgb(237 247 244 / 8%) 1.2rem calc(1.2rem + 1px));
 }
 
-html[data-skin="the-interlocking"] .site-header::before,
-html[data-skin="the-interlocking"] .site-footer::before {
+html[data-skin="the-interlocking"] .site-header::before {
   width: clamp(7rem, 20vw, 15rem);
   background: repeating-linear-gradient(90deg, var(--signal-sage) 0 .72rem, var(--signal-paper-high) .72rem .85rem, var(--signal-blue) .85rem 1rem);
 }
@@ -1536,8 +1521,7 @@ html[data-skin="the-interlocking"][data-theme="dark"] .record-head {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-interlocking"] .site-header,
-  html[data-skin="the-interlocking"] .site-footer {
+  html[data-skin="the-interlocking"] .site-header {
     border-left-width: 3px;
     border-right-width: 3px;
   }
@@ -2006,36 +1990,15 @@ html[data-skin="the-interlocking"] .archive-empty {
   margin: 0;
 }
 
-html[data-skin="the-interlocking"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2.25rem);
-  align-items: start;
-}
-
 html[data-skin="the-interlocking"] .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 0;
   border-top-color: var(--signal-red);
 }
 
 html[data-skin="the-interlocking"] .record-head__key {
-  grid-column: 1 / -1;
   margin: 0;
 }
 
-html[data-skin="the-interlocking"] .record-head h1 {
-  grid-column: 1 / 9;
-  align-self: end;
-  max-width: none;
-}
-
 html[data-skin="the-interlocking"] .record-head__abstract {
-  grid-column: 9 / -1;
-  align-self: end;
   margin: 0;
   padding: .9rem;
   background: rgb(237 247 244 / 11%);
@@ -2043,8 +2006,6 @@ html[data-skin="the-interlocking"] .record-head__abstract {
 }
 
 html[data-skin="the-interlocking"] .record-facts {
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
 }
 
@@ -2062,35 +2023,17 @@ html[data-skin="the-interlocking"] .record-actions {
 }
 
 html[data-skin="the-interlocking"] .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15.5rem, .34fr);
-  gap: clamp(1rem, 2.5vw, 2.4rem);
-  margin: 0;
-  padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
 }
 
 html[data-skin="the-interlocking"] .record-grid > .article__content {
-  grid-column: 1;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1.3rem, 3vw, 3rem) clamp(1rem, 4vw, 4.5rem);
   border-top-color: var(--signal-blue);
   border-right: .34rem solid var(--signal-blue);
 }
 
 html[data-skin="the-interlocking"] .record-grid > .record-index {
-  grid-column: 2;
-  position: sticky;
-  top: 1rem;
-  align-self: start;
-  max-height: calc(100vh - 2rem);
-  margin: 0;
-  padding: 1rem;
-  overflow: auto;
   border-top-color: var(--signal-sage-high);
 }
 
@@ -2115,12 +2058,14 @@ html[data-skin="the-interlocking"] .record-grid > .record-index .related-records
 }
 
 html[data-skin="the-interlocking"] .record-end {
+  border-top-color: var(--signal-red);
+}
+html[data-skin="the-interlocking"] .record-end:not(:where(.record-page, .record-page *)) {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, .8fr);
   gap: 1rem;
   margin: 0;
-  border-top-color: var(--signal-red);
 }
 
 html[data-skin="the-interlocking"] .record-end > p {
@@ -2133,54 +2078,14 @@ html[data-skin="the-interlocking"] .record-end nav {
   gap: .65rem;
 }
 
-html[data-skin="the-interlocking"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .9fr);
-  gap: 1.15rem 2rem;
-  align-items: center;
-  min-height: 7.2rem;
-  padding-left: clamp(1rem, 4vw, 4rem);
-  border-left: .55rem solid var(--signal-red);
-}
-
-html[data-skin="the-interlocking"] .site-footer__note {
-  margin: 0;
-  padding: .75rem 0;
-  border-bottom: 2px solid rgb(237 247 244 / 34%);
-}
-
-html[data-skin="the-interlocking"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="the-interlocking"] .site-footer__links a {
-  min-width: 0;
-  min-height: 3.4rem;
-  padding: .45rem;
-  border-bottom-color: var(--signal-blue);
-  box-shadow: none;
-}
-
-html[data-skin="the-interlocking"] .site-footer__links a:nth-child(2) {
-  border-bottom-color: var(--signal-red);
-}
-
-html[data-skin="the-interlocking"] .site-footer__links a:nth-child(3) {
-  border-bottom-color: var(--signal-sage-high);
-}
-
 @media (max-width: 50rem) {
   html[data-skin="the-interlocking"] .site-header__inner,
-  html[data-skin="the-interlocking"] .home-shell,
-  html[data-skin="the-interlocking"] .archive-shell,
-  html[data-skin="the-interlocking"] .record-page,
-  html[data-skin="the-interlocking"] .site-footer__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-  }
+html[data-skin="the-interlocking"] .home-shell,
+html[data-skin="the-interlocking"] .archive-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+}
 
   html[data-skin="the-interlocking"] .site-brand,
 html[data-skin="the-interlocking"] .site-nav,
@@ -2220,39 +2125,30 @@ html[data-skin="the-interlocking"] .archive-empty {
   }
 
   html[data-skin="the-interlocking"] .home-shell > .masthead,
-  html[data-skin="the-interlocking"] .record-head,
-  html[data-skin="the-interlocking"] .record-grid,
-  html[data-skin="the-interlocking"] .record-end {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-interlocking"] .record-end:not(:where(.record-page, .record-page *)) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-interlocking"] .masthead__copy {
     min-height: 0;
   }
 
-  html[data-skin="the-interlocking"] .record-facts,
-html[data-skin="the-interlocking"] .quick-filters,
-html[data-skin="the-interlocking"] .all-tags__grid,
-html[data-skin="the-interlocking"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-interlocking"] .quick-filters,
+html[data-skin="the-interlocking"] .all-tags__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-interlocking"] .home-shell > .record-index .section-heading,
   html[data-skin="the-interlocking"] .archive-year > header {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-interlocking"] .record-head__key,
-  html[data-skin="the-interlocking"] .record-head h1,
-  html[data-skin="the-interlocking"] .record-head__abstract,
-  html[data-skin="the-interlocking"] .record-facts,
   html[data-skin="the-interlocking"] .tag-line,
-  html[data-skin="the-interlocking"] .record-actions,
-  html[data-skin="the-interlocking"] .record-grid,
-  html[data-skin="the-interlocking"] .record-end {
-    grid-column: 1;
-  }
+html[data-skin="the-interlocking"] .record-actions,
+html[data-skin="the-interlocking"] .record-end:not(:where(.record-page, .record-page *)) {
+  grid-column: 1;
+}
 
   html[data-skin="the-interlocking"] .record-head__abstract {
     margin: 0;
@@ -2262,20 +2158,6 @@ html[data-skin="the-interlocking"] .site-footer__links {
     justify-content: flex-start;
   }
 
-  html[data-skin="the-interlocking"] .record-grid > .article__content,
-  html[data-skin="the-interlocking"] .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="the-interlocking"] .record-grid > .record-index {
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-
-  html[data-skin="the-interlocking"] .site-footer__note {
-    border-bottom: 0;
-  }
 }
 
 /* Final remediation: The Interlocking */
@@ -2380,13 +2262,40 @@ html[data-skin="the-interlocking"][data-theme="dark"] body {
     repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(237 247 244 / 7%) 2.5rem calc(2.5rem + 1px));
 }
 
-html[data-skin="the-interlocking"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell),
-html[data-skin="the-interlocking"] :is(.masthead, .masthead__copy, .index-heading, .page-heading, .record-head, .record-grid, .record-index, .archive-tools, .archive-groups, .article__content, .page-prose, .record-end, .record-grid > .record-index) {
+html[data-skin="the-interlocking"] .site-header,
+html[data-skin="the-interlocking"] .home-shell,
+html[data-skin="the-interlocking"] .archive-shell,
+html[data-skin="the-interlocking"] .page-shell,
+html[data-skin="the-interlocking"] .error-shell,
+html[data-skin="the-interlocking"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   overflow: visible;
 }
+html[data-skin="the-interlocking"] :is(.record-index, :not(*):nth-child(n):nth-child(n)) {
+  overflow: visible;
+}
+html[data-skin="the-interlocking"] :is(.record-index:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+}
 
-html[data-skin="the-interlocking"] :is(a, button, input, select, summary, .record-row__title, .record-row__event, .record-row__primitive, .record-row__date, .record-head__abstract, .site-footer__note, .toc-fallback) {
+html[data-skin="the-interlocking"] :is(a,
+button,
+input,
+select,
+summary,
+.record-row__title,
+.record-row__event,
+.record-row__primitive,
+.record-row__date,
+.record-head__abstract,
+.toc-fallback) {
   overflow-wrap: anywhere;
 }
 
@@ -2425,7 +2334,45 @@ html[data-skin="the-interlocking"] .skip-link {
   line-height: 1.25;
 }
 
-html[data-skin="the-interlocking"] :is(.site-brand__scope, .site-nav a, .theme-toggle, .skin-menu summary, .skin-menu__panel label, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .all-tags summary, .all-tags__grid a, .pagination, .pagination a, .pagination span, .site-footer__note, .site-footer__links a, .eyebrow, .record-head__key, .record-facts dt, .record-facts dd, .archive-search label, .archive-search p, .archive-year > header span, .record-row__date, .record-row__event, .record-row__primitive, .record-toc summary, .record-end nav span, .prose th, .prose td, .prose code, .code-frame__label strong, .code-frame__label small, .code-frame__actions button, .code-frame__gutter, .code-frame__status, .code-frame__fallback, .prose .katex, .prose .katex-display) {
+html[data-skin="the-interlocking"] :is(.site-brand__scope,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags summary,
+.all-tags__grid a,
+.pagination,
+.pagination a,
+.pagination span,
+.eyebrow,
+.record-head__key,
+.record-facts dt,
+.record-facts dd,
+.archive-search label,
+.archive-search p,
+.archive-year > header span,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.record-toc summary,
+.record-end nav span,
+.prose th,
+.prose td,
+.prose code,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback,
+.prose .katex,
+.prose .katex-display) {
   font-size: 1rem;
 }
 
@@ -2433,7 +2380,7 @@ html[data-skin="the-interlocking"] :is(.prose pre, .prose pre code) {
   font-size: max(1rem, 1em);
 }
 
-html[data-skin="the-interlocking"] :is(.site-header, .site-footer) {
+html[data-skin="the-interlocking"] :is(.site-header) {
   color: var(--int-control-fg);
   background: var(--int-control-bg);
   border: 4px solid var(--int-control-bg);
@@ -2446,12 +2393,7 @@ html[data-skin="the-interlocking"] .site-header {
   margin-top: 1.25rem;
 }
 
-html[data-skin="the-interlocking"] .site-footer {
-  margin-bottom: 1.25rem;
-  border-top-color: var(--int-stop-bg);
-}
-
-html[data-skin="the-interlocking"] :is(.site-header, .site-footer)::before,
+html[data-skin="the-interlocking"] :is(.site-header)::before,
 html[data-skin="the-interlocking"] :is(.masthead__copy, .index-heading, .page-heading, .record-head)::before,
 html[data-skin="the-interlocking"] :is(.masthead__copy, .index-heading, .page-heading, .record-head)::after,
 html[data-skin="the-interlocking"] .record-facts > div::after,
@@ -2524,8 +2466,7 @@ html[data-skin="the-interlocking"] .quick-filters a,
 html[data-skin="the-interlocking"] .all-tags summary,
 html[data-skin="the-interlocking"] .all-tags__grid a,
 html[data-skin="the-interlocking"] .pagination a,
-html[data-skin="the-interlocking"] .pagination span,
-html[data-skin="the-interlocking"] .site-footer__links a {
+html[data-skin="the-interlocking"] .pagination span {
   min-width: 0;
   min-height: 2.75rem;
   padding: .55rem .7rem;
@@ -2638,9 +2579,7 @@ html[data-skin="the-interlocking"] .all-tags summary:focus-visible,
 html[data-skin="the-interlocking"] .all-tags__grid a:hover,
 html[data-skin="the-interlocking"] .all-tags__grid a:focus-visible,
 html[data-skin="the-interlocking"] .pagination a:hover,
-html[data-skin="the-interlocking"] .pagination a:focus-visible,
-html[data-skin="the-interlocking"] .site-footer__links a:hover,
-html[data-skin="the-interlocking"] .site-footer__links a:focus-visible {
+html[data-skin="the-interlocking"] .pagination a:focus-visible {
   color: var(--int-accent-ink);
   background: var(--int-stop-bg);
   border-color: var(--int-accent-ink);
@@ -2730,12 +2669,24 @@ html[data-skin="the-interlocking"] .skin-menu__panel .skin-randomizer {
   border-bottom-color: var(--int-cyan);
 }
 
-html[data-skin="the-interlocking"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="the-interlocking"] .home-shell,
+html[data-skin="the-interlocking"] .archive-shell,
+html[data-skin="the-interlocking"] .page-shell,
+html[data-skin="the-interlocking"] .error-shell {
   position: relative;
   isolation: isolate;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   padding: clamp(1rem, 2.5vw, 2.25rem);
+  color: var(--int-ink);
+  background: var(--int-field);
+  border: 4px solid var(--int-control-bg);
+  border-top: .5rem solid var(--int-cyan);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-interlocking"] .record-page {
+  isolation: isolate;
   color: var(--int-ink);
   background: var(--int-field);
   border: 4px solid var(--int-control-bg);
@@ -2761,7 +2712,9 @@ html[data-skin="the-interlocking"][data-theme="dark"] :is(.home-shell, .archive-
     repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(237 247 244 / 8%) 2.5rem calc(2.5rem + 1px));
 }
 
-html[data-skin="the-interlocking"] :is(.masthead__copy, .index-heading, .page-heading, .record-head) {
+html[data-skin="the-interlocking"] .masthead__copy,
+html[data-skin="the-interlocking"] .index-heading,
+html[data-skin="the-interlocking"] .page-heading {
   min-width: 0;
   padding: clamp(1.25rem, 3vw, 2.5rem);
   color: var(--int-control-fg);
@@ -2771,9 +2724,32 @@ html[data-skin="the-interlocking"] :is(.masthead__copy, .index-heading, .page-he
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="the-interlocking"] .record-head {
+  color: var(--int-control-fg);
+  background: var(--int-control-bg);
+  border: 3px solid var(--int-control-bg);
+  border-left: .5rem solid var(--int-stop-bg);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="the-interlocking"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="the-interlocking"] .masthead h1,
+html[data-skin="the-interlocking"] .index-heading h1,
+html[data-skin="the-interlocking"] .page-heading h1,
+html[data-skin="the-interlocking"] .error-shell h1 {
   max-width: 22ch;
+  margin: 0;
+  color: var(--int-control-fg);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4.25rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: .95;
+  overflow-wrap: anywhere;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+html[data-skin="the-interlocking"] .record-head h1 {
   margin: 0;
   color: var(--int-control-fg);
   font-family: var(--display);
@@ -2796,8 +2772,18 @@ html[data-skin="the-interlocking"] :is(.eyebrow, .record-head__key) {
   text-transform: uppercase;
 }
 
-html[data-skin="the-interlocking"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="the-interlocking"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-interlocking"] .index-heading > p:last-child,
+html[data-skin="the-interlocking"] .page-heading > p:last-child {
   max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--int-control-fg);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="the-interlocking"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 1rem 0 0;
   color: var(--int-control-fg);
   font-family: var(--body);
@@ -2846,7 +2832,10 @@ html[data-skin="the-interlocking"] .home-shell > .record-index {
   margin: 0;
 }
 
-html[data-skin="the-interlocking"] :is(.home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
+html[data-skin="the-interlocking"] .home-shell > .record-index,
+html[data-skin="the-interlocking"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   margin: 0;
   padding: clamp(1rem, 2.25vw, 1.75rem);
@@ -2856,6 +2845,20 @@ html[data-skin="the-interlocking"] :is(.home-shell > .record-index, .archive-too
   border-left: .45rem solid var(--int-cyan);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="the-interlocking"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--int-ink);
+  background: var(--int-surface);
+  border: 3px solid var(--int-control-bg);
+  border-left: .45rem solid var(--int-cyan);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-interlocking"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2.25vw, 1.75rem);
 }
 
 html[data-skin="the-interlocking"] .section-heading {
@@ -3241,24 +3244,11 @@ html[data-skin="the-interlocking"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="the-interlocking"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.4vw, 2rem);
-  align-items: start;
-}
-
 html[data-skin="the-interlocking"] .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 0;
   border-left-color: var(--int-stop-bg);
 }
 
 html[data-skin="the-interlocking"] .record-head__key {
-  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem 1.5rem;
@@ -3268,14 +3258,7 @@ html[data-skin="the-interlocking"] .record-head__key {
   border-bottom: 2px solid rgb(237 247 244 / 45%);
 }
 
-html[data-skin="the-interlocking"] .record-head h1 {
-  grid-column: 1 / 9;
-  align-self: end;
-}
-
 html[data-skin="the-interlocking"] .record-head__abstract {
-  grid-column: 9 / -1;
-  align-self: end;
   margin: 0;
   padding: .85rem;
   border-left: .35rem solid var(--int-active-bg);
@@ -3283,9 +3266,7 @@ html[data-skin="the-interlocking"] .record-head__abstract {
 }
 
 html[data-skin="the-interlocking"] .record-facts {
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: .65rem;
   margin: 0;
   padding-top: 1rem;
@@ -3324,15 +3305,8 @@ html[data-skin="the-interlocking"] .record-facts dd {
   line-height: 1.35;
 }
 
-html[data-skin="the-interlocking"] .record-head .tag-line {
-  grid-column: 1 / 8;
-  align-self: start;
-}
-
 html[data-skin="the-interlocking"] .record-head .record-actions {
-  grid-column: 8 / -1;
   justify-content: flex-end;
-  align-self: start;
 }
 
 html[data-skin="the-interlocking"] :is(.record-head .tag-line a, .record-head .record-actions a) {
@@ -3343,37 +3317,16 @@ html[data-skin="the-interlocking"] :is(.record-head .tag-line a, .record-head .r
 }
 
 html[data-skin="the-interlocking"] .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 9fr) minmax(15rem, 3fr);
-  gap: clamp(1rem, 2.4vw, 2rem);
-  margin: 0;
-  padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
 }
 
 html[data-skin="the-interlocking"] .record-grid > .article__content {
-  grid-column: 1;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3rem) clamp(1rem, 4vw, 4rem);
   border-right: .35rem solid var(--int-cyan);
 }
 
 html[data-skin="the-interlocking"] .record-grid > .record-index {
-  grid-column: 2;
-  position: sticky;
-  top: 1rem;
-  align-self: start;
-  width: auto;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 1rem;
-  overflow: visible;
   color: var(--int-control-fg);
   background: var(--int-control-bg);
   border: 3px solid var(--int-control-bg);
@@ -3448,7 +3401,7 @@ html[data-skin="the-interlocking"] .related-records h2 {
   text-shadow: none;
 }
 
-html[data-skin="the-interlocking"] .record-end {
+html[data-skin="the-interlocking"] .record-end:not(:where(.record-page, .record-page *)) {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, .8fr);
@@ -3504,12 +3457,14 @@ html[data-skin="the-interlocking"] .record-end nav span {
 }
 
 html[data-skin="the-interlocking"] .prose {
-  min-width: 0;
   color: var(--int-ink);
   font-family: var(--body);
   font-size: 1.125rem;
   line-height: 1.7;
   overflow-wrap: break-word;
+}
+html[data-skin="the-interlocking"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="the-interlocking"] :is(.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6) {
@@ -3594,9 +3549,11 @@ html[data-skin="the-interlocking"] .prose code {
 
 html[data-skin="the-interlocking"] .prose table {
   display: block;
-  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+html[data-skin="the-interlocking"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
 }
 
 html[data-skin="the-interlocking"] :is(.prose th, .prose td) {
@@ -3883,43 +3840,18 @@ html[data-skin="the-interlocking"] .redirect-shell > p .action {
   margin-top: .5rem;
 }
 
-html[data-skin="the-interlocking"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .9fr);
-  gap: 1rem 2rem;
-  align-items: center;
-  min-height: 6.5rem;
-  padding: 1rem 1.25rem;
-  border-left: .45rem solid var(--int-stop-bg);
-}
-
-html[data-skin="the-interlocking"] .site-footer__note {
-  margin: 0;
-  padding: .5rem 0;
-  color: var(--int-control-fg);
-  font-family: var(--body);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-html[data-skin="the-interlocking"] .site-footer__note a {
-  color: var(--int-cyan);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-html[data-skin="the-interlocking"] .site-footer__note a:hover,
-html[data-skin="the-interlocking"] .site-footer__note a:focus-visible {
-  color: var(--int-active-bg);
-}
-
-html[data-skin="the-interlocking"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="the-interlocking"][data-theme="dark"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .all-tags summary, .all-tags__grid a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="the-interlocking"][data-theme="dark"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags summary,
+.all-tags__grid a,
+.pagination a,
+.pagination span) {
   color: var(--int-control-fg);
   background: var(--int-control-bg);
 }
@@ -3947,32 +3879,36 @@ html[data-skin="the-interlocking"][data-theme="dark"] .prose tr:nth-child(even) 
 }
 
 @media (max-width: 50rem) {
-  html[data-skin="the-interlocking"] :is(.site-header, .site-footer) {
+  html[data-skin="the-interlocking"] :is(.site-header) {
     width: 100%;
     margin-inline: 0;
     box-shadow: none;
   }
 
   html[data-skin="the-interlocking"] .site-header { margin-top: 0; }
-  html[data-skin="the-interlocking"] .site-footer { margin-bottom: 0; }
 
   html[data-skin="the-interlocking"] .site-header__inner,
-  html[data-skin="the-interlocking"] .home-shell,
-  html[data-skin="the-interlocking"] .archive-shell,
-  html[data-skin="the-interlocking"] .record-page,
-  html[data-skin="the-interlocking"] .page-shell,
-  html[data-skin="the-interlocking"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
+html[data-skin="the-interlocking"] .home-shell,
+html[data-skin="the-interlocking"] .archive-shell,
+html[data-skin="the-interlocking"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
 
-  html[data-skin="the-interlocking"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-block: 0;
-    padding: 1rem;
-    border-inline-width: 3px;
-    box-shadow: none;
-  }
+  html[data-skin="the-interlocking"] .home-shell,
+html[data-skin="the-interlocking"] .archive-shell,
+html[data-skin="the-interlocking"] .page-shell,
+html[data-skin="the-interlocking"] .error-shell {
+  width: 100%;
+  margin-block: 0;
+  padding: 1rem;
+  border-inline-width: 3px;
+  box-shadow: none;
+}
+html[data-skin="the-interlocking"] .record-page {
+  border-inline-width: 3px;
+  box-shadow: none;
+}
 
   html[data-skin="the-interlocking"] .site-brand {
     min-height: 0;
@@ -3993,23 +3929,27 @@ html[data-skin="the-interlocking"][data-theme="dark"] .prose tr:nth-child(even) 
     min-height: 2.75rem;
   }
 
-  html[data-skin="the-interlocking"] :is(.home-shell > .masthead, .home-shell > .record-index, .archive-shell > .index-heading, .archive-tools, .archive-groups, .archive-empty, .record-head, .record-grid, .record-end, .page-heading, .page-prose) {
-    grid-column: 1;
-  }
+  html[data-skin="the-interlocking"] .home-shell > .masthead,
+html[data-skin="the-interlocking"] .home-shell > .record-index,
+html[data-skin="the-interlocking"] .archive-shell > .index-heading,
+html[data-skin="the-interlocking"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.archive-empty, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-interlocking"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
+  grid-column: 1;
+}
 
   html[data-skin="the-interlocking"] .home-shell > .masthead,
-  html[data-skin="the-interlocking"] .record-head,
-  html[data-skin="the-interlocking"] .record-grid,
-  html[data-skin="the-interlocking"] .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-interlocking"] .record-end:not(:where(.record-page, .record-page *)) {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  html[data-skin="the-interlocking"] .record-facts,
-html[data-skin="the-interlocking"] .quick-filters,
-html[data-skin="the-interlocking"] .all-tags__grid,
-html[data-skin="the-interlocking"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-interlocking"] .quick-filters,
+html[data-skin="the-interlocking"] .all-tags__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-interlocking"] .section-heading,
   html[data-skin="the-interlocking"] .archive-year > header {
@@ -4027,24 +3967,8 @@ html[data-skin="the-interlocking"] .site-footer__links {
     gap: .35rem;
   }
 
-  html[data-skin="the-interlocking"] .record-head__key,
-  html[data-skin="the-interlocking"] .record-head h1,
-  html[data-skin="the-interlocking"] .record-head__abstract,
-  html[data-skin="the-interlocking"] .record-facts,
-  html[data-skin="the-interlocking"] .record-head .tag-line,
-  html[data-skin="the-interlocking"] .record-head .record-actions,
-  html[data-skin="the-interlocking"] .record-grid > .article__content,
-  html[data-skin="the-interlocking"] .record-grid > .record-index {
-    grid-column: 1;
-  }
-
   html[data-skin="the-interlocking"] .record-head .record-actions {
     justify-content: flex-start;
-  }
-
-  html[data-skin="the-interlocking"] .record-grid > .record-index {
-    position: static;
-    width: 100%;
   }
 
   html[data-skin="the-interlocking"] .error-shell {
@@ -4089,7 +4013,27 @@ html[data-skin="the-interlocking"] .site-footer__links {
 }
 
 @media (forced-colors: active) {
-  html[data-skin="the-interlocking"] :is(body, .site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .record-grid > .record-index, .prose .code-frame, .code-frame__bar, .code-frame__status) {
+  html[data-skin="the-interlocking"] :is(body,
+.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-grid > .record-index,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4097,7 +4041,19 @@ html[data-skin="the-interlocking"] .site-footer__links {
     box-shadow: none;
   }
 
-  html[data-skin="the-interlocking"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .all-tags summary, .all-tags__grid a, .pagination a, .pagination span, .site-footer__links a, .code-frame__actions button) {
+  html[data-skin="the-interlocking"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags summary,
+.all-tags__grid a,
+.pagination a,
+.pagination span,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4111,7 +4067,8 @@ html[data-skin="the-interlocking"] .site-footer__links {
     box-shadow: inset .3rem 0 0 HighlightText;
   }
 
-  html[data-skin="the-interlocking"] :is(a, .prose a, .site-footer__note a) {
+  html[data-skin="the-interlocking"] :is(a,
+.prose a) {
     color: LinkText;
   }
 
@@ -4125,7 +4082,12 @@ html[data-skin="the-interlocking"] .site-footer__links {
     background: Canvas !important;
   }
 
-  html[data-skin="the-interlocking"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell)::before,
+  html[data-skin="the-interlocking"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell)::before,
 html[data-skin="the-interlocking"] :is(.site-nav a, .theme-toggle, .all-tags__grid a)::before {
     content: none;
   }
@@ -4146,35 +4108,29 @@ html[data-skin="the-interlocking"] .all-tags .all-tags__grid a {
   transform: none;
 }
 
-html[data-skin="the-interlocking"] .site-footer .site-footer__links a {
-  border-bottom-color: var(--int-cyan);
-}
-
 @media (not (forced-colors: active)) {
   html[data-skin="the-interlocking"][data-theme="dark"] .site-nav a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .site-nav a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .theme-toggle:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .theme-toggle:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .skin-menu summary:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .skin-menu summary:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .skin-randomizer:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .skin-randomizer:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .action:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .action:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .record-head .record-actions a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .record-head .record-actions a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .record-head .tag-line a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .record-head .tag-line a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .quick-filters a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .quick-filters a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .all-tags summary:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .all-tags summary:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .all-tags__grid a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .all-tags__grid a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .pagination a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .pagination a:focus-visible,
-  html[data-skin="the-interlocking"][data-theme="dark"] .site-footer__links a:hover,
-  html[data-skin="the-interlocking"][data-theme="dark"] .site-footer__links a:focus-visible {
+html[data-skin="the-interlocking"][data-theme="dark"] .site-nav a:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .theme-toggle:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .theme-toggle:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .skin-menu summary:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .skin-menu summary:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .skin-randomizer:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .skin-randomizer:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .action:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .action:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .record-head .record-actions a:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .record-head .record-actions a:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .record-head .tag-line a:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .record-head .tag-line a:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .quick-filters a:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .quick-filters a:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .all-tags summary:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .all-tags summary:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .all-tags__grid a:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .all-tags__grid a:focus-visible,
+html[data-skin="the-interlocking"][data-theme="dark"] .pagination a:hover,
+html[data-skin="the-interlocking"][data-theme="dark"] .pagination a:focus-visible {
     color: var(--int-accent-ink);
     background: var(--int-stop-bg);
     border-color: var(--int-accent-ink);
@@ -4312,177 +4268,197 @@ html[data-skin="the-interlocking"] .record-list .record-row .record-row__link:fo
 }
 
 /* Cycle two corrective pass: The Interlocking */
-html[data-skin="the-interlocking"] .theme-toggle[hidden]{display:none !important;}
-html[data-skin="the-interlocking"] body{background-color:var(--int-field);background-image:repeating-linear-gradient(0deg,transparent 0 2.5rem,rgb(16 42 53 / 10%) 2.5rem calc(2.5rem + 1px));}
-html[data-skin="the-interlocking"][data-theme="dark"] body{background-image:repeating-linear-gradient(0deg,transparent 0 2.5rem,rgb(237 247 244 / 8%) 2.5rem calc(2.5rem + 1px));}
-html[data-skin="the-interlocking"] :is(.home-shell,.archive-shell,.record-page,.page-shell)::before,html[data-skin="the-interlocking"] :is(.record-list,.home-shell > .record-index .record-list)::before,html[data-skin="the-interlocking"] :is(.record-list .record-row,.home-shell > .record-index .record-row)::before,html[data-skin="the-interlocking"] .archive-year::before{content:none;}
-html[data-skin="the-interlocking"] .record-list{padding-left:0;}
-html[data-skin="the-interlocking"] :is(.home-shell,.archive-shell,.record-page,.page-shell){background:var(--int-surface);border:0;border-block:3px solid var(--int-control-bg);box-shadow:none;}
-html[data-skin="the-interlocking"] .error-shell{min-height:0;border-inline:0;border-block:3px solid var(--int-stop-bg);box-shadow:none;}
-html[data-skin="the-interlocking"] :is(.site-brand,.site-footer__inner){background:none;border-inline:0;border-bottom:2px solid var(--int-cyan);}
-html[data-skin="the-interlocking"] .site-nav{grid-template-rows:repeat(2,auto);background:none;border-inline:0;border-block:2px solid rgb(237 247 244 / 45%);}
-html[data-skin="the-interlocking"] .home-shell > .masthead{background:transparent;border-inline:0;}
-html[data-skin="the-interlocking"] :is(.masthead__copy,.index-heading,.page-heading,.record-head){border-inline:0;border-block:3px solid var(--int-cyan);box-shadow:none;}
-html[data-skin="the-interlocking"] .record-head{border-block-color:var(--int-stop-bg);}
+html[data-skin="the-interlocking"] .theme-toggle[hidden] {display:none !important;}
+html[data-skin="the-interlocking"] body {background-color:var(--int-field);background-image:repeating-linear-gradient(0deg,transparent 0 2.5rem,rgb(16 42 53 / 10%) 2.5rem calc(2.5rem + 1px));}
+html[data-skin="the-interlocking"][data-theme="dark"] body {background-image:repeating-linear-gradient(0deg,transparent 0 2.5rem,rgb(237 247 244 / 8%) 2.5rem calc(2.5rem + 1px));}
+html[data-skin="the-interlocking"] :is(.home-shell,.archive-shell,.record-page,.page-shell)::before,html[data-skin="the-interlocking"] :is(.record-list,.home-shell > .record-index .record-list)::before,html[data-skin="the-interlocking"] :is(.record-list .record-row,.home-shell > .record-index .record-row)::before,html[data-skin="the-interlocking"] .archive-year::before {content:none;}
+html[data-skin="the-interlocking"] .record-list {padding-left:0;}
+html[data-skin="the-interlocking"] :is(.home-shell,.archive-shell,.record-page,.page-shell) {background:var(--int-surface);border:0;border-block:3px solid var(--int-control-bg);box-shadow:none;}
+html[data-skin="the-interlocking"] .error-shell {min-height:0;border-inline:0;border-block:3px solid var(--int-stop-bg);box-shadow:none;}
+html[data-skin="the-interlocking"] :is(.site-brand) {background:none;border-inline:0;border-bottom:2px solid var(--int-cyan);}
+html[data-skin="the-interlocking"] .site-nav {grid-template-rows:repeat(2,auto);background:none;border-inline:0;border-block:2px solid rgb(237 247 244 / 45%);}
+html[data-skin="the-interlocking"] .home-shell > .masthead {background:transparent;border-inline:0;}
+html[data-skin="the-interlocking"] :is(.masthead__copy,.index-heading,.page-heading,.record-head) {border-inline:0;border-block:3px solid var(--int-cyan);box-shadow:none;}
+html[data-skin="the-interlocking"] .record-head {border-block-color:var(--int-stop-bg);}
 html[data-skin="the-interlocking"] :is(.skin-menu__panel, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .record-grid > .record-index) {background:transparent;border-inline:0;border-block:2px solid var(--int-control-bg);box-shadow:none;}
-html[data-skin="the-interlocking"] .record-grid > .record-index{color:var(--int-control-fg);background:var(--int-control-bg);border-block-color:var(--int-cyan);}
+html[data-skin="the-interlocking"] .record-grid > .record-index {color:var(--int-control-fg);background:var(--int-control-bg);border-block-color:var(--int-cyan);}
 html[data-skin="the-interlocking"][data-theme="dark"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .skin-menu__panel, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .prose h2, .prose .info) {border-block-color:var(--int-cyan);}
 html[data-skin="the-interlocking"] .record-head .record-facts > div {min-height:0;border-inline:0;border-block:1px solid var(--int-control-fg);box-shadow:none;}
 html[data-skin="the-interlocking"] :is(.all-tags__grid a, .record-end nav a) {min-height:0;border-inline:0;border-block:2px solid var(--int-control-bg);box-shadow:none;}
-html[data-skin="the-interlocking"] .archive-search{border-inline:0;border-block:2px solid var(--int-stop-bg);}
-html[data-skin="the-interlocking"] .quick-filters{background:transparent;border-block:2px solid var(--int-control-bg);}
-html[data-skin="the-interlocking"] .archive-year{padding-left:0;border-inline:0;border-top:2px solid var(--int-cyan);}
-html[data-skin="the-interlocking"] :is(.record-row__link,.record-row__link:hover,.record-row__link:focus-visible){border-left:0;}
-html[data-skin="the-interlocking"] .record-head__abstract{border-left:0;background:transparent;}
-html[data-skin="the-interlocking"] .record-grid > .article__content{border-right:0;}
-html[data-skin="the-interlocking"] .prose h2{padding:.45rem 0;background:none;border-inline:0;border-block:2px solid var(--int-control-bg);}
-html[data-skin="the-interlocking"] .prose :is(.info,blockquote,.katex-display){border-inline:0;box-shadow:none;}
-html[data-skin="the-interlocking"] .prose .info{border-block:2px solid var(--int-control-bg);}
-html[data-skin="the-interlocking"] .prose :is(blockquote,.katex-display){border-block:2px solid var(--int-rule);}
-html[data-skin="the-interlocking"] .prose .code-frame{border-inline:0;border-block:3px solid var(--int-cyan);}
-html[data-skin="the-interlocking"] .prose .code-frame__gutter{border-right:0;border-bottom:2px solid var(--int-rail);}
-html[data-skin="the-interlocking"] :is(.masthead h1,.index-heading h1,.page-heading h1,.record-head h1,.error-shell h1){font-size:clamp(1.875rem,3.4vw,3rem) !important;line-height:1.05 !important;overflow-wrap:break-word;word-break:normal;}
-html[data-skin="the-interlocking"] .prose h1{font-size:clamp(1.75rem,3vw,2.5rem);}
-html[data-skin="the-interlocking"] .prose h2{font-size:clamp(1.375rem,2.2vw,1.875rem);}
-html[data-skin="the-interlocking"] .prose h3{font-size:1.25rem;}
-html[data-skin="the-interlocking"] :is(.prose h4,.prose h5,.prose h6){font-size:1.125rem;}
-html[data-skin="the-interlocking"] :is(.record-row__title,.record-row__event,.record-row__primitive,.record-row__date,.record-facts dd,.site-nav a,.theme-toggle,.skin-menu summary){overflow-wrap:break-word;word-break:normal;}
-html[data-skin="the-interlocking"] .record-facts {grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));}
-html[data-skin="the-interlocking"] .article__content > :is(p,ul,ol,dl,blockquote,h1,h2,h3,h4,h5,h6,hr,.info,table,figure,.highlighter-rouge,.katex-display){max-width:72ch;}
+html[data-skin="the-interlocking"] .archive-search {border-inline:0;border-block:2px solid var(--int-stop-bg);}
+html[data-skin="the-interlocking"] .quick-filters {background:transparent;border-block:2px solid var(--int-control-bg);}
+html[data-skin="the-interlocking"] .archive-year {padding-left:0;border-inline:0;border-top:2px solid var(--int-cyan);}
+html[data-skin="the-interlocking"] :is(.record-row__link,.record-row__link:hover,.record-row__link:focus-visible) {border-left:0;}
+html[data-skin="the-interlocking"] .record-head__abstract {border-left:0;background:transparent;}
+html[data-skin="the-interlocking"] .record-grid > .article__content {border-right:0;}
+html[data-skin="the-interlocking"] .prose h2 {padding:.45rem 0;background:none;border-inline:0;border-block:2px solid var(--int-control-bg);}
+html[data-skin="the-interlocking"] .prose :is(.info,blockquote,.katex-display) {border-inline:0;box-shadow:none;}
+html[data-skin="the-interlocking"] .prose .info {border-block:2px solid var(--int-control-bg);}
+html[data-skin="the-interlocking"] .prose :is(blockquote,.katex-display) {border-block:2px solid var(--int-rule);}
+html[data-skin="the-interlocking"] .prose .code-frame {border-inline:0;border-block:3px solid var(--int-cyan);}
+html[data-skin="the-interlocking"] .prose .code-frame__gutter {border-right:0;border-bottom:2px solid var(--int-rail);}
+html[data-skin="the-interlocking"] :is(.masthead h1,.index-heading h1,.page-heading h1,.record-head h1,.error-shell h1) {font-size:clamp(1.875rem,3.4vw,3rem) !important;line-height:1.05 !important;overflow-wrap:break-word;word-break:normal;}
+html[data-skin="the-interlocking"] .prose h1 {font-size:clamp(1.75rem,3vw,2.5rem);}
+html[data-skin="the-interlocking"] .prose h2 {font-size:clamp(1.375rem,2.2vw,1.875rem);}
+html[data-skin="the-interlocking"] .prose h3 {font-size:1.25rem;}
+html[data-skin="the-interlocking"] :is(.prose h4,.prose h5,.prose h6) {font-size:1.125rem;}
+html[data-skin="the-interlocking"] :is(.record-row__title,.record-row__event,.record-row__primitive,.record-row__date,.record-facts dd,.site-nav a,.theme-toggle,.skin-menu summary) {overflow-wrap:break-word;word-break:normal;}
+
+html[data-skin="the-interlocking"] .article__content > .info,
+html[data-skin="the-interlocking"] .article__content > :is(table, :not(*):nth-child(n)),
+html[data-skin="the-interlocking"] .article__content > :is(figure, :not(*):nth-child(n)),
+html[data-skin="the-interlocking"] .article__content > .highlighter-rouge,
+html[data-skin="the-interlocking"] .article__content > .katex-display {
+  max-width:72ch;
+}
 html[data-skin="the-interlocking"] .record-row__link {min-width:0;}
-html[data-skin="the-interlocking"] .record-row__link{grid-template-columns:minmax(6.75rem,8.5rem) minmax(0,1fr) minmax(7rem,10rem);grid-template-areas:"date title primitive" "date event primitive";gap:.3rem 1rem;align-items:start;}
-html[data-skin="the-interlocking"] body :is(.site-nav > a,.theme-toggle,.skin-menu summary,.skin-randomizer,.action,.record-actions a,.tag-line a,.quick-filters a,.all-tags summary,.all-tags__grid a,.pagination a,.code-frame__actions button,.site-footer__links a){align-self:start;height:auto;min-height:0 !important;padding-block:.35rem !important;}
-html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.theme-toggle[aria-pressed="true"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.all-tags[open] summary,.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"]){box-shadow:none !important;}
-html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.theme-toggle[aria-pressed="true"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"])::after{margin-left:.4rem;padding:.1rem .35rem;color:var(--int-control-fg);content:"CURRENT";background:var(--int-control-bg);font-family:var(--keys);font-size:1rem;font-weight:700;line-height:1.2;}
-html[data-skin="the-interlocking"] .all-tags[open] summary::after{margin-left:.4rem;padding:.1rem .35rem;color:var(--int-control-fg);content:"OPEN";background:var(--int-control-bg);font-family:var(--keys);font-size:1rem;font-weight:700;line-height:1.2;}
-html[data-skin="the-interlocking"] .prose .code-frame__actions button[aria-pressed="true"]{box-shadow:none;}
-html[data-skin="the-interlocking"] .prose .code-frame__actions button[aria-pressed="true"]::after{margin-left:.35rem;content:"ON";font:inherit;}
-html[data-skin="the-interlocking"] :is(.record-row__link,.record-toc summary,.record-toc a,.related-records a,.site-footer__note a):focus-visible{outline-color:var(--int-cyan);}
-html[data-skin="the-interlocking"] .prose :is(.katex,.katex-display){overflow-x:auto;overflow-y:visible;}
-html[data-skin="the-interlocking"] .prose :is(.code-frame__viewport,.code-frame > .highlight){overflow-x:auto;overflow-y:visible;}
-@media (min-width:50.0625rem) and (max-width:70rem){html[data-skin="the-interlocking"] .record-grid{grid-template-columns:minmax(0,1fr);}html[data-skin="the-interlocking"] :is(.record-grid > .article__content,.record-grid > .record-index){grid-column:1;position:static;}html[data-skin="the-interlocking"] .record-head{grid-template-columns:minmax(0,1fr);}html[data-skin="the-interlocking"] .record-head > :is(.record-head__key,h1,.record-head__abstract,.record-facts,.tag-line,.record-actions){grid-column:1;grid-row:auto;}html[data-skin="the-interlocking"] .archive-year .record-row__link {grid-template-columns:minmax(7rem,auto) minmax(0,1fr);grid-template-areas:"date event" "title title" "primitive primitive";}}
-@media (max-width:50rem){html[data-skin="the-interlocking"] .site-nav{grid-template-columns:repeat(2,minmax(0,1fr));}html[data-skin="the-interlocking"] :is(.site-nav a[data-route],.theme-toggle){grid-column:auto;grid-row:auto;}html[data-skin="the-interlocking"] .skin-menu{grid-column:1 / -1;}html[data-skin="the-interlocking"] .record-facts {grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));}}
-@media (forced-colors:active){html[data-skin="the-interlocking"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .skin-menu__panel, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .record-grid > .record-index, .prose .info, .prose blockquote, .prose .katex-display, .prose .code-frame, .code-frame__bar, .code-frame__gutter, .code-frame__status) {color:CanvasText;background:Canvas;background-image:none;border-color:CanvasText;box-shadow:none;}html[data-skin="the-interlocking"] :focus-visible{outline-color:Highlight;}html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.theme-toggle[aria-pressed="true"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"])::after,html[data-skin="the-interlocking"] .all-tags[open] summary::after{color:HighlightText;background:Highlight;outline:1px solid HighlightText;}}
-@media (not (forced-colors:active)){html[data-skin="the-interlocking"] body .prose :is(.code-frame,.code-frame pre,.code-frame pre code,.code-frame__gutter,.highlight){color:var(--int-code-fg) !important;background-color:var(--int-code-bg) !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.c,.c1,.cm,.cp,.cs){color:#b9d9d5 !important;}html[data-skin="the-interlocking"] body .prose .highlight .err{color:#ffffff !important;background:#9c2442 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.k,.kc,.kd,.kn,.kp,.kr,.kt){color:#79ffe8 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.o,.ow){color:#ffd976 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.n,.na,.nb,.nd,.ne,.ni,.nl,.nn,.no,.nt,.nv){color:#edf7f4 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.nc,.nf){color:#ffb4c2 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.s,.s1,.s2,.sa,.sb,.sc,.sd,.se,.sh,.si,.sr,.ss,.sx){color:#d8ff9b !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.m,.mb,.mf,.mh,.mi,.mo,.il){color:#ffe77a !important;}html[data-skin="the-interlocking"] body .prose .highlight .gd{color:#ffb4c2 !important;}html[data-skin="the-interlocking"] body .prose .highlight .gi{color:#a9ffd9 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.gh,.gu){color:#b8f7ff !important;}}
-html[data-skin="the-interlocking"] .prose .katex .vlist-s{font-size:1px !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size1{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size2{font-size:1.2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size3{font-size:1.4em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size4{font-size:1.6em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size5{font-size:1.8em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size6{font-size:2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size7{font-size:2.4em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size8{font-size:2.88em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size9{font-size:3.456em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size10{font-size:4.148em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size11{font-size:4.976em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size1{font-size:.8333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size2{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size3{font-size:1.1666666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size4{font-size:1.3333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size5{font-size:1.5em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size6{font-size:1.6666666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size7{font-size:2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size8{font-size:2.4em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size9{font-size:2.88em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size10{font-size:3.4566666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size11{font-size:4.1466666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size1{font-size:.7142857143em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size2{font-size:.8571428571em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size3{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size4{font-size:1.1428571429em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size5{font-size:1.2857142857em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size6{font-size:1.4285714286em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size7{font-size:1.7142857143em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size8{font-size:2.0571428571em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size9{font-size:2.4685714286em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size10{font-size:2.9628571429em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size11{font-size:3.5542857143em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size1{font-size:.625em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size2{font-size:.75em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size3{font-size:.875em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size4{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size5{font-size:1.125em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size6{font-size:1.25em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size7{font-size:1.5em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size8{font-size:1.8em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size9{font-size:2.16em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size10{font-size:2.5925em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size11{font-size:3.11em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size1{font-size:.5555555556em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size2{font-size:.6666666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size3{font-size:.7777777778em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size4{font-size:.8888888889em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size5{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size6{font-size:1.1111111111em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size7{font-size:1.3333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size8{font-size:1.6em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size9{font-size:1.92em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size10{font-size:2.3044444444em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size11{font-size:2.7644444444em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size1{font-size:.5em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size2{font-size:.6em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size3{font-size:.7em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size4{font-size:.8em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size5{font-size:.9em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size6{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size7{font-size:1.2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size8{font-size:1.44em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size9{font-size:1.728em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size10{font-size:2.074em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size11{font-size:2.488em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size1{font-size:.4166666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size2{font-size:.5em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size3{font-size:.5833333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size4{font-size:.6666666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size5{font-size:.75em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size6{font-size:.8333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size7{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size8{font-size:1.2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size9{font-size:1.44em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size10{font-size:1.7283333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size11{font-size:2.0733333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size1{font-size:.3472222222em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size2{font-size:.4166666667em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size3{font-size:.4861111111em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size4{font-size:.5555555556em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size5{font-size:.625em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size6{font-size:.6944444444em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size7{font-size:.8333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size8{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size9{font-size:1.2em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size10{font-size:1.4402777778em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size11{font-size:1.7277777778em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size1{font-size:.2893518519em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size2{font-size:.3472222222em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size3{font-size:.4050925926em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size4{font-size:.462962963em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size5{font-size:.5208333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size6{font-size:.5787037037em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size7{font-size:.6944444444em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size8{font-size:.8333333333em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size9{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size10{font-size:1.2002314815em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size11{font-size:1.4398148148em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size1{font-size:.2410800386em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size2{font-size:.2892960463em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size3{font-size:.337512054em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size4{font-size:.3857280617em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size5{font-size:.4339440694em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size6{font-size:.4821600771em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size7{font-size:.5785920926em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size8{font-size:.6943105111em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size9{font-size:.8331726133em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size10{font-size:1em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size11{font-size:1.1996142719em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size1{font-size:.2009646302em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size2{font-size:.2411575563em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size3{font-size:.2813504823em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size4{font-size:.3215434084em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size5{font-size:.3617363344em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size6{font-size:.4019292605em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size7{font-size:.4823151125em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size8{font-size:.578778135em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size9{font-size:.6945337621em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size10{font-size:.8336012862em !important;}
-html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size11{font-size:1em !important;}
+html[data-skin="the-interlocking"] .record-row__link {grid-template-columns:minmax(6.75rem,8.5rem) minmax(0,1fr) minmax(7rem,10rem);grid-template-areas:"date title primitive" "date event primitive";gap:.3rem 1rem;align-items:start;}
+html[data-skin="the-interlocking"] body :is(.site-nav > a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.all-tags summary,
+.all-tags__grid a,
+.pagination a,
+.code-frame__actions button) {align-self:start;height:auto;min-height:0 !important;padding-block:.35rem !important;}
+html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.all-tags[open] summary,.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"]) {box-shadow:none !important;}
+html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"])::after {margin-left:.4rem;padding:.1rem .35rem;color:var(--int-control-fg);content:"CURRENT";background:var(--int-control-bg);font-family:var(--keys);font-size:1rem;font-weight:700;line-height:1.2;}
+html[data-skin="the-interlocking"] .all-tags[open] summary::after {margin-left:.4rem;padding:.1rem .35rem;color:var(--int-control-fg);content:"OPEN";background:var(--int-control-bg);font-family:var(--keys);font-size:1rem;font-weight:700;line-height:1.2;}
+html[data-skin="the-interlocking"] .prose .code-frame__actions button[aria-pressed="true"] {box-shadow:none;}
+html[data-skin="the-interlocking"] .prose .code-frame__actions button[aria-pressed="true"]::after {margin-left:.35rem;content:"ON";font:inherit;}
+html[data-skin="the-interlocking"] :is(.record-row__link,
+.record-toc summary,
+.record-toc a,
+.related-records a):focus-visible {outline-color:var(--int-cyan);}
+html[data-skin="the-interlocking"] .prose :is(.katex,.katex-display) {overflow-x:auto;overflow-y:visible;}
+html[data-skin="the-interlocking"] .prose :is(.code-frame__viewport,.code-frame > .highlight) {overflow-x:auto;overflow-y:visible;}
+@media (min-width:50.0625rem) and (max-width:70rem) {html[data-skin="the-interlocking"] .archive-year .record-row__link {grid-template-columns:minmax(7rem,auto) minmax(0,1fr);grid-template-areas:"date event" "title title" "primitive primitive";}}
+@media (max-width:50rem) {html[data-skin="the-interlocking"] .site-nav {grid-template-columns:repeat(2,minmax(0,1fr));}html[data-skin="the-interlocking"] :is(.site-nav a[data-route],.theme-toggle) {grid-column:auto;grid-row:auto;}html[data-skin="the-interlocking"] .skin-menu {grid-column:1 / -1;}}
+@media (forced-colors:active) {html[data-skin="the-interlocking"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .skin-menu__panel, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .record-grid > .record-index, .prose .info, .prose blockquote, .prose .katex-display, .prose .code-frame, .code-frame__bar, .code-frame__gutter, .code-frame__status) {color:CanvasText;background:Canvas;background-image:none;border-color:CanvasText;box-shadow:none;}html[data-skin="the-interlocking"] :focus-visible {outline-color:Highlight;}html[data-skin="the-interlocking"] :is(.site-nav a[aria-current="page"],.quick-filters a[aria-current="true"],.all-tags__grid a[aria-current="true"],.action--primary,.masthead__actions .action--primary,.record-head .record-actions a[href="#article-body"])::after,html[data-skin="the-interlocking"] .all-tags[open] summary::after {color:HighlightText;background:Highlight;outline:1px solid HighlightText;}}
+@media (not (forced-colors:active)) {html[data-skin="the-interlocking"] body .prose :is(.code-frame,.code-frame pre,.code-frame pre code,.code-frame__gutter,.highlight) {color:var(--int-code-fg) !important;background-color:var(--int-code-bg) !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.c,.c1,.cm,.cp,.cs) {color:#b9d9d5 !important;}html[data-skin="the-interlocking"] body .prose .highlight .err {color:#ffffff !important;background:#9c2442 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.k,.kc,.kd,.kn,.kp,.kr,.kt) {color:#79ffe8 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.o,.ow) {color:#ffd976 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.n,.na,.nb,.nd,.ne,.ni,.nl,.nn,.no,.nt,.nv) {color:#edf7f4 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.nc,.nf) {color:#ffb4c2 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.s,.s1,.s2,.sa,.sb,.sc,.sd,.se,.sh,.si,.sr,.ss,.sx) {color:#d8ff9b !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.m,.mb,.mf,.mh,.mi,.mo,.il) {color:#ffe77a !important;}html[data-skin="the-interlocking"] body .prose .highlight .gd {color:#ffb4c2 !important;}html[data-skin="the-interlocking"] body .prose .highlight .gi {color:#a9ffd9 !important;}html[data-skin="the-interlocking"] body .prose .highlight :is(.gh,.gu) {color:#b8f7ff !important;}}
+html[data-skin="the-interlocking"] .prose .katex .vlist-s {font-size:1px !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size1 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size2 {font-size:1.2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size3 {font-size:1.4em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size4 {font-size:1.6em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size5 {font-size:1.8em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size6 {font-size:2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size7 {font-size:2.4em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size8 {font-size:2.88em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size9 {font-size:3.456em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size10 {font-size:4.148em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size1.size11 {font-size:4.976em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size1 {font-size:.8333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size2 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size3 {font-size:1.1666666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size4 {font-size:1.3333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size5 {font-size:1.5em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size6 {font-size:1.6666666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size7 {font-size:2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size8 {font-size:2.4em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size9 {font-size:2.88em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size10 {font-size:3.4566666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size2.size11 {font-size:4.1466666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size1 {font-size:.7142857143em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size2 {font-size:.8571428571em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size3 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size4 {font-size:1.1428571429em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size5 {font-size:1.2857142857em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size6 {font-size:1.4285714286em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size7 {font-size:1.7142857143em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size8 {font-size:2.0571428571em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size9 {font-size:2.4685714286em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size10 {font-size:2.9628571429em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size3.size11 {font-size:3.5542857143em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size1 {font-size:.625em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size2 {font-size:.75em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size3 {font-size:.875em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size4 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size5 {font-size:1.125em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size6 {font-size:1.25em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size7 {font-size:1.5em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size8 {font-size:1.8em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size9 {font-size:2.16em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size10 {font-size:2.5925em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size4.size11 {font-size:3.11em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size1 {font-size:.5555555556em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size2 {font-size:.6666666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size3 {font-size:.7777777778em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size4 {font-size:.8888888889em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size5 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size6 {font-size:1.1111111111em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size7 {font-size:1.3333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size8 {font-size:1.6em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size9 {font-size:1.92em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size10 {font-size:2.3044444444em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size5.size11 {font-size:2.7644444444em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size1 {font-size:.5em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size2 {font-size:.6em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size3 {font-size:.7em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size4 {font-size:.8em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size5 {font-size:.9em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size6 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size7 {font-size:1.2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size8 {font-size:1.44em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size9 {font-size:1.728em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size10 {font-size:2.074em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size6.size11 {font-size:2.488em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size1 {font-size:.4166666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size2 {font-size:.5em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size3 {font-size:.5833333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size4 {font-size:.6666666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size5 {font-size:.75em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size6 {font-size:.8333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size7 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size8 {font-size:1.2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size9 {font-size:1.44em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size10 {font-size:1.7283333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size7.size11 {font-size:2.0733333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size1 {font-size:.3472222222em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size2 {font-size:.4166666667em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size3 {font-size:.4861111111em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size4 {font-size:.5555555556em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size5 {font-size:.625em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size6 {font-size:.6944444444em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size7 {font-size:.8333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size8 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size9 {font-size:1.2em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size10 {font-size:1.4402777778em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size8.size11 {font-size:1.7277777778em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size1 {font-size:.2893518519em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size2 {font-size:.3472222222em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size3 {font-size:.4050925926em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size4 {font-size:.462962963em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size5 {font-size:.5208333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size6 {font-size:.5787037037em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size7 {font-size:.6944444444em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size8 {font-size:.8333333333em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size9 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size10 {font-size:1.2002314815em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size9.size11 {font-size:1.4398148148em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size1 {font-size:.2410800386em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size2 {font-size:.2892960463em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size3 {font-size:.337512054em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size4 {font-size:.3857280617em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size5 {font-size:.4339440694em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size6 {font-size:.4821600771em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size7 {font-size:.5785920926em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size8 {font-size:.6943105111em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size9 {font-size:.8331726133em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size10 {font-size:1em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size10.size11 {font-size:1.1996142719em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size1 {font-size:.2009646302em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size2 {font-size:.2411575563em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size3 {font-size:.2813504823em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size4 {font-size:.3215434084em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size5 {font-size:.3617363344em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size6 {font-size:.4019292605em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size7 {font-size:.4823151125em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size8 {font-size:.578778135em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size9 {font-size:.6945337621em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size10 {font-size:.8336012862em !important;}
+html[data-skin="the-interlocking"] .prose .katex :is(.katex-sizing,.fontsize-ensurer).reset-size11.size11 {font-size:1em !important;}

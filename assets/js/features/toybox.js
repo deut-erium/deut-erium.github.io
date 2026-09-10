@@ -15,6 +15,37 @@
   const root = D.documentElement;
   const body = D.body;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let away = false;
+
+  // Wall-clock expiry restores links/tilt even after a long hidden interval.
+  // Hidden documents hold deadlines, not ticking timers. Each job owns one
+  // timeout and is removed before its callback can schedule another job.
+  const tasks = new Set();
+  const arm = (job) => {
+    if (away || D.hidden || job.timer !== null || !tasks.has(job)) return;
+    job.timer = setTimeout(() => {
+      job.timer = null;
+      if (!tasks.has(job) || away || D.hidden) return;
+      tasks.delete(job);
+      job.run();
+    }, Math.max(0, job.due - performance.now()));
+  };
+  const schedule = (run, delay) => {
+    const job = { run, due: performance.now() + delay, timer: null };
+    tasks.add(job);
+    arm(job);
+    return job;
+  };
+  const cancelTask = (job) => {
+    if (!job) return;
+    clearTimeout(job.timer);
+    job.timer = null;
+    tasks.delete(job);
+  };
+  const pauseTasks = () => tasks.forEach((job) => {
+    clearTimeout(job.timer);
+    job.timer = null;
+  });
 
   /* ------------------------------------------------------------------ */
   /* Scaffold: stylesheet + overlay root                                 */
@@ -32,7 +63,7 @@ html.tb-tilt{overflow-x:hidden}
 html.tb-tilt body{transition:transform .45s ease}
 html.tb-char body{filter:sepia(.8) brightness(.55) contrast(1.25) saturate(.65);transition:filter 4s linear}
 @media (prefers-reduced-motion:reduce){html.tb-char body{transition:none}}
-html.tb-slow body,html.tb-slow body *,html.tb-slow body *::before,html.tb-slow body *::after{transition-duration:2s !important}
+@media (prefers-reduced-motion:no-preference){html.tb-slow body,html.tb-slow body *,html.tb-slow body *::before,html.tb-slow body *::after{transition-duration:2s !important}}
 @media (prefers-reduced-motion:reduce){html.tb-tilt body{transition:none}}
 .toy-burn{position:fixed;inset:0;width:100vw;height:100vh;z-index:800;pointer-events:none}
 .toy-panic{position:fixed;inset:0;z-index:950;overflow:auto;padding:3rem 1.25rem 2rem;background:#f0e7d3;color:#463f2f;font-family:Georgia,"Times New Roman",serif}
@@ -86,8 +117,8 @@ html.toy-grav main{user-select:none}
     const el = ce('p', 'toy-toast', message);
     el.setAttribute('role', 'status');
     toyRoot.appendChild(el);
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.remove(), 4200);
+    cancelTask(toastTimer);
+    toastTimer = schedule(() => { el.remove(); toastTimer = null; }, 4200);
   };
 
   /* ------------------------------------------------------------------ */
@@ -170,7 +201,8 @@ html.toy-grav main{user-select:none}
       links.forEach((a, i) => a.setAttribute('href', originals[order[i]]));
     },
     unshuffle() {
-      clearInterval(this.timer);
+      cancelTask(this.timer);
+      this.timer = null;
       countdown.hidden = true;
       if (this.saved) {
         this.saved.forEach(([a, href]) => a.setAttribute('href', href));
@@ -178,18 +210,22 @@ html.toy-grav main{user-select:none}
       }
     },
     runTimer() {
-      clearInterval(this.timer);
+      cancelTask(this.timer);
+      const deadline = performance.now() + 60000;
       this.remaining = 60;
       countdown.hidden = false;
       countdown.textContent = 'chaos: 60s';
-      this.timer = setInterval(() => {
-        this.remaining -= 1;
+      const tick = () => {
+        this.remaining = Math.max(0, Math.ceil((deadline - performance.now()) / 1000));
         countdown.textContent = `chaos: ${this.remaining}s`;
         if (this.remaining <= 0) {
           this.unshuffle();
           sync();
+        } else {
+          this.timer = schedule(tick, Math.min(1000, deadline - performance.now()));
         }
-      }, 1000);
+      };
+      this.timer = schedule(tick, 1000);
     },
     restore() {
       this.unshuffle();
@@ -219,15 +255,16 @@ html.toy-grav main{user-select:none}
       this.active = true;
       root.classList.add('tb-tilt');
       paintRoot();
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
+      cancelTask(this.timer);
+      this.timer = schedule(() => {
         this.restore();
         sync();
       }, 30000);
     },
     restore() {
       this.active = false;
-      clearTimeout(this.timer);
+      cancelTask(this.timer);
+      this.timer = null;
       root.classList.remove('tb-tilt');
       unpaintRoot();
     },
@@ -243,16 +280,20 @@ html.toy-grav main{user-select:none}
   const burn = {
     canvas: null,
     raf: 0,
-    fade: 0,
+    generation: 0,
+    lastFrame: null,
+    draw: null,
+    dispose: null,
+    visible: false,
     active: false,
     press() {
       if (this.active) this.restore();
       else this.start();
     },
     start() {
+      if (this.active) return;
       this.active = true;
       root.classList.add('tb-char');
-      if (reduced.matches) return; // instant sepia flash, no ember loop
       const scale = devicePixelRatio || 1;
       const canvas = ce('canvas', 'toy-burn');
       canvas.width = Math.floor(innerWidth * scale);
@@ -260,13 +301,29 @@ html.toy-grav main{user-select:none}
       toyRoot.appendChild(canvas);
       this.canvas = canvas;
       const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        canvas.remove();
+        this.canvas = null;
+        return; // Keep the static char when canvas rendering is unavailable.
+      }
       ctx.scale(scale, scale);
       const W = innerWidth;
       const H = innerHeight;
       const embers = [];
-      const t0 = performance.now();
-      const frame = (now) => {
-        const t = Math.min(1, (now - t0) / 4000);
+      let elapsed = 0;
+      this.draw = (now) => {
+        if (this.lastFrame !== null) elapsed += now - this.lastFrame;
+        this.lastFrame = now;
+        if (elapsed >= 4750) {
+          this.stopVisual();
+          sync();
+          return;
+        }
+        if (elapsed >= 4000) {
+          canvas.style.opacity = String(1 - (elapsed - 4000) / 750);
+          return;
+        }
+        const t = Math.min(1, elapsed / 4000);
         const y = t * H;
         ctx.clearRect(0, 0, W, H);
         ctx.fillStyle = 'rgba(23,15,9,.96)';
@@ -312,30 +369,68 @@ html.toy-grav main{user-select:none}
           ctx.fillStyle = `rgba(255,${120 + Math.floor(100 * p.life)},40,${(p.life * 0.9).toFixed(3)})`;
           ctx.fillRect(p.x, p.y, 2.2, 2.2);
         }
-        if (t >= 1) {
-          canvas.style.transition = 'opacity .7s ease';
-          canvas.style.opacity = '0';
-          this.fade = setTimeout(() => {
-            canvas.remove();
-            if (this.canvas === canvas) this.canvas = null;
-            sync();
-          }, 750);
-          return;
-        }
-        this.raf = requestAnimationFrame(frame);
       };
-      this.raf = requestAnimationFrame(frame);
+      this.visible = false;
+      canvas.style.visibility = 'hidden';
+      if (window.__dtDecorations) {
+        this.dispose = window.__dtDecorations.watch(canvas, (running) => {
+          this.visible = running;
+          this.updateMotion();
+        });
+      } else if (typeof IntersectionObserver === 'function') {
+        // The lazy toy also works without the shared chrome script.
+        const observer = new IntersectionObserver((entries) => {
+          if (this.canvas !== canvas) return;
+          entries.forEach((entry) => {
+            if (entry.target === canvas) this.visible = entry.isIntersecting;
+          });
+          this.updateMotion();
+        });
+        observer.observe(canvas);
+        this.dispose = () => observer.disconnect();
+      } else {
+        this.visible = true;
+      }
+      this.updateMotion();
     },
-    restore() {
+    queueFrame() {
+      if (this.raf || !this.draw) return;
+      const ticket = this.generation;
+      this.raf = requestAnimationFrame((now) => {
+        if (ticket !== this.generation) return;
+        this.raf = 0;
+        this.draw?.(now);
+        this.queueFrame();
+      });
+    },
+    updateMotion() {
+      if (!this.canvas) return;
+      const running = this.visible && !D.hidden && !away && !reduced.matches;
+      // visibility:hidden preserves the canvas intersection box.
+      this.canvas.style.visibility = running ? 'visible' : 'hidden';
+      if (running) this.queueFrame();
+      else this.pause();
+    },
+    pause() {
+      this.generation += 1;
       cancelAnimationFrame(this.raf);
-      clearTimeout(this.fade);
+      this.raf = 0;
+      this.lastFrame = null;
+    },
+    stopVisual() {
+      this.pause();
+      this.dispose?.();
+      this.dispose = null;
+      this.draw = null;
       this.canvas?.remove();
       this.canvas = null;
+    },
+    restore() {
+      this.stopVisual();
       this.active = false;
-      // Snap the char off instantly instead of un-burning over four seconds.
-      body.style.transition = 'filter 0s';
+      // Removing the toy rule also removes its filter transition. No delayed
+      // inline-style cleanup can leak into a later burn or a restored page.
       root.classList.remove('tb-char');
-      setTimeout(() => body.style.removeProperty('transition'), 80);
     },
     pill() {
       return this.active ? (this.canvas ? 'burning' : 'charred') : null;
@@ -354,22 +449,23 @@ html.toy-grav main{user-select:none}
       else this.start();
     },
     start() {
+      if (this.active) return;
       const main = D.querySelector('main');
       if (!main) return;
-      const kids = Array.from(main.children).filter((el) => {
-        const tag = el.tagName.toLowerCase();
-        if (tag === 'script' || tag === 'style' || tag === 'template') return false;
-        return el.getBoundingClientRect().height > 2;
-      });
+      // Read every box before changing styles; never alternate layout reads
+      // with transforms while building the pile.
+      const kids = Array.from(main.children).filter((el) =>
+        !['script', 'style', 'template'].includes(el.tagName.toLowerCase())
+      ).map((el) => ({ el, rect: el.getBoundingClientRect() })).filter(({ rect }) => rect.height > 2);
       if (!kids.length) return;
       this.active = true;
       root.classList.add('toy-grav');
       const instant = reduced.matches;
       let pileTop = innerHeight - 8;
-      this.items = kids.map((el) => {
-        const rect = el.getBoundingClientRect();
+      this.items = kids.map(({ el, rect }) => {
         const item = {
           el,
+          styles: ['transition', 'transform'].map((name) => [name, el.style.getPropertyValue(name), el.style.getPropertyPriority(name)]),
           dy: Math.round(pileTop - rect.bottom),
           pointer: -1,
           startY: 0,
@@ -378,6 +474,7 @@ html.toy-grav main{user-select:none}
           onDown: null,
           onMove: null,
           onUp: null,
+          swallow: null,
         };
         pileTop = pileTop - rect.height - 6;
         el.style.setProperty('transition', instant ? 'none' : 'transform .7s cubic-bezier(.5,0,1,.6)');
@@ -390,7 +487,9 @@ html.toy-grav main{user-select:none}
       });
     },
     grab(item, e) {
-      if (e.pointerType === 'touch' || e.button > 0) return; // touch keeps page scrolling
+      if (item.pointer !== -1 || e.pointerType === 'touch' || e.button > 0) return; // touch keeps page scrolling
+      item.el.removeEventListener('click', item.swallow, true);
+      item.swallow = null;
       item.pointer = e.pointerId;
       item.startY = e.clientY;
       item.startDy = item.dy;
@@ -421,13 +520,17 @@ html.toy-grav main{user-select:none}
       item.el.removeEventListener('pointermove', item.onMove);
       item.el.removeEventListener('pointerup', item.onUp);
       item.el.removeEventListener('pointercancel', item.onUp);
+      try {
+        if (item.pointer !== -1) item.el.releasePointerCapture(item.pointer);
+      } catch (_) { /* capture may already have been released */ }
       item.pointer = -1;
       if (!item.moved) return;
-      const swallow = (ev) => {
+      item.swallow = (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
+        item.swallow = null;
       };
-      item.el.addEventListener('click', swallow, { capture: true, once: true });
+      item.el.addEventListener('click', item.swallow, { capture: true, once: true });
     },
     restore() {
       this.active = false;
@@ -437,8 +540,14 @@ html.toy-grav main{user-select:none}
         item.el.removeEventListener('pointermove', item.onMove);
         item.el.removeEventListener('pointerup', item.onUp);
         item.el.removeEventListener('pointercancel', item.onUp);
-        item.el.style.removeProperty('transition');
-        item.el.style.removeProperty('transform');
+        item.el.removeEventListener('click', item.swallow, true);
+        try {
+          if (item.pointer !== -1) item.el.releasePointerCapture(item.pointer);
+        } catch (_) { /* capture may already have been released */ }
+        item.styles.forEach(([name, value, priority]) => {
+          if (value) item.el.style.setProperty(name, value, priority);
+          else item.el.style.removeProperty(name);
+        });
       });
       this.items = [];
     },
@@ -712,23 +821,17 @@ html.toy-grav main{user-select:none}
     if (restoreBtn) restoreBtn.hidden = activeCount() === 0;
   };
 
-  /* Toys can end on their own (tilt stands back up, the chaos ladder
-     finishes); poll while anything runs so the footer stays honest. */
-  let poll = 0;
-  const watch = () => {
-    clearInterval(poll);
-    poll = setInterval(() => {
-      sync();
-      if (activeCount() === 0) clearInterval(poll);
-    }, 1000);
-  };
-
+  // Every effect updates the controls at its own end; static toys need no poll.
   const restoreAll = () => {
     TOYS.forEach((toy) => toy.restore());
+    tasks.forEach(cancelTask);
+    toastTimer = null;
+    toyRoot.querySelector('.toy-toast')?.remove();
     sync();
   };
 
   const go = (slot) => {
+    if (away) return;
     const toy = slots[slot];
     if (!toy) return;
     toy.press();
@@ -738,13 +841,32 @@ html.toy-grav main{user-select:none}
       idle[Math.floor(Math.random() * idle.length)].press();
     }
     sync();
-    watch();
   };
 
   window.__dtToy = { go, restore: restoreAll };
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => go(slotOf(button)));
+  // The footer loader owns mystery clicks and forwards them to go(). Binding
+  // again here would execute each later press twice. Keep slots/IDs untouched.
+  const visibility = () => {
+    if (D.hidden || away) pauseTasks();
+    else tasks.forEach(arm);
+    burn.updateMotion();
+  };
+  D.addEventListener('visibilitychange', visibility);
+  const motionChanged = () => {
+    burn.updateMotion();
+    if (reduced.matches) grav.items.forEach((item) => item.el.style.setProperty('transition', 'none'));
+  };
+  if (reduced.addEventListener) reduced.addEventListener('change', motionChanged);
+  else reduced.addListener?.(motionChanged);
+  window.addEventListener('pagehide', () => {
+    away = true;
+    restoreAll();
+  });
+  window.addEventListener('pageshow', () => {
+    away = false;
+    visibility();
+    sync();
   });
 
   if (restoreBtn) {
