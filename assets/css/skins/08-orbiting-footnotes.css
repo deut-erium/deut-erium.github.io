@@ -101,13 +101,15 @@ html[data-skin="orbiting-footnotes"] .skip-link {
 }
 
 html[data-skin="orbiting-footnotes"] .site-header,
-html[data-skin="orbiting-footnotes"] .site-footer,
 html[data-skin="orbiting-footnotes"] .home-shell,
 html[data-skin="orbiting-footnotes"] .archive-shell,
-html[data-skin="orbiting-footnotes"] .record-page,
 html[data-skin="orbiting-footnotes"] .page-shell,
 html[data-skin="orbiting-footnotes"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid var(--riso-ink);
+  border-radius: .3rem;
+}
+html[data-skin="orbiting-footnotes"] .record-page {
   border: 5px solid var(--riso-ink);
   border-radius: .3rem;
 }
@@ -215,8 +217,7 @@ html[data-skin="orbiting-footnotes"] .record-actions a,
 html[data-skin="orbiting-footnotes"] .tag-line a,
 html[data-skin="orbiting-footnotes"] .quick-filters a,
 html[data-skin="orbiting-footnotes"] .pagination a,
-html[data-skin="orbiting-footnotes"] .pagination span,
-html[data-skin="orbiting-footnotes"] .site-footer__links a {
+html[data-skin="orbiting-footnotes"] .pagination span {
   min-height: 2.65rem;
   padding: .5rem .65rem;
   color: var(--riso-paper-light);
@@ -314,9 +315,7 @@ html[data-skin="orbiting-footnotes"] .tag-line a:focus-visible,
 html[data-skin="orbiting-footnotes"] .quick-filters a:hover,
 html[data-skin="orbiting-footnotes"] .quick-filters a:focus-visible,
 html[data-skin="orbiting-footnotes"] .pagination a:hover,
-html[data-skin="orbiting-footnotes"] .pagination a:focus-visible,
-html[data-skin="orbiting-footnotes"] .site-footer__links a:hover,
-html[data-skin="orbiting-footnotes"] .site-footer__links a:focus-visible {
+html[data-skin="orbiting-footnotes"] .pagination a:focus-visible {
   color: var(--riso-ink);
   background: var(--riso-orange);
   border-color: var(--riso-ink);
@@ -334,11 +333,19 @@ html[data-skin="orbiting-footnotes"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="orbiting-footnotes"] .home-shell,
 html[data-skin="orbiting-footnotes"] .archive-shell,
-html[data-skin="orbiting-footnotes"] .record-page,
 html[data-skin="orbiting-footnotes"] .page-shell {
   position: relative;
   isolation: isolate;
   padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--riso-paper);
+  background-image:
+    radial-gradient(#1522561d 1px, transparent 1.15px),
+    linear-gradient(90deg, transparent 0 2.25rem, #3559e626 2.25rem 2.43rem, transparent 2.43rem calc(100% - 2.43rem), #ff4d7426 calc(100% - 2.43rem) calc(100% - 2.25rem), transparent calc(100% - 2.25rem));
+  background-size: 8px 8px, auto;
+  box-shadow: .65rem .7rem 0 var(--riso-pink), 1.1rem 1.15rem 0 var(--riso-blue);
+}
+html[data-skin="orbiting-footnotes"] .record-page {
+  isolation: isolate;
   background-color: var(--riso-paper);
   background-image:
     radial-gradient(#1522561d 1px, transparent 1.15px),
@@ -409,10 +416,19 @@ html[data-skin="orbiting-footnotes"] .record-head__key {
 html[data-skin="orbiting-footnotes"] .masthead h1,
 html[data-skin="orbiting-footnotes"] .index-heading h1,
 html[data-skin="orbiting-footnotes"] .page-heading h1,
-html[data-skin="orbiting-footnotes"] .record-head h1,
 html[data-skin="orbiting-footnotes"] .error-shell h1 {
   position: relative;
   max-width: 12ch;
+  margin: .25rem 0;
+  color: var(--riso-blue);
+  font-family: var(--display);
+  font-size: clamp(2.65rem, 6.4vw, 6.65rem);
+  font-weight: 900;
+  letter-spacing: -.13em;
+  line-height: .8;
+  text-transform: uppercase;
+}
+html[data-skin="orbiting-footnotes"] .record-head h1 {
   margin: .25rem 0;
   color: var(--riso-blue);
   font-family: var(--display);
@@ -434,10 +450,16 @@ html[data-skin="orbiting-footnotes"] .masthead h1::after {
 
 html[data-skin="orbiting-footnotes"] .masthead__lede,
 html[data-skin="orbiting-footnotes"] .index-heading > p:last-child,
-html[data-skin="orbiting-footnotes"] .page-heading > p:last-child,
-html[data-skin="orbiting-footnotes"] .record-head__abstract {
+html[data-skin="orbiting-footnotes"] .page-heading > p:last-child {
   position: relative;
   max-width: 56ch;
+  color: var(--riso-ink);
+  font-family: var(--body);
+  font-size: clamp(1.05rem, 1.42vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.6;
+}
+html[data-skin="orbiting-footnotes"] .record-head__abstract {
   color: var(--riso-ink);
   font-family: var(--body);
   font-size: clamp(1.05rem, 1.42vw, 1.25rem);
@@ -478,7 +500,7 @@ html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
 html[data-skin="orbiting-footnotes"] .archive-tools,
 html[data-skin="orbiting-footnotes"] .archive-groups,
 html[data-skin="orbiting-footnotes"] .page-prose,
-html[data-skin="orbiting-footnotes"] .record-end {
+html[data-skin="orbiting-footnotes"] .record-end:not(:where(.record-page, .record-page *)) {
   padding: clamp(1.15rem, 2.5vw, 2.5rem);
 }
 
@@ -603,12 +625,15 @@ html[data-skin="orbiting-footnotes"] .pagination__position strong {
 }
 
 html[data-skin="orbiting-footnotes"] .index-heading,
-html[data-skin="orbiting-footnotes"] .page-heading,
-html[data-skin="orbiting-footnotes"] .record-head {
+html[data-skin="orbiting-footnotes"] .page-heading {
   position: relative;
   overflow: hidden;
   padding: clamp(1.7rem, 4.35vw, 4.4rem);
   padding-left: clamp(2.1rem, 5vw, 5.1rem);
+  border: 4px solid var(--riso-ink);
+  box-shadow: .45rem .5rem 0 var(--riso-pink), .8rem .85rem 0 var(--riso-blue);
+}
+html[data-skin="orbiting-footnotes"] .record-head {
   border: 4px solid var(--riso-ink);
   box-shadow: .45rem .5rem 0 var(--riso-pink), .8rem .85rem 0 var(--riso-blue);
 }
@@ -652,8 +677,7 @@ html[data-skin="orbiting-footnotes"] .record-head > * {
 }
 
 html[data-skin="orbiting-footnotes"] .index-heading h1,
-html[data-skin="orbiting-footnotes"] .page-heading h1,
-html[data-skin="orbiting-footnotes"] .record-head h1 {
+html[data-skin="orbiting-footnotes"] .page-heading h1 {
   max-width: 13ch;
 }
 
@@ -745,10 +769,6 @@ html[data-skin="orbiting-footnotes"] .record-head__key span + span {
   background: var(--riso-orange);
 }
 
-html[data-skin="orbiting-footnotes"] .record-head__abstract {
-  max-width: 62ch;
-}
-
 html[data-skin="orbiting-footnotes"] .record-facts {
   gap: .55rem;
   padding: .75rem;
@@ -789,11 +809,9 @@ html[data-skin="orbiting-footnotes"] .record-actions a:last-child {
   box-shadow: 3px 3px 0 var(--riso-orange);
 }
 
-html[data-skin="orbiting-footnotes"] .record-grid {
-  gap: 1.75rem;
+html[data-skin="orbiting-footnotes"] .article__content {
+  border-left: .9rem solid var(--riso-blue);
 }
-
-html[data-skin="orbiting-footnotes"] .article__content,
 html[data-skin="orbiting-footnotes"] .page-prose {
   max-width: var(--reading);
   padding: clamp(1.3rem, 3.5vw, 3.5rem);
@@ -1117,57 +1135,6 @@ html[data-skin="orbiting-footnotes"] .error-shell h1 {
   text-shadow: 4px 4px 0 var(--riso-blue);
 }
 
-html[data-skin="orbiting-footnotes"] .site-footer {
-  position: relative;
-  isolation: isolate;
-  margin-bottom: 1.45rem;
-  overflow: hidden;
-  color: var(--riso-paper-light);
-  background-color: var(--riso-ink);
-  background-image: radial-gradient(#f3e2c721 1px, transparent 1.1px);
-  background-size: 8px 8px;
-  border-top-color: var(--riso-orange);
-  box-shadow: .6rem .65rem 0 var(--riso-pink), 1rem 1.05rem 0 var(--riso-blue);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer::after {
-  position: absolute;
-  z-index: -1;
-  right: 8%;
-  bottom: -6rem;
-  width: 14rem;
-  height: 14rem;
-  pointer-events: none;
-  content: "";
-  background: var(--riso-pink);
-  border-radius: 50%;
-  opacity: .6;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__inner {
-  padding: 1.1rem 1.4rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__note {
-  font-family: var(--body);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer a {
-  color: var(--riso-orange);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links a {
-  color: var(--riso-ink);
-  background: var(--riso-paper-light);
-  box-shadow: 3px 3px 0 var(--riso-pink);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links a:hover,
-html[data-skin="orbiting-footnotes"] .site-footer__links a:focus-visible {
-  color: var(--riso-paper-light);
-  background: var(--riso-pink);
-}
-
 html[data-skin="orbiting-footnotes"][data-theme="dark"] {
   color-scheme: dark;
   --riso-paper: #1f2a59;
@@ -1317,8 +1284,7 @@ html[data-skin="orbiting-footnotes"][data-theme="dark"] .record-actions a,
 html[data-skin="orbiting-footnotes"][data-theme="dark"] .tag-line a,
 html[data-skin="orbiting-footnotes"][data-theme="dark"] .quick-filters a,
 html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a,
-html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination span,
-html[data-skin="orbiting-footnotes"][data-theme="dark"] .site-footer__links a {
+html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination span {
   color: var(--riso-ink);
   background: var(--paper-low);
 }
@@ -1344,27 +1310,6 @@ html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a:hover,
 html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a:focus-visible {
   color: #101735;
   background: var(--riso-orange);
-}
-
-@media (min-width: 76rem) {
-  html[data-skin="orbiting-footnotes"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="orbiting-footnotes"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
 }
 
 @media (max-width: 68rem) {
@@ -1393,24 +1338,22 @@ html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a:focus-visi
 
 @media (max-width: 44rem) {
   html[data-skin="orbiting-footnotes"] .site-header,
-  html[data-skin="orbiting-footnotes"] .site-footer,
-  html[data-skin="orbiting-footnotes"] .home-shell,
-  html[data-skin="orbiting-footnotes"] .archive-shell,
-  html[data-skin="orbiting-footnotes"] .record-page,
-  html[data-skin="orbiting-footnotes"] .page-shell,
-  html[data-skin="orbiting-footnotes"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="orbiting-footnotes"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="orbiting-footnotes"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="orbiting-footnotes"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="orbiting-footnotes"] .site-header::before,
@@ -1444,29 +1387,34 @@ html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a:focus-visi
   }
 
   html[data-skin="orbiting-footnotes"] .home-shell,
-  html[data-skin="orbiting-footnotes"] .archive-shell,
-  html[data-skin="orbiting-footnotes"] .record-page,
-  html[data-skin="orbiting-footnotes"] .page-shell,
-  html[data-skin="orbiting-footnotes"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-  }
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+}
 
   html[data-skin="orbiting-footnotes"] .masthead__copy,
-  html[data-skin="orbiting-footnotes"] .index-heading,
-  html[data-skin="orbiting-footnotes"] .page-heading,
-  html[data-skin="orbiting-footnotes"] .record-head,
-  html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
-  html[data-skin="orbiting-footnotes"] .archive-tools,
-  html[data-skin="orbiting-footnotes"] .archive-groups,
-  html[data-skin="orbiting-footnotes"] .page-prose,
-  html[data-skin="orbiting-footnotes"] .article__content,
-  html[data-skin="orbiting-footnotes"] .record-end {
-    padding: 1rem;
-    border-width: 3px;
-    box-shadow: .25rem .3rem 0 var(--riso-pink), .5rem .55rem 0 var(--riso-blue);
-  }
+html[data-skin="orbiting-footnotes"] .index-heading,
+html[data-skin="orbiting-footnotes"] .page-heading,
+html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
+html[data-skin="orbiting-footnotes"] .archive-tools,
+html[data-skin="orbiting-footnotes"] .archive-groups,
+html[data-skin="orbiting-footnotes"] .page-prose {
+  padding: 1rem;
+  border-width: 3px;
+  box-shadow: .25rem .3rem 0 var(--riso-pink), .5rem .55rem 0 var(--riso-blue);
+}
+html[data-skin="orbiting-footnotes"] .record-head,
+html[data-skin="orbiting-footnotes"] .article__content,
+html[data-skin="orbiting-footnotes"] .record-end {
+  border-width: 3px;
+  box-shadow: .25rem .3rem 0 var(--riso-pink), .5rem .55rem 0 var(--riso-blue);
+}
+html[data-skin="orbiting-footnotes"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="orbiting-footnotes"] .article__content,
   html[data-skin="orbiting-footnotes"] .page-prose {
@@ -1585,42 +1533,40 @@ html[data-skin="orbiting-footnotes"][data-theme="dark"] .pagination a:focus-visi
 
 @media (forced-colors: active) {
   html[data-skin="orbiting-footnotes"] .site-header,
-  html[data-skin="orbiting-footnotes"] .site-footer,
-  html[data-skin="orbiting-footnotes"] .home-shell,
-  html[data-skin="orbiting-footnotes"] .archive-shell,
-  html[data-skin="orbiting-footnotes"] .record-page,
-  html[data-skin="orbiting-footnotes"] .page-shell,
-  html[data-skin="orbiting-footnotes"] .error-shell,
-  html[data-skin="orbiting-footnotes"] .masthead,
-  html[data-skin="orbiting-footnotes"] .masthead__copy,
-  html[data-skin="orbiting-footnotes"] .index-heading,
-  html[data-skin="orbiting-footnotes"] .page-heading,
-  html[data-skin="orbiting-footnotes"] .record-head,
-  html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
-  html[data-skin="orbiting-footnotes"] .archive-tools,
-  html[data-skin="orbiting-footnotes"] .archive-groups,
-  html[data-skin="orbiting-footnotes"] .page-prose,
-  html[data-skin="orbiting-footnotes"] .article__content,
-  html[data-skin="orbiting-footnotes"] .record-end,
-  html[data-skin="orbiting-footnotes"] .record-grid > .record-index,
-  html[data-skin="orbiting-footnotes"] .prose .code-frame {
+html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .record-page,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell,
+html[data-skin="orbiting-footnotes"] .masthead,
+html[data-skin="orbiting-footnotes"] .masthead__copy,
+html[data-skin="orbiting-footnotes"] .index-heading,
+html[data-skin="orbiting-footnotes"] .page-heading,
+html[data-skin="orbiting-footnotes"] .record-head,
+html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
+html[data-skin="orbiting-footnotes"] .archive-tools,
+html[data-skin="orbiting-footnotes"] .archive-groups,
+html[data-skin="orbiting-footnotes"] .page-prose,
+html[data-skin="orbiting-footnotes"] .article__content,
+html[data-skin="orbiting-footnotes"] .record-end,
+html[data-skin="orbiting-footnotes"] .record-grid > .record-index,
+html[data-skin="orbiting-footnotes"] .prose .code-frame {
     forced-color-adjust: auto;
     background-image: none;
     box-shadow: none;
   }
 
   html[data-skin="orbiting-footnotes"] .site-nav a,
-  html[data-skin="orbiting-footnotes"] .theme-toggle,
-  html[data-skin="orbiting-footnotes"] .skin-menu summary,
-  html[data-skin="orbiting-footnotes"] .skin-randomizer,
-  html[data-skin="orbiting-footnotes"] .action,
-  html[data-skin="orbiting-footnotes"] .record-actions a,
-  html[data-skin="orbiting-footnotes"] .tag-line a,
-  html[data-skin="orbiting-footnotes"] .quick-filters a,
-  html[data-skin="orbiting-footnotes"] .pagination a,
-  html[data-skin="orbiting-footnotes"] .site-footer__links a,
-  html[data-skin="orbiting-footnotes"] .record-end nav a,
-  html[data-skin="orbiting-footnotes"] .code-frame__actions button {
+html[data-skin="orbiting-footnotes"] .theme-toggle,
+html[data-skin="orbiting-footnotes"] .skin-menu summary,
+html[data-skin="orbiting-footnotes"] .skin-randomizer,
+html[data-skin="orbiting-footnotes"] .action,
+html[data-skin="orbiting-footnotes"] .record-actions a,
+html[data-skin="orbiting-footnotes"] .tag-line a,
+html[data-skin="orbiting-footnotes"] .quick-filters a,
+html[data-skin="orbiting-footnotes"] .pagination a,
+html[data-skin="orbiting-footnotes"] .record-end nav a,
+html[data-skin="orbiting-footnotes"] .code-frame__actions button {
     forced-color-adjust: auto;
     box-shadow: none;
   }
@@ -1758,8 +1704,7 @@ html[data-skin="orbiting-footnotes"] .site-nav > .skin-menu .skin-randomizer:foc
 }
 
 html[data-skin="orbiting-footnotes"] .home-shell,
-html[data-skin="orbiting-footnotes"] .archive-shell,
-html[data-skin="orbiting-footnotes"] .record-page {
+html[data-skin="orbiting-footnotes"] .archive-shell {
   display: grid;
   min-width: 0;
   gap: clamp(1rem, 2vw, 1.8rem);
@@ -1961,27 +1906,16 @@ html[data-skin="orbiting-footnotes"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="orbiting-footnotes"] .record-page {
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-}
-
 html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-  display: grid;
-  gap: 1.1rem;
-  margin: 0;
-  padding: clamp(1.45rem, 3vw, 3rem);
   border-left: .9rem solid var(--riso-pink);
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head h1 {
-  max-width: 11ch;
   font-size: clamp(2.5rem, 5vw, 5.3rem);
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-head__key {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .4rem;
   margin: 0;
 }
@@ -1996,7 +1930,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-head__a
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   margin: 0;
   padding: .55rem;
@@ -2010,7 +1943,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts >
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .tag-line,
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   margin: 0;
 }
@@ -2021,31 +1953,17 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-actions
   text-align: left;
 }
 
-html[data-skin="orbiting-footnotes"] .record-page > .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(1rem, 2vw, 1.6rem);
-  margin: 0;
-}
-
 html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .article__content {
-  max-width: none;
-  margin: 0;
   border-top: .8rem solid var(--riso-blue);
   border-left-width: .55rem;
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-  position: static;
-  width: auto;
-  max-width: none;
-  margin: 0;
   border-right: .8rem solid var(--riso-orange);
   box-shadow: .35rem .4rem 0 var(--riso-pink), .65rem .7rem 0 var(--riso-blue);
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-end {
-  margin: 0;
   border-bottom: .8rem solid var(--riso-pink);
 }
 
@@ -2053,35 +1971,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-end nav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .65rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer {
-  border-bottom-color: var(--riso-blue);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr);
-  gap: 1rem;
-  align-items: center;
-  padding: 1.15rem 1.4rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__note {
-  max-width: 52ch;
-  margin: 0;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links a {
-  min-width: 0;
-  min-height: 4rem;
-  border-radius: 50% 50% .3rem .3rem;
 }
 
 @media (min-width: 70rem) {
@@ -2130,43 +2019,14 @@ html[data-skin="orbiting-footnotes"] .site-footer__links a {
     grid-area: empty;
   }
 
-  html[data-skin="orbiting-footnotes"] .record-page {
-    grid-template-columns: minmax(16rem, .34fr) minmax(0, 1fr);
-    grid-template-areas:
-      "head reading"
-      "end reading";
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-    grid-area: head;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid {
-    grid-area: reading;
-    grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem);
-    align-items: start;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-end {
-    grid-area: end;
-    align-self: end;
-  }
 }
 
 @media (max-width: 69.99rem) {
   html[data-skin="orbiting-footnotes"] .site-header__inner,
-  html[data-skin="orbiting-footnotes"] .home-shell,
-  html[data-skin="orbiting-footnotes"] .archive-shell,
-  html[data-skin="orbiting-footnotes"] .record-page,
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid,
-  html[data-skin="orbiting-footnotes"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="orbiting-footnotes"] .site-brand {
     min-height: 0;
@@ -2226,15 +2086,10 @@ html[data-skin="orbiting-footnotes"] .site-footer__links a {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="orbiting-footnotes"] .record-page > .record-end nav,
-  html[data-skin="orbiting-footnotes"] .site-footer__links {
+  html[data-skin="orbiting-footnotes"] .record-page > .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="orbiting-footnotes"] .site-footer__links a {
-    min-height: 3rem;
-    border-radius: 999px;
-  }
 }
 
 @media (max-width: 25rem) {
@@ -2382,7 +2237,20 @@ html[data-skin="orbiting-footnotes"] body {
   font-size: max(1.125rem, var(--of-floor));
 }
 
-html[data-skin="orbiting-footnotes"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .archive-groups, .article__content, .page-prose, .record-end, .record-grid > .record-index) {
+html[data-skin="orbiting-footnotes"] :is(.site-header, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.home-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.archive-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
+html[data-skin="orbiting-footnotes"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   overflow: visible;
 }
@@ -2405,51 +2273,50 @@ html[data-skin="orbiting-footnotes"] a {
   text-underline-offset: .16em;
 }
 
-html[data-skin="orbiting-footnotes"] :is(.prose a, .page-prose a, .site-footer__note a, .error-shell > p a):hover,
-html[data-skin="orbiting-footnotes"] :is(.prose a, .page-prose a, .site-footer__note a, .error-shell > p a):focus-visible {
+html[data-skin="orbiting-footnotes"] :is(.prose a,
+.page-prose a,
+.error-shell > p a):hover,
+html[data-skin="orbiting-footnotes"] :is(.prose a,
+.page-prose a,
+.error-shell > p a):focus-visible {
   color: var(--of-selected-fg);
   background: var(--of-selected);
 }
 
 /* The minimum covers labels and tools that are not ordinary body copy. */
-html[data-skin="orbiting-footnotes"] :is(
-  .skip-link,
-  .site-brand__scope,
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu :is(summary, label, select),
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination :is(a, span, strong),
-  .site-footer,
-  .site-footer__note,
-  .site-footer__links a,
-  .eyebrow,
-  .record-head__key,
-  .record-facts :is(dt, dd),
-  .record-row__date,
-  .record-row__event,
-  .record-row__primitive,
-  .all-tags__grid :is(a, small),
-  .archive-search :is(label, input, p),
-  .section-heading > p,
-  .archive-year > header span,
-  .all-tags summary,
-  .record-toc summary,
-  .record-end nav span,
-  .heading-anchor,
-  .prose th,
-  .code-frame__bar,
-  .code-frame__label :is(strong, small),
-  .code-frame__actions button,
-  .code-frame__gutter,
-  .code-frame pre,
-  .code-frame__status,
-  .code-frame__fallback
-) {
+html[data-skin="orbiting-footnotes"] :is(.skip-link,
+.site-brand__scope,
+.site-nav a,
+.theme-toggle,
+.skin-menu :is(summary, label, select),
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span, strong),
+.eyebrow,
+.record-head__key,
+.record-facts :is(dt, dd),
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.all-tags__grid :is(a, small),
+.archive-search :is(label, input, p),
+.section-heading > p,
+.archive-year > header span,
+.all-tags summary,
+.record-toc summary,
+.record-end nav span,
+.heading-anchor,
+.prose th,
+.code-frame__bar,
+.code-frame__label :is(strong, small),
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame pre,
+.code-frame__status,
+.code-frame__fallback) {
   font-size: var(--of-floor) !important;
 }
 
@@ -2565,18 +2432,15 @@ html[data-skin="orbiting-footnotes"] .site-nav > :is(a[data-route], .theme-toggl
   grid-row: auto;
 }
 
-html[data-skin="orbiting-footnotes"] :is(
-  .site-nav > a[data-route],
-  .theme-toggle,
-  .skin-menu > summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination :is(a, span),
-  .site-footer__links a
-) {
+html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu > summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span)) {
   display: inline-flex;
   min-width: 0;
   min-height: 3rem;
@@ -2686,28 +2550,24 @@ html[data-skin="orbiting-footnotes"] .skin-randomizer {
   width: 100%;
 }
 
-html[data-skin="orbiting-footnotes"] :is(
-  .site-nav > a[data-route]:hover,
-  .site-nav > a[data-route]:focus-visible,
-  .theme-toggle:hover,
-  .theme-toggle:focus-visible,
-  .skin-menu > summary:hover,
-  .skin-menu > summary:focus-visible,
-  .skin-randomizer:hover,
-  .skin-randomizer:focus-visible,
-  .action:hover,
-  .action:focus-visible,
-  .record-actions a:hover,
-  .record-actions a:focus-visible,
-  .tag-line a:hover,
-  .tag-line a:focus-visible,
-  .quick-filters a:hover,
-  .quick-filters a:focus-visible,
-  .pagination a:hover,
-  .pagination a:focus-visible,
-  .site-footer__links a:hover,
-  .site-footer__links a:focus-visible
-) {
+html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route]:hover,
+.site-nav > a[data-route]:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.skin-menu > summary:hover,
+.skin-menu > summary:focus-visible,
+.skin-randomizer:hover,
+.skin-randomizer:focus-visible,
+.action:hover,
+.action:focus-visible,
+.record-actions a:hover,
+.record-actions a:focus-visible,
+.tag-line a:hover,
+.tag-line a:focus-visible,
+.quick-filters a:hover,
+.quick-filters a:focus-visible,
+.pagination a:hover,
+.pagination a:focus-visible) {
   color: var(--of-selected-fg);
   background: var(--of-selected);
   border-color: var(--of-rule);
@@ -2728,7 +2588,15 @@ html[data-skin="orbiting-footnotes"] :is(
   box-shadow: inset 0 -3px 0 var(--of-focus-inner);
 }
 
-html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route], .theme-toggle, .skin-menu > summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):active {
+html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu > summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):active {
   color: var(--of-selected-fg);
   background: var(--of-selected);
   border-style: double;
@@ -2742,7 +2610,10 @@ html[data-skin="orbiting-footnotes"] .pagination span[aria-disabled="true"] {
 }
 
 /* The field sheet uses a shared twelve-column registration rail. */
-html[data-skin="orbiting-footnotes"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas: none;
@@ -2760,8 +2631,24 @@ html[data-skin="orbiting-footnotes"] :is(.home-shell, .archive-shell, .record-pa
   border-radius: 0;
   box-shadow: 7px 7px 0 color-mix(in srgb, var(--of-blue) 52%, transparent);
 }
+html[data-skin="orbiting-footnotes"] .record-page {
+  color: var(--of-body);
+  background-color: var(--of-paper-low);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.1rem, color-mix(in srgb, var(--of-blue) 35%, transparent) 1.1rem 1.25rem, transparent 1.25rem calc(100% - 1.25rem), color-mix(in srgb, var(--of-pink) 30%, transparent) calc(100% - 1.25rem) calc(100% - 1.1rem), transparent calc(100% - 1.1rem)),
+    radial-gradient(color-mix(in srgb, var(--of-body) 10%, transparent) 1px, transparent 1.2px);
+  background-size: auto, 9px 9px;
+  border: 3px solid var(--of-rule);
+  border-radius: 0;
+  box-shadow: 7px 7px 0 color-mix(in srgb, var(--of-blue) 52%, transparent);
+}
 
-html[data-skin="orbiting-footnotes"] :is(.masthead, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .article__content, .page-prose, .record-end, .record-grid > .record-index) {
+html[data-skin="orbiting-footnotes"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
+html[data-skin="orbiting-footnotes"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   color: var(--of-body);
   background-color: var(--of-paper);
@@ -2769,6 +2656,20 @@ html[data-skin="orbiting-footnotes"] :is(.masthead, .index-heading, .page-headin
   border: 3px solid var(--of-rule);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="orbiting-footnotes"] :is(.record-head, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.record-end, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] .record-grid > .record-index {
+  color: var(--of-body);
+  background-color: var(--of-paper);
+  background-image: none;
+  border: 3px solid var(--of-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="orbiting-footnotes"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
 }
 
 /* Home cover, observation log, and recovered-signal list. */
@@ -2855,7 +2756,6 @@ html[data-skin="orbiting-footnotes"] :is(.masthead h1, .index-heading h1, .page-
 }
 
 html[data-skin="orbiting-footnotes"] .record-head h1 {
-  max-width: 15ch;
   margin: .35rem 0;
   color: var(--of-display);
   font-family: var(--display);
@@ -2868,8 +2768,18 @@ html[data-skin="orbiting-footnotes"] .record-head h1 {
   text-transform: uppercase;
 }
 
-html[data-skin="orbiting-footnotes"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="orbiting-footnotes"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="orbiting-footnotes"] .index-heading > p:last-child,
+html[data-skin="orbiting-footnotes"] .page-heading > p:last-child {
   max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--of-body);
+  font-family: var(--body);
+  font-size: max(1.125rem, var(--of-floor));
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="orbiting-footnotes"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 1rem 0 0;
   color: var(--of-body);
   font-family: var(--body);
@@ -3236,13 +3146,6 @@ html[data-skin="orbiting-footnotes"] .archive-shell > .archive-empty {
 
 /* Article metadata spine, quiet leaf, and dark orbit index. */
 html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-  grid-area: auto;
-  grid-column: 1 / span 3;
-  display: grid;
-  align-content: start;
-  gap: 1rem;
-  margin: 0;
-  padding: 1.15rem;
   border-left: .7rem solid var(--of-selected);
 }
 
@@ -3274,7 +3177,6 @@ html[data-skin="orbiting-footnotes"] .record-head__abstract {
 
 html[data-skin="orbiting-footnotes"] .record-facts {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   margin: 0;
   padding: .5rem;
@@ -3318,9 +3220,9 @@ html[data-skin="orbiting-footnotes"] .record-facts dd {
   font-weight: 700;
 }
 
-html[data-skin="orbiting-footnotes"] .record-page > .record-head :is(.tag-line, .record-actions) {
+html[data-skin="orbiting-footnotes"] .record-page > .record-head .tag-line,
+html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   margin: 0;
 }
@@ -3331,24 +3233,12 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head :is(.tag-line a
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-grid {
-  grid-area: auto;
-  grid-column: 4 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(12rem, 2fr);
-  gap: clamp(1rem, 2vw, 1.7rem);
-  align-items: start;
-  margin: 0;
-  padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .article__content {
-  width: 100%;
-  max-width: var(--reading);
-  margin: 0;
-  padding: clamp(1.2rem, 3vw, 3rem);
   color: var(--of-body);
   background: var(--of-paper);
   border: 3px solid var(--of-rule);
@@ -3357,12 +3247,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .article__con
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--of-code-fg);
   background: var(--of-code);
   border: 3px solid var(--of-code);
@@ -3427,10 +3311,6 @@ html[data-skin="orbiting-footnotes"] .related-records h2 {
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-end {
-  grid-area: auto;
-  grid-column: 1 / span 3;
-  margin: 0;
-  padding: 1rem 0 0;
   color: var(--of-body);
   background: transparent;
   border: 0;
@@ -3579,8 +3459,10 @@ html[data-skin="orbiting-footnotes"] .prose tr:nth-child(even) td {
 
 html[data-skin="orbiting-footnotes"] .prose table {
   display: block;
-  max-width: 100%;
   overflow-x: auto;
+}
+html[data-skin="orbiting-footnotes"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
 }
 
 html[data-skin="orbiting-footnotes"] .prose img:not(.emoji) {
@@ -3822,55 +3704,6 @@ html[data-skin="orbiting-footnotes"] .error-shell nav {
 }
 
 /* Return-address footer. */
-html[data-skin="orbiting-footnotes"] .site-footer {
-  position: relative;
-  width: min(calc(100% - 2rem), var(--page));
-  margin: clamp(2rem, 5vw, 5rem) auto 1rem;
-  color: var(--of-code-fg);
-  background: var(--of-code);
-  border: 3px solid var(--of-code);
-  border-bottom: .55rem solid var(--of-orange);
-  border-radius: 0;
-  box-shadow: 7px 7px 0 var(--of-selected);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: .55rem;
-  align-items: stretch;
-  padding: .7rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__note {
-  grid-column: 1 / span 8;
-  max-width: none;
-  margin: 0;
-  padding: .75rem;
-  color: var(--of-code-fg);
-  background: var(--of-code);
-  border: 1px solid color-mix(in srgb, var(--of-code-fg) 45%, transparent);
-  font-family: var(--body);
-  line-height: 1.45;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__note a {
-  color: var(--of-code-fg);
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links {
-  grid-column: 9 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links a {
-  min-height: 3.5rem;
-  color: var(--of-code-fg);
-  background: var(--of-code);
-  border-color: var(--of-code-fg);
-}
 
 /* Resolve the older, route-specific topology without restoring its card shell. */
 html[data-skin="orbiting-footnotes"] .home-shell > .masthead .masthead__copy {
@@ -3989,7 +3822,6 @@ html[data-skin="orbiting-footnotes"] .archive-shell > .archive-groups .record-ro
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head h1 {
-  max-width: 15ch;
   margin: .35rem 0;
   color: var(--of-display);
   font-size: clamp(2.15rem, 3.9vw, 3.8rem);
@@ -4005,7 +3837,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-head__k
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .45rem;
   margin: 0;
   padding: .5rem;
@@ -4055,22 +3886,32 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   }
 
-  html[data-skin="orbiting-footnotes"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  html[data-skin="orbiting-footnotes"] :is(.home-shell > .masthead, .home-shell > .index-heading, .home-shell > .record-index, .archive-shell > .index-heading--archive, .archive-shell > .archive-tools, .archive-shell > .archive-groups, .archive-shell > .archive-empty, .record-page > .record-head, .record-page > .record-grid, .record-page > .record-end, .page-shell > .page-heading, .page-shell > .page-prose) {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  html[data-skin="orbiting-footnotes"] .home-shell > .masthead,
+html[data-skin="orbiting-footnotes"] .home-shell > .index-heading,
+html[data-skin="orbiting-footnotes"] .home-shell > .record-index,
+html[data-skin="orbiting-footnotes"] .archive-shell > .index-heading--archive,
+html[data-skin="orbiting-footnotes"] .archive-shell > .archive-tools,
+html[data-skin="orbiting-footnotes"] .archive-shell > .archive-groups,
+html[data-skin="orbiting-footnotes"] .archive-shell > .archive-empty,
+html[data-skin="orbiting-footnotes"] .page-shell > .page-heading,
+html[data-skin="orbiting-footnotes"] .page-shell > .page-prose {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="orbiting-footnotes"] .home-shell > .masthead {
     grid-template-columns: minmax(0, 1fr);
   }
-  html[data-skin="orbiting-footnotes"] .archive-shell > .archive-tools,
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="orbiting-footnotes"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="orbiting-footnotes"] .archive-shell > .archive-groups .archive-year {
     grid-template-columns: minmax(0, 1fr);
@@ -4090,46 +3931,21 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     grid-column: 1;
   }
 
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head :is(.record-head__key, h1, .record-head__abstract, .tag-line, .record-actions) {
-    grid-column: 1 / -1;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-facts,
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-    max-width: var(--reading);
-  }
-
   html[data-skin="orbiting-footnotes"] .page-shell > .page-prose {
     max-width: var(--reading);
   }
 
-  html[data-skin="orbiting-footnotes"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] :is(.site-footer__note, .site-footer__links) {
-    grid-column: 1;
-  }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="orbiting-footnotes"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: min(calc(100% - 1rem), var(--page));
-    margin-inline: auto;
-  }
+  html[data-skin="orbiting-footnotes"] .site-header,
+html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
+  width: min(calc(100% - 1rem), var(--page));
+  margin-inline: auto;
+}
 
   html[data-skin="orbiting-footnotes"] .site-header {
     margin-top: .5rem;
@@ -4151,10 +3967,13 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     margin-top: .45rem;
   }
 
-  html[data-skin="orbiting-footnotes"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    gap: 1rem;
-    padding: .7rem;
-  }
+  html[data-skin="orbiting-footnotes"] .home-shell,
+html[data-skin="orbiting-footnotes"] .archive-shell,
+html[data-skin="orbiting-footnotes"] .page-shell,
+html[data-skin="orbiting-footnotes"] .error-shell {
+  gap: 1rem;
+  padding: .7rem;
+}
 
   html[data-skin="orbiting-footnotes"] .home-shell > .masthead::before,
   html[data-skin="orbiting-footnotes"] .home-shell > .masthead::after,
@@ -4163,9 +3982,14 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     display: none;
   }
 
-  html[data-skin="orbiting-footnotes"] :is(.masthead__copy, .home-shell > .record-index, .archive-shell > .index-heading--archive, .archive-shell > .archive-tools, .record-page > .record-head, .record-page > .record-grid > .article__content, .record-page > .record-grid > .record-index, .page-shell > .page-heading, .page-shell > .page-prose) {
-    padding: 1rem;
-  }
+  html[data-skin="orbiting-footnotes"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.home-shell > .record-index, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.archive-shell > .index-heading--archive, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.archive-shell > .archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-shell > .page-heading, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="orbiting-footnotes"] :is(.page-shell > .page-prose, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  padding: 1rem;
+}
 
   html[data-skin="orbiting-footnotes"] :is(.masthead h1, .index-heading h1, .page-heading h1, .error-shell h1) {
     font-size: clamp(2.1rem, 10vw, 3.6rem);
@@ -4199,19 +4023,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
   html[data-skin="orbiting-footnotes"] .record-row__date::before { content: "Date"; }
   html[data-skin="orbiting-footnotes"] .record-row__event::before { content: "Event"; }
   html[data-skin="orbiting-footnotes"] .record-row__primitive::before { content: "Topic"; }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-facts,
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-end {
-    padding: 1rem 0 0;
-  }
 
   html[data-skin="orbiting-footnotes"] .page-shell > .page-prose {
     grid-column: 1;
@@ -4254,9 +4065,6 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     padding-inline: .35rem;
   }
 
-  html[data-skin="orbiting-footnotes"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 23rem) {
@@ -4289,7 +4097,29 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     background-image: none;
   }
 
-  html[data-skin="orbiting-footnotes"] :is(.site-header, .site-brand, .skin-menu__panel, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .article__content, .page-prose, .record-grid > .record-index, .record-end, .site-footer, .site-footer__note, .prose .code-frame, .code-frame__bar, .code-frame__status, .prose .katex-display) {
+  html[data-skin="orbiting-footnotes"] :is(.site-header,
+.site-brand,
+.skin-menu__panel,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.article__content,
+.page-prose,
+.record-grid > .record-index,
+.record-end,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -4297,11 +4127,22 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
     box-shadow: none;
   }
 
-  html[data-skin="orbiting-footnotes"] :is(a, .site-footer__note a) {
+  html[data-skin="orbiting-footnotes"] :is(a, :not(*):nth-child(n):is(css-specificity)) {
     color: LinkText;
   }
 
-  html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route], .theme-toggle, .skin-menu > summary, .skin-menu__panel :is(select, button), .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .all-tags__grid a, .record-end nav a, .site-footer__links a, .code-frame__actions button) {
+  html[data-skin="orbiting-footnotes"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu > summary,
+.skin-menu__panel :is(select, button),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.all-tags__grid a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4484,50 +4325,12 @@ html[data-skin="orbiting-footnotes"] .record-facts :is(dt, dd) {
   word-break: normal;
 }
 
-html[data-skin="orbiting-footnotes"] .site-footer__links {
-  align-self: start;
-}
-
-html[data-skin="orbiting-footnotes"] .site-footer__links a,
 html[data-skin="orbiting-footnotes"] .code-frame__actions button {
   align-self: start;
 }
 
 html[data-skin="orbiting-footnotes"] .code-frame__bar {
   align-items: start;
-}
-
-@media (min-width: 44.01rem) and (max-width: 81.99rem) {
-  html[data-skin="orbiting-footnotes"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] :is(.record-page > .record-head, .record-page > .record-grid, .record-page > .record-end) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head :is(.record-head__key, h1, .record-head__abstract, .tag-line, .record-actions) {
-    grid-column: 1 / -1;
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-grid > .record-index {
-    position: static;
-    max-width: var(--reading);
-  }
 }
 
 @media (max-width: 44rem) {
@@ -4567,14 +4370,12 @@ html[data-skin="orbiting-footnotes"] .code-frame__bar {
 }
 
 /* Rendered feedback correction: Orbiting Footnotes */
-html[data-skin="orbiting-footnotes"] .record-page > .record-head,
 html[data-skin="orbiting-footnotes"] .record-page > .record-head > * {
   min-inline-size: 0;
   max-inline-size: 100%;
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head h1 {
-  max-inline-size: 100%;
   overflow-wrap: normal;
   word-break: normal;
   hyphens: auto;
@@ -4582,11 +4383,7 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head h1 {
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: .55rem;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  min-inline-size: 0;
 }
 
 html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts > div,
@@ -4599,21 +4396,4 @@ html[data-skin="orbiting-footnotes"] .record-page > .record-head .record-facts :
   overflow-wrap: normal;
   word-break: normal;
   hyphens: auto;
-}
-
-@media (min-width: 82rem) {
-  html[data-skin="orbiting-footnotes"] .record-page {
-    grid-template-columns: minmax(20rem, .34fr) minmax(0, 1fr);
-  }
-
-  html[data-skin="orbiting-footnotes"] .record-page > .record-head,
-  html[data-skin="orbiting-footnotes"] .record-page > .record-end {
-    grid-column: 1;
-  }
-
-  html[data-skin="orbiting-footnotes"] main.record-page > .record-grid {
-    grid-column: 2;
-    grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem) !important;
-    min-inline-size: 0;
-  }
 }

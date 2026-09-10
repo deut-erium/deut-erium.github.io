@@ -152,13 +152,14 @@ html[data-skin="mercury-keyspace"] .skip-link {
 }
 
 html[data-skin="mercury-keyspace"] .site-header,
-html[data-skin="mercury-keyspace"] .site-footer,
 html[data-skin="mercury-keyspace"] .home-shell,
 html[data-skin="mercury-keyspace"] .archive-shell,
-html[data-skin="mercury-keyspace"] .record-page,
 html[data-skin="mercury-keyspace"] .page-shell,
 html[data-skin="mercury-keyspace"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 1px solid var(--mercury-steel);
+}
+html[data-skin="mercury-keyspace"] .record-page {
   border: 1px solid var(--mercury-steel);
 }
 
@@ -269,8 +270,7 @@ html[data-skin="mercury-keyspace"] .record-actions a,
 html[data-skin="mercury-keyspace"] .tag-line a,
 html[data-skin="mercury-keyspace"] .quick-filters a,
 html[data-skin="mercury-keyspace"] .pagination a,
-html[data-skin="mercury-keyspace"] .pagination span,
-html[data-skin="mercury-keyspace"] .site-footer__links a {
+html[data-skin="mercury-keyspace"] .pagination span {
   min-height: 2.55rem;
   padding: .5rem .68rem;
   color: var(--mercury-silver);
@@ -379,9 +379,7 @@ html[data-skin="mercury-keyspace"] .tag-line a:focus-visible,
 html[data-skin="mercury-keyspace"] .quick-filters a:hover,
 html[data-skin="mercury-keyspace"] .quick-filters a:focus-visible,
 html[data-skin="mercury-keyspace"] .pagination a:hover,
-html[data-skin="mercury-keyspace"] .pagination a:focus-visible,
-html[data-skin="mercury-keyspace"] .site-footer__links a:hover,
-html[data-skin="mercury-keyspace"] .site-footer__links a:focus-visible {
+html[data-skin="mercury-keyspace"] .pagination a:focus-visible {
   color: #071217;
   background: linear-gradient(100deg, var(--mercury-cyan), #dcfffd 49%, var(--mercury-pink));
   border-color: var(--mercury-white);
@@ -398,7 +396,6 @@ html[data-skin="mercury-keyspace"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="mercury-keyspace"] .home-shell,
 html[data-skin="mercury-keyspace"] .archive-shell,
-html[data-skin="mercury-keyspace"] .record-page,
 html[data-skin="mercury-keyspace"] .page-shell,
 html[data-skin="mercury-keyspace"] .error-shell {
   position: relative;
@@ -406,6 +403,14 @@ html[data-skin="mercury-keyspace"] .error-shell {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   overflow: hidden;
+  background:
+    linear-gradient(125deg, #ffffff11 0 1.5%, transparent 7% 48%, #5cf0e70d 52%, transparent 62%),
+    linear-gradient(145deg, #222638, var(--mercury-velvet) 17%, var(--mercury-void) 82%, #202537);
+  border-radius: 1.8rem .7rem 1.8rem .7rem;
+  box-shadow: inset 0 1px 0 #ffffff45, inset 0 -1px 0 #000000, 0 1rem 2.3rem #00000078;
+}
+html[data-skin="mercury-keyspace"] .record-page {
+  isolation: isolate;
   background:
     linear-gradient(125deg, #ffffff11 0 1.5%, transparent 7% 48%, #5cf0e70d 52%, transparent 62%),
     linear-gradient(145deg, #222638, var(--mercury-velvet) 17%, var(--mercury-void) 82%, #202537);
@@ -451,11 +456,19 @@ html[data-skin="mercury-keyspace"] .masthead {
 
 html[data-skin="mercury-keyspace"] .masthead__copy,
 html[data-skin="mercury-keyspace"] .index-heading,
-html[data-skin="mercury-keyspace"] .page-heading,
-html[data-skin="mercury-keyspace"] .record-head {
+html[data-skin="mercury-keyspace"] .page-heading {
   position: relative;
   overflow: hidden;
   padding: clamp(1.5rem, 3.5vw, 3.2rem);
+  color: var(--mercury-white);
+  background:
+    linear-gradient(135deg, #ffffff17 0 1px, transparent 1px 100%),
+    linear-gradient(145deg, #30364a, #11131e 34%, #08090f 82%);
+  border: 1px solid #929cb2;
+  border-radius: 1.2rem .38rem 1.2rem .38rem;
+  box-shadow: inset 0 1px 0 #ffffff61, inset 0 -1px 0 #000000, 0 .7rem 1.35rem #00000075;
+}
+html[data-skin="mercury-keyspace"] .record-head {
   color: var(--mercury-white);
   background:
     linear-gradient(135deg, #ffffff17 0 1px, transparent 1px 100%),
@@ -484,9 +497,20 @@ html[data-skin="mercury-keyspace"] .record-head::after {
 html[data-skin="mercury-keyspace"] .masthead h1,
 html[data-skin="mercury-keyspace"] .index-heading h1,
 html[data-skin="mercury-keyspace"] .page-heading h1,
-html[data-skin="mercury-keyspace"] .record-head h1,
 html[data-skin="mercury-keyspace"] .error-shell h1 {
   max-width: 16ch;
+  color: transparent;
+  background: linear-gradient(180deg, #ffffff 0 14%, #9ca6ba 36%, #ffffff 51%, #4d566b 70%, #ffffff 97%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: var(--display);
+  font-size: clamp(2.35rem, 5.8vw, 5.55rem);
+  font-weight: 900;
+  letter-spacing: -.095em;
+  line-height: .9;
+  text-transform: uppercase;
+}
+html[data-skin="mercury-keyspace"] .record-head h1 {
   color: transparent;
   background: linear-gradient(180deg, #ffffff 0 14%, #9ca6ba 36%, #ffffff 51%, #4d566b 70%, #ffffff 97%);
   -webkit-background-clip: text;
@@ -501,9 +525,13 @@ html[data-skin="mercury-keyspace"] .error-shell h1 {
 
 html[data-skin="mercury-keyspace"] .masthead__lede,
 html[data-skin="mercury-keyspace"] .index-heading > p:last-child,
-html[data-skin="mercury-keyspace"] .page-heading > p:last-child,
-html[data-skin="mercury-keyspace"] .record-head__abstract {
+html[data-skin="mercury-keyspace"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--mercury-silver);
+  font-size: clamp(1.1rem, 1.65vw, 1.28rem);
+  line-height: 1.62;
+}
+html[data-skin="mercury-keyspace"] .record-head__abstract {
   color: var(--mercury-silver);
   font-size: clamp(1.1rem, 1.65vw, 1.28rem);
   line-height: 1.62;
@@ -531,9 +559,7 @@ html[data-skin="mercury-keyspace"] .record-actions a:last-child {
 html[data-skin="mercury-keyspace"] .home-shell > .record-index,
 html[data-skin="mercury-keyspace"] .archive-tools,
 html[data-skin="mercury-keyspace"] .archive-groups,
-html[data-skin="mercury-keyspace"] .page-prose,
-html[data-skin="mercury-keyspace"] .article__content,
-html[data-skin="mercury-keyspace"] .record-end {
+html[data-skin="mercury-keyspace"] .page-prose {
   position: relative;
   z-index: 1;
   background:
@@ -541,6 +567,18 @@ html[data-skin="mercury-keyspace"] .record-end {
   border: 1px solid #b4bdcc;
   border-radius: .8rem 2rem .8rem 2rem;
   box-shadow: inset 0 1px 0 #ffffff, inset 0 -.12rem .3rem #7580972e, 0 .7rem 1.3rem #00000063;
+}
+html[data-skin="mercury-keyspace"] .article__content,
+html[data-skin="mercury-keyspace"] .record-end {
+  z-index: 1;
+  background:
+    linear-gradient(135deg, #ffffffd9 0, #f8f9fc 9%, var(--paper) 70%, #e1e5ed 100%);
+  border: 1px solid #b4bdcc;
+  border-radius: .8rem 2rem .8rem 2rem;
+  box-shadow: inset 0 1px 0 #ffffff, inset 0 -.12rem .3rem #7580972e, 0 .7rem 1.3rem #00000063;
+}
+html[data-skin="mercury-keyspace"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
 }
 
 html[data-skin="mercury-keyspace"][data-theme="dark"] .home-shell > .record-index,
@@ -761,7 +799,6 @@ html[data-skin="mercury-keyspace"] .record-head__key {
 }
 
 html[data-skin="mercury-keyspace"] .record-head h1 {
-  max-width: 18ch;
   font-size: clamp(2.25rem, 5.3vw, 4.9rem);
 }
 
@@ -799,9 +836,7 @@ html[data-skin="mercury-keyspace"] .tag-line a:nth-child(odd) {
 }
 
 html[data-skin="mercury-keyspace"] .record-grid {
-  position: relative;
   z-index: 1;
-  gap: 1rem;
 }
 
 html[data-skin="mercury-keyspace"] .article__content,
@@ -1192,32 +1227,6 @@ html[data-skin="mercury-keyspace"] .prose .katex-display {
   border-radius: .55rem 1.2rem .55rem 1.2rem;
 }
 
-html[data-skin="mercury-keyspace"] .site-footer {
-  position: relative;
-  margin-bottom: 1.25rem;
-  overflow: hidden;
-  color: var(--mercury-silver);
-  background:
-    linear-gradient(110deg, #ffffff12, transparent 31%, #ff5fac14 68%, transparent),
-    linear-gradient(145deg, #2a2f41, #0b0c13 73%);
-  border-radius: .9rem 2rem .9rem 2rem;
-  box-shadow: inset 0 1px 0 #ffffff54, inset 0 -1px 0 #000000, 0 .75rem 1.5rem #0000007a;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  padding: 1rem 1.25rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__note {
-  color: var(--mercury-mist);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer a {
-  color: var(--mercury-cyan);
-}
-
 html[data-skin="mercury-keyspace"] .error-shell {
   min-height: 60vh;
   display: grid;
@@ -1271,17 +1280,19 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
 
 @media (max-width: 44rem) {
   html[data-skin="mercury-keyspace"] .site-header,
-  html[data-skin="mercury-keyspace"] .site-footer,
-  html[data-skin="mercury-keyspace"] .home-shell,
-  html[data-skin="mercury-keyspace"] .archive-shell,
-  html[data-skin="mercury-keyspace"] .record-page,
-  html[data-skin="mercury-keyspace"] .page-shell,
-  html[data-skin="mercury-keyspace"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-inline: 0;
-    border-radius: 0;
-  }
+html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-inline: 0;
+  border-radius: 0;
+}
+html[data-skin="mercury-keyspace"] .record-page {
+  border-inline: 0;
+  border-radius: 0;
+}
 
   html[data-skin="mercury-keyspace"] .site-header {
     margin-top: 0;
@@ -1325,14 +1336,13 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
   }
 
   html[data-skin="mercury-keyspace"] .home-shell,
-  html[data-skin="mercury-keyspace"] .archive-shell,
-  html[data-skin="mercury-keyspace"] .record-page,
-  html[data-skin="mercury-keyspace"] .page-shell,
-  html[data-skin="mercury-keyspace"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .75rem;
-  }
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .75rem;
+}
 
   html[data-skin="mercury-keyspace"] .home-shell::before,
   html[data-skin="mercury-keyspace"] .archive-shell::before,
@@ -1345,18 +1355,23 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
   }
 
   html[data-skin="mercury-keyspace"] .masthead__copy,
-  html[data-skin="mercury-keyspace"] .index-heading,
-  html[data-skin="mercury-keyspace"] .page-heading,
-  html[data-skin="mercury-keyspace"] .record-head,
-  html[data-skin="mercury-keyspace"] .home-shell > .record-index,
-  html[data-skin="mercury-keyspace"] .archive-tools,
-  html[data-skin="mercury-keyspace"] .archive-groups,
-  html[data-skin="mercury-keyspace"] .page-prose,
-  html[data-skin="mercury-keyspace"] .article__content,
-  html[data-skin="mercury-keyspace"] .record-end {
-    padding: 1rem;
-    border-radius: .65rem 1.3rem .65rem 1.3rem;
-  }
+html[data-skin="mercury-keyspace"] .index-heading,
+html[data-skin="mercury-keyspace"] .page-heading,
+html[data-skin="mercury-keyspace"] .home-shell > .record-index,
+html[data-skin="mercury-keyspace"] .archive-tools,
+html[data-skin="mercury-keyspace"] .archive-groups,
+html[data-skin="mercury-keyspace"] .page-prose {
+  padding: 1rem;
+  border-radius: .65rem 1.3rem .65rem 1.3rem;
+}
+html[data-skin="mercury-keyspace"] .record-head,
+html[data-skin="mercury-keyspace"] .article__content,
+html[data-skin="mercury-keyspace"] .record-end {
+  border-radius: .65rem 1.3rem .65rem 1.3rem;
+}
+html[data-skin="mercury-keyspace"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="mercury-keyspace"] .masthead h1,
   html[data-skin="mercury-keyspace"] .index-heading h1,
@@ -1397,9 +1412,6 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
     border-radius: .65rem 1.3rem .65rem 1.3rem;
   }
 
-  html[data-skin="mercury-keyspace"] .site-footer {
-    margin-bottom: 0;
-  }
 }
 
 @media (max-width: 23rem) {
@@ -1429,26 +1441,25 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
 
 @media (forced-colors: active) {
   html[data-skin="mercury-keyspace"] .site-header,
-  html[data-skin="mercury-keyspace"] .site-footer,
-  html[data-skin="mercury-keyspace"] .home-shell,
-  html[data-skin="mercury-keyspace"] .archive-shell,
-  html[data-skin="mercury-keyspace"] .record-page,
-  html[data-skin="mercury-keyspace"] .page-shell,
-  html[data-skin="mercury-keyspace"] .error-shell,
-  html[data-skin="mercury-keyspace"] .masthead__copy,
-  html[data-skin="mercury-keyspace"] .index-heading,
-  html[data-skin="mercury-keyspace"] .page-heading,
-  html[data-skin="mercury-keyspace"] .record-head,
-  html[data-skin="mercury-keyspace"] .home-shell > .record-index,
-  html[data-skin="mercury-keyspace"] .archive-tools,
-  html[data-skin="mercury-keyspace"] .archive-groups,
-  html[data-skin="mercury-keyspace"] .page-prose,
-  html[data-skin="mercury-keyspace"] .article__content,
-  html[data-skin="mercury-keyspace"] .record-end,
-  html[data-skin="mercury-keyspace"] .record-grid > .record-index,
-  html[data-skin="mercury-keyspace"] .code-frame,
-  html[data-skin="mercury-keyspace"] .code-frame__bar,
-  html[data-skin="mercury-keyspace"] .code-frame__status {
+html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .record-page,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell,
+html[data-skin="mercury-keyspace"] .masthead__copy,
+html[data-skin="mercury-keyspace"] .index-heading,
+html[data-skin="mercury-keyspace"] .page-heading,
+html[data-skin="mercury-keyspace"] .record-head,
+html[data-skin="mercury-keyspace"] .home-shell > .record-index,
+html[data-skin="mercury-keyspace"] .archive-tools,
+html[data-skin="mercury-keyspace"] .archive-groups,
+html[data-skin="mercury-keyspace"] .page-prose,
+html[data-skin="mercury-keyspace"] .article__content,
+html[data-skin="mercury-keyspace"] .record-end,
+html[data-skin="mercury-keyspace"] .record-grid > .record-index,
+html[data-skin="mercury-keyspace"] .code-frame,
+html[data-skin="mercury-keyspace"] .code-frame__bar,
+html[data-skin="mercury-keyspace"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1756,89 +1767,6 @@ html[data-skin="mercury-keyspace"] .archive-year .record-row__link {
   gap: .5rem;
 }
 
-html[data-skin="mercury-keyspace"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(0, var(--reading)) minmax(14rem, 18rem);
-  grid-template-areas:
-    "head head"
-    "grid grid"
-    "end .";
-  gap: clamp(1rem, 2.2vw, 1.8rem);
-  justify-content: center;
-}
-
-html[data-skin="mercury-keyspace"] .record-page > .record-head {
-  grid-area: head;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .record-page > .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, var(--reading)) minmax(14rem, 18rem);
-  gap: clamp(1rem, 2.2vw, 1.8rem);
-  justify-content: center;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content {
-  grid-column: 1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-  grid-column: 2;
-  grid-row: 1;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  align-self: start;
-}
-
-html[data-skin="mercury-keyspace"] .record-page > .record-end {
-  grid-area: end;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 30rem);
-  gap: 1rem 2rem;
-  align-items: end;
-  padding: 1.1rem 1.25rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__note {
-  max-width: 48rem;
-  margin: 0;
-  padding-left: .9rem;
-  border-left: .3rem solid var(--mercury-cyan);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__links a {
-  min-width: 0;
-  min-height: 2.45rem;
-  padding-inline: .35rem;
-  font-size: .62rem;
-}
-
 @media (max-width: 64rem) {
   html[data-skin="mercury-keyspace"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -1852,10 +1780,9 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
   }
 
   html[data-skin="mercury-keyspace"] .home-shell,
-  html[data-skin="mercury-keyspace"] .archive-shell,
-  html[data-skin="mercury-keyspace"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="mercury-keyspace"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="mercury-keyspace"] .archive-shell {
     grid-template-areas:
@@ -1869,35 +1796,6 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     position: static;
   }
 
-  html[data-skin="mercury-keyspace"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content,
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content {
-    grid-row: 1;
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-    grid-row: 2;
-    position: static;
-  }
-
-  html[data-skin="mercury-keyspace"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-  }
 }
 
 @media (max-width: 44rem) {
@@ -1945,17 +1843,13 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     border-bottom: 1px solid #aeb7c86e;
   }
 
-  html[data-skin="mercury-keyspace"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {
   html[data-skin="mercury-keyspace"] .site-nav > a[data-route],
-  html[data-skin="mercury-keyspace"] .site-nav > .theme-toggle,
-  html[data-skin="mercury-keyspace"] .site-nav > .skin-menu > summary,
-  html[data-skin="mercury-keyspace"] .skin-randomizer,
-  html[data-skin="mercury-keyspace"] .site-footer__links a {
+html[data-skin="mercury-keyspace"] .site-nav > .theme-toggle,
+html[data-skin="mercury-keyspace"] .site-nav > .skin-menu > summary,
+html[data-skin="mercury-keyspace"] .skin-randomizer {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -1963,8 +1857,7 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
   }
 
   html[data-skin="mercury-keyspace"] .site-brand,
-  html[data-skin="mercury-keyspace"] .site-footer__note,
-  html[data-skin="mercury-keyspace"] .archive-year > header {
+html[data-skin="mercury-keyspace"] .archive-year > header {
     border-color: CanvasText;
   }
 }
@@ -2086,52 +1979,49 @@ html[data-skin="mercury-keyspace"] ::selection {
   background: var(--mk-selected-bg);
 }
 
-html[data-skin="mercury-keyspace"] body :is(
-  .skip-link,
-  .site-brand__scope,
-  .eyebrow,
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-menu__panel label,
-  .skin-menu select,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .pagination span,
-  .site-footer__links a,
-  .record-row__date,
-  .record-row__event,
-  .record-row__primitive,
-  .section-heading > p,
-  .archive-year > header span,
-  .pagination__position,
-  .archive-search label,
-  .archive-search input,
-  .archive-search p,
-  .all-tags summary,
-  .all-tags__grid a,
-  .all-tags__grid small,
-  .record-head__key,
-  .record-facts dt,
-  .record-facts dd,
-  .record-toc summary,
-  .record-toc a,
-  .related-records a,
-  .toc-fallback,
-  .record-end nav span,
-  .prose th,
-  .prose td,
-  .code-frame__label strong,
-  .code-frame__label small,
-  .code-frame__actions button,
-  .code-frame__gutter,
-  .code-frame__status,
-  .code-frame__fallback
-) {
+html[data-skin="mercury-keyspace"] body :is(.skip-link,
+.site-brand__scope,
+.eyebrow,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.section-heading > p,
+.archive-year > header span,
+.pagination__position,
+.archive-search label,
+.archive-search input,
+.archive-search p,
+.all-tags summary,
+.all-tags__grid a,
+.all-tags__grid small,
+.record-head__key,
+.record-facts dt,
+.record-facts dd,
+.record-toc summary,
+.record-toc a,
+.related-records a,
+.toc-fallback,
+.record-end nav span,
+.prose th,
+.prose td,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback) {
   font-size: var(--mk-ui);
   line-height: 1.35;
 }
@@ -2160,19 +2050,20 @@ html[data-skin="mercury-keyspace"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="mercury-keyspace"] :is(
-  .site-header,
-  .site-footer,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="mercury-keyspace"] .site-header,
+html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
   width: min(calc(100% - 2rem), var(--mk-page));
   min-width: 0;
   margin-inline: auto;
   overflow: visible;
+  border: 1px solid var(--mk-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="mercury-keyspace"] .record-page {
   border: 1px solid var(--mk-border);
   border-radius: 0;
   box-shadow: none;
@@ -2291,8 +2182,7 @@ html[data-skin="mercury-keyspace"] .record-actions a,
 html[data-skin="mercury-keyspace"] .tag-line a,
 html[data-skin="mercury-keyspace"] .quick-filters a,
 html[data-skin="mercury-keyspace"] .pagination a,
-html[data-skin="mercury-keyspace"] .pagination span,
-html[data-skin="mercury-keyspace"] .site-footer__links a {
+html[data-skin="mercury-keyspace"] .pagination span {
   display: inline-flex;
   min-height: 2.75rem;
   min-width: 0;
@@ -2403,18 +2293,15 @@ html[data-skin="mercury-keyspace"] .skin-menu select {
   text-align: left;
 }
 
-html[data-skin="mercury-keyspace"] :is(
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .site-footer__links a
-):is(:hover, :focus-visible) {
+html[data-skin="mercury-keyspace"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):is(:hover, :focus-visible) {
   color: var(--mk-control-fg);
   background: var(--mk-hover-bg);
   border-color: var(--mk-signal);
@@ -2475,18 +2362,20 @@ html[data-skin="mercury-keyspace"] .site-nav > .skin-menu[open] > summary {
   box-shadow: inset 0 -3px 0 var(--mk-selected-edge);
 }
 
-html[data-skin="mercury-keyspace"] :is(
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
   position: relative;
   isolation: isolate;
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: clamp(1rem, 2vw, 1.5rem);
+  color: var(--mk-ink);
+  background: var(--mk-canvas);
+}
+html[data-skin="mercury-keyspace"] .record-page {
+  isolation: isolate;
   color: var(--mk-ink);
   background: var(--mk-canvas);
 }
@@ -2559,8 +2448,7 @@ html[data-skin="mercury-keyspace"] .masthead {
 
 html[data-skin="mercury-keyspace"] .masthead__copy,
 html[data-skin="mercury-keyspace"] .index-heading,
-html[data-skin="mercury-keyspace"] .page-heading,
-html[data-skin="mercury-keyspace"] .record-head {
+html[data-skin="mercury-keyspace"] .page-heading {
   min-width: 0;
   min-height: 0;
   padding: 0;
@@ -2570,6 +2458,13 @@ html[data-skin="mercury-keyspace"] .record-head {
   border-radius: 0;
   box-shadow: none;
   overflow: visible;
+}
+html[data-skin="mercury-keyspace"] .record-head {
+  color: var(--mk-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 html[data-skin="mercury-keyspace"] .masthead__copy {
@@ -2595,13 +2490,10 @@ html[data-skin="mercury-keyspace"] .record-head__key {
   text-transform: uppercase;
 }
 
-html[data-skin="mercury-keyspace"] :is(
-  .masthead h1,
-  .index-heading h1,
-  .page-heading h1,
-  .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="mercury-keyspace"] .masthead h1,
+html[data-skin="mercury-keyspace"] .index-heading h1,
+html[data-skin="mercury-keyspace"] .page-heading h1,
+html[data-skin="mercury-keyspace"] .error-shell h1 {
   max-width: 17ch;
   color: var(--mk-heading);
   background: none;
@@ -2612,14 +2504,26 @@ html[data-skin="mercury-keyspace"] :is(
   line-height: 1.02;
   text-transform: uppercase;
 }
+html[data-skin="mercury-keyspace"] .record-head h1 {
+  color: var(--mk-heading);
+  background: none;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -.075em;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
 
-html[data-skin="mercury-keyspace"] :is(
-  .masthead__lede,
-  .index-heading > p:last-child,
-  .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="mercury-keyspace"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="mercury-keyspace"] .index-heading > p:last-child,
+html[data-skin="mercury-keyspace"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--mk-ink);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+html[data-skin="mercury-keyspace"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--mk-ink);
   font-size: 1.125rem;
   line-height: 1.7;
@@ -2641,14 +2545,10 @@ html[data-skin="mercury-keyspace"] .record-actions a:last-child {
   box-shadow: inset 0 -3px 0 var(--mk-selected-edge);
 }
 
-html[data-skin="mercury-keyspace"] :is(
-  .home-shell > .record-index,
-  .archive-tools,
-  .archive-groups,
-  .page-prose,
-  .article__content,
-  .record-end
-) {
+html[data-skin="mercury-keyspace"] .home-shell > .record-index,
+html[data-skin="mercury-keyspace"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="mercury-keyspace"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="mercury-keyspace"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   margin-top: 0;
   padding: clamp(1rem, 2.3vw, 1.5rem);
@@ -2657,6 +2557,19 @@ html[data-skin="mercury-keyspace"] :is(
   border: 1px solid var(--mk-border);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="mercury-keyspace"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="mercury-keyspace"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="mercury-keyspace"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+  margin-top: 0;
+  padding: clamp(1rem, 2.3vw, 1.5rem);
 }
 
 html[data-skin="mercury-keyspace"] .home-shell > .record-index,
@@ -3011,19 +2924,7 @@ html[data-skin="mercury-keyspace"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="mercury-keyspace"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas: none;
-  gap: 1rem;
-  align-items: start;
-}
-
 html[data-skin="mercury-keyspace"] .record-page > .record-head {
-  grid-area: auto;
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: clamp(1rem, 2.8vw, 2.25rem);
   color: var(--mk-ink);
   background: var(--mk-rail-bg);
   border: 1px solid var(--mk-border);
@@ -3037,7 +2938,6 @@ html[data-skin="mercury-keyspace"] .record-head__key {
 }
 
 html[data-skin="mercury-keyspace"] .record-head h1 {
-  max-width: 19ch;
   font-size: clamp(2.25rem, 5vw, 4rem);
 }
 
@@ -3078,41 +2978,7 @@ html[data-skin="mercury-keyspace"] .tag-line a:nth-child(odd) {
   border-color: var(--mk-border);
 }
 
-html[data-skin="mercury-keyspace"] .record-grid {
-  display: grid;
-  grid-area: auto;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 8fr) minmax(15rem, 4fr);
-  gap: 1rem;
-  justify-content: normal;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .record-page > .record-grid {
-  grid-area: auto;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 8fr) minmax(15rem, 4fr);
-  gap: 1rem;
-  justify-content: normal;
-  margin: 0;
-}
-
-html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content {
-  grid-column: 1;
-  width: 100%;
-  max-width: var(--mk-reading);
-  margin: 0;
-}
-
 html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-  grid-column: 2;
-  grid-row: 1;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--mk-ink);
   background: var(--mk-rail-bg);
   border: 1px solid var(--mk-border);
@@ -3158,14 +3024,6 @@ html[data-skin="mercury-keyspace"] .toc-fallback {
 html[data-skin="mercury-keyspace"] .related-records h2 {
   color: var(--mk-heading);
   font-size: 1.5rem;
-}
-
-html[data-skin="mercury-keyspace"] .record-page > .record-end {
-  grid-area: auto;
-  grid-column: 1 / span 8;
-  width: 100%;
-  max-width: var(--mk-reading);
-  margin: 0;
 }
 
 html[data-skin="mercury-keyspace"] .record-end > p {
@@ -3578,59 +3436,6 @@ html[data-skin="mercury-keyspace"] .error-shell nav {
   justify-content: center;
 }
 
-html[data-skin="mercury-keyspace"] .site-footer {
-  position: relative;
-  margin-bottom: 1rem;
-  color: var(--mk-ink);
-  background: var(--mk-rail-bg);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer::after {
-  position: absolute;
-  right: 1rem;
-  bottom: .75rem;
-  width: 5rem;
-  height: 2px;
-  pointer-events: none;
-  content: "";
-  background: var(--mk-signal);
-  box-shadow: 0 .35rem 0 var(--mk-violet);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(22rem, 32rem);
-  gap: 1rem 2rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__note {
-  max-width: 48rem;
-  margin: 0;
-  padding-left: .75rem;
-  color: var(--mk-muted);
-  border-left: 3px solid var(--mk-signal);
-  font-size: 1rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__note a {
-  color: var(--mk-link);
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="mercury-keyspace"] .site-footer__links a {
-  min-height: 2.65rem;
-  padding-inline: .45rem;
-}
-
 @media (max-width: 64rem) {
   html[data-skin="mercury-keyspace"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -3642,37 +3447,28 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     border-bottom: 1px solid var(--mk-border);
   }
 
-  html[data-skin="mercury-keyspace"] :is(
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell
-  ) {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-  }
+  html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+}
 
-  html[data-skin="mercury-keyspace"] :is(
-    .home-shell > .masthead,
-    .home-shell > .index-heading,
-    .home-shell > .record-index,
-    .archive-shell > .index-heading--archive,
-    .archive-shell > .archive-tools,
-    .archive-shell > .archive-groups,
-    .archive-shell > .archive-empty,
-    .page-heading,
-    .page-prose,
-    .record-page > .record-head,
-    .record-grid,
-    .record-page > .record-end
-  ) {
-    grid-column: 1;
-  }
+  html[data-skin="mercury-keyspace"] .home-shell > .masthead,
+html[data-skin="mercury-keyspace"] .home-shell > .index-heading,
+html[data-skin="mercury-keyspace"] .home-shell > .record-index,
+html[data-skin="mercury-keyspace"] .archive-shell > .index-heading--archive,
+html[data-skin="mercury-keyspace"] .archive-shell > .archive-tools,
+html[data-skin="mercury-keyspace"] .archive-shell > .archive-groups,
+html[data-skin="mercury-keyspace"] .archive-shell > .archive-empty,
+html[data-skin="mercury-keyspace"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="mercury-keyspace"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
+  grid-column: 1;
+}
 
-  html[data-skin="mercury-keyspace"] .archive-shell > .archive-tools,
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="mercury-keyspace"] .archive-shell > .archive-tools {
+  position: static;
+}
 
   html[data-skin="mercury-keyspace"] .archive-shell > .index-heading--archive,
   html[data-skin="mercury-keyspace"] .page-heading {
@@ -3681,42 +3477,21 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     border-bottom: 1px solid var(--mk-border);
   }
 
-  html[data-skin="mercury-keyspace"] .record-grid,
-  html[data-skin="mercury-keyspace"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > :is(.article__content, .record-index) {
-    grid-column: 1;
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content {
-    grid-row: 1;
-  }
-
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-    grid-row: 2;
-  }
-
-  html[data-skin="mercury-keyspace"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="mercury-keyspace"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell
-  ) {
-    width: 100%;
-    margin-inline: 0;
-    border-inline-width: 0;
-  }
+  html[data-skin="mercury-keyspace"] .site-header,
+html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-inline-width: 0;
+}
+html[data-skin="mercury-keyspace"] .record-page {
+  border-inline-width: 0;
+}
 
   html[data-skin="mercury-keyspace"] .site-header {
     margin-top: 0;
@@ -3747,17 +3522,14 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     padding: .75rem;
   }
 
-  html[data-skin="mercury-keyspace"] :is(
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell
-  ) {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 1rem;
-  }
+  html[data-skin="mercury-keyspace"] .home-shell,
+html[data-skin="mercury-keyspace"] .archive-shell,
+html[data-skin="mercury-keyspace"] .page-shell,
+html[data-skin="mercury-keyspace"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1rem;
+}
 
   html[data-skin="mercury-keyspace"] .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -3819,31 +3591,12 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="mercury-keyspace"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   html[data-skin="mercury-keyspace"] .record-facts > div {
     border-right: 0;
   }
 
-  html[data-skin="mercury-keyspace"] .record-end nav,
-  html[data-skin="mercury-keyspace"] .site-footer__links {
+  html[data-skin="mercury-keyspace"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="mercury-keyspace"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="mercury-keyspace"] .site-footer__inner {
-    padding: 1rem;
-  }
-
-  html[data-skin="mercury-keyspace"] .site-footer__links a {
-    justify-content: flex-start;
-    min-height: 3rem;
-    padding-inline: .75rem;
   }
 
   html[data-skin="mercury-keyspace"] .code-frame__bar {
@@ -3882,74 +3635,65 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     background: Canvas;
   }
 
-  html[data-skin="mercury-keyspace"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead,
-    .home-shell > .record-index,
-    .archive-tools,
-    .archive-groups,
-    .page-prose,
-    .article__content,
-    .record-end,
-    .record-page > .record-head,
-    .record-page .record-grid > .record-index,
-    .record-facts > div,
-    .prose .info,
-    .prose blockquote,
-    .prose .katex-display,
-    .prose th,
-    .prose tr:nth-child(even) td,
-    .prose .code-frame,
-    .code-frame__bar,
-    .code-frame__status,
-    .prose .code-frame__gutter,
-    .prose .code-frame pre,
-    .prose .highlight
-  ) {
+  html[data-skin="mercury-keyspace"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-page > .record-head,
+.record-page .record-grid > .record-index,
+.record-facts > div,
+.prose .info,
+.prose blockquote,
+.prose .katex-display,
+.prose th,
+.prose tr:nth-child(even) td,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status,
+.prose .code-frame__gutter,
+.prose .code-frame pre,
+.prose .highlight) {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
     box-shadow: none;
   }
 
-  html[data-skin="mercury-keyspace"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead,
-    .site-brand,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .error-code
-  )::before,
-  html[data-skin="mercury-keyspace"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead,
-    .site-brand,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .error-code
-  )::after {
+  html[data-skin="mercury-keyspace"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.site-brand,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.error-code)::before,
+html[data-skin="mercury-keyspace"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.site-brand,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.error-code)::after {
     content: none;
   }
 
@@ -3985,23 +3729,20 @@ html[data-skin="mercury-keyspace"] .site-footer__links a {
     color: LinkText;
   }
 
-  html[data-skin="mercury-keyspace"] :is(
-    .site-nav a,
-    .theme-toggle,
-    .skin-menu summary,
-    .skin-menu select,
-    .skin-randomizer,
-    .action,
-    .record-actions a,
-    .tag-line a,
-    .quick-filters a,
-    .pagination a,
-    .pagination span,
-    .site-footer__links a,
-    .all-tags__grid a,
-    .record-end nav a,
-    .code-frame__actions button
-  ) {
+  html[data-skin="mercury-keyspace"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.all-tags__grid a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4151,9 +3892,7 @@ html[data-skin="mercury-keyspace"] body .skin-menu__panel {
 html[data-skin="mercury-keyspace"] body .skin-menu:not([open]) .skin-menu__panel {
   display: none;
 }
-html[data-skin="mercury-keyspace"] body .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-}
+
 html[data-skin="mercury-keyspace"] body .record-facts > div {
   overflow-wrap: break-word;
   word-break: normal;
@@ -4187,24 +3926,16 @@ html[data-skin="mercury-keyspace"] body .prose .katex-display {
   border-left: 0;
   border-top: 2px solid var(--mk-signal);
 }
-html[data-skin="mercury-keyspace"] body .site-footer__note {
-  padding-left: 0;
-  padding-top: .75rem;
-  border-left: 0;
-  border-top: 1px solid var(--mk-border);
-}
-html[data-skin="mercury-keyspace"] body :is(
-  .site-nav a,
-  .theme-toggle,
-  .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .site-footer__links a
-):is(:hover, :focus-visible),
+
+html[data-skin="mercury-keyspace"] body :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):is(:hover, :focus-visible),
 html[data-skin="mercury-keyspace"] body :is(
   .all-tags__grid a,
   .record-toc a,
@@ -4246,30 +3977,7 @@ html[data-skin="mercury-keyspace"] body :is(
     grid-column: 1;
   }
 }
-@media (max-width: 70rem) {
-  html[data-skin="mercury-keyspace"] :is(
-    .record-grid,
-    .record-page > .record-grid
-  ) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > :is(
-    .article__content,
-    .record-index
-  ) {
-    grid-column: 1;
-  }
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .article__content {
-    grid-row: 1;
-  }
-  html[data-skin="mercury-keyspace"] .record-page .record-grid > .record-index {
-    grid-row: 2;
-    position: static;
-  }
-  html[data-skin="mercury-keyspace"] .record-page > .record-end {
-    grid-column: 1 / -1;
-  }
-}
+
 @media (max-width: 50rem) {
   html[data-skin="mercury-keyspace"] .site-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -97,13 +97,15 @@ html[data-skin="thirteen-orphans"] .skip-link {
 }
 
 html[data-skin="thirteen-orphans"] .site-header,
-html[data-skin="thirteen-orphans"] .site-footer,
 html[data-skin="thirteen-orphans"] .home-shell,
 html[data-skin="thirteen-orphans"] .archive-shell,
-html[data-skin="thirteen-orphans"] .record-page,
 html[data-skin="thirteen-orphans"] .page-shell,
 html[data-skin="thirteen-orphans"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 6px solid var(--vermilion);
+  border-radius: .25rem;
+}
+html[data-skin="thirteen-orphans"] .record-page {
   border: 6px solid var(--vermilion);
   border-radius: .25rem;
 }
@@ -122,8 +124,7 @@ html[data-skin="thirteen-orphans"] .site-header {
   box-shadow: .65rem .7rem 0 var(--ink), inset 0 0 0 3px var(--gold);
 }
 
-html[data-skin="thirteen-orphans"] .site-header::before,
-html[data-skin="thirteen-orphans"] .site-footer::before {
+html[data-skin="thirteen-orphans"] .site-header::before {
   position: absolute;
   inset: 6px;
   pointer-events: none;
@@ -188,8 +189,7 @@ html[data-skin="thirteen-orphans"] .record-actions a,
 html[data-skin="thirteen-orphans"] .tag-line a,
 html[data-skin="thirteen-orphans"] .quick-filters a,
 html[data-skin="thirteen-orphans"] .pagination a,
-html[data-skin="thirteen-orphans"] .pagination span,
-html[data-skin="thirteen-orphans"] .site-footer__links a {
+html[data-skin="thirteen-orphans"] .pagination span {
   min-height: 2.65rem;
   padding: .5rem .65rem;
   color: var(--ink);
@@ -276,9 +276,7 @@ html[data-skin="thirteen-orphans"] .tag-line a:focus-visible,
 html[data-skin="thirteen-orphans"] .quick-filters a:hover,
 html[data-skin="thirteen-orphans"] .quick-filters a:focus-visible,
 html[data-skin="thirteen-orphans"] .pagination a:hover,
-html[data-skin="thirteen-orphans"] .pagination a:focus-visible,
-html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
-html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
+html[data-skin="thirteen-orphans"] .pagination a:focus-visible {
   color: var(--tile);
   background: var(--felt);
   border-color: var(--ink);
@@ -294,9 +292,17 @@ html[data-skin="thirteen-orphans"] .quick-filters a[aria-current="true"] {
 
 html[data-skin="thirteen-orphans"] .home-shell,
 html[data-skin="thirteen-orphans"] .archive-shell,
-html[data-skin="thirteen-orphans"] .record-page,
 html[data-skin="thirteen-orphans"] .page-shell {
   padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--felt);
+  background-image:
+    linear-gradient(90deg, #fff7df18 2px, transparent 2px),
+    linear-gradient(#fff7df18 2px, transparent 2px),
+    radial-gradient(circle at 1px 1px, #f6c84c22 1px, transparent 1.2px);
+  background-size: 48px 48px, 48px 48px, 12px 12px;
+  box-shadow: .7rem .8rem 0 var(--ink), inset 0 0 0 4px var(--ivory);
+}
+html[data-skin="thirteen-orphans"] .record-page {
   background-color: var(--felt);
   background-image:
     linear-gradient(90deg, #fff7df18 2px, transparent 2px),
@@ -347,9 +353,18 @@ html[data-skin="thirteen-orphans"] .record-head__key {
 html[data-skin="thirteen-orphans"] .masthead h1,
 html[data-skin="thirteen-orphans"] .index-heading h1,
 html[data-skin="thirteen-orphans"] .page-heading h1,
-html[data-skin="thirteen-orphans"] .record-head h1,
 html[data-skin="thirteen-orphans"] .error-shell h1 {
   max-width: 12ch;
+  margin: .3rem 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 6.1vw, 6.25rem);
+  font-weight: 900;
+  letter-spacing: -.12em;
+  line-height: .87;
+  text-transform: uppercase;
+}
+html[data-skin="thirteen-orphans"] .record-head h1 {
   margin: .3rem 0;
   color: var(--ink);
   font-family: var(--display);
@@ -366,9 +381,15 @@ html[data-skin="thirteen-orphans"] .masthead h1 {
 
 html[data-skin="thirteen-orphans"] .masthead__lede,
 html[data-skin="thirteen-orphans"] .index-heading > p:last-child,
-html[data-skin="thirteen-orphans"] .page-heading > p:last-child,
-html[data-skin="thirteen-orphans"] .record-head__abstract {
+html[data-skin="thirteen-orphans"] .page-heading > p:last-child {
   max-width: 58ch;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.58;
+}
+html[data-skin="thirteen-orphans"] .record-head__abstract {
   color: var(--ink);
   font-family: var(--body);
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
@@ -405,7 +426,7 @@ html[data-skin="thirteen-orphans"] .home-shell > .record-index,
 html[data-skin="thirteen-orphans"] .archive-tools,
 html[data-skin="thirteen-orphans"] .archive-groups,
 html[data-skin="thirteen-orphans"] .page-prose,
-html[data-skin="thirteen-orphans"] .record-end {
+html[data-skin="thirteen-orphans"] .record-end:not(:where(.record-page, .record-page *)) {
   padding: clamp(1.15rem, 2.5vw, 2.4rem);
 }
 
@@ -533,10 +554,13 @@ html[data-skin="thirteen-orphans"] .pagination__position strong {
 }
 
 html[data-skin="thirteen-orphans"] .index-heading,
-html[data-skin="thirteen-orphans"] .page-heading,
-html[data-skin="thirteen-orphans"] .record-head {
+html[data-skin="thirteen-orphans"] .page-heading {
   padding: clamp(1.7rem, 4.3vw, 4.25rem);
   padding-left: clamp(2.1rem, 5vw, 5rem);
+  border: 5px solid var(--ink);
+  box-shadow: .5rem .55rem 0 var(--vermilion);
+}
+html[data-skin="thirteen-orphans"] .record-head {
   border: 5px solid var(--ink);
   box-shadow: .5rem .55rem 0 var(--vermilion);
 }
@@ -548,8 +572,7 @@ html[data-skin="thirteen-orphans"] .record-head__key {
 }
 
 html[data-skin="thirteen-orphans"] .index-heading h1,
-html[data-skin="thirteen-orphans"] .page-heading h1,
-html[data-skin="thirteen-orphans"] .record-head h1 {
+html[data-skin="thirteen-orphans"] .page-heading h1 {
   max-width: 13ch;
 }
 
@@ -633,10 +656,6 @@ html[data-skin="thirteen-orphans"] .record-head__key span {
   border: 2px solid var(--ink);
 }
 
-html[data-skin="thirteen-orphans"] .record-head__abstract {
-  max-width: 62ch;
-}
-
 html[data-skin="thirteen-orphans"] .record-facts {
   gap: .55rem;
   padding: .7rem;
@@ -675,11 +694,9 @@ html[data-skin="thirteen-orphans"] .record-actions a:last-child {
   background: var(--vermilion);
 }
 
-html[data-skin="thirteen-orphans"] .record-grid {
-  gap: 1.75rem;
+html[data-skin="thirteen-orphans"] .article__content {
+  border-left: .95rem solid var(--vermilion);
 }
-
-html[data-skin="thirteen-orphans"] .article__content,
 html[data-skin="thirteen-orphans"] .page-prose {
   max-width: var(--reading);
   padding: clamp(1.3rem, 3.5vw, 3.4rem);
@@ -989,40 +1006,6 @@ html[data-skin="thirteen-orphans"] .error-shell h1 {
   text-shadow: 4px 4px 0 var(--vermilion);
 }
 
-html[data-skin="thirteen-orphans"] .site-footer {
-  position: relative;
-  margin-bottom: 1.4rem;
-  color: var(--tile);
-  background-color: var(--felt-deep);
-  background-image: linear-gradient(90deg, #fff7df16 1px, transparent 1px), linear-gradient(#fff7df16 1px, transparent 1px);
-  background-size: 2rem 2rem;
-  border-top-color: var(--gold);
-  box-shadow: .65rem .7rem 0 var(--ink);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__inner {
-  padding: 1.1rem 1.4rem;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__note {
-  font-family: var(--body);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer a {
-  color: var(--gold);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links a {
-  color: var(--ink);
-  background: var(--tile);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
-html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
-  color: var(--tile);
-  background: var(--vermilion);
-}
-
 html[data-skin="thirteen-orphans"][data-theme="dark"] {
   color-scheme: dark;
   --felt: #164f42;
@@ -1178,27 +1161,6 @@ html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions butto
   color: var(--ink);
 }
 
-@media (min-width: 76rem) {
-  html[data-skin="thirteen-orphans"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="thirteen-orphans"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 68rem) {
   html[data-skin="thirteen-orphans"] .site-header__inner {
     grid-template-columns: 1fr;
@@ -1225,24 +1187,22 @@ html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions butto
 
 @media (max-width: 44rem) {
   html[data-skin="thirteen-orphans"] .site-header,
-  html[data-skin="thirteen-orphans"] .site-footer,
-  html[data-skin="thirteen-orphans"] .home-shell,
-  html[data-skin="thirteen-orphans"] .archive-shell,
-  html[data-skin="thirteen-orphans"] .record-page,
-  html[data-skin="thirteen-orphans"] .page-shell,
-  html[data-skin="thirteen-orphans"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="thirteen-orphans"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="thirteen-orphans"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="thirteen-orphans"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="thirteen-orphans"] .site-header__inner {
@@ -1278,29 +1238,34 @@ html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions butto
   }
 
   html[data-skin="thirteen-orphans"] .home-shell,
-  html[data-skin="thirteen-orphans"] .archive-shell,
-  html[data-skin="thirteen-orphans"] .record-page,
-  html[data-skin="thirteen-orphans"] .page-shell,
-  html[data-skin="thirteen-orphans"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-  }
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+}
 
   html[data-skin="thirteen-orphans"] .masthead__copy,
-  html[data-skin="thirteen-orphans"] .index-heading,
-  html[data-skin="thirteen-orphans"] .page-heading,
-  html[data-skin="thirteen-orphans"] .record-head,
-  html[data-skin="thirteen-orphans"] .home-shell > .record-index,
-  html[data-skin="thirteen-orphans"] .archive-tools,
-  html[data-skin="thirteen-orphans"] .archive-groups,
-  html[data-skin="thirteen-orphans"] .page-prose,
-  html[data-skin="thirteen-orphans"] .article__content,
-  html[data-skin="thirteen-orphans"] .record-end {
-    padding: 1rem;
-    border-width: 4px;
-    box-shadow: .3rem .35rem 0 var(--vermilion);
-  }
+html[data-skin="thirteen-orphans"] .index-heading,
+html[data-skin="thirteen-orphans"] .page-heading,
+html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"] .archive-tools,
+html[data-skin="thirteen-orphans"] .archive-groups,
+html[data-skin="thirteen-orphans"] .page-prose {
+  padding: 1rem;
+  border-width: 4px;
+  box-shadow: .3rem .35rem 0 var(--vermilion);
+}
+html[data-skin="thirteen-orphans"] .record-head,
+html[data-skin="thirteen-orphans"] .article__content,
+html[data-skin="thirteen-orphans"] .record-end {
+  border-width: 4px;
+  box-shadow: .3rem .35rem 0 var(--vermilion);
+}
+html[data-skin="thirteen-orphans"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="thirteen-orphans"] .article__content,
   html[data-skin="thirteen-orphans"] .page-prose {
@@ -1408,41 +1373,39 @@ html[data-skin="thirteen-orphans"][data-theme="dark"] .code-frame__actions butto
 
 @media (forced-colors: active) {
   html[data-skin="thirteen-orphans"] .site-header,
-  html[data-skin="thirteen-orphans"] .site-footer,
-  html[data-skin="thirteen-orphans"] .home-shell,
-  html[data-skin="thirteen-orphans"] .archive-shell,
-  html[data-skin="thirteen-orphans"] .record-page,
-  html[data-skin="thirteen-orphans"] .page-shell,
-  html[data-skin="thirteen-orphans"] .error-shell,
-  html[data-skin="thirteen-orphans"] .masthead,
-  html[data-skin="thirteen-orphans"] .masthead__copy,
-  html[data-skin="thirteen-orphans"] .index-heading,
-  html[data-skin="thirteen-orphans"] .page-heading,
-  html[data-skin="thirteen-orphans"] .record-head,
-  html[data-skin="thirteen-orphans"] .home-shell > .record-index,
-  html[data-skin="thirteen-orphans"] .archive-tools,
-  html[data-skin="thirteen-orphans"] .archive-groups,
-  html[data-skin="thirteen-orphans"] .page-prose,
-  html[data-skin="thirteen-orphans"] .article__content,
-  html[data-skin="thirteen-orphans"] .record-end,
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index,
-  html[data-skin="thirteen-orphans"] .prose .code-frame {
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .record-page,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell,
+html[data-skin="thirteen-orphans"] .masthead,
+html[data-skin="thirteen-orphans"] .masthead__copy,
+html[data-skin="thirteen-orphans"] .index-heading,
+html[data-skin="thirteen-orphans"] .page-heading,
+html[data-skin="thirteen-orphans"] .record-head,
+html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"] .archive-tools,
+html[data-skin="thirteen-orphans"] .archive-groups,
+html[data-skin="thirteen-orphans"] .page-prose,
+html[data-skin="thirteen-orphans"] .article__content,
+html[data-skin="thirteen-orphans"] .record-end,
+html[data-skin="thirteen-orphans"] .record-grid > .record-index,
+html[data-skin="thirteen-orphans"] .prose .code-frame {
     forced-color-adjust: auto;
     background-image: none;
     box-shadow: none;
   }
 
   html[data-skin="thirteen-orphans"] .site-nav a,
-  html[data-skin="thirteen-orphans"] .skin-menu summary,
-  html[data-skin="thirteen-orphans"] .skin-randomizer,
-  html[data-skin="thirteen-orphans"] .action,
-  html[data-skin="thirteen-orphans"] .record-actions a,
-  html[data-skin="thirteen-orphans"] .tag-line a,
-  html[data-skin="thirteen-orphans"] .quick-filters a,
-  html[data-skin="thirteen-orphans"] .pagination a,
-  html[data-skin="thirteen-orphans"] .site-footer__links a,
-  html[data-skin="thirteen-orphans"] .record-end nav a,
-  html[data-skin="thirteen-orphans"] .code-frame__actions button {
+html[data-skin="thirteen-orphans"] .skin-menu summary,
+html[data-skin="thirteen-orphans"] .skin-randomizer,
+html[data-skin="thirteen-orphans"] .action,
+html[data-skin="thirteen-orphans"] .record-actions a,
+html[data-skin="thirteen-orphans"] .tag-line a,
+html[data-skin="thirteen-orphans"] .quick-filters a,
+html[data-skin="thirteen-orphans"] .pagination a,
+html[data-skin="thirteen-orphans"] .record-end nav a,
+html[data-skin="thirteen-orphans"] .code-frame__actions button {
     forced-color-adjust: auto;
     box-shadow: none;
   }
@@ -1685,23 +1648,7 @@ html[data-skin="thirteen-orphans"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="thirteen-orphans"] .record-page {
-  display: grid;
-  grid-template-areas:
-    "head record-grid"
-    "head record-end";
-  grid-template-columns: minmax(17rem, .7fr) minmax(0, 1.3fr);
-  gap: clamp(1rem, 2.4vw, 2.4rem);
-  align-items: start;
-}
-
 html[data-skin="thirteen-orphans"] .record-page > .record-head {
-  position: sticky;
-  top: 1rem;
-  grid-area: head;
-  min-width: 0;
-  margin: 0;
-  padding: clamp(1.3rem, 2.8vw, 2.5rem);
   border-left: .8rem solid var(--vermilion);
 }
 
@@ -1711,67 +1658,6 @@ html[data-skin="thirteen-orphans"] .record-page > .record-head h1 {
 
 html[data-skin="thirteen-orphans"] .record-page > .record-head .record-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-html[data-skin="thirteen-orphans"] .record-page > .record-grid {
-  display: grid;
-  grid-area: record-grid;
-  grid-template-areas: "article index";
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
-  gap: clamp(1rem, 2vw, 1.8rem);
-  min-width: 0;
-  margin: 0;
-  align-items: start;
-}
-
-html[data-skin="thirteen-orphans"] .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-area: index;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="thirteen-orphans"] .record-page > .record-end {
-  grid-area: record-end;
-  min-width: 0;
-  margin: 0;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(19rem, .8fr);
-  gap: 1rem 2rem;
-  align-items: center;
-  padding: 1.2rem 1.4rem;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__note {
-  margin: 0;
-  padding: .9rem 1rem;
-  border-left: .55rem solid var(--gold);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links a {
-  display: grid;
-  min-height: 4.4rem;
-  place-items: center;
-  padding: .55rem;
 }
 
 @media (max-width: 70rem) {
@@ -1784,35 +1670,15 @@ html[data-skin="thirteen-orphans"] .site-footer__links a {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="thirteen-orphans"] .archive-shell > .archive-tools,
-  html[data-skin="thirteen-orphans"] .record-page > .record-head,
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="thirteen-orphans"] .archive-shell > .archive-tools {
+  position: static;
+}
 
-  html[data-skin="thirteen-orphans"] .record-page {
-    grid-template-areas:
-      "head"
-      "record-grid"
-      "record-end";
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 52rem) {
   html[data-skin="thirteen-orphans"] .home-shell > .masthead .masthead__copy {
     min-height: 0;
-  }
-
-  html[data-skin="thirteen-orphans"] .record-page > .record-grid {
-    grid-template-areas:
-      "article"
-      "index";
-    grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="thirteen-orphans"] .archive-groups .archive-year {
@@ -1851,13 +1717,6 @@ html[data-skin="thirteen-orphans"] .site-footer__links a {
     min-height: 3.15rem;
   }
 
-  html[data-skin="thirteen-orphans"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] .site-footer__links a {
-    min-height: 3.2rem;
-  }
 }
 
 @media (max-width: 28rem) {
@@ -1878,9 +1737,6 @@ html[data-skin="thirteen-orphans"] .site-footer__links a {
     width: min(100%, calc(100vw - 1.5rem));
   }
 
-  html[data-skin="thirteen-orphans"] .record-page > .record-head .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 /* Final remediation: Thirteen Orphans */
@@ -2067,10 +1923,7 @@ html[data-skin="thirteen-orphans"] :is(
   outline-color: var(--to-focus-inverse) !important;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .record-toc summary,
-  .site-footer__note a
-):focus-visible {
+html[data-skin="thirteen-orphans"] :is(.record-toc summary):focus-visible {
   outline-color: var(--to-focus-deep) !important;
 }
 
@@ -2078,38 +1931,29 @@ html[data-skin="thirteen-orphans"] .code-frame__actions button:not(:last-child):
   outline-color: var(--to-focus-deep) !important;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-nav > a[data-route="archive"],
-  .code-frame__actions button:last-child,
-  .site-footer__links a,
-  .record-end nav a
-):focus-visible {
+html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route="archive"],
+.code-frame__actions button:last-child,
+.record-end nav a):focus-visible {
   outline-color: var(--to-focus-gold) !important;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-nav > a[data-route],
-  .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .site-footer__links a,
-  .record-end nav a
-):hover:focus-visible {
+html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route],
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.record-end nav a):hover:focus-visible {
   outline-color: var(--to-focus-deep) !important;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-nav > a[data-route][aria-current="page"],
-  .quick-filters a[aria-current="true"],
-  .skin-menu[open] summary,
-  .code-frame__actions button[aria-pressed="true"],
-  .site-footer__links a,
-  .record-end nav a
-):hover:focus-visible {
+html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route][aria-current="page"],
+.quick-filters a[aria-current="true"],
+.skin-menu[open] summary,
+.code-frame__actions button[aria-pressed="true"],
+.record-end nav a):hover:focus-visible {
   outline-color: var(--to-focus-inverse) !important;
 }
 
@@ -2129,17 +1973,18 @@ html[data-skin="thirteen-orphans"] .skip-link {
   font-weight: 700;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-header,
-  .site-footer,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="thirteen-orphans"] .site-header,
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   min-width: 0;
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="thirteen-orphans"] .record-page {
   border: 3px solid var(--to-fg);
   border-radius: 0;
   box-shadow: none;
@@ -2153,8 +1998,7 @@ html[data-skin="thirteen-orphans"] .site-header {
   overflow: visible;
 }
 
-html[data-skin="thirteen-orphans"] .site-header::before,
-html[data-skin="thirteen-orphans"] .site-footer::before {
+html[data-skin="thirteen-orphans"] .site-header::before {
   display: none;
 }
 
@@ -2213,18 +2057,15 @@ html[data-skin="thirteen-orphans"] .site-nav {
   padding: .6rem;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-nav > a[data-route],
-  .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .pagination span,
-  .site-footer__links a
-) {
+html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route],
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span) {
   display: inline-flex;
   min-height: 3rem;
   align-items: center;
@@ -2346,17 +2187,14 @@ html[data-skin="thirteen-orphans"] .skin-randomizer {
   cursor: pointer;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .site-nav > a[data-route],
-  .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .site-footer__links a
-):hover {
+html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route],
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):hover {
   color: var(--to-on-felt);
   background: var(--to-felt);
   border-color: var(--to-fg);
@@ -2389,13 +2227,10 @@ html[data-skin="thirteen-orphans"] .skin-menu:focus-within summary {
 }
 
 /* Shared table surface */
-html[data-skin="thirteen-orphans"] :is(
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: clamp(.85rem, 2vw, 1.5rem);
@@ -2406,18 +2241,21 @@ html[data-skin="thirteen-orphans"] :is(
     linear-gradient(#fffaf017 1px, transparent 1px);
   background-size: 2.5rem 2.5rem;
 }
+html[data-skin="thirteen-orphans"] .record-page {
+  color: var(--to-fg);
+  background-color: var(--to-felt);
+  background-image:
+    linear-gradient(90deg, #fffaf017 1px, transparent 1px),
+    linear-gradient(#fffaf017 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+}
 
-html[data-skin="thirteen-orphans"] :is(
-  .masthead__copy,
-  .index-heading,
-  .page-heading,
-  .record-head,
-  .home-shell > .record-index,
-  .archive-tools,
-  .page-prose,
-  .article__content,
-  .record-end
-) {
+html[data-skin="thirteen-orphans"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] .home-shell > .record-index,
+html[data-skin="thirteen-orphans"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   color: var(--to-fg);
   background: var(--to-paper);
@@ -2425,14 +2263,23 @@ html[data-skin="thirteen-orphans"] :is(
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="thirteen-orphans"] :is(.record-head, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="thirteen-orphans"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--to-fg);
+  background: var(--to-paper);
+  border: 3px solid var(--to-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="thirteen-orphans"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+}
 
-html[data-skin="thirteen-orphans"] :is(
-  .masthead h1,
-  .index-heading h1,
-  .page-heading h1,
-  .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="thirteen-orphans"] .masthead h1,
+html[data-skin="thirteen-orphans"] .index-heading h1,
+html[data-skin="thirteen-orphans"] .page-heading h1,
+html[data-skin="thirteen-orphans"] .error-shell h1 {
   max-width: 18ch;
   margin: 0;
   color: var(--to-fg);
@@ -2444,35 +2291,45 @@ html[data-skin="thirteen-orphans"] :is(
   overflow-wrap: anywhere;
   text-transform: uppercase;
 }
+html[data-skin="thirteen-orphans"] .record-head h1 {
+  margin: 0;
+  color: var(--to-fg);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: .96;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
 
-html[data-skin="thirteen-orphans"] :is(
-  .eyebrow,
-  .record-head__key,
-  .section-heading > p,
-  .archive-search label,
-  .archive-search p,
-  .archive-year > header span,
-  .record-row__date,
-  .record-row__event,
-  .record-row__primitive,
-  .all-tags summary,
-  .record-toc summary,
-  .record-end nav span,
-  .code-frame__label strong,
-  .code-frame__label small,
-  .code-frame__status,
-  .site-footer__note
-) {
+html[data-skin="thirteen-orphans"] :is(.eyebrow,
+.record-head__key,
+.section-heading > p,
+.archive-search label,
+.archive-search p,
+.archive-year > header span,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.all-tags summary,
+.record-toc summary,
+.record-end nav span,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__status) {
   font-size: 1rem;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .masthead__lede,
-  .index-heading > p:last-child,
-  .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="thirteen-orphans"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="thirteen-orphans"] .index-heading > p:last-child,
+html[data-skin="thirteen-orphans"] .page-heading > p:last-child {
   max-width: 65ch;
+  color: var(--to-fg);
+  font-size: max(18px, 1.125rem);
+  line-height: 1.6;
+}
+html[data-skin="thirteen-orphans"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--to-fg);
   font-size: max(18px, 1.125rem);
   line-height: 1.6;
@@ -3015,26 +2872,12 @@ html[data-skin="thirteen-orphans"] .archive-empty {
 }
 
 /* Article scorebook and about leaf */
-html[data-skin="thirteen-orphans"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(.85rem, 1.7vw, 1.5rem);
-  align-items: start;
-}
 
 html[data-skin="thirteen-orphans"] .record-page > .record-head {
-  position: static;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: .85rem 1.25rem;
-  margin: 0;
-  padding: clamp(1rem, 2vw, 1.75rem);
   border-left: .7rem solid var(--to-vermilion);
 }
 
 html[data-skin="thirteen-orphans"] .record-head__key {
-  grid-column: 1 / span 3;
   display: flex;
   flex-wrap: wrap;
   gap: .45rem;
@@ -3056,20 +2899,15 @@ html[data-skin="thirteen-orphans"] .record-head__key span {
 }
 
 html[data-skin="thirteen-orphans"] .record-page > .record-head h1 {
-  grid-column: 4 / -1;
-  max-width: 17ch;
   font-size: clamp(2.25rem, 4.5vw, 4.5rem);
 }
 
 html[data-skin="thirteen-orphans"] .record-head__abstract {
-  grid-column: 4 / -1;
   margin: 0;
 }
 
 html[data-skin="thirteen-orphans"] .record-facts {
-  grid-column: 1 / span 3;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .45rem;
   margin: 0;
   padding: .5rem;
@@ -3115,41 +2953,14 @@ html[data-skin="thirteen-orphans"] .record-facts dd {
 
 html[data-skin="thirteen-orphans"] .record-page > .record-head .tag-line,
 html[data-skin="thirteen-orphans"] .record-page > .record-head .record-actions {
-  grid-column: 4 / -1;
-  margin: 0;
-}
-
-html[data-skin="thirteen-orphans"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(.85rem, 1.7vw, 1.5rem);
-  min-width: 0;
   margin: 0;
 }
 
 html[data-skin="thirteen-orphans"] .record-grid > .article__content {
-  grid-column: 2 / span 8;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1rem, 2.5vw, 2.25rem);
   border-left: .7rem solid var(--to-vermilion);
-  overflow: visible;
-}
-
-html[data-skin="thirteen-orphans"] .article__content > * {
-  max-width: 75ch;
 }
 
 html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 10 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--to-list-fg);
   background: var(--to-list-surface);
   border: 3px solid var(--to-fg);
@@ -3210,13 +3021,6 @@ html[data-skin="thirteen-orphans"] .related-records {
 html[data-skin="thirteen-orphans"] .related-records h2 {
   color: var(--to-list-meta);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
-}
-
-html[data-skin="thirteen-orphans"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
 }
 
 html[data-skin="thirteen-orphans"] .record-end > p {
@@ -3284,12 +3088,14 @@ html[data-skin="thirteen-orphans"] .page-prose {
 
 /* Reading leaf */
 html[data-skin="thirteen-orphans"] .prose {
-  min-width: 0;
   color: var(--to-fg);
   font-family: var(--body);
   font-size: max(18px, 1.125rem);
   line-height: 1.72;
   overflow-wrap: break-word;
+}
+html[data-skin="thirteen-orphans"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="thirteen-orphans"] .prose :is(h1, h2, h3, h4, h5, h6) {
@@ -3591,53 +3397,6 @@ html[data-skin="thirteen-orphans"] .error-shell nav {
   gap: .5rem;
 }
 
-html[data-skin="thirteen-orphans"] .site-footer {
-  margin-bottom: 1rem;
-  color: var(--to-list-fg);
-  background: var(--to-deep);
-  overflow: visible;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__note {
-  margin: 0;
-  padding-left: .75rem;
-  color: var(--to-list-fg);
-  border-left: .5rem solid var(--to-gold);
-  font-family: var(--body);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__note a {
-  color: var(--to-list-meta);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links a {
-  min-height: 3.5rem;
-  color: var(--to-on-gold);
-  background: var(--to-gold);
-}
-
-html[data-skin="thirteen-orphans"] .site-footer__links a:hover,
-html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
-  color: var(--to-current-fg);
-  background: var(--to-current);
-}
-
 @media (max-width: 70rem) {
   html[data-skin="thirteen-orphans"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -3656,18 +3415,10 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
     grid-column: 1 / -1;
   }
 
-  html[data-skin="thirteen-orphans"] .archive-tools,
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="thirteen-orphans"] .archive-tools {
+  position: static;
+}
 
-  html[data-skin="thirteen-orphans"] .record-grid > .article__content {
-    grid-column: 1 / span 9;
-  }
-
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-    grid-column: 10 / -1;
-  }
 }
 
 @media (max-width: 52rem) {
@@ -3683,67 +3434,34 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="thirteen-orphans"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] :is(
-    .record-head__key,
-    .record-page > .record-head h1,
-    .record-head__abstract,
-    .record-facts,
-    .record-page > .record-head .tag-line,
-    .record-page > .record-head .record-actions
-  ) {
-    grid-column: 1;
-  }
-
-  html[data-skin="thirteen-orphans"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] :is(
-    .record-grid > .article__content,
-    .record-grid > .record-index
-  ) {
-    grid-column: 1;
-  }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="thirteen-orphans"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell
-  ) {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 3px;
-  }
+  html[data-skin="thirteen-orphans"] .site-header,
+html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 3px;
+}
+html[data-skin="thirteen-orphans"] .record-page {
+  border-width: 3px;
+}
 
   html[data-skin="thirteen-orphans"] .site-header {
     margin-top: 0;
   }
 
-  html[data-skin="thirteen-orphans"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="thirteen-orphans"] :is(
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell
-  ) {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .75rem;
-  }
+  html[data-skin="thirteen-orphans"] .home-shell,
+html[data-skin="thirteen-orphans"] .archive-shell,
+html[data-skin="thirteen-orphans"] .page-shell,
+html[data-skin="thirteen-orphans"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .75rem;
+}
 
   html[data-skin="thirteen-orphans"] .site-nav > a[data-route],
   html[data-skin="thirteen-orphans"] .skin-menu summary {
@@ -3814,21 +3532,8 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
     border-left-color: var(--to-list-meta);
   }
 
-  html[data-skin="thirteen-orphans"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="thirteen-orphans"] .record-end nav,
-  html[data-skin="thirteen-orphans"] .site-footer__inner {
+  html[data-skin="thirteen-orphans"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="thirteen-orphans"] .site-footer__links a {
-    min-height: 3.15rem;
   }
 
   html[data-skin="thirteen-orphans"] .error-code {
@@ -3840,11 +3545,10 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
 
 @media (max-width: 28rem) {
   html[data-skin="thirteen-orphans"] .site-nav,
-  html[data-skin="thirteen-orphans"] .quick-filters,
-  html[data-skin="thirteen-orphans"] .all-tags__grid,
-  html[data-skin="thirteen-orphans"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="thirteen-orphans"] .quick-filters,
+html[data-skin="thirteen-orphans"] .all-tags__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="thirteen-orphans"] .site-nav > a[data-route="source"],
   html[data-skin="thirteen-orphans"] .skin-menu {
@@ -3868,31 +3572,28 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
 }
 
 @media (forced-colors: active) {
-  html[data-skin="thirteen-orphans"] :is(
-    .site-header,
-    .site-footer,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .masthead,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .home-shell > .record-index,
-    .archive-tools,
-    .archive-groups,
-    .page-prose,
-    .article__content,
-    .record-end,
-    .record-grid > .record-index,
-    .record-row,
-    .prose .code-frame,
-    .prose .code-frame :is(pre, .highlight),
-    .prose .katex-display
-  ) {
+  html[data-skin="thirteen-orphans"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-grid > .record-index,
+.record-row,
+.prose .code-frame,
+.prose .code-frame :is(pre, .highlight),
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3901,21 +3602,18 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
     forced-color-adjust: auto;
   }
 
-  html[data-skin="thirteen-orphans"] :is(
-    .site-nav > a[data-route],
-    .skin-menu summary,
-    .skin-menu select,
-    .skin-randomizer,
-    .action,
-    .record-actions a,
-    .tag-line a,
-    .quick-filters a,
-    .pagination a,
-    .pagination span,
-    .site-footer__links a,
-    .code-frame__actions button,
-    .record-end nav a
-  ) {
+  html[data-skin="thirteen-orphans"] :is(.site-nav > a[data-route],
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.code-frame__actions button,
+.record-end nav a) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3939,12 +3637,9 @@ html[data-skin="thirteen-orphans"] .site-footer__links a:focus-visible {
     outline-offset: 3px;
   }
 
-  html[data-skin="thirteen-orphans"] :is(
-    .record-row__link,
-    .record-toc a,
-    .related-records a,
-    .site-footer__note a
-  ) {
+  html[data-skin="thirteen-orphans"] :is(.record-row__link,
+.record-toc a,
+.related-records a) {
     color: LinkText;
   }
 
@@ -3999,16 +3694,13 @@ html[data-skin="thirteen-orphans"] .archive-groups .record-row__link:focus-visib
   box-shadow: none;
 }
 
-html[data-skin="thirteen-orphans"] :is(
-  .archive-shell > .index-heading--archive,
-  .record-page > .record-head,
-  .record-grid > .article__content,
-  .page-heading,
-  .page-prose,
-  .prose .info,
-  .prose blockquote,
-  .site-footer__note
-) {
+html[data-skin="thirteen-orphans"] :is(.archive-shell > .index-heading--archive,
+.record-page > .record-head,
+.record-grid > .article__content,
+.page-heading,
+.page-prose,
+.prose .info,
+.prose blockquote) {
   border-left: 0;
 }
 
@@ -4071,32 +3763,14 @@ html[data-skin="thirteen-orphans"] :is(.prose .info, .prose blockquote) {
   border-top: 3px solid var(--to-fg);
 }
 
-html[data-skin="thirteen-orphans"] .site-footer__note {
-  padding: .75rem 0 0;
-  border: 0;
-  border-top: 2px solid var(--to-list-meta);
-}
-
-html[data-skin="thirteen-orphans"] :is(.archive-tools, .record-grid > .record-index) {
+html[data-skin="thirteen-orphans"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)) {
   max-block-size: calc(100dvh - 2rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   scroll-padding-block: .5rem;
 }
-
-html[data-skin="thirteen-orphans"] .record-facts {
-  grid-column: 1 / span 4;
-  grid-template-columns: repeat(2, minmax(9rem, 1fr));
-}
-
-html[data-skin="thirteen-orphans"] .record-page > .record-head :is(h1, .record-head__abstract, .tag-line, .record-actions) {
-  grid-column: 5 / -1;
-}
-
-@media (min-width: 44.01rem) and (max-width: 70rem) {
-  html[data-skin="thirteen-orphans"] .site-footer__links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+html[data-skin="thirteen-orphans"] .record-grid > .record-index {
+  scroll-padding-block: .5rem;
 }
 
 @media (min-width: 70.01rem) and (max-width: 84rem) {
@@ -4109,26 +3783,12 @@ html[data-skin="thirteen-orphans"] .record-page > .record-head :is(h1, .record-h
 }
 
 @media (max-width: 70rem) {
-  html[data-skin="thirteen-orphans"] .record-facts {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(9rem, 1fr));
-  }
 
-  html[data-skin="thirteen-orphans"] :is(
-    .record-grid > .article__content,
-    .record-grid > .record-index
-  ) {
-    grid-column: 1 / -1;
-  }
+  html[data-skin="thirteen-orphans"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)) {
+  max-block-size: none;
+  overflow: visible;
+}
 
-  html[data-skin="thirteen-orphans"] :is(.archive-tools, .record-grid > .record-index) {
-    max-block-size: none;
-    overflow: visible;
-  }
-
-  html[data-skin="thirteen-orphans"] .record-grid > .record-index {
-    position: static;
-  }
 }
 
 @media (max-width: 52rem) {
@@ -4158,9 +3818,6 @@ html[data-skin="thirteen-orphans"] .record-page > .record-head :is(h1, .record-h
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="thirteen-orphans"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {

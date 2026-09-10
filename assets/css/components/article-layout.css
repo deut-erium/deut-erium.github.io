@@ -1,0 +1,237 @@
+/* Article geometry owner. Load after theme-remediation.css. Skins retain
+   fonts, colors, borders and artwork; their old article track/width rules have
+   been removed. This component does not participate in print layout. */
+@media screen {
+  html .record-page {
+    --article-padding: 1.25rem;
+    --article-gap: 1.5rem;
+    --article-rail: 15rem;
+    position: relative;
+    display: block;
+    container: article-layout / inline-size;
+    box-sizing: border-box;
+    width: min(calc(100% - 2rem), calc(80ch + 21rem));
+    max-width: 86rem;
+    min-width: 0;
+    margin: 1rem auto;
+    padding: 1rem;
+    transform: none;
+    overflow: visible;
+  }
+
+  html .record-page > :is(.record-head, .record-grid, .record-end) {
+    position: relative;
+    inset: auto;
+    box-sizing: border-box;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    grid-area: auto;
+    overflow: visible;
+  }
+
+  html .record-page > .record-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    padding: var(--article-padding);
+    /* Orbiting artwork belongs inside the heading plate, not the viewport. */
+    overflow: clip;
+  }
+
+  html .record-head > :is(.record-head__key, h1, .record-head__abstract, .record-facts, .tag-line, .record-actions) {
+    position: relative;
+    inset: auto;
+    grid-area: auto;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    transform: none;
+    overflow-wrap: anywhere !important;
+  }
+
+  html .record-head > .record-facts {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  }
+
+  html .record-head > :is(.tag-line, .record-actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+  }
+
+  html .record-page > .record-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--article-rail);
+    grid-template-areas: "article rail";
+    gap: var(--article-gap);
+    align-items: start;
+    margin-block: var(--article-gap);
+    padding: 0;
+  }
+
+  html .record-grid > .article__content,
+  html .record-page > .article__content {
+    position: relative;
+    grid-area: article;
+    box-sizing: content-box;
+    width: auto;
+    min-width: 0;
+    max-width: 76ch;
+    margin: 0;
+    padding: var(--article-padding);
+    justify-self: stretch;
+    align-self: start;
+    transform: none;
+    overflow: visible;
+  }
+
+  /* Locked articles have no navigation rail or record-grid wrapper. */
+  html .record-page > .article__content {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(76ch + 2 * var(--article-padding) + 12px);
+    margin: var(--article-gap) auto;
+  }
+
+  html .record-grid > .record-index {
+    position: sticky;
+    top: 1rem;
+    display: block;
+    grid-area: rail;
+    box-sizing: border-box;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    max-height: calc(100dvh - 2rem);
+    margin: 0;
+    padding: .75rem;
+    align-self: start;
+    transform: none;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  html .record-page > .record-end {
+    padding: var(--article-padding);
+  }
+
+  /* A skin's generated label or seam must not create an implicit grid track.
+     Keep its paint and dimensions, but take it out of structural flow. */
+  html .record-page > :is(.record-head, .record-grid)::before,
+  html .record-page > :is(.record-head, .record-grid)::after {
+    position: absolute !important;
+    grid-area: auto !important;
+    pointer-events: none;
+    max-width: 100%;
+  }
+
+  /* Paragraphs use the article's measure, not a second font-dependent cap.
+     Code, math, tables, lists and callout padding keep their native rules. */
+  html .record-page .article__content > p {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  html .record-page .prose table {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Use the available article shell, not the viewport: docked-header skins
+     have less room. The flattened aside puts contents first and related last. */
+  @container article-layout (max-width: 64rem) {
+    html .record-page > .record-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "toc" "article" "related";
+    }
+
+    html .record-grid > .article__content {
+      justify-self: center;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: calc(76ch + 2 * var(--article-padding) + 12px);
+    }
+
+    html .record-grid > .record-index {
+      display: contents;
+    }
+
+    html .record-index > :is(.record-toc, .related-records) {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      max-width: 76ch;
+      margin: 0 auto;
+      padding: .75rem;
+      color: var(--article-nav-ink, var(--ink));
+      background: var(--article-nav-paper, var(--paper));
+      border: 1px solid var(--rule);
+    }
+
+    html .record-index > .record-toc { grid-area: toc; }
+    html .record-index > .related-records { grid-area: related; }
+
+    html .record-grid > .record-index::before,
+    html .record-grid > .record-index::after {
+      display: none;
+    }
+
+    /* The aside no longer paints a background when display:contents applies.
+       Use paired theme tokens on the two independent navigation panels. */
+    html .record-page .record-index > :is(.record-toc, .related-records) :is(summary, h2, a) {
+      color: inherit !important;
+      background: transparent !important;
+    }
+  }
+
+  /* The shared small-label rule otherwise puts dark muted text on this
+     skin's dark desktop contents rail. Keep its existing rail palette. */
+  html[data-skin="cut-paste-factor"] .record-grid .record-toc summary {
+    color: var(--cpf-on-control);
+  }
+
+  /* Collision Atlas's general paper token is light ink in dark mode. */
+  html[data-skin="collision-atlas"] .record-page {
+    --article-nav-ink: var(--ca-ink);
+    --article-nav-paper: var(--ca-panel);
+  }
+
+  @media (max-width: 44rem) {
+    html .record-page {
+      --article-padding: .75rem;
+      --article-gap: 1rem;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: .5rem 0;
+      border-inline-width: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    html .record-page > :is(.record-head, .record-end) {
+      padding: .75rem;
+      border-inline-width: 1px;
+    }
+
+    html .record-grid > .article__content,
+    html .record-page > .article__content {
+      width: calc(100% - 1rem);
+      padding: var(--article-padding);
+      border-inline-width: 1px !important;
+    }
+
+    html .record-index > :is(.record-toc, .related-records) {
+      width: calc(100% - 1rem);
+    }
+  }
+}

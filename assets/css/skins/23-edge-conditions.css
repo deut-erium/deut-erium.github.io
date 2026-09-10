@@ -162,10 +162,8 @@ html[data-skin="edge-conditions"] .skip-link {
 }
 
 html[data-skin="edge-conditions"] .site-header,
-html[data-skin="edge-conditions"] .site-footer,
 html[data-skin="edge-conditions"] .home-shell,
 html[data-skin="edge-conditions"] .archive-shell,
-html[data-skin="edge-conditions"] .record-page,
 html[data-skin="edge-conditions"] .page-shell,
 html[data-skin="edge-conditions"] .error-shell {
   position: relative;
@@ -181,9 +179,20 @@ html[data-skin="edge-conditions"] .error-shell {
   border-radius: 0;
   box-shadow: .55rem .6rem 0 var(--tile-ink);
 }
+html[data-skin="edge-conditions"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 3.4%, #173f4619 3.5% 3.67%, transparent 3.77% 96.23%, #173f4619 96.33% 96.5%, transparent 96.6%),
+    linear-gradient(#173f460e 2px, transparent 2px),
+    linear-gradient(90deg, #173f460e 2px, transparent 2px);
+  background-size: auto, 3rem 3rem, 3rem 3rem;
+  border: 3px solid var(--tile-ink);
+  border-radius: 0;
+  box-shadow: .55rem .6rem 0 var(--tile-ink);
+}
 
-html[data-skin="edge-conditions"] .site-header,
-html[data-skin="edge-conditions"] .site-footer {
+html[data-skin="edge-conditions"] .site-header {
   color: var(--tile-paper);
   background-color: var(--tile-ink);
   background-image:
@@ -197,21 +206,14 @@ html[data-skin="edge-conditions"] .site-header {
   border-bottom: .75rem solid var(--tile-gold);
 }
 
-html[data-skin="edge-conditions"] .site-footer {
-  margin-bottom: 1.4rem;
-  border-top: .75rem solid var(--tile-red);
-}
-
 html[data-skin="edge-conditions"] .home-shell,
 html[data-skin="edge-conditions"] .archive-shell,
-html[data-skin="edge-conditions"] .record-page,
 html[data-skin="edge-conditions"] .page-shell,
 html[data-skin="edge-conditions"] .error-shell {
   padding: clamp(1.1rem, 3vw, 2.8rem);
 }
 
-html[data-skin="edge-conditions"] .site-header::before,
-html[data-skin="edge-conditions"] .site-footer::before {
+html[data-skin="edge-conditions"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -224,8 +226,7 @@ html[data-skin="edge-conditions"] .site-footer::before {
   border-inline: 1px solid #f3e6c866;
 }
 
-html[data-skin="edge-conditions"] .site-header__inner,
-html[data-skin="edge-conditions"] .site-footer__inner {
+html[data-skin="edge-conditions"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: 1rem 2rem;
@@ -273,8 +274,7 @@ html[data-skin="edge-conditions"] .record-actions a,
 html[data-skin="edge-conditions"] .tag-line a,
 html[data-skin="edge-conditions"] .quick-filters a,
 html[data-skin="edge-conditions"] .pagination a,
-html[data-skin="edge-conditions"] .pagination span,
-html[data-skin="edge-conditions"] .site-footer__links a {
+html[data-skin="edge-conditions"] .pagination span {
   min-height: 2.65rem;
   color: var(--tile-paper);
   background: var(--tile-ink);
@@ -319,9 +319,7 @@ html[data-skin="edge-conditions"] .tag-line a:focus-visible,
 html[data-skin="edge-conditions"] .quick-filters a:hover,
 html[data-skin="edge-conditions"] .quick-filters a:focus-visible,
 html[data-skin="edge-conditions"] .pagination a:hover,
-html[data-skin="edge-conditions"] .pagination a:focus-visible,
-html[data-skin="edge-conditions"] .site-footer__links a:hover,
-html[data-skin="edge-conditions"] .site-footer__links a:focus-visible {
+html[data-skin="edge-conditions"] .pagination a:focus-visible {
   color: var(--tile-paper);
   background: var(--tile-red-deep);
   border-color: var(--tile-gold);
@@ -370,19 +368,28 @@ html[data-skin="edge-conditions"] .skin-randomizer {
   border-color: var(--tile-ink);
 }
 
-html[data-skin="edge-conditions"] .masthead,
-html[data-skin="edge-conditions"] .record-grid {
+html[data-skin="edge-conditions"] .masthead {
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 html[data-skin="edge-conditions"] .masthead__copy,
 html[data-skin="edge-conditions"] .index-heading,
 html[data-skin="edge-conditions"] .page-heading,
-html[data-skin="edge-conditions"] .record-head,
 html[data-skin="edge-conditions"] .error-shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: var(--tile-ink);
+  background:
+    linear-gradient(90deg, transparent 0 4%, #173f461c 4.1% 4.28%, transparent 4.38% 95.62%, #173f461c 95.72% 95.9%, transparent 96%),
+    var(--tile-paper);
+  border: 6px solid var(--tile-ink);
+  border-color: var(--tile-red) var(--tile-gold) var(--tile-teal) var(--tile-ink);
+  border-radius: 0;
+  box-shadow: .5rem .55rem 0 var(--tile-ink);
+}
+html[data-skin="edge-conditions"] .record-head {
+  isolation: isolate;
   color: var(--tile-ink);
   background:
     linear-gradient(90deg, transparent 0 4%, #173f461c 4.1% 4.28%, transparent 4.38% 95.62%, #173f461c 95.72% 95.9%, transparent 96%),
@@ -445,9 +452,14 @@ html[data-skin="edge-conditions"] .related-records h2 {
 
 html[data-skin="edge-conditions"] .masthead__lede,
 html[data-skin="edge-conditions"] .index-heading > p:last-child,
-html[data-skin="edge-conditions"] .page-heading > p:last-child,
-html[data-skin="edge-conditions"] .record-head__abstract {
+html[data-skin="edge-conditions"] .page-heading > p:last-child {
   max-width: 56ch;
+  font-family: var(--body);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.58;
+}
+html[data-skin="edge-conditions"] .record-head__abstract {
   font-family: var(--body);
   font-size: 1.12rem;
   font-weight: 700;
@@ -1114,68 +1126,29 @@ html[data-skin="edge-conditions"] .error-shell > p {
   color: var(--tile-ink);
 }
 
-html[data-skin="edge-conditions"] .site-footer__note,
-html[data-skin="edge-conditions"] .site-footer a {
-  color: var(--tile-paper);
-}
-
-html[data-skin="edge-conditions"][data-theme="dark"] .site-footer__note {
-  color: var(--tile-ink);
-}
-
-html[data-skin="edge-conditions"] .site-footer__note a:hover,
-html[data-skin="edge-conditions"] .site-footer__note a:focus-visible {
-  color: var(--tile-gold);
-}
-
-@media (min-width: 76rem) {
-  html[data-skin="edge-conditions"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="edge-conditions"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="edge-conditions"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 44rem) {
   html[data-skin="edge-conditions"] .site-header,
-  html[data-skin="edge-conditions"] .site-footer,
-  html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page,
-  html[data-skin="edge-conditions"] .page-shell,
-  html[data-skin="edge-conditions"] .error-shell {
+html[data-skin="edge-conditions"] .home-shell,
+html[data-skin="edge-conditions"] .archive-shell,
+html[data-skin="edge-conditions"] .record-page,
+html[data-skin="edge-conditions"] .page-shell,
+html[data-skin="edge-conditions"] .error-shell {
     border-width: 3px;
     box-shadow: 0 0 0 2px var(--tile-paper);
   }
 
-  html[data-skin="edge-conditions"] .site-header,
-  html[data-skin="edge-conditions"] .site-footer {
+  html[data-skin="edge-conditions"] .site-header {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  html[data-skin="edge-conditions"] .site-header::before,
-  html[data-skin="edge-conditions"] .site-footer::before {
+  html[data-skin="edge-conditions"] .site-header::before {
     left: auto;
     right: 4%;
     width: .65rem;
   }
 
-  html[data-skin="edge-conditions"] .site-header__inner,
-  html[data-skin="edge-conditions"] .site-footer__inner {
+  html[data-skin="edge-conditions"] .site-header__inner {
     padding: .9rem;
   }
 
@@ -1270,26 +1243,25 @@ html[data-skin="edge-conditions"] .site-footer__note a:focus-visible {
 
 @media (forced-colors: active) {
   html[data-skin="edge-conditions"] .site-header,
-  html[data-skin="edge-conditions"] .site-footer,
-  html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page,
-  html[data-skin="edge-conditions"] .page-shell,
-  html[data-skin="edge-conditions"] .error-shell,
-  html[data-skin="edge-conditions"] .masthead__copy,
-  html[data-skin="edge-conditions"] .index-heading,
-  html[data-skin="edge-conditions"] .page-heading,
-  html[data-skin="edge-conditions"] .record-head,
-  html[data-skin="edge-conditions"] .home-shell > .record-index,
-  html[data-skin="edge-conditions"] .archive-tools,
-  html[data-skin="edge-conditions"] .archive-groups,
-  html[data-skin="edge-conditions"] .page-prose,
-  html[data-skin="edge-conditions"] .article__content,
-  html[data-skin="edge-conditions"] .record-end,
-  html[data-skin="edge-conditions"] .record-grid > .record-index,
-  html[data-skin="edge-conditions"] .code-frame,
-  html[data-skin="edge-conditions"] .code-frame__bar,
-  html[data-skin="edge-conditions"] .code-frame__status {
+html[data-skin="edge-conditions"] .home-shell,
+html[data-skin="edge-conditions"] .archive-shell,
+html[data-skin="edge-conditions"] .record-page,
+html[data-skin="edge-conditions"] .page-shell,
+html[data-skin="edge-conditions"] .error-shell,
+html[data-skin="edge-conditions"] .masthead__copy,
+html[data-skin="edge-conditions"] .index-heading,
+html[data-skin="edge-conditions"] .page-heading,
+html[data-skin="edge-conditions"] .record-head,
+html[data-skin="edge-conditions"] .home-shell > .record-index,
+html[data-skin="edge-conditions"] .archive-tools,
+html[data-skin="edge-conditions"] .archive-groups,
+html[data-skin="edge-conditions"] .page-prose,
+html[data-skin="edge-conditions"] .article__content,
+html[data-skin="edge-conditions"] .record-end,
+html[data-skin="edge-conditions"] .record-grid > .record-index,
+html[data-skin="edge-conditions"] .code-frame,
+html[data-skin="edge-conditions"] .code-frame__bar,
+html[data-skin="edge-conditions"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1325,8 +1297,7 @@ html[data-skin="edge-conditions"] .site-footer__note a:focus-visible {
 }
 
 /* Site topology */
-html[data-skin="edge-conditions"] .site-header,
-html[data-skin="edge-conditions"] .site-footer {
+html[data-skin="edge-conditions"] .site-header {
   width: min(96rem, calc(100% - 2rem));
   margin-inline: auto;
 }
@@ -1465,8 +1436,7 @@ html[data-skin="edge-conditions"] .skin-randomizer {
 }
 
 html[data-skin="edge-conditions"] .home-shell,
-html[data-skin="edge-conditions"] .archive-shell,
-html[data-skin="edge-conditions"] .record-page {
+html[data-skin="edge-conditions"] .archive-shell {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: clamp(1rem, 2.2vw, 2rem);
@@ -1636,13 +1606,6 @@ html[data-skin="edge-conditions"] .archive-empty {
   grid-column: 1 / -1;
 }
 
-html[data-skin="edge-conditions"] .record-page > .record-head {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 2;
-  align-self: start;
-  padding: clamp(1.15rem, 2.4vw, 2rem);
-}
-
 html[data-skin="edge-conditions"] .record-head h1 {
   font-size: clamp(2.2rem, 4vw, 4.25rem);
 }
@@ -1654,7 +1617,6 @@ html[data-skin="edge-conditions"] .record-head__abstract {
 
 html[data-skin="edge-conditions"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 html[data-skin="edge-conditions"] .record-actions,
@@ -1673,43 +1635,6 @@ html[data-skin="edge-conditions"] .tag-line a {
   text-align: center;
 }
 
-html[data-skin="edge-conditions"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 5 / -1;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem);
-  grid-template-areas: "article index";
-  align-items: start;
-  gap: clamp(1rem, 2vw, 1.75rem);
-  min-width: 0;
-}
-
-html[data-skin="edge-conditions"] .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3rem);
-}
-
-html[data-skin="edge-conditions"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-area: index;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
-}
-
-html[data-skin="edge-conditions"] .record-page > .record-end {
-  display: grid;
-  grid-column: 5 / -1;
-  grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
-  gap: 1rem;
-  align-items: center;
-  padding: 1.2rem;
-}
-
 html[data-skin="edge-conditions"] .record-end > p {
   margin: 0;
 }
@@ -1720,63 +1645,23 @@ html[data-skin="edge-conditions"] .record-end nav {
   gap: .75rem;
 }
 
-html[data-skin="edge-conditions"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, .85fr);
-  gap: 1.25rem;
-  align-items: center;
-}
-
-html[data-skin="edge-conditions"] .site-footer__note {
-  max-width: 44ch;
-  margin: 0;
-  padding: 1rem;
-  border-left: .55rem solid var(--tile-gold);
-}
-
-html[data-skin="edge-conditions"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .65rem;
-}
-
-html[data-skin="edge-conditions"] .site-footer__links a {
-  display: grid;
-  place-items: center;
-  min-height: 3.1rem;
-  padding: .5rem;
-  text-align: center;
-}
-
 @media (max-width: 70rem) {
   html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="edge-conditions"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="edge-conditions"] .home-shell > .masthead,
-  html[data-skin="edge-conditions"] .home-shell > .masthead ~ .record-index,
-  html[data-skin="edge-conditions"] .home-shell > .index-heading,
-  html[data-skin="edge-conditions"] .home-shell > .index-heading ~ .record-index,
-  html[data-skin="edge-conditions"] .archive-shell > .index-heading--archive,
-  html[data-skin="edge-conditions"] .archive-tools,
-  html[data-skin="edge-conditions"] .archive-groups,
-  html[data-skin="edge-conditions"] .archive-empty,
-  html[data-skin="edge-conditions"] .record-page > .record-head,
-  html[data-skin="edge-conditions"] .record-page > .record-grid,
-  html[data-skin="edge-conditions"] .record-page > .record-end {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="edge-conditions"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
-  }
-
-  html[data-skin="edge-conditions"] .record-page > .record-head {
-    position: static;
-  }
+html[data-skin="edge-conditions"] .home-shell > .masthead ~ .record-index,
+html[data-skin="edge-conditions"] .home-shell > .index-heading,
+html[data-skin="edge-conditions"] .home-shell > .index-heading ~ .record-index,
+html[data-skin="edge-conditions"] .archive-shell > .index-heading--archive,
+html[data-skin="edge-conditions"] .archive-tools,
+html[data-skin="edge-conditions"] .archive-groups,
+html[data-skin="edge-conditions"] .archive-empty {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="edge-conditions"] .archive-shell > .index-heading--archive {
     max-width: 40rem;
@@ -1785,14 +1670,11 @@ html[data-skin="edge-conditions"] .site-footer__links a {
 
 @media (max-width: 44rem) {
   html[data-skin="edge-conditions"] .site-header__inner,
-  html[data-skin="edge-conditions"] .site-footer__inner,
-  html[data-skin="edge-conditions"] .home-shell > .masthead,
-  html[data-skin="edge-conditions"] .archive-tools,
-  html[data-skin="edge-conditions"] .record-page > .record-grid,
-  html[data-skin="edge-conditions"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-  }
+html[data-skin="edge-conditions"] .home-shell > .masthead,
+html[data-skin="edge-conditions"] .archive-tools {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: none;
+}
 
   html[data-skin="edge-conditions"] .site-brand {
     border-right: 0;
@@ -1818,14 +1700,9 @@ html[data-skin="edge-conditions"] .site-footer__links a {
     grid-area: auto;
   }
 
-  html[data-skin="edge-conditions"] .masthead__copy,
-  html[data-skin="edge-conditions"] .record-grid > .article__content,
-  html[data-skin="edge-conditions"] .record-grid > .record-index {
-    grid-area: auto;
-  }
-  html[data-skin="edge-conditions"] .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="edge-conditions"] .masthead__copy {
+  grid-area: auto;
+}
 
   html[data-skin="edge-conditions"] .archive-search {
     padding-right: 0;
@@ -1842,26 +1719,17 @@ html[data-skin="edge-conditions"] .site-footer__links a {
     grid-column: 1;
   }
 
-  html[data-skin="edge-conditions"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="edge-conditions"] .site-footer__note {
-    max-width: none;
-  }
 }
 
 @media (max-width: 30rem) {
   html[data-skin="edge-conditions"] .site-nav,
-  html[data-skin="edge-conditions"] .quick-filters,
-  html[data-skin="edge-conditions"] .all-tags__grid,
-  html[data-skin="edge-conditions"] .record-facts,
-  html[data-skin="edge-conditions"] .record-actions,
-  html[data-skin="edge-conditions"] .tag-line,
-  html[data-skin="edge-conditions"] .record-end nav,
-  html[data-skin="edge-conditions"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="edge-conditions"] .quick-filters,
+html[data-skin="edge-conditions"] .all-tags__grid,
+html[data-skin="edge-conditions"] .record-actions,
+html[data-skin="edge-conditions"] .tag-line,
+html[data-skin="edge-conditions"] .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="edge-conditions"] .site-nav {
     grid-template-areas:
@@ -1875,11 +1743,10 @@ html[data-skin="edge-conditions"] .site-footer__links a {
   }
 
   html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page {
-    width: min(100% - 1rem, 96rem);
-    gap: .85rem;
-  }
+html[data-skin="edge-conditions"] .archive-shell {
+  width: min(100% - 1rem, 96rem);
+  gap: .85rem;
+}
 
   html[data-skin="edge-conditions"] .home-shell > .record-index .section-heading,
   html[data-skin="edge-conditions"] .archive-year > header {
@@ -2107,8 +1974,6 @@ html[data-skin="edge-conditions"] .tag-line a,
 html[data-skin="edge-conditions"] .quick-filters a,
 html[data-skin="edge-conditions"] .pagination a,
 html[data-skin="edge-conditions"] .pagination span,
-html[data-skin="edge-conditions"] .site-footer__note,
-html[data-skin="edge-conditions"] .site-footer__links a,
 html[data-skin="edge-conditions"] .eyebrow,
 html[data-skin="edge-conditions"] .record-head__key,
 html[data-skin="edge-conditions"] .archive-search label,
@@ -2138,9 +2003,17 @@ html[data-skin="edge-conditions"] .record-end nav span {
 html[data-skin="edge-conditions"] .masthead h1,
 html[data-skin="edge-conditions"] .index-heading h1,
 html[data-skin="edge-conditions"] .page-heading h1,
-html[data-skin="edge-conditions"] .record-head h1,
 html[data-skin="edge-conditions"] .error-shell h1 {
   max-width: 100%;
+  color: var(--ec-heading);
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+html[data-skin="edge-conditions"] .record-head h1 {
   color: var(--ec-heading);
   font-family: var(--display);
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -2174,13 +2047,20 @@ html[data-skin="edge-conditions"] .prose h3,
 html[data-skin="edge-conditions"] .prose h4,
 html[data-skin="edge-conditions"] .prose h5,
 html[data-skin="edge-conditions"] .prose h6 {
-  max-width: 100%;
   color: var(--ec-heading);
   font-family: var(--display);
   font-weight: 800;
   letter-spacing: -.035em;
   line-height: 1.1;
   overflow-wrap: anywhere;
+}
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h1,
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h2,
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h3,
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h4,
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h5,
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) h6 {
+  max-width: 100%;
 }
 
 html[data-skin="edge-conditions"] .prose h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
@@ -2190,8 +2070,7 @@ html[data-skin="edge-conditions"] .prose h4 { font-size: 1.1875rem; }
 html[data-skin="edge-conditions"] .prose h5,
 html[data-skin="edge-conditions"] .prose h6 { font-size: 1rem; }
 
-html[data-skin="edge-conditions"] .site-header,
-html[data-skin="edge-conditions"] .site-footer {
+html[data-skin="edge-conditions"] .site-header {
   width: min(96rem, calc(100% - 2rem));
   margin: 1rem auto;
   overflow: visible;
@@ -2206,12 +2085,7 @@ html[data-skin="edge-conditions"] .site-header {
   border-bottom: .55rem solid var(--ec-edge-gold);
 }
 
-html[data-skin="edge-conditions"] .site-footer {
-  border-top: .55rem solid var(--ec-edge-red);
-}
-
-html[data-skin="edge-conditions"] .site-header::before,
-html[data-skin="edge-conditions"] .site-footer::before {
+html[data-skin="edge-conditions"] .site-header::before {
   display: none;
 }
 
@@ -2285,8 +2159,7 @@ html[data-skin="edge-conditions"] .action,
 html[data-skin="edge-conditions"] .record-actions a,
 html[data-skin="edge-conditions"] .tag-line a,
 html[data-skin="edge-conditions"] .quick-filters a,
-html[data-skin="edge-conditions"] .pagination a,
-html[data-skin="edge-conditions"] .site-footer__links a {
+html[data-skin="edge-conditions"] .pagination a {
   display: grid;
   min-height: 2.75rem;
   padding: .55rem .65rem;
@@ -2342,7 +2215,6 @@ html[data-skin="edge-conditions"] .record-actions a:hover,
 html[data-skin="edge-conditions"] .tag-line a:hover,
 html[data-skin="edge-conditions"] .quick-filters a:hover,
 html[data-skin="edge-conditions"] .pagination a:hover,
-html[data-skin="edge-conditions"] .site-footer__links a:hover,
 html[data-skin="edge-conditions"] .code-frame__actions button:hover {
   color: var(--ec-control-hover-fg);
   background: var(--ec-control-hover-bg);
@@ -2359,7 +2231,6 @@ html[data-skin="edge-conditions"] .record-actions a:focus-visible,
 html[data-skin="edge-conditions"] .tag-line a:focus-visible,
 html[data-skin="edge-conditions"] .quick-filters a:focus-visible,
 html[data-skin="edge-conditions"] .pagination a:focus-visible,
-html[data-skin="edge-conditions"] .site-footer__links a:focus-visible,
 html[data-skin="edge-conditions"] .code-frame__actions button:focus-visible {
   color: var(--ec-control-focus-fg);
   background: var(--ec-control-focus-bg);
@@ -2496,7 +2367,6 @@ html[data-skin="edge-conditions"] .skin-randomizer {
 
 html[data-skin="edge-conditions"] .home-shell,
 html[data-skin="edge-conditions"] .archive-shell,
-html[data-skin="edge-conditions"] .record-page,
 html[data-skin="edge-conditions"] .page-shell,
 html[data-skin="edge-conditions"] .error-shell {
   display: grid;
@@ -2513,18 +2383,21 @@ html[data-skin="edge-conditions"] .error-shell {
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="edge-conditions"] .record-page {
+  color: var(--ec-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 
 html[data-skin="edge-conditions"] .masthead,
 html[data-skin="edge-conditions"] .index-heading,
 html[data-skin="edge-conditions"] .page-heading,
-html[data-skin="edge-conditions"] .record-head,
 html[data-skin="edge-conditions"] .home-shell > .record-index,
 html[data-skin="edge-conditions"] .archive-tools,
 html[data-skin="edge-conditions"] .archive-year,
-html[data-skin="edge-conditions"] .article__content,
-html[data-skin="edge-conditions"] .page-prose,
-html[data-skin="edge-conditions"] .record-end,
-html[data-skin="edge-conditions"] .record-grid > .record-index {
+html[data-skin="edge-conditions"] .page-prose {
   min-width: 0;
   overflow: visible;
   color: var(--ec-ink);
@@ -2536,6 +2409,24 @@ html[data-skin="edge-conditions"] .record-grid > .record-index {
   border-left: .45rem solid var(--ec-ink);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="edge-conditions"] .record-head,
+html[data-skin="edge-conditions"] .article__content,
+html[data-skin="edge-conditions"] .record-end,
+html[data-skin="edge-conditions"] .record-grid > .record-index {
+  color: var(--ec-ink);
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-ink);
+  border-top: .45rem solid var(--ec-edge-red);
+  border-right: .45rem solid var(--ec-edge-teal);
+  border-bottom: .45rem solid var(--ec-edge-gold);
+  border-left: .45rem solid var(--ec-ink);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="edge-conditions"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  overflow: visible;
 }
 
 html[data-skin="edge-conditions"] .masthead::before,
@@ -2587,9 +2478,13 @@ html[data-skin="edge-conditions"] .archive-year > header span {
 
 html[data-skin="edge-conditions"] .masthead__lede,
 html[data-skin="edge-conditions"] .index-heading > p:last-child,
-html[data-skin="edge-conditions"] .page-heading > p:last-child,
-html[data-skin="edge-conditions"] .record-head__abstract {
+html[data-skin="edge-conditions"] .page-heading > p:last-child {
   max-width: 62ch;
+  font-size: 1.1875rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+html[data-skin="edge-conditions"] .record-head__abstract {
   font-size: 1.1875rem;
   font-weight: 600;
   line-height: 1.55;
@@ -2968,13 +2863,6 @@ html[data-skin="edge-conditions"] .archive-empty {
   box-shadow: none;
 }
 
-html[data-skin="edge-conditions"] .record-page > .record-head {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 2;
-  align-self: start;
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-}
-
 html[data-skin="edge-conditions"] .record-head__key {
   display: flex;
   flex-wrap: wrap;
@@ -2990,7 +2878,6 @@ html[data-skin="edge-conditions"] .record-head__abstract {
 
 html[data-skin="edge-conditions"] .record-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .55rem;
   margin: 1rem 0 0;
   padding-top: 1rem;
@@ -3053,32 +2940,7 @@ html[data-skin="edge-conditions"] .tag-line a[aria-current="true"]:focus-visible
   outline-color: var(--ec-focus-selected);
 }
 
-html[data-skin="edge-conditions"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 5 / -1;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-  grid-template-areas: "article index";
-  gap: clamp(1rem, 2vw, 1.5rem);
-  align-items: start;
-}
-
-html[data-skin="edge-conditions"] .record-grid > .article__content {
-  grid-area: article;
-  width: 100%;
-  max-width: 68ch;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  justify-self: start;
-}
-
 html[data-skin="edge-conditions"] .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-area: index;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--ec-paper);
   background: var(--ec-canvas);
   border-color: var(--ec-paper-low);
@@ -3126,17 +2988,6 @@ html[data-skin="edge-conditions"] .related-records h2 {
   color: var(--ec-paper);
   font-size: 1.5rem;
   text-shadow: none;
-}
-
-html[data-skin="edge-conditions"] .record-page > .record-end {
-  display: grid;
-  grid-column: 5 / -1;
-  grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
-  gap: 1rem;
-  align-items: center;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
 }
 
 html[data-skin="edge-conditions"] .record-end > p {
@@ -3482,11 +3333,13 @@ html[data-skin="edge-conditions"] .prose tr:nth-child(even) td {
 
 html[data-skin="edge-conditions"] .prose table {
   display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+html[data-skin="edge-conditions"] .prose:not(:where(.record-page, .record-page *)) table {
   width: max-content;
   min-width: 100%;
   max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 html[data-skin="edge-conditions"] .prose img:not(.emoji) {
@@ -3562,115 +3415,48 @@ html[data-skin="edge-conditions"] .error-shell > nav {
   gap: .65rem;
 }
 
-html[data-skin="edge-conditions"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="edge-conditions"] .site-footer__note {
-  grid-column: 1 / span 9;
-  max-width: none;
-  margin: 0;
-  padding-left: .85rem;
-  color: var(--ec-paper);
-  border-left: .35rem solid var(--ec-edge-gold);
-  font-family: var(--body);
-  line-height: 1.45;
-}
-
-html[data-skin="edge-conditions"] .site-footer__note a {
-  color: var(--ec-edge-gold);
-  font-weight: 700;
-}
-
-html[data-skin="edge-conditions"][data-theme="dark"] .site-footer__note {
-  color: var(--tile-ink);
-}
-
-html[data-skin="edge-conditions"] .site-footer__note a:hover,
-html[data-skin="edge-conditions"] .site-footer__note a:focus-visible {
-  color: var(--ec-paper);
-}
-
-html[data-skin="edge-conditions"] .site-footer__note a:focus-visible {
-  outline-color: var(--ec-focus-control);
-}
-
-html[data-skin="edge-conditions"] .site-footer__links {
-  display: grid;
-  grid-column: 10 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-  justify-content: stretch;
-}
-
-html[data-skin="edge-conditions"] .site-footer__links a {
-  min-height: 2.75rem;
-}
-
 @media (max-width: 76rem) {
   html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page,
-  html[data-skin="edge-conditions"] .page-shell,
-  html[data-skin="edge-conditions"] .error-shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="edge-conditions"] .archive-shell,
+html[data-skin="edge-conditions"] .page-shell,
+html[data-skin="edge-conditions"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="edge-conditions"] .home-shell > .masthead,
-  html[data-skin="edge-conditions"] .home-shell > .masthead ~ .record-index,
-  html[data-skin="edge-conditions"] .home-shell > .index-heading,
-  html[data-skin="edge-conditions"] .home-shell > .index-heading ~ .record-index,
-  html[data-skin="edge-conditions"] .archive-shell > .index-heading--archive,
-  html[data-skin="edge-conditions"] .archive-tools,
-  html[data-skin="edge-conditions"] .archive-groups,
-  html[data-skin="edge-conditions"] .archive-empty,
-  html[data-skin="edge-conditions"] .record-page > .record-head,
-  html[data-skin="edge-conditions"] .record-page > .record-grid,
-  html[data-skin="edge-conditions"] .record-page > .record-end,
-  html[data-skin="edge-conditions"] .page-shell > .page-heading,
-  html[data-skin="edge-conditions"] .page-shell > .page-prose,
-  html[data-skin="edge-conditions"] .error-shell > .eyebrow,
-  html[data-skin="edge-conditions"] .error-shell > h1,
-  html[data-skin="edge-conditions"] .error-shell > p:not(.eyebrow),
-  html[data-skin="edge-conditions"] .error-shell > nav {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  html[data-skin="edge-conditions"] .record-grid > .record-index {
-    position: static;
-  }
+html[data-skin="edge-conditions"] .home-shell > .masthead ~ .record-index,
+html[data-skin="edge-conditions"] .home-shell > .index-heading,
+html[data-skin="edge-conditions"] .home-shell > .index-heading ~ .record-index,
+html[data-skin="edge-conditions"] .archive-shell > .index-heading--archive,
+html[data-skin="edge-conditions"] .archive-tools,
+html[data-skin="edge-conditions"] .archive-groups,
+html[data-skin="edge-conditions"] .archive-empty,
+html[data-skin="edge-conditions"] .page-shell > .page-heading,
+html[data-skin="edge-conditions"] .page-shell > .page-prose,
+html[data-skin="edge-conditions"] .error-shell > .eyebrow,
+html[data-skin="edge-conditions"] .error-shell > h1,
+html[data-skin="edge-conditions"] .error-shell > p:not(.eyebrow),
+html[data-skin="edge-conditions"] .error-shell > nav {
+  grid-column: 1;
+  grid-row: auto;
+}
 
-  html[data-skin="edge-conditions"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="edge-conditions"] .record-grid > .article__content,
   html[data-skin="edge-conditions"] .page-shell > .page-prose {
-    max-width: 68ch;
-  }
+  max-width: 68ch;
+}
 }
 
 @media (max-width: 44rem) {
   html[data-skin="edge-conditions"] .site-header,
-  html[data-skin="edge-conditions"] .site-footer,
-  html[data-skin="edge-conditions"] .home-shell,
-  html[data-skin="edge-conditions"] .archive-shell,
-  html[data-skin="edge-conditions"] .record-page,
-  html[data-skin="edge-conditions"] .page-shell,
-  html[data-skin="edge-conditions"] .error-shell {
-    width: min(100% - 1rem, 96rem);
-    margin: .5rem auto;
-  }
+html[data-skin="edge-conditions"] .home-shell,
+html[data-skin="edge-conditions"] .archive-shell,
+html[data-skin="edge-conditions"] .page-shell,
+html[data-skin="edge-conditions"] .error-shell {
+  width: min(100% - 1rem, 96rem);
+  margin: .5rem auto;
+}
 
-  html[data-skin="edge-conditions"] .site-header__inner,
-  html[data-skin="edge-conditions"] .site-footer__inner {
+  html[data-skin="edge-conditions"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
     padding: .75rem;
   }
@@ -3720,23 +3506,15 @@ html[data-skin="edge-conditions"] .site-footer__links a {
     border-bottom: 1px solid var(--ec-rule);
   }
 
-
-  html[data-skin="edge-conditions"] .record-page > .record-end,
   html[data-skin="edge-conditions"] .record-end nav {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="edge-conditions"] .error-shell > .eyebrow,
-  html[data-skin="edge-conditions"] .error-shell > h1,
-  html[data-skin="edge-conditions"] .error-shell > p:not(.eyebrow),
-  html[data-skin="edge-conditions"] .error-shell > nav,
-  html[data-skin="edge-conditions"] .site-footer__note,
-  html[data-skin="edge-conditions"] .site-footer__links {
+html[data-skin="edge-conditions"] .error-shell > h1,
+html[data-skin="edge-conditions"] .error-shell > p:not(.eyebrow),
+html[data-skin="edge-conditions"] .error-shell > nav {
     grid-column: 1;
-  }
-
-  html[data-skin="edge-conditions"] .site-footer__links {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   html[data-skin="edge-conditions"] .section-heading,
@@ -3752,13 +3530,11 @@ html[data-skin="edge-conditions"] .site-footer__links a {
 
 @media (max-width: 30rem) {
   html[data-skin="edge-conditions"] .skin-menu__panel,
-  html[data-skin="edge-conditions"] .record-facts,
-  html[data-skin="edge-conditions"] .record-actions,
-  html[data-skin="edge-conditions"] .tag-line,
-  html[data-skin="edge-conditions"] .site-footer__links,
-  html[data-skin="edge-conditions"] .record-end nav {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="edge-conditions"] .record-actions,
+html[data-skin="edge-conditions"] .tag-line,
+html[data-skin="edge-conditions"] .record-end nav {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="edge-conditions"] .skin-menu select,
   html[data-skin="edge-conditions"] .skin-randomizer {
@@ -3785,26 +3561,25 @@ html[data-skin="edge-conditions"] .site-footer__links a {
 
 @media (forced-colors: active) {
   html[data-skin="edge-conditions"] body,
-  html[data-skin="edge-conditions"] .site-header,
-  html[data-skin="edge-conditions"] .site-footer,
-  html[data-skin="edge-conditions"] .masthead__copy,
-  html[data-skin="edge-conditions"] .index-heading,
-  html[data-skin="edge-conditions"] .page-heading,
-  html[data-skin="edge-conditions"] .record-head,
-  html[data-skin="edge-conditions"] .home-shell > .record-index,
-  html[data-skin="edge-conditions"] .archive-tools,
-  html[data-skin="edge-conditions"] .archive-year,
-  html[data-skin="edge-conditions"] .article__content,
-  html[data-skin="edge-conditions"] .page-prose,
-  html[data-skin="edge-conditions"] .record-end,
-  html[data-skin="edge-conditions"] .record-grid > .record-index,
-  html[data-skin="edge-conditions"] .error-shell,
-  html[data-skin="edge-conditions"] .prose .info,
-  html[data-skin="edge-conditions"] .prose blockquote,
-  html[data-skin="edge-conditions"] .prose .katex-display,
-  html[data-skin="edge-conditions"] .prose .code-frame,
-  html[data-skin="edge-conditions"] .code-frame__bar,
-  html[data-skin="edge-conditions"] .code-frame__status {
+html[data-skin="edge-conditions"] .site-header,
+html[data-skin="edge-conditions"] .masthead__copy,
+html[data-skin="edge-conditions"] .index-heading,
+html[data-skin="edge-conditions"] .page-heading,
+html[data-skin="edge-conditions"] .record-head,
+html[data-skin="edge-conditions"] .home-shell > .record-index,
+html[data-skin="edge-conditions"] .archive-tools,
+html[data-skin="edge-conditions"] .archive-year,
+html[data-skin="edge-conditions"] .article__content,
+html[data-skin="edge-conditions"] .page-prose,
+html[data-skin="edge-conditions"] .record-end,
+html[data-skin="edge-conditions"] .record-grid > .record-index,
+html[data-skin="edge-conditions"] .error-shell,
+html[data-skin="edge-conditions"] .prose .info,
+html[data-skin="edge-conditions"] .prose blockquote,
+html[data-skin="edge-conditions"] .prose .katex-display,
+html[data-skin="edge-conditions"] .prose .code-frame,
+html[data-skin="edge-conditions"] .code-frame__bar,
+html[data-skin="edge-conditions"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3814,16 +3589,15 @@ html[data-skin="edge-conditions"] .site-footer__links a {
   }
 
   html[data-skin="edge-conditions"] .site-nav a,
-  html[data-skin="edge-conditions"] .theme-toggle,
-  html[data-skin="edge-conditions"] .skin-menu summary,
-  html[data-skin="edge-conditions"] .skin-randomizer,
-  html[data-skin="edge-conditions"] .action,
-  html[data-skin="edge-conditions"] .record-actions a,
-  html[data-skin="edge-conditions"] .tag-line a,
-  html[data-skin="edge-conditions"] .quick-filters a,
-  html[data-skin="edge-conditions"] .pagination a,
-  html[data-skin="edge-conditions"] .site-footer__links a,
-  html[data-skin="edge-conditions"] .code-frame__actions button {
+html[data-skin="edge-conditions"] .theme-toggle,
+html[data-skin="edge-conditions"] .skin-menu summary,
+html[data-skin="edge-conditions"] .skin-randomizer,
+html[data-skin="edge-conditions"] .action,
+html[data-skin="edge-conditions"] .record-actions a,
+html[data-skin="edge-conditions"] .tag-line a,
+html[data-skin="edge-conditions"] .quick-filters a,
+html[data-skin="edge-conditions"] .pagination a,
+html[data-skin="edge-conditions"] .code-frame__actions button {
     color: ButtonText;
     background: ButtonFace;
     background-image: none;
@@ -3848,21 +3622,44 @@ html[data-skin="edge-conditions"] .site-footer__links a {
 }
 
 /* Cycle two corrective pass: Edge Conditions */
-html[data-skin="edge-conditions"][data-skin] :is(
-  .skip-link, .site-brand__scope, .site-nav a, .theme-toggle,
-  .skin-menu summary, .skin-menu summary::after, .skin-menu__panel label,
-  .skin-menu select, .skin-randomizer, .action, .record-actions a,
-  .tag-line a, .quick-filters a, .pagination a, .pagination span,
-  .site-footer__note, .site-footer__links a, .eyebrow, .record-head__key,
-  .archive-search label, .archive-search input, .all-tags summary,
-  .all-tags__grid small, .record-toc summary, .record-facts dt,
-  .record-facts dd, .section-heading > p,
-  .archive-year > header span, .record-row__date,
-  .record-row__event, .record-row__primitive, .pagination__position,
-  .prose th, .code-frame__label strong, .code-frame__label small,
-  .code-frame__actions button, .prose .code-frame__gutter,
-  .code-frame__status, .code-frame__fallback, .record-end nav span
-) {
+html[data-skin="edge-conditions"][data-skin] :is(.skip-link,
+.site-brand__scope,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu summary::after,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.eyebrow,
+.record-head__key,
+.archive-search label,
+.archive-search input,
+.all-tags summary,
+.all-tags__grid small,
+.record-toc summary,
+.record-facts dt,
+.record-facts dd,
+.section-heading > p,
+.archive-year > header span,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.pagination__position,
+.prose th,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.prose .code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback,
+.record-end nav span) {
   font-size: 1rem !important;
 }
 
@@ -3937,12 +3734,16 @@ html[data-skin="edge-conditions"] .site-brand {
   border-block-end: .25rem solid var(--ec-edge-gold);
 }
 
-html[data-skin="edge-conditions"] :is(
-  .site-nav a[data-route], .theme-toggle, .skin-menu summary,
-  .skin-randomizer, .action, .record-actions a, .tag-line a,
-  .quick-filters a, .pagination a, .site-footer__links a,
-  .code-frame__actions button
-) {
+html[data-skin="edge-conditions"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button) {
   min-height: 2.5rem !important;
   border-inline: 1px solid var(--ec-paper-low);
   border-block: 1px solid var(--ec-paper-low);
@@ -3955,11 +3756,15 @@ html[data-skin="edge-conditions"] :is(
   border-inline-start: 1px solid var(--ec-paper-low);
 }
 
-html[data-skin="edge-conditions"] :is(
-  .site-nav a[data-route], .theme-toggle, .skin-menu summary,
-  .skin-randomizer, .action, .record-actions a, .tag-line a,
-  .quick-filters a, .pagination a, .site-footer__links a
-) {
+html[data-skin="edge-conditions"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a) {
   overflow-wrap: normal;
   word-break: normal;
 }
@@ -3973,12 +3778,16 @@ html[data-skin="edge-conditions"] :is(
   border-block-color: var(--ec-edge-gold);
 }
 
-html[data-skin="edge-conditions"] :is(
-  .site-nav a[data-route], .theme-toggle, .skin-menu summary,
-  .skin-randomizer, .action, .record-actions a, .tag-line a,
-  .quick-filters a, .pagination a, .site-footer__links a,
-  .code-frame__actions button
-):is(:hover, :focus-visible) {
+html[data-skin="edge-conditions"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button):is(:hover, :focus-visible) {
   border-inline-color: var(--ec-paper-low);
   border-block-color: var(--ec-edge-gold);
 }
@@ -4052,37 +3861,9 @@ html[data-skin="edge-conditions"] .code-frame__fallback {
 html[data-skin="edge-conditions"] .code-frame__status { border-top-color: var(--ec-edge-teal); }
 html[data-skin="edge-conditions"] .prose th { border-inline-color: var(--ec-rule); }
 
-html[data-skin="edge-conditions"] .site-footer__note {
-  padding-inline-start: 0;
-  border-inline-start: 0;
-  border-block-start: .2rem solid var(--ec-edge-gold);
-}
-
-html[data-skin="edge-conditions"] .record-page > .record-head,
-html[data-skin="edge-conditions"] .record-page > .record-grid,
-html[data-skin="edge-conditions"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  grid-row: auto;
-}
-
-html[data-skin="edge-conditions"] .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-}
-
 html[data-skin="edge-conditions"] :is(.record-head h1, .record-facts dt, .record-facts dd) {
   overflow-wrap: break-word;
   word-break: normal;
-}
-
-@media (max-width: 82rem) {
-  html[data-skin="edge-conditions"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
-
-  html[data-skin="edge-conditions"] .record-grid > .record-index { position: static; }
 }
 
 @media (max-width: 76rem) {

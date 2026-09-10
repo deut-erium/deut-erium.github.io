@@ -146,13 +146,14 @@ html[data-skin="the-hash-crash"] .skip-link {
 }
 
 html[data-skin="the-hash-crash"] .site-header,
-html[data-skin="the-hash-crash"] .site-footer,
 html[data-skin="the-hash-crash"] .home-shell,
 html[data-skin="the-hash-crash"] .archive-shell,
-html[data-skin="the-hash-crash"] .record-page,
 html[data-skin="the-hash-crash"] .page-shell,
 html[data-skin="the-hash-crash"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid #111111;
+}
+html[data-skin="the-hash-crash"] .record-page {
   border: 5px solid #111111;
 }
 
@@ -264,8 +265,7 @@ html[data-skin="the-hash-crash"] .record-actions a,
 html[data-skin="the-hash-crash"] .tag-line a,
 html[data-skin="the-hash-crash"] .quick-filters a,
 html[data-skin="the-hash-crash"] .pagination a,
-html[data-skin="the-hash-crash"] .pagination span,
-html[data-skin="the-hash-crash"] .site-footer__links a {
+html[data-skin="the-hash-crash"] .pagination span {
   min-height: 2.65rem;
   padding: .46rem .64rem;
   color: #111111;
@@ -364,9 +364,7 @@ html[data-skin="the-hash-crash"] .tag-line a:focus-visible,
 html[data-skin="the-hash-crash"] .quick-filters a:hover,
 html[data-skin="the-hash-crash"] .quick-filters a:focus-visible,
 html[data-skin="the-hash-crash"] .pagination a:hover,
-html[data-skin="the-hash-crash"] .pagination a:focus-visible,
-html[data-skin="the-hash-crash"] .site-footer__links a:hover,
-html[data-skin="the-hash-crash"] .site-footer__links a:focus-visible {
+html[data-skin="the-hash-crash"] .pagination a:focus-visible {
   color: #111111;
   background: var(--crash-yellow);
   border-color: #111111;
@@ -384,13 +382,21 @@ html[data-skin="the-hash-crash"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="the-hash-crash"] .home-shell,
 html[data-skin="the-hash-crash"] .archive-shell,
-html[data-skin="the-hash-crash"] .record-page,
 html[data-skin="the-hash-crash"] .page-shell,
 html[data-skin="the-hash-crash"] .error-shell {
   position: relative;
   margin-top: 1.45rem;
   margin-bottom: 1.45rem;
   padding: clamp(1rem, 3vw, 2.8rem);
+  background-color: var(--crash-blue);
+  background-image:
+    radial-gradient(#153aa842 1.5px, transparent 1.75px),
+    linear-gradient(135deg, transparent 0 49.2%, #ffffff4d 49.3% 50.7%, transparent 50.8%);
+  background-size: .75rem .75rem, 2.2rem 2.2rem;
+  border-radius: .35rem;
+  box-shadow: .75rem .85rem 0 #111111, 1.1rem 1.2rem 0 #153aa847;
+}
+html[data-skin="the-hash-crash"] .record-page {
   background-color: var(--crash-blue);
   background-image:
     radial-gradient(#153aa842 1.5px, transparent 1.75px),
@@ -415,8 +421,7 @@ html[data-skin="the-hash-crash"] .page-shell::before {
   transform: rotate(-8deg);
 }
 
-html[data-skin="the-hash-crash"] .masthead,
-html[data-skin="the-hash-crash"] .record-grid {
+html[data-skin="the-hash-crash"] .masthead {
   gap: clamp(1.2rem, 3vw, 2.4rem);
 }
 
@@ -430,9 +435,18 @@ html[data-skin="the-hash-crash"] .masthead {
 
 html[data-skin="the-hash-crash"] .masthead__copy,
 html[data-skin="the-hash-crash"] .index-heading,
-html[data-skin="the-hash-crash"] .page-heading,
-html[data-skin="the-hash-crash"] .record-head {
+html[data-skin="the-hash-crash"] .page-heading {
   position: relative;
+  isolation: isolate;
+  color: #111111;
+  background-color: var(--crash-paper);
+  background-image: radial-gradient(#153aa833 1.25px, transparent 1.55px);
+  background-size: .7rem .7rem;
+  border: 5px solid #111111;
+  border-radius: 0;
+  box-shadow: .42rem .48rem 0 var(--crash-red);
+}
+html[data-skin="the-hash-crash"] .record-head {
   isolation: isolate;
   color: #111111;
   background-color: var(--crash-paper);
@@ -540,17 +554,24 @@ html[data-skin="the-hash-crash"] .masthead h1 {
 
 html[data-skin="the-hash-crash"] .index-heading h1,
 html[data-skin="the-hash-crash"] .page-heading h1,
-html[data-skin="the-hash-crash"] .record-head h1,
 html[data-skin="the-hash-crash"] .error-shell h1 {
   max-width: 13ch;
+  font-size: clamp(2.45rem, 6vw, 6rem);
+}
+html[data-skin="the-hash-crash"] .record-head h1 {
   font-size: clamp(2.45rem, 6vw, 6rem);
 }
 
 html[data-skin="the-hash-crash"] .masthead__lede,
 html[data-skin="the-hash-crash"] .index-heading > p:last-child,
-html[data-skin="the-hash-crash"] .page-heading > p:last-child,
-html[data-skin="the-hash-crash"] .record-head__abstract {
+html[data-skin="the-hash-crash"] .page-heading > p:last-child {
   max-width: 57ch;
+  font-family: var(--body);
+  font-size: clamp(1.07rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="the-hash-crash"] .record-head__abstract {
   font-family: var(--body);
   font-size: clamp(1.07rem, 1.5vw, 1.25rem);
   font-weight: 700;
@@ -581,9 +602,7 @@ html[data-skin="the-hash-crash"] .masthead__actions .action--primary {
 html[data-skin="the-hash-crash"] .home-shell > .record-index,
 html[data-skin="the-hash-crash"] .archive-tools,
 html[data-skin="the-hash-crash"] .archive-groups,
-html[data-skin="the-hash-crash"] .page-prose,
-html[data-skin="the-hash-crash"] .article__content,
-html[data-skin="the-hash-crash"] .record-end {
+html[data-skin="the-hash-crash"] .page-prose {
   position: relative;
   color: var(--ink);
   background-color: var(--paper);
@@ -591,6 +610,18 @@ html[data-skin="the-hash-crash"] .record-end {
   border: 5px solid #111111;
   border-radius: 0;
   box-shadow: .45rem .52rem 0 #111111;
+}
+html[data-skin="the-hash-crash"] .article__content,
+html[data-skin="the-hash-crash"] .record-end {
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: linear-gradient(90deg, transparent 0 1.15rem, #ec364d33 1.15rem 1.27rem, transparent 1.27rem);
+  border: 5px solid #111111;
+  border-radius: 0;
+  box-shadow: .45rem .52rem 0 #111111;
+}
+html[data-skin="the-hash-crash"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
 }
 
 html[data-skin="the-hash-crash"] .section-heading {
@@ -751,7 +782,6 @@ html[data-skin="the-hash-crash"] .archive-empty {
 }
 
 html[data-skin="the-hash-crash"] .record-head {
-  padding: clamp(1.4rem, 3.8vw, 3.7rem);
   background-color: var(--crash-blue);
   background-image:
     radial-gradient(#153aa84a 1.45px, transparent 1.7px),
@@ -786,7 +816,6 @@ html[data-skin="the-hash-crash"] .record-head h1 {
 }
 
 html[data-skin="the-hash-crash"] .record-head__abstract {
-  max-width: 62ch;
   color: #111111;
 }
 
@@ -885,7 +914,9 @@ html[data-skin="the-hash-crash"] .related-records h2 {
   text-shadow: .12rem .15rem 0 #111111, .2rem .24rem 0 var(--crash-red);
 }
 
-html[data-skin="the-hash-crash"] .article__content,
+html[data-skin="the-hash-crash"] .article__content {
+  border-left: .85rem solid var(--crash-red);
+}
 html[data-skin="the-hash-crash"] .page-prose {
   overflow: hidden;
   border-left: .85rem solid var(--crash-red);
@@ -1257,55 +1288,6 @@ html[data-skin="the-hash-crash"] .error-shell > p {
   font-weight: 700;
 }
 
-html[data-skin="the-hash-crash"] .site-footer {
-  position: relative;
-  isolation: isolate;
-  margin-bottom: 1.35rem;
-  overflow: hidden;
-  color: var(--crash-white);
-  background-color: var(--crash-blue-deep);
-  background-image: radial-gradient(#ffffff2e 1.2px, transparent 1.45px);
-  background-size: .75rem .75rem;
-  border-radius: 0;
-  box-shadow: .7rem .78rem 0 #111111;
-}
-
-html[data-skin="the-hash-crash"] .site-footer::after {
-  position: absolute;
-  z-index: -1;
-  right: 6%;
-  bottom: -4rem;
-  width: 12rem;
-  height: 12rem;
-  pointer-events: none;
-  content: "";
-  background: var(--crash-red);
-  border: 4px solid #111111;
-  clip-path: polygon(50% 0, 59% 35%, 89% 11%, 68% 43%, 100% 50%, 68% 57%, 89% 89%, 59% 65%, 50% 100%, 41% 65%, 11% 89%, 32% 57%, 0 50%, 32% 43%, 11% 11%, 41% 35%);
-  opacity: .82;
-  transform: rotate(17deg);
-}
-
-html[data-skin="the-hash-crash"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__note,
-html[data-skin="the-hash-crash"] .site-footer a {
-  color: var(--crash-white);
-}
-
-html[data-skin="the-hash-crash"] .site-footer__note a {
-  color: var(--crash-yellow);
-}
-
-html[data-skin="the-hash-crash"] .site-footer__links a {
-  color: #111111;
-  background: var(--crash-yellow);
-}
-
 html[data-skin="the-hash-crash"][data-theme="dark"] .site-header,
 html[data-skin="the-hash-crash"][data-theme="dark"] .home-shell,
 html[data-skin="the-hash-crash"][data-theme="dark"] .archive-shell,
@@ -1316,7 +1298,6 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .page-shell {
 }
 
 html[data-skin="the-hash-crash"][data-theme="dark"] .site-header,
-html[data-skin="the-hash-crash"][data-theme="dark"] .site-footer,
 html[data-skin="the-hash-crash"][data-theme="dark"] .masthead,
 html[data-skin="the-hash-crash"][data-theme="dark"] .record-grid > .record-index {
   border-color: var(--crash-ink);
@@ -1431,27 +1412,6 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
   background: var(--paper);
 }
 
-@media (min-width: 76rem) {
-  html[data-skin="the-hash-crash"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="the-hash-crash"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="the-hash-crash"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 68rem) {
   html[data-skin="the-hash-crash"] .site-header__inner {
     grid-template-columns: 1fr;
@@ -1478,29 +1438,27 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
 
 @media (max-width: 44rem) {
   html[data-skin="the-hash-crash"] .site-header,
-  html[data-skin="the-hash-crash"] .site-footer,
-  html[data-skin="the-hash-crash"] .home-shell,
-  html[data-skin="the-hash-crash"] .archive-shell,
-  html[data-skin="the-hash-crash"] .record-page,
-  html[data-skin="the-hash-crash"] .page-shell,
-  html[data-skin="the-hash-crash"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    border-radius: 0;
-    box-shadow: none;
-  }
+html[data-skin="the-hash-crash"] .home-shell,
+html[data-skin="the-hash-crash"] .archive-shell,
+html[data-skin="the-hash-crash"] .page-shell,
+html[data-skin="the-hash-crash"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-hash-crash"] .record-page {
+  border-width: 4px;
+  border-radius: 0;
+  box-shadow: none;
+}
 
   html[data-skin="the-hash-crash"] .site-header {
     margin-top: 0;
   }
 
-  html[data-skin="the-hash-crash"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-hash-crash"] .site-header__inner,
-  html[data-skin="the-hash-crash"] .site-footer__inner {
+  html[data-skin="the-hash-crash"] .site-header__inner {
     padding: .8rem;
   }
 
@@ -1531,14 +1489,13 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="the-hash-crash"] .home-shell,
-  html[data-skin="the-hash-crash"] .archive-shell,
-  html[data-skin="the-hash-crash"] .record-page,
-  html[data-skin="the-hash-crash"] .page-shell,
-  html[data-skin="the-hash-crash"] .error-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .8rem;
-  }
+html[data-skin="the-hash-crash"] .archive-shell,
+html[data-skin="the-hash-crash"] .page-shell,
+html[data-skin="the-hash-crash"] .error-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .8rem;
+}
 
   html[data-skin="the-hash-crash"] .masthead,
   html[data-skin="the-hash-crash"] .masthead__copy,
@@ -1557,11 +1514,10 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="the-hash-crash"] .masthead__copy,
-  html[data-skin="the-hash-crash"] .index-heading,
-  html[data-skin="the-hash-crash"] .page-heading,
-  html[data-skin="the-hash-crash"] .record-head {
-    padding: 1.2rem;
-  }
+html[data-skin="the-hash-crash"] .index-heading,
+html[data-skin="the-hash-crash"] .page-heading {
+  padding: 1.2rem;
+}
 
   html[data-skin="the-hash-crash"] .masthead h1 {
     font-size: clamp(2.4rem, 13vw, 4.15rem);
@@ -1592,15 +1548,13 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
     font-size: 1rem;
   }
 
-  html[data-skin="the-hash-crash"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-hash-crash"] .article__content,
-  html[data-skin="the-hash-crash"] .page-prose {
-    padding: 1rem;
-    border-left-width: .62rem;
-  }
+  html[data-skin="the-hash-crash"] .article__content {
+  border-left-width: .62rem;
+}
+html[data-skin="the-hash-crash"] .page-prose {
+  padding: 1rem;
+  border-left-width: .62rem;
+}
 
   html[data-skin="the-hash-crash"] .prose {
     font-size: 1.125rem;
@@ -1636,27 +1590,26 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback {
 
 @media (forced-colors: active) {
   html[data-skin="the-hash-crash"] .site-header,
-  html[data-skin="the-hash-crash"] .site-footer,
-  html[data-skin="the-hash-crash"] .home-shell,
-  html[data-skin="the-hash-crash"] .archive-shell,
-  html[data-skin="the-hash-crash"] .record-page,
-  html[data-skin="the-hash-crash"] .page-shell,
-  html[data-skin="the-hash-crash"] .error-shell,
-  html[data-skin="the-hash-crash"] .masthead,
-  html[data-skin="the-hash-crash"] .masthead__copy,
-  html[data-skin="the-hash-crash"] .index-heading,
-  html[data-skin="the-hash-crash"] .page-heading,
-  html[data-skin="the-hash-crash"] .record-head,
-  html[data-skin="the-hash-crash"] .home-shell > .record-index,
-  html[data-skin="the-hash-crash"] .archive-tools,
-  html[data-skin="the-hash-crash"] .archive-groups,
-  html[data-skin="the-hash-crash"] .page-prose,
-  html[data-skin="the-hash-crash"] .article__content,
-  html[data-skin="the-hash-crash"] .record-end,
-  html[data-skin="the-hash-crash"] .record-grid > .record-index,
-  html[data-skin="the-hash-crash"] .prose .code-frame,
-  html[data-skin="the-hash-crash"] .code-frame__bar,
-  html[data-skin="the-hash-crash"] .code-frame__status {
+html[data-skin="the-hash-crash"] .home-shell,
+html[data-skin="the-hash-crash"] .archive-shell,
+html[data-skin="the-hash-crash"] .record-page,
+html[data-skin="the-hash-crash"] .page-shell,
+html[data-skin="the-hash-crash"] .error-shell,
+html[data-skin="the-hash-crash"] .masthead,
+html[data-skin="the-hash-crash"] .masthead__copy,
+html[data-skin="the-hash-crash"] .index-heading,
+html[data-skin="the-hash-crash"] .page-heading,
+html[data-skin="the-hash-crash"] .record-head,
+html[data-skin="the-hash-crash"] .home-shell > .record-index,
+html[data-skin="the-hash-crash"] .archive-tools,
+html[data-skin="the-hash-crash"] .archive-groups,
+html[data-skin="the-hash-crash"] .page-prose,
+html[data-skin="the-hash-crash"] .article__content,
+html[data-skin="the-hash-crash"] .record-end,
+html[data-skin="the-hash-crash"] .record-grid > .record-index,
+html[data-skin="the-hash-crash"] .prose .code-frame,
+html[data-skin="the-hash-crash"] .code-frame__bar,
+html[data-skin="the-hash-crash"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -1920,100 +1873,15 @@ html[data-skin="the-hash-crash"] .archive-shell > .archive-groups .record-row__l
   grid-template-columns: 5.2rem minmax(0, 1fr) minmax(6.2rem, 8.5rem) minmax(5rem, 6.5rem) 2.15rem;
 }
 
-html[data-skin="the-hash-crash"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(17rem, .62fr) minmax(0, 1.38fr);
-  grid-template-areas:
-    "cover story"
-    "cover end";
-  align-items: start;
-  gap: clamp(1.2rem, 3vw, 2.5rem);
-}
-
-html[data-skin="the-hash-crash"] .record-page > .record-head {
-  grid-area: cover;
-  position: sticky;
-  top: 1rem;
-  margin: 0;
-}
-
 html[data-skin="the-hash-crash"] .record-page > .record-head h1 {
   font-size: clamp(2.25rem, 3.5vw, 4.4rem);
 }
 
-html[data-skin="the-hash-crash"] .record-page > .record-head .record-facts {
-  grid-template-columns: 1fr;
-}
-
-html[data-skin="the-hash-crash"] .record-page > .record-grid {
-  grid-area: story;
-  display: grid;
-  grid-template-columns: minmax(0, 1.38fr) minmax(13.5rem, .62fr);
-  grid-template-areas: "article index";
-  align-items: start;
-  gap: clamp(1rem, 2.5vw, 1.8rem);
-  margin: 0;
-}
-
-html[data-skin="the-hash-crash"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="the-hash-crash"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="the-hash-crash"] .record-page > .record-end {
-  grid-area: end;
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(19rem, .9fr);
-  align-items: stretch;
-  gap: 1.25rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__note {
-  display: grid;
-  align-content: center;
-  min-height: 5.75rem;
-  padding: .8rem 1rem;
-  color: #111111;
-  background: var(--crash-yellow);
-  border: 3px solid #111111;
-  box-shadow: .25rem .3rem 0 #111111;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__links a {
-  display: grid;
-  min-height: 5.75rem;
-  align-content: center;
-}
-
 @media (max-width: 70rem) {
   html[data-skin="the-hash-crash"] .home-shell,
-  html[data-skin="the-hash-crash"] .archive-shell,
-  html[data-skin="the-hash-crash"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-hash-crash"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-hash-crash"] .home-shell {
     grid-template-areas:
@@ -2029,25 +1897,10 @@ html[data-skin="the-hash-crash"] .site-footer__links a {
       "groups";
   }
 
-  html[data-skin="the-hash-crash"] .archive-shell > .archive-tools,
-  html[data-skin="the-hash-crash"] .record-page > .record-head,
-  html[data-skin="the-hash-crash"] .record-page > .record-grid > .record-index {
-    position: static;
-  }
+  html[data-skin="the-hash-crash"] .archive-shell > .archive-tools {
+  position: static;
+}
 
-  html[data-skin="the-hash-crash"] .record-page {
-    grid-template-areas:
-      "cover"
-      "story"
-      "end";
-  }
-
-  html[data-skin="the-hash-crash"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "article"
-      "index";
-  }
 }
 
 @media (max-width: 44rem) {
@@ -2068,8 +1921,7 @@ html[data-skin="the-hash-crash"] .site-footer__links a {
   }
 
   html[data-skin="the-hash-crash"] .site-nav > .skin-menu .skin-menu__panel,
-  html[data-skin="the-hash-crash"] .home-shell > .masthead,
-  html[data-skin="the-hash-crash"] .site-footer__inner {
+html[data-skin="the-hash-crash"] .home-shell > .masthead {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2109,21 +1961,13 @@ html[data-skin="the-hash-crash"] .site-footer__links a {
     grid-area: primitive;
   }
 
-  html[data-skin="the-hash-crash"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-hash-crash"] .site-footer__links a {
-    min-height: 3.2rem;
-  }
 }
 
 @media (forced-colors: active) {
   html[data-skin="the-hash-crash"] .site-nav > a[data-route],
-  html[data-skin="the-hash-crash"] .site-nav > .theme-toggle,
-  html[data-skin="the-hash-crash"] .site-nav > .skin-menu summary,
-  html[data-skin="the-hash-crash"] .site-nav > .skin-menu .skin-randomizer,
-  html[data-skin="the-hash-crash"] .site-footer__note {
+html[data-skin="the-hash-crash"] .site-nav > .theme-toggle,
+html[data-skin="the-hash-crash"] .site-nav > .skin-menu summary,
+html[data-skin="the-hash-crash"] .site-nav > .skin-menu .skin-randomizer {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -2294,7 +2138,7 @@ html[data-skin="the-hash-crash"] .skip-link {
   font-size: var(--hc-ui-size);
 }
 
-html[data-skin="the-hash-crash"] :is(.site-header, .site-footer) {
+html[data-skin="the-hash-crash"] :is(.site-header) {
   width: min(calc(100% - 2rem), var(--page));
   overflow: visible;
   border: 4px solid var(--hc-text);
@@ -2312,7 +2156,6 @@ html[data-skin="the-hash-crash"] .site-header {
 
 html[data-skin="the-hash-crash"] .site-header::before,
 html[data-skin="the-hash-crash"] .site-header::after,
-html[data-skin="the-hash-crash"] .site-footer::after,
 html[data-skin="the-hash-crash"] .index-heading::after,
 html[data-skin="the-hash-crash"] .page-heading::after,
 html[data-skin="the-hash-crash"] .record-head::after {
@@ -2365,19 +2208,16 @@ html[data-skin="the-hash-crash"] .site-nav {
   padding: .7rem;
 }
 
-html[data-skin="the-hash-crash"] :is(
-  .site-nav > a[data-route],
-  .site-nav > .theme-toggle,
-  .site-nav > .skin-menu summary,
-  .skin-menu select,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination :is(a, span),
-  .site-footer__links a
-) {
+html[data-skin="the-hash-crash"] :is(.site-nav > a[data-route],
+.site-nav > .theme-toggle,
+.site-nav > .skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span)) {
   min-height: 2.8rem;
   padding: .55rem .65rem;
   color: var(--hc-text);
@@ -2427,20 +2267,17 @@ html[data-skin="the-hash-crash"] .code-frame__actions button[aria-pressed="true"
   box-shadow: inset 0 -.35rem 0 var(--hc-yellow);
 }
 
-html[data-skin="the-hash-crash"] :is(
-  .site-nav > a[data-route],
-  .site-nav > .theme-toggle,
-  .site-nav > .skin-menu summary,
-  .skin-randomizer,
-  .action,
-  .record-actions a,
-  .tag-line a,
-  .quick-filters a,
-  .pagination a,
-  .site-footer__links a,
-  .record-end nav a,
-  .code-frame__actions button
-):hover {
+html[data-skin="the-hash-crash"] :is(.site-nav > a[data-route],
+.site-nav > .theme-toggle,
+.site-nav > .skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.record-end nav a,
+.code-frame__actions button):hover {
   color: var(--hc-text);
   background: var(--hc-yellow);
   border-color: var(--hc-text);
@@ -2518,11 +2355,21 @@ html[data-skin="the-hash-crash"] .skin-randomizer {
   cursor: pointer;
 }
 
-html[data-skin="the-hash-crash"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="the-hash-crash"] .home-shell,
+html[data-skin="the-hash-crash"] .archive-shell,
+html[data-skin="the-hash-crash"] .page-shell,
+html[data-skin="the-hash-crash"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 0;
+  color: var(--hc-text);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-hash-crash"] .record-page {
   color: var(--hc-text);
   background: none;
   border: 0;
@@ -2603,9 +2450,15 @@ html[data-skin="the-hash-crash"] :is(.eyebrow, .record-head__key, .record-facts 
 html[data-skin="the-hash-crash"] .masthead h1,
 html[data-skin="the-hash-crash"] .index-heading h1,
 html[data-skin="the-hash-crash"] .page-heading h1,
-html[data-skin="the-hash-crash"] .record-head h1,
 html[data-skin="the-hash-crash"] .error-shell h1 {
   max-width: 14ch;
+  color: var(--hc-heading);
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+  line-height: .95;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+}
+html[data-skin="the-hash-crash"] .record-head h1 {
   color: var(--hc-heading);
   font-size: clamp(2.5rem, 5vw, 4.75rem);
   line-height: .95;
@@ -2615,9 +2468,14 @@ html[data-skin="the-hash-crash"] .error-shell h1 {
 
 html[data-skin="the-hash-crash"] .masthead__lede,
 html[data-skin="the-hash-crash"] .index-heading > p:last-child,
-html[data-skin="the-hash-crash"] .page-heading > p:last-child,
-html[data-skin="the-hash-crash"] .record-head__abstract {
+html[data-skin="the-hash-crash"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--hc-text);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+html[data-skin="the-hash-crash"] .record-head__abstract {
   color: var(--hc-text);
   font-size: 1.125rem;
   font-weight: 700;
@@ -2640,7 +2498,10 @@ html[data-skin="the-hash-crash"] .masthead__actions .action--primary {
   background: var(--hc-selected);
 }
 
-html[data-skin="the-hash-crash"] :is(.home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) {
+html[data-skin="the-hash-crash"] .home-shell > .record-index,
+html[data-skin="the-hash-crash"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   position: relative;
   min-width: 0;
   margin: 0;
@@ -2650,6 +2511,20 @@ html[data-skin="the-hash-crash"] :is(.home-shell > .record-index, .archive-tools
   border: 4px solid var(--hc-text);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="the-hash-crash"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--hc-text);
+  background: var(--hc-panel);
+  background-image: none;
+  border: 4px solid var(--hc-text);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-hash-crash"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  position: relative;
+  min-width: 0;
+  margin: 0;
 }
 
 html[data-skin="the-hash-crash"] .home-shell > .record-index {
@@ -2906,22 +2781,7 @@ html[data-skin="the-hash-crash"] .archive-empty {
   font-weight: 700;
 }
 
-html[data-skin="the-hash-crash"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas:
-    "head head head story story story story story story story story story"
-    "head head head end end end end end end end end end";
-  gap: 1.5rem;
-  align-items: start;
-}
-
 html[data-skin="the-hash-crash"] .record-page > .record-head {
-  grid-area: head;
-  position: sticky;
-  top: 1rem;
-  margin: 0;
-  padding: 1.25rem;
   color: var(--hc-text);
   background: var(--hc-panel-blue);
   background-image: radial-gradient(#0a2f7826 1px, transparent 1.2px);
@@ -2958,7 +2818,6 @@ html[data-skin="the-hash-crash"] .record-head h1 { color: var(--hc-heading); fon
 
 html[data-skin="the-hash-crash"] .record-facts {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: 0;
   padding: 0;
   background: var(--hc-text);
@@ -2999,34 +2858,12 @@ html[data-skin="the-hash-crash"] .record-facts dd { margin-top: .3rem; font-fami
 html[data-skin="the-hash-crash"] .record-actions a,
 html[data-skin="the-hash-crash"] .tag-line a { min-width: 0; flex: 1 1 8rem; }
 
-html[data-skin="the-hash-crash"] .record-page > .record-grid {
-  grid-area: story;
-  display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(13rem, 3fr);
-  grid-template-areas: "article index";
-  gap: 1.5rem;
-  margin: 0;
-}
-
 html[data-skin="the-hash-crash"] .record-page > .record-grid > .article__content {
-  grid-area: article;
-  width: auto;
-  max-width: var(--hc-reading);
-  margin: 0;
-  padding: clamp(1rem, 3vw, 2rem);
-  overflow: visible;
   background: var(--hc-panel);
   border-left: .7rem solid var(--hc-alert);
 }
 
 html[data-skin="the-hash-crash"] .record-page > .record-grid > .record-index {
-  grid-area: index;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--hc-selected-text);
   background: var(--hc-selected);
   background-image: none;
@@ -3064,10 +2901,6 @@ html[data-skin="the-hash-crash"] .related-records h2 {
 }
 
 html[data-skin="the-hash-crash"] .record-page > .record-end {
-  grid-area: end;
-  width: auto;
-  max-width: none;
-  padding: 1rem;
   border-top: .75rem solid var(--hc-alert);
 }
 
@@ -3287,9 +3120,16 @@ html[data-skin="the-hash-crash"] .prose .katex-display {
   overflow-x: auto;
 }
 
-html[data-skin="the-hash-crash"] :is(.prose pre, .prose table, .prose .katex-display) {
+html[data-skin="the-hash-crash"] :is(.prose pre, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] .prose .katex-display {
   max-width: 100%;
   overflow-x: auto;
+}
+html[data-skin="the-hash-crash"] :is(.prose table, :not(*):nth-child(n):nth-child(n)) {
+  overflow-x: auto;
+}
+html[data-skin="the-hash-crash"] :is(.prose:not(:where(.record-page, .record-page *)) table, :not(*):nth-child(n):nth-child(n)) {
+  max-width: 100%;
 }
 
 html[data-skin="the-hash-crash"] .error-shell {
@@ -3310,53 +3150,7 @@ html[data-skin="the-hash-crash"] .error-shell h1 { color: var(--hc-heading); }
 html[data-skin="the-hash-crash"] .error-shell > p { color: var(--hc-text); font-size: 1.125rem; font-weight: 700; }
 html[data-skin="the-hash-crash"] .error-shell nav { display: flex; flex-wrap: wrap; gap: .65rem; }
 
-html[data-skin="the-hash-crash"] .site-footer {
-  margin-bottom: 1rem;
-  color: var(--hc-selected-text);
-  background: var(--hc-selected);
-  background-image: radial-gradient(#ffffff24 1px, transparent 1.2px);
-  background-size: .7rem .7rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: .75rem;
-  padding: .75rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__note {
-  grid-column: span 7;
-  margin: 0;
-  padding: .75rem;
-  color: var(--hc-text);
-  background: var(--hc-yellow);
-  border: 3px solid var(--hc-text);
-  box-shadow: none;
-  font-size: var(--hc-ui-size);
-  line-height: 1.5;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__note a { color: var(--hc-heading); font-size: var(--hc-ui-size); }
-
-html[data-skin="the-hash-crash"] .site-footer__links {
-  grid-column: span 5;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="the-hash-crash"] .site-footer__links a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--hc-selected-text);
-  background: transparent;
-  border-color: var(--hc-selected-text);
-  font-size: var(--hc-ui-size);
-}
-
-html[data-skin="the-hash-crash"][data-theme="dark"] :is(.site-header, .site-footer) { border-color: var(--hc-text); }
+html[data-skin="the-hash-crash"][data-theme="dark"] :is(.site-header) { border-color: var(--hc-text); }
 html[data-skin="the-hash-crash"][data-theme="dark"] :is(.masthead__copy, .archive-shell > .index-heading, .record-page > .record-head, .page-heading, .error-shell) { color: var(--hc-text); background-color: var(--hc-panel-blue); border-color: var(--hc-text); }
 html[data-skin="the-hash-crash"][data-theme="dark"] :is(.home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end) { color: var(--hc-text); background-color: var(--hc-panel); border-color: var(--hc-text); box-shadow: none; }
 html[data-skin="the-hash-crash"][data-theme="dark"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1, .section-heading :is(h1, h2), .archive-year h2, .prose h1, .prose h2, .prose h4, .prose h5, .prose h6) { color: var(--hc-heading); text-shadow: none; }
@@ -3375,22 +3169,31 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback { colo
   html[data-skin="the-hash-crash"] .site-header__inner { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="the-hash-crash"] .site-brand { grid-column: auto; border-right: 0; border-bottom: 4px solid var(--hc-text); }
   html[data-skin="the-hash-crash"] .site-nav { grid-column: auto; }
-  html[data-skin="the-hash-crash"] :is(.home-shell, .archive-shell, .record-page) { grid-template-columns: minmax(0, 1fr); }
+  html[data-skin="the-hash-crash"] .home-shell,
+html[data-skin="the-hash-crash"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
   html[data-skin="the-hash-crash"] .home-shell { grid-template-areas: "masthead" "records"; }
   html[data-skin="the-hash-crash"] .archive-shell { grid-template-areas: "heading" "tools" "groups" "empty"; }
-  html[data-skin="the-hash-crash"] .record-page { grid-template-areas: "head" "story" "end"; }
-  html[data-skin="the-hash-crash"] :is(.archive-shell > .archive-tools, .record-page > .record-head, .record-page > .record-grid > .record-index) { position: static; }
-  html[data-skin="the-hash-crash"] .record-page > .record-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "article" "index"; }
+
+  html[data-skin="the-hash-crash"] :is(.archive-shell > .archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  position: static;
+}
+
   html[data-skin="the-hash-crash"] .page-shell { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="the-hash-crash"] :is(.page-heading, .page-prose) { grid-column: auto; max-width: none; }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-hash-crash"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: min(calc(100% - 2rem), var(--page));
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
+  html[data-skin="the-hash-crash"] .site-header,
+html[data-skin="the-hash-crash"] .home-shell,
+html[data-skin="the-hash-crash"] .archive-shell,
+html[data-skin="the-hash-crash"] .page-shell,
+html[data-skin="the-hash-crash"] .error-shell {
+  width: min(calc(100% - 2rem), var(--page));
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
   html[data-skin="the-hash-crash"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
@@ -3407,7 +3210,13 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback { colo
   html[data-skin="the-hash-crash"] .home-shell > .masthead { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="the-hash-crash"] .masthead__copy { border-right: 0; border-bottom: 4px solid var(--hc-text); }
   html[data-skin="the-hash-crash"] .masthead__copy::after { display: none; }
-  html[data-skin="the-hash-crash"] :is(.home-shell > .record-index, .archive-tools, .archive-groups, .article__content, .page-prose, .record-end) { padding: 1rem; }
+  html[data-skin="the-hash-crash"] .home-shell > .record-index,
+html[data-skin="the-hash-crash"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-hash-crash"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  padding: 1rem;
+}
   html[data-skin="the-hash-crash"] .section-heading,
   html[data-skin="the-hash-crash"] .archive-year > header { align-items: start; flex-direction: column; }
   html[data-skin="the-hash-crash"] .record-row__link {
@@ -3424,14 +3233,12 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback { colo
   html[data-skin="the-hash-crash"] .record-row__primitive { grid-area: primitive; }
   html[data-skin="the-hash-crash"] .record-row__date { border-right: 0; border-bottom: 2px solid var(--hc-text); }
   html[data-skin="the-hash-crash"] :is(.record-row__title, .record-row__event, .record-row__primitive) { padding: .65rem; }
-  html[data-skin="the-hash-crash"] :is(.all-tags__grid, .quick-filters, .site-footer__links) { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="the-hash-crash"] .record-page > .record-head { padding: 1rem; }
-  html[data-skin="the-hash-crash"] .record-page > .record-grid { gap: 1rem; }
-  html[data-skin="the-hash-crash"] .record-page > .record-grid > .article__content { max-width: none; }
+  html[data-skin="the-hash-crash"] :is(.all-tags__grid,
+.quick-filters) { grid-template-columns: minmax(0, 1fr); }
+
   html[data-skin="the-hash-crash"] .error-shell { grid-template-columns: minmax(0, 1fr); min-height: 0; }
   html[data-skin="the-hash-crash"] .error-shell > :not(.error-code) { grid-column: auto; }
-  html[data-skin="the-hash-crash"] .site-footer__inner { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="the-hash-crash"] :is(.site-footer__note, .site-footer__links) { grid-column: auto; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3447,7 +3254,25 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback { colo
 }
 
 @media (forced-colors: active) {
-  html[data-skin="the-hash-crash"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .masthead__copy, .index-heading, .page-heading, .record-head, .record-index, .archive-tools, .archive-groups, .article__content, .page-prose, .record-end, .prose .code-frame, .prose .katex-display) {
+  html[data-skin="the-hash-crash"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.record-index,
+.archive-tools,
+.archive-groups,
+.article__content,
+.page-prose,
+.record-end,
+.prose .code-frame,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3455,7 +3280,18 @@ html[data-skin="the-hash-crash"][data-theme="dark"] .code-frame__fallback { colo
     box-shadow: none;
   }
 
-  html[data-skin="the-hash-crash"] :is(.site-nav > a[data-route], .theme-toggle, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a, .record-end nav a, .code-frame__actions button) {
+  html[data-skin="the-hash-crash"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3476,16 +3312,13 @@ html[data-skin="the-hash-crash"] :is(.record-toc summary, .related-records h2) {
   color: var(--hc-selected-text);
 }
 
-html[data-skin="the-hash-crash"] :is(
-  .site-nav > a[data-route="archive"],
-  .site-nav > a[data-route="source"],
-  .quick-filters a[aria-current="true"],
-  .skin-randomizer,
-  .action--primary,
-  .record-page > .record-grid > .record-index *,
-  .site-footer__links a,
-  .code-frame__actions button[aria-pressed="true"]
-):focus-visible {
+html[data-skin="the-hash-crash"] :is(.site-nav > a[data-route="archive"],
+.site-nav > a[data-route="source"],
+.quick-filters a[aria-current="true"],
+.skin-randomizer,
+.action--primary,
+.record-page > .record-grid > .record-index *,
+.code-frame__actions button[aria-pressed="true"]):focus-visible {
   outline-color: var(--hc-focus-inverse) !important;
 }
 
@@ -3508,8 +3341,7 @@ html[data-skin="the-hash-crash"] .site-nav > .skin-menu[open] :is(summary, .skin
   grid-column: auto;
 }
 
-html[data-skin="the-hash-crash"] .site-nav > .skin-menu .skin-randomizer,
-html[data-skin="the-hash-crash"] .site-footer__links a {
+html[data-skin="the-hash-crash"] .site-nav > .skin-menu .skin-randomizer {
   min-height: 2.8rem;
   align-self: start;
 }
@@ -3522,16 +3354,6 @@ html[data-skin="the-hash-crash"] .home-shell > .masthead .masthead__copy {
   min-height: 0;
   border-right: 0;
   border-bottom: 4px solid var(--hc-text);
-}
-
-html[data-skin="the-hash-crash"] .site-footer__links {
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  align-content: start;
-  align-items: start;
-}
-
-html[data-skin="the-hash-crash"][data-theme="dark"] .site-footer {
-  background-image: none;
 }
 
 html[data-skin="the-hash-crash"] .archive-shell > .archive-groups {
@@ -3634,25 +3456,6 @@ html[data-skin="the-hash-crash"] .prose h5 { font-size: 1.3125rem; }
 html[data-skin="the-hash-crash"] .prose h6 { font-size: 1.1875rem; }
 
 @media (min-width: 70.0625rem) {
-  html[data-skin="the-hash-crash"] .record-page {
-    grid-template-areas:
-      "head head head head head head head head head head head head"
-      "story story story story story story story story story story story story"
-      "end end end end end end end end end end end end";
-  }
-
-  html[data-skin="the-hash-crash"] .record-page > .record-head {
-    position: static;
-  }
-
-  html[data-skin="the-hash-crash"] .record-page > .record-head .record-facts {
-    grid-template-columns: repeat(2, minmax(12rem, 1fr));
-  }
-
-  html[data-skin="the-hash-crash"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 68ch) minmax(14rem, 19rem);
-    justify-content: start;
-  }
 
   html[data-skin="the-hash-crash"] .page-shell {
     grid-template-columns: minmax(0, 1fr);

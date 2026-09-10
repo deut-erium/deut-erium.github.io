@@ -153,13 +153,14 @@ html[data-skin="cut-paste-factor"] .skip-link {
 }
 
 html[data-skin="cut-paste-factor"] .site-header,
-html[data-skin="cut-paste-factor"] .site-footer,
 html[data-skin="cut-paste-factor"] .home-shell,
 html[data-skin="cut-paste-factor"] .archive-shell,
-html[data-skin="cut-paste-factor"] .record-page,
 html[data-skin="cut-paste-factor"] .page-shell,
 html[data-skin="cut-paste-factor"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid var(--cut-black);
+}
+html[data-skin="cut-paste-factor"] .record-page {
   border: 5px solid var(--cut-black);
 }
 
@@ -269,8 +270,7 @@ html[data-skin="cut-paste-factor"] .record-actions a,
 html[data-skin="cut-paste-factor"] .tag-line a,
 html[data-skin="cut-paste-factor"] .quick-filters a,
 html[data-skin="cut-paste-factor"] .pagination a,
-html[data-skin="cut-paste-factor"] .pagination span,
-html[data-skin="cut-paste-factor"] .site-footer__links a {
+html[data-skin="cut-paste-factor"] .pagination span {
   min-height: 2.55rem;
   padding: .47rem .64rem;
   color: var(--cut-white);
@@ -390,9 +390,7 @@ html[data-skin="cut-paste-factor"] .tag-line a:focus-visible,
 html[data-skin="cut-paste-factor"] .quick-filters a:hover,
 html[data-skin="cut-paste-factor"] .quick-filters a:focus-visible,
 html[data-skin="cut-paste-factor"] .pagination a:hover,
-html[data-skin="cut-paste-factor"] .pagination a:focus-visible,
-html[data-skin="cut-paste-factor"] .site-footer__links a:hover,
-html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
+html[data-skin="cut-paste-factor"] .pagination a:focus-visible {
   color: var(--cut-white);
   background: var(--cut-red);
   border-color: var(--cut-white);
@@ -409,7 +407,6 @@ html[data-skin="cut-paste-factor"] .quick-filters a[aria-current="true"] {
 
 html[data-skin="cut-paste-factor"] .home-shell,
 html[data-skin="cut-paste-factor"] .archive-shell,
-html[data-skin="cut-paste-factor"] .record-page,
 html[data-skin="cut-paste-factor"] .page-shell,
 html[data-skin="cut-paste-factor"] .error-shell {
   position: relative;
@@ -417,6 +414,15 @@ html[data-skin="cut-paste-factor"] .error-shell {
   margin-top: 1.6rem;
   margin-bottom: 1.6rem;
   padding: clamp(1rem, 3vw, 2.65rem);
+  background-color: var(--cut-black);
+  background-image:
+    radial-gradient(#ffffff24 1px, transparent 1.2px),
+    repeating-linear-gradient(2deg, transparent 0 4px, #ffffff0e 5px);
+  background-size: 8px 8px, auto;
+  box-shadow: .65rem .75rem 0 var(--cut-red), 1.1rem 1.25rem 0 #11111124;
+}
+html[data-skin="cut-paste-factor"] .record-page {
+  isolation: isolate;
   background-color: var(--cut-black);
   background-image:
     radial-gradient(#ffffff24 1px, transparent 1.2px),
@@ -441,16 +447,26 @@ html[data-skin="cut-paste-factor"] .page-shell::before {
   transform: rotate(4deg);
 }
 
-html[data-skin="cut-paste-factor"] .masthead,
-html[data-skin="cut-paste-factor"] .record-grid {
+html[data-skin="cut-paste-factor"] .masthead {
   gap: clamp(1.1rem, 3vw, 2.3rem);
 }
 
 html[data-skin="cut-paste-factor"] .masthead__copy,
 html[data-skin="cut-paste-factor"] .index-heading,
-html[data-skin="cut-paste-factor"] .page-heading,
-html[data-skin="cut-paste-factor"] .record-head {
+html[data-skin="cut-paste-factor"] .page-heading {
   position: relative;
+  isolation: isolate;
+  color: var(--cut-ink);
+  background-color: var(--cut-copy);
+  background-image:
+    repeating-linear-gradient(2deg, transparent 0 4px, #11111112 5px),
+    radial-gradient(#1111112e .8px, transparent 1px);
+  background-size: auto, 8px 8px;
+  border: 5px solid var(--cut-black);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--cut-red);
+}
+html[data-skin="cut-paste-factor"] .record-head {
   isolation: isolate;
   color: var(--cut-ink);
   background-color: var(--cut-copy);
@@ -519,18 +535,27 @@ html[data-skin="cut-paste-factor"] .masthead h1 {
 
 html[data-skin="cut-paste-factor"] .index-heading h1,
 html[data-skin="cut-paste-factor"] .page-heading h1,
-html[data-skin="cut-paste-factor"] .record-head h1,
 html[data-skin="cut-paste-factor"] .error-shell h1 {
   max-width: 14ch;
+  font-size: clamp(2.3rem, 5.6vw, 5.55rem);
+  text-shadow: .11rem .13rem 0 var(--cut-white), .21rem .25rem 0 var(--cut-red);
+}
+html[data-skin="cut-paste-factor"] .record-head h1 {
   font-size: clamp(2.3rem, 5.6vw, 5.55rem);
   text-shadow: .11rem .13rem 0 var(--cut-white), .21rem .25rem 0 var(--cut-red);
 }
 
 html[data-skin="cut-paste-factor"] .masthead__lede,
 html[data-skin="cut-paste-factor"] .index-heading > p:last-child,
-html[data-skin="cut-paste-factor"] .page-heading > p:last-child,
-html[data-skin="cut-paste-factor"] .record-head__abstract {
+html[data-skin="cut-paste-factor"] .page-heading > p:last-child {
   max-width: 60ch;
+  color: var(--cut-ink);
+  font-family: var(--body);
+  font-size: clamp(1.06rem, 1.5vw, 1.23rem);
+  font-weight: 700;
+  line-height: 1.58;
+}
+html[data-skin="cut-paste-factor"] .record-head__abstract {
   color: var(--cut-ink);
   font-family: var(--body);
   font-size: clamp(1.06rem, 1.5vw, 1.23rem);
@@ -559,9 +584,7 @@ html[data-skin="cut-paste-factor"] .record-actions a:last-child {
 html[data-skin="cut-paste-factor"] .home-shell > .record-index,
 html[data-skin="cut-paste-factor"] .archive-tools,
 html[data-skin="cut-paste-factor"] .archive-groups,
-html[data-skin="cut-paste-factor"] .page-prose,
-html[data-skin="cut-paste-factor"] .article__content,
-html[data-skin="cut-paste-factor"] .record-end {
+html[data-skin="cut-paste-factor"] .page-prose {
   position: relative;
   color: var(--ink);
   background-color: var(--paper);
@@ -571,6 +594,20 @@ html[data-skin="cut-paste-factor"] .record-end {
   border: 5px solid var(--cut-black);
   border-radius: 0;
   box-shadow: .45rem .52rem 0 var(--cut-red);
+}
+html[data-skin="cut-paste-factor"] .article__content,
+html[data-skin="cut-paste-factor"] .record-end {
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 1.25rem, #d51f2f4d 1.25rem 1.37rem, transparent 1.37rem),
+    repeating-linear-gradient(2deg, transparent 0 5px, #1111110c 5px 6px);
+  border: 5px solid var(--cut-black);
+  border-radius: 0;
+  box-shadow: .45rem .52rem 0 var(--cut-red);
+}
+html[data-skin="cut-paste-factor"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
 }
 
 html[data-skin="cut-paste-factor"] .section-heading {
@@ -751,10 +788,6 @@ html[data-skin="cut-paste-factor"] .archive-empty {
   text-transform: uppercase;
 }
 
-html[data-skin="cut-paste-factor"] .record-head {
-  padding: clamp(1.35rem, 3.6vw, 3.5rem);
-}
-
 html[data-skin="cut-paste-factor"] .record-head__key {
   align-items: center;
   justify-content: flex-start;
@@ -880,7 +913,9 @@ html[data-skin="cut-paste-factor"] .related-records h2 {
   text-shadow: .12rem .14rem 0 var(--cut-red);
 }
 
-html[data-skin="cut-paste-factor"] .article__content,
+html[data-skin="cut-paste-factor"] .article__content {
+  border-left: .78rem solid var(--cut-red);
+}
 html[data-skin="cut-paste-factor"] .page-prose {
   overflow: hidden;
   border-left: .78rem solid var(--cut-red);
@@ -1279,62 +1314,11 @@ html[data-skin="cut-paste-factor"] .error-shell > p {
   font-weight: 700;
 }
 
-html[data-skin="cut-paste-factor"] .site-footer {
-  position: relative;
-  isolation: isolate;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  color: var(--cut-copy);
-  background-color: var(--cut-black);
-  background-image:
-    repeating-linear-gradient(2deg, transparent 0 4px, #ffffff16 5px),
-    radial-gradient(#ffffff20 .8px, transparent 1px);
-  background-size: auto, 8px 8px;
-  border-radius: 0;
-  box-shadow: .55rem .65rem 0 var(--cut-red);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer::after {
-  position: absolute;
-  z-index: -1;
-  right: 9%;
-  bottom: -2.4rem;
-  width: 11rem;
-  height: 5rem;
-  pointer-events: none;
-  content: "";
-  background: var(--cut-red);
-  border: 3px solid var(--cut-white);
-  transform: rotate(-7deg);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__inner {
-  position: relative;
-  z-index: 1;
-  padding: 1.1rem 1.25rem;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note,
-html[data-skin="cut-paste-factor"] .site-footer a {
-  color: var(--cut-copy);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note a {
-  color: #ffb4ba;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a {
-  color: var(--cut-black);
-  background: var(--cut-copy);
-  border-color: var(--cut-copy);
-}
-
 html[data-skin="cut-paste-factor"][data-theme="dark"] .site-header,
 html[data-skin="cut-paste-factor"][data-theme="dark"] .home-shell,
 html[data-skin="cut-paste-factor"][data-theme="dark"] .archive-shell,
 html[data-skin="cut-paste-factor"][data-theme="dark"] .record-page,
-html[data-skin="cut-paste-factor"][data-theme="dark"] .page-shell,
-html[data-skin="cut-paste-factor"][data-theme="dark"] .site-footer {
+html[data-skin="cut-paste-factor"][data-theme="dark"] .page-shell {
   border-color: var(--cut-white);
   box-shadow: .6rem .7rem 0 var(--cut-red-dark), 1rem 1.15rem 0 #0000008c;
 }
@@ -1522,24 +1506,22 @@ html[data-skin="cut-paste-factor"][data-theme="dark"] .page-prose {
 
 @media (max-width: 44rem) {
   html[data-skin="cut-paste-factor"] .site-header,
-  html[data-skin="cut-paste-factor"] .site-footer,
-  html[data-skin="cut-paste-factor"] .home-shell,
-  html[data-skin="cut-paste-factor"] .archive-shell,
-  html[data-skin="cut-paste-factor"] .record-page,
-  html[data-skin="cut-paste-factor"] .page-shell,
-  html[data-skin="cut-paste-factor"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-inline-width: 0;
-    box-shadow: 0 .5rem 0 var(--cut-red);
-  }
+html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell,
+html[data-skin="cut-paste-factor"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-inline-width: 0;
+  box-shadow: 0 .5rem 0 var(--cut-red);
+}
+html[data-skin="cut-paste-factor"] .record-page {
+  border-inline-width: 0;
+  box-shadow: 0 .5rem 0 var(--cut-red);
+}
 
   html[data-skin="cut-paste-factor"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="cut-paste-factor"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="cut-paste-factor"] .site-header__inner {
@@ -1564,13 +1546,12 @@ html[data-skin="cut-paste-factor"][data-theme="dark"] .page-prose {
   }
 
   html[data-skin="cut-paste-factor"] .home-shell,
-  html[data-skin="cut-paste-factor"] .archive-shell,
-  html[data-skin="cut-paste-factor"] .record-page,
-  html[data-skin="cut-paste-factor"] .page-shell {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: .8rem;
-  }
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: .8rem;
+}
 
   html[data-skin="cut-paste-factor"] .masthead__copy {
     min-height: auto;
@@ -1604,14 +1585,9 @@ html[data-skin="cut-paste-factor"][data-theme="dark"] .page-prose {
     box-shadow: .32rem .38rem 0 var(--cut-red);
   }
 
-  html[data-skin="cut-paste-factor"] .record-head,
   html[data-skin="cut-paste-factor"] .page-heading {
-    padding: 1.25rem;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  padding: 1.25rem;
+}
 
   html[data-skin="cut-paste-factor"] .record-facts > div {
     min-height: 4.7rem;
@@ -1669,9 +1645,6 @@ html[data-skin="cut-paste-factor"][data-theme="dark"] .page-prose {
     gap: .55rem;
   }
 
-  html[data-skin="cut-paste-factor"] .site-footer__inner {
-    padding: 1rem .8rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2189,56 +2162,26 @@ html[data-skin="cut-paste-factor"] .archive-shell > .archive-empty {
   grid-column: 2 / -1;
 }
 
-html[data-skin="cut-paste-factor"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.4rem, 3vw, 3rem);
-  align-items: start;
-  padding: clamp(1.2rem, 3vw, 3rem);
-}
-
-html[data-skin="cut-paste-factor"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem clamp(.75rem, 2vw, 2rem);
-  align-items: start;
-  padding: clamp(1.35rem, 3vw, 3.25rem);
-  transform: rotate(-.55deg);
-}
-
 html[data-skin="cut-paste-factor"] .record-page .record-head__key {
-  grid-column: 1 / span 4;
-  grid-row: 1;
   margin: 0;
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-head h1 {
-  grid-column: 1 / span 8;
-  grid-row: 2;
-  max-width: 10ch;
   margin: 0;
   font-size: clamp(3rem, 7.2vw, 7.4rem);
   line-height: .76;
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-head__abstract {
-  grid-column: 9 / -1;
-  grid-row: 2;
-  align-self: end;
   margin: 0;
   padding: .9rem;
   color: var(--cut-white);
   background: var(--cut-black);
   border: 3px solid var(--cut-black);
   box-shadow: .25rem .3rem 0 var(--cut-red);
-  transform: rotate(2deg);
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-facts {
-  grid-column: 9 / -1;
-  grid-row: 3 / span 2;
-  grid-template-columns: 1fr;
   gap: .45rem;
   margin: 0;
   padding: .65rem;
@@ -2277,116 +2220,17 @@ html[data-skin="cut-paste-factor"] .record-page .record-actions {
   margin: 0;
 }
 
-html[data-skin="cut-paste-factor"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-  gap: clamp(1rem, 2.5vw, 2.8rem);
-  align-items: start;
-  justify-content: stretch;
-  max-width: none;
-  margin-top: 0;
-}
-
 html[data-skin="cut-paste-factor"] .record-page .article__content {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3.5vw, 3.5rem) clamp(1rem, 5vw, 5rem);
   border-left-width: 1rem;
 }
 
-html[data-skin="cut-paste-factor"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  grid-row: 1;
-  max-width: none;
-  margin: 2.25rem 0 0;
-  padding: 1rem;
-  transform: rotate(1.25deg);
-}
-
 html[data-skin="cut-paste-factor"] .record-page > .record-end {
-  grid-column: 2 / 12;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1.2rem;
   border-top-width: .75rem;
 }
 
 html[data-skin="cut-paste-factor"] .record-page > .record-end nav {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer {
-  width: min(calc(100% - 4rem), var(--page));
-  margin-top: 2.5rem;
-  margin-bottom: 2.25rem;
-  color: var(--cut-ink);
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  overflow: visible;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(14rem, .75fr) minmax(0, 1.5fr);
-  gap: 1.2rem clamp(1rem, 4vw, 4rem);
-  align-items: end;
-  padding: 1.4rem 1.5rem;
-  background: var(--cut-paper);
-  border: 5px solid var(--cut-black);
-  box-shadow: .65rem .72rem 0 var(--cut-red);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note {
-  max-width: 28ch;
-  padding: .7rem;
-  color: var(--cut-white);
-  background: var(--cut-black);
-  border: 3px solid var(--cut-black);
-  box-shadow: .25rem .3rem 0 var(--cut-red);
-  font-family: var(--keys);
-  font-size: .72rem;
-  line-height: 1.45;
-  text-transform: uppercase;
-  transform: rotate(-1.25deg);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note a {
-  color: var(--cut-white);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .75rem;
-  justify-content: stretch;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a {
-  min-height: 4.1rem;
-  color: var(--cut-black);
-  background: var(--cut-copy);
-  border-color: var(--cut-black);
-  box-shadow: .2rem .25rem 0 var(--cut-red);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(2) {
-  color: var(--cut-white);
-  background: var(--cut-black);
-  transform: rotate(1deg);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(3) {
-  color: var(--cut-white);
-  background: var(--cut-red);
-  transform: rotate(-1deg);
 }
 
 @media (max-width: 72rem) {
@@ -2419,21 +2263,15 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(3) {
     grid-column: 2;
   }
 
-  html[data-skin="cut-paste-factor"] .record-page .record-head h1,
   html[data-skin="cut-paste-factor"] .record-page .tag-line,
-  html[data-skin="cut-paste-factor"] .record-page .record-actions {
-    grid-column: 1 / span 7;
-  }
+html[data-skin="cut-paste-factor"] .record-page .record-actions {
+  grid-column: 1 / span 7;
+}
 
-  html[data-skin="cut-paste-factor"] .record-page .record-head__abstract,
-  html[data-skin="cut-paste-factor"] .record-page .record-facts {
-    grid-column: 8 / -1;
-  }
 }
 
 @media (max-width: 52rem) {
-  html[data-skin="cut-paste-factor"] .site-header,
-  html[data-skin="cut-paste-factor"] .site-footer {
+  html[data-skin="cut-paste-factor"] .site-header {
     width: 100%;
     margin-inline: 0;
   }
@@ -2487,26 +2325,22 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="cut-paste-factor"] .home-shell,
-  html[data-skin="cut-paste-factor"] .archive-shell,
-  html[data-skin="cut-paste-factor"] .record-page {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.2rem;
-    padding: 1rem .8rem 1.3rem;
-  }
+html[data-skin="cut-paste-factor"] .archive-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1rem .8rem 1.3rem;
+}
 
   html[data-skin="cut-paste-factor"] .home-shell .masthead,
-  html[data-skin="cut-paste-factor"] .home-shell > .record-index,
-  html[data-skin="cut-paste-factor"] .archive-shell > .index-heading,
-  html[data-skin="cut-paste-factor"] .archive-shell > .archive-tools,
-  html[data-skin="cut-paste-factor"] .archive-shell > .archive-groups,
-  html[data-skin="cut-paste-factor"] .archive-shell > .archive-empty,
-  html[data-skin="cut-paste-factor"] .record-page > .record-head,
-  html[data-skin="cut-paste-factor"] .record-page > .record-grid,
-  html[data-skin="cut-paste-factor"] .record-page > .record-end {
-    grid-column: 1;
-    grid-row: auto;
-  }
+html[data-skin="cut-paste-factor"] .home-shell > .record-index,
+html[data-skin="cut-paste-factor"] .archive-shell > .index-heading,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-tools,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-groups,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-empty {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="cut-paste-factor"] .home-shell .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -2581,77 +2415,24 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(3) {
     margin-bottom: 1rem;
   }
 
-  html[data-skin="cut-paste-factor"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-    transform: none;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .record-head__key,
-  html[data-skin="cut-paste-factor"] .record-page .record-head h1,
-  html[data-skin="cut-paste-factor"] .record-page .record-head__abstract,
-  html[data-skin="cut-paste-factor"] .record-page .record-facts,
   html[data-skin="cut-paste-factor"] .record-page .tag-line,
-  html[data-skin="cut-paste-factor"] .record-page .record-actions {
-    grid-column: 1;
-    grid-row: auto;
-  }
+html[data-skin="cut-paste-factor"] .record-page .record-actions {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="cut-paste-factor"] .record-page .record-head h1 {
-    max-width: 12ch;
-    font-size: clamp(2.8rem, 14vw, 5rem);
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .record-head__abstract {
-    transform: none;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .article__content,
-  html[data-skin="cut-paste-factor"] .record-page .record-grid > .record-index {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  font-size: clamp(2.8rem, 14vw, 5rem);
+}
 
   html[data-skin="cut-paste-factor"] .record-page .article__content {
-    padding: 1.25rem 1rem;
-    border-left-width: .65rem;
-  }
+  border-left-width: .65rem;
+}
 
-  html[data-skin="cut-paste-factor"] .record-page .record-grid > .record-index {
-    position: static;
-    margin: 0;
-    transform: none;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page > .record-end nav,
-  html[data-skin="cut-paste-factor"] .site-footer__links {
+  html[data-skin="cut-paste-factor"] .record-page > .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="cut-paste-factor"] .site-footer {
-    margin-top: 1rem;
-    margin-bottom: 0;
-  }
-
-  html[data-skin="cut-paste-factor"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 1rem .8rem;
-    border-inline-width: 0;
-    box-shadow: 0 -.5rem 0 var(--cut-red);
-  }
-
-  html[data-skin="cut-paste-factor"] .site-footer__note {
-    max-width: none;
-  }
 }
 
 /* Final remediation: Cut, Paste, Factor */
@@ -2761,15 +2542,11 @@ html[data-skin="cut-paste-factor"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="cut-paste-factor"] :is(
-  .site-header,
-  .site-footer,
-  .home-shell,
-  .archive-shell,
-  .record-page,
-  .page-shell,
-  .error-shell
-) {
+html[data-skin="cut-paste-factor"] .site-header,
+html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell,
+html[data-skin="cut-paste-factor"] .error-shell {
   width: min(calc(100% - 3rem), var(--page));
   min-width: 0;
   margin-inline: auto;
@@ -2778,9 +2555,14 @@ html[data-skin="cut-paste-factor"] :is(
   box-shadow: none;
   overflow: visible;
 }
+html[data-skin="cut-paste-factor"] .record-page {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="cut-paste-factor"] :is(.site-header, .site-footer)::before,
-html[data-skin="cut-paste-factor"] :is(.site-header, .site-footer)::after {
+html[data-skin="cut-paste-factor"] :is(.site-header)::before,
+html[data-skin="cut-paste-factor"] :is(.site-header)::after {
   content: none;
 }
 
@@ -3079,12 +2861,23 @@ html[data-skin="cut-paste-factor"] .skin-randomizer:focus-visible {
 }
 
 /* Shared press-sheet surfaces. Grain stays on blank space, never on text itself. */
-html[data-skin="cut-paste-factor"] :is(.home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell,
+html[data-skin="cut-paste-factor"] .error-shell {
   position: relative;
   isolation: isolate;
   margin-top: 2rem;
   margin-bottom: 2rem;
   padding: clamp(1rem, 2.5vw, 2.5rem);
+  color: var(--cpf-ink);
+  background-color: var(--cpf-paper);
+  background-image: repeating-linear-gradient(2deg, transparent 0 6px, rgb(17 17 17 / 4%) 6px 7px);
+  border: 4px solid var(--cpf-heading);
+  box-shadow: .55rem .6rem 0 var(--cpf-accent);
+}
+html[data-skin="cut-paste-factor"] .record-page {
+  isolation: isolate;
   color: var(--cpf-ink);
   background-color: var(--cpf-paper);
   background-image: repeating-linear-gradient(2deg, transparent 0 6px, rgb(17 17 17 / 4%) 6px 7px);
@@ -3146,7 +2939,12 @@ html[data-skin="cut-paste-factor"] .record-head__abstract {
   line-height: 1.6;
 }
 
-html[data-skin="cut-paste-factor"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="cut-paste-factor"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span) {
   min-height: 3rem;
   padding: .55rem .7rem;
   color: var(--cpf-on-control);
@@ -3170,8 +2968,16 @@ html[data-skin="cut-paste-factor"] :is(.action--primary, .masthead__actions .act
   border-color: var(--cpf-accent);
 }
 
-html[data-skin="cut-paste-factor"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):hover,
-html[data-skin="cut-paste-factor"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a):focus-visible {
+html[data-skin="cut-paste-factor"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):hover,
+html[data-skin="cut-paste-factor"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):focus-visible {
   color: var(--cpf-on-accent);
   background: var(--cpf-accent);
   border-color: var(--cpf-accent);
@@ -3207,8 +3013,7 @@ html[data-skin="cut-paste-factor"] .home-shell .masthead {
 
 html[data-skin="cut-paste-factor"] .masthead__copy,
 html[data-skin="cut-paste-factor"] .index-heading,
-html[data-skin="cut-paste-factor"] .page-heading,
-html[data-skin="cut-paste-factor"] .record-head {
+html[data-skin="cut-paste-factor"] .page-heading {
   position: relative;
   min-height: 0;
   padding: clamp(1.25rem, 3vw, 2.75rem);
@@ -3218,6 +3023,13 @@ html[data-skin="cut-paste-factor"] .record-head {
   border-radius: 0;
   box-shadow: .35rem .4rem 0 var(--cpf-accent);
   transform: none;
+}
+html[data-skin="cut-paste-factor"] .record-head {
+  color: var(--cpf-ink);
+  background: var(--cpf-paper-alt);
+  border: 4px solid var(--cpf-heading);
+  border-radius: 0;
+  box-shadow: .35rem .4rem 0 var(--cpf-accent);
 }
 
 html[data-skin="cut-paste-factor"] :is(.masthead__copy, .index-heading, .page-heading, .record-head)::after {
@@ -3253,9 +3065,7 @@ html[data-skin="cut-paste-factor"] .masthead__actions {
 html[data-skin="cut-paste-factor"] .home-shell > .record-index,
 html[data-skin="cut-paste-factor"] .archive-tools,
 html[data-skin="cut-paste-factor"] .archive-groups,
-html[data-skin="cut-paste-factor"] .page-prose,
-html[data-skin="cut-paste-factor"] .article__content,
-html[data-skin="cut-paste-factor"] .record-end {
+html[data-skin="cut-paste-factor"] .page-prose {
   min-width: 0;
   margin: 0;
   padding: clamp(1rem, 2.5vw, 2.25rem);
@@ -3264,6 +3074,19 @@ html[data-skin="cut-paste-factor"] .record-end {
   border: 4px solid var(--cpf-heading);
   border-radius: 0;
   box-shadow: .35rem .4rem 0 var(--cpf-accent);
+}
+html[data-skin="cut-paste-factor"] .article__content,
+html[data-skin="cut-paste-factor"] .record-end {
+  color: var(--cpf-ink);
+  background: var(--cpf-paper);
+  border: 4px solid var(--cpf-heading);
+  border-radius: 0;
+  box-shadow: .35rem .4rem 0 var(--cpf-accent);
+}
+html[data-skin="cut-paste-factor"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
 }
 
 html[data-skin="cut-paste-factor"] .home-shell > .record-index {
@@ -3577,25 +3400,8 @@ html[data-skin="cut-paste-factor"] .archive-empty {
 }
 
 /* Article: a case-file cover, wide reading sheet, outer evidence tab, correction slip. */
-html[data-skin="cut-paste-factor"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2.5rem);
-  align-items: start;
-}
-
-html[data-skin="cut-paste-factor"] .record-page > .record-head {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
-  align-items: start;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
-}
 
 html[data-skin="cut-paste-factor"] .record-page .record-head__key {
-  grid-column: 1 / span 8;
-  grid-row: 1;
   display: flex;
   flex-wrap: wrap;
   gap: .45rem;
@@ -3619,18 +3425,12 @@ html[data-skin="cut-paste-factor"] .record-head__key span + span {
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-head h1 {
-  grid-column: 1 / span 8;
-  grid-row: 2;
-  max-width: 13ch;
   margin: 0;
   font-size: clamp(2.5rem, 5vw, 4rem);
   line-height: .98;
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-head__abstract {
-  grid-column: 9 / -1;
-  grid-row: 1 / span 2;
-  align-self: stretch;
   margin: 0;
   padding: 1rem;
   color: var(--cpf-on-control);
@@ -3640,9 +3440,6 @@ html[data-skin="cut-paste-factor"] .record-page .record-head__abstract {
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-facts {
-  grid-column: 9 / -1;
-  grid-row: 3 / span 2;
-  grid-template-columns: 1fr;
   gap: .55rem;
   margin: 0;
   padding: .65rem;
@@ -3690,42 +3487,16 @@ html[data-skin="cut-paste-factor"] .record-page .record-actions {
   margin: 0;
 }
 
-html[data-skin="cut-paste-factor"] .record-page > .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
-  gap: clamp(1rem, 2.5vw, 2.5rem);
-  align-items: start;
-  max-width: none;
-  margin: 0;
-}
-
 html[data-skin="cut-paste-factor"] .record-page .article__content {
-  grid-column: 1;
-  grid-row: 1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3.5vw, 3rem) clamp(1rem, 5vw, 4rem);
   border-left: .85rem solid var(--cpf-accent);
-  overflow: visible;
 }
 
 html[data-skin="cut-paste-factor"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-  grid-row: 1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--cpf-on-control);
   background: var(--cpf-control);
   border: 4px solid var(--cpf-control);
   border-radius: 0;
   box-shadow: .35rem .4rem 0 var(--cpf-accent);
-  transform: none;
 }
 
 html[data-skin="cut-paste-factor"] .record-toc {
@@ -3773,9 +3544,6 @@ html[data-skin="cut-paste-factor"] .related-records h2 {
 }
 
 html[data-skin="cut-paste-factor"] .record-page > .record-end {
-  grid-column: 2 / 12;
-  width: auto;
-  max-width: none;
   border-top: .7rem solid var(--cpf-accent);
 }
 
@@ -4183,74 +3951,6 @@ html[data-skin="cut-paste-factor"] .prose .katex-display {
 }
 
 /* Footer colophon keeps the existing three links in their original order. */
-html[data-skin="cut-paste-factor"] .site-footer {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  color: var(--cpf-ink);
-  background: transparent;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(14rem, .8fr) minmax(0, 1.6fr);
-  gap: 1rem clamp(1rem, 3vw, 3rem);
-  align-items: end;
-  padding: 1.25rem;
-  color: var(--cpf-ink);
-  background: var(--cpf-paper);
-  border: 4px solid var(--cpf-heading);
-  box-shadow: .5rem .55rem 0 var(--cpf-accent);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note {
-  max-width: 30ch;
-  margin: 0;
-  padding: .75rem;
-  color: var(--cpf-on-control);
-  background: var(--cpf-control);
-  border: 3px solid var(--cpf-control);
-  box-shadow: .2rem .23rem 0 var(--cpf-accent);
-  font-family: var(--cpf-mono);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: .01em;
-  line-height: 1.45;
-  text-transform: uppercase;
-  transform: none;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__note a {
-  color: var(--cpf-on-control);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .7rem;
-  justify-content: stretch;
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a {
-  min-height: 3.5rem;
-  color: var(--cpf-on-control);
-  background: var(--cpf-control);
-  border-color: var(--cpf-control);
-  box-shadow: .16rem .18rem 0 var(--cpf-accent);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a:nth-child(3) {
-  color: var(--cpf-on-accent);
-  background: var(--cpf-accent);
-  border-color: var(--cpf-accent);
-}
-
-html[data-skin="cut-paste-factor"] .site-footer__links a:hover,
-html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
-  color: var(--cpf-on-accent);
-  background: var(--cpf-accent);
-  border-color: var(--cpf-accent);
-  transform: none;
-}
 
 @media (max-width: 72rem) {
   html[data-skin="cut-paste-factor"] .site-header__inner {
@@ -4262,23 +3962,24 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
   html[data-skin="cut-paste-factor"] .archive-shell > .index-heading { grid-column: 1 / span 3; }
   html[data-skin="cut-paste-factor"] .archive-shell > :is(.archive-tools, .archive-groups, .archive-empty) { grid-column: 4 / -1; }
 
-  html[data-skin="cut-paste-factor"] .record-page .record-head h1,
-  html[data-skin="cut-paste-factor"] .record-page .record-head__key,
   html[data-skin="cut-paste-factor"] .record-page .tag-line,
-  html[data-skin="cut-paste-factor"] .record-page .record-actions { grid-column: 1 / span 7; }
+html[data-skin="cut-paste-factor"] .record-page .record-actions {
+  grid-column: 1 / span 7;
+}
 
-  html[data-skin="cut-paste-factor"] .record-page .record-head__abstract,
-  html[data-skin="cut-paste-factor"] .record-page .record-facts { grid-column: 8 / -1; }
 }
 
 @media (max-width: 52rem) {
-  html[data-skin="cut-paste-factor"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-inline: 0;
-  }
+  html[data-skin="cut-paste-factor"] .site-header,
+html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell,
+html[data-skin="cut-paste-factor"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+}
 
   html[data-skin="cut-paste-factor"] .site-header { margin-top: 0; }
-  html[data-skin="cut-paste-factor"] .site-footer { margin-bottom: 0; }
 
   html[data-skin="cut-paste-factor"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -4319,32 +4020,33 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
     box-shadow: none;
   }
 
-  html[data-skin="cut-paste-factor"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem .8rem 1.25rem;
-    border-inline-width: 0;
-    box-shadow: 0 .45rem 0 var(--cpf-accent);
-  }
+  html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem .8rem 1.25rem;
+  border-inline-width: 0;
+  box-shadow: 0 .45rem 0 var(--cpf-accent);
+}
+html[data-skin="cut-paste-factor"] .record-page {
+  border-inline-width: 0;
+  box-shadow: 0 .45rem 0 var(--cpf-accent);
+}
 
-  html[data-skin="cut-paste-factor"] :is(
-    .home-shell .masthead,
-    .home-shell > .record-index,
-    .archive-shell > .index-heading,
-    .archive-shell > .archive-tools,
-    .archive-shell > .archive-groups,
-    .archive-shell > .archive-empty,
-    .record-page > .record-head,
-    .record-page > .record-grid,
-    .record-page > .record-end,
-    .page-shell > .page-heading,
-    .page-shell > .page-prose
-  ) {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  html[data-skin="cut-paste-factor"] .home-shell .masthead,
+html[data-skin="cut-paste-factor"] .home-shell > .record-index,
+html[data-skin="cut-paste-factor"] .archive-shell > .index-heading,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-tools,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-groups,
+html[data-skin="cut-paste-factor"] .archive-shell > .archive-empty,
+html[data-skin="cut-paste-factor"] .page-shell > .page-heading,
+html[data-skin="cut-paste-factor"] .page-shell > .page-prose {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="cut-paste-factor"] .home-shell .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -4410,53 +4112,21 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
 
   html[data-skin="cut-paste-factor"] .archive-year > header { margin-bottom: 1rem; }
 
-  html[data-skin="cut-paste-factor"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page :is(
-    .record-head__key,
-    .record-head h1,
-    .record-head__abstract,
-    .record-facts,
-    .tag-line,
-    .record-actions
-  ) {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  html[data-skin="cut-paste-factor"] .record-page :is(.tag-line, :not(*):nth-child(n):is(css-specificity)),
+html[data-skin="cut-paste-factor"] .record-page :is(.record-actions, :not(*):nth-child(n):is(css-specificity)) {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="cut-paste-factor"] .record-page .record-head h1 {
-    max-width: 13ch;
-    font-size: clamp(2.25rem, 11vw, 4rem);
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .article__content,
-  html[data-skin="cut-paste-factor"] .record-page .record-grid > .record-index {
-    position: static;
-    grid-column: 1;
-    grid-row: auto;
-  }
+  font-size: clamp(2.25rem, 11vw, 4rem);
+}
 
   html[data-skin="cut-paste-factor"] .record-page .article__content {
-    padding: 1.25rem 1rem;
-    border-left-width: .65rem;
-  }
+  border-left-width: .65rem;
+}
 
-  html[data-skin="cut-paste-factor"] .record-page > .record-end { width: auto; }
-
-  html[data-skin="cut-paste-factor"] .record-end nav,
-  html[data-skin="cut-paste-factor"] .site-footer__links {
+  html[data-skin="cut-paste-factor"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -4480,14 +4150,6 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
 
   html[data-skin="cut-paste-factor"] .error-code { font-size: clamp(3rem, 20vw, 5rem); }
 
-  html[data-skin="cut-paste-factor"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 1rem .8rem;
-    border-inline-width: 0;
-    box-shadow: 0 -.45rem 0 var(--cpf-accent);
-  }
-
-  html[data-skin="cut-paste-factor"] .site-footer__note { max-width: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4510,49 +4172,43 @@ html[data-skin="cut-paste-factor"] .site-footer__links a:focus-visible {
 }
 
 @media (forced-colors: active) {
-  html[data-skin="cut-paste-factor"] :is(
-    .site-header__inner,
-    .home-shell,
-    .archive-shell,
-    .record-page,
-    .page-shell,
-    .error-shell,
-    .site-footer__inner,
-    .masthead__copy,
-    .index-heading,
-    .page-heading,
-    .record-head,
-    .home-shell > .record-index,
-    .archive-tools,
-    .archive-groups,
-    .page-prose,
-    .article__content,
-    .record-end,
-    .record-grid > .record-index,
-    .prose .code-frame,
-    .code-frame__bar,
-    .code-frame__status
-  ) {
+  html[data-skin="cut-paste-factor"] :is(.site-header__inner,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.page-prose,
+.article__content,
+.record-end,
+.record-grid > .record-index,
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status) {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
     box-shadow: none;
   }
 
-  html[data-skin="cut-paste-factor"] :is(
-    .site-nav a,
-    .theme-toggle,
-    .skin-menu summary,
-    .skin-randomizer,
-    .skin-menu select,
-    .action,
-    .record-actions a,
-    .tag-line a,
-    .quick-filters a,
-    .pagination a,
-    .site-footer__links a,
-    .code-frame__actions button
-  ) {
+  html[data-skin="cut-paste-factor"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.skin-menu select,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4611,8 +4267,16 @@ html[data-skin="cut-paste-factor"] :is(
   }
 }
 
-html[data-skin="cut-paste-factor"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
+html[data-skin="cut-paste-factor"] .home-shell,
+html[data-skin="cut-paste-factor"] .archive-shell,
+html[data-skin="cut-paste-factor"] .page-shell {
   padding: 0;
+  background: transparent;
+  background-image: none;
+  border: 0;
+  box-shadow: none;
+}
+html[data-skin="cut-paste-factor"] .record-page {
   background: transparent;
   background-image: none;
   border: 0;
@@ -4697,12 +4361,6 @@ html[data-skin="cut-paste-factor"] .prose h4 { font-size: 1.375rem; }
 html[data-skin="cut-paste-factor"] .prose h5 { font-size: 1.25rem; }
 html[data-skin="cut-paste-factor"] .prose h6 { font-size: 1rem; }
 
-html[data-skin="cut-paste-factor"] .record-page .article__content {
-  width: min(100%, calc(76ch + 5rem + 8px));
-  max-width: calc(76ch + 5rem + 8px);
-  justify-self: start;
-}
-
 html[data-skin="cut-paste-factor"] .page-shell > .page-prose {
   width: min(100%, calc(76ch + 3.5rem + 8px));
   max-width: calc(76ch + 3.5rem + 8px);
@@ -4728,35 +4386,12 @@ html[data-skin="cut-paste-factor"] .page-shell > .page-prose {
     margin-bottom: 0;
   }
 
-  html[data-skin="cut-paste-factor"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="cut-paste-factor"] .record-page :is(.tag-line, :not(*):nth-child(n):is(css-specificity)),
+html[data-skin="cut-paste-factor"] .record-page :is(.record-actions, :not(*):nth-child(n):is(css-specificity)) {
+  grid-column: 1;
+  grid-row: auto;
+}
 
-  html[data-skin="cut-paste-factor"] .record-page :is(
-    .record-head__key,
-    .record-head h1,
-    .record-head__abstract,
-    .record-facts,
-    .tag-line,
-    .record-actions
-  ) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page :is(.article__content, .record-grid > .record-index) {
-    position: static;
-    grid-column: 1;
-    grid-row: auto;
-  }
 }
 
 @media (max-width: 52rem) {
@@ -4764,15 +4399,10 @@ html[data-skin="cut-paste-factor"] .page-shell > .page-prose {
     grid-template-rows: none;
   }
 
-  html[data-skin="cut-paste-factor"] .record-page .record-facts {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
-  }
-
-  html[data-skin="cut-paste-factor"] .record-page .article__content,
   html[data-skin="cut-paste-factor"] .page-shell > .page-prose {
-    width: min(100%, calc(76ch + 2rem + 8px));
-    max-width: calc(76ch + 2rem + 8px);
-  }
+  width: min(100%, calc(76ch + 2rem + 8px));
+  max-width: calc(76ch + 2rem + 8px);
+}
 }
 
 @media (forced-colors: active) {

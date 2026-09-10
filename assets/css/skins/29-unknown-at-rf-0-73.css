@@ -59,8 +59,7 @@ html[data-skin="unknown-at-rf-0-73"] .skip-link {
   font-family: var(--keys);
 }
 
-html[data-skin="unknown-at-rf-0-73"] .site-header,
-html[data-skin="unknown-at-rf-0-73"] .site-footer {
+html[data-skin="unknown-at-rf-0-73"] .site-header {
   color: #f4ebd7;
   background: #123c46;
   border: 1px solid #123c46;
@@ -73,8 +72,7 @@ html[data-skin="unknown-at-rf-0-73"] .site-header {
   border-top: .45rem solid #e3b23c;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .site-header__inner,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__inner {
+html[data-skin="unknown-at-rf-0-73"] .site-header__inner {
   padding: .85rem 1rem;
 }
 
@@ -174,10 +172,17 @@ html[data-skin="unknown-at-rf-0-73"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="unknown-at-rf-0-73"] .home-shell,
 html[data-skin="unknown-at-rf-0-73"] .archive-shell,
-html[data-skin="unknown-at-rf-0-73"] .record-page,
 html[data-skin="unknown-at-rf-0-73"] .page-shell,
 html[data-skin="unknown-at-rf-0-73"] .error-shell {
   padding: clamp(1rem, 3vw, 2.5rem);
+  background-color: #f4ebd7;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 2.05rem, rgb(18 60 70 / 11%) 2.05rem calc(2.05rem + 1px));
+  border: 1px solid #123c46;
+  border-left: .45rem solid #c44a2d;
+  border-radius: 0;
+  box-shadow: .55rem .6rem 0 rgb(18 60 70 / 18%);
+}
+html[data-skin="unknown-at-rf-0-73"] .record-page {
   background-color: #f4ebd7;
   background-image: repeating-linear-gradient(to bottom, transparent 0 2.05rem, rgb(18 60 70 / 11%) 2.05rem calc(2.05rem + 1px));
   border: 1px solid #123c46;
@@ -193,9 +198,15 @@ html[data-skin="unknown-at-rf-0-73"] .masthead {
 
 html[data-skin="unknown-at-rf-0-73"] .masthead__copy,
 html[data-skin="unknown-at-rf-0-73"] .index-heading,
-html[data-skin="unknown-at-rf-0-73"] .page-heading,
-html[data-skin="unknown-at-rf-0-73"] .record-head {
+html[data-skin="unknown-at-rf-0-73"] .page-heading {
   padding: clamp(1rem, 3vw, 2.25rem);
+  color: #123c46;
+  background: rgb(244 235 215 / 82%);
+  border: 1px solid #123c46;
+  border-radius: 0;
+  box-shadow: inset 0 .28rem 0 #e3b23c;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-head {
   color: #123c46;
   background: rgb(244 235 215 / 82%);
   border: 1px solid #123c46;
@@ -245,8 +256,7 @@ html[data-skin="unknown-at-rf-0-73"] .record-actions a,
 html[data-skin="unknown-at-rf-0-73"] .tag-line a,
 html[data-skin="unknown-at-rf-0-73"] .quick-filters a,
 html[data-skin="unknown-at-rf-0-73"] .pagination a,
-html[data-skin="unknown-at-rf-0-73"] .pagination span,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a {
+html[data-skin="unknown-at-rf-0-73"] .pagination span {
   min-height: 2.5rem;
   padding: .45rem .65rem;
   color: #f4ebd7;
@@ -278,8 +288,6 @@ html[data-skin="unknown-at-rf-0-73"] .quick-filters a:hover,
 html[data-skin="unknown-at-rf-0-73"] .quick-filters a:focus-visible,
 html[data-skin="unknown-at-rf-0-73"] .pagination a:hover,
 html[data-skin="unknown-at-rf-0-73"] .pagination a:focus-visible,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:hover,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:focus-visible,
 html[data-skin="unknown-at-rf-0-73"] .quick-filters a[aria-current="true"] {
   color: #f4ebd7;
   background: #c44a2d;
@@ -289,12 +297,19 @@ html[data-skin="unknown-at-rf-0-73"] .quick-filters a[aria-current="true"] {
 html[data-skin="unknown-at-rf-0-73"] .home-shell > .record-index,
 html[data-skin="unknown-at-rf-0-73"] .archive-tools,
 html[data-skin="unknown-at-rf-0-73"] .archive-groups,
-html[data-skin="unknown-at-rf-0-73"] .page-prose,
-html[data-skin="unknown-at-rf-0-73"] .record-end {
+html[data-skin="unknown-at-rf-0-73"] .page-prose {
   padding: clamp(1rem, 2.5vw, 2rem);
   background: rgb(244 235 215 / 88%);
   border: 1px solid #123c46;
   border-radius: 0;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-end {
+  background: rgb(244 235 215 / 88%);
+  border: 1px solid #123c46;
+  border-radius: 0;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: clamp(1rem, 2.5vw, 2rem);
 }
 
 html[data-skin="unknown-at-rf-0-73"] .section-heading :is(h1, h2),
@@ -688,33 +703,6 @@ html[data-skin="unknown-at-rf-0-73"] .error-shell > p {
   color: #123c46;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-bottom: .45rem solid #c44a2d;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note,
-html[data-skin="unknown-at-rf-0-73"] .site-footer a {
-  color: #f4ebd7;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note a {
-  color: #e3b23c;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a {
-  color: #123c46;
-  background: #e9ddc5;
-  border-color: #e9ddc5;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:hover,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:focus-visible {
-  color: #f4ebd7;
-  background: #c44a2d;
-  border-color: #c44a2d;
-}
-
 html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] {
   color-scheme: dark;
   --bench: #091f25;
@@ -834,18 +822,13 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .record-row {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="unknown-at-rf-0-73"] .site-header,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer {
+  html[data-skin="unknown-at-rf-0-73"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
 
   html[data-skin="unknown-at-rf-0-73"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="unknown-at-rf-0-73"] .site-nav {
@@ -1270,10 +1253,6 @@ html[data-skin="unknown-at-rf-0-73"] .archive-year > .record-list {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-page {
-  width: min(calc(100% - 3rem), 108rem);
-  display: grid;
-  gap: 1.15rem;
-  padding: 1.15rem;
   background: rgb(244 235 215 / 72%);
   border: 1px solid #123c46;
   border-left: .6rem solid #c44a2d;
@@ -1281,10 +1260,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-page {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(15rem, .75fr);
-  gap: 1.1rem 2rem;
-  padding: clamp(1.3rem, 3vw, 3rem);
   background:
     linear-gradient(90deg, transparent 0 3.3rem, rgb(196 74 45 / 42%) 3.3rem calc(3.3rem + 2px), transparent calc(3.3rem + 2px)),
     repeating-linear-gradient(to bottom, #f4ebd7 0 2rem, rgb(18 60 70 / 12%) 2rem calc(2rem + 1px));
@@ -1293,16 +1268,8 @@ html[data-skin="unknown-at-rf-0-73"] .record-head {
   box-shadow: none;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .record-head__key,
-html[data-skin="unknown-at-rf-0-73"] .record-head h1,
-html[data-skin="unknown-at-rf-0-73"] .record-facts {
-  grid-column: 1 / -1;
-}
-
 html[data-skin="unknown-at-rf-0-73"] .record-head__key {
   justify-content: flex-start;
-  width: max-content;
-  max-width: 100%;
   margin: 0;
   padding: .3rem .5rem;
   color: #f4ebd7;
@@ -1310,14 +1277,11 @@ html[data-skin="unknown-at-rf-0-73"] .record-head__key {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head h1 {
-  max-width: 18ch;
   margin: 0;
   font-size: clamp(3rem, 6.4vw, 7rem);
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
-  grid-column: 2;
-  align-self: end;
   margin: 0;
   padding: 1rem;
   color: #123c46;
@@ -1327,7 +1291,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-facts {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   padding-top: 0;
   border: 1px solid #123c46;
@@ -1345,31 +1308,15 @@ html[data-skin="unknown-at-rf-0-73"] .record-facts > div:last-child {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head .tag-line {
-  align-self: start;
   margin-top: 0;
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head .record-actions {
-  align-self: start;
   justify-content: flex-end;
   margin-top: 0;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2.15fr) minmax(15rem, .72fr);
-  gap: 1.15rem;
-  align-items: start;
-  justify-content: stretch;
-  margin: 0;
-}
-
 html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
-  grid-column: 1;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3rem);
   background-color: var(--paper);
   border: 1px solid #123c46;
   border-top: .4rem solid #e3b23c;
@@ -1377,13 +1324,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-  grid-column: 2;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   border: 1px solid #123c46;
   border-top: .4rem solid #c44a2d;
   box-shadow: none;
@@ -1398,10 +1338,12 @@ html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index .related-recor
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-end {
-  margin: 0;
-  padding: 1rem 1.2rem;
   background: #dce5dc;
   border: 1px solid #123c46;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)) {
+  margin: 0;
+  padding: 1rem 1.2rem;
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-end nav {
@@ -1415,65 +1357,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-end nav a {
   padding: .8rem;
   background: #f4ebd7;
   border: 1px solid #123c46;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer {
-  width: min(calc(100% - 3rem), 108rem);
-  margin-bottom: 1.5rem;
-  background: #123c46;
-  border: 1px solid #123c46;
-  border-bottom: .5rem solid #c44a2d;
-  box-shadow: .55rem .55rem 0 rgb(18 60 70 / 24%);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
-  gap: 0;
-  align-items: stretch;
-  padding: 0;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note {
-  display: flex;
-  align-items: center;
-  max-width: none;
-  min-height: 5rem;
-  padding: 1rem 1.25rem;
-  background: repeating-linear-gradient(to bottom, transparent 0 1.95rem, rgb(244 235 215 / 13%) 1.95rem calc(1.95rem + 1px));
-  font-family: var(--body);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  justify-content: stretch;
-  border-left: 1px solid rgb(244 235 215 / 40%);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a {
-  min-width: 0;
-  min-height: 5rem;
-  padding: .65rem;
-  color: #123c46;
-  background: #dce5dc;
-  border: 0;
-  border-right: 1px solid #123c46;
-  box-shadow: none;
-  font-size: .68rem;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:last-child {
-  border-right: 0;
-  color: #123c46;
-  background: #e3b23c;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:hover,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:focus-visible {
-  color: #f4ebd7;
-  background: #c44a2d;
 }
 
 html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .home-shell,
@@ -1544,21 +1427,9 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .record-facts > div {
     grid-template-columns: minmax(0, 1.45fr) minmax(13rem, .65fr);
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
-    grid-column: 1;
-  }
-
   html[data-skin="unknown-at-rf-0-73"] .record-head .tag-line,
   html[data-skin="unknown-at-rf-0-73"] .record-head .record-actions {
     justify-content: flex-start;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div:nth-child(2) {
@@ -1568,14 +1439,15 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .record-facts > div {
 
 @media (max-width: 48rem) {
   html[data-skin="unknown-at-rf-0-73"] .site-header,
-  html[data-skin="unknown-at-rf-0-73"] .home-shell,
-  html[data-skin="unknown-at-rf-0-73"] .archive-shell,
-  html[data-skin="unknown-at-rf-0-73"] .record-page,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer {
-    width: 100%;
-    margin-inline: 0;
-    box-shadow: none;
-  }
+html[data-skin="unknown-at-rf-0-73"] .home-shell,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell {
+  width: 100%;
+  margin-inline: 0;
+  box-shadow: none;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-page {
+  box-shadow: none;
+}
 
   html[data-skin="unknown-at-rf-0-73"] .site-header,
   html[data-skin="unknown-at-rf-0-73"] .home-shell,
@@ -1667,21 +1539,6 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .record-facts > div {
     margin-top: 0;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-page {
-    gap: .85rem;
-    padding: .85rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .85rem;
-    padding: 1rem 1rem 1rem 2.85rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div,
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div:nth-child(2) {
     min-height: 0;
@@ -1693,37 +1550,10 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] .record-facts > div {
     border-bottom: 0;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .85rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content,
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-end nav,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__inner,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
+  html[data-skin="unknown-at-rf-0-73"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-    border-top: 1px solid rgb(244 235 215 / 40%);
-    border-left: 0;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links a,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:last-child {
-    min-height: 3rem;
-    border-right: 0;
-    border-bottom: 1px solid #123c46;
-  }
 }
 
 /* Final remediation: Unknown at Rf 0.73 */
@@ -1849,39 +1679,76 @@ html[data-skin="unknown-at-rf-0-73"] :focus-visible {
   outline-offset: 4px;
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .site-header, .site-header__inner, .site-nav, .skin-menu, .skin-menu__panel,
-  .site-footer, .site-footer__inner, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .masthead, .masthead__copy,
-  .record-head, .record-facts, .record-grid, .article__content, .page-prose,
-  .archive-year, .record-row__link, .record-end
-) {
+html[data-skin="unknown-at-rf-0-73"] .site-header,
+html[data-skin="unknown-at-rf-0-73"] .site-header__inner,
+html[data-skin="unknown-at-rf-0-73"] .site-nav,
+html[data-skin="unknown-at-rf-0-73"] .skin-menu,
+html[data-skin="unknown-at-rf-0-73"] .skin-menu__panel,
+html[data-skin="unknown-at-rf-0-73"] .home-shell,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell,
+html[data-skin="unknown-at-rf-0-73"] .page-shell,
+html[data-skin="unknown-at-rf-0-73"] .error-shell,
+html[data-skin="unknown-at-rf-0-73"] .masthead,
+html[data-skin="unknown-at-rf-0-73"] .masthead__copy,
+html[data-skin="unknown-at-rf-0-73"] .page-prose,
+html[data-skin="unknown-at-rf-0-73"] .archive-year,
+html[data-skin="unknown-at-rf-0-73"] .record-row__link,
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)) {
   min-width: 0;
   overflow: visible;
 }
+html[data-skin="unknown-at-rf-0-73"] .record-facts {
+  overflow: visible;
+}
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .site-brand__scope, .site-nav :is(a, button, summary, label, select),
-  .skin-menu__panel :is(label, select, button), .action, .record-actions a,
-  .tag-line a, .quick-filters a, .pagination :is(a, span, strong),
-  .record-row :is(time, span),
-  .archive-search :is(label, input, p), .all-tags :is(summary, a, small),
-  .record-facts :is(dt, dd), .record-toc summary, .record-end :is(span, a),
-  .site-footer :is(p, a), .prose :is(th, td, code),
-  .code-frame :is(strong, small, button, li, code, pre),
-  .prose :is(.katex, .katex-display)
-) {
+html[data-skin="unknown-at-rf-0-73"] :is(.site-brand__scope,
+.site-nav :is(a, button, summary, label, select),
+.skin-menu__panel :is(label, select, button),
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span, strong),
+.record-row :is(time, span),
+.archive-search :is(label, input, p),
+.all-tags :is(summary, a, small),
+.record-facts :is(dt, dd),
+.record-toc summary,
+.record-end :is(span, a),
+.prose :is(th, td, code),
+.code-frame :is(strong, small, button, li, code, pre),
+.prose :is(.katex, .katex-display)) {
   font-size: var(--text-floor) !important;
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .site-brand__name, .masthead h1, .index-heading h1, .page-heading h1,
-  .record-head h1, .error-shell h1, .prose h1, .prose h2, .prose h3,
-  .prose h4, .prose h5, .prose h6, .section-heading :is(h1, h2),
-  .archive-year h2, .related-records h2
-) {
+html[data-skin="unknown-at-rf-0-73"] :is(.site-brand__name, :not(*):nth-child(n):is(css-specificity)),
+html[data-skin="unknown-at-rf-0-73"] .masthead h1,
+html[data-skin="unknown-at-rf-0-73"] .index-heading h1,
+html[data-skin="unknown-at-rf-0-73"] .page-heading h1,
+html[data-skin="unknown-at-rf-0-73"] .error-shell h1,
+html[data-skin="unknown-at-rf-0-73"] .section-heading h1,
+html[data-skin="unknown-at-rf-0-73"] .section-heading h2,
+html[data-skin="unknown-at-rf-0-73"] .archive-year h2,
+html[data-skin="unknown-at-rf-0-73"] .related-records h2 {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-head h1,
+html[data-skin="unknown-at-rf-0-73"] .prose h1,
+html[data-skin="unknown-at-rf-0-73"] .prose h2,
+html[data-skin="unknown-at-rf-0-73"] .prose h3,
+html[data-skin="unknown-at-rf-0-73"] .prose h4,
+html[data-skin="unknown-at-rf-0-73"] .prose h5,
+html[data-skin="unknown-at-rf-0-73"] .prose h6 {
+  overflow-wrap: anywhere;
+}
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h1,
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h2,
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h3,
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h4,
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h5,
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) h6 {
+  min-width: 0;
 }
 
 html[data-skin="unknown-at-rf-0-73"] .skip-link {
@@ -1894,18 +1761,24 @@ html[data-skin="unknown-at-rf-0-73"] .skip-link {
   font-size: var(--text-floor);
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell
-) {
+html[data-skin="unknown-at-rf-0-73"] .site-header,
+html[data-skin="unknown-at-rf-0-73"] .home-shell,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell,
+html[data-skin="unknown-at-rf-0-73"] .page-shell,
+html[data-skin="unknown-at-rf-0-73"] .error-shell {
   width: min(calc(100% - 2.5rem), 96rem);
   margin-inline: auto;
   border: 1px solid var(--rule);
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="unknown-at-rf-0-73"] .record-page {
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="unknown-at-rf-0-73"] :is(.site-header, .site-footer) {
+html[data-skin="unknown-at-rf-0-73"] :is(.site-header) {
   color: var(--header-fg);
   background: var(--header-bg);
   border-color: var(--header-bg);
@@ -2193,11 +2066,17 @@ html[data-skin="unknown-at-rf-0-73"] .masthead h1 {
   font-size: clamp(2.25rem, 4.8vw, 5rem);
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child,
-  .record-head__abstract
-) {
+html[data-skin="unknown-at-rf-0-73"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="unknown-at-rf-0-73"] .index-heading > p:last-child,
+html[data-skin="unknown-at-rf-0-73"] .page-heading > p:last-child {
   max-width: 62ch;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--text-floor);
+  line-height: 1.65;
+}
+html[data-skin="unknown-at-rf-0-73"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 0;
   color: var(--ink);
   font-family: var(--body);
@@ -2221,10 +2100,11 @@ html[data-skin="unknown-at-rf-0-73"] .masthead__actions {
   border-top: 3px solid var(--lane-cyan);
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .action, .record-actions a, .tag-line a, .quick-filters a,
-  .pagination :is(a, span), .site-footer__links a
-) {
+html[data-skin="unknown-at-rf-0-73"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span)) {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -2253,10 +2133,11 @@ html[data-skin="unknown-at-rf-0-73"] :is(
   border-color: var(--selected-bg);
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .action, .record-actions a, .tag-line a, .quick-filters a,
-  .pagination a, .site-footer__links a
-):is(:hover, :focus-visible),
+html[data-skin="unknown-at-rf-0-73"] :is(.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a):is(:hover, :focus-visible),
 html[data-skin="unknown-at-rf-0-73"] .quick-filters a[aria-current="true"] {
   color: var(--selected-fg);
   background: var(--selected-bg);
@@ -2264,10 +2145,11 @@ html[data-skin="unknown-at-rf-0-73"] .quick-filters a[aria-current="true"] {
   box-shadow: inset 0 -3px var(--selected-mark);
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .home-shell > .record-index, .archive-tools, .archive-groups,
-  .page-heading, .page-prose, .record-end
-) {
+html[data-skin="unknown-at-rf-0-73"] .home-shell > .record-index,
+html[data-skin="unknown-at-rf-0-73"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="unknown-at-rf-0-73"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="unknown-at-rf-0-73"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="unknown-at-rf-0-73"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   margin: 0;
   padding: clamp(1rem, 2.5vw, 1.75rem);
   color: var(--ink);
@@ -2275,6 +2157,17 @@ html[data-skin="unknown-at-rf-0-73"] :is(
   border: 1px solid var(--heading);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="unknown-at-rf-0-73"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--heading);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="unknown-at-rf-0-73"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
 }
 
 html[data-skin="unknown-at-rf-0-73"] .home-shell > .record-index {
@@ -2596,21 +2489,7 @@ html[data-skin="unknown-at-rf-0-73"] .archive-empty {
   font-size: var(--text-floor);
 }
 
-html[data-skin="unknown-at-rf-0-73"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1.25rem;
-  padding: 1.25rem;
-  margin-block: 1.25rem;
-}
-
 html[data-skin="unknown-at-rf-0-73"] .record-head {
-  grid-column: 1 / -1;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem 1.25rem;
-  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1.75rem, 4vw, 3.25rem);
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--heading);
@@ -2620,9 +2499,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-head {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head__key {
-  grid-column: 1 / -1;
-  width: max-content;
-  max-width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem 1rem;
@@ -2633,14 +2509,10 @@ html[data-skin="unknown-at-rf-0-73"] .record-head__key {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head h1 {
-  grid-column: 1 / span 8;
-  max-width: 18ch;
   font-size: clamp(2rem, 4.2vw, 4.5rem);
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
-  grid-column: 9 / -1;
-  align-self: end;
   padding: 1rem;
   background: var(--paper-alt);
   border: 1px solid var(--rule);
@@ -2648,9 +2520,7 @@ html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-facts {
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   margin: 0;
   color: var(--ink);
@@ -2695,7 +2565,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-facts dd {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head .tag-line {
-  grid-column: 1 / span 7;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
@@ -2703,7 +2572,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-head .tag-line {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-head .record-actions {
-  grid-column: 8 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
@@ -2711,21 +2579,7 @@ html[data-skin="unknown-at-rf-0-73"] .record-head .record-actions {
   margin: 0;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .record-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1.25rem;
-  align-items: start;
-}
-
 html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
-  grid-column: 2 / span 8;
-  position: relative;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 3.25rem);
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--heading);
@@ -2735,13 +2589,6 @@ html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-  grid-column: 10 / -1;
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   color: var(--header-fg);
   background: var(--header-bg);
   border: 1px solid var(--header-bg);
@@ -2795,11 +2642,13 @@ html[data-skin="unknown-at-rf-0-73"] .related-records h2 {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-end {
+  background: var(--paper-alt);
+  border-top: 4px solid var(--heading);
+}
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)) {
   grid-column: 2 / -1;
   display: grid;
   gap: 1rem;
-  background: var(--paper-alt);
-  border-top: 4px solid var(--heading);
 }
 
 html[data-skin="unknown-at-rf-0-73"] .record-end > p {
@@ -2852,12 +2701,6 @@ html[data-skin="unknown-at-rf-0-73"] .prose {
   font-family: var(--body);
   font-size: var(--text-floor);
   line-height: 1.75;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .article__content > :is(
-  p, ul, ol, dl, blockquote, h1, h2, h3, h4, h5, h6, hr
-) {
-  max-width: 65ch;
 }
 
 html[data-skin="unknown-at-rf-0-73"] :is(
@@ -2944,14 +2787,16 @@ html[data-skin="unknown-at-rf-0-73"] .prose :not(pre) > code {
 }
 
 html[data-skin="unknown-at-rf-0-73"] .prose table {
-  width: max-content;
-  min-width: 100%;
-  max-width: none;
   display: block;
   overflow-x: auto;
   overflow-y: visible;
   border-collapse: collapse;
   -webkit-overflow-scrolling: touch;
+}
+html[data-skin="unknown-at-rf-0-73"] .prose:not(:where(.record-page, .record-page *)) table {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
 }
 
 html[data-skin="unknown-at-rf-0-73"] .prose :is(th, td) {
@@ -3249,72 +3094,6 @@ html[data-skin="unknown-at-rf-0-73"] .error-shell > nav {
   gap: .65rem;
 }
 
-html[data-skin="unknown-at-rf-0-73"] .site-footer {
-  margin-bottom: 1.25rem;
-  border-bottom: 4px solid var(--lane-pink);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 0;
-  padding: 0;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note {
-  grid-column: 1 / span 7;
-  min-height: 5rem;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 1rem 1.25rem;
-  color: var(--header-fg);
-  background: repeating-linear-gradient(to bottom, transparent 0 2.35rem, rgb(247 240 217 / 12%) 2.35rem calc(2.35rem + 1px));
-  font-family: var(--body);
-  font-size: var(--text-floor);
-  line-height: 1.55;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note a {
-  color: var(--focus-dark);
-  font-size: var(--text-floor);
-  text-decoration-color: currentColor;
-  text-decoration-thickness: 2px;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__note a:is(:hover, :focus-visible) {
-  color: var(--header-fg);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-  grid-column: 8 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  border-left: 1px solid rgb(247 240 217 / 48%);
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a,
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:last-child {
-  min-width: 0;
-  min-height: 5rem;
-  color: var(--header-fg);
-  background: var(--header-bg);
-  border: 0;
-  border-right: 1px solid rgb(247 240 217 / 48%);
-  box-shadow: inset 0 -3px transparent;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:last-child {
-  border-right: 0;
-}
-
-html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:is(:hover, :focus-visible) {
-  color: var(--selected-fg);
-  background: var(--selected-bg);
-  box-shadow: inset 0 -3px var(--selected-mark);
-}
-
 html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
   .home-shell, .archive-shell, .record-page, .page-shell, .error-shell,
   .masthead, .masthead__copy, .home-shell > .record-index,
@@ -3353,15 +3132,16 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
   color: var(--heading);
 }
 
-html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
-  .site-nav > a[data-route]:is(:hover, :focus-visible, [aria-current="page"]),
-  .skin-menu > summary:is(:hover, :focus-visible), .skin-menu[open] > summary,
-  .skin-randomizer:is(:hover, :focus-visible), .action:is(:hover, :focus-visible),
-  .record-actions a:is(:hover, :focus-visible), .tag-line a:is(:hover, :focus-visible),
-  .quick-filters a:is(:hover, :focus-visible, [aria-current="true"]),
-  .pagination a:is(:hover, :focus-visible), .site-footer__links a:is(:hover, :focus-visible),
-  .code-frame__actions button:is(:hover, :focus-visible, [aria-pressed="true"])
-) {
+html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(.site-nav > a[data-route]:is(:hover, :focus-visible, [aria-current="page"]),
+.skin-menu > summary:is(:hover, :focus-visible),
+.skin-menu[open] > summary,
+.skin-randomizer:is(:hover, :focus-visible),
+.action:is(:hover, :focus-visible),
+.record-actions a:is(:hover, :focus-visible),
+.tag-line a:is(:hover, :focus-visible),
+.quick-filters a:is(:hover, :focus-visible, [aria-current="true"]),
+.pagination a:is(:hover, :focus-visible),
+.code-frame__actions button:is(:hover, :focus-visible, [aria-pressed="true"])) {
   color: var(--selected-fg);
   background: var(--selected-bg);
   border-color: var(--selected-bg);
@@ -3436,10 +3216,10 @@ html[data-skin="unknown-at-rf-0-73"] .site-nav > .skin-menu > .skin-menu__panel 
   font-size: var(--text-floor) !important;
 }
 
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .site-brand, .masthead__actions .action, .archive-tools :focus-visible,
-  .record-grid > .record-index :focus-visible, .site-footer a
-):focus-visible {
+html[data-skin="unknown-at-rf-0-73"] :is(.site-brand,
+.masthead__actions .action,
+.archive-tools :focus-visible,
+.record-grid > .record-index :focus-visible):focus-visible {
   outline-color: var(--focus-dark);
 }
 
@@ -3491,22 +3271,6 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     grid-column: 1 / span 5;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-head h1 {
-    grid-column: 1 / span 7;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-head__abstract {
-    grid-column: 8 / -1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
-    grid-column: 1 / span 8;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-    grid-column: 9 / -1;
-  }
-
   html[data-skin="unknown-at-rf-0-73"] .page-heading {
     grid-column: 1 / span 4;
   }
@@ -3515,31 +3279,24 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     grid-column: 5 / -1;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__note {
-    grid-column: 1 / span 6;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-    grid-column: 7 / -1;
-  }
 }
 
 @media (max-width: 47.99rem) {
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell
-  ) {
-    width: 100%;
-    margin-inline: 0;
-    border-left-width: 3px;
-  }
+  html[data-skin="unknown-at-rf-0-73"] .site-header,
+html[data-skin="unknown-at-rf-0-73"] .home-shell,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell,
+html[data-skin="unknown-at-rf-0-73"] .page-shell,
+html[data-skin="unknown-at-rf-0-73"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-left-width: 3px;
+}
+html[data-skin="unknown-at-rf-0-73"] .record-page {
+  border-left-width: 3px;
+}
 
   html[data-skin="unknown-at-rf-0-73"] .site-header {
     margin-top: 0;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer {
-    margin-bottom: 0;
   }
 
   html[data-skin="unknown-at-rf-0-73"] .site-header__inner {
@@ -3579,21 +3336,28 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     border-width: 1px 0 0;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .home-shell, .archive-shell, .record-page, .page-shell, .error-shell
-  ) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: .85rem;
-    padding: .85rem;
-    margin-block: 0;
-  }
+  html[data-skin="unknown-at-rf-0-73"] .home-shell,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell,
+html[data-skin="unknown-at-rf-0-73"] .page-shell,
+html[data-skin="unknown-at-rf-0-73"] .error-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .85rem;
+  padding: .85rem;
+  margin-block: 0;
+}
 
-  html[data-skin="unknown-at-rf-0-73"] .home-shell > :is(.masthead, .index-heading, .record-index),
-  html[data-skin="unknown-at-rf-0-73"] .archive-shell > :is(.index-heading, .archive-tools, .archive-groups),
-  html[data-skin="unknown-at-rf-0-73"] :is(.record-head, .record-grid, .record-end, .page-heading, .page-prose) {
-    grid-column: 1;
-  }
+  html[data-skin="unknown-at-rf-0-73"] .home-shell > .masthead,
+html[data-skin="unknown-at-rf-0-73"] .home-shell > .index-heading,
+html[data-skin="unknown-at-rf-0-73"] .home-shell > .record-index,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell > .index-heading,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell > .archive-tools,
+html[data-skin="unknown-at-rf-0-73"] .archive-shell > .archive-groups,
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)),
+html[data-skin="unknown-at-rf-0-73"] .page-heading,
+html[data-skin="unknown-at-rf-0-73"] .page-prose {
+  grid-column: 1;
+}
 
   html[data-skin="unknown-at-rf-0-73"] .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -3625,13 +3389,13 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
   }
 
   html[data-skin="unknown-at-rf-0-73"] .home-shell > .record-index,
-  html[data-skin="unknown-at-rf-0-73"] .archive-tools,
-  html[data-skin="unknown-at-rf-0-73"] .archive-groups,
-  html[data-skin="unknown-at-rf-0-73"] .page-heading,
-  html[data-skin="unknown-at-rf-0-73"] .page-prose,
-  html[data-skin="unknown-at-rf-0-73"] .record-end {
-    padding: 1rem;
-  }
+html[data-skin="unknown-at-rf-0-73"] .archive-tools,
+html[data-skin="unknown-at-rf-0-73"] .archive-groups,
+html[data-skin="unknown-at-rf-0-73"] .page-heading,
+html[data-skin="unknown-at-rf-0-73"] .page-prose,
+html[data-skin="unknown-at-rf-0-73"] .record-end:not(:where(.record-page, .record-page *)) {
+  padding: 1rem;
+}
 
   html[data-skin="unknown-at-rf-0-73"] .record-row__link {
     grid-template-columns: minmax(0, 1fr);
@@ -3678,27 +3442,6 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     border-bottom: 3px solid var(--assay-accent);
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .85rem;
-    padding: 1.25rem 1rem 1.25rem 2rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .record-head__key, .record-head h1, .record-head__abstract,
-    .record-facts, .record-head .tag-line, .record-head .record-actions
-  ) {
-    grid-column: 1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-head h1 {
-    max-width: none;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div,
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div:nth-child(2) {
     border-right: 0;
@@ -3713,28 +3456,7 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     justify-content: flex-start;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .85rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .record-grid > .article__content, .record-grid > .record-index
-  ) {
-    grid-column: 1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
-    padding: 1.25rem 1rem 1.25rem 2rem;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .record-end nav,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__inner,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
+  html[data-skin="unknown-at-rf-0-73"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -3748,23 +3470,6 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
 
   html[data-skin="unknown-at-rf-0-73"] :is(.error-code, .error-shell > .eyebrow, .error-shell > h1, .error-shell > p, .error-shell > nav) {
     grid-column: 1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__note,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-    grid-column: 1;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links {
-    border-top: 1px solid rgb(247 240 217 / 48%);
-    border-left: 0;
-  }
-
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links a,
-  html[data-skin="unknown-at-rf-0-73"] .site-footer__links a:last-child {
-    min-height: 2.75rem;
-    border-right: 0;
-    border-bottom: 1px solid rgb(247 240 217 / 48%);
   }
 
   html[data-skin="unknown-at-rf-0-73"] .code-frame__bar,
@@ -3798,28 +3503,47 @@ html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] :is(
     --focus-dark: Highlight;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell, .masthead, .masthead__copy,
-    .home-shell > .record-index,
-    .archive-tools, .archive-groups, .archive-shell > .index-heading,
-    .record-head, .record-head__abstract, .record-facts, .record-facts > div,
-    .record-grid > .article__content, .record-grid > .record-index,
-    .page-heading, .page-prose, .record-end, .prose :is(th, td, .info, blockquote, .katex-display),
-    .prose .code-frame, .code-frame__bar, .code-frame__status, .skin-menu__panel
-  ) {
+  html[data-skin="unknown-at-rf-0-73"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.masthead__copy,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.archive-shell > .index-heading,
+.record-head,
+.record-head__abstract,
+.record-facts,
+.record-facts > div,
+.record-grid > .article__content,
+.record-grid > .record-index,
+.page-heading,
+.page-prose,
+.record-end,
+.prose :is(th, td, .info, blockquote, .katex-display),
+.prose .code-frame,
+.code-frame__bar,
+.code-frame__status,
+.skin-menu__panel) {
     color: CanvasText !important;
     background: Canvas !important;
     border-color: CanvasText !important;
     box-shadow: none !important;
   }
 
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .site-nav > a[data-route], .skin-menu > summary,
-    .skin-randomizer, .action, .record-actions a, .tag-line a,
-    .quick-filters a, .pagination :is(a, span), .site-footer__links a,
-    .code-frame__actions button
-  ) {
+  html[data-skin="unknown-at-rf-0-73"] :is(.site-nav > a[data-route],
+.skin-menu > summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.code-frame__actions button) {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -3951,7 +3675,6 @@ html[data-skin="unknown-at-rf-0-73"] .archive-empty {
   border-block: 1px solid var(--heading);
 }
 html[data-skin="unknown-at-rf-0-73"] .record-head {
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   border: 0;
   border-top: 4px solid var(--lane-pink);
   border-bottom: 1px solid var(--heading);
@@ -3969,19 +3692,24 @@ html[data-skin="unknown-at-rf-0-73"] .record-facts > div:nth-child(2) {
   border-left: 0;
 }
 html[data-skin="unknown-at-rf-0-73"] .record-grid > .article__content {
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   background: transparent;
   border: 0;
   border-top: 4px solid var(--lane-cyan);
   border-bottom: 1px solid var(--heading);
   box-shadow: none;
 }
-html[data-skin="unknown-at-rf-0-73"] .article__content > :is(
-  p, ul, ol, dl, blockquote, h1, h2, h3, h4, h5, h6, hr
-),
-html[data-skin="unknown-at-rf-0-73"] .page-prose > :is(
-  p, ul, ol, dl, blockquote, h1, h2, h3, h4, h5, h6, hr
-) {
+html[data-skin="unknown-at-rf-0-73"] .page-prose > p,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > ul,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > ol,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > dl,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > blockquote,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h1,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h2,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h3,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h4,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h5,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > h6,
+html[data-skin="unknown-at-rf-0-73"] .page-prose > hr {
   max-width: 72ch;
 }
 html[data-skin="unknown-at-rf-0-73"] .prose :is(.info, blockquote, .katex-display) {
@@ -3991,10 +3719,7 @@ html[data-skin="unknown-at-rf-0-73"] .prose :is(.info, blockquote, .katex-displa
 html[data-skin="unknown-at-rf-0-73"] .prose blockquote {
   border-color: var(--rule);
 }
-html[data-skin="unknown-at-rf-0-73"] :is(
-  .record-end nav a, .site-footer__links a,
-  .site-footer__links a:last-child
-) {
+html[data-skin="unknown-at-rf-0-73"] :is(.record-end nav a, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   min-height: 2.75rem;
 }
 html[data-skin="unknown-at-rf-0-73"] .code-frame__bar,
@@ -4051,32 +3776,15 @@ html[data-skin="unknown-at-rf-0-73"] body .prose .code-frame .highlight :is(.gh,
   html[data-skin="unknown-at-rf-0-73"] .quick-filters {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
   }
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .record-head h1, .record-head__abstract, .record-head .tag-line,
-    .record-head .record-actions
-  ) {
-    grid-column: 1 / -1;
-  }
+
   html[data-skin="unknown-at-rf-0-73"] .record-head .record-actions {
     justify-content: flex-start;
   }
-  html[data-skin="unknown-at-rf-0-73"] .record-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div:nth-child(even) {
     border-right: 0;
   }
-  html[data-skin="unknown-at-rf-0-73"] .record-grid {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  html[data-skin="unknown-at-rf-0-73"] :is(
-    .record-grid > .article__content, .record-grid > .record-index
-  ) {
-    grid-column: 1 / -1;
-  }
-  html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
-    position: static;
-  }
+
 }
 @media (max-width: 47.99rem) {
   html[data-skin="unknown-at-rf-0-73"] .record-facts > div,

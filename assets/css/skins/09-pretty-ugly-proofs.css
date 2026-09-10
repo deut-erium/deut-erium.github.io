@@ -96,13 +96,14 @@ html[data-skin="pretty-ugly-proofs"] .skip-link {
 }
 
 html[data-skin="pretty-ugly-proofs"] .site-header,
-html[data-skin="pretty-ugly-proofs"] .site-footer,
 html[data-skin="pretty-ugly-proofs"] .home-shell,
 html[data-skin="pretty-ugly-proofs"] .archive-shell,
-html[data-skin="pretty-ugly-proofs"] .record-page,
 html[data-skin="pretty-ugly-proofs"] .page-shell,
 html[data-skin="pretty-ugly-proofs"] .error-shell {
   width: min(calc(100% - 2.5rem), var(--page));
+  border: 5px solid var(--bubble-plum);
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
   border: 5px solid var(--bubble-plum);
 }
 
@@ -174,8 +175,7 @@ html[data-skin="pretty-ugly-proofs"] .record-actions a,
 html[data-skin="pretty-ugly-proofs"] .tag-line a,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a,
 html[data-skin="pretty-ugly-proofs"] .pagination a,
-html[data-skin="pretty-ugly-proofs"] .pagination span,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
+html[data-skin="pretty-ugly-proofs"] .pagination span {
   min-height: 2.65rem;
   padding: .48rem .68rem;
   color: #ffffff;
@@ -260,9 +260,7 @@ html[data-skin="pretty-ugly-proofs"] .tag-line a:focus-visible,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a:hover,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a:focus-visible,
 html[data-skin="pretty-ugly-proofs"] .pagination a:hover,
-html[data-skin="pretty-ugly-proofs"] .pagination a:focus-visible,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:hover,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:focus-visible {
+html[data-skin="pretty-ugly-proofs"] .pagination a:focus-visible {
   color: var(--bubble-plum);
   background: var(--bubble-mint);
   border-color: var(--bubble-plum);
@@ -279,9 +277,17 @@ html[data-skin="pretty-ugly-proofs"] .theme-toggle[aria-pressed="true"] {
 
 html[data-skin="pretty-ugly-proofs"] .home-shell,
 html[data-skin="pretty-ugly-proofs"] .archive-shell,
-html[data-skin="pretty-ugly-proofs"] .record-page,
 html[data-skin="pretty-ugly-proofs"] .page-shell {
   padding: clamp(1rem, 3vw, 3rem);
+  background-color: var(--bubble-pink);
+  background-image:
+    radial-gradient(#ffffffc4 0 .2rem, transparent .22rem),
+    linear-gradient(135deg, transparent 47%, #ff5bbd42 48% 52%, transparent 53%);
+  background-size: 2.5rem 2.5rem, 1rem 1rem;
+  border-radius: 2.25rem 1rem 2.1rem 1.15rem;
+  box-shadow: .8rem .9rem 0 var(--bubble-plum), inset 0 .35rem 0 #ffffff8c;
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
   background-color: var(--bubble-pink);
   background-image:
     radial-gradient(#ffffffc4 0 .2rem, transparent .22rem),
@@ -331,9 +337,18 @@ html[data-skin="pretty-ugly-proofs"] .masthead .eyebrow {
 html[data-skin="pretty-ugly-proofs"] .masthead h1,
 html[data-skin="pretty-ugly-proofs"] .index-heading h1,
 html[data-skin="pretty-ugly-proofs"] .page-heading h1,
-html[data-skin="pretty-ugly-proofs"] .record-head h1,
 html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
   max-width: 12ch;
+  margin: .35rem 0;
+  color: var(--bubble-grape);
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 6.7vw, 6.8rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .82;
+  text-shadow: .14rem .18rem 0 #ffffff, .32rem .38rem 0 var(--bubble-rose);
+}
+html[data-skin="pretty-ugly-proofs"] .record-head h1 {
   margin: .35rem 0;
   color: var(--bubble-grape);
   font-family: var(--display);
@@ -346,9 +361,15 @@ html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
 
 html[data-skin="pretty-ugly-proofs"] .masthead__lede,
 html[data-skin="pretty-ugly-proofs"] .index-heading > p:last-child,
-html[data-skin="pretty-ugly-proofs"] .page-heading > p:last-child,
-html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
+html[data-skin="pretty-ugly-proofs"] .page-heading > p:last-child {
   max-width: 55ch;
+  color: var(--bubble-plum);
+  font-family: var(--body);
+  font-size: clamp(1.07rem, 1.55vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
   color: var(--bubble-plum);
   font-family: var(--body);
   font-size: clamp(1.07rem, 1.55vw, 1.25rem);
@@ -568,7 +589,6 @@ html[data-skin="pretty-ugly-proofs"] .archive-empty {
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-head {
-  padding: clamp(1.6rem, 4vw, 4.5rem);
   background-color: var(--bubble-pink);
   background-image:
     radial-gradient(#ffffff 0 .25rem, transparent .27rem),
@@ -598,10 +618,6 @@ html[data-skin="pretty-ugly-proofs"] .record-head__key span {
 html[data-skin="pretty-ugly-proofs"] .record-head__key span + span {
   color: var(--bubble-plum);
   background: var(--bubble-lemon);
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
-  max-width: 62ch;
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-facts {
@@ -645,11 +661,9 @@ html[data-skin="pretty-ugly-proofs"] .record-actions a:last-child {
   background: var(--bubble-lemon);
 }
 
-html[data-skin="pretty-ugly-proofs"] .record-grid {
-  gap: 1.8rem;
+html[data-skin="pretty-ugly-proofs"] .article__content {
+  border-left: .9rem solid var(--bubble-mint);
 }
-
-html[data-skin="pretty-ugly-proofs"] .article__content,
 html[data-skin="pretty-ugly-proofs"] .page-prose {
   max-width: var(--reading);
   padding: clamp(1.25rem, 3vw, 3rem);
@@ -924,38 +938,6 @@ html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
   color: var(--bubble-lemon);
 }
 
-html[data-skin="pretty-ugly-proofs"] .site-footer {
-  color: #fff8fc;
-  background-color: var(--bubble-plum);
-  background-image: radial-gradient(#ff5bbd6b 0 .14rem, transparent .16rem);
-  background-size: 1.1rem 1.1rem;
-  border-radius: 1.7rem .7rem 1.5rem .8rem;
-  box-shadow: .65rem .75rem 0 var(--bubble-hot);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__inner {
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__note {
-  font-family: var(--body);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer a {
-  color: var(--bubble-mint);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
-  color: var(--bubble-plum);
-  background: var(--bubble-lemon);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:hover,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:focus-visible {
-  color: var(--bubble-plum);
-  background: var(--bubble-mint);
-}
-
 html[data-skin="pretty-ugly-proofs"][data-theme="dark"] {
   --bench: #181016;
   --shell: #31212d;
@@ -1041,27 +1023,6 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
   background: var(--paper);
 }
 
-@media (min-width: 76rem) {
-  html[data-skin="pretty-ugly-proofs"] .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
-    align-items: start;
-    justify-content: stretch;
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .article__content {
-    max-width: none;
-    margin-inline: 0;
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index {
-    position: sticky;
-    top: 1rem;
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
 @media (max-width: 68rem) {
   html[data-skin="pretty-ugly-proofs"] .site-header__inner {
     grid-template-columns: 1fr;
@@ -1088,26 +1049,23 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
 
 @media (max-width: 44rem) {
   html[data-skin="pretty-ugly-proofs"] .site-header,
-  html[data-skin="pretty-ugly-proofs"] .site-footer,
-  html[data-skin="pretty-ugly-proofs"] .home-shell,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell,
-  html[data-skin="pretty-ugly-proofs"] .record-page,
-  html[data-skin="pretty-ugly-proofs"] .page-shell,
-  html[data-skin="pretty-ugly-proofs"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="pretty-ugly-proofs"] .site-header {
     margin-top: 0;
     border-radius: 0 0 1.5rem 1.1rem;
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .site-footer {
-    margin-bottom: 0;
-    border-radius: 1.4rem 1rem 0 0;
   }
 
   html[data-skin="pretty-ugly-proofs"] .site-nav {
@@ -1136,14 +1094,16 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="pretty-ugly-proofs"] .home-shell,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell,
-  html[data-skin="pretty-ugly-proofs"] .record-page,
-  html[data-skin="pretty-ugly-proofs"] .page-shell {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-    border-radius: 0;
-  }
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+  border-radius: 0;
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
+  border-radius: 0;
+}
 
   html[data-skin="pretty-ugly-proofs"] .masthead,
   html[data-skin="pretty-ugly-proofs"] .index-heading,
@@ -1161,11 +1121,10 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
   }
 
   html[data-skin="pretty-ugly-proofs"] .masthead__copy,
-  html[data-skin="pretty-ugly-proofs"] .index-heading,
-  html[data-skin="pretty-ugly-proofs"] .page-heading,
-  html[data-skin="pretty-ugly-proofs"] .record-head {
-    padding: 1.15rem;
-  }
+html[data-skin="pretty-ugly-proofs"] .index-heading,
+html[data-skin="pretty-ugly-proofs"] .page-heading {
+  padding: 1.15rem;
+}
 
   html[data-skin="pretty-ugly-proofs"] .masthead h1,
   html[data-skin="pretty-ugly-proofs"] .index-heading h1,
@@ -1193,15 +1152,13 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
     font-size: 1rem;
   }
 
-  html[data-skin="pretty-ugly-proofs"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .article__content,
-  html[data-skin="pretty-ugly-proofs"] .page-prose {
-    padding: 1rem;
-    border-left-width: .65rem;
-  }
+  html[data-skin="pretty-ugly-proofs"] .article__content {
+  border-left-width: .65rem;
+}
+html[data-skin="pretty-ugly-proofs"] .page-prose {
+  padding: 1rem;
+  border-left-width: .65rem;
+}
 
   html[data-skin="pretty-ugly-proofs"] .prose {
     font-size: 1.125rem;
@@ -1219,9 +1176,6 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
     font-size: 1.4rem;
   }
 
-  html[data-skin="pretty-ugly-proofs"] .site-footer__inner {
-    padding: .85rem;
-  }
 }
 
 @media (max-width: 23rem) {
@@ -1242,24 +1196,23 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
 
 @media (forced-colors: active) {
   html[data-skin="pretty-ugly-proofs"] .site-header,
-  html[data-skin="pretty-ugly-proofs"] .site-footer,
-  html[data-skin="pretty-ugly-proofs"] .home-shell,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell,
-  html[data-skin="pretty-ugly-proofs"] .record-page,
-  html[data-skin="pretty-ugly-proofs"] .page-shell,
-  html[data-skin="pretty-ugly-proofs"] .error-shell,
-  html[data-skin="pretty-ugly-proofs"] .masthead,
-  html[data-skin="pretty-ugly-proofs"] .index-heading,
-  html[data-skin="pretty-ugly-proofs"] .page-heading,
-  html[data-skin="pretty-ugly-proofs"] .record-head,
-  html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
-  html[data-skin="pretty-ugly-proofs"] .archive-tools,
-  html[data-skin="pretty-ugly-proofs"] .archive-groups,
-  html[data-skin="pretty-ugly-proofs"] .page-prose,
-  html[data-skin="pretty-ugly-proofs"] .article__content,
-  html[data-skin="pretty-ugly-proofs"] .record-end,
-  html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index,
-  html[data-skin="pretty-ugly-proofs"] .prose .code-frame {
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .record-page,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell,
+html[data-skin="pretty-ugly-proofs"] .masthead,
+html[data-skin="pretty-ugly-proofs"] .index-heading,
+html[data-skin="pretty-ugly-proofs"] .page-heading,
+html[data-skin="pretty-ugly-proofs"] .record-head,
+html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
+html[data-skin="pretty-ugly-proofs"] .archive-tools,
+html[data-skin="pretty-ugly-proofs"] .archive-groups,
+html[data-skin="pretty-ugly-proofs"] .page-prose,
+html[data-skin="pretty-ugly-proofs"] .article__content,
+html[data-skin="pretty-ugly-proofs"] .record-end,
+html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index,
+html[data-skin="pretty-ugly-proofs"] .prose .code-frame {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -1348,7 +1301,6 @@ html[data-skin="pretty-ugly-proofs"] .skip-link {
 }
 
 html[data-skin="pretty-ugly-proofs"] .site-header,
-html[data-skin="pretty-ugly-proofs"] .site-footer,
 html[data-skin="pretty-ugly-proofs"] .home-shell,
 html[data-skin="pretty-ugly-proofs"] .archive-shell,
 html[data-skin="pretty-ugly-proofs"] .record-page,
@@ -1465,8 +1417,7 @@ html[data-skin="pretty-ugly-proofs"] .record-actions a,
 html[data-skin="pretty-ugly-proofs"] .tag-line a,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a,
 html[data-skin="pretty-ugly-proofs"] .pagination a,
-html[data-skin="pretty-ugly-proofs"] .pagination span,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
+html[data-skin="pretty-ugly-proofs"] .pagination span {
   color: var(--bubble-black);
   background: var(--bubble-white);
   border: 3px solid var(--bubble-black);
@@ -1493,9 +1444,7 @@ html[data-skin="pretty-ugly-proofs"] .tag-line a:focus-visible,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a:hover,
 html[data-skin="pretty-ugly-proofs"] .quick-filters a:focus-visible,
 html[data-skin="pretty-ugly-proofs"] .pagination a:hover,
-html[data-skin="pretty-ugly-proofs"] .pagination a:focus-visible,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:hover,
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a:focus-visible {
+html[data-skin="pretty-ugly-proofs"] .pagination a:focus-visible {
   color: var(--bubble-black);
   background: var(--bubble-acid);
   border-color: var(--bubble-black);
@@ -1585,9 +1534,17 @@ html[data-skin="pretty-ugly-proofs"] .record-end nav span {
 html[data-skin="pretty-ugly-proofs"] .masthead h1,
 html[data-skin="pretty-ugly-proofs"] .index-heading h1,
 html[data-skin="pretty-ugly-proofs"] .page-heading h1,
-html[data-skin="pretty-ugly-proofs"] .record-head h1,
 html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
   max-width: 12ch;
+  color: var(--bubble-white);
+  font-family: var(--display);
+  font-size: clamp(3rem, 7.1vw, 7.35rem);
+  letter-spacing: -.09em;
+  line-height: .73;
+  -webkit-text-stroke: 2px var(--bubble-black);
+  text-shadow: .32rem .35rem 0 var(--bubble-black);
+}
+html[data-skin="pretty-ugly-proofs"] .record-head h1 {
   color: var(--bubble-white);
   font-family: var(--display);
   font-size: clamp(3rem, 7.1vw, 7.35rem);
@@ -1599,9 +1556,14 @@ html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
 
 html[data-skin="pretty-ugly-proofs"] .masthead__lede,
 html[data-skin="pretty-ugly-proofs"] .index-heading > p:last-child,
-html[data-skin="pretty-ugly-proofs"] .page-heading > p:last-child,
-html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
+html[data-skin="pretty-ugly-proofs"] .page-heading > p:last-child {
   max-width: 58ch;
+  color: var(--bubble-black);
+  font-size: clamp(1.06rem, 1.55vw, 1.22rem);
+  font-weight: 700;
+  line-height: 1.58;
+}
+html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
   color: var(--bubble-black);
   font-size: clamp(1.06rem, 1.55vw, 1.22rem);
   font-weight: 700;
@@ -1704,10 +1666,18 @@ html[data-skin="pretty-ugly-proofs"] .all-tags__grid a:focus-visible {
 }
 
 html[data-skin="pretty-ugly-proofs"] .index-heading,
-html[data-skin="pretty-ugly-proofs"] .page-heading,
-html[data-skin="pretty-ugly-proofs"] .record-head {
+html[data-skin="pretty-ugly-proofs"] .page-heading {
   position: relative;
   padding: clamp(1.5rem, 4vw, 4rem);
+  color: var(--bubble-black);
+  background-color: var(--bubble-pink);
+  background-image: linear-gradient(135deg, #ffffff55 25%, transparent 25% 75%, #11111114 75%);
+  background-size: .85rem .85rem;
+  border: 6px solid var(--bubble-black);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--bubble-black);
+}
+html[data-skin="pretty-ugly-proofs"] .record-head {
   color: var(--bubble-black);
   background-color: var(--bubble-pink);
   background-image: linear-gradient(135deg, #ffffff55 25%, transparent 25% 75%, #11111114 75%);
@@ -2016,25 +1986,6 @@ html[data-skin="pretty-ugly-proofs"] .error-code i {
   background: var(--bubble-pink);
 }
 
-html[data-skin="pretty-ugly-proofs"] .site-footer {
-  color: var(--bubble-white);
-  background-color: var(--bubble-black);
-  background-image: linear-gradient(135deg, #ff5bbd55 25%, transparent 25% 75%, #c6ff3e2c 75%);
-  background-size: .85rem .85rem;
-  border: 6px solid var(--bubble-black);
-  border-radius: 0;
-  box-shadow: .55rem .65rem 0 var(--bubble-pink);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer a {
-  color: var(--bubble-acid);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
-  color: var(--bubble-black);
-  background: var(--bubble-white);
-}
-
 html[data-skin="pretty-ugly-proofs"][data-theme="dark"] {
   --bench: #180f16;
   --shell: #402036;
@@ -2212,24 +2163,23 @@ html[data-skin="pretty-ugly-proofs"][data-theme="dark"] .code-frame__fallback {
 
 @media (forced-colors: active) {
   html[data-skin="pretty-ugly-proofs"] .site-header,
-  html[data-skin="pretty-ugly-proofs"] .site-footer,
-  html[data-skin="pretty-ugly-proofs"] .home-shell,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell,
-  html[data-skin="pretty-ugly-proofs"] .record-page,
-  html[data-skin="pretty-ugly-proofs"] .page-shell,
-  html[data-skin="pretty-ugly-proofs"] .error-shell,
-  html[data-skin="pretty-ugly-proofs"] .masthead,
-  html[data-skin="pretty-ugly-proofs"] .index-heading,
-  html[data-skin="pretty-ugly-proofs"] .page-heading,
-  html[data-skin="pretty-ugly-proofs"] .record-head,
-  html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
-  html[data-skin="pretty-ugly-proofs"] .archive-tools,
-  html[data-skin="pretty-ugly-proofs"] .archive-groups,
-  html[data-skin="pretty-ugly-proofs"] .page-prose,
-  html[data-skin="pretty-ugly-proofs"] .article__content,
-  html[data-skin="pretty-ugly-proofs"] .record-end,
-  html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index,
-  html[data-skin="pretty-ugly-proofs"] .prose .code-frame {
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .record-page,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell,
+html[data-skin="pretty-ugly-proofs"] .masthead,
+html[data-skin="pretty-ugly-proofs"] .index-heading,
+html[data-skin="pretty-ugly-proofs"] .page-heading,
+html[data-skin="pretty-ugly-proofs"] .record-head,
+html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
+html[data-skin="pretty-ugly-proofs"] .archive-tools,
+html[data-skin="pretty-ugly-proofs"] .archive-groups,
+html[data-skin="pretty-ugly-proofs"] .page-prose,
+html[data-skin="pretty-ugly-proofs"] .article__content,
+html[data-skin="pretty-ugly-proofs"] .record-end,
+html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index,
+html[data-skin="pretty-ugly-proofs"] .prose .code-frame {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -2346,86 +2296,8 @@ html[data-skin="pretty-ugly-proofs"] .archive-shell .archive-year > header {
   border-bottom: 4px solid var(--bubble-black);
 }
 
-html[data-skin="pretty-ugly-proofs"] .record-page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
-  align-items: start;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-head,
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid,
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-end {
-  grid-column: 1 / -1;
-  margin-top: 0;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-head {
-  display: grid;
-  grid-template-columns: minmax(10rem, .45fr) minmax(0, 1.55fr);
-  column-gap: clamp(1rem, 3vw, 3rem);
-  row-gap: 0;
-}
-
 html[data-skin="pretty-ugly-proofs"] .record-head__key {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: end;
   margin-bottom: 1rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head h1,
-html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
-  grid-column: 2;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head h1 {
-  grid-row: 1;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
-  grid-row: 2;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head .record-facts,
-html[data-skin="pretty-ugly-proofs"] .record-head .tag-line,
-html[data-skin="pretty-ugly-proofs"] .record-head .record-actions {
-  grid-column: 1 / -1;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-head .record-facts {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, .38fr);
-  gap: clamp(1rem, 2vw, 2rem);
-  justify-content: stretch;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page .article__content,
-html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-  width: auto;
-  max-width: none;
-  margin-inline: 0;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page .article__content {
-  grid-column: 1;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 2;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-end {
-  display: grid;
-  grid-template-columns: minmax(12rem, .55fr) minmax(0, 1.45fr);
-  gap: 1rem;
-  align-items: center;
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-page > .record-end > p {
@@ -2436,34 +2308,6 @@ html[data-skin="pretty-ugly-proofs"] .record-page > .record-end nav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .75rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(20rem, .9fr);
-  gap: 1.25rem;
-  align-items: center;
-  padding: 1.15rem 1.3rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__note {
-  margin: 0;
-  padding-right: 1.25rem;
-  border-right: 4px solid var(--bubble-pink);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .55rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
-  width: 100%;
-  min-height: 3.1rem;
-  padding: .5rem;
-  border-width: 3px;
-  box-shadow: 3px 3px 0 var(--bubble-pink);
 }
 
 @media (max-width: 70rem) {
@@ -2490,49 +2334,22 @@ html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
     grid-template-columns: 1fr;
   }
 
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .record-head__key,
-  html[data-skin="pretty-ugly-proofs"] .record-head h1,
-  html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .record-page .article__content,
-  html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-    grid-column: 1;
-  }
-
-  html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-    position: static;
-  }
 }
 
 @media (max-width: 44rem) {
   html[data-skin="pretty-ugly-proofs"] .home-shell,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell,
-  html[data-skin="pretty-ugly-proofs"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="pretty-ugly-proofs"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="pretty-ugly-proofs"] .home-shell > .masthead,
-  html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell > .index-heading,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-tools,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-groups,
-  html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-empty,
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-head,
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid,
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-end {
-    grid-column: 1;
-  }
+html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .index-heading,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-tools,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-groups,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-empty {
+  grid-column: 1;
+}
 
   html[data-skin="pretty-ugly-proofs"] .home-shell > .masthead {
     grid-template-columns: minmax(0, 1fr);
@@ -2544,35 +2361,16 @@ html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
     border-bottom: 6px solid var(--bubble-black);
   }
 
-  html[data-skin="pretty-ugly-proofs"] .record-head .record-facts,
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-end,
-  html[data-skin="pretty-ugly-proofs"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   html[data-skin="pretty-ugly-proofs"] .record-page > .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="pretty-ugly-proofs"] .site-footer__note {
-    padding-right: 0;
-    padding-bottom: 1rem;
-    border-right: 0;
-    border-bottom: 4px solid var(--bubble-pink);
-  }
-}
-
-@media (max-width: 28rem) {
-  html[data-skin="pretty-ugly-proofs"] .site-footer__links {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (forced-colors: active) {
   html[data-skin="pretty-ugly-proofs"] .site-nav a[data-route],
-  html[data-skin="pretty-ugly-proofs"] .site-nav .theme-toggle,
-  html[data-skin="pretty-ugly-proofs"] .site-nav .skin-menu summary,
-  html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
+html[data-skin="pretty-ugly-proofs"] .site-nav .theme-toggle,
+html[data-skin="pretty-ugly-proofs"] .site-nav .skin-menu summary {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -2658,14 +2456,30 @@ html[data-skin="pretty-ugly-proofs"] body {
   line-height: 1.65;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .article__content, .page-prose, .code-frame) {
+html[data-skin="pretty-ugly-proofs"] .site-header,
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell,
+html[data-skin="pretty-ugly-proofs"] .masthead,
+html[data-skin="pretty-ugly-proofs"] .page-prose,
+html[data-skin="pretty-ugly-proofs"] .code-frame {
   overflow: visible;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
+html[data-skin="pretty-ugly-proofs"] .site-header,
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell {
   width: min(calc(100% - 2rem), var(--page));
   min-width: 0;
   margin-inline: auto;
+  border: 6px solid var(--rule);
+  border-radius: 0;
+  box-shadow: .5rem .5rem 0 var(--rule);
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
   border: 6px solid var(--rule);
   border-radius: 0;
   box-shadow: .5rem .5rem 0 var(--rule);
@@ -2793,7 +2607,17 @@ html[data-skin="pretty-ugly-proofs"] .site-nav {
   min-width: 0;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .site-footer__links a) {
+html[data-skin="pretty-ugly-proofs"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.skin-menu select,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span) {
   display: inline-flex;
   min-width: 0;
   min-height: 3rem;
@@ -2897,30 +2721,26 @@ html[data-skin="pretty-ugly-proofs"] .skin-randomizer {
   cursor: pointer;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(
-  .site-nav a[data-route]:hover,
-  .site-nav a[data-route]:focus-visible,
-  .theme-toggle:hover,
-  .theme-toggle:focus-visible,
-  .skin-menu summary:hover,
-  .skin-menu summary:focus-visible,
-  .skin-randomizer:hover,
-  .skin-randomizer:focus-visible,
-  .action:hover,
-  .action:focus-visible,
-  .record-actions a:hover,
-  .record-actions a:focus-visible,
-  .tag-line a:hover,
-  .tag-line a:focus-visible,
-  .quick-filters a:hover,
-  .quick-filters a:focus-visible,
-  .pagination a:hover,
-  .pagination a:focus-visible,
-  .site-footer__links a:hover,
-  .site-footer__links a:focus-visible,
-  .code-frame__actions button:hover,
-  .code-frame__actions button:focus-visible
-) {
+html[data-skin="pretty-ugly-proofs"] :is(.site-nav a[data-route]:hover,
+.site-nav a[data-route]:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.skin-menu summary:hover,
+.skin-menu summary:focus-visible,
+.skin-randomizer:hover,
+.skin-randomizer:focus-visible,
+.action:hover,
+.action:focus-visible,
+.record-actions a:hover,
+.record-actions a:focus-visible,
+.tag-line a:hover,
+.tag-line a:focus-visible,
+.quick-filters a:hover,
+.quick-filters a:focus-visible,
+.pagination a:hover,
+.pagination a:focus-visible,
+.code-frame__actions button:hover,
+.code-frame__actions button:focus-visible) {
   color: var(--ink);
   background: var(--selected-bg);
   box-shadow: inset 0 -.25rem 0 var(--ink), 0 0 0 3px var(--paper), 0 0 0 6px var(--focus-halo);
@@ -2949,35 +2769,31 @@ html[data-skin="pretty-ugly-proofs"] .pagination span[aria-disabled="true"] {
 html[data-skin="pretty-ugly-proofs"] .site-header::before { color: var(--selected-ink); }
 html[data-skin="pretty-ugly-proofs"] .site-nav a[data-route="home"] { color: var(--pink-ink); }
 html[data-skin="pretty-ugly-proofs"] :is(.site-nav a[data-route="archive"], .site-nav a[data-route="source"], .skin-menu summary, .masthead__actions .action--primary) { color: var(--selected-ink); }
-html[data-skin="pretty-ugly-proofs"] :is(
-  .site-nav a[data-route]:hover,
-  .site-nav a[data-route]:focus-visible,
-  .theme-toggle:hover,
-  .theme-toggle:focus-visible,
-  .skin-menu summary:hover,
-  .skin-menu summary:focus-visible,
-  .skin-randomizer:hover,
-  .skin-randomizer:focus-visible,
-  .action:hover,
-  .action:focus-visible,
-  .record-actions a:hover,
-  .record-actions a:focus-visible,
-  .tag-line a:hover,
-  .tag-line a:focus-visible,
-  .quick-filters a:hover,
-  .quick-filters a:focus-visible,
-  .pagination a:hover,
-  .pagination a:focus-visible,
-  .site-footer__links a:hover,
-  .site-footer__links a:focus-visible,
-  .code-frame__actions button:hover,
-  .code-frame__actions button:focus-visible,
-  .site-nav a[data-route][aria-current="page"],
-  .theme-toggle[aria-pressed="true"],
-  .quick-filters a[aria-current="true"],
-  .code-frame__actions button[aria-pressed="true"],
-  .skin-menu[open] > summary
-) { color: var(--selected-ink); }
+html[data-skin="pretty-ugly-proofs"] :is(.site-nav a[data-route]:hover,
+.site-nav a[data-route]:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.skin-menu summary:hover,
+.skin-menu summary:focus-visible,
+.skin-randomizer:hover,
+.skin-randomizer:focus-visible,
+.action:hover,
+.action:focus-visible,
+.record-actions a:hover,
+.record-actions a:focus-visible,
+.tag-line a:hover,
+.tag-line a:focus-visible,
+.quick-filters a:hover,
+.quick-filters a:focus-visible,
+.pagination a:hover,
+.pagination a:focus-visible,
+.code-frame__actions button:hover,
+.code-frame__actions button:focus-visible,
+.site-nav a[data-route][aria-current="page"],
+.theme-toggle[aria-pressed="true"],
+.quick-filters a[aria-current="true"],
+.code-frame__actions button[aria-pressed="true"],
+.skin-menu[open] > summary) { color: var(--selected-ink); }
 html[data-skin="pretty-ugly-proofs"] .record-row__link:is(:hover, :focus-visible),
 html[data-skin="pretty-ugly-proofs"] .all-tags__grid a:is(:hover, :focus-visible),
 html[data-skin="pretty-ugly-proofs"] .archive-search input:is(:hover, :focus-visible),
@@ -2986,7 +2802,9 @@ html[data-skin="pretty-ugly-proofs"] .archive-empty,
 html[data-skin="pretty-ugly-proofs"] .prose .info { color: var(--selected-ink); }
 
 /* Shared proof-workbench sheets */
-html[data-skin="pretty-ugly-proofs"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 2rem);
@@ -2999,14 +2817,39 @@ html[data-skin="pretty-ugly-proofs"] :is(.home-shell, .archive-shell, .record-pa
   background-image: linear-gradient(135deg, transparent 49%, color-mix(in srgb, var(--ink) 11%, transparent) 50% 51%, transparent 52%);
   background-size: 1.1rem 1.1rem;
 }
+html[data-skin="pretty-ugly-proofs"] .record-page {
+  color: var(--ink);
+  background-color: var(--bubble-pink);
+  background-image: linear-gradient(135deg, transparent 49%, color-mix(in srgb, var(--ink) 11%, transparent) 50% 51%, transparent 52%);
+  background-size: 1.1rem 1.1rem;
+}
 
-html[data-skin="pretty-ugly-proofs"] :is(.masthead, .index-heading, .archive-tools, .archive-groups, .archive-empty, .record-head, .article__content, .page-heading, .page-prose, .record-end, .record-grid > .record-index) {
+html[data-skin="pretty-ugly-proofs"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.index-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.archive-empty, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   color: var(--ink);
   background: var(--paper);
   border: 5px solid var(--rule);
   border-radius: 0;
   box-shadow: .35rem .35rem 0 var(--rule);
+}
+html[data-skin="pretty-ugly-proofs"] :is(.record-head, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] :is(.record-end, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="pretty-ugly-proofs"] .record-grid > .record-index {
+  color: var(--ink);
+  background: var(--paper);
+  border: 5px solid var(--rule);
+  border-radius: 0;
+  box-shadow: .35rem .35rem 0 var(--rule);
+}
+html[data-skin="pretty-ugly-proofs"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
 }
 
 html[data-skin="pretty-ugly-proofs"] :is(.eyebrow, .record-head__key, .record-facts dt, .archive-search label, .archive-year > header span, .pagination__position, .record-end nav span, .section-heading > p) {
@@ -3019,7 +2862,10 @@ html[data-skin="pretty-ugly-proofs"] :is(.eyebrow, .record-head__key, .record-fa
   text-transform: uppercase;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="pretty-ugly-proofs"] .masthead h1,
+html[data-skin="pretty-ugly-proofs"] .index-heading h1,
+html[data-skin="pretty-ugly-proofs"] .page-heading h1,
+html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
   max-width: 15ch;
   margin: 0;
   color: var(--heading);
@@ -3031,9 +2877,29 @@ html[data-skin="pretty-ugly-proofs"] :is(.masthead h1, .index-heading h1, .page-
   overflow-wrap: anywhere;
   text-shadow: .14rem .14rem 0 var(--bubble-pink);
 }
+html[data-skin="pretty-ugly-proofs"] .record-head h1 {
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .95;
+  overflow-wrap: anywhere;
+  text-shadow: .14rem .14rem 0 var(--bubble-pink);
+}
 
-html[data-skin="pretty-ugly-proofs"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract) {
+html[data-skin="pretty-ugly-proofs"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="pretty-ugly-proofs"] .index-heading > p:last-child,
+html[data-skin="pretty-ugly-proofs"] .page-heading > p:last-child {
   max-width: 62ch;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+html[data-skin="pretty-ugly-proofs"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   color: var(--ink);
   font-family: var(--body);
   font-size: 1.125rem;
@@ -3342,38 +3208,19 @@ html[data-skin="pretty-ugly-proofs"] .archive-empty {
 
 /* Article: evidence rail, calm proof sheet, and contents rail. */
 html[data-skin="pretty-ugly-proofs"] .record-page > .record-head {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem clamp(1rem, 2vw, 2rem);
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
   border-top: .75rem solid var(--bubble-pink);
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-head__key {
-  grid-column: 1 / span 3;
-  grid-row: 1;
-  align-self: end;
   margin: 0;
 }
 
-html[data-skin="pretty-ugly-proofs"] .record-head h1 {
-  grid-column: 4 / -1;
-  grid-row: 1;
-}
-
 html[data-skin="pretty-ugly-proofs"] .record-head__abstract {
-  grid-column: 4 / -1;
-  grid-row: 2;
   margin: 0;
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-head .record-facts {
   display: grid;
-  grid-column: 1 / span 3;
-  grid-row: 2 / span 3;
-  grid-template-columns: minmax(0, 1fr);
   gap: .5rem;
   margin: 0;
   padding: .5rem;
@@ -3408,37 +3255,16 @@ html[data-skin="pretty-ugly-proofs"] .record-facts dd {
   overflow-wrap: anywhere;
 }
 
-html[data-skin="pretty-ugly-proofs"] :is(.record-head .tag-line, .record-head .record-actions) {
-  grid-column: 4 / -1;
-  margin: 0;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
-  align-items: start;
+html[data-skin="pretty-ugly-proofs"] .record-head .tag-line,
+html[data-skin="pretty-ugly-proofs"] .record-head .record-actions {
   margin: 0;
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-page .article__content {
-  grid-column: 2 / span 8;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 3rem);
   border-left: .8rem solid var(--bubble-acid);
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 10 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   background: var(--paper-low);
   border-top: .75rem solid var(--bubble-cyan);
 }
@@ -3467,16 +3293,6 @@ html[data-skin="pretty-ugly-proofs"] .related-records {
 
 html[data-skin="pretty-ugly-proofs"] .related-records h2 {
   font-size: 1.5rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .record-page > .record-end {
-  display: grid;
-  grid-column: 2 / span 8;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  gap: 1rem;
-  align-items: center;
-  margin: 0;
-  padding: 1.25rem;
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-end > p {
@@ -3510,11 +3326,13 @@ html[data-skin="pretty-ugly-proofs"] .record-end nav a:focus-visible {
 
 /* Calm technical reading sheet. */
 html[data-skin="pretty-ugly-proofs"] .prose {
-  max-width: var(--reading);
   color: var(--ink);
   font-family: var(--body);
   font-size: 1.125rem;
   line-height: 1.7;
+}
+html[data-skin="pretty-ugly-proofs"] .prose:not(:where(.record-page, .record-page *)) {
+  max-width: var(--reading);
 }
 
 html[data-skin="pretty-ugly-proofs"] :is(.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6) {
@@ -3587,7 +3405,12 @@ html[data-skin="pretty-ugly-proofs"] .prose th {
 }
 
 html[data-skin="pretty-ugly-proofs"] .prose tr:nth-child(even) td { background: var(--paper-low); }
-html[data-skin="pretty-ugly-proofs"] .prose table { max-width: 100%; font-size: var(--ui-size); }
+html[data-skin="pretty-ugly-proofs"] .prose table {
+  font-size: var(--ui-size);
+}
+html[data-skin="pretty-ugly-proofs"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
+}
 
 html[data-skin="pretty-ugly-proofs"] .prose .code-frame {
   color: var(--code-ink);
@@ -3745,47 +3568,6 @@ html[data-skin="pretty-ugly-proofs"] .error-shell > p:not(.eyebrow) { margin: 0;
 html[data-skin="pretty-ugly-proofs"] .error-shell nav { display: flex; flex-wrap: wrap; gap: .65rem; margin: 0; }
 
 /* Footer: status bar, then links in template order. */
-html[data-skin="pretty-ugly-proofs"] .site-footer {
-  margin-bottom: 1.25rem;
-  color: var(--code-ink);
-  background: var(--code-bg);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem 1.25rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__note {
-  margin: 0;
-  padding-right: 1rem;
-  color: var(--code-ink);
-  border-right: 4px solid var(--bubble-pink);
-  font-size: var(--ui-size);
-  line-height: 1.45;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__note a {
-  color: var(--bubble-acid);
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-html[data-skin="pretty-ugly-proofs"] .site-footer__links a {
-  width: 100%;
-  min-height: 3rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 3px solid var(--code-ink);
-  text-transform: none;
-}
 
 /* Final foreground repairs for bright selections and their contained text. */
 html[data-skin="pretty-ugly-proofs"] ::selection,
@@ -3808,37 +3590,54 @@ html[data-skin="pretty-ugly-proofs"] .prose .info a { color: var(--selected-ink)
     position: static;
     grid-column: 1 / -1;
   }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-head { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] :is(.record-head__key, .record-head h1, .record-head__abstract, .record-head .record-facts, .record-head .tag-line, .record-head .record-actions) { grid-column: 1; grid-row: auto; }
-  html[data-skin="pretty-ugly-proofs"] .record-head .record-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] :is(.record-page .article__content, .record-page .record-grid > .record-index) { position: static; grid-column: 1; }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-end { grid-column: 1; }
+
   html[data-skin="pretty-ugly-proofs"] :is(.page-shell > .page-heading, .page-shell > .page-prose) { grid-column: 1 / -1; }
   html[data-skin="pretty-ugly-proofs"] .page-shell > .page-prose { margin-top: 0; }
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="pretty-ugly-proofs"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-inline: 0;
-    border-width: 4px;
-    box-shadow: none;
-  }
+  html[data-skin="pretty-ugly-proofs"] .site-header,
+html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell,
+html[data-skin="pretty-ugly-proofs"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  border-width: 4px;
+  box-shadow: none;
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
+  border-width: 4px;
+  box-shadow: none;
+}
 
   html[data-skin="pretty-ugly-proofs"] .site-header { margin-top: 0; padding-top: 2.55rem; }
   html[data-skin="pretty-ugly-proofs"] .site-header::before { height: 2.55rem; font-size: var(--ui-size); line-height: 2.2rem; }
   html[data-skin="pretty-ugly-proofs"] .site-header::after { display: none; }
-  html[data-skin="pretty-ugly-proofs"] :is(.home-shell, .archive-shell, .record-page, .page-shell) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: .85rem;
-    border-radius: 0;
-  }
+  html[data-skin="pretty-ugly-proofs"] .home-shell,
+html[data-skin="pretty-ugly-proofs"] .archive-shell,
+html[data-skin="pretty-ugly-proofs"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .85rem;
+  border-radius: 0;
+}
+html[data-skin="pretty-ugly-proofs"] .record-page {
+  border-radius: 0;
+}
 
-  html[data-skin="pretty-ugly-proofs"] :is(.home-shell > .masthead, .home-shell > .record-index, .archive-shell > .index-heading, .archive-shell > .archive-tools, .archive-shell > .archive-groups, .archive-shell > .archive-empty, .record-page > .record-head, .record-page > .record-grid, .record-page > .record-end, .page-shell > .page-heading, .page-shell > .page-prose) { grid-column: 1; }
+  html[data-skin="pretty-ugly-proofs"] .home-shell > .masthead,
+html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .index-heading,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-tools,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-groups,
+html[data-skin="pretty-ugly-proofs"] .archive-shell > .archive-empty,
+html[data-skin="pretty-ugly-proofs"] .page-shell > .page-heading,
+html[data-skin="pretty-ugly-proofs"] .page-shell > .page-prose {
+  grid-column: 1;
+}
 
   html[data-skin="pretty-ugly-proofs"] .home-shell > .masthead { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="pretty-ugly-proofs"] .masthead__copy { padding: 1.25rem; border: 0; }
@@ -3877,20 +3676,21 @@ html[data-skin="pretty-ugly-proofs"] .prose .info a { color: var(--selected-ink)
   html[data-skin="pretty-ugly-proofs"] .archive-search { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="pretty-ugly-proofs"] .archive-search p { grid-column: 1; }
   html[data-skin="pretty-ugly-proofs"] .archive-year > header { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] .record-head .record-facts { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-end,
-  html[data-skin="pretty-ugly-proofs"] .site-footer__inner { grid-template-columns: minmax(0, 1fr); }
+
   html[data-skin="pretty-ugly-proofs"] .record-end nav { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] .article__content,
-  html[data-skin="pretty-ugly-proofs"] .page-prose { padding: 1rem; border-left-width: .6rem; }
+  html[data-skin="pretty-ugly-proofs"] .article__content {
+  border-left-width: .6rem;
+}
+html[data-skin="pretty-ugly-proofs"] .page-prose {
+  padding: 1rem;
+  border-left-width: .6rem;
+}
   html[data-skin="pretty-ugly-proofs"] .prose { font-size: 1.125rem; }
-  html[data-skin="pretty-ugly-proofs"] .site-footer { margin-bottom: 0; }
-  html[data-skin="pretty-ugly-proofs"] .site-footer__note { padding-right: 0; padding-bottom: 1rem; border-right: 0; border-bottom: 4px solid var(--bubble-pink); }
+
 }
 
 @media (max-width: 28rem) {
-  html[data-skin="pretty-ugly-proofs"] .all-tags__grid,
-  html[data-skin="pretty-ugly-proofs"] .site-footer__links { grid-template-columns: minmax(0, 1fr); }
+  html[data-skin="pretty-ugly-proofs"] .all-tags__grid { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="pretty-ugly-proofs"] .record-row__link { padding-inline: .55rem; }
   html[data-skin="pretty-ugly-proofs"] :is(.record-row__date, .record-row__title, .record-row__event, .record-row__primitive) { grid-template-columns: minmax(0, 1fr); }
 }
@@ -3906,7 +3706,25 @@ html[data-skin="pretty-ugly-proofs"] .prose .info a { color: var(--selected-ink)
 }
 
 @media (forced-colors: active) {
-  html[data-skin="pretty-ugly-proofs"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell, .masthead, .index-heading, .archive-tools, .archive-groups, .archive-empty, .record-head, .article__content, .page-heading, .page-prose, .record-end, .record-grid > .record-index, .prose .code-frame, .prose .katex-display) {
+  html[data-skin="pretty-ugly-proofs"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead,
+.index-heading,
+.archive-tools,
+.archive-groups,
+.archive-empty,
+.record-head,
+.article__content,
+.page-heading,
+.page-prose,
+.record-end,
+.record-grid > .record-index,
+.prose .code-frame,
+.prose .katex-display) {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3914,7 +3732,18 @@ html[data-skin="pretty-ugly-proofs"] .prose .info a { color: var(--selected-ink)
     box-shadow: none;
   }
 
-  html[data-skin="pretty-ugly-proofs"] :is(.site-nav a, .theme-toggle, .skin-menu summary, .skin-randomizer, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span, .site-footer__links a, .code-frame__actions button) {
+  html[data-skin="pretty-ugly-proofs"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.skin-menu select,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span,
+.code-frame__actions button) {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -3938,7 +3767,6 @@ html[data-skin="pretty-ugly-proofs"] .prose .info a { color: var(--selected-ink)
     box-shadow: 0 0 0 3px Canvas, 0 0 0 6px Highlight;
   }
 }
-
 
 /* Cycle two corrective pass: Pretty Ugly Proofs */
 html[data-skin="pretty-ugly-proofs"] {
@@ -4065,15 +3893,8 @@ html[data-skin="pretty-ugly-proofs"] .all-tags__grid small {
 html[data-skin="pretty-ugly-proofs"] .archive-search input { box-shadow: none; }
 
 /* Keep article facts broad and use the proof sheet without an accent rail. */
-html[data-skin="pretty-ugly-proofs"] .record-head :is(.record-head__key, h1, .record-head__abstract, .tag-line, .record-actions) {
-  grid-column: 1 / -1;
-  grid-row: auto;
-}
 
 html[data-skin="pretty-ugly-proofs"] .record-head .record-facts {
-  grid-column: 1 / -1;
-  grid-row: auto;
-  grid-template-columns: repeat(2, minmax(15rem, 1fr));
   gap: .75rem;
   padding: .75rem;
   background: var(--paper-low);
@@ -4088,20 +3909,29 @@ html[data-skin="pretty-ugly-proofs"] .record-facts > div {
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-page .article__content {
-  grid-column: 1 / span 9;
-  max-width: none;
   border: 5px solid var(--rule);
 }
 
 html[data-skin="pretty-ugly-proofs"] .record-page .record-grid > .record-index {
-  grid-column: 10 / -1;
   background: var(--paper-low);
 }
 
-html[data-skin="pretty-ugly-proofs"] .prose { width: min(100%, var(--reading)); max-width: var(--reading); }
+html[data-skin="pretty-ugly-proofs"] .prose:not(:where(.record-page, .record-page *)) {
+  width: min(100%, var(--reading));
+  max-width: var(--reading);
+}
 
-html[data-skin="pretty-ugly-proofs"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1) {
+html[data-skin="pretty-ugly-proofs"] .masthead h1,
+html[data-skin="pretty-ugly-proofs"] .index-heading h1,
+html[data-skin="pretty-ugly-proofs"] .page-heading h1,
+html[data-skin="pretty-ugly-proofs"] .error-shell h1 {
   max-width: 18ch;
+  font-size: clamp(2.25rem, 4vw, 4rem) !important;
+  line-height: 1 !important;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+html[data-skin="pretty-ugly-proofs"] .record-head h1 {
   font-size: clamp(2.25rem, 4vw, 4rem) !important;
   line-height: 1 !important;
   overflow-wrap: break-word;
@@ -4128,12 +3958,6 @@ html[data-skin="pretty-ugly-proofs"] .prose .code-frame__gutter {
 }
 
 html[data-skin="pretty-ugly-proofs"] .prose .code-frame pre { overflow: auto; }
-html[data-skin="pretty-ugly-proofs"] .site-footer__note {
-  padding-right: 0;
-  padding-bottom: .75rem;
-  border-right: 0;
-  border-bottom: 4px solid var(--rule);
-}
 
 /* Explicit token colors survive the shared readable code frame. */
 html[data-skin="pretty-ugly-proofs"] .prose .code-frame .highlight :is(.c, .c1, .cm, .cp, .cs) { color: #d8c8d3 !important; }
@@ -4163,9 +3987,7 @@ html[data-skin="pretty-ugly-proofs"] .prose .katex :is(.katex-sizing, .fontsize-
 
 @media (max-width: 70rem) {
   html[data-skin="pretty-ugly-proofs"] .home-shell > .record-index { position: static; grid-column: 1 / -1; }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-grid { grid-template-columns: minmax(0, 1fr); }
-  html[data-skin="pretty-ugly-proofs"] :is(.record-page .article__content, .record-page .record-grid > .record-index) { position: static; grid-column: 1; }
-  html[data-skin="pretty-ugly-proofs"] .record-page > .record-end { grid-column: 1; }
+
   html[data-skin="pretty-ugly-proofs"] :is(.page-shell > .page-heading, .page-shell > .page-prose) { grid-column: 1 / -1; }
 }
 
@@ -4183,7 +4005,7 @@ html[data-skin="pretty-ugly-proofs"] .prose .katex :is(.katex-sizing, .fontsize-
     margin-left: 0;
   }
   html[data-skin="pretty-ugly-proofs"] .site-nav .skin-menu summary { width: 100%; }
-  html[data-skin="pretty-ugly-proofs"] .record-head .record-facts { grid-template-columns: minmax(0, 1fr); }
+
   html[data-skin="pretty-ugly-proofs"] .record-facts > div { min-width: 0; }
   html[data-skin="pretty-ugly-proofs"] :is(.article__content, .page-prose) { border-width: 4px; }
 }

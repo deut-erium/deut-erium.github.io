@@ -97,8 +97,7 @@ html[data-skin="margin-of-error"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="margin-of-error"] .site-header,
-html[data-skin="margin-of-error"] .site-footer {
+html[data-skin="margin-of-error"] .site-header {
   position: relative;
   isolation: isolate;
   color: var(--margin-ink);
@@ -116,8 +115,7 @@ html[data-skin="margin-of-error"] .site-header {
   margin-top: 1.35rem;
 }
 
-html[data-skin="margin-of-error"] .site-header::before,
-html[data-skin="margin-of-error"] .site-footer::before {
+html[data-skin="margin-of-error"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: .45rem;
@@ -144,14 +142,7 @@ html[data-skin="margin-of-error"] .site-header::after {
   letter-spacing: .07em;
 }
 
-html[data-skin="margin-of-error"] .site-footer::before {
-  right: 1rem;
-  left: auto;
-  background: repeating-linear-gradient(90deg, var(--margin-red) 0 .48rem, transparent .48rem .66rem);
-}
-
-html[data-skin="margin-of-error"] .site-header__inner,
-html[data-skin="margin-of-error"] .site-footer__inner {
+html[data-skin="margin-of-error"] .site-header__inner {
   position: relative;
   z-index: 1;
   gap: .85rem 1.6rem;
@@ -198,8 +189,7 @@ html[data-skin="margin-of-error"] .record-actions a,
 html[data-skin="margin-of-error"] .tag-line a,
 html[data-skin="margin-of-error"] .quick-filters a,
 html[data-skin="margin-of-error"] .pagination a,
-html[data-skin="margin-of-error"] .pagination span,
-html[data-skin="margin-of-error"] .site-footer__links a {
+html[data-skin="margin-of-error"] .pagination span {
   min-height: 2.45rem;
   padding: .44rem .62rem;
   color: var(--margin-ink);
@@ -264,9 +254,7 @@ html[data-skin="margin-of-error"] .tag-line a:focus-visible,
 html[data-skin="margin-of-error"] .quick-filters a:hover,
 html[data-skin="margin-of-error"] .quick-filters a:focus-visible,
 html[data-skin="margin-of-error"] .pagination a:hover,
-html[data-skin="margin-of-error"] .pagination a:focus-visible,
-html[data-skin="margin-of-error"] .site-footer__links a:hover,
-html[data-skin="margin-of-error"] .site-footer__links a:focus-visible {
+html[data-skin="margin-of-error"] .pagination a:focus-visible {
   color: var(--margin-ink);
   background: #dfe1ff;
   border-color: var(--margin-blue);
@@ -317,7 +305,6 @@ html[data-skin="margin-of-error"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="margin-of-error"] .home-shell,
 html[data-skin="margin-of-error"] .archive-shell,
-html[data-skin="margin-of-error"] .record-page,
 html[data-skin="margin-of-error"] .page-shell,
 html[data-skin="margin-of-error"] .error-shell {
   position: relative;
@@ -332,20 +319,40 @@ html[data-skin="margin-of-error"] .error-shell {
   border-radius: 1.35rem;
   box-shadow: inset .2rem .2rem 0 rgb(255 255 255 / 42%), inset -.35rem -.35rem 0 rgb(32 32 30 / 10%), .62rem .72rem 0 rgb(32 32 30 / 27%);
 }
+html[data-skin="margin-of-error"] .record-page {
+  isolation: isolate;
+  background-color: var(--margin-bezel);
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 43%), transparent 24%, rgb(32 32 30 / 10%) 100%),
+    repeating-linear-gradient(90deg, transparent 0 2.45rem, rgb(32 32 30 / 4%) 2.45rem calc(2.45rem + 1px));
+  border: .52rem solid var(--margin-ink);
+  border-color: var(--margin-bezel-high) #8f8d86 #85837d #ddd9d0;
+  border-radius: 1.35rem;
+  box-shadow: inset .2rem .2rem 0 rgb(255 255 255 / 42%), inset -.35rem -.35rem 0 rgb(32 32 30 / 10%), .62rem .72rem 0 rgb(32 32 30 / 27%);
+}
 
-html[data-skin="margin-of-error"] .masthead,
-html[data-skin="margin-of-error"] .record-grid {
+html[data-skin="margin-of-error"] .masthead {
   gap: clamp(1rem, 2.8vw, 2.4rem);
 }
 
 html[data-skin="margin-of-error"] .masthead__copy,
 html[data-skin="margin-of-error"] .index-heading,
-html[data-skin="margin-of-error"] .page-heading,
-html[data-skin="margin-of-error"] .record-head {
+html[data-skin="margin-of-error"] .page-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(1.25rem, 3vw, 2.7rem);
+  color: var(--margin-ink);
+  background-color: var(--margin-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.6rem, rgb(216 75 98 / 39%) 2.6rem calc(2.6rem + 2px), transparent calc(2.6rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.2rem, rgb(32 32 30 / 9%) 2.2rem calc(2.2rem + 1px));
+  border: .2rem solid var(--margin-ink);
+  border-radius: .18rem;
+  box-shadow: .34rem .42rem 0 rgb(32 32 30 / 23%);
+}
+html[data-skin="margin-of-error"] .record-head {
+  isolation: isolate;
   color: var(--margin-ink);
   background-color: var(--margin-paper);
   background-image:
@@ -435,9 +442,14 @@ html[data-skin="margin-of-error"] .record-head h1 {
 
 html[data-skin="margin-of-error"] .masthead__lede,
 html[data-skin="margin-of-error"] .index-heading > p:last-child,
-html[data-skin="margin-of-error"] .page-heading > p:last-child,
-html[data-skin="margin-of-error"] .record-head__abstract {
+html[data-skin="margin-of-error"] .page-heading > p:last-child {
   max-width: 58ch;
+  color: var(--margin-ink-soft);
+  font-family: var(--body);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+html[data-skin="margin-of-error"] .record-head__abstract {
   color: var(--margin-ink-soft);
   font-family: var(--body);
   font-size: 1.1rem;
@@ -452,17 +464,10 @@ html[data-skin="margin-of-error"] .tag-line {
   border-top: 1px solid rgb(32 32 30 / 32%);
 }
 
-
-
-
-
-
 html[data-skin="margin-of-error"] .home-shell > .record-index,
 html[data-skin="margin-of-error"] .archive-tools,
 html[data-skin="margin-of-error"] .archive-groups,
-html[data-skin="margin-of-error"] .page-prose,
-html[data-skin="margin-of-error"] .article__content,
-html[data-skin="margin-of-error"] .record-end {
+html[data-skin="margin-of-error"] .page-prose {
   position: relative;
   color: var(--margin-ink);
   background-color: var(--margin-paper);
@@ -473,12 +478,26 @@ html[data-skin="margin-of-error"] .record-end {
   border-radius: .18rem;
   box-shadow: .36rem .44rem 0 rgb(32 32 30 / 23%);
 }
+html[data-skin="margin-of-error"] .article__content,
+html[data-skin="margin-of-error"] .record-end {
+  color: var(--margin-ink);
+  background-color: var(--margin-paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 2.7rem, rgb(216 75 98 / 38%) 2.7rem calc(2.7rem + 2px), transparent calc(2.7rem + 2px)),
+    repeating-linear-gradient(0deg, transparent 0 2.15rem, rgb(32 32 30 / 9%) 2.15rem calc(2.15rem + 1px));
+  border: .2rem solid var(--margin-ink);
+  border-radius: .18rem;
+  box-shadow: .36rem .44rem 0 rgb(32 32 30 / 23%);
+}
+html[data-skin="margin-of-error"] .record-end:not(:where(.record-page, .record-page *)) {
+  position: relative;
+}
 
 html[data-skin="margin-of-error"] .home-shell > .record-index,
 html[data-skin="margin-of-error"] .archive-tools,
 html[data-skin="margin-of-error"] .archive-groups,
 html[data-skin="margin-of-error"] .page-prose,
-html[data-skin="margin-of-error"] .record-end {
+html[data-skin="margin-of-error"] .record-end:not(:where(.record-page, .record-page *)) {
   padding: clamp(1rem, 2.5vw, 2.1rem);
 }
 
@@ -501,7 +520,6 @@ html[data-skin="margin-of-error"] .pagination__position {
   letter-spacing: .055em;
   text-transform: uppercase;
 }
-
 
 html[data-skin="margin-of-error"] .record-row {
   border-bottom: 1px solid var(--margin-rule);
@@ -560,7 +578,6 @@ html[data-skin="margin-of-error"] .record-row__link:focus-visible .record-row__p
   color: var(--margin-ink);
 }
 
-
 html[data-skin="margin-of-error"] .all-tags__grid a {
   color: var(--margin-ink);
   background-color: var(--margin-paper-low);
@@ -593,7 +610,6 @@ html[data-skin="margin-of-error"] .all-tags__grid a:focus-visible {
   border-color: var(--margin-blue);
   box-shadow: .18rem .23rem 0 var(--margin-red);
 }
-
 
 html[data-skin="margin-of-error"] .pagination__position strong {
   color: var(--margin-red);
@@ -1057,23 +1073,6 @@ html[data-skin="margin-of-error"] .error-shell > p {
   color: var(--margin-ink-soft);
 }
 
-html[data-skin="margin-of-error"] .site-footer {
-  margin-bottom: 1.35rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__note,
-html[data-skin="margin-of-error"] .site-footer a {
-  color: var(--margin-ink);
-}
-
-html[data-skin="margin-of-error"] .site-footer__note a {
-  color: var(--margin-link);
-}
-
-html[data-skin="margin-of-error"] .site-footer__links a {
-  background: var(--margin-paper-low);
-}
-
 html[data-skin="margin-of-error"][data-theme="dark"] {
   color-scheme: dark;
   --margin-desk: #151614;
@@ -1126,7 +1125,6 @@ html[data-skin="margin-of-error"][data-theme="dark"] body {
 }
 
 html[data-skin="margin-of-error"][data-theme="dark"] .site-header,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-footer,
 html[data-skin="margin-of-error"][data-theme="dark"] .home-shell,
 html[data-skin="margin-of-error"][data-theme="dark"] .archive-shell,
 html[data-skin="margin-of-error"][data-theme="dark"] .record-page,
@@ -1182,9 +1180,7 @@ html[data-skin="margin-of-error"][data-theme="dark"] .error-shell > p {
 }
 
 html[data-skin="margin-of-error"][data-theme="dark"] .site-brand,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-brand__name,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-footer__note,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-footer a {
+html[data-skin="margin-of-error"][data-theme="dark"] .site-brand__name {
   color: var(--margin-ink);
 }
 
@@ -1201,8 +1197,7 @@ html[data-skin="margin-of-error"][data-theme="dark"] .record-actions a,
 html[data-skin="margin-of-error"][data-theme="dark"] .tag-line a,
 html[data-skin="margin-of-error"][data-theme="dark"] .quick-filters a,
 html[data-skin="margin-of-error"][data-theme="dark"] .pagination a,
-html[data-skin="margin-of-error"][data-theme="dark"] .pagination span,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-footer__links a {
+html[data-skin="margin-of-error"][data-theme="dark"] .pagination span {
   color: #1d1e1b;
   background: #e1e0d8;
   border-color: #e1e0d8;
@@ -1248,7 +1243,6 @@ html[data-skin="margin-of-error"][data-theme="dark"] .prose blockquote {
   border-color: var(--margin-rule);
 }
 
-
 html[data-skin="margin-of-error"][data-theme="dark"] .all-tags__grid a:nth-child(3n) {
   color: var(--margin-paper);
   background: #11120f;
@@ -1270,8 +1264,7 @@ html[data-skin="margin-of-error"][data-theme="dark"] .prose code {
 }
 
 html[data-skin="margin-of-error"][data-theme="dark"] .prose a,
-html[data-skin="margin-of-error"][data-theme="dark"] .record-end > p a,
-html[data-skin="margin-of-error"][data-theme="dark"] .site-footer__note a {
+html[data-skin="margin-of-error"][data-theme="dark"] .record-end > p a {
   color: var(--margin-link);
 }
 
@@ -1290,8 +1283,7 @@ html[data-skin="margin-of-error"][data-theme="dark"] .section-heading {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="margin-of-error"] .site-header,
-  html[data-skin="margin-of-error"] .site-footer {
+  html[data-skin="margin-of-error"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
@@ -1299,11 +1291,6 @@ html[data-skin="margin-of-error"][data-theme="dark"] .section-heading {
   html[data-skin="margin-of-error"] .site-header {
     margin-top: 0;
     border-radius: 0 0 .7rem .7rem;
-  }
-
-  html[data-skin="margin-of-error"] .site-footer {
-    margin-bottom: 0;
-    border-radius: .7rem .7rem 0 0;
   }
 
   html[data-skin="margin-of-error"] .site-nav {
@@ -1328,15 +1315,19 @@ html[data-skin="margin-of-error"][data-theme="dark"] .section-heading {
   }
 
   html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page,
-  html[data-skin="margin-of-error"] .page-shell,
-  html[data-skin="margin-of-error"] .error-shell {
-    padding: .8rem;
-    border-width: .32rem;
-    border-radius: .45rem;
-    box-shadow: none;
-  }
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  padding: .8rem;
+  border-width: .32rem;
+  border-radius: .45rem;
+  box-shadow: none;
+}
+html[data-skin="margin-of-error"] .record-page {
+  border-width: .32rem;
+  border-radius: .45rem;
+  box-shadow: none;
+}
 
   html[data-skin="margin-of-error"] .masthead__copy,
   html[data-skin="margin-of-error"] .index-heading,
@@ -1366,7 +1357,6 @@ html[data-skin="margin-of-error"][data-theme="dark"] .section-heading {
       linear-gradient(90deg, transparent 0 2rem, rgb(216 75 98 / 38%) 2rem calc(2rem + 2px), transparent calc(2rem + 2px)),
       repeating-linear-gradient(0deg, transparent 0 2.05rem, rgb(32 32 30 / 9%) 2.05rem calc(2.05rem + 1px));
   }
-
 
   html[data-skin="margin-of-error"] .record-row__event,
   html[data-skin="margin-of-error"] .record-row__primitive {
@@ -1566,26 +1556,16 @@ html[data-skin="margin-of-error"] .home-shell .masthead__copy {
   box-shadow: none;
 }
 
-
-
-
-
-
 html[data-skin="margin-of-error"] .home-shell > .record-index {
   grid-area: records;
   margin-top: 0;
   border-left-width: .65rem;
 }
 
-
-
-
-
 html[data-skin="margin-of-error"] .home-shell .record-row__link {
   grid-template-columns: 5.5rem minmax(10rem, 1fr) minmax(5rem, .6fr) minmax(4.5rem, .45fr) 1.8rem;
   gap: .45rem;
 }
-
 
 html[data-skin="margin-of-error"] .home-shell .record-row__link {
   padding: .78rem .55rem;
@@ -1706,21 +1686,8 @@ html[data-skin="margin-of-error"] .archive-shell .record-row__link {
   gap: .4rem;
 }
 
-
 html[data-skin="margin-of-error"] .archive-shell .record-row__link {
   padding: .72rem .5rem;
-}
-
-html[data-skin="margin-of-error"] .record-page {
-  display: grid;
-  grid-template-columns: 4.7rem minmax(0, 1.48fr) minmax(13rem, .58fr);
-  grid-template-areas:
-    "rail head head"
-    "rail grid grid"
-    "rail end end";
-  gap: clamp(1rem, 2.25vw, 2rem);
-  align-items: start;
-  width: min(calc(100% - 3rem), 96rem);
 }
 
 html[data-skin="margin-of-error"] .record-page::before {
@@ -1742,44 +1709,14 @@ html[data-skin="margin-of-error"] .record-page::before {
 }
 
 html[data-skin="margin-of-error"] .record-page .record-head {
-  grid-area: head;
-  margin: 0;
-  min-height: 22rem;
   border-left-width: .68rem;
-}
-
-html[data-skin="margin-of-error"] .record-page .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, .38fr);
-  gap: clamp(1rem, 2vw, 1.7rem);
-  justify-content: stretch;
-  width: 100%;
-  margin-top: 0;
 }
 
 html[data-skin="margin-of-error"] .record-page .article__content {
-  width: auto;
-  max-width: none;
-  margin: 0;
   border-left-width: .68rem;
 }
 
-html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 11.1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
-  align-self: start;
-}
-
 html[data-skin="margin-of-error"] .record-page .record-end {
-  display: grid;
-  grid-area: end;
-  gap: .8rem;
-  margin-top: 0;
   border-top: .5rem solid var(--margin-blue);
 }
 
@@ -1796,41 +1733,6 @@ html[data-skin="margin-of-error"] .record-page .record-end nav {
 html[data-skin="margin-of-error"] .record-page .record-end nav a {
   min-height: 5.2rem;
   padding: .75rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer {
-  width: min(calc(100% - 3rem), 96rem);
-  margin-top: 1.5rem;
-  border-radius: .28rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(17rem, .65fr);
-  gap: 1rem 2rem;
-  align-items: end;
-  padding: .9rem 1.15rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__note {
-  padding-left: 1rem;
-  border-left: .35rem solid var(--margin-red);
-  font-family: var(--body);
-  font-size: .95rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .4rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__links a {
-  min-height: 3.4rem;
-  padding: .45rem;
-  border-radius: 50% 50% .18rem .18rem;
-  box-shadow: none;
-  font-size: .56rem;
 }
 
 @media (max-width: 64rem) {
@@ -1866,14 +1768,13 @@ html[data-skin="margin-of-error"] .site-footer__links a {
   }
 
   html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
+html[data-skin="margin-of-error"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
       "masthead"
       "records"
       "map";
-  }
+}
 
   html[data-skin="margin-of-error"] .archive-shell {
     grid-template-areas:
@@ -1881,13 +1782,6 @@ html[data-skin="margin-of-error"] .site-footer__links a {
       "tools"
       "groups"
       "empty";
-  }
-
-  html[data-skin="margin-of-error"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
   }
 
   html[data-skin="margin-of-error"] .record-page::before {
@@ -1903,15 +1797,10 @@ html[data-skin="margin-of-error"] .site-footer__links a {
     grid-row: 1;
   }
 
-
-
-
-  html[data-skin="margin-of-error"] .archive-shell .archive-tools,
-  html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
-    position: static;
-    transform: none;
-  }
-
+  html[data-skin="margin-of-error"] .archive-shell .archive-tools {
+  position: static;
+  transform: none;
+}
 
   html[data-skin="margin-of-error"] .archive-shell .quick-filters {
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1921,25 +1810,14 @@ html[data-skin="margin-of-error"] .site-footer__links a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  html[data-skin="margin-of-error"] .record-page .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="margin-of-error"] .site-footer__inner {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
 }
 
 @media (max-width: 44rem) {
   html[data-skin="margin-of-error"] .site-header,
-  html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page,
-  html[data-skin="margin-of-error"] .site-footer {
-    width: 100%;
-  }
+html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell {
+  width: 100%;
+}
 
   html[data-skin="margin-of-error"] .site-header__inner {
     padding: .6rem;
@@ -1963,13 +1841,9 @@ html[data-skin="margin-of-error"] .site-footer__links a {
     min-height: 2.6rem;
   }
 
-
-
-
   html[data-skin="margin-of-error"] .archive-shell .quick-filters,
-  html[data-skin="margin-of-error"] .archive-shell .all-tags__grid,
-  html[data-skin="margin-of-error"] .site-footer__links,
-  html[data-skin="margin-of-error"] .record-page .record-end nav {
+html[data-skin="margin-of-error"] .archive-shell .all-tags__grid,
+html[data-skin="margin-of-error"] .record-page .record-end nav {
     grid-template-columns: 1fr;
   }
 
@@ -1986,7 +1860,6 @@ html[data-skin="margin-of-error"] .site-footer__links a {
     border-bottom: 2px solid var(--margin-red);
     text-align: left;
   }
-
 
   html[data-skin="margin-of-error"] .home-shell .record-row__link,
   html[data-skin="margin-of-error"] .archive-shell .record-row__link {
@@ -2017,7 +1890,6 @@ html[data-skin="margin-of-error"] .site-footer__links a {
   html[data-skin="margin-of-error"] .archive-shell .record-row__primitive {
     grid-area: primitive;
   }
-
 
 }
 
@@ -2146,8 +2018,6 @@ html[data-skin="margin-of-error"] .record-actions a,
 html[data-skin="margin-of-error"] .tag-line a,
 html[data-skin="margin-of-error"] .quick-filters a,
 html[data-skin="margin-of-error"] .pagination :is(a, span),
-html[data-skin="margin-of-error"] .site-footer__note,
-html[data-skin="margin-of-error"] .site-footer__links a,
 html[data-skin="margin-of-error"] .eyebrow,
 html[data-skin="margin-of-error"] .record-head__key,
 html[data-skin="margin-of-error"] .archive-search label,
@@ -2216,8 +2086,7 @@ html[data-skin="margin-of-error"] .site-header {
   box-shadow: none;
 }
 
-html[data-skin="margin-of-error"] .site-header::before,
-html[data-skin="margin-of-error"] .site-footer::before {
+html[data-skin="margin-of-error"] .site-header::before {
   inset: auto 1rem .55rem 1rem;
   width: auto;
   height: 1px;
@@ -2285,8 +2154,7 @@ html[data-skin="margin-of-error"] .action,
 html[data-skin="margin-of-error"] .record-actions a,
 html[data-skin="margin-of-error"] .tag-line a,
 html[data-skin="margin-of-error"] .quick-filters a,
-html[data-skin="margin-of-error"] .pagination :is(a, span),
-html[data-skin="margin-of-error"] .site-footer__links a {
+html[data-skin="margin-of-error"] .pagination :is(a, span) {
   display: inline-flex;
   width: 100%;
   min-height: 2.8rem;
@@ -2349,9 +2217,7 @@ html[data-skin="margin-of-error"] .tag-line a:focus-visible,
 html[data-skin="margin-of-error"] .quick-filters a:hover,
 html[data-skin="margin-of-error"] .quick-filters a:focus-visible,
 html[data-skin="margin-of-error"] .pagination a:hover,
-html[data-skin="margin-of-error"] .pagination a:focus-visible,
-html[data-skin="margin-of-error"] .site-footer__links a:hover,
-html[data-skin="margin-of-error"] .site-footer__links a:focus-visible {
+html[data-skin="margin-of-error"] .pagination a:focus-visible {
   color: var(--mo-current-text);
   background: var(--mo-current);
   border-color: var(--mo-current);
@@ -2464,7 +2330,6 @@ html[data-skin="margin-of-error"] .skin-menu__panel .skin-randomizer {
 /* Shared paper and ledger surfaces. */
 html[data-skin="margin-of-error"] .home-shell,
 html[data-skin="margin-of-error"] .archive-shell,
-html[data-skin="margin-of-error"] .record-page,
 html[data-skin="margin-of-error"] .page-shell,
 html[data-skin="margin-of-error"] .error-shell {
   grid-area: folio;
@@ -2479,17 +2344,22 @@ html[data-skin="margin-of-error"] .error-shell {
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="margin-of-error"] .record-page {
+  color: var(--mo-ink);
+  background: transparent;
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 
 html[data-skin="margin-of-error"] .masthead__copy,
 html[data-skin="margin-of-error"] .index-heading,
 html[data-skin="margin-of-error"] .page-heading,
-html[data-skin="margin-of-error"] .record-head,
 html[data-skin="margin-of-error"] .home-shell > .record-index,
 html[data-skin="margin-of-error"] .archive-tools,
 html[data-skin="margin-of-error"] .archive-groups,
 html[data-skin="margin-of-error"] .page-prose,
-html[data-skin="margin-of-error"] .article__content,
-html[data-skin="margin-of-error"] .record-end,
 html[data-skin="margin-of-error"] .error-shell {
   min-width: 0;
   overflow: visible;
@@ -2500,6 +2370,21 @@ html[data-skin="margin-of-error"] .error-shell {
   border: 1px solid var(--mo-rule);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="margin-of-error"] .record-head,
+html[data-skin="margin-of-error"] .article__content,
+html[data-skin="margin-of-error"] .record-end {
+  color: var(--mo-ink);
+  background: var(--mo-page);
+  background-image: repeating-linear-gradient(0deg, transparent 0 2rem, rgb(32 32 30 / 5%) 2rem calc(2rem + 1px));
+  border: 1px solid var(--mo-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="margin-of-error"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  overflow: visible;
+  padding: clamp(1rem, 2.5vw, 2rem);
 }
 
 html[data-skin="margin-of-error"][data-theme="dark"] :is(.masthead__copy, .index-heading, .page-heading, .record-head, .home-shell > .record-index, .archive-tools, .archive-groups, .page-prose, .article__content, .record-end, .error-shell) {
@@ -2513,9 +2398,18 @@ html[data-skin="margin-of-error"][data-theme="dark"] :is(.masthead__copy, .index
 html[data-skin="margin-of-error"] .masthead h1,
 html[data-skin="margin-of-error"] .index-heading h1,
 html[data-skin="margin-of-error"] .page-heading h1,
-html[data-skin="margin-of-error"] .record-head h1,
 html[data-skin="margin-of-error"] .error-shell h1 {
   max-width: 22ch;
+  margin: 0;
+  color: var(--mo-ink);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1;
+  text-decoration: none;
+}
+html[data-skin="margin-of-error"] .record-head h1 {
   margin: 0;
   color: var(--mo-ink);
   font-family: var(--display);
@@ -2529,9 +2423,14 @@ html[data-skin="margin-of-error"] .error-shell h1 {
 html[data-skin="margin-of-error"] .masthead__lede,
 html[data-skin="margin-of-error"] .index-heading > p:last-child,
 html[data-skin="margin-of-error"] .page-heading > p:last-child,
-html[data-skin="margin-of-error"] .record-head__abstract,
 html[data-skin="margin-of-error"] .error-shell > p {
   max-width: 62ch;
+  color: var(--mo-muted);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+html[data-skin="margin-of-error"] .record-head__abstract {
   color: var(--mo-muted);
   font-size: 1rem;
   font-weight: 400;
@@ -2597,19 +2496,11 @@ html[data-skin="margin-of-error"] .home-shell .masthead__copy {
   box-shadow: none;
 }
 
-
-
-
-
-
 html[data-skin="margin-of-error"] .home-shell > .record-index {
   grid-area: records;
   margin: 0;
   border-left: 4px solid var(--mo-mark);
 }
-
-
-
 
 html[data-skin="margin-of-error"] .all-tags__grid a {
   display: flex;
@@ -2647,7 +2538,6 @@ html[data-skin="margin-of-error"] .all-tags__grid a:focus-visible {
   box-shadow: inset 4px 0 0 var(--mo-mark);
 }
 
-
 html[data-skin="margin-of-error"] .section-heading {
   gap: .8rem 1.5rem;
   align-items: end;
@@ -2674,7 +2564,6 @@ html[data-skin="margin-of-error"] .pagination__position {
   letter-spacing: 0;
   text-transform: none;
 }
-
 
 html[data-skin="margin-of-error"] .record-row {
   border-bottom: 1px solid var(--mo-rule);
@@ -2737,7 +2626,6 @@ html[data-skin="margin-of-error"] .record-row__title {
   font-weight: 700;
   line-height: 1.35;
 }
-
 
 html[data-skin="margin-of-error"] .pagination__position strong {
   color: var(--mo-ink);
@@ -2934,25 +2822,12 @@ html[data-skin="margin-of-error"] .archive-shell .archive-empty {
 }
 
 /* Article: cover, writing sheet, right margin notes, closing strip. */
-html[data-skin="margin-of-error"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(12rem, 13rem);
-  grid-template-areas:
-    "head head"
-    "grid grid"
-    "end end";
-  gap: 1.5rem clamp(1rem, 2vw, 2rem);
-  align-items: start;
-}
 
 html[data-skin="margin-of-error"] .record-page::before {
   display: none;
 }
 
 html[data-skin="margin-of-error"] .record-page .record-head {
-  grid-area: head;
-  min-height: 0;
-  margin: 0;
   border-top: 2px solid var(--mo-blue);
   border-left: 4px solid var(--mo-mark);
 }
@@ -2997,29 +2872,11 @@ html[data-skin="margin-of-error"] .record-facts dd {
   line-height: 1.4;
 }
 
-html[data-skin="margin-of-error"] .record-page .record-grid {
-  display: grid;
-  grid-area: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(12rem, 13rem);
-  gap: clamp(1rem, 2vw, 2rem);
-  width: 100%;
-  margin: 0;
-}
-
 html[data-skin="margin-of-error"] .record-page .article__content {
-  width: auto;
-  max-width: none;
-  margin: 0;
   border-left: 4px solid var(--mo-mark);
 }
 
 html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 0 0 0 1rem;
   color: var(--mo-ink);
   background: transparent;
   background-image: none;
@@ -3071,11 +2928,6 @@ html[data-skin="margin-of-error"] .related-records h2 {
 }
 
 html[data-skin="margin-of-error"] .record-page .record-end {
-  display: grid;
-  grid-area: end;
-  gap: .85rem;
-  max-width: none;
-  margin: 0;
   border-top: 2px solid var(--mo-blue);
   border-left: 4px solid var(--mo-mark);
 }
@@ -3165,8 +3017,7 @@ html[data-skin="margin-of-error"] .prose h5,
 html[data-skin="margin-of-error"] .prose h6 { font-size: 1rem; }
 
 html[data-skin="margin-of-error"] .prose a,
-html[data-skin="margin-of-error"] .record-end > p a,
-html[data-skin="margin-of-error"] .site-footer__note a {
+html[data-skin="margin-of-error"] .record-end > p a {
   color: var(--mo-link);
   font-weight: 700;
   text-decoration-color: currentcolor;
@@ -3175,9 +3026,7 @@ html[data-skin="margin-of-error"] .site-footer__note a {
 html[data-skin="margin-of-error"] .prose a:hover,
 html[data-skin="margin-of-error"] .prose a:focus-visible,
 html[data-skin="margin-of-error"] .record-end > p a:hover,
-html[data-skin="margin-of-error"] .record-end > p a:focus-visible,
-html[data-skin="margin-of-error"] .site-footer__note a:hover,
-html[data-skin="margin-of-error"] .site-footer__note a:focus-visible {
+html[data-skin="margin-of-error"] .record-end > p a:focus-visible {
   color: var(--mo-link);
   text-decoration-color: var(--mo-mark);
 }
@@ -3510,54 +3359,6 @@ html[data-skin="margin-of-error"] .error-shell nav .action {
 }
 
 /* Footer: the note is the folio status strip and links remain in source order. */
-html[data-skin="margin-of-error"] .site-footer {
-  grid-area: footer;
-  width: 100%;
-  margin: 0;
-  color: var(--mo-ink);
-  background: var(--mo-rim);
-  border: 1px solid var(--mo-rule);
-  border-top: 2px solid var(--mo-blue);
-  border-radius: 0;
-  box-shadow: none;
-}
-
-html[data-skin="margin-of-error"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(12rem, 13rem);
-  gap: 1rem clamp(1rem, 2vw, 2rem);
-  align-items: center;
-  padding: .85rem 1rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__note,
-html[data-skin="margin-of-error"] .site-footer a {
-  color: var(--mo-ink);
-}
-
-html[data-skin="margin-of-error"] .site-footer__note {
-  padding-left: .75rem;
-  border-left: 3px solid var(--mo-mark);
-  font-family: var(--body);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-html[data-skin="margin-of-error"] .site-footer__links {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: .4rem;
-}
-
-html[data-skin="margin-of-error"] .site-footer__links a {
-  min-height: 2.7rem;
-  color: var(--mo-ink);
-  background: var(--mo-page);
-  border-color: var(--mo-ink);
-  border-radius: 0;
-  font-family: var(--body);
-  font-size: 1rem;
-}
 
 /* Dark foreground and state pairs remain explicit even against legacy dark selectors. */
 html[data-skin="margin-of-error"][data-theme="dark"] .masthead h1,
@@ -3573,15 +3374,25 @@ html[data-skin="margin-of-error"][data-theme="dark"] .prose :is(h1, h2, h3, h4, 
   color: var(--mo-ink);
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.masthead__lede, .index-heading > p:last-child, .page-heading > p:last-child, .record-head__abstract, .error-shell > p, .site-brand__scope, .site-footer__note, .record-row__date, .record-row__event, .record-row__primitive, .toc-fallback) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.masthead__lede,
+.index-heading > p:last-child,
+.page-heading > p:last-child,
+.record-head__abstract,
+.error-shell > p,
+.site-brand__scope,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.toc-fallback) {
   color: var(--mo-muted);
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-brand, .site-brand__name, .site-footer a) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-brand,
+.site-brand__name, :not(*):nth-child(n):is(css-specificity)) {
   color: var(--mo-ink);
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-header, .site-footer) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-header) {
   color: var(--mo-ink);
   background: var(--mo-rim);
   border-color: var(--mo-rule);
@@ -3595,7 +3406,14 @@ html[data-skin="margin-of-error"][data-theme="dark"] :is(.home-shell, .archive-s
   box-shadow: none;
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span)) {
   color: var(--mo-ink);
   background: var(--mo-page);
   border-color: var(--mo-ink);
@@ -3615,7 +3433,24 @@ html[data-skin="margin-of-error"][data-theme="dark"] .skin-menu[open] summary {
   box-shadow: inset 4px 0 0 var(--mo-mark);
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route]:hover, .site-nav a[data-route]:focus-visible, .theme-toggle:hover, .theme-toggle:focus-visible, .skin-menu summary:hover, .skin-menu summary:focus-visible, .skin-randomizer:hover, .skin-randomizer:focus-visible, .action:hover, .action:focus-visible, .record-actions a:hover, .record-actions a:focus-visible, .tag-line a:hover, .tag-line a:focus-visible, .quick-filters a:hover, .quick-filters a:focus-visible, .pagination a:hover, .pagination a:focus-visible, .site-footer__links a:hover, .site-footer__links a:focus-visible) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route]:hover,
+.site-nav a[data-route]:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.skin-menu summary:hover,
+.skin-menu summary:focus-visible,
+.skin-randomizer:hover,
+.skin-randomizer:focus-visible,
+.action:hover,
+.action:focus-visible,
+.record-actions a:hover,
+.record-actions a:focus-visible,
+.tag-line a:hover,
+.tag-line a:focus-visible,
+.quick-filters a:hover,
+.quick-filters a:focus-visible,
+.pagination a:hover,
+.pagination a:focus-visible) {
   color: var(--mo-current-text);
   background: var(--mo-current);
   border-color: var(--mo-current);
@@ -3650,7 +3485,8 @@ html[data-skin="margin-of-error"][data-theme="dark"] .prose code {
   border-color: var(--mo-rule);
 }
 
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.prose a, .record-end > p a, .site-footer__note a) {
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.prose a,
+.record-end > p a) {
   color: var(--mo-link);
 }
 
@@ -3675,7 +3511,21 @@ html[data-skin="margin-of-error"][data-theme="dark"] .code-frame__actions button
   border-color: var(--mo-current-text);
 }
 
-html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .all-tags__grid a, .record-row__link, .record-end nav a, .site-footer__links a, .code-frame__actions button, .archive-search input):focus-visible {
+html[data-skin="margin-of-error"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.all-tags__grid a,
+.record-row__link,
+.record-end nav a,
+.code-frame__actions button,
+.archive-search input):focus-visible {
   outline: 2px solid var(--mo-focus-inner);
   outline-offset: 2px;
   box-shadow: inset 4px 0 0 var(--mo-mark), 0 0 0 5px var(--mo-focus-outer);
@@ -3688,15 +3538,13 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] .site-header,
-  html[data-skin="margin-of-error"] .site-footer,
-  html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page,
-  html[data-skin="margin-of-error"] .page-shell,
-  html[data-skin="margin-of-error"] .error-shell {
-    width: min(100%, 66rem);
-    margin-inline: auto;
-  }
+html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  width: min(100%, 66rem);
+  margin-inline: auto;
+}
 
   html[data-skin="margin-of-error"] .site-header {
     position: relative;
@@ -3713,10 +3561,9 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="margin-of-error"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="margin-of-error"] .home-shell {
     grid-template-areas:
@@ -3733,31 +3580,17 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
       "empty";
   }
 
-  html[data-skin="margin-of-error"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-
   html[data-skin="margin-of-error"] .archive-tools,
-  html[data-skin="margin-of-error"] .archive-shell .archive-tools,
-  html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
-    position: static;
-    top: auto;
-  }
+html[data-skin="margin-of-error"] .archive-shell .archive-tools {
+  position: static;
+  top: auto;
+}
 
   html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
-    padding: 1rem;
-    background: var(--mo-page);
-    border: 1px solid var(--mo-rule);
-    border-left: 4px solid var(--mo-mark);
-  }
-
-
-  html[data-skin="margin-of-error"] .record-page .record-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  background: var(--mo-page);
+  border: 1px solid var(--mo-rule);
+  border-left: 4px solid var(--mo-mark);
+}
 
   html[data-skin="margin-of-error"] .page-shell {
     grid-template-columns: minmax(0, 1fr);
@@ -3765,10 +3598,6 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
 
   html[data-skin="margin-of-error"] .page-shell::after {
     display: none;
-  }
-
-  html[data-skin="margin-of-error"] .site-footer {
-    margin-top: 1.5rem;
   }
 
 }
@@ -3779,15 +3608,13 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] .site-header,
-  html[data-skin="margin-of-error"] .site-footer,
-  html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page,
-  html[data-skin="margin-of-error"] .page-shell,
-  html[data-skin="margin-of-error"] .error-shell {
-    width: 100%;
-    margin-inline: 0;
-  }
+html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+}
 
   html[data-skin="margin-of-error"] .site-header {
     margin-top: 0;
@@ -3808,37 +3635,27 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] .home-shell,
-  html[data-skin="margin-of-error"] .archive-shell,
-  html[data-skin="margin-of-error"] .record-page,
-  html[data-skin="margin-of-error"] .page-shell,
-  html[data-skin="margin-of-error"] .error-shell {
-    gap: 1rem;
-  }
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  gap: 1rem;
+}
 
   html[data-skin="margin-of-error"] .masthead__copy,
-  html[data-skin="margin-of-error"] .index-heading,
-  html[data-skin="margin-of-error"] .page-heading,
-  html[data-skin="margin-of-error"] .record-head,
-  html[data-skin="margin-of-error"] .home-shell > .record-index,
-  html[data-skin="margin-of-error"] .archive-tools,
-  html[data-skin="margin-of-error"] .archive-groups,
-  html[data-skin="margin-of-error"] .page-prose,
-  html[data-skin="margin-of-error"] .article__content,
-  html[data-skin="margin-of-error"] .record-end,
-  html[data-skin="margin-of-error"] .error-shell {
-    padding: 1rem;
-  }
+html[data-skin="margin-of-error"] .index-heading,
+html[data-skin="margin-of-error"] .page-heading,
+html[data-skin="margin-of-error"] .home-shell > .record-index,
+html[data-skin="margin-of-error"] .archive-tools,
+html[data-skin="margin-of-error"] .archive-groups,
+html[data-skin="margin-of-error"] .page-prose,
+html[data-skin="margin-of-error"] .record-end:not(:where(.record-page, .record-page *)),
+html[data-skin="margin-of-error"] .error-shell {
+  padding: 1rem;
+}
 
-
-
-
-
-  html[data-skin="margin-of-error"] .site-footer__links,
   html[data-skin="margin-of-error"] .record-page .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
-
-
 
   html[data-skin="margin-of-error"] .record-row__link,
   html[data-skin="margin-of-error"] .home-shell .record-row__link,
@@ -3856,7 +3673,6 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   html[data-skin="margin-of-error"] .record-row__event { grid-area: event; }
   html[data-skin="margin-of-error"] .record-row__primitive { grid-area: primitive; }
 
-
   html[data-skin="margin-of-error"] .archive-year > header,
   html[data-skin="margin-of-error"] .archive-shell .archive-year > header {
     display: block;
@@ -3865,10 +3681,6 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   html[data-skin="margin-of-error"] .archive-year > header span {
     display: block;
     margin-top: .35rem;
-  }
-
-  html[data-skin="margin-of-error"] .record-facts {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   html[data-skin="margin-of-error"] .record-facts > div {
@@ -3899,11 +3711,6 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   html[data-skin="margin-of-error"] .error-shell nav .action {
     display: grid;
     width: 100%;
-  }
-
-  html[data-skin="margin-of-error"] .site-footer__inner {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 1rem;
   }
 
 }
@@ -3952,24 +3759,23 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] body,
-  html[data-skin="margin-of-error"] .site-header,
-  html[data-skin="margin-of-error"] .site-footer,
-  html[data-skin="margin-of-error"] .masthead,
-  html[data-skin="margin-of-error"] .masthead__copy,
-  html[data-skin="margin-of-error"] .index-heading,
-  html[data-skin="margin-of-error"] .page-heading,
-  html[data-skin="margin-of-error"] .record-head,
-  html[data-skin="margin-of-error"] .home-shell > .record-index,
-  html[data-skin="margin-of-error"] .archive-tools,
-  html[data-skin="margin-of-error"] .archive-groups,
-  html[data-skin="margin-of-error"] .page-prose,
-  html[data-skin="margin-of-error"] .article__content,
-  html[data-skin="margin-of-error"] .record-end,
-  html[data-skin="margin-of-error"] .error-shell,
-  html[data-skin="margin-of-error"] .record-page .record-grid > .record-index,
-  html[data-skin="margin-of-error"] .prose .code-frame,
-  html[data-skin="margin-of-error"] .code-frame__bar,
-  html[data-skin="margin-of-error"] .code-frame__status {
+html[data-skin="margin-of-error"] .site-header,
+html[data-skin="margin-of-error"] .masthead,
+html[data-skin="margin-of-error"] .masthead__copy,
+html[data-skin="margin-of-error"] .index-heading,
+html[data-skin="margin-of-error"] .page-heading,
+html[data-skin="margin-of-error"] .record-head,
+html[data-skin="margin-of-error"] .home-shell > .record-index,
+html[data-skin="margin-of-error"] .archive-tools,
+html[data-skin="margin-of-error"] .archive-groups,
+html[data-skin="margin-of-error"] .page-prose,
+html[data-skin="margin-of-error"] .article__content,
+html[data-skin="margin-of-error"] .record-end,
+html[data-skin="margin-of-error"] .error-shell,
+html[data-skin="margin-of-error"] .record-page .record-grid > .record-index,
+html[data-skin="margin-of-error"] .prose .code-frame,
+html[data-skin="margin-of-error"] .code-frame__bar,
+html[data-skin="margin-of-error"] .code-frame__status {
     color: CanvasText;
     background: Canvas;
     background-image: none;
@@ -3978,17 +3784,16 @@ html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .s
   }
 
   html[data-skin="margin-of-error"] .site-nav a,
-  html[data-skin="margin-of-error"] .theme-toggle,
-  html[data-skin="margin-of-error"] .skin-menu summary,
-  html[data-skin="margin-of-error"] .skin-menu select,
-  html[data-skin="margin-of-error"] .skin-randomizer,
-  html[data-skin="margin-of-error"] .action,
-  html[data-skin="margin-of-error"] .record-actions a,
-  html[data-skin="margin-of-error"] .tag-line a,
-  html[data-skin="margin-of-error"] .quick-filters a,
-  html[data-skin="margin-of-error"] .pagination :is(a, span),
-  html[data-skin="margin-of-error"] .site-footer__links a,
-  html[data-skin="margin-of-error"] .code-frame__actions button {
+html[data-skin="margin-of-error"] .theme-toggle,
+html[data-skin="margin-of-error"] .skin-menu summary,
+html[data-skin="margin-of-error"] .skin-menu select,
+html[data-skin="margin-of-error"] .skin-randomizer,
+html[data-skin="margin-of-error"] .action,
+html[data-skin="margin-of-error"] .record-actions a,
+html[data-skin="margin-of-error"] .tag-line a,
+html[data-skin="margin-of-error"] .quick-filters a,
+html[data-skin="margin-of-error"] .pagination :is(a, span),
+html[data-skin="margin-of-error"] .code-frame__actions button {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -4020,14 +3825,8 @@ html[data-skin="margin-of-error"] :is(.site-header, .site-brand, .skin-menu__pan
 html[data-skin="margin-of-error"] :is(.site-header, .site-brand, .home-shell .masthead, .archive-shell .index-heading--archive, .page-heading) {
   border-top: 2px solid var(--mo-blue);
 }
-html[data-skin="margin-of-error"] .site-footer__note {
-  padding-top: .75rem;
-  padding-left: 0;
-  border-top: 1px solid var(--mo-rule);
-  border-left: 0;
-}
-html[data-skin="margin-of-error"] :is(.record-page .record-grid > .record-index) {
-  padding-left: 0;
+
+html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
   border-top: 1px solid var(--mo-rule);
   border-left: 0;
 }
@@ -4047,26 +3846,93 @@ html[data-skin="margin-of-error"] :is(.prose .info, .prose blockquote, .prose .k
 }
 html[data-skin="margin-of-error"] .prose .info { border-top: 2px solid var(--mo-blue); }
 html[data-skin="margin-of-error"] :is(.prose blockquote, .prose .katex-display) { border-top: 2px solid var(--mo-mark); }
-html[data-skin="margin-of-error"] :is(.site-nav a[aria-current="page"], .theme-toggle[aria-pressed="true"], .quick-filters a[aria-current="true"], .action--primary, .masthead__actions .action--primary, .record-actions a:last-child, .tag-line a:nth-child(odd), .all-tags__grid a:nth-child(3n), .skin-randomizer, .skin-menu[open] summary, .site-nav a[data-route]:hover, .site-nav a[data-route]:focus-visible, .theme-toggle:hover, .theme-toggle:focus-visible, .skin-menu summary:hover, .skin-menu summary:focus-visible, .skin-randomizer:hover, .skin-randomizer:focus-visible, .action:hover, .action:focus-visible, .record-actions a:hover, .record-actions a:focus-visible, .tag-line a:hover, .tag-line a:focus-visible, .quick-filters a:hover, .quick-filters a:focus-visible, .pagination a:hover, .pagination a:focus-visible, .site-footer__links a:hover, .site-footer__links a:focus-visible, .all-tags__grid a:hover, .all-tags__grid a:focus-visible, .record-end nav a:hover, .record-end nav a:focus-visible) { box-shadow: none; }
-html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .all-tags__grid a, .record-row__link, .record-end nav a, .site-footer__links a, .code-frame__actions button, .archive-search input):focus-visible { box-shadow: 0 0 0 5px var(--mo-focus-outer); }
-html[data-skin="margin-of-error"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-menu select, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination :is(a, span), .site-footer__links a, .code-frame__actions button, .archive-search input) {
+html[data-skin="margin-of-error"] :is(.site-nav a[aria-current="page"],
+.theme-toggle[aria-pressed="true"],
+.quick-filters a[aria-current="true"],
+.action--primary,
+.masthead__actions .action--primary,
+.record-actions a:last-child,
+.tag-line a:nth-child(odd),
+.all-tags__grid a:nth-child(3n),
+.skin-randomizer,
+.skin-menu[open] summary,
+.site-nav a[data-route]:hover,
+.site-nav a[data-route]:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.skin-menu summary:hover,
+.skin-menu summary:focus-visible,
+.skin-randomizer:hover,
+.skin-randomizer:focus-visible,
+.action:hover,
+.action:focus-visible,
+.record-actions a:hover,
+.record-actions a:focus-visible,
+.tag-line a:hover,
+.tag-line a:focus-visible,
+.quick-filters a:hover,
+.quick-filters a:focus-visible,
+.pagination a:hover,
+.pagination a:focus-visible,
+.all-tags__grid a:hover,
+.all-tags__grid a:focus-visible,
+.record-end nav a:hover,
+.record-end nav a:focus-visible) { box-shadow: none; }
+html[data-skin="margin-of-error"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.all-tags__grid a,
+.record-row__link,
+.record-end nav a,
+.code-frame__actions button,
+.archive-search input):focus-visible { box-shadow: 0 0 0 5px var(--mo-focus-outer); }
+html[data-skin="margin-of-error"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination :is(a, span),
+.code-frame__actions button,
+.archive-search input) {
   height: auto;
   min-height: 0;
 }
-html[data-skin="margin-of-error"] :is(.masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1, .prose h1) {
+html[data-skin="margin-of-error"] .masthead h1,
+html[data-skin="margin-of-error"] .index-heading h1,
+html[data-skin="margin-of-error"] .page-heading h1,
+html[data-skin="margin-of-error"] .error-shell h1 {
   max-width: 26ch;
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1.05;
+}
+html[data-skin="margin-of-error"] .record-head h1,
+html[data-skin="margin-of-error"] .prose h1 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.05;
+}
+html[data-skin="margin-of-error"] .prose:not(:where(.record-page, .record-page *)) h1 {
+  max-width: 26ch;
 }
 html[data-skin="margin-of-error"] .prose h3 { font-size: 1.15rem; }
 html[data-skin="margin-of-error"] .prose h4 { font-size: 1.125rem; }
 html[data-skin="margin-of-error"] .prose h5 { font-size: 1.0625rem; }
 html[data-skin="margin-of-error"] .prose h6 { font-size: 1rem; }
-html[data-skin="margin-of-error"] :is(.record-page .article__content, .page-prose) {
+html[data-skin="margin-of-error"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   box-sizing: border-box;
   max-width: 76ch;
 }
-html[data-skin="margin-of-error"] .record-facts { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+
 html[data-skin="margin-of-error"] :is(.record-facts > div, .record-facts dd, .record-row__title, .record-row__event, .record-row__primitive) {
   min-width: 0;
   overflow-wrap: break-word;
@@ -4083,10 +3949,14 @@ html[data-skin="margin-of-error"] :is(.record-facts > div, .record-facts dd, .re
     display: block;
     padding: 0 1rem 1rem;
   }
-  html[data-skin="margin-of-error"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: min(100%, 66rem);
-    margin-inline: auto;
-  }
+  html[data-skin="margin-of-error"] .site-header,
+html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  width: min(100%, 66rem);
+  margin-inline: auto;
+}
   html[data-skin="margin-of-error"] .site-header {
     position: relative;
     top: auto;
@@ -4094,7 +3964,10 @@ html[data-skin="margin-of-error"] :is(.record-facts > div, .record-facts dd, .re
   }
   html[data-skin="margin-of-error"] .site-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   html[data-skin="margin-of-error"] .skin-menu { grid-column: 1 / -1; }
-  html[data-skin="margin-of-error"] :is(.home-shell, .archive-shell, .record-page) { grid-template-columns: minmax(0, 1fr); }
+  html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
   html[data-skin="margin-of-error"] .home-shell {
     grid-template-areas:
       "masthead"
@@ -4108,43 +3981,65 @@ html[data-skin="margin-of-error"] :is(.record-facts > div, .record-facts dd, .re
       "groups"
       "empty";
   }
-  html[data-skin="margin-of-error"] .record-page {
-    grid-template-areas:
-      "head"
-      "grid"
-      "end";
-  }
-  html[data-skin="margin-of-error"] :is(.archive-tools, .archive-shell .archive-tools, .record-page .record-grid > .record-index) {
-    position: static;
-    top: auto;
-  }
-  html[data-skin="margin-of-error"] :is(.record-page .record-grid > .record-index) {
-    padding: 1rem;
-    border: 1px solid var(--mo-rule);
-    border-top: 2px solid var(--mo-blue);
-    border-left: 0;
-  }
-  html[data-skin="margin-of-error"] :is(.record-page .record-grid, .page-shell) { grid-template-columns: minmax(0, 1fr); }
+
+  html[data-skin="margin-of-error"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="margin-of-error"] :is(.archive-shell .archive-tools, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  position: static;
+  top: auto;
+}
+  html[data-skin="margin-of-error"] .record-page .record-grid > .record-index {
+  border: 1px solid var(--mo-rule);
+  border-top: 2px solid var(--mo-blue);
+  border-left: 0;
+}
+  html[data-skin="margin-of-error"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)) {
+  grid-template-columns: minmax(0, 1fr);
+}
   html[data-skin="margin-of-error"] .page-shell::after { display: none; }
 
 }
 @media (max-width: 48rem) {
   html[data-skin="margin-of-error"] body { padding: 0; }
-  html[data-skin="margin-of-error"] :is(.site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell, .error-shell) {
-    width: 100%;
-    margin-inline: 0;
-  }
+  html[data-skin="margin-of-error"] .site-header,
+html[data-skin="margin-of-error"] .home-shell,
+html[data-skin="margin-of-error"] .archive-shell,
+html[data-skin="margin-of-error"] .page-shell,
+html[data-skin="margin-of-error"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+}
   html[data-skin="margin-of-error"] .site-header {
     margin-top: 0;
     border-right: 0;
   }
   html[data-skin="margin-of-error"] .site-nav { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="margin-of-error"] .skin-menu { grid-column: auto; }
-  html[data-skin="margin-of-error"] .record-facts { grid-template-columns: minmax(0, 1fr); }
 
 }
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a, .all-tags__grid a, .record-end nav a, .record-end nav a:hover, .record-end nav a:focus-visible) { box-shadow: none; }
-html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route], .theme-toggle, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a, .all-tags__grid a, .record-end nav a):focus-visible { box-shadow: 0 0 0 5px var(--mo-focus-outer); }
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.all-tags__grid a,
+.record-end nav a,
+.record-end nav a:hover,
+.record-end nav a:focus-visible) { box-shadow: none; }
+html[data-skin="margin-of-error"][data-theme="dark"] :is(.site-nav a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.all-tags__grid a,
+.record-end nav a):focus-visible { box-shadow: 0 0 0 5px var(--mo-focus-outer); }
 
 @media (forced-colors: active) {
   html[data-skin="margin-of-error"] .highlight span { background: Canvas !important; }

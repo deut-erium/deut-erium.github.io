@@ -98,8 +98,7 @@ html[data-skin="the-fat-tail-register"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="the-fat-tail-register"] .site-header,
-html[data-skin="the-fat-tail-register"] .site-footer {
+html[data-skin="the-fat-tail-register"] .site-header {
   position: relative;
   isolation: isolate;
   color: var(--tail-ink);
@@ -118,13 +117,7 @@ html[data-skin="the-fat-tail-register"] .site-header {
   margin-top: 1.5rem;
 }
 
-html[data-skin="the-fat-tail-register"] .site-footer {
-  margin-bottom: 1.5rem;
-  border-top-color: var(--tail-safe-dark);
-}
-
-html[data-skin="the-fat-tail-register"] .site-header::before,
-html[data-skin="the-fat-tail-register"] .site-footer::before {
+html[data-skin="the-fat-tail-register"] .site-header::before {
   position: absolute;
   z-index: -1;
   top: -.58rem;
@@ -135,12 +128,7 @@ html[data-skin="the-fat-tail-register"] .site-footer::before {
   background: repeating-linear-gradient(90deg, var(--tail-warning) 0 .75rem, var(--tail-ruin) .75rem 1.05rem, var(--tail-ink) 1.05rem 1.22rem);
 }
 
-html[data-skin="the-fat-tail-register"] .site-footer::before {
-  background: repeating-linear-gradient(90deg, var(--tail-safe) 0 .75rem, var(--tail-warning) .75rem 1.05rem, var(--tail-ink) 1.05rem 1.22rem);
-}
-
-html[data-skin="the-fat-tail-register"] .site-header__inner,
-html[data-skin="the-fat-tail-register"] .site-footer__inner {
+html[data-skin="the-fat-tail-register"] .site-header__inner {
   gap: 1rem 2rem;
   padding: .92rem 1.1rem;
 }
@@ -189,8 +177,7 @@ html[data-skin="the-fat-tail-register"] .record-actions a,
 html[data-skin="the-fat-tail-register"] .tag-line a,
 html[data-skin="the-fat-tail-register"] .quick-filters a,
 html[data-skin="the-fat-tail-register"] .pagination a,
-html[data-skin="the-fat-tail-register"] .pagination span,
-html[data-skin="the-fat-tail-register"] .site-footer__links a {
+html[data-skin="the-fat-tail-register"] .pagination span {
   min-height: 2.5rem;
   padding: .46rem .62rem;
   color: var(--tail-paper);
@@ -258,9 +245,7 @@ html[data-skin="the-fat-tail-register"] .tag-line a:focus-visible,
 html[data-skin="the-fat-tail-register"] .quick-filters a:hover,
 html[data-skin="the-fat-tail-register"] .quick-filters a:focus-visible,
 html[data-skin="the-fat-tail-register"] .pagination a:hover,
-html[data-skin="the-fat-tail-register"] .pagination a:focus-visible,
-html[data-skin="the-fat-tail-register"] .site-footer__links a:hover,
-html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
+html[data-skin="the-fat-tail-register"] .pagination a:focus-visible {
   color: var(--tail-paper);
   background: var(--tail-ruin);
   border-color: var(--tail-ink);
@@ -312,12 +297,23 @@ html[data-skin="the-fat-tail-register"] .skin-menu__panel .skin-randomizer {
 
 html[data-skin="the-fat-tail-register"] .home-shell,
 html[data-skin="the-fat-tail-register"] .archive-shell,
-html[data-skin="the-fat-tail-register"] .record-page,
 html[data-skin="the-fat-tail-register"] .page-shell,
 html[data-skin="the-fat-tail-register"] .error-shell {
   position: relative;
   isolation: isolate;
   padding: clamp(1.05rem, 3vw, 2.7rem);
+  background-color: var(--tail-news);
+  background-image:
+    linear-gradient(90deg, transparent 0 3.3rem, rgb(200 21 69 / 38%) 3.3rem calc(3.3rem + 1px), transparent calc(3.3rem + 1px)),
+    linear-gradient(90deg, transparent calc(100% - 1.25rem), rgb(49 90 99 / 33%) calc(100% - 1.25rem) calc(100% - 1.1rem), transparent calc(100% - 1.1rem)),
+    repeating-linear-gradient(0deg, transparent 0 2.3rem, rgb(49 90 99 / 11%) 2.3rem calc(2.3rem + 1px));
+  border: 3px solid var(--tail-ink);
+  border-top: .72rem solid var(--tail-ink);
+  border-radius: 0;
+  box-shadow: .6rem .68rem 0 rgb(10 11 12 / 26%);
+}
+html[data-skin="the-fat-tail-register"] .record-page {
+  isolation: isolate;
   background-color: var(--tail-news);
   background-image:
     linear-gradient(90deg, transparent 0 3.3rem, rgb(200 21 69 / 38%) 3.3rem calc(3.3rem + 1px), transparent calc(3.3rem + 1px)),
@@ -343,19 +339,30 @@ html[data-skin="the-fat-tail-register"] .page-shell::before {
   background: repeating-linear-gradient(90deg, var(--tail-safe) 0 .8rem, var(--tail-warning) .8rem 1.08rem, var(--tail-ruin) 1.08rem 1.28rem);
 }
 
-html[data-skin="the-fat-tail-register"] .masthead,
-html[data-skin="the-fat-tail-register"] .record-grid {
+html[data-skin="the-fat-tail-register"] .masthead {
   gap: clamp(1.15rem, 3vw, 2.7rem);
 }
 
 html[data-skin="the-fat-tail-register"] .masthead__copy,
 html[data-skin="the-fat-tail-register"] .index-heading,
-html[data-skin="the-fat-tail-register"] .page-heading,
-html[data-skin="the-fat-tail-register"] .record-head {
+html[data-skin="the-fat-tail-register"] .page-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(1.2rem, 3vw, 2.65rem);
+  color: var(--tail-paper);
+  background-color: var(--tail-ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 1rem, rgb(243 240 226 / 16%) 1rem calc(1rem + 1px), transparent calc(1rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.25rem, rgb(243 240 226 / 8%) 2.25rem calc(2.25rem + 1px));
+  border: 3px solid var(--tail-ink);
+  border-top: .5rem solid var(--tail-ruin);
+  border-right: .5rem solid var(--tail-safe);
+  border-radius: 0;
+  box-shadow: .4rem .46rem 0 rgb(10 11 12 / 33%);
+}
+html[data-skin="the-fat-tail-register"] .record-head {
+  isolation: isolate;
   color: var(--tail-paper);
   background-color: var(--tail-ink);
   background-image:
@@ -441,9 +448,11 @@ html[data-skin="the-fat-tail-register"] .related-records h2 {
 
 html[data-skin="the-fat-tail-register"] .masthead h1,
 html[data-skin="the-fat-tail-register"] .index-heading h1,
-html[data-skin="the-fat-tail-register"] .page-heading h1,
-html[data-skin="the-fat-tail-register"] .record-head h1 {
+html[data-skin="the-fat-tail-register"] .page-heading h1 {
   max-width: 17ch;
+  text-shadow: 3px 3px 0 var(--tail-ruin), 6px 6px 0 rgb(0 202 187 / 52%);
+}
+html[data-skin="the-fat-tail-register"] .record-head h1 {
   text-shadow: 3px 3px 0 var(--tail-ruin), 6px 6px 0 rgb(0 202 187 / 52%);
 }
 
@@ -1108,19 +1117,6 @@ html[data-skin="the-fat-tail-register"] .error-shell > p {
   color: var(--tail-paper);
 }
 
-html[data-skin="the-fat-tail-register"] .site-footer__note,
-html[data-skin="the-fat-tail-register"] .site-footer a {
-  color: var(--tail-ink);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__note a {
-  color: var(--tail-link);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a {
-  color: var(--tail-paper);
-}
-
 html[data-skin="the-fat-tail-register"][data-theme="dark"] {
   color-scheme: dark;
   --tail-bench: #060d0f;
@@ -1172,16 +1168,13 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] body {
     repeating-linear-gradient(0deg, transparent 0 2.35rem, rgb(237 243 232 / 7%) 2.35rem calc(2.35rem + 1px));
 }
 
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-header,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer {
+html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-header {
   color: var(--tail-ink);
   background-color: #0b1719;
   box-shadow: .52rem .58rem 0 rgb(0 0 0 / 57%);
 }
 
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-brand,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer__note,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer a {
+html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-brand {
   color: var(--tail-ink);
 }
 
@@ -1198,8 +1191,7 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .record-actions a,
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .tag-line a,
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .quick-filters a,
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination a,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination span,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer__links a {
+html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination span {
   color: var(--tail-ink);
   background: #061012;
   border-color: var(--tail-ink);
@@ -1236,9 +1228,7 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .tag-line a:focus-vis
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .quick-filters a:hover,
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .quick-filters a:focus-visible,
 html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination a:hover,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination a:focus-visible,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer__links a:hover,
-html[data-skin="the-fat-tail-register"][data-theme="dark"] .site-footer__links a:focus-visible {
+html[data-skin="the-fat-tail-register"][data-theme="dark"] .pagination a:focus-visible {
   color: #fff5f7;
   background: #c93058;
   border-color: var(--tail-ink);
@@ -1414,8 +1404,7 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .section-heading {
 }
 
 @media (max-width: 44rem) {
-  html[data-skin="the-fat-tail-register"] .site-header,
-  html[data-skin="the-fat-tail-register"] .site-footer {
+  html[data-skin="the-fat-tail-register"] .site-header {
     margin-inline: 0;
     box-shadow: none;
   }
@@ -1424,12 +1413,7 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .section-heading {
     margin-top: 0;
   }
 
-  html[data-skin="the-fat-tail-register"] .site-footer {
-    margin-bottom: 0;
-  }
-
-  html[data-skin="the-fat-tail-register"] .site-header__inner,
-  html[data-skin="the-fat-tail-register"] .site-footer__inner {
+  html[data-skin="the-fat-tail-register"] .site-header__inner {
     padding: .8rem;
   }
 
@@ -1523,24 +1507,23 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .section-heading {
   }
 
   html[data-skin="the-fat-tail-register"] .site-header,
-  html[data-skin="the-fat-tail-register"] .site-footer,
-  html[data-skin="the-fat-tail-register"] .home-shell,
-  html[data-skin="the-fat-tail-register"] .archive-shell,
-  html[data-skin="the-fat-tail-register"] .record-page,
-  html[data-skin="the-fat-tail-register"] .page-shell,
-  html[data-skin="the-fat-tail-register"] .error-shell,
-  html[data-skin="the-fat-tail-register"] .masthead__copy,
-  html[data-skin="the-fat-tail-register"] .index-heading,
-  html[data-skin="the-fat-tail-register"] .page-heading,
-  html[data-skin="the-fat-tail-register"] .record-head,
-  html[data-skin="the-fat-tail-register"] .home-shell > .record-index,
-  html[data-skin="the-fat-tail-register"] .archive-tools,
-  html[data-skin="the-fat-tail-register"] .archive-groups,
-  html[data-skin="the-fat-tail-register"] .page-prose,
-  html[data-skin="the-fat-tail-register"] .article__content,
-  html[data-skin="the-fat-tail-register"] .record-end,
-  html[data-skin="the-fat-tail-register"] .record-grid > .record-index,
-  html[data-skin="the-fat-tail-register"] .prose .code-frame {
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .record-page,
+html[data-skin="the-fat-tail-register"] .page-shell,
+html[data-skin="the-fat-tail-register"] .error-shell,
+html[data-skin="the-fat-tail-register"] .masthead__copy,
+html[data-skin="the-fat-tail-register"] .index-heading,
+html[data-skin="the-fat-tail-register"] .page-heading,
+html[data-skin="the-fat-tail-register"] .record-head,
+html[data-skin="the-fat-tail-register"] .home-shell > .record-index,
+html[data-skin="the-fat-tail-register"] .archive-tools,
+html[data-skin="the-fat-tail-register"] .archive-groups,
+html[data-skin="the-fat-tail-register"] .page-prose,
+html[data-skin="the-fat-tail-register"] .article__content,
+html[data-skin="the-fat-tail-register"] .record-end,
+html[data-skin="the-fat-tail-register"] .record-grid > .record-index,
+html[data-skin="the-fat-tail-register"] .prose .code-frame {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
@@ -1548,16 +1531,15 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .section-heading {
   }
 
   html[data-skin="the-fat-tail-register"] .site-nav a,
-  html[data-skin="the-fat-tail-register"] .theme-toggle,
-  html[data-skin="the-fat-tail-register"] .skin-menu summary,
-  html[data-skin="the-fat-tail-register"] .skin-randomizer,
-  html[data-skin="the-fat-tail-register"] .action,
-  html[data-skin="the-fat-tail-register"] .record-actions a,
-  html[data-skin="the-fat-tail-register"] .tag-line a,
-  html[data-skin="the-fat-tail-register"] .quick-filters a,
-  html[data-skin="the-fat-tail-register"] .pagination a,
-  html[data-skin="the-fat-tail-register"] .site-footer__links a,
-  html[data-skin="the-fat-tail-register"] .code-frame__actions button {
+html[data-skin="the-fat-tail-register"] .theme-toggle,
+html[data-skin="the-fat-tail-register"] .skin-menu summary,
+html[data-skin="the-fat-tail-register"] .skin-randomizer,
+html[data-skin="the-fat-tail-register"] .action,
+html[data-skin="the-fat-tail-register"] .record-actions a,
+html[data-skin="the-fat-tail-register"] .tag-line a,
+html[data-skin="the-fat-tail-register"] .quick-filters a,
+html[data-skin="the-fat-tail-register"] .pagination a,
+html[data-skin="the-fat-tail-register"] .code-frame__actions button {
     color: ButtonText;
     background: ButtonFace;
     border-color: ButtonText;
@@ -1571,10 +1553,8 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] .section-heading {
 
 /* Site topology */
 html[data-skin="the-fat-tail-register"] .site-header,
-html[data-skin="the-fat-tail-register"] .site-footer,
 html[data-skin="the-fat-tail-register"] .home-shell,
-html[data-skin="the-fat-tail-register"] .archive-shell,
-html[data-skin="the-fat-tail-register"] .record-page {
+html[data-skin="the-fat-tail-register"] .archive-shell {
   width: min(calc(100% - 2rem), 110rem);
 }
 
@@ -2065,53 +2045,25 @@ html[data-skin="the-fat-tail-register"] .archive-shell > .archive-empty {
   margin: 0;
 }
 
-html[data-skin="the-fat-tail-register"] .record-page {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "head"
-    "grid"
-    "end";
-  gap: clamp(1rem, 2vw, 1.8rem);
-  margin: 1.2rem auto;
-  padding: clamp(.9rem, 2vw, 1.5rem);
-}
-
 html[data-skin="the-fat-tail-register"] .record-page > .record-head {
-  grid-area: head;
-  display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(14rem, .7fr);
-  grid-template-areas:
-    "key facts"
-    "title facts"
-    "abstract facts"
-    "tags actions";
-  gap: .9rem 1.5rem;
-  margin: 0;
   border-top-color: var(--tail-ruin);
   border-right-color: var(--tail-ink);
   box-shadow: inset .85rem 0 0 var(--tail-ruin), .4rem .46rem 0 rgb(10 11 12 / 33%);
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-head__key {
-  grid-area: key;
   margin: 0;
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-head h1 {
-  grid-area: title;
-  max-width: 15ch;
   margin: 0;
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-head__abstract {
-  grid-area: abstract;
   margin: 0;
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-facts {
-  grid-area: facts;
-  grid-template-columns: minmax(0, 1fr);
   align-content: stretch;
   margin: 0;
   padding: .35rem;
@@ -2146,33 +2098,12 @@ html[data-skin="the-fat-tail-register"] .record-page .tag-line a {
   font-size: .59rem;
 }
 
-html[data-skin="the-fat-tail-register"] .record-page > .record-grid {
-  grid-area: grid;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, .34fr);
-  gap: clamp(1rem, 2vw, 1.8rem);
-  align-items: start;
-  margin: 0;
-  padding: 0;
-}
-
 html[data-skin="the-fat-tail-register"] .record-page .article__content {
-  width: auto;
-  max-width: none;
-  min-height: 38rem;
-  margin: 0;
-  padding: clamp(1rem, 3vw, 2.4rem);
   border-top-color: var(--tail-safe-dark);
   border-left-color: var(--tail-safe);
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   border-left-color: var(--tail-ruin);
 }
 
@@ -2189,14 +2120,6 @@ html[data-skin="the-fat-tail-register"] .record-page .record-index::before {
 }
 
 html[data-skin="the-fat-tail-register"] .record-page > .record-end {
-  grid-area: end;
-  display: grid;
-  grid-template-columns: minmax(14rem, .55fr) minmax(0, 1.45fr);
-  gap: 1rem;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 1rem;
   border-top-color: var(--tail-safe-dark);
 }
 
@@ -2222,86 +2145,8 @@ html[data-skin="the-fat-tail-register"] .record-page .record-end nav {
   margin: 0;
 }
 
-html[data-skin="the-fat-tail-register"] .site-footer {
-  margin: 0 auto 1.1rem;
-  border-top: .7rem solid var(--tail-safe-dark);
-  border-bottom: 3px solid var(--tail-ink);
-  box-shadow: .7rem .75rem 0 rgb(10 11 12 / 28%);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(15rem, .8fr) minmax(0, 1.55fr);
-  gap: 1rem 1.8rem;
-  align-items: stretch;
-  padding: .9rem;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__note {
-  display: grid;
-  align-content: center;
-  min-height: 6rem;
-  max-width: none;
-  margin: 0;
-  padding: .8rem 1rem;
-  color: var(--tail-paper);
-  background: var(--tail-ink);
-  border-left: .55rem solid var(--tail-safe);
-  font-family: var(--body);
-  font-size: .94rem;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__note a {
-  color: var(--tail-safe);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .42rem;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a {
-  display: grid;
-  min-height: 6rem;
-  align-content: end;
-  justify-content: start;
-  padding: .65rem;
-  box-shadow: none;
-  font-size: .62rem;
-  text-align: left;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a::before {
-  display: block;
-  margin-bottom: .45rem;
-  color: var(--tail-warning);
-  content: "PUBLIC RECORD";
-  font-family: var(--keys);
-  font-size: .48rem;
-  letter-spacing: .07em;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(2) {
-  color: var(--tail-ink);
-  background: var(--tail-safe);
-  border-bottom-color: var(--tail-safe-dark);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(2)::before {
-  color: var(--tail-safe-dark);
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
-  background: var(--tail-ruin);
-  border-bottom-color: var(--tail-warning);
-}
-
 @media (max-width: 62rem) {
-  html[data-skin="the-fat-tail-register"] .site-header__inner,
-  html[data-skin="the-fat-tail-register"] .site-footer__inner {
+  html[data-skin="the-fat-tail-register"] .site-header__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2330,33 +2175,25 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
       "empty";
   }
 
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr) minmax(13rem, .55fr);
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(13rem, .42fr);
-  }
 }
 
 @media (max-width: 46rem) {
   html[data-skin="the-fat-tail-register"] .site-header,
-  html[data-skin="the-fat-tail-register"] .site-footer,
-  html[data-skin="the-fat-tail-register"] .home-shell,
-  html[data-skin="the-fat-tail-register"] .archive-shell,
-  html[data-skin="the-fat-tail-register"] .record-page {
-    width: 100%;
-    margin-inline: 0;
-    box-shadow: none;
-  }
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell {
+  width: 100%;
+  margin-inline: 0;
+  box-shadow: none;
+}
+html[data-skin="the-fat-tail-register"] .record-page {
+  box-shadow: none;
+}
 
   html[data-skin="the-fat-tail-register"] .site-header__inner,
-  html[data-skin="the-fat-tail-register"] .site-footer__inner,
-  html[data-skin="the-fat-tail-register"] .home-shell,
-  html[data-skin="the-fat-tail-register"] .archive-shell,
-  html[data-skin="the-fat-tail-register"] .record-page {
-    padding: .75rem;
-  }
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell {
+  padding: .75rem;
+}
 
   html[data-skin="the-fat-tail-register"] .site-nav {
     grid-template-columns: minmax(0, 1fr);
@@ -2379,11 +2216,9 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-fat-tail-register"] .home-shell .masthead,
-  html[data-skin="the-fat-tail-register"] .archive-shell > .archive-tools,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-grid,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-end {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-skin="the-fat-tail-register"] .archive-shell > .archive-tools {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy {
     min-height: 0;
@@ -2393,29 +2228,10 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "key"
-      "title"
-      "abstract"
-      "facts"
-      "tags"
-      "actions";
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-    position: static;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-end nav,
-  html[data-skin="the-fat-tail-register"] .site-footer__links {
+  html[data-skin="the-fat-tail-register"] .record-page .record-end nav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-skin="the-fat-tail-register"] .site-footer__links a {
-    min-height: 3.3rem;
-  }
 }
 
 @media (max-width: 27rem) {
@@ -2430,17 +2246,15 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
 
 @media (forced-colors: active) {
   html[data-skin="the-fat-tail-register"] .site-header,
-  html[data-skin="the-fat-tail-register"] .site-footer,
-  html[data-skin="the-fat-tail-register"] .home-shell,
-  html[data-skin="the-fat-tail-register"] .archive-shell,
-  html[data-skin="the-fat-tail-register"] .record-page,
-  html[data-skin="the-fat-tail-register"] .site-brand,
-  html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy,
-  html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head,
-  html[data-skin="the-fat-tail-register"] .archive-shell .archive-year,
-  html[data-skin="the-fat-tail-register"] .record-page .record-end > p,
-  html[data-skin="the-fat-tail-register"] .site-footer__note {
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .record-page,
+html[data-skin="the-fat-tail-register"] .site-brand,
+html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy,
+html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive,
+html[data-skin="the-fat-tail-register"] .record-page > .record-head,
+html[data-skin="the-fat-tail-register"] .archive-shell .archive-year,
+html[data-skin="the-fat-tail-register"] .record-page .record-end > p {
     color: CanvasText !important;
     background: Canvas !important;
     background-image: none !important;
@@ -2449,10 +2263,9 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:nth-child(3) {
   }
 
   html[data-skin="the-fat-tail-register"] .site-nav > a[data-route],
-  html[data-skin="the-fat-tail-register"] .theme-toggle,
-  html[data-skin="the-fat-tail-register"] .skin-menu summary,
-  html[data-skin="the-fat-tail-register"] .skin-menu__panel .skin-randomizer,
-  html[data-skin="the-fat-tail-register"] .site-footer__links a {
+html[data-skin="the-fat-tail-register"] .theme-toggle,
+html[data-skin="the-fat-tail-register"] .skin-menu summary,
+html[data-skin="the-fat-tail-register"] .skin-menu__panel .skin-randomizer {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -2554,39 +2367,74 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] body {
   background-image: repeating-linear-gradient(0deg, transparent 0 2.75rem, rgb(244 240 229 / 9%) 2.75rem calc(2.75rem + 1px));
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .skip-link, .site-brand__scope, .site-nav a, .theme-toggle,
-  .skin-menu summary, .skin-menu__panel label, .skin-menu select,
-  .skin-randomizer, .action, .record-actions a, .tag-line a,
-  .quick-filters a, .pagination, .pagination a, .pagination span,
-  .eyebrow,
-  .record-row__date, .record-row__event,
-  .record-row__primitive, .record-row__title, .archive-search label,
-  .archive-search p, .all-tags summary, .all-tags__grid a,
-  .all-tags__grid small, .archive-year > header span, .record-head__key,
-  .record-facts dt, .record-facts dd, .record-toc summary,
-  .record-toc a, .related-records a, .toc-fallback, .record-end nav span,
-  .record-end nav a, .site-footer *, .prose th, .prose td, .prose code,
-  .prose pre, .code-frame__label strong, .code-frame__label small,
-  .code-frame__actions button, .code-frame__gutter, .code-frame__status,
-  .code-frame__fallback
-) {
+html[data-skin="the-fat-tail-register"] :is(.skip-link,
+.site-brand__scope,
+.site-nav a,
+.theme-toggle,
+.skin-menu summary,
+.skin-menu__panel label,
+.skin-menu select,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination,
+.pagination a,
+.pagination span,
+.eyebrow,
+.record-row__date,
+.record-row__event,
+.record-row__primitive,
+.record-row__title,
+.archive-search label,
+.archive-search p,
+.all-tags summary,
+.all-tags__grid a,
+.all-tags__grid small,
+.archive-year > header span,
+.record-head__key,
+.record-facts dt,
+.record-facts dd,
+.record-toc summary,
+.record-toc a,
+.related-records a,
+.toc-fallback,
+.record-end nav span,
+.record-end nav a,
+.prose th,
+.prose td,
+.prose code,
+.prose pre,
+.code-frame__label strong,
+.code-frame__label small,
+.code-frame__actions button,
+.code-frame__gutter,
+.code-frame__status,
+.code-frame__fallback) {
   font-size: var(--tail-text-min) !important;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .site-nav > a[data-route]::before, .theme-toggle::before,
-  .skin-menu summary::before, .skin-menu summary::after,
-  .skin-menu[open] summary::after, .skin-randomizer::before,
-  .masthead__copy::before, .masthead__copy::after,
-  .index-heading::before, .index-heading::after,
-  .page-heading::before, .page-heading::after,
-  .record-head::before, .record-head::after,
-  .home-shell::before, .archive-shell::before, .record-page::before,
-  .page-shell::before, .site-header::before, .site-footer::before,
-  .record-grid > .record-index::before,
-  .site-footer__links a::before
-) {
+html[data-skin="the-fat-tail-register"] :is(.site-nav > a[data-route]::before,
+.theme-toggle::before,
+.skin-menu summary::before,
+.skin-menu summary::after,
+.skin-menu[open] summary::after,
+.skin-randomizer::before,
+.masthead__copy::before,
+.masthead__copy::after,
+.index-heading::before,
+.index-heading::after,
+.page-heading::before,
+.page-heading::after,
+.record-head::before,
+.record-head::after,
+.home-shell::before,
+.archive-shell::before,
+.record-page::before,
+.page-shell::before,
+.site-header::before,
+.record-grid > .record-index::before) {
   display: none;
   content: none;
 }
@@ -2626,10 +2474,11 @@ html[data-skin="the-fat-tail-register"] .skip-link {
   text-transform: uppercase;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell
-) {
+html[data-skin="the-fat-tail-register"] .site-header,
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell,
+html[data-skin="the-fat-tail-register"] .error-shell {
   width: min(calc(100% - 2rem), var(--tail-page));
   min-width: 0;
   margin-inline: auto;
@@ -2639,14 +2488,28 @@ html[data-skin="the-fat-tail-register"] :is(
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="the-fat-tail-register"] .record-page {
+  color: var(--tail-fg);
+  background-color: var(--tail-surface);
+  border: 2px solid var(--tail-fg);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="the-fat-tail-register"] :is(
-  .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-  .page-shell, .error-shell, .site-header__inner, .site-footer__inner,
-  .site-nav, .skin-menu, .skin-menu__panel, .masthead, .masthead__copy,
-  .record-head, .article__content, .page-prose, .record-grid,
-  .record-grid > .record-index, .record-row__link, .record-end
-) {
+html[data-skin="the-fat-tail-register"] :is(.site-header, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.home-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.archive-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.page-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.site-header__inner, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.site-nav, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.skin-menu, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.skin-menu__panel, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.masthead, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.record-row__link, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
   overflow: visible;
 }
 
@@ -2881,9 +2744,9 @@ html[data-skin="the-fat-tail-register"] .skin-randomizer {
 }
 
 /* The paper field and its publication hierarchy. */
-html[data-skin="the-fat-tail-register"] :is(
-  .home-shell, .archive-shell, .record-page, .page-shell
-) {
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 2rem);
@@ -2891,6 +2754,12 @@ html[data-skin="the-fat-tail-register"] :is(
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   padding: clamp(1rem, 2.5vw, 2.25rem);
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(8.333% - 1px), rgb(17 17 15 / 9%) calc(8.333% - 1px) 8.333%),
+    repeating-linear-gradient(0deg, transparent 0 2.75rem, rgb(17 17 15 / 10%) 2.75rem calc(2.75rem + 1px));
+  border-top-width: .55rem;
+}
+html[data-skin="the-fat-tail-register"] .record-page {
   background-image:
     repeating-linear-gradient(90deg, transparent 0 calc(8.333% - 1px), rgb(17 17 15 / 9%) calc(8.333% - 1px) 8.333%),
     repeating-linear-gradient(0deg, transparent 0 2.75rem, rgb(17 17 15 / 10%) 2.75rem calc(2.75rem + 1px));
@@ -2905,33 +2774,31 @@ html[data-skin="the-fat-tail-register"][data-theme="dark"] :is(
     repeating-linear-gradient(0deg, transparent 0 2.75rem, rgb(244 240 229 / 8%) 2.75rem calc(2.75rem + 1px));
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .home-shell, .archive-shell, .record-page, .page-shell
-) {
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell {
   grid-template-areas: none;
   grid-template-rows: none;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .site-brand, .archive-shell > .index-heading--archive,
-  .record-page .article__content, .error-shell
-) {
+html[data-skin="the-fat-tail-register"] :is(.site-brand, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive,
+html[data-skin="the-fat-tail-register"] :is(.error-shell, :not(*):nth-child(n):nth-child(n)) {
   min-height: 0;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .home-shell > .masthead, .home-shell > .record-index,
-  .archive-shell > .index-heading--archive, .archive-shell > .archive-tools,
-  .archive-shell > .archive-groups, .archive-shell > .archive-empty,
-  .record-page > .record-head, .record-page > .record-grid,
-  .record-page > .record-end
-) {
+html[data-skin="the-fat-tail-register"] .home-shell > .masthead,
+html[data-skin="the-fat-tail-register"] .home-shell > .record-index,
+html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive,
+html[data-skin="the-fat-tail-register"] .archive-shell > .archive-tools,
+html[data-skin="the-fat-tail-register"] .archive-shell > .archive-groups,
+html[data-skin="the-fat-tail-register"] .archive-shell > .archive-empty {
   grid-area: auto;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .masthead__copy, .index-heading, .page-heading, .record-head
-) {
+html[data-skin="the-fat-tail-register"] .masthead__copy,
+html[data-skin="the-fat-tail-register"] .index-heading,
+html[data-skin="the-fat-tail-register"] .page-heading {
   min-width: 0;
   padding: clamp(1.25rem, 3vw, 2.5rem);
   color: var(--tail-heading-fg);
@@ -2941,12 +2808,32 @@ html[data-skin="the-fat-tail-register"] :is(
   border-radius: 0;
   box-shadow: none;
 }
+html[data-skin="the-fat-tail-register"] .record-head {
+  color: var(--tail-heading-fg);
+  background: var(--tail-heading-bg);
+  border: 3px solid var(--tail-heading-bg);
+  border-top: .5rem solid var(--tail-ruin);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-html[data-skin="the-fat-tail-register"] :is(
-  .masthead h1, .index-heading h1, .page-heading h1, .record-head h1,
-  .error-shell h1
-) {
+html[data-skin="the-fat-tail-register"] .masthead h1,
+html[data-skin="the-fat-tail-register"] .index-heading h1,
+html[data-skin="the-fat-tail-register"] .page-heading h1,
+html[data-skin="the-fat-tail-register"] .error-shell h1 {
   max-width: 18ch;
+  margin: 0;
+  color: var(--tail-heading-fg);
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  line-height: .92;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+html[data-skin="the-fat-tail-register"] .record-head h1 {
   margin: 0;
   color: var(--tail-heading-fg);
   font-family: var(--display);
@@ -2970,11 +2857,18 @@ html[data-skin="the-fat-tail-register"] .record-head__key {
   text-transform: uppercase;
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .masthead__lede, .index-heading > p:last-child,
-  .page-heading > p:last-child, .record-head__abstract
-) {
+html[data-skin="the-fat-tail-register"] :is(.masthead__lede, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] .index-heading > p:last-child,
+html[data-skin="the-fat-tail-register"] .page-heading > p:last-child {
   max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--tail-heading-fg);
+  font-family: var(--body);
+  font-size: max(1.125rem, var(--tail-text-min));
+  font-weight: 400;
+  line-height: 1.55;
+}
+html[data-skin="the-fat-tail-register"] :is(.record-head__abstract, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   margin: 1rem 0 0;
   color: var(--tail-heading-fg);
   font-family: var(--body);
@@ -3040,10 +2934,10 @@ html[data-skin="the-fat-tail-register"] .masthead__copy {
   border-top-color: var(--tail-teal);
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .home-shell > .record-index, .archive-tools, .archive-groups,
-  .page-prose, .article__content, .record-end
-) {
+html[data-skin="the-fat-tail-register"] .home-shell > .record-index,
+html[data-skin="the-fat-tail-register"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
   min-width: 0;
   margin: 0;
   padding: clamp(1rem, 2vw, 1.75rem);
@@ -3053,6 +2947,20 @@ html[data-skin="the-fat-tail-register"] :is(
   border-top: .35rem solid var(--tail-teal);
   border-radius: 0;
   box-shadow: none;
+}
+html[data-skin="the-fat-tail-register"] :is(.article__content, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.record-end, :not(*):nth-child(n):nth-child(n)) {
+  color: var(--tail-fg);
+  background: var(--tail-surface);
+  border: 2px solid var(--tail-fg);
+  border-top: .35rem solid var(--tail-teal);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-fat-tail-register"] :is(.record-end:not(:where(.record-page, .record-page *)), :not(*):nth-child(n):nth-child(n)) {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem);
 }
 
 html[data-skin="the-fat-tail-register"] .home-shell > .record-index {
@@ -3412,32 +3320,17 @@ html[data-skin="the-fat-tail-register"] .archive-empty {
 }
 
 /* Article: cover, reading frame, and a real margin index. */
-html[data-skin="the-fat-tail-register"] .record-page {
-  grid-template-areas: none;
-}
 
 html[data-skin="the-fat-tail-register"] .record-page > .record-head {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas: none;
-  grid-template-rows: none;
-  gap: .9rem 1.25rem;
-  margin: 0;
   border-top-color: var(--tail-ruin);
 }
 
-html[data-skin="the-fat-tail-register"] :is(
-  .record-page .record-head__key, .record-page .record-head h1,
-  .record-page .record-head__abstract, .record-page .record-facts,
-  .record-page .tag-line, .record-page .record-actions,
-  .record-page .article__content, .record-page .record-grid > .record-index
-) {
+html[data-skin="the-fat-tail-register"] :is(.record-page .tag-line, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.record-page .record-actions, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
   grid-area: auto;
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-head__key {
-  grid-column: 1 / span 9;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem 1.25rem;
@@ -3447,21 +3340,12 @@ html[data-skin="the-fat-tail-register"] .record-page .record-head__key {
   border-bottom: 1px solid color-mix(in srgb, var(--tail-heading-fg) 45%, transparent);
 }
 
-html[data-skin="the-fat-tail-register"] .record-page .record-head h1 {
-  grid-column: 1 / span 9;
-  max-width: 16ch;
-}
-
 html[data-skin="the-fat-tail-register"] .record-page .record-head__abstract {
-  grid-column: 1 / span 9;
   margin: 0;
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-facts {
   display: grid;
-  grid-column: 10 / -1;
-  grid-row: 1 / span 4;
-  grid-template-columns: minmax(0, 1fr);
   gap: 0;
   align-content: start;
   margin: 0;
@@ -3522,32 +3406,11 @@ html[data-skin="the-fat-tail-register"] .record-page :is(.tag-line a, .record-ac
   min-height: 2.75rem;
 }
 
-html[data-skin="the-fat-tail-register"] .record-page > .record-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
-  align-items: start;
-  margin: 0;
-  padding: 0;
-}
-
 html[data-skin="the-fat-tail-register"] .record-page .article__content {
-  grid-column: 1 / span 8;
-  width: auto;
-  max-width: none;
-  margin: 0;
   border-top-color: var(--tail-teal);
 }
 
 html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-  position: sticky;
-  top: 1rem;
-  grid-column: 10 / -1;
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 0;
   color: var(--tail-fg);
   background: var(--tail-surface);
   border: 2px solid var(--tail-fg);
@@ -3613,12 +3476,6 @@ html[data-skin="the-fat-tail-register"] .related-records h2 {
 }
 
 html[data-skin="the-fat-tail-register"] .record-page > .record-end {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(14rem, .65fr) minmax(0, 1.35fr);
-  gap: 1rem;
-  width: auto;
-  max-width: none;
   border-top-color: var(--tail-ochre);
 }
 
@@ -3679,12 +3536,14 @@ html[data-skin="the-fat-tail-register"] .record-end nav span {
 
 /* Reading stays quiet after the cover. */
 html[data-skin="the-fat-tail-register"] .prose {
-  min-width: 0;
   color: var(--tail-fg);
   font-family: var(--body);
   font-size: max(1.125rem, var(--tail-text-min));
   line-height: 1.72;
   overflow-wrap: break-word;
+}
+html[data-skin="the-fat-tail-register"] .prose:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
 }
 
 html[data-skin="the-fat-tail-register"] .prose h1,
@@ -3764,10 +3623,12 @@ html[data-skin="the-fat-tail-register"] .prose code {
 
 html[data-skin="the-fat-tail-register"] .prose table {
   display: block;
-  max-width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
   font-size: var(--tail-text-min);
+}
+html[data-skin="the-fat-tail-register"] .prose:not(:where(.record-page, .record-page *)) table {
+  max-width: 100%;
 }
 
 html[data-skin="the-fat-tail-register"] .prose th,
@@ -4056,72 +3917,6 @@ html[data-skin="the-fat-tail-register"] .redirect-shell a:not(.action) {
 }
 
 /* Footer is a colophon and ruled links, never a row of route cards. */
-html[data-skin="the-fat-tail-register"] .site-footer {
-  margin-bottom: 1.25rem;
-  border-top: .55rem solid var(--tail-teal);
-  background-image: repeating-linear-gradient(90deg, transparent 0 7.75rem, rgb(17 17 15 / 10%) 7.75rem calc(7.75rem + 1px));
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__inner {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__note {
-  grid-column: 1 / span 5;
-  margin: 0;
-  color: var(--tail-fg);
-  background: transparent;
-  border: 0;
-  border-left: .4rem solid var(--tail-ruin);
-  font-family: var(--body);
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__note a {
-  color: var(--tail-link);
-  font-weight: 700;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links {
-  display: grid;
-  grid-column: 6 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a {
-  display: flex;
-  min-width: 0;
-  min-height: 2.75rem;
-  align-items: center;
-  padding: .55rem .75rem;
-  color: var(--tail-link);
-  background: transparent;
-  border: 0;
-  border-left: 2px solid var(--tail-teal);
-  border-radius: 0;
-  box-shadow: none;
-  font-family: var(--keys);
-  font-weight: 700;
-  line-height: 1.3;
-  text-align: left;
-  text-decoration: underline;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
-}
-
-html[data-skin="the-fat-tail-register"] .site-footer__links a:hover,
-html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
-  color: var(--tail-current-fg);
-  background: var(--tail-current-bg);
-  border-left-color: var(--tail-current-fg);
-  text-decoration: none;
-}
 
 @media (max-width: 76rem) {
   html[data-skin="the-fat-tail-register"] .site-header__inner {
@@ -4138,11 +3933,11 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     justify-content: flex-start;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .home-shell, .archive-shell, .record-page, .page-shell
-  ) {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
+  html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
 
   html[data-skin="the-fat-tail-register"] .masthead {
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -4161,21 +3956,6 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     grid-column: 4 / -1;
   }
 
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-grid {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-head__key,
-  html[data-skin="the-fat-tail-register"] .record-page .record-head h1,
-  html[data-skin="the-fat-tail-register"] .record-page .record-head__abstract {
-    grid-column: 1 / span 5;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-facts {
-    grid-column: 6 / -1;
-  }
-
   html[data-skin="the-fat-tail-register"] .record-page .tag-line {
     grid-column: 1 / span 4;
   }
@@ -4183,14 +3963,6 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
   html[data-skin="the-fat-tail-register"] .record-page .record-actions {
     grid-column: 5 / span 1;
     justify-content: flex-start;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .article__content {
-    grid-column: 1 / span 5;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-    grid-column: 6 / -1;
   }
 
   html[data-skin="the-fat-tail-register"] .page-heading {
@@ -4201,36 +3973,34 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     grid-column: 4 / -1;
   }
 
-  html[data-skin="the-fat-tail-register"] .site-footer__note {
-    grid-column: 1 / span 4;
-  }
-
-  html[data-skin="the-fat-tail-register"] .site-footer__links {
-    grid-column: 5 / -1;
-  }
 }
 
 @media (max-width: 46rem) {
-  html[data-skin="the-fat-tail-register"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell
-  ) {
-    width: 100%;
-    margin-inline: 0;
-    box-shadow: none;
-  }
+  html[data-skin="the-fat-tail-register"] .site-header,
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell,
+html[data-skin="the-fat-tail-register"] .error-shell {
+  width: 100%;
+  margin-inline: 0;
+  box-shadow: none;
+}
+html[data-skin="the-fat-tail-register"] .record-page {
+  box-shadow: none;
+}
 
-  html[data-skin="the-fat-tail-register"] :is(.site-header, .site-footer) {
+  html[data-skin="the-fat-tail-register"] :is(.site-header) {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .site-header__inner, .site-footer__inner, .home-shell, .archive-shell,
-    .record-page, .page-shell, .error-shell
-  ) {
-    padding: .9rem;
-  }
+  html[data-skin="the-fat-tail-register"] .site-header__inner,
+html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell,
+html[data-skin="the-fat-tail-register"] .error-shell {
+  padding: .9rem;
+}
 
   html[data-skin="the-fat-tail-register"] .site-nav {
     display: grid;
@@ -4255,13 +4025,16 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     width: 100%;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .home-shell, .archive-shell, .record-page, .page-shell
-  ) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-    background-image: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(17 17 15 / 9%) 2.5rem calc(2.5rem + 1px));
-  }
+  html[data-skin="the-fat-tail-register"] .home-shell,
+html[data-skin="the-fat-tail-register"] .archive-shell,
+html[data-skin="the-fat-tail-register"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  background-image: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(17 17 15 / 9%) 2.5rem calc(2.5rem + 1px));
+}
+html[data-skin="the-fat-tail-register"] .record-page {
+  background-image: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgb(17 17 15 / 9%) 2.5rem calc(2.5rem + 1px));
+}
 
   html[data-skin="the-fat-tail-register"][data-theme="dark"] :is(
     .home-shell, .archive-shell, .record-page, .page-shell
@@ -4281,14 +4054,15 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     height: 45%;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .masthead__copy, .home-shell > .record-index,
-    .archive-shell > .index-heading--archive, .archive-tools,
-    .archive-groups, .record-page > .record-head, .record-page > .record-grid,
-    .record-page > .record-end, .page-heading, .page-prose
-  ) {
-    grid-column: 1;
-  }
+  html[data-skin="the-fat-tail-register"] :is(.masthead__copy, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] .home-shell > .record-index,
+html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive,
+html[data-skin="the-fat-tail-register"] :is(.archive-tools, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.archive-groups, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.page-heading, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.page-prose, :not(*):nth-child(n):nth-child(n)) {
+  grid-column: 1;
+}
 
   html[data-skin="the-fat-tail-register"] .section-heading,
   html[data-skin="the-fat-tail-register"] .archive-year > header {
@@ -4342,55 +4116,18 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     gap: 1.5rem;
   }
 
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-grid,
-  html[data-skin="the-fat-tail-register"] .record-page > .record-end {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  html[data-skin="the-fat-tail-register"] :is(
-    .record-page .record-head__key, .record-page .record-head h1,
-    .record-page .record-head__abstract, .record-page .record-facts,
-    .record-page .tag-line, .record-page .record-actions,
-    .record-page .article__content, .record-page .record-grid > .record-index
-  ) {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-facts {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  html[data-skin="the-fat-tail-register"] :is(.record-page .tag-line, :not(*):nth-child(n):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] :is(.record-page .record-actions, :not(*):nth-child(n):nth-child(n):nth-child(n)) {
+  grid-column: 1;
+  grid-row: auto;
+}
 
   html[data-skin="the-fat-tail-register"] .record-page .record-actions {
     justify-content: flex-start;
   }
 
-  html[data-skin="the-fat-tail-register"] .record-page .article__content {
-    width: 100%;
-    max-width: none;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-    position: static;
-    width: 100%;
-  }
-
-  html[data-skin="the-fat-tail-register"] .record-end nav,
-  html[data-skin="the-fat-tail-register"] .site-footer__links {
+  html[data-skin="the-fat-tail-register"] .record-end nav {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html[data-skin="the-fat-tail-register"] .site-footer__note,
-  html[data-skin="the-fat-tail-register"] .site-footer__links {
-    grid-column: 1 / -1;
-  }
-
-  html[data-skin="the-fat-tail-register"] .site-footer__links a {
-    border-left: 0;
-    border-top: 2px solid var(--tail-teal);
   }
 
   html[data-skin="the-fat-tail-register"] .prose {
@@ -4425,17 +4162,36 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     box-shadow: 0 0 0 2px Canvas !important;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .site-header, .site-footer, .home-shell, .archive-shell, .record-page,
-    .page-shell, .error-shell, .masthead__copy, .index-heading, .page-heading,
-    .record-head,
-    .home-shell > .record-index, .archive-tools, .archive-groups,
-    .archive-year, .page-prose, .article__content, .record-end,
-    .record-grid > .record-index, .record-toc, .related-records,
-    .prose .info, .prose blockquote, .prose .katex-display,
-    .prose th, .prose td, .skin-menu__panel, .skin-menu select,
-    .archive-search input, .code-frame__status, .code-frame__fallback
-  ) {
+  html[data-skin="the-fat-tail-register"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell,
+.error-shell,
+.masthead__copy,
+.index-heading,
+.page-heading,
+.record-head,
+.home-shell > .record-index,
+.archive-tools,
+.archive-groups,
+.archive-year,
+.page-prose,
+.article__content,
+.record-end,
+.record-grid > .record-index,
+.record-toc,
+.related-records,
+.prose .info,
+.prose blockquote,
+.prose .katex-display,
+.prose th,
+.prose td,
+.skin-menu__panel,
+.skin-menu select,
+.archive-search input,
+.code-frame__status,
+.code-frame__fallback) {
     color: CanvasText !important;
     background: Canvas !important;
     background-image: none !important;
@@ -4443,13 +4199,19 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
     box-shadow: none !important;
   }
 
-  html[data-skin="the-fat-tail-register"] :is(
-    .site-nav > a[data-route], .theme-toggle, .skin-menu summary,
-    .skin-randomizer, .action, .record-actions a, .tag-line a,
-    .quick-filters a, .pagination a, .pagination span[aria-disabled="true"],
-    .all-tags__grid a, .record-end nav a,
-    .site-footer__links a, .code-frame__actions button
-  ) {
+  html[data-skin="the-fat-tail-register"] :is(.site-nav > a[data-route],
+.theme-toggle,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.pagination span[aria-disabled="true"],
+.all-tags__grid a,
+.record-end nav a,
+.code-frame__actions button) {
     color: ButtonText !important;
     background: ButtonFace !important;
     border-color: ButtonText !important;
@@ -4482,15 +4244,31 @@ html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible {
   }
 }
 
-
 /* Cycle two corrective pass: The Fat Tail Register */
 html[data-skin="the-fat-tail-register"] { --tail-code-comment: #bdd2ca; --tail-code-keyword: #86e7de; --tail-code-operator: #ffe38a; --tail-code-name: #edf3e8; --tail-code-symbol: #ffb6c2; --tail-code-string: #d8e9a8; --tail-code-number: #ffd18a; }
  html[data-skin="the-fat-tail-register"][data-theme="dark"] { --tail-code-comment: #c6d8d0; --tail-code-keyword: #8be0dc; --tail-code-operator: #ffe27a; --tail-code-name: #f4f0e5; --tail-code-symbol: #ffb6c2; --tail-code-string: #d8e9a8; --tail-code-number: #ffd18a; }
  html[data-skin="the-fat-tail-register"] .site-brand { align-self: start; min-height: 0; padding: 0 0 .75rem; color: var(--tail-fg); background: transparent; border: 0; border-bottom: 3px solid var(--tail-ruin); box-shadow: none; }
- html[data-skin="the-fat-tail-register"] :is( .home-shell .masthead__copy, .archive-shell > .index-heading--archive, .record-page > .record-head ) { min-height: 0 !important; box-shadow: none; border-inline: 0; }
+ html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy,
+html[data-skin="the-fat-tail-register"] .archive-shell > .index-heading--archive {
+  min-height: 0 !important;
+  box-shadow: none;
+  border-inline: 0;
+}
+html[data-skin="the-fat-tail-register"] .record-page > .record-head {
+  box-shadow: none;
+  border-inline: 0;
+}
  html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy { justify-content: flex-start; }
- html[data-skin="the-fat-tail-register"] :is( .site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell ) { background-image: repeating-linear-gradient( 0deg, transparent 0 2.75rem, rgb(17 17 15 / 10%) 2.75rem calc(2.75rem + 1px) ); }
- html[data-skin="the-fat-tail-register"][data-theme="dark"] :is( .site-header, .site-footer, .home-shell, .archive-shell, .record-page, .page-shell ) { background-image: repeating-linear-gradient( 0deg, transparent 0 2.75rem, rgb(244 240 229 / 8%) 2.75rem calc(2.75rem + 1px) ); }
+ html[data-skin="the-fat-tail-register"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell) { background-image: repeating-linear-gradient( 0deg, transparent 0 2.75rem, rgb(17 17 15 / 10%) 2.75rem calc(2.75rem + 1px) ); }
+ html[data-skin="the-fat-tail-register"][data-theme="dark"] :is(.site-header,
+.home-shell,
+.archive-shell,
+.record-page,
+.page-shell) { background-image: repeating-linear-gradient( 0deg, transparent 0 2.75rem, rgb(244 240 229 / 8%) 2.75rem calc(2.75rem + 1px) ); }
  html[data-skin="the-fat-tail-register"] .home-shell .masthead { grid-template-columns: repeat(12, minmax(0, 1fr)); }
  html[data-skin="the-fat-tail-register"] .masthead::after { content: none; }
  html[data-skin="the-fat-tail-register"] .record-row__link { border-left: 0; border-top: 1px solid var(--tail-rule); }
@@ -4504,9 +4282,7 @@ html[data-skin="the-fat-tail-register"] { --tail-code-comment: #bdd2ca; --tail-c
  html[data-skin="the-fat-tail-register"] :is(.prose .info, .prose blockquote) { border-inline: 0; border-top: .45rem solid var(--tail-fg); }
  html[data-skin="the-fat-tail-register"] .prose .katex-display { border-inline: 0; border-top: 2px solid var(--tail-fg); border-bottom: 2px solid var(--tail-fg); }
  html[data-skin="the-fat-tail-register"] .prose .code-frame__gutter { background: var(--tail-code-bg); border-right: 1px solid var(--tail-rule); }
- html[data-skin="the-fat-tail-register"] .site-footer__note { padding-top: .75rem; border-inline: 0; border-top: 2px solid var(--tail-ruin); }
- html[data-skin="the-fat-tail-register"] .site-footer__links a { border-left: 0; border-top: 1px solid var(--tail-rule); }
- html[data-skin="the-fat-tail-register"] .site-footer__links a:hover, html[data-skin="the-fat-tail-register"] .site-footer__links a:focus-visible { border-top-color: var(--tail-current-fg); }
+
  html[data-skin="the-fat-tail-register"] body :is( .masthead h1, .index-heading h1, .page-heading h1, .record-head h1, .error-shell h1 ) { font-size: clamp(2rem, 3.4vw, 3.6rem) !important; line-height: .95 !important; }
  html[data-skin="the-fat-tail-register"] .prose h1 { font-size: clamp(1.9rem, 3vw, 2.65rem); }
  html[data-skin="the-fat-tail-register"] .prose h2 { font-size: clamp(1.6rem, 2.4vw, 2.05rem); }
@@ -4515,8 +4291,18 @@ html[data-skin="the-fat-tail-register"] { --tail-code-comment: #bdd2ca; --tail-c
  html[data-skin="the-fat-tail-register"] .prose h5 { font-size: 1.125rem; letter-spacing: .01em; line-height: 1.2; text-transform: none; }
  html[data-skin="the-fat-tail-register"] .prose h6 { font-size: var(--tail-text-min); letter-spacing: .04em; line-height: 1.25; }
  html[data-skin="the-fat-tail-register"] .site-nav, html[data-skin="the-fat-tail-register"] .site-header__inner { align-items: start; align-content: start; grid-auto-rows: max-content; }
- html[data-skin="the-fat-tail-register"] :is( .site-nav a, .theme-toggle, .skin-menu, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .site-footer__links a, .code-frame__actions button ) { align-self: start; block-size: auto; }
- html[data-skin="the-fat-tail-register"] .record-page .article__content { grid-column: 1 / span 9; inline-size: min(100%, 72ch); max-inline-size: 72ch; justify-self: start; }
+ html[data-skin="the-fat-tail-register"] :is(.site-nav a,
+.theme-toggle,
+.skin-menu,
+.skin-menu summary,
+.skin-randomizer,
+.action,
+.record-actions a,
+.tag-line a,
+.quick-filters a,
+.pagination a,
+.code-frame__actions button) { align-self: start; block-size: auto; }
+
  html[data-skin="the-fat-tail-register"] .code-frame__fallback { width: 100%; min-height: 4.5rem; height: auto; max-block-size: 24rem; overflow: auto; }
  html[data-skin="the-fat-tail-register"] .prose .katex-display { font-size: inherit !important; }
  html[data-skin="the-fat-tail-register"] .prose .katex { font-size: max(1rem, 1em) !important; }
@@ -4657,12 +4443,15 @@ html[data-skin="the-fat-tail-register"] { --tail-code-comment: #bdd2ca; --tail-c
  @media (max-width: 87rem) { html[data-skin="the-fat-tail-register"] .archive-shell .archive-groups { grid-template-columns: minmax(0, 1fr); }
  }
  @media (max-width: 76rem) { html[data-skin="the-fat-tail-register"] .home-shell .masthead { grid-template-columns: repeat(8, minmax(0, 1fr)); }
- html[data-skin="the-fat-tail-register"] .record-page > :is(.record-head, .record-grid) { grid-template-columns: minmax(0, 1fr); }
- html[data-skin="the-fat-tail-register"] .record-page :is( .record-head__key, .record-head h1, .record-head__abstract, .record-facts, .tag-line, .record-actions, .article__content, .record-grid > .record-index ) { grid-column: 1 / -1; grid-row: auto; }
- html[data-skin="the-fat-tail-register"] .record-page .record-facts { grid-template-columns: minmax(0, 1fr); }
+
+ html[data-skin="the-fat-tail-register"] .record-page :is(.tag-line, :not(*):nth-child(n):nth-child(n)),
+html[data-skin="the-fat-tail-register"] .record-page :is(.record-actions, :not(*):nth-child(n):nth-child(n)) {
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
  html[data-skin="the-fat-tail-register"] .record-page .record-actions { justify-content: flex-start; }
- html[data-skin="the-fat-tail-register"] .record-page .article__content { inline-size: min(100%, 72ch); }
- html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index { position: static; }
+
  }
  @media (max-width: 46rem) { html[data-skin="the-fat-tail-register"] .home-shell .masthead { grid-template-columns: minmax(0, 1fr); }
  }
@@ -4672,22 +4461,37 @@ html[data-skin="the-fat-tail-register"] { --tail-code-comment: #bdd2ca; --tail-c
  html[data-skin="the-fat-tail-register"] .prose .highlight .err { outline: 1px solid CanvasText !important; }
  }
  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index { border-inline: 0; border-bottom: 2px solid var(--tail-fg); }
-html[data-skin="the-fat-tail-register"] .site-footer__note { min-height: 0; }
+
 html[data-skin="the-fat-tail-register"] .prose .katex-display { overflow: auto; }
 @media (forced-colors: active) { html[data-skin="the-fat-tail-register"] body .prose .highlight :is(.c, .c1, .cm, .cp, .cs, .err, .k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow, .n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .no, .nt, .nv, .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .m, .mb, .mf, .mh, .mi, .mo, .il, .gd, .gi, .gh, .gu) { color: CanvasText !important; background: transparent !important; } }
 @media (forced-colors: active) { html[data-skin="the-fat-tail-register"] .prose .highlight :is(.o, .ow, .m, .mb, .mf, .mh, .mi, .mo, .il) { font-weight: 700 !important; } html[data-skin="the-fat-tail-register"] .prose .highlight :is(.s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .gi) { text-decoration: underline dotted !important; } html[data-skin="the-fat-tail-register"] .prose .highlight .gd { text-decoration: line-through !important; } }
 
 /* Rendered feedback correction: The Fat Tail Register */
-html[data-skin="the-fat-tail-register"] :is(
-  .site-brand__name, .site-brand__scope, .masthead h1, .index-heading h1,
-  .page-heading h1, .record-head h1, .error-shell h1, .section-heading :is(h1, h2),
-  .archive-year h2, .related-records h2,
-  .record-row__title, .record-row__date, .record-row__event,
-  .record-row__primitive, .record-facts :is(dt, dd),
-  .all-tags__grid a, .tag-line a, .record-actions a, .site-footer__note,
-  .site-footer__links a, .site-nav > a[data-route], .skin-menu summary
-) {
+html[data-skin="the-fat-tail-register"] :is(.site-brand__name, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.site-brand__scope, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.masthead h1, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.index-heading h1, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.page-heading h1, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.error-shell h1, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.section-heading :is(h1, h2), :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.archive-year h2, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.related-records h2, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-row__title, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-row__date, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-row__event, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-row__primitive, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-facts :is(dt, dd), :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.all-tags__grid a, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.tag-line a, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] :is(.record-actions a, :not(*):nth-child(n):nth-child(n):is(css-specificity)),
+html[data-skin="the-fat-tail-register"] .site-nav > a[data-route],
+html[data-skin="the-fat-tail-register"] :is(.skin-menu summary, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   min-inline-size: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
+}
+html[data-skin="the-fat-tail-register"] :is(.record-head h1, :not(*):nth-child(n):nth-child(n):is(css-specificity)) {
   overflow-wrap: normal;
   word-break: normal;
   hyphens: auto;
@@ -4707,13 +4511,7 @@ html[data-skin="the-fat-tail-register"] .skin-menu__panel {
   max-inline-size: 100%;
   box-sizing: border-box;
 }
-html[data-skin="the-fat-tail-register"] .record-page .record-facts {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-}
-html[data-skin="the-fat-tail-register"] .site-footer__links {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
-  gap: .5rem;
-}
+
 html[data-skin="the-fat-tail-register"] .prose .katex-display {
   overflow: visible !important;
 }
@@ -4736,55 +4534,10 @@ html[data-skin="the-fat-tail-register"] .prose .katex-display {
   html[data-skin="the-fat-tail-register"] .home-shell .masthead__copy {
     grid-column: 1 / -1;
   }
-  html[data-skin="the-fat-tail-register"] .record-page > .record-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  html[data-skin="the-fat-tail-register"] body .record-page > .record-grid {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-  html[data-skin="the-fat-tail-register"] .record-page .record-head > :is(
-    .record-head__key, h1, .record-head__abstract, .record-facts,
-    .tag-line, .record-actions
-  ) {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  html[data-skin="the-fat-tail-register"] body .record-page > .record-grid {
-    grid-template-areas:
-      "article"
-      "index";
-  }
-  html[data-skin="the-fat-tail-register"] .record-page :is(
-    .article__content, .record-grid > .record-index
-  ) {
-    grid-column: auto;
-    grid-row: auto;
-    inline-size: 100%;
-    max-inline-size: none;
-  }
-  html[data-skin="the-fat-tail-register"] .record-page .article__content { grid-area: article; }
-  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-    position: static;
-    grid-area: index;
-  }
+
   html[data-skin="the-fat-tail-register"] .record-page .record-actions { justify-content: flex-start; }
 }
-@media (min-width: 82.01rem) {
-  html[data-skin="the-fat-tail-register"] body .record-page > .record-grid {
-    grid-template-columns: minmax(80ch, 1fr) minmax(16rem, 22rem) !important;
-    grid-template-areas: "article index";
-  }
-  html[data-skin="the-fat-tail-register"] .record-page .article__content {
-    grid-area: article;
-    grid-column: auto;
-    inline-size: 100%;
-    max-inline-size: none;
-  }
-  html[data-skin="the-fat-tail-register"] .record-page .record-grid > .record-index {
-    grid-area: index;
-    grid-column: auto;
-  }
-}
+
 @media (max-width: 52rem) {
   html[data-skin="the-fat-tail-register"] .record-row__link {
     grid-template-columns: minmax(0, 1fr);
@@ -4810,7 +4563,7 @@ html[data-skin="the-fat-tail-register"] .prose .katex-display {
   html[data-skin="the-fat-tail-register"] .record-row__date::before { content: "Date"; }
   html[data-skin="the-fat-tail-register"] .record-row__event::before { content: "Event"; }
   html[data-skin="the-fat-tail-register"] .record-row__primitive::before { content: "Topic"; }
-  html[data-skin="the-fat-tail-register"] .site-footer__links { grid-template-columns: minmax(0, 1fr); }
+
 }
 
 /* Rendered feedback correction: masthead spans the field, register runs full width. */
