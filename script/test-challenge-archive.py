@@ -165,7 +165,7 @@ def rendered_fixture(source, site, baseurl=''):
                     for ident in sorted(gate.PRACTICE_IDS))
     # Bodyless stand-ins: no original private/locked article content is read.
     posts.extend({'route': ORIGIN + baseurl + f'/legacy-fixture-{i}.html', 'title': 'Synthetic legacy post',
-                  'section': 'tutorials'} for i in range(83))
+                  'section': 'tutorials'} for i in range(80))
     write(site/'index.json', json.dumps(posts))
     write(site/'index.jsonl', ''.join(json.dumps(p) + '\n' for p in posts))
     write(site/'challenges.json', json.dumps(progress))
