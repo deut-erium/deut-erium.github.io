@@ -336,7 +336,7 @@ const fullMatrix = Object.entries(defaults).every(([k, values]) => JSON.stringif
 const keyOf = job => `${job.theme}-${job.width}-${job.mode}-${job.page}`;
 async function open(input, job, failFonts = false) {
   const context = await browser.createBrowserContext(), page = await context.newPage();
-  const network = { requests: 0, externalBlocked: 0, denied: 0, localErrors: [], jsErrors: [], fonts: [], fontRequests: 0, themeLibraryRequests: 0, failedFonts: 0 };
+  const network = { requests: 0, externalBlocked: 0, denied: 0, localErrors: [], jsErrors: [], fonts: [], fontRequests: 0, themeLibraryRequests: 0, failedFonts: 0, dismissedCookieNotices: 0 };
   try {
     await page.setViewport({ width: job.width, height: 1000, deviceScaleFactor: 1 });
     await page.emulateTimezone('UTC');
@@ -365,6 +365,14 @@ async function open(input, job, failFonts = false) {
       assert.equal(res.status(), 200, 'Generated navigation failed');
       await page.waitForNetworkIdle({ idleTime: 100, timeout: 12000 });
       await page.evaluate(() => Promise.race([document.fonts.ready, new Promise((_, reject) => setTimeout(() => reject(new Error('Font settling timeout')), 12000))]));
+      // Compare the same user-visible state. Leave the 1% draw untouched and
+      // dismiss an offered notice through its real Reject button, not a mask.
+      if (await page.$('#cookie-banner')) {
+        await page.waitForSelector('#cookie-banner:not([hidden])', { timeout: 2000 });
+        await page.click('#cookie-banner .cookie-banner__btn:nth-child(2)');
+        await page.waitForSelector('#cookie-banner', { hidden: true });
+        network.dismissedCookieNotices++;
+      }
     };
     await navigate();
     return { context, page, network, cdp, navigate };
@@ -409,6 +417,8 @@ async function stableRegions(c, dir, job) {
   for (const [name, selector] of Object.entries(selectors)) {
     const el = await c.page.$(selector); assert.ok(el, `Missing RPN stable region: ${selector}`);
     await el.evaluate(e => e.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await c.page.waitForNetworkIdle({ idleTime: 100, timeout: 12000 });
+    await c.page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const a = await stableSignature(c.page, selector);
     const first = opt['no-screenshots'] ? null : pixels(Buffer.from(await el.screenshot({ path: path.join(out, dir, `rpn-${name}-a.png`) })));
     await pause(120);
@@ -524,7 +534,7 @@ try {
   const axePath = axePaths.find(p => fs.existsSync(p)); if (axePath) axeSource = fs.readFileSync(axePath, 'utf8');
   if (!axePath && !['off', 'auto'].includes(opt.axe)) throw new Error('Requested local axe script missing');
   const inventory = input => [...input.files.values()].filter(e => e.relative.endsWith('.html') || e.relative === 'assets/css/main.css' || Object.values(skinFiles).includes(e.relative)).map(e => ({ path: e.relative, sha256: hash(fs.readFileSync(e.file)) }));
-  write('run.json', { started, provisional: !!opt.provisional, options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random content is not mocked. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
+  write('run.json', { started, provisional: !!opt.provisional, options: opt, planned: jobs.length, fullMatrix, origin: ORIGIN, browser: await browser.version(), modulePath, chrome, libs, axe: axePath || null, site: site.root, before: before.root, allowlistFiles: site.files.size, inventory: inventory(site), beforeInventory: inventory(before), limitations: ['Blocked external embeds and analytics are not validated.', 'Article measure budgets: <=100 measured zero-glyph units; >=75% viewport on mobile; >=560px at desktop. These are regression budgets, not aesthetic scores.', 'Focus samples and optional axe color-contrast are not a complete accessibility audit.', 'Reduced motion only; random draws are not mocked. An offered cookie notice is dismissed via its real Reject button and recorded; no overlay masking. RPN unstable channels are disclosed with repeat captures.', 'Toy activation, no-JS and print are covered separately by test-article-layout.mjs.', 'Font hashes identify inputs only. RPN parity uses actual CDP fonts, style signatures and decoded pixels.'] });
   let cursor = 0;
   await Promise.all(Array.from({ length: concurrency }, async () => {
     while (cursor < jobs.length) {

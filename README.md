@@ -73,7 +73,7 @@ node script/test-theme-redesign.mjs \
   --out agent_out/theme-redesign/browser-NEW
 ```
 
-Its default 240 cases cover six themes, four page types, five widths and both modes. It checks real rendered fonts, layout, focus, footer cells and selected contrast, with separate font-failure cases. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
+Its default 240 cases cover six themes, four page types, five widths and both modes. It checks real rendered fonts, layout, focus, footer cells and selected contrast, with separate font-failure cases. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
 
 ## API
 
