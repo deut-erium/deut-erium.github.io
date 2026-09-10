@@ -1,7 +1,13 @@
 ---
 layout: base
 ---
-{%- assign _years = site.posts | group_by_exp: '_post', '_post.date | date: "%Y"' -%}
+{%- assign _listed_posts = site.posts | where_exp: '_post', '_post.hidden != true' -%}
+{%- assign _years = _listed_posts | group_by_exp: '_post', '_post.date | date: "%Y"' -%}
+{%- assign _listed_tag_count = 0 -%}
+{%- for _tag in site.tags -%}
+  {%- assign _listed_tag_posts = _tag[1] | where_exp: '_post', '_post.hidden != true' -%}
+  {%- if _listed_tag_posts.size > 0 -%}{%- assign _listed_tag_count = _listed_tag_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
 <main id="content" class="archive-shell">
   <header class="index-heading index-heading--archive">
     <h1>Archive</h1>
@@ -10,7 +16,7 @@ layout: base
     <div class="archive-search">
       <label id="filter-title" for="archive-query">Filter posts</label>
       <input id="archive-query" class="js-archive-query" type="search" autocomplete="off" placeholder="Title, section, topic, or tag">
-      <p aria-live="polite"><span class="js-result-count">{{ site.posts | size }}</span> posts shown</p>
+      <p aria-live="polite"><span class="js-result-count">{{ _listed_posts | size }}</span> posts shown</p>
     </div>
     <nav class="quick-filters js-archive-filters" aria-label="Section filters">
       <a href="{{ '/archive.html' | relative_url }}" data-filter="">All</a>
@@ -20,10 +26,13 @@ layout: base
       <a href="{{ '/archive.html?tag=challenges' | relative_url }}" data-filter="challenges">Challenges</a>
     </nav>
     <details class="all-tags">
-      <summary>All tags <span>{{ site.tags | size }}</span></summary>
+      <summary>All tags <span>{{ _listed_tag_count }}</span></summary>
       <div class="all-tags__grid js-archive-filters">
         {%- assign _tags = site.tags | sort -%}
-        {%- for _tag in _tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag[0] | url_encode }}" data-filter="{{ _tag[0] | downcase | escape }}"><span>{{ _tag[0] | replace: '_', ' ' }}</span><small>{{ _tag[1] | size }}</small></a>{%- endfor -%}
+        {%- for _tag in _tags -%}
+          {%- assign _listed_tag_posts = _tag[1] | where_exp: '_post', '_post.hidden != true' -%}
+          {%- if _listed_tag_posts.size > 0 -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag[0] | url_encode }}" data-filter="{{ _tag[0] | downcase | escape }}"><span>{{ _tag[0] | replace: '_', ' ' }}</span><small>{{ _listed_tag_posts | size }}</small></a>{%- endif -%}
+        {%- endfor -%}
       </div>
     </details>
   </section>

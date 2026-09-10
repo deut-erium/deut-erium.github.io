@@ -17,10 +17,13 @@ Jekyll::Hooks.register :site, :post_write do |site|
 
   unlisted_outputs = site.pages.select { |page| page.data['unlisted'] == true }
                          .map { |page| File.expand_path(page.destination(dest)) }
+  hidden_outputs = site.posts.docs.select { |post| post.data['hidden'] == true }
+                       .map { |post| File.expand_path(post.destination(dest)) }
+  excluded_outputs = unlisted_outputs + hidden_outputs
   challenges = []
   by_hash = {}
   Dir.glob(File.join(dest, '**', '*.html')).sort.each do |path|
-    next if unlisted_outputs.include?(File.expand_path(path))
+    next if excluded_outputs.include?(File.expand_path(path))
 
     html = begin
       File.read(path, encoding: 'UTF-8')

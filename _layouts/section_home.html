@@ -1,7 +1,8 @@
 ---
 layout: base
 ---
-{%- assign _all_posts = site.posts | where: 'section', page.section -%}
+{%- assign _listed_posts = site.posts | where_exp: '_post', '_post.hidden != true' -%}
+{%- assign _all_posts = _listed_posts | where: 'section', page.section -%}
 {%- if page.page_limit -%}
   {%- assign _offset = page.page_offset | default: 0 -%}
   {%- assign _posts = _all_posts | slice: _offset, page.page_limit -%}

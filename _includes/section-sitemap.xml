@@ -1,4 +1,5 @@
-{%- assign _posts = site.posts | where: 'section', page.section -%}<?xml version="1.0" encoding="UTF-8"?>
+{%- assign _listed_posts = site.posts | where_exp: '_post', '_post.hidden != true' -%}
+{%- assign _posts = _listed_posts | where: 'section', page.section -%}<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>{{ page.section_home | absolute_url }}</loc></url>
   {%- for _post in _posts %}

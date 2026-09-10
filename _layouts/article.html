@@ -28,7 +28,7 @@ layout: base
     <article id="article-body" class="prose article__content js-article-content" itemprop="articleBody">{{ content }}</article>
     <aside class="record-index" aria-label="Article navigation">
       <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" aria-label="Table of contents"><p class="toc-fallback">Enable JavaScript for section links.</p></nav></details>
-      <section class="related-records"><h2>{{ _section_title }}</h2><ul>{%- assign _count = 0 -%}{%- for _post in site.posts -%}{%- if _post.section == page.section and _post.url != page.url and _count < 4 -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- assign _count = _count | plus: 1 -%}{%- endif -%}{%- endfor -%}</ul></section>
+      <section class="related-records"><h2>{{ _section_title }}</h2><ul>{%- assign _count = 0 -%}{%- for _post in site.posts -%}{%- if _post.hidden != true and _post.section == page.section and _post.url != page.url and _count < 4 -%}<li><a href="{{ _post.url | relative_url }}">{{ _post.title }}</a></li>{%- assign _count = _count | plus: 1 -%}{%- endif -%}{%- endfor -%}</ul></section>
     </aside>
   </div>
 

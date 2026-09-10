@@ -1,4 +1,5 @@
-{%- assign _posts = site.posts | where: 'section', page.section -%}<?xml version="1.0" encoding="utf-8"?>
+{%- assign _listed_posts = site.posts | where_exp: '_post', '_post.hidden != true' -%}
+{%- assign _posts = _listed_posts | where: 'section', page.section -%}<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ page.feed_title | xml_escape }}</title>
   <link href="{{ page.permalink | absolute_url }}" rel="self" type="application/atom+xml" />

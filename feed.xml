@@ -14,7 +14,7 @@ sitemap: false
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <author><name>{{ site.author.name | default: site.author | xml_escape }}</name>{% if site.author.email %}<email>{{ site.author.email | xml_escape }}</email>{% endif %}{% if site.author.uri %}<uri>{{ site.author.uri | xml_escape }}</uri>{% endif %}</author>
   {%- comment -%}Use the archive's order, including ties. Sorting by date again reverses tied entries.{%- endcomment -%}
-  {%- assign _feed_posts = site.posts -%}
+  {%- assign _feed_posts = site.posts | where_exp: 'post', 'post.hidden != true' -%}
   {%- unless site.show_drafts -%}{%- assign _feed_posts = _feed_posts | where_exp: 'post', 'post.draft != true' -%}{%- endunless -%}
   {%- assign _feed_limit = site.feed.posts_limit | default: 10 -%}
   {%- for _post in _feed_posts limit: _feed_limit %}

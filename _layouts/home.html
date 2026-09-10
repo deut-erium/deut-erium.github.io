@@ -1,7 +1,8 @@
 ---
 layout: base
 ---
-{%- assign _home_posts = paginator.posts | default: site.posts -%}
+{%- assign _listed_posts = site.posts | where_exp: '_post', '_post.hidden != true' -%}
+{%- assign _home_posts = paginator.posts | default: _listed_posts -%}
 <main id="content" class="home-shell">
   <section class="masthead" aria-labelledby="masthead-title">
     <div class="masthead__copy">
@@ -18,10 +19,10 @@ layout: base
   <section class="record-index section-cards" aria-labelledby="sections-title">
     <div class="section-heading"><div><h2 id="sections-title">Publications</h2></div></div>
     <nav class="section-links index-map__links" aria-label="Site sections">
-      <a href="{{ '/WriteUps/' | relative_url }}"><span>CTF Writeups</span><strong>{{ site.posts | where: 'section', 'writeups' | size }}</strong></a>
-      <a href="{{ '/ctf-tutorials/' | relative_url }}"><span>Blog on CTFs</span><strong>{{ site.posts | where: 'section', 'tutorials' | size }}</strong></a>
-      <a href="{{ '/ramblings/' | relative_url }}"><span>Ramblings</span><strong>{{ site.posts | where: 'section', 'ramblings' | size }}</strong></a>
-      <a href="{{ '/archive.html' | relative_url }}"><span>All posts</span><strong>{{ site.posts | size }}</strong></a>
+      <a href="{{ '/WriteUps/' | relative_url }}"><span>CTF Writeups</span><strong>{{ _listed_posts | where: 'section', 'writeups' | size }}</strong></a>
+      <a href="{{ '/ctf-tutorials/' | relative_url }}"><span>Blog on CTFs</span><strong>{{ _listed_posts | where: 'section', 'tutorials' | size }}</strong></a>
+      <a href="{{ '/ramblings/' | relative_url }}"><span>Ramblings</span><strong>{{ _listed_posts | where: 'section', 'ramblings' | size }}</strong></a>
+      <a href="{{ '/archive.html' | relative_url }}"><span>All posts</span><strong>{{ _listed_posts | size }}</strong></a>
     </nav>
   </section>
 

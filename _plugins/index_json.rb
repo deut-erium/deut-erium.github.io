@@ -58,7 +58,7 @@ module DeuteriumSite
     # Newest post first; ties broken by route so the output is a stable total
     # order regardless of filesystem enumeration order.
     def entries(site)
-      site.posts.docs.sort do |left, right|
+      site.posts.docs.reject { |post| post.data["hidden"] == true }.sort do |left, right|
         comparison = right.date <=> left.date
         comparison.zero? ? (left.url <=> right.url) : comparison
       end.map { |post| entry(site, post) }
