@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import parse_qs, quote, unquote, urlsplit
+from urllib.parse import parse_qs, quote, unquote, urljoin, urlsplit
 import gzip
 import hashlib
 import html
@@ -405,6 +405,37 @@ def parse_archive(path: Path) -> list[str]:
     return [unquote(urlsplit(html.unescape(url)).path) for url in records]
 
 
+def has_robots_directive(values: list[str], expected: str) -> bool:
+    directives = {
+        directive.strip().lower()
+        for value in values
+        for directive in value.split(",")
+        if directive.strip()
+    }
+    return expected.lower() in directives
+
+
+def resolved_local_path(ref: str, page_path: str) -> str:
+    base = f"{SITE_URL}/{page_path}"
+    return unquote(urlsplit(urljoin(base, ref)).path)
+
+
+def check_home_pagination(root: Path, archive_order: list[str], page_size: int) -> None:
+    if page_size <= 0: fail("invalid pagination size")
+    expected_pages = max(1, (len(archive_order) + page_size - 1) // page_size)
+    expected_paths = {
+        root / ("index.html" if number == 1 else f"page{number}/index.html")
+        for number in range(1, expected_pages + 1)
+    }
+    actual_paths = {root / "index.html", *root.glob("page*/index.html")}
+    if actual_paths != expected_paths: fail("home pagination path drift")
+    for number in range(1, expected_pages + 1):
+        path = root / ("index.html" if number == 1 else f"page{number}/index.html")
+        start = (number - 1) * page_size
+        if parse_archive(path) != archive_order[start:start + page_size]:
+            fail(f"home pagination membership or order drift: page {number}")
+
+
 def check_archive_membership(actual: list[str], expected: set[str], label: str) -> None:
     if len(actual) != len(expected) or set(actual) != expected:
         fail(f"{label} archive membership drift")
@@ -762,9 +793,9 @@ for rel, sitemap_path in robots.items():
     text = (ROOT / rel).read_text(encoding="utf-8")
     if f"Sitemap: {SITE_URL}{sitemap_path}" not in text: fail(f"robots sitemap drift: {rel}")
 
-home_pages = [ROOT / "index.html", *sorted(ROOT.glob("page*/index.html"), key=lambda path: int(path.parent.name.removeprefix("page")))]
-home_order = [route for path in home_pages for route in parse_archive(path)]
-if home_order != archive_order: fail("home pagination membership or order drift")
+pagination_match = re.search(r"(?m)^paginate:\s*(\d+)\s*$", (SOURCE / "_config.yml").read_text(encoding="utf-8"))
+if not pagination_match: fail("pagination size is missing")
+check_home_pagination(ROOT, archive_order, int(pagination_match.group(1)))
 post_index = json.loads((ROOT / "index.json").read_text(encoding="utf-8"))
 indexed_routes = {unquote(urlsplit(entry.get("route", "")).path) for entry in post_index if isinstance(entry, dict)}
 if len(post_index) != len(listed_routes) or indexed_routes != listed_routes:
@@ -773,13 +804,30 @@ hidden_outputs = {post_output_path(route) for route in hidden_routes}
 for hidden_route in hidden_routes:
     rel = post_output_path(hidden_route)
     audit = page_audits[rel]
-    if not any("noindex" in value.lower() for value in audit.robots): fail(f"hidden post is indexable: {hidden_route}")
+    if not has_robots_directive(audit.robots, "noindex"): fail(f"hidden post is indexable: {hidden_route}")
 for page in pages:
     rel = page.relative_to(ROOT).as_posix()
     if rel in hidden_outputs: continue
-    text = page.read_text(encoding="utf-8")
-    for hidden_route in hidden_routes:
-        if f'href="{hidden_route}"' in text: fail(f"hidden post linked from generated page: {rel}")
+    for ref in page_audits[rel].local:
+        if resolved_local_path(ref, rel) in hidden_routes:
+            fail(f"hidden post linked from generated page: {rel}")
+
+# Sidecar assets for hidden posts must remain available and byte-identical.
+hidden_postfiles = 0
+content_by_path = {item["path"]: item for item in CONTENT["files"]}
+for source_path, hidden_route in hidden_posts:
+    source_dir = Path(source_path).parent
+    public_dir = ROOT / Path(hidden_route.lstrip("/")).parent
+    for asset_path, item in content_by_path.items():
+        asset = Path(asset_path)
+        if asset.parent != source_dir or DATE_POST.match(asset.name): continue
+        public = public_dir / asset.name
+        if not public.is_file(): fail(f"hidden postfile missing: {public.relative_to(ROOT)}")
+        data = public.read_bytes()
+        if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
+            fail(f"hidden postfile drift: {public.relative_to(ROOT)}")
+        hidden_postfiles += 1
+if hidden_postfiles != 19: fail(f"hidden postfile count drift: {hidden_postfiles}")
 
 # Every imported WriteUps postfile must remain byte-identical at its current route.
 current_postfiles = 0
@@ -928,6 +976,7 @@ print(json.dumps({
     "posts": len(post_routes),
     "listed_posts": len(listed_routes),
     "hidden_posts": len(hidden_routes),
+    "hidden_postfiles": hidden_postfiles,
     "post_sections": {section: list(post_routes.values()).count(section) for section in ("root", "writeups", "tutorials", "ramblings")},
     "merged_tags": tag_count,
     "current_postfiles": current_postfiles,

@@ -221,6 +221,33 @@ class RouteTests(unittest.TestCase):
     def tags_html(self, tags):
         return '<div class="all-tags__grid js-archive-filters">' + "".join(f'<a href="/archive.html?tag={quote(tag)}" data-filter="{html.escape(tag.lower())}">{html.escape(tag)}</a>' for tag in sorted(tags)) + '</div>'
 
+    def test_hidden_post_robots_directive_is_exact(self):
+        check = self.site["has_robots_directive"]
+        self.assertTrue(check(["NOINDEX, follow"], "noindex"))
+        self.assertFalse(check(["index, follow, x-noindex-disabled"], "noindex"))
+        self.assertFalse(check([], "noindex"))
+
+    def test_hidden_post_links_resolve_absolute_and_relative_forms(self):
+        resolve = self.site["resolved_local_path"]
+        route = "/2026/09/06/masatermind.html"
+        self.assertEqual(resolve(route, "about.html"), route)
+        self.assertEqual(resolve("https://deut-erium.github.io" + route + "?from=about", "about.html"), route)
+        self.assertEqual(resolve("../../09/06/masatermind%2Ehtml", "2026/10/01/example.html"), route)
+
+    def test_home_pagination_enforces_page_boundaries(self):
+        routes = [f"/2026/01/{day:02d}/fixture-{day}.html" for day in range(1, 11)]
+
+        def records(items):
+            return "<ol>" + "".join(f'<li data-record><a href="{route}">Post</a></li>' for route in items) + "</ol>"
+
+        write(self.work, "index.html", records(routes[:8]))
+        write(self.work, "page2/index.html", records(routes[8:]))
+        self.site["check_home_pagination"](self.work, routes, 8)
+        write(self.work, "index.html", records(routes))
+        write(self.work, "page2/index.html", records([]))
+        with self.assertRaisesRegex(SystemExit, "page 1"):
+            self.site["check_home_pagination"](self.work, routes, 8)
+
     def test_exact_tag_membership_and_duplicates(self):
         tags = self.site["expected_archive_tags"]()
         self.assertEqual(self.site["check_archive_tags"](self.tags_html(tags)), 135)
