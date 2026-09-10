@@ -1,6 +1,6 @@
 import { entryLines } from './entries.mjs';
-// Fixed A4 layout modeled on assets/resume.pdf. The browser and PDF use the
-// same glyph positions; there are no visitor-selectable format settings.
+// Fixed A4 layout preserves the original resume's typesetting. The browser
+// and PDF use the same glyph positions; visitors cannot alter the format.
 export const PAPER = { a4: { width: 595.276, height: 841.89 } };
 export const INK = '#000000';
 const MARGIN = 43;

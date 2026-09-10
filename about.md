@@ -16,7 +16,7 @@ stylesheets:
       <h2 id="resume-heading">Resume</h2>
       <p>Oh no, my resume doesn't seem to satisfy your HR filters? No worries, add all your roles and responsibilities and keywords here.</p>
 
-      <div class="resume-solver">
+      <div class="resume-builder">
         <form id="resume-form">
           <label for="request">hr_filters.txt</label>
           <textarea id="request" rows="12" maxlength="12000" spellcheck="false" placeholder="Must have 10 years of experience with a framework released last Tuesday.
