@@ -243,6 +243,31 @@ if (process.argv.includes('--browser')) {
       const footerHTML = markup.replace(/<link\b[^>]*>/g, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '')
         .replace(/{{ '([^']+)' \| relative_url }}/g, (_, url) => url)
         .replace(/{{[^}]+}}/g, 'fixture');
+      // Compare rendered paint to the skin contract, not just to other skins:
+      // even the rejected plain card had 48 different color/font signatures.
+      const paintContract = () => page.evaluate(() => {
+        const fields = ['color', 'background-color', 'background-image', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-radius', 'box-shadow'];
+        const type = ['font-family', 'font-weight', 'font-style', 'letter-spacing', 'text-transform', 'text-shadow'];
+        const mismatches = [];
+        for (const [selector, prefix, props] of [
+          ['#site-footer', 'footer', fields],
+          ['.site-footer__note', 'footer-note', [...fields, ...type]],
+          ['.site-footer__links a', 'footer-key', [...fields, ...type]],
+        ]) {
+          const actual = getComputedStyle(document.querySelector(selector));
+          const probe = document.createElement('span');
+          probe.style.setProperty('all', 'initial', 'important');
+          props.forEach(p => probe.style.setProperty(p, `var(--${prefix}-${p})`, 'important'));
+          document.body.append(probe);
+          const expected = getComputedStyle(probe);
+          props.forEach(p => {
+            if (actual.getPropertyValue(p) !== expected.getPropertyValue(p))
+              mismatches.push({ selector, property: p, actual: actual.getPropertyValue(p), expected: expected.getPropertyValue(p) });
+          });
+          probe.remove();
+        }
+        return mismatches;
+      });
       const skins = [null, ...readdirSync('assets/css/skins').filter(n => n.endsWith('.css')).sort()];
       assert.equal(skins.length, 48);
       for (const file of skins) {
@@ -308,6 +333,14 @@ if (process.argv.includes('--browser')) {
                 emptyRestoreSlot: Boolean(f.querySelector('.site-footer__restore-slot')) };
             });
             if (appearance.underlines || !appearance.statusHidden || appearance.emptyRestoreSlot) issues.push('rejected footer copy/spacing/underlines');
+            const paintMismatches = await paintContract();
+            if (paintMismatches.length) issues.push({ paint: paintMismatches });
+            // A deliberately flattened card must fail the paint contract even
+            // when copy, order, target sizes and theme-dependent colors remain.
+            const flattened = await page.addStyleTag({ content: '#site-footer, #site-footer * { background: var(--paper) !important; border: 1px solid var(--rule) !important; border-radius: .5rem !important; box-shadow: none !important; font-family: var(--body) !important; }' });
+            if (!(await paintContract()).length) issues.push('flattened footer mutation escaped');
+            await flattened.dispose().catch(() => {});
+            await page.evaluate(() => [...document.querySelectorAll('style')].findLast(s => s.textContent.includes('border: 1px solid var(--rule) !important; border-radius: .5rem'))?.remove());
             if (!before.slots.every(s => s.disabled) || before.slots.map(s => s.slot).join() !== '0,1,2') issues.push('no-JS contract');
             await page.addScriptTag({ content: source });
             await page.evaluate(() => {
@@ -333,6 +366,21 @@ if (process.argv.includes('--browser')) {
             await page.keyboard.press('Space');
             if (!await page.$eval('.site-footer__restore', el => el.hidden)) issues.push('restore failed');
             if (!await page.$eval('.site-footer__mystery', el => document.activeElement === el)) issues.push('restore focus lost');
+            // Failure feedback uses the selected theme's control paint. Test it
+            // while visible; an idle-only contrast scan cannot see this state.
+            await page.evaluate(() => { window.__dtToy.go = () => { throw new Error('fixture failure'); }; });
+            await page.focus('.site-footer__mystery'); await page.keyboard.press('Enter');
+            const errorContrast = await page.evaluate(async () => {
+              const status = document.querySelector('.site-footer__status');
+              const r = await window.axe.run(status, { runOnly: ['color-contrast'] });
+              const style = getComputedStyle(status);
+              return { visible: status.dataset.error === 'true' && style.clipPath === 'none', color: style.color, background: style.backgroundColor,
+                violations: r.violations.map(v => v.nodes.map(n => n.failureSummary)), incomplete: r.incomplete.length };
+            });
+            if (!errorContrast.visible || errorContrast.violations.length) issues.push({ errorContrast });
+            await page.evaluate(() => { window.__dtToy.go = () => {}; });
+            await page.keyboard.press('Enter');
+            if (await page.$eval('.site-footer__status', el => el.textContent !== '' || el.dataset.error !== 'false')) issues.push('failure message did not clear');
             {
               await page.$eval('#site-footer', el => el.scrollIntoView({ behavior: 'instant', block: 'end' }));
               await page.evaluate(() => document.activeElement?.blur());
@@ -341,7 +389,7 @@ if (process.argv.includes('--browser')) {
               const header = await page.$('.site-header');
               if (header) await header.screenshot({ path: path.join(out, `${skin}-${mode}-${width}-header.png`) });
             }
-            results.push({ skin, mode, width, axe, appearance, footer: before.footer, issues });
+            results.push({ skin, mode, width, axe, errorContrast, appearance, footer: before.footer, issues });
           }
         }
       }
