@@ -57,7 +57,7 @@ node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-l
 
 ## Theme redesign checks
 
-Proof Bonbons, The Exploit Grimoire, Mercury Keyspace, Stack Underflow and Crowd Signal use separate page designs and selected local font families. Their styles remain scoped to their own theme IDs. RPN Garden and the other skins retain their existing styles. The adopted font files, licenses and provenance are in `assets/fonts/theme-library/`; only the selected skin declares its faces. Five short-heading display families use swap loading so their lettering appears after a cold download; reading/code faces and pre-existing global fonts remain optional.
+All 47 alternatives to RPN Garden have separate page designs and selected local fonts. RPN Garden remains unchanged. Each skin is scoped to its theme ID and declares only its selected faces. The 87-family library, notices, provenance and 47-theme manifest are in `assets/fonts/theme-library/`. Display faces use swap loading so their lettering appears after a cold download; reading/code faces and pre-existing global fonts remain optional.
 
 The static check validates skin scope, shared geometry ownership, local font hashes/licenses and decorative SVGs. It runs in CI without a browser. It does not score visual quality.
 
@@ -73,7 +73,7 @@ node script/test-theme-redesign.mjs \
   --out agent_out/theme-redesign/browser-NEW
 ```
 
-Its default 240 cases cover six themes, four page types, five widths and both modes. It checks settled cold-navigation display fonts, warmed reading/code fonts, layout, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
+Its default 1,920 cases cover all 48 themes, four page types, five widths and both modes. It checks settled cold-navigation display fonts, warmed reading/code fonts, layout, visible header descriptions, article utility/contents clearance, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
 
 ## API
 
