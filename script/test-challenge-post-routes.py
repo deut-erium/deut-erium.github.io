@@ -18,7 +18,7 @@ from urllib.parse import quote, unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agent_out/challenge-runtime/integration/post-route-gates"
-RETAINED = ROOT / "agent_out/challenge-posts/legacy-baseline.json"
+RETAINED = ROOT / "test/fixtures/challenge-posts/legacy-baseline.json"
 
 
 def load_gate(name: str) -> dict:

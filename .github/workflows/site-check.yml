@@ -51,7 +51,7 @@ jobs:
           import json
           from pathlib import Path
           import shutil
-          fixtures = Path('agent_out/challenge-runtime/integration/public-fixtures')
+          fixtures = Path('test/fixtures/challenge-runtime')
           for entry in json.loads((fixtures / 'manifest.json').read_text())['files']:
               relative = Path(entry['path'])
               assert not relative.is_absolute() and '..' not in relative.parts
