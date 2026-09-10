@@ -4,4 +4,6 @@ These 15 families support Proof Bonbons, The Exploit Grimoire, Mercury Keyspace,
 
 PROVENANCE.json records every installed font, license and metadata file with its public acquisition URL, access time and SHA-256. Files are unmodified webfonts. Keep each family's license and copyright metadata when copying it. The larger exploratory collection is not part of the site.
 
+Modak, Grenze Gotisch, Michroma, VT323 and Honk use font-display: swap so downloaded display lettering appears during the first visit. The selected reading/code faces and pre-existing global fonts retain optional loading. No global preload was added.
+
 Nunito, Literata, Zilla Slab and Chivo include real italic faces. Mercury uses Manrope for ordinary reading and Literata for italic emphasis because the acquired Manrope family has no italic face. Display faces remain reserved for short headings and the site wordmark; code uses the selected monospace face.

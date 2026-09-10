@@ -17,6 +17,9 @@ export const families = Object.freeze({
   'stack-underflow': ['VT323', 'Zilla Slab', 'IBM Plex Sans', 'IBM Plex Mono'],
   'crowd-signal': ['Honk', 'Chivo', 'JetBrains Mono'],
 });
+// Only short-heading display faces swap after a cold download. Keep reading,
+// code and all pre-existing global faces on the optional-loading policy.
+export const displayFaces = Object.freeze(Object.fromEntries(Object.entries(families).map(([skin, names]) => [skin, names[0]])));
 export const skinFiles = Object.fromEntries(Object.keys(families).map((s, i) => [s, `assets/css/skins/${['02', '03', '12', '31', '47'][i]}-${s}.css`]));
 export const hash = b => createHash('sha256').update(b).digest('hex');
 export const within = (root, file) => file === root || file.startsWith(root + path.sep);
@@ -157,7 +160,7 @@ export function checkSkin(root, skin, index, cssOverride) {
     if (/^@font-face$/i.test(r.prelude)) {
       const family = unquote(props['font-family'] || '');
       assert.ok(families[skin].includes(family), `Unselected face ${family}: ${file}`);
-      assert.equal(props['font-display'], 'optional', `Face must use optional loading: ${file}`);
+      assert.equal(props['font-display'], family === displayFaces[skin] ? 'swap' : 'optional', `Unexpected font loading policy for ${family}: ${file}`);
       assert.ok(!/local\s*\(/i.test(props.src || ''), 'Local font aliases defeat pinned rendering');
       const srcs = urls(props.src || ''); assert.ok(srcs.length, 'Face without URL');
       for (const url of srcs) {
@@ -270,6 +273,14 @@ async function main() {
     for (const skin of Object.keys(families)) {
       const css = opt['negative-control'] === 'unscoped' && skin === 'proof-bonbons' ? fs.readFileSync(path.join(repo, skinFiles[skin]), 'utf8') + '\nbody { color: red; }' : undefined;
       const result = check(skin, () => checkSkin(repo, skin, index || new Map(), css)); if (result) summary.skins.push(result);
+    }
+    if (index && !opt['negative-control']) {
+      const css = fs.readFileSync(path.join(repo, skinFiles['proof-bonbons']), 'utf8');
+      for (const mutated of [css.replace('font-display: swap', 'font-display: optional'), css.replace('font-display: optional', 'font-display: swap')]) {
+        assert.notEqual(mutated, css);
+        assert.throws(() => checkSkin(repo, 'proof-bonbons', index, mutated), /Unexpected font loading policy/);
+      }
+      summary.controls.push('display lockout and reading-font swap policy mutations rejected');
     }
     summary.globalLoading = check('lazy-library-loading', () => checkNoGlobalLibrary(repo));
     summary.status = summary.failures.length ? 'failed' : 'passed';

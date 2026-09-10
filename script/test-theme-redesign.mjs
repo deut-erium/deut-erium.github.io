@@ -12,7 +12,7 @@ import { parseArgs } from 'node:util';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { inflateSync } from 'node:zlib';
-import { families, skinFiles, repo, hash, within, freshOutput } from './test-theme-redesign-static.mjs';
+import { families, displayFaces, skinFiles, repo, hash, within, freshOutput } from './test-theme-redesign-static.mjs';
 
 const ORIGIN = 'https://theme-regression.invalid';
 const RPN = 'rpn-garden';
@@ -365,6 +365,7 @@ async function open(input, job, failFonts = false) {
       assert.equal(res.status(), 200, 'Generated navigation failed');
       await page.waitForNetworkIdle({ idleTime: 100, timeout: 12000 });
       await page.evaluate(() => Promise.race([document.fonts.ready, new Promise((_, reject) => setTimeout(() => reject(new Error('Font settling timeout')), 12000))]));
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       // Compare the same user-visible state. Leave the 1% draw untouched and
       // dismiss an offered notice through its real Reject button, not a mask.
       if (await page.$('#cookie-banner')) {
@@ -399,7 +400,12 @@ async function screenshots(page, dir, job, force = false) {
     }, region);
     const file = `${dir}/${region}.png`; await page.screenshot({ path: path.join(out, file) }); names.push(file);
   }
-  await page.evaluate(() => scrollTo(0, 0)); return names;
+  await page.evaluate(() => scrollTo(0, 0));
+  if (job.page === 'home') {
+    const file = `${dir}/full-home.png`;
+    await page.screenshot({ path: path.join(out, file), fullPage: true }); names.push(file);
+  }
+  return names;
 }
 async function stableSignature(page, selector) {
   const rows = await page.$eval(selector, root => {
@@ -466,6 +472,8 @@ async function runCase(job, fallback = false) {
     checkpoint('cold-rendered-fonts'); result.coldFonts = await renderedFonts(c.page, c.cdp);
     result.coldFallback = result.coldFonts.filter(r => families[job.theme]?.includes(r.family) && !usedSelectedFace(r)).map(r => r.selector);
     if (!fallback) {
+      result.coldDisplaySamples = result.coldFonts.filter(r => r.family === displayFaces[job.theme]);
+      for (const row of result.coldDisplaySamples) if (!usedSelectedFace(row)) result.issues.push(`cold-display-not-rendered:${row.selector}:${row.family}`);
       checkpoint('cold-layout'); const metrics = await measure(c.page), issues = issuesFor(metrics, job);
       result.coldLayout = { issues, viewportOverflow: metrics.viewportOverflow, prose: metrics.prose, cells: metrics.cells };
       result.issues.push(...issues.map(code => 'cold:' + code));
