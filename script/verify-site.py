@@ -433,10 +433,16 @@ small_prime smt soundness substitution testing tetris timeseed transposition
 twin_prime vignere vim wargames weak_keys welcome wordgame xor z3 zh3r0
 zh3r0_ctf2 zk zkvm
 """.split())
+# These tags belonged only to the three posts intentionally removed from every
+# generated discovery surface. Shared tags remain with their visible posts.
+HIDDEN_ONLY_TAGS = frozenset("""
+binius64 cairo-m ceno dusk expander fiat-shamir jolt kzg mastermind nexus plonk
+sat soundness zk zkvm
+""".split())
 
 
 def expected_archive_tags() -> set[str]:
-    tags = set(BASELINE_TAGS)
+    tags = set(BASELINE_TAGS - HIDDEN_ONLY_TAGS)
     for path in registered_challenge_routes():
         text = (SOURCE / path).read_text(encoding="utf-8")
         header = re.match(r"\A---\n(.*?)\n---(?:\n|\Z)", text, re.S)
@@ -520,6 +526,24 @@ post_routes = expected_post_routes()
 if len(post_routes) != 101: fail(f"source post count drift: {len(post_routes)}")
 for route in post_routes:
     if not (ROOT / post_output_path(route)).is_file(): fail(f"post route missing: {route}")
+
+hidden_config = json.loads((SOURCE / "_data/hidden_posts.json").read_text(encoding="utf-8"))
+if hidden_config.get("version") != 1 or not isinstance(hidden_config.get("posts"), list):
+    fail("invalid hidden-post configuration")
+expected_hidden_posts = {
+    ("_posts/2026/osec_mirror/zkvms/2026-03-03-unfaithful-claims-breaking-6-zkvms.md", "/2026/03/03/unfaithful-claims-breaking-6-zkvms.html"),
+    ("_posts/2026/osec_mirror/dusk/2026-04-13-dusk-commitment-issues.md", "/2026/04/13/dusk-commitment-issues.html"),
+    ("_posts/2026-09-06-masatermind.md", "/2026/09/06/masatermind.html"),
+}
+hidden_posts = {(entry.get("path"), entry.get("url")) for entry in hidden_config["posts"] if isinstance(entry, dict)}
+if hidden_posts != expected_hidden_posts or len(hidden_config["posts"]) != len(expected_hidden_posts):
+    fail(f"hidden-post membership drift: {sorted(hidden_posts)}")
+for entry in hidden_config["posts"]:
+    if not isinstance(entry.get("reason"), str) or not entry["reason"].strip(): fail("hidden-post reason is missing")
+    if not (SOURCE / entry["path"]).is_file(): fail(f"hidden-post source missing: {entry['path']}")
+hidden_routes = {url for _, url in hidden_posts}
+if not hidden_routes.issubset(post_routes): fail("hidden-post route is not a post")
+listed_routes = set(post_routes) - hidden_routes
 
 pages = sorted(ROOT.rglob("*.html"))
 VERIFICATION_HTML = {"google98b86655786074b6.html", "yandex_0a37c4f8df609655.html"}
@@ -691,7 +715,7 @@ for rel, section in (("404.html", "root"), ("WriteUps/404.html", "writeups"), ("
 # Archive order is the source of truth for feed windows.
 archive_text = (ROOT / "archive.html").read_text(encoding="utf-8")
 archive_order = parse_archive(ROOT / "archive.html")
-check_archive_membership(archive_order, set(post_routes), "global")
+check_archive_membership(archive_order, listed_routes, "global")
 tag_count = check_archive_tags(archive_text)
 if "?tag=RSA" not in archive_text or "?tag=CTF" not in archive_text or "?tag=rsa" in archive_text or "?tag=ctfs" in archive_text:
     fail("tag alias merge drift")
@@ -716,7 +740,8 @@ for directory, (section, limit, home) in section_specs.items():
     if sitemap != {home, *expected}: fail(f"section sitemap membership drift: {directory}")
 
 root_sitemap = parse_sitemap(ROOT / "sitemap.xml")
-if not set(post_routes).issubset(root_sitemap): fail("root sitemap omits posts")
+if not listed_routes.issubset(root_sitemap): fail("root sitemap omits listed posts")
+if hidden_routes.intersection(root_sitemap): fail("root sitemap lists hidden posts")
 if not {"/" + rel.removesuffix("index.html") for rel in APP_PAGES}.issubset(root_sitemap):
     fail("root sitemap omits Tetrasquares pages")
 if any(path.startswith("/new-tetris/") for path in root_sitemap):
@@ -736,6 +761,25 @@ robots = {
 for rel, sitemap_path in robots.items():
     text = (ROOT / rel).read_text(encoding="utf-8")
     if f"Sitemap: {SITE_URL}{sitemap_path}" not in text: fail(f"robots sitemap drift: {rel}")
+
+home_pages = [ROOT / "index.html", *sorted(ROOT.glob("page*/index.html"), key=lambda path: int(path.parent.name.removeprefix("page")))]
+home_order = [route for path in home_pages for route in parse_archive(path)]
+if home_order != archive_order: fail("home pagination membership or order drift")
+post_index = json.loads((ROOT / "index.json").read_text(encoding="utf-8"))
+indexed_routes = {unquote(urlsplit(entry.get("route", "")).path) for entry in post_index if isinstance(entry, dict)}
+if len(post_index) != len(listed_routes) or indexed_routes != listed_routes:
+    fail("JSON post index lists hidden or missing posts")
+hidden_outputs = {post_output_path(route) for route in hidden_routes}
+for hidden_route in hidden_routes:
+    rel = post_output_path(hidden_route)
+    audit = page_audits[rel]
+    if not any("noindex" in value.lower() for value in audit.robots): fail(f"hidden post is indexable: {hidden_route}")
+for page in pages:
+    rel = page.relative_to(ROOT).as_posix()
+    if rel in hidden_outputs: continue
+    text = page.read_text(encoding="utf-8")
+    for hidden_route in hidden_routes:
+        if f'href="{hidden_route}"' in text: fail(f"hidden post linked from generated page: {rel}")
 
 # Every imported WriteUps postfile must remain byte-identical at its current route.
 current_postfiles = 0
@@ -882,6 +926,8 @@ print(json.dumps({
     "html_pages": len(pages),
     "historical_html_paths": len(HISTORICAL["html_paths"]),
     "posts": len(post_routes),
+    "listed_posts": len(listed_routes),
+    "hidden_posts": len(hidden_routes),
     "post_sections": {section: list(post_routes.values()).count(section) for section in ("root", "writeups", "tutorials", "ramblings")},
     "merged_tags": tag_count,
     "current_postfiles": current_postfiles,

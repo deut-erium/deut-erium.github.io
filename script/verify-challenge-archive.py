@@ -828,7 +828,7 @@ def verify_rendered(site, baseurl, catalog, metadata):
         require(record['page'] == baseurl + e['url'] and record['title'] == e['post_title'] and
                 record.get('sha256') == c['sha256'] and record.get('salt') == c['salt'] and not record['aliases'], 'authored progress entry for ' + e['id'])
     posts = json.loads(safe_path(site, 'index.json', 'post index').read_text())
-    require(len(posts) == 101, 'post index count')
+    require(len(posts) == 98, 'listed post index count')
     post_routes = [canonical_path(p['route'], baseurl, absolute=True) for p in posts]
     require(len(set(post_routes)) == len(post_routes), 'duplicate post index routes')
     require(Counter(r for r in post_routes if r.startswith('/challenges/')) == Counter(routes), 'post index archive membership')

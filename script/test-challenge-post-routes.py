@@ -30,7 +30,7 @@ def load_gate(name: str) -> dict:
     """
     path = ROOT / "script" / name
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP", "BASELINE_TAGS"}
+    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP", "BASELINE_TAGS", "HIDDEN_ONLY_TAGS"}
     nodes = []
     for node in tree.body:
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -146,8 +146,9 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(len(tags), 149)
         self.assertEqual(self.site["BASELINE_TAGS"], tags)
         current = self.site["expected_archive_tags"]()
-        self.assertEqual(len(current), 150)
-        self.assertEqual(current - tags, {"misc"})
+        visible = tags - self.site["HIDDEN_ONLY_TAGS"]
+        self.assertEqual(len(current), 135)
+        self.assertEqual(current, visible | {"misc"})
         aliases = dict(line.split(": ") for line in (ROOT / "_data/tag_aliases.yml").read_text().splitlines() if line)
         self.assertEqual(aliases, {"ctf": "CTF", "ctfs": "CTF", "rsa": "RSA"})
 
@@ -222,7 +223,7 @@ class RouteTests(unittest.TestCase):
 
     def test_exact_tag_membership_and_duplicates(self):
         tags = self.site["expected_archive_tags"]()
-        self.assertEqual(self.site["check_archive_tags"](self.tags_html(tags)), 150)
+        self.assertEqual(self.site["check_archive_tags"](self.tags_html(tags)), 135)
         for bad in (tags - {"misc"}, tags - {"RSA"} | {"rsa"}, list(tags) + ["misc"], tags - {"CRT"} | {"unexpected"}):
             with self.subTest(size=len(bad)), self.assertRaisesRegex(SystemExit, "tag membership"):
                 self.site["check_archive_tags"](self.tags_html(bad))
@@ -232,7 +233,8 @@ class RouteTests(unittest.TestCase):
         self.site["SOURCE"] = self.work
         path = self.work / entry["post_path"]
         path.write_text(path.read_text().replace('["challenges", "crypto"]', '["ctfs", "rsa", "fixture-new"]'))
-        self.assertEqual(self.site["expected_archive_tags"](), set(self.site["BASELINE_TAGS"]) | {"fixture-new"})
+        visible = set(self.site["BASELINE_TAGS"]) - self.site["HIDDEN_ONLY_TAGS"]
+        self.assertEqual(self.site["expected_archive_tags"](), visible | {"fixture-new"})
 
     def test_malformed_new_tag_array_rejected(self):
         entry = catalog_fixture(self.work)
@@ -246,10 +248,11 @@ class RouteTests(unittest.TestCase):
         env = self.site
         env.update(ROOT=self.work, APP_PAGES=set(), noindex_paths=set())
         routes = env["expected_post_routes"]()
-        env["post_routes"] = routes
+        hidden = {entry["url"] for entry in json.loads((ROOT / "_data/hidden_posts.json").read_text())["posts"]}
+        env.update(post_routes=routes, hidden_routes=hidden, listed_routes=set(routes) - hidden)
         # Put challenge routes in both feed windows so the mutations exercise
         # the new route type, rather than only the unchanged dated posts.
-        order = sorted(routes, key=lambda route: (not route.startswith("/challenges/"), route))
+        order = sorted(env["listed_routes"], key=lambda route: (not route.startswith("/challenges/"), route))
         tags = self.tags_html(env["expected_archive_tags"]())
 
         def records(urls):
@@ -275,17 +278,17 @@ class RouteTests(unittest.TestCase):
             write(self.work, env["post_output_path"](route), "<!doctype html><title>Fixture</title>")
         return env
 
-    def test_archive_feed_sitemap_block_with_all_101_routes(self):
+    def test_archive_feed_sitemap_block_with_98_listed_routes(self):
         env = self.archive_fixture()
         exec(archive_gate_code(), env)
-        self.assertEqual(len(env["archive_order"]), 101)
-        self.assertEqual(env["tag_count"], 150)
+        self.assertEqual(len(env["archive_order"]), 98)
+        self.assertEqual(env["tag_count"], 135)
 
     def test_deliberate_payload_baseline(self):
         tree = ast.parse((ROOT / "script/verify-site.py").read_text())
         comparisons = [node for node in ast.walk(tree) if isinstance(node, ast.Compare)]
         payload = next(node for node in comparisons if isinstance(node.left, ast.Tuple) and [item.id for item in node.left.elts] == ["forms", "challenge_scripts", "article_scripts", "code_frames", "math_expressions", "images"])
-        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 356, 275, 104))
+        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 356, 275, 103))
         for name, expected in (("post_routes", 101), ("challenge_pages", 13), ("math_pages", 7)):
             count = next(node for node in comparisons if isinstance(node.left, ast.Call) and isinstance(node.left.func, ast.Name) and node.left.func.id == "len" and len(node.left.args) == 1 and isinstance(node.left.args[0], ast.Name) and node.left.args[0].id == name)
             self.assertEqual(ast.literal_eval(count.comparators[0]), expected)
@@ -395,7 +398,7 @@ GATE_MUTATIONS = {
     "global_feed_file_route": ("feed.xml", "index.html", "global feed"),
     "tutorial_feed_file_route": ("ctf-tutorials/feed.xml", "index.html", "section feed"),
     "tutorial_sitemap_file_route": ("ctf-tutorials/sitemap.xml", "index.html", "section sitemap"),
-    "root_sitemap_file_route": ("sitemap.xml", "index.html", "root sitemap omits posts"),
+    "root_sitemap_file_route": ("sitemap.xml", "index.html", "root sitemap omits listed posts"),
 }
 for label, (path, suffix, message) in GATE_MUTATIONS.items():
     def check(self, path=path, suffix=suffix, message=message):
