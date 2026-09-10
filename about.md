@@ -19,7 +19,7 @@ stylesheets:
       <div class="resume-builder">
         <form id="resume-form">
           <label for="request">hr_filters.txt</label>
-          <textarea id="request" rows="12" maxlength="12000" spellcheck="false" placeholder="Must have 10 years of experience with a framework released last Tuesday.
+          <textarea id="request" rows="12" maxlength="12000" spellcheck="false">Must have 10 years of experience with a framework released last Tuesday.
 Required: 15 years of production Rust experience, starting before Rust 1.0.
 Can explain elliptic curves to a submarine crew during an active kraken incident.
 Must rotate signing keys without waking the kraken.
@@ -27,7 +27,7 @@ Has deployed zero-knowledge proofs to a TI-84 calculator at planetary scale.
 Can debug Byzantine consensus by reading packet captures and tea leaves.
 Must know every programming language, including the ones we invent during the interview.
 Available 25 hours a day across Earth, Mars and the Byzantine fault domain.
-Willing to relocate to /dev/null; compensation includes exposure and one company hoodie."></textarea>
+Willing to relocate to /dev/null; compensation includes exposure and one company hoodie.</textarea>
           <div class="resume-solve-action">
             <button id="compile" type="submit" disabled>Build tailored PDF</button>
           </div>
