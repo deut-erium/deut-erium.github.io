@@ -1,0 +1,18 @@
+/* Opt-in nodes only; never inherit a pause into article/game descendants. */
+html .dt-decoration.dt-decoration-paused,
+html.dt-decorations-paused .dt-decoration,
+html .dt-decoration-after.dt-decoration-paused::after,
+html.dt-decorations-paused .dt-decoration-after::after {
+  animation-play-state: paused !important;
+}
+
+/* Also works before the observer script loads. These are decorative chrome,
+   not the unlock feedback, puzzle status indicators, or game renderers. */
+@media (prefers-reduced-motion: reduce) {
+  html .site-footer__mystery,
+  html .skin-dice__face,
+  html .site-brand__name::after,
+  html body[data-argon] .argon-rain[aria-hidden="true"] > .argon-rain__row {
+    animation-play-state: paused !important;
+  }
+}
