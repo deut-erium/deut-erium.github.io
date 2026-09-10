@@ -47,12 +47,10 @@ type: writeup
     </article>
 
     <aside class="record-index" aria-label="Article navigation">
-      <details class="record-toc" open>
-        <summary>Contents</summary>
-        <nav class="js-toc-root" aria-label="Table of contents">
-          <p class="toc-fallback">Enable JavaScript for section links.</p>
-        </nav>
-      </details>
+      {%- assign _article_contents = content | article_contents: page.section -%}
+      {%- unless _article_contents == empty -%}
+      <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" data-toc-built aria-label="Table of contents">{{ _article_contents }}</nav></details>
+      {%- endunless -%}
 
       <section class="related-records">
         <h2>More posts</h2>

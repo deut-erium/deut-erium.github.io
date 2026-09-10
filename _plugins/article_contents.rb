@@ -225,7 +225,7 @@ module DeuteriumSite
     end
 
     def finalize(document)
-      return unless document.data["layout"] == "article" && document.output_ext == ".html" && document.output.include?(SLOT)
+      return unless %w[article writeup].include?(document.data["layout"]) && document.output_ext == ".html" && document.output.include?(SLOT)
 
       begin
         contents = render_page(document.output)

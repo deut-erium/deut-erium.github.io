@@ -124,9 +124,17 @@ assert.call(render.call('<h2 id="rcdata">X<textarea>&#10;&#10;A</textarea>Z</h2>
   assert.call(render.call(input) == "", "unsupported parser state was linked: #{input[0, 100]}")
 end
 
-legacy_literal = Struct.new(:output, :data, :output_ext).new(contents::SLOT.dup, { 'layout' => 'writeup' }, '.html')
+legacy_literal = Struct.new(:output, :data, :output_ext).new(contents::SLOT.dup, { 'layout' => 'page' }, '.html')
 contents.finalize(legacy_literal)
 assert.call(legacy_literal.output == contents::SLOT, 'contents hook modified an unowned layout')
+%w[article writeup].each do |layout|
+  page = Struct.new(:output, :data, :output_ext).new(
+    '<article id="article-body"><h2 id="section">Section</h2></article>' + contents::SLOT,
+    { 'layout' => layout }, '.html')
+  contents.finalize(page)
+  assert.call(page.output.include?('<a href="#section">Section</a>'), "#{layout} did not build contents")
+  assert.call(!page.output.include?(contents::PENDING), "#{layout} left a pending marker")
+end
 assert.call(render.call('<h2 id="large">' + '.' * (4 * 1024 * 1024) + '</h2>') == '', 'size limit did not omit contents')
 assert.call(render.call('<h2 id="&#' + '1' * 129 + ';">Long reference</h2>') == '', 'reference limit did not omit contents')
 
@@ -304,7 +312,7 @@ if ARGV.include?("--browser")
         await page.close();
         cases++;
       }
-      // Shared JS must still enhance the unowned writeup layout's fallback.
+      // Shared JS still supports legacy cached markup without built contents.
       const page = await browser.newPage();
       await page.setContent('<article class="js-article-content"><h2 id="old">Old layout</h2></article><details open><nav class="js-toc-root"><p>Enable JavaScript</p></nav></details>');
       await page.evaluate(input.script);
