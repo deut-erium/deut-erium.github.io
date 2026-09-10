@@ -1,0 +1,42 @@
+/* Wide page geometry owner. Skins retain their colors, borders, typography and
+   artwork; pages that opt in get one dependable track for wide components. */
+@media screen {
+  html .page-shell--wide {
+    --wide-page-measure: 72rem;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    grid-template-areas: none !important;
+    grid-auto-flow: row !important;
+    gap: clamp(1.2rem, 3vw, 2.5rem) !important;
+    align-items: start !important;
+  }
+
+  html .page-shell--wide > :is(.page-heading, .page-prose--wide) {
+    position: relative !important;
+    inset: auto !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    margin-block: 0 !important;
+    transform: none !important;
+    grid-area: auto !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+  }
+
+  html .page-shell--wide > .page-heading {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+  }
+
+  html .page-shell--wide > .page-prose--wide {
+    width: min(100%, var(--wide-page-measure)) !important;
+    max-width: var(--wide-page-measure) !important;
+    inline-size: min(100%, var(--wide-page-measure)) !important;
+    max-inline-size: var(--wide-page-measure) !important;
+    margin-inline: auto !important;
+  }
+}

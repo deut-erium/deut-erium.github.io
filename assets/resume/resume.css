@@ -1,12 +1,15 @@
 /* The resume generator inherits the active blog theme. */
-.resume-disclosure { margin: 1.5rem 0 2rem; }
+.resume-profile { width: 100%; max-width: none; }
+.resume-profile > p { max-width: 72ch; }
+.resume-disclosure { width: 100%; max-width: none; margin: 1.5rem 0 2rem; }
 .resume-disclosure > summary { display: inline-block; box-sizing: border-box; padding: .7rem 1rem; color: var(--lcd-ink); background: var(--lcd); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; font: 700 1rem var(--mono); list-style: none; }
 .resume-disclosure > summary::-webkit-details-marker { display: none; }
 .resume-disclosure > summary:hover { box-shadow: 1px 1px 0 var(--ink); transform: translate(2px, 2px); }
 .resume-disclosure > summary:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
 .resume-disclosure[open] > summary { margin-bottom: 1.25rem; }
+.resume-workshop { container: resume-workshop / inline-size; }
 .resume-workshop > h2 { margin-top: 0; }
-.resume-builder { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1.25rem; margin: 1.25rem 0 2rem; align-items: start; }
+.resume-builder { display: grid; width: 100%; max-width: none; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1.25rem; margin: 1.25rem 0 2rem; align-items: start; }
 #resume-form { margin: 0; min-width: 0; }
 #resume-form label { display: block; padding: .55rem .8rem; margin: 0; border: 1px solid var(--rule); border-bottom: 0; background: var(--paper-low); font: .85rem var(--mono); }
 #resume-form textarea, #resume-form button { box-sizing: border-box; max-width: 100%; padding: .7rem .8rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 0; font: inherit; }
@@ -29,6 +32,9 @@
 #preview svg { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 0 .65rem; background: #fff; color-scheme: light; border: 1px solid var(--rule); box-sizing: border-box; }
 #preview svg:last-child { margin-bottom: 0; }
 #resume-form :is(textarea, button):focus-visible, #resume-result :is(a, #preview):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+@container resume-workshop (max-width: 52rem) {
+  .resume-builder { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+}
 @media (max-width: 800px) {
   .resume-builder { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
   #resume-form textarea { min-height: 17rem; }
