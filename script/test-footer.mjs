@@ -1,6 +1,6 @@
 // Native, offline loader checks. Add --browser for the local Chrome theme matrix.
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import test from 'node:test';
@@ -89,9 +89,11 @@ test('markup preserves all destinations, warning and ordered disabled controls',
   assert.match(markup, /<script defer src="{{ '\/assets\/js\/footer.js' \| relative_url }}/);
   assert.ok(markup.indexOf('<link rel="stylesheet"') < markup.indexOf('<footer'));
   assert.doesNotMatch(markup, /<script>|\bonclick=|setInterval|setTimeout|Math\.random/);
-  assert.match(css, /min-height: 44px !important/);
-  assert.match(css, /flex-flow: row wrap !important/);
-  assert.match(css, /animation: none !important/);
+  assert.match(css, /min-height: 44px/);
+  assert.match(css, /flex-wrap: wrap/);
+  assert.doesNotMatch(markup, /restore-slot/);
+  assert.doesNotMatch(source, /These buttons change the page/);
+  assert.doesNotMatch(css, /text-decoration: underline/);
   assert.match(css, /\[hidden\]\s*\{\s*display: none !important/);
 });
 
@@ -100,7 +102,8 @@ test('idle initialization is idempotent, enables controls and never loads toybox
   assert.equal(p.scripts.length, 0);
   assert.equal(p.listeners.length, 1);
   assert.ok(p.buttons.every(b => !b.disabled));
-  assert.match(p.status.textContent, /change the page/);
+  assert.equal(p.status.textContent, '');
+  assert.equal(p.status.dataset.error, 'false');
   assert.equal(p.window.__dtToyPending, undefined);
 });
 
@@ -191,6 +194,7 @@ test('toy API exceptions give recovery text rather than another script request',
   const p = fixture(); p.run(); p.install();
   p.window.__dtToy.go = () => { throw new Error('effect failed'); };
   p.click(p.buttons[0]); assert.match(p.status.textContent, /could not start/);
+  assert.equal(p.status.dataset.error, 'true');
   p.restore.hidden = false;
   p.window.__dtToy.restore = () => { throw new Error('restore failed'); };
   p.click(p.restore); assert.match(p.status.textContent, /Reload/);
@@ -199,14 +203,15 @@ test('toy API exceptions give recovery text rather than another script request',
 
 if (process.argv.includes('--browser')) {
   test('offline Chrome: footer theme, mobile, focus, no-JS and restore geometry matrix', async () => {
-    const { default: puppeteer } = await import('puppeteer-core');
-    const out = path.resolve('agent_out/article-layout-rework/footer');
+    const { default: puppeteer } = await import('../.toolchain/verify/lighthouse-node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js');
+    const out = path.resolve(process.env.BLOG_FOOTER_OUT || 'agent_out/footer-theme-repair/browser');
+    assert.ok(out.startsWith(path.resolve('agent_out') + path.sep));
     mkdirSync(out, { recursive: true });
     const browser = await puppeteer.launch({
       executablePath: process.env.CHROME_BIN || path.resolve('.toolchain/verify/browser/chrome-linux64/chrome'),
       headless: true,
-      args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-background-networking'],
-      env: { ...process.env, LD_LIBRARY_PATH: path.resolve('.toolchain/verify/browser/sysroot/usr/lib/x86_64-linux-gnu') },
+      args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-background-networking', '--proxy-server=http://127.0.0.1:9', '--proxy-bypass-list=<-loopback>', '--host-resolver-rules=MAP * ~NOTFOUND'],
+      env: { ...process.env, LD_LIBRARY_PATH: process.env.BLOG_CHROME_LIBS || ['agent_out/mastermind-game/browser-runtime/root/usr/lib/x86_64-linux-gnu', 'agent_out/mastermind-game/browser-runtime/root/lib/x86_64-linux-gnu', '.toolchain/verify/browser/sysroot/usr/lib/x86_64-linux-gnu'].map(p => path.resolve(p)).join(':') },
     });
     const results = [];
     try {
@@ -216,17 +221,22 @@ if (process.argv.includes('--browser')) {
         // Fulfill public assets from disk. No request is continued to the network.
         try {
           const url = new URL(request.url());
-          const file = path.resolve('.' + decodeURIComponent(url.pathname));
+          const file = realpathSync(path.resolve('.' + decodeURIComponent(url.pathname)));
           if (url.origin === 'https://footer.test' && file.startsWith(path.resolve('assets') + path.sep)) {
-            request.respond({ status: 200, body: readFileSync(file) });
+            request.respond({ status: 200, headers: { 'Access-Control-Allow-Origin': '*' }, body: readFileSync(file) });
           } else request.abort();
         } catch (_) { request.abort(); }
       });
-      const base = readFileSync('agent_out/article-layout-rework/before/2026/03/03/unfaithful-claims-breaking-6-zkvms.html', 'utf8')
-        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
-        .replace(/<link\b[^>]*>/gi, '')
-        .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, 'FOOTER_FIXTURE');
+      // A supplied generated page adds real header/article context to screenshots.
+      // The default fixture is standalone; it needs no ignored historical build.
+      const base = process.env.BLOG_FOOTER_PAGE
+        ? readFileSync(process.env.BLOG_FOOTER_PAGE, 'utf8')
+          .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+          .replace(/<link\b[^>]*>/gi, '')
+          .replace(/<footer\b[^>]*class="site-footer"[^>]*>[\s\S]*?<\/footer>/, 'FOOTER_FIXTURE')
+        : '<!doctype html><html><head></head><body>FOOTER_FIXTURE</body></html>';
       assert.ok(base.includes('FOOTER_FIXTURE'));
+      const axeSource = readFileSync('.toolchain/verify/lighthouse-node_modules/axe-core/axe.min.js', 'utf8');
       // Embedded CSS needs the same font base as /assets/css/main.css.
       const main = readFileSync('assets/css/main.css', 'utf8').replaceAll('../fonts/', '/assets/fonts/');
       const remediation = readFileSync('assets/css/theme-remediation.css', 'utf8');
@@ -240,7 +250,7 @@ if (process.argv.includes('--browser')) {
         const skin = file ? skinCSS.match(/html\[data-skin="([^"]+)"\]/)?.[1] : 'rpn-garden';
         assert.ok(skin, file);
         for (const mode of ['light', 'dark']) {
-          for (const width of [320, 1440]) {
+          for (const width of [320, 390, 768, 1440]) {
             await page.setViewport({ width, height: 900 });
             await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: mode }]);
             const html = base.replace(/<html\b[^>]*>/, `<html data-skin="${skin}" data-theme="${mode}">`)
@@ -248,6 +258,12 @@ if (process.argv.includes('--browser')) {
               .replace('FOOTER_FIXTURE', `<style>${css}</style>${footerHTML}`);
             await page.setContent(html, { waitUntil: 'load' });
             await page.evaluate(() => document.fonts.ready);
+            // font-display: optional may retain a cold fallback. Review the
+            // warm selected-theme faces as well as the separate cold-page tests.
+            await page.setContent(html, { waitUntil: 'load' });
+            await page.evaluate(() => document.fonts.ready);
+            const fontErrors = await page.evaluate(() => [...document.fonts].filter(f => f.status === 'error').map(f => f.family));
+            assert.deepEqual(fontErrors, [], 'Local fixture fonts must load');
             const inspect = () => page.evaluate(() => {
               const footer = document.getElementById('site-footer');
               const controls = [...footer.querySelectorAll('a, button')].filter(el => !el.hidden);
@@ -276,7 +292,22 @@ if (process.argv.includes('--browser')) {
               const a = before.controls[i], b = before.controls[j];
               if (a.x < b.x + b.w - 1 && a.x + a.w > b.x + 1 && a.y < b.y + b.h - 1 && a.y + a.h > b.y + 1) issues.push('control overlap');
             }
-            if (before.contrast < 4.5) issues.push('contrast below 4.5');
+            // A container-color ratio cannot assess gradients or painted notes.
+            await page.addScriptTag({ content: axeSource });
+            const axe = await page.evaluate(async () => {
+              const r = await window.axe.run(document.getElementById('site-footer'), { runOnly: ['color-contrast'] });
+              return { violations: r.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => ({ target: n.target, summary: n.failureSummary })) })), incomplete: r.incomplete.length };
+            });
+            if (axe.violations.length) issues.push({ contrast: axe.violations });
+            const appearance = await page.evaluate(() => {
+              const f = document.getElementById('site-footer'), s = getComputedStyle(f);
+              const a = getComputedStyle(f.querySelector('a'));
+              return { paint: [s.backgroundColor, s.backgroundImage, s.borderTop, s.borderRadius, s.boxShadow, a.fontFamily, a.backgroundColor],
+                underlines: [...f.querySelectorAll('a')].some(a => getComputedStyle(a).textDecorationLine !== 'none'),
+                statusHidden: getComputedStyle(f.querySelector('.site-footer__status')).clipPath === 'inset(50%)',
+                emptyRestoreSlot: Boolean(f.querySelector('.site-footer__restore-slot')) };
+            });
+            if (appearance.underlines || !appearance.statusHidden || appearance.emptyRestoreSlot) issues.push('rejected footer copy/spacing/underlines');
             if (!before.slots.every(s => s.disabled) || before.slots.map(s => s.slot).join() !== '0,1,2') issues.push('no-JS contract');
             await page.addScriptTag({ content: source });
             await page.evaluate(() => {
@@ -302,11 +333,15 @@ if (process.argv.includes('--browser')) {
             await page.keyboard.press('Space');
             if (!await page.$eval('.site-footer__restore', el => el.hidden)) issues.push('restore failed');
             if (!await page.$eval('.site-footer__mystery', el => document.activeElement === el)) issues.push('restore focus lost');
-            if (skin === 'rpn-garden' || skin === 'collision-atlas') {
+            {
               await page.$eval('#site-footer', el => el.scrollIntoView({ behavior: 'instant', block: 'end' }));
-              await page.screenshot({ path: path.join(out, `${skin}-${mode}-${width}.png`) });
+              await page.evaluate(() => document.activeElement?.blur());
+              const el = await page.$('#site-footer');
+              await el.screenshot({ path: path.join(out, `${skin}-${mode}-${width}-footer.png`) });
+              const header = await page.$('.site-header');
+              if (header) await header.screenshot({ path: path.join(out, `${skin}-${mode}-${width}-header.png`) });
             }
-            results.push({ skin, mode, width, contrast: before.contrast, footer: before.footer, issues });
+            results.push({ skin, mode, width, axe, appearance, footer: before.footer, issues });
           }
         }
       }
@@ -350,6 +385,11 @@ if (process.argv.includes('--browser')) {
     } finally {
       writeFileSync(path.join(out, 'browser-matrix.json'), JSON.stringify(results, null, 2) + '\n');
       await browser.close();
+    }
+    assert.equal(results.length, 384);
+    for (const mode of ['light', 'dark']) {
+      const paints = results.filter(r => r.mode === mode && r.width === 1440).map(r => JSON.stringify(r.appearance.paint));
+      assert.equal(new Set(paints).size, 48, 'Theme paint must not collapse into a uniform footer');
     }
     assert.deepEqual(results.filter(r => r.issues.length), []);
   });

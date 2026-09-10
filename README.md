@@ -30,7 +30,7 @@ Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. 
 
 ## Article layout checks
 
-Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply their colors and typography rather than separate copies of that geometry. The three mystery buttons keep their order, load toys only after a press, and explain their disabled state without JavaScript.
+Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply footer colors, borders, accents and typography through `--footer-*` properties rather than copies of the geometry. The three mystery buttons keep their order and load toys only after a press. Restore occupies a row only while a toy is active; idle helper text is not displayed. Disabled controls have a screen-reader explanation without JavaScript.
 
 Both article and writeup layouts build contents links from the final heading IDs. Duplicate targets are omitted. Unsupported HTML produces a build warning and omits contents without changing the article. JavaScript adds heading permalinks and code controls; it is not required for the contents links.
 
