@@ -427,7 +427,7 @@ Reply:   2 exact, 0 misplaced
 
 <p>The cap applies separately on <strong>every turn</strong>. You can choose different positions next time, and changing fewer than the cap is allowed. Nothing is spent across the game. The computer knows the cap, but receives neither the original secret nor your temporary row.</p>
 
-<p>With four positions and six colors, two changes per turn can already hide every score clue: a legal temporary row can always report two Exact matches and zero Misplaced matches. The <a href="https://github.com/deut-erium/deut-erium.github.io/blob/a180e16355802407e907fbdf69ebfd40bf56389e/agent_out/mastermind-analysis/CAP-STRENGTHENING.md">constant-reply construction</a> shows why the computer can be forced to search code by code. A round limit is a game goal, not a promise that the computer can always solve within it.</p>
+<p>With four positions and six colors, two changes per turn can already hide every score clue: a legal temporary row can always report two Exact matches and zero Misplaced matches. The constant-reply construction shows why the computer can be forced to search code by code. A round limit is a game goal, not a promise that the computer can always solve within it.</p>
 
 <p>A reported pair must be attainable for the particular guess under ordinary scoring. An all-red guess cannot have misplaced matches. Three exact and one misplaced is impossible for any four-position guess: if three pegs are in place, there is nowhere else for the fourth to belong. Merely checking that the two counts sum to at most four would miss this.</p>
 
@@ -665,7 +665,7 @@ Reply:   2 exact, 0 misplaced
 
 <p>The last guess matched the fixed secret on query 11. The referee stopped before sampling another reply. This run was selected for a short example with incorrect feedback, not as a typical game.</p>
 
-<p>The <a href="https://github.com/deut-erium/deut-erium.github.io/blob/b0162fd002bed5851b43d4f45e29c527c6c62228/agent_out/mastermind-publish/experiments/primary/REPLAY.md">recorded transcript</a> uses seed <strong>3934693235</strong> and the E/T-agreement baseline. Its solver saw only guesses, reported replies and win/non-win outcomes. The temporary rows and truthful counts shown here were withheld during selection. This is a batch replay, not a sequence promised by the playable opponent.</p>
+<p>The recorded transcript uses seed <strong>3934693235</strong> and the E/T-agreement baseline. Its solver saw only guesses, reported replies and win/non-win outcomes. The temporary rows and truthful counts shown here were withheld during selection. This is a batch replay, not a sequence promised by the playable opponent.</p>
 
 <h2 id="what-a-channel-aware-solver-would-need">What a channel-aware solver would need</h2>
 
@@ -751,33 +751,11 @@ Reply:   2 exact, 0 misplaced
 </div>
 <script type="module" src="/assets/js/mastermind/board.mjs?v=ecc295ccd37c563e74ef99f85c3832030ba150f0"></script>
 
-<h2 id="reproducing-the-results">Reproducing the results</h2>
+<h2 id="how-the-results-were-checked">How the results were checked</h2>
 
 <p>The batch experiments use cached scores and incremental costs. Their checks compare every issued guess with independently accumulated costs and sample complete transcripts against the reference referee and ordered candidate lists. All actual wins, non-repeats and spent allowances were checked. A second run reproduced the deterministic result files byte for byte; timing logs are separate. The playable opponent uses a different, position-cap-aware query rule, so these tables are not measurements of its performance.</p>
 
-<p>The <a href="https://github.com/deut-erium/deut-erium.github.io/tree/b0162fd002bed5851b43d4f45e29c527c6c62228/agent_out/mastermind-publish/experiments">experiment code and retained results</a> document the seeds, opponent, cap, intervals, and verification. To rerun after checking out the repository:</p>
-
-<figure class="code-frame language-sh highlighter-rouge" data-code-frame data-language="sh" data-lines="3" data-source-sha256="afc3d7905b9aa282ab545df4e724b6408e575256fd4728650274d59375f6377a" aria-labelledby="code-frame-label-4">
-  <figcaption class="code-frame__bar">
-    <span class="code-frame__label" id="code-frame-label-4"><strong>Sh</strong></span>
-    <span class="code-frame__actions">
-      <button type="button" data-wrap-code aria-label="Wrap Sh code frame 4" aria-pressed="false" disabled hidden>Wrap</button>
-      <button type="button" data-copy-code aria-label="Copy Sh code frame 4" aria-describedby="code-frame-status-4" disabled hidden>Copy</button>
-    </span>
-  </figcaption>
-  <div class="code-frame__viewport">
-    <div class="code-frame__gutter" aria-hidden="true">1
-2
-3</div>
-    <div class="highlight"><pre class="highlight" tabindex="0" aria-label="Sh code; horizontally scrollable"><code><span class="nv">D</span><span class="o">=</span>agent_out/mastermind-publish/experiments
-node <span class="s2">"</span><span class="nv">$D</span><span class="s2">/experiment.mjs"</span> <span class="s2">"</span><span class="nv">$D</span><span class="s2">/rerun"</span>
-node <span class="s2">"</span><span class="nv">$D</span><span class="s2">/validate.mjs"</span> <span class="s2">"</span><span class="nv">$D</span><span class="s2">/rerun"</span> <span class="s2">"</span><span class="nv">$D</span><span class="s2">/rerun-checks"</span>
-</code></pre></div>
-  </div>
-  <p class="code-frame__status" id="code-frame-status-4" role="status" aria-live="polite" aria-atomic="true"></p>
-</figure>
-
-<p>Those are local policy experiments, not browser-speed measurements. The honest-game bound, random-error results, and behavior against an adversarial player answer different questions. Keeping them separate makes it possible to tell whether a solver learned from a reply, merely survived it, or finally reached the secret by trying codes.</p>
+<p>The experiment code, full transcripts, and timing logs are retained outside the public repository. The published result and curve CSVs contain the data used in the tables and figures. These are local policy experiments, not browser-speed measurements. The honest-game bound, random-error results, and behavior against an adversarial player answer different questions. Keeping them separate makes it possible to tell whether a solver learned from a reply, merely survived it, or finally reached the secret by trying codes.</p>
 </article>
     <aside class="record-index" aria-label="Article navigation">
       <details class="record-toc" open><summary>Contents</summary><nav class="js-toc-root" aria-label="Table of contents"><p class="toc-fallback">Enable JavaScript for section links.</p></nav></details>
