@@ -233,6 +233,17 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(resolve(route, "about.html"), route)
         self.assertEqual(resolve("https://deut-erium.github.io" + route + "?from=about", "about.html"), route)
         self.assertEqual(resolve("../../09/06/masatermind%2Ehtml", "2026/10/01/example.html"), route)
+        self.assertEqual(resolve("/listed/%2e%2e" + route, "about.html"), route)
+
+    def test_hidden_post_audit_tracks_casefolded_host_and_head_robots(self):
+        audit = self.site["Audit"]()
+        audit.feed('<html><head><meta name="robots" content="noindex, follow"></head>'
+                   '<body><a href="https://DEUT-ERIUM.GITHUB.IO/2026/09/06/masatermind.html">Post</a>'
+                   '<meta name="robots" content="noindex"></body></html>')
+        audit.close()
+        self.assertEqual(audit.head_robots, ["noindex, follow"])
+        self.assertEqual(len(audit.robots), 2)
+        self.assertEqual(audit.local, ["https://DEUT-ERIUM.GITHUB.IO/2026/09/06/masatermind.html"])
 
     def test_home_pagination_enforces_page_boundaries(self):
         routes = [f"/2026/01/{day:02d}/fixture-{day}.html" for day in range(1, 11)]

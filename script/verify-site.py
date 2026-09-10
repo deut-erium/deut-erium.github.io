@@ -87,6 +87,7 @@ class Audit(HTMLParser):
         self.title = self.h1 = self.main = self.description = 0
         self.canonicals: list[str] = []
         self.robots: list[str] = []
+        self.head_robots: list[str] = []
         self.refresh: list[str] = []
         self.ids: list[str] = []
         self.local: list[str] = []
@@ -101,6 +102,7 @@ class Audit(HTMLParser):
         self.headings: list[tuple[int, str, bool]] = []
         self._heading: dict[str, object] | None = None
         self._element_stack: list[tuple[str, bool]] = []
+        self._head_depth = 0
         self.unnamed_links: list[str] = []
         self._anchor: dict[str, str] | None = None
         self.forms = 0
@@ -133,6 +135,8 @@ class Audit(HTMLParser):
         )
         if tag not in self.VOID_ELEMENTS:
             self._element_stack.append((tag, element_hidden))
+        if tag == "head":
+            self._head_depth = len(self._element_stack)
         if tag == "article" and data.get("id") == "article-body":
             self._article_depth = len(self._element_stack)
         if "data-challenge-practice" in data:
@@ -165,7 +169,11 @@ class Audit(HTMLParser):
         if tag == "main": self.main += 1
         if tag == "body": self.body_classes.update((data.get("class") or "").split())
         if tag == "meta" and data.get("name") == "description": self.description += 1
-        if tag == "meta" and data.get("name") == "robots": self.robots.append(data.get("content") or "")
+        if tag == "meta" and data.get("name") == "robots":
+            value = data.get("content") or ""
+            self.robots.append(value)
+            if self._head_depth and len(self._element_stack) == self._head_depth:
+                self.head_robots.append(value)
         if tag == "meta" and (data.get("http-equiv") or "").lower() == "refresh": self.refresh.append(data.get("content") or "")
         if tag == "link" and "canonical" in (data.get("rel") or "").split(): self.canonicals.append(data.get("href") or "")
         if data.get("id"): self.ids.append(data.get("id") or "")
@@ -220,7 +228,7 @@ class Audit(HTMLParser):
             elif scheme == "data":
                 if tag not in {"img", "source"}: self.dangerous_refs.append(ref[:80])
             elif scheme in {"http", "https"}:
-                if split.netloc == SITE_HOST:
+                if (split.hostname or "").lower() == SITE_HOST.lower():
                     self.local.append(ref)
                 elif self._is_analytics_ref(ref):
                     self.analytics.append(ref)
@@ -262,6 +270,8 @@ class Audit(HTMLParser):
             if self._element_stack[index][0] == tag:
                 del self._element_stack[index:]
                 break
+        if len(self._element_stack) < self._head_depth:
+            self._head_depth = 0
         if len(self._element_stack) < self._browser_depth:
             self._browser_depth = 0
         if len(self._element_stack) < self._article_depth:
@@ -417,7 +427,15 @@ def has_robots_directive(values: list[str], expected: str) -> bool:
 
 def resolved_local_path(ref: str, page_path: str) -> str:
     base = f"{SITE_URL}/{page_path}"
-    return unquote(urlsplit(urljoin(base, ref)).path)
+    decoded = unquote(urlsplit(urljoin(base, ref)).path)
+    segments: list[str] = []
+    for segment in decoded.split("/"):
+        if segment in {"", "."}: continue
+        if segment == "..":
+            if segments: segments.pop()
+        else:
+            segments.append(segment)
+    return "/" + "/".join(segments)
 
 
 def check_home_pagination(root: Path, archive_order: list[str], page_size: int) -> None:
@@ -804,7 +822,8 @@ hidden_outputs = {post_output_path(route) for route in hidden_routes}
 for hidden_route in hidden_routes:
     rel = post_output_path(hidden_route)
     audit = page_audits[rel]
-    if not has_robots_directive(audit.robots, "noindex"): fail(f"hidden post is indexable: {hidden_route}")
+    if len(audit.head_robots) != 1 or not has_robots_directive(audit.head_robots, "noindex"):
+        fail(f"hidden post is indexable: {hidden_route}")
 for page in pages:
     rel = page.relative_to(ROOT).as_posix()
     if rel in hidden_outputs: continue
