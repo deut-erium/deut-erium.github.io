@@ -258,6 +258,10 @@ if (process.argv.includes('--browser')) {
           const probe = document.createElement('span');
           probe.style.setProperty('all', 'initial', 'important');
           props.forEach(p => probe.style.setProperty(p, `var(--${prefix}-${p})`, 'important'));
+          if (prefix === 'footer-key' && matchMedia('(max-width: 36rem)').matches) {
+            probe.style.setProperty('font-size', '1rem', 'important');
+            probe.style.setProperty('letter-spacing', '.025em', 'important');
+          }
           document.body.append(probe);
           const expected = getComputedStyle(probe);
           props.forEach(p => {
@@ -333,14 +337,26 @@ if (process.argv.includes('--browser')) {
                 emptyRestoreSlot: Boolean(f.querySelector('.site-footer__restore-slot')) };
             });
             if (appearance.underlines || !appearance.statusHidden || appearance.emptyRestoreSlot) issues.push('rejected footer copy/spacing/underlines');
+            if (width <= 390) {
+              const rows = await page.$$eval('.site-footer__links a', links => {
+                const counts = new Map();
+                for (const link of links) { const y = Math.round(link.getBoundingClientRect().top); counts.set(y, (counts.get(y) || 0) + 1); }
+                return [...counts.values()];
+              });
+              if (rows.join(',') !== '2,2,2') issues.push('mobile links leave ragged empty rows');
+              const brokenLabels = await page.$$eval('.site-footer__links a', links => links.filter(link => {
+                const range = document.createRange(); range.selectNodeContents(link); return range.getClientRects().length !== 1;
+              }).map(link => link.textContent));
+              if (brokenLabels.length) issues.push({ brokenLabels });
+            }
             const paintMismatches = await paintContract();
             if (paintMismatches.length) issues.push({ paint: paintMismatches });
             // A deliberately flattened card must fail the paint contract even
             // when copy, order, target sizes and theme-dependent colors remain.
             const flattened = await page.addStyleTag({ content: '#site-footer, #site-footer * { background: var(--paper) !important; border: 1px solid var(--rule) !important; border-radius: .5rem !important; box-shadow: none !important; font-family: var(--body) !important; }' });
             if (!(await paintContract()).length) issues.push('flattened footer mutation escaped');
-            await flattened.dispose().catch(() => {});
-            await page.evaluate(() => [...document.querySelectorAll('style')].findLast(s => s.textContent.includes('border: 1px solid var(--rule) !important; border-radius: .5rem'))?.remove());
+            await flattened.evaluate(el => el.remove());
+            await flattened.dispose();
             if (!before.slots.every(s => s.disabled) || before.slots.map(s => s.slot).join() !== '0,1,2') issues.push('no-JS contract');
             await page.addScriptTag({ content: source });
             await page.evaluate(() => {
