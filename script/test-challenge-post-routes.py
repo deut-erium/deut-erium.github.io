@@ -326,7 +326,7 @@ class RouteTests(unittest.TestCase):
         tree = ast.parse((ROOT / "script/verify-site.py").read_text())
         comparisons = [node for node in ast.walk(tree) if isinstance(node, ast.Compare)]
         payload = next(node for node in comparisons if isinstance(node.left, ast.Tuple) and [item.id for item in node.left.elts] == ["forms", "challenge_scripts", "article_scripts", "code_frames", "math_expressions", "images"])
-        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 356, 275, 103))
+        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 355, 275, 103))
         for name, expected in (("post_routes", 101), ("challenge_pages", 13), ("math_pages", 7)):
             count = next(node for node in comparisons if isinstance(node.left, ast.Call) and isinstance(node.left.func, ast.Name) and node.left.func.id == "len" and len(node.left.args) == 1 and isinstance(node.left.args[0], ast.Name) and node.left.args[0].id == name)
             self.assertEqual(ast.literal_eval(count.comparators[0]), expected)
