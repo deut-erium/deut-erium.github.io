@@ -66,6 +66,7 @@ jobs:
       - name: Verify source and generated dependencies
         run: |
           set -euo pipefail
+          python3 script/verify-local-only-paths.py
           python3 script/verify-imported-content.py
           python3 script/verify-static-app.py
           python3 script/verify-challenge-archive.py
