@@ -1023,29 +1023,29 @@ html[data-skin="monsters-in-the-math"] {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 65rem;
   --reading: 76ch;
-  --bench: #b7c583;
-  --paper: #fff9e8;
-  --paper-low: #eee9d5;
-  --ink: #302b27;
-  --muted: #625c4c;
-  --link: #613454;
-  --rule: #aaa889;
-  --moss: #657544;
-  --ochre: #c39b43;
-  --specimen: #e9e8cb;
+  --bench: #8b8af5;
+  --paper: #ffe1d2;
+  --paper-low: #f0f5a4;
+  --ink: #29234d;
+  --muted: #534369;
+  --link: #493394;
+  --rule: #8874ae;
+  --moss: #614084;
+  --ochre: #ffac82;
+  --specimen: #b6afff;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #302b27;
-  --navy-soft: #4f503c;
+  --navy: #343082;
+  --navy-soft: #524abe;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--rule);
   --lcd-ink: var(--ink);
-  --pink: #d6bad0;
+  --pink: #ffb58f;
   --orange: var(--ochre);
-  --yellow: #e4c575;
-  --cyan: #b7c583;
+  --yellow: #e8fc4d;
+  --cyan: #8b8af5;
   --inline-code: var(--paper-low);
   --inline-rule: var(--rule);
   --quote: var(--paper-low);
@@ -1111,19 +1111,19 @@ html[data-skin="monsters-in-the-math"] {
 }
 html[data-skin="monsters-in-the-math"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #252920;
-  --paper: #30352a;
-  --paper-low: #3d4434;
-  --ink: #f4ecd8;
-  --muted: #c5c6ad;
-  --link: #e3b2d3;
-  --rule: #787f63;
-  --moss: #a6b879;
-  --ochre: #deb960;
+  --bench: #4c4fbd;
+  --paper: #efb59e;
+  --paper-low: #dce887;
+  --ink: #211d49;
+  --muted: #50385e;
+  --link: #3e2b82;
+  --rule: #70609c;
+  --moss: #553285;
+  --ochre: #ffa677;
 }
 html[data-skin="monsters-in-the-math"] body {
   color: var(--ink);
-  background: radial-gradient(#65754438 .65px, transparent .85px) 0 0 / 7px 9px, var(--bench);
+  background: radial-gradient(#49339438 .65px, transparent .85px) 0 0 / 7px 9px, var(--bench);
   font: 400 1.125rem/1.7 var(--body);
   font-synthesis: none;
 }
@@ -1136,7 +1136,7 @@ html[data-skin="monsters-in-the-math"]:root :focus-visible {
   outline: 3px solid var(--link);
   outline-offset: 4px;
 }
-html[data-skin="monsters-in-the-math"] ::selection { color: #302b27; background: #e4c575; }
+html[data-skin="monsters-in-the-math"] ::selection { color: #29234d; background: #e8fc4d; }
 html[data-skin="monsters-in-the-math"] .skip-link {
   color: var(--ink);
   background: var(--paper);
@@ -1261,10 +1261,10 @@ html[data-skin="monsters-in-the-math"] .masthead::before {
   width: 100%;
   aspect-ratio: 1.05;
   background: var(--specimen) url("../../images/themes/monsters-in-the-math.svg#crawler") center / contain no-repeat;
-  border: 1px solid #878564;
-  border-bottom: 3px solid #878564;
+  border: 1px solid #6960b2;
+  border-bottom: 3px solid #6960b2;
   border-radius: 49% 43% 29% 24% / 44% 53% 15% 19%;
-  box-shadow: inset 0 0 0 7px var(--paper), inset 0 0 0 8px #b6b08c;
+  box-shadow: inset 0 0 0 7px var(--paper), inset 0 0 0 8px #8a7be3;
   pointer-events: none;
 }
 html[data-skin="monsters-in-the-math"] .masthead__copy {
@@ -1620,4 +1620,89 @@ html[data-skin="monsters-in-the-math"] .prose th { color: var(--ink); background
 @media (forced-colors: active) {
   html[data-skin="monsters-in-the-math"] .masthead::before { forced-color-adjust: none; }
   html[data-skin="monsters-in-the-math"]:root :focus-visible { outline-color: Highlight; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="monsters-in-the-math"] {
+  --pr-panel: #a5a6ff;
+  --pr-panel-ink: #29234d;
+  --pr-row: #d2caff;
+  --pr-slime: #e8fc4d;
+  --pr-code: #343082;
+  --pr-code-ink: #fff0e5;
+}
+html[data-skin="monsters-in-the-math"][data-theme="dark"] {
+  --pr-panel: #4b4ba5;
+  --pr-panel-ink: #fff0e5;
+  --pr-row: #b8b3ed;
+  --pr-slime: #d8ed48;
+}
+html[data-skin="monsters-in-the-math"] .home-shell > .section-cards {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-panel);
+  border-color: var(--pr-panel-ink);
+}
+html[data-skin="monsters-in-the-math"] .section-cards :is(h2, .index-map__links a, .index-map__links strong) {
+  color: var(--pr-panel-ink);
+  border-color: var(--pr-panel-ink);
+}
+html[data-skin="monsters-in-the-math"] .section-cards .index-map__links a:hover,
+html[data-skin="monsters-in-the-math"] .section-cards .index-map__links a:hover strong {
+  color: var(--ink);
+  background-color: var(--paper-low);
+}
+html[data-skin="monsters-in-the-math"]:root .section-cards a:focus-visible {
+  outline-color: var(--pr-panel-ink);
+}
+html[data-skin="monsters-in-the-math"] .record-row:nth-child(even) {
+  background-color: var(--pr-row);
+}
+html[data-skin="monsters-in-the-math"] #records > .section-heading,
+html[data-skin="monsters-in-the-math"] :is(.record-head, .page-heading) {
+  background-color: var(--pr-row);
+}
+html[data-skin="monsters-in-the-math"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--ink) !important;
+  background-color: var(--pr-slime) !important;
+  border-color: var(--ink) !important;
+}
+html[data-skin="monsters-in-the-math"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--ink) !important;
+  background-color: var(--paper) !important;
+  border-color: var(--ink) !important;
+  outline-color: var(--pr-slime);
+}
+html[data-skin="monsters-in-the-math"]:root .prose li::marker {
+  color: var(--link);
+}
+html[data-skin="monsters-in-the-math"] .error-shell :is(h1, p, .error-code) {
+  color: var(--ink);
+}
+html[data-skin="monsters-in-the-math"] .code-frame__actions button:is(:hover, :focus-visible, [aria-pressed="true"]) {
+  color: var(--ink);
+  background-color: var(--paper-low);
+  border-color: var(--link);
+}
+html[data-skin="monsters-in-the-math"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: var(--pr-code-ink) !important;
+  background-color: var(--pr-code) !important;
+}
+html[data-skin="monsters-in-the-math"]:root .prose .code-frame pre:focus-visible {
+  outline-color: var(--pr-slime);
+}
+html[data-skin="monsters-in-the-math"]:root .prose .highlight :is(.c, .c1, .cm, .cp, .cs) {
+  color: #c9c7ff !important;
+}
+html[data-skin="monsters-in-the-math"]:root .prose .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow) {
+  color: #e8fc4d !important;
+}
+html[data-skin="monsters-in-the-math"]:root .prose .highlight :is(.nc, .nf, .m, .mb, .mf, .mh, .mi, .mo, .il, .gd) {
+  color: #ffba95 !important;
+}
+html[data-skin="monsters-in-the-math"]:root .prose .highlight :is(.s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .gi) {
+  color: #edf5a7 !important;
+}
+html[data-skin="monsters-in-the-math"]:root .prose .highlight .err {
+  color: #29234d !important;
+  background-color: #ffb58f !important;
 }
