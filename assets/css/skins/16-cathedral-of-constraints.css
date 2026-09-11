@@ -160,25 +160,25 @@ html[data-skin="cathedral-of-constraints"] {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 72.5rem;
   --reading: 76ch;
-  --bench: #e8e1d2;
-  --paper: #fff9ec;
-  --ink: #302d29;
-  --muted: #685d50;
-  --link: #852d3f;
-  --rule: #b1a38c;
-  --shell: #ded4c2;
-  --navy: #302d29;
+  --bench: #ff88ce;
+  --paper: #ddfaff;
+  --ink: #29154e;
+  --muted: #49385e;
+  --link: #6520b4;
+  --rule: #8275be;
+  --shell: #7525da;
+  --navy: #29154e;
   --lcd: var(--paper);
   --lcd-ink: var(--ink);
-  --lcd-high: #f3e7cd;
-  --pink: #ead5bf;
-  --orange: #d7a443;
-  --yellow: #d7a443;
-  --cc-sill: #dcd1bf;
-  --cc-ruby: #aa3349;
-  --cc-amber: #d7a443;
-  --cc-emerald: #287052;
-  --cc-soft: #f3e7cd;
+  --lcd-high: #bceef8;
+  --pink: #ff8ed0;
+  --orange: #fff36c;
+  --yellow: #fff36c;
+  --cc-sill: #ff8ed0;
+  --cc-ruby: #ff59b6;
+  --cc-amber: #8b36e5;
+  --cc-emerald: #29dceb;
+  --cc-soft: #bceef8;
   --article-nav-ink: var(--ink);
   --article-nav-paper: var(--paper);
   font-synthesis: none;
@@ -240,21 +240,21 @@ html[data-skin="cathedral-of-constraints"] {
 
 html[data-skin="cathedral-of-constraints"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #262420;
-  --paper: #322f29;
-  --ink: #f8eedb;
-  --muted: #c8bba6;
-  --link: #f3c878;
-  --rule: #756956;
-  --shell: #39352e;
-  --navy: #262420;
-  --lcd-high: #413b30;
-  --pink: #534536;
-  --cc-sill: #423c32;
-  --cc-soft: #413b30;
-  --cc-ruby: #ac4657;
-  --cc-amber: #d9aa50;
-  --cc-emerald: #438566;
+  --bench: #6221c5;
+  --paper: #09586e;
+  --ink: #e6fcff;
+  --muted: #b9e5f2;
+  --link: #fff17c;
+  --rule: #819bd3;
+  --shell: #8b36e5;
+  --navy: #29154e;
+  --lcd-high: #10667c;
+  --pink: #ff8ed0;
+  --cc-sill: #782bbe;
+  --cc-soft: #10667c;
+  --cc-ruby: #ff59b6;
+  --cc-amber: #8b36e5;
+  --cc-emerald: #29dceb;
 }
 
 html[data-skin="cathedral-of-constraints"]:root,
@@ -272,8 +272,8 @@ html[data-skin="cathedral-of-constraints"] body {
 }
 
 html[data-skin="cathedral-of-constraints"] ::selection {
-  color: #302d29;
-  background: #edc675;
+  color: #29154e;
+  background: #fff36c;
 }
 
 html[data-skin="cathedral-of-constraints"]:root :focus-visible {
@@ -814,4 +814,143 @@ html[data-skin="cathedral-of-constraints"] :is(.error-code, .error-shell > p) { 
   html[data-skin="cathedral-of-constraints"]:root body .site-header.site-header,
   html[data-skin="cathedral-of-constraints"]:root :is(.home-shell, .archive-shell) { background: Canvas; }
   html[data-skin="cathedral-of-constraints"] .record-grid::before { content: none; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="cathedral-of-constraints"] {
+  --pr-deep: #29154e;
+  --pr-white: #f3fcff;
+  --pr-violet: #7525da;
+  --pr-pink: #ff8ed0;
+  --pr-cyan: #4ae3ef;
+  --pr-lemon: #fff36c;
+  --pr-hero: #ff8ed0;
+  --pr-code: #35175e;
+  --pr-correct: #006577;
+  --pr-wrong: #a0146b;
+}
+html[data-skin="cathedral-of-constraints"][data-theme="dark"] {
+  --pr-hero: #ee79be;
+  --pr-correct: #86f4ff;
+  --pr-wrong: #ffb8e1;
+}
+html[data-skin="cathedral-of-constraints"]:root .site-nav {
+  background-color: var(--pr-violet);
+}
+html[data-skin="cathedral-of-constraints"]:root :is(.site-nav > a, .skin-menu summary) {
+  color: var(--pr-white);
+  background-color: var(--pr-violet);
+}
+html[data-skin="cathedral-of-constraints"]:root .skin-menu summary::after {
+  color: inherit;
+}
+html[data-skin="cathedral-of-constraints"]:root .site-nav > a[aria-current="page"] {
+  color: var(--pr-deep);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root :is(.site-nav > a, .skin-menu summary):hover {
+  color: var(--pr-deep);
+  background-color: var(--pr-cyan);
+}
+html[data-skin="cathedral-of-constraints"]:root :is(.site-nav > a, .skin-menu summary):focus-visible {
+  outline-color: var(--pr-white);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__copy {
+  color: var(--pr-deep);
+  background-color: var(--pr-hero);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__copy :is(h1, .eyebrow, .masthead__lede) {
+  color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__actions .action {
+  color: var(--pr-white);
+  background-color: var(--pr-violet);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__actions .action.action--primary {
+  color: var(--pr-deep);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__actions .action:is(:hover, :focus-visible) {
+  color: var(--pr-deep);
+  background-color: var(--pr-cyan);
+}
+html[data-skin="cathedral-of-constraints"]:root .masthead__actions .action:focus-visible {
+  outline-color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links a {
+  color: var(--pr-deep);
+  background-color: var(--pr-pink);
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links a:nth-child(2) {
+  color: var(--pr-white);
+  background-color: var(--pr-violet);
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links a:nth-child(3) {
+  background-color: var(--pr-cyan);
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links a:nth-child(4) {
+  background-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links strong {
+  color: inherit;
+}
+html[data-skin="cathedral-of-constraints"]:root .section-links a:is(:hover, :focus-visible) {
+  color: var(--pr-deep);
+  background-color: #ddfaff;
+  outline-color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"]:root .prose th {
+  color: var(--pr-deep);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root .prose th a {
+  color: var(--pr-deep);
+  text-decoration-color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: var(--pr-white) !important;
+  background-color: var(--pr-code) !important;
+}
+html[data-skin="cathedral-of-constraints"]:root .prose .code-frame :focus-visible {
+  outline-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root .flag-check input::placeholder {
+  color: var(--muted);
+}
+html[data-skin="cathedral-of-constraints"]:root .flag-check button {
+  color: var(--pr-deep);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="cathedral-of-constraints"]:root .flag-check button:is(:hover, :focus-visible) {
+  background-color: var(--pr-pink);
+}
+html[data-skin="cathedral-of-constraints"]:root .flag-check output.is-correct {
+  color: var(--pr-correct);
+}
+html[data-skin="cathedral-of-constraints"]:root .flag-check output.is-wrong {
+  color: var(--pr-wrong);
+}
+html[data-skin="cathedral-of-constraints"]:root .external-embed,
+html[data-skin="cathedral-of-constraints"]:root .external-embed a {
+  color: var(--pr-deep);
+  text-decoration-color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-deep) !important;
+  background-color: var(--pr-cyan) !important;
+  border-color: var(--pr-deep) !important;
+}
+html[data-skin="cathedral-of-constraints"]:root .skin-dice {
+  background-color: var(--pr-pink) !important;
+}
+html[data-skin="cathedral-of-constraints"]:root .theme-toggle {
+  background-color: var(--pr-lemon) !important;
+}
+html[data-skin="cathedral-of-constraints"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-white) !important;
+  background-color: var(--pr-violet) !important;
+  outline-color: var(--pr-deep);
+}
+html[data-skin="cathedral-of-constraints"][data-theme="dark"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):focus-visible {
+  outline-color: var(--pr-white);
 }
