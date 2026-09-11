@@ -252,21 +252,21 @@ html[data-skin="cut-paste-factor"]:root {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 63.75rem;
   --reading: 64rem;
-  --bench: #e5e2d9;
-  --paper: #fffef8;
-  --paper-low: #eeece3;
-  --ink: #22221f;
-  --muted: #5a5c51;
-  --link: #b32426;
-  --rule: #aaa99c;
-  --cpf-signal: #e33e37;
-  --cpf-olive: #73794d;
+  --bench: #ffa14f;
+  --paper: #f2dfff;
+  --paper-low: #e4c8ff;
+  --ink: #4a1130;
+  --muted: #62183c;
+  --link: #94113c;
+  --rule: #85518f;
+  --cpf-signal: #ef3154;
+  --cpf-olive: #ff7a25;
   --cpf-on-control: var(--ink);
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #22221f;
-  --navy-soft: #30312b;
+  --navy: #351c58;
+  --navy-soft: #46256f;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper);
   --lcd-low: var(--paper-low);
@@ -275,8 +275,8 @@ html[data-skin="cut-paste-factor"]:root {
   --orange: var(--cpf-signal);
   --yellow: var(--link);
   --cyan: var(--cpf-olive);
-  --inline-code: #eeece3;
-  --inline-rule: #bbb9ac;
+  --inline-code: #e4c8ff;
+  --inline-rule: #85518f;
   --quote: var(--paper-low);
   --quote-high: var(--paper-low);
   --quote-low: var(--paper-low);
@@ -339,17 +339,17 @@ html[data-skin="cut-paste-factor"]:root {
 
 html[data-skin="cut-paste-factor"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #22221f;
-  --paper: #30312b;
-  --paper-low: #3b3d33;
-  --ink: #f5f2e7;
-  --muted: #c5c7b7;
-  --link: #ff9d91;
-  --rule: #767a68;
-  --cpf-signal: #e66c5d;
-  --cpf-olive: #bac18f;
-  --inline-code: #414237;
-  --inline-rule: #7e826b;
+  --bench: #f58444;
+  --paper: #46256f;
+  --paper-low: #563680;
+  --ink: #f8e9ff;
+  --muted: #dfc2f6;
+  --link: #ffc08a;
+  --rule: #bc91dc;
+  --cpf-signal: #ff5a71;
+  --cpf-olive: #ff973b;
+  --inline-code: #563680;
+  --inline-rule: #bc91dc;
 }
 
 html[data-skin="cut-paste-factor"]:root body {
@@ -943,8 +943,8 @@ html[data-skin="cut-paste-factor"]:root .prose code {
 }
 
 html[data-skin="cut-paste-factor"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
-  color: #f5f2e7 !important;
-  background-color: #22221f !important;
+  color: #f8e9ff !important;
+  background-color: #351c58 !important;
 }
 
 html[data-skin="cut-paste-factor"]:root .prose .code-frame {
@@ -1105,4 +1105,152 @@ html[data-skin="cut-paste-factor"]:root .prose hr {
   html[data-skin="cut-paste-factor"]:root .record-row__title {
     transition: none;
   }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="cut-paste-factor"]:root {
+  --pr-field-ink: #4a1130;
+  --pr-field-muted: #5b1535;
+  --pr-field-link: #671033;
+  --pr-cutout: #d3afff;
+  --pr-sticker-ink: #771035;
+}
+
+html[data-skin="cut-paste-factor"][data-theme="dark"] {
+  --pr-cutout: #c49aed;
+}
+
+html[data-skin="cut-paste-factor"]:root body,
+html[data-skin="cut-paste-factor"]:root header.site-header.site-header,
+html[data-skin="cut-paste-factor"]:root .site-brand,
+html[data-skin="cut-paste-factor"]:root .site-nav a,
+html[data-skin="cut-paste-factor"]:root .skin-menu summary {
+  color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .site-brand__scope {
+  color: var(--pr-field-muted);
+}
+
+html[data-skin="cut-paste-factor"]:root .site-nav {
+  border-color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .site-nav a[aria-current="page"] {
+  color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .site-nav a:hover,
+html[data-skin="cut-paste-factor"]:root .skin-menu summary:hover {
+  text-decoration-color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .site-brand:focus-visible,
+html[data-skin="cut-paste-factor"]:root .site-nav > a:focus-visible,
+html[data-skin="cut-paste-factor"]:root .skin-menu > summary:focus-visible,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records :focus-visible {
+  outline-color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell::before,
+html[data-skin="cut-paste-factor"]:root .archive-shell::before {
+  background-color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .skin-menu__panel label {
+  color: var(--ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .section-cards::before {
+  background-color: var(--pr-cutout);
+}
+
+html[data-skin="cut-paste-factor"]:root .section-cards,
+html[data-skin="cut-paste-factor"]:root .section-cards .section-heading h2 {
+  color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .section-cards .section-links a {
+  color: var(--pr-sticker-ink);
+  border-color: var(--pr-sticker-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .section-cards .section-links strong {
+  color: var(--pr-field-muted);
+}
+
+html[data-skin="cut-paste-factor"]:root .section-cards :focus-visible {
+  outline-color: var(--pr-sticker-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .section-heading h2,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .record-row__link,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination__position strong {
+  color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .section-heading {
+  border-color: var(--pr-field-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .record-row,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination a,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination span[aria-disabled="true"] {
+  border-color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records :is(.record-row__date, .record-row__event, .record-row__primitive),
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination__position,
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination span[aria-disabled="true"] {
+  color: var(--pr-field-muted);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .pagination a {
+  color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .home-shell > #records .record-row__link:hover .record-row__title {
+  text-decoration-color: var(--pr-field-link);
+}
+
+html[data-skin="cut-paste-factor"]:root .prose blockquote code {
+  color: var(--ink);
+  background-color: var(--inline-code);
+  border-color: var(--inline-rule);
+}
+
+html[data-skin="cut-paste-factor"]:root .prose :is(input, textarea, select) {
+  color: var(--ink);
+  background-color: var(--paper);
+  border-color: var(--rule);
+  caret-color: var(--ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .prose :is(input, textarea)::placeholder {
+  color: var(--muted);
+}
+
+html[data-skin="cut-paste-factor"]:root .flag-check button {
+  color: var(--paper);
+  background-color: var(--link);
+  border-color: var(--link);
+}
+
+html[data-skin="cut-paste-factor"]:root .flag-check output.is-correct {
+  color: var(--ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .flag-check output.is-wrong {
+  color: var(--link);
+}
+
+html[data-skin="cut-paste-factor"]:root .skin-randomizer {
+  color: var(--pr-sticker-ink);
+  background-color: var(--pr-cutout);
+  border-color: var(--pr-sticker-ink);
+}
+
+html[data-skin="cut-paste-factor"]:root .error-shell {
+  background-color: var(--paper);
 }
