@@ -143,17 +143,17 @@ html[data-skin="root-access"] {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 88rem;
   --reading: 76ch;
-  --ra-canvas: #d99874;
-  --ra-paper: #fff9eb;
-  --ra-shelf: #f2e8d2;
-  --ra-ink: #382d21;
-  --ra-muted: #70614c;
-  --ra-green: #376b2b;
-  --ra-rib: #66804b;
-  --ra-clay: #bd603b;
-  --ra-rule: #b4ae8b;
-  --ra-focus: #9a3e20;
-  --ra-hover: #e5edcf;
+  --ra-canvas: #d66bea;
+  --ra-paper: #efbbfa;
+  --ra-shelf: #ffd1b3;
+  --ra-ink: #3b154f;
+  --ra-muted: #451f50;
+  --ra-green: #50105e;
+  --ra-rib: #fff16a;
+  --ra-clay: #ffae82;
+  --ra-rule: #824891;
+  --ra-focus: #59113e;
+  --ra-hover: #fff2a6;
   --bench: var(--ra-canvas);
   --paper: var(--ra-paper);
   --paper-low: var(--ra-shelf);
@@ -236,17 +236,17 @@ html[data-skin="root-access"] {
 
 html[data-skin="root-access"][data-theme="dark"] {
   color-scheme: dark;
-  --ra-canvas: #251b14;
-  --ra-paper: #33261b;
-  --ra-shelf: #403222;
-  --ra-ink: #f4e7cc;
-  --ra-muted: #c7b793;
-  --ra-green: #a9da80;
-  --ra-rib: #8fa775;
-  --ra-clay: #e89064;
-  --ra-rule: #796c50;
-  --ra-focus: #ffd18f;
-  --ra-hover: #4b492e;
+  --ra-canvas: #8625a6;
+  --ra-paper: #73258e;
+  --ra-shelf: #542d70;
+  --ra-ink: #fff1ff;
+  --ra-muted: #f0c6f7;
+  --ra-green: #fff16a;
+  --ra-rib: #fff16a;
+  --ra-clay: #ffae82;
+  --ra-rule: #cf8dea;
+  --ra-focus: #ffc6a3;
+  --ra-hover: #683780;
 }
 
 html[data-skin="root-access"] body {
@@ -750,4 +750,76 @@ html[data-skin="root-access"] .record-end nav a { color: var(--ra-green); backgr
   html[data-skin="root-access"] .home-shell > #records { padding-top: 2rem; background-image: none; }
   html[data-skin="root-access"] :is(.archive-tools, .archive-groups, .index-heading) { padding: 1.25rem 1rem; }
   html[data-skin="root-access"] .archive-search { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="root-access"] {
+  --pr-reading: #fcf0ff;
+  --pr-roof: #9c30b8;
+  --pr-plant-panel: #ffbf99;
+  --pr-panel-ink: #3b154f;
+  --pr-panel-link: #50105e;
+  --pr-panel-hover: #fff2a6;
+}
+html[data-skin="root-access"][data-theme="dark"] {
+  --pr-reading: #42255c;
+  --pr-plant-panel: #ffb48c;
+}
+html[data-skin="root-access"] .masthead::before {
+  background-color: var(--pr-roof);
+}
+html[data-skin="root-access"] .home-shell > #records,
+html[data-skin="root-access"] :is(.archive-groups, .record-head, .page-heading, .article__content, .page-prose, .record-end) {
+  background-color: var(--pr-reading);
+}
+html[data-skin="root-access"] .home-shell > .section-cards {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-plant-panel);
+}
+html[data-skin="root-access"] .home-shell > .section-cards h2 {
+  color: var(--pr-panel-ink);
+}
+html[data-skin="root-access"] .home-shell > .section-cards .section-links a {
+  color: var(--pr-panel-link);
+}
+html[data-skin="root-access"] .home-shell > .section-cards .section-links a:is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-panel-hover);
+  outline-color: var(--pr-panel-link);
+}
+html[data-skin="root-access"] :is(input, textarea, select) {
+  color: var(--ra-ink);
+  background-color: var(--ra-paper);
+  border-color: var(--ra-rule);
+  caret-color: var(--ra-ink);
+  accent-color: var(--ra-green);
+}
+html[data-skin="root-access"] :is(input, textarea)::placeholder {
+  color: var(--ra-muted);
+}
+html[data-skin="root-access"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--ra-ink);
+  background-color: var(--ra-shelf);
+  border-color: var(--ra-green);
+}
+html[data-skin="root-access"] .code-frame__actions button[aria-pressed="true"]:is(:hover, :focus-visible) {
+  color: var(--ra-ink);
+  background-color: var(--ra-hover);
+}
+html[data-skin="root-access"]:root .prose :is(pre, pre code, .code-frame, .code-frame__gutter, .highlight) {
+  color: #fff1ff !important;
+  background-color: #42255c !important;
+}
+html[data-skin="root-access"]:root .prose .code-frame pre:focus-visible {
+  outline-color: #fff16a;
+}
+html[data-skin="root-access"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-panel-ink) !important;
+  background-color: #fff16a !important;
+  border-color: var(--pr-panel-link) !important;
+}
+html[data-skin="root-access"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink) !important;
+  background-color: #ffae82 !important;
+  outline-color: var(--ra-focus) !important;
 }
