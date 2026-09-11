@@ -28,6 +28,10 @@ The release command performs one Jekyll build for the root blog, WriteUps, tutor
 
 Set `BUILD_TIME` to an ISO 8601 timestamp when building outside a Git checkout. The build uses local assets. Mathematics and syntax highlighting are generated before publication.
 
+## Theme collection
+
+The picker keeps all 48 choices from the recorded origin/master release: RPN Garden, 43 deployed alternatives and four selected older styles. Those four are Grid Meltdown, The Exploit Grimoire, Cryptographic Blockbuster and Exploit in B-flat. Grimoire uses Euler Fraktur for display text; its reading font is unchanged. The later collection-wide recoloring and Grand Modulo addition remain off master.
+
 ## Article layout checks
 
 Article widths and navigation tracks belong to `assets/css/components/article-layout.css`; footer structure belongs to `assets/css/components/site-footer.css`. Skins supply footer colors, borders, accents and typography through `--footer-*` properties rather than copies of the geometry. Themes with body grids can assign `--article-page-area` and `--footer-page-area` without overriding the shared components. The three mystery buttons keep their order and load toys only after a press. Restore occupies a row only while a toy is active; idle helper text is not displayed. Disabled controls have a screen-reader explanation without JavaScript.
@@ -48,15 +52,42 @@ python3 script/test-print-fonts.py
 
 The optional `script/test-article-layout.mjs` browser check serves only a supplied generated site and blocks external requests. Its `--help` lists the theme matrix, prefix builds, no-JavaScript checks and comparison options. It requires a locally available Chromium and Puppeteer; the native CI checks do not download a browser.
 
-The picker offers RPN Garden, Grid Meltdown, The Exploit Grimoire, Cryptographic Blockbuster and Exploit in B-flat. Grimoire uses the existing Euler Fraktur display face; its reading font is unchanged. Each active entry records its stylesheet filename explicitly, so reordering the picker does not rename or misroute assets. Other skin files remain inactive; retired saved/query choices fall back to a valid saved choice or RPN.
-
-The About check opens the resume section at five widths, in both color modes, across the five active themes. It needs local Chromium and Puppeteer.
+The optional wide-screen page-placement check covers Margin of Error on both sides of its desktop breakpoint. The About check opens the resume section at five widths, in both color modes, across all 48 themes. Both commands need local Chromium and Puppeteer.
 
 ```sh
+node script/test-theme-page-placement.mjs --site GENERATED_BUILD --out agent_out/theme-redesign/placement
 node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-layout/browser
 ```
 
-The older `script/test-theme-page-placement.mjs` is a Margin of Error regression tool for archived builds containing that theme; it is not a current-picker check.
+## Theme redesign checks
+
+All 47 alternatives to RPN Garden have separate page designs and selected local fonts. RPN Garden remains unchanged. Each skin is scoped to its theme ID and declares only its selected faces. The 87-family library, notices, provenance and 47-theme manifest are in `assets/fonts/theme-library/`. Display faces use swap loading so their lettering appears after a cold download; reading/code faces and pre-existing global fonts remain optional.
+
+The static check validates skin scope, shared geometry ownership, local font hashes/licenses and decorative SVGs. It runs in CI without a browser. It does not score visual quality.
+
+```sh
+node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/static-NEW
+```
+
+The optional browser matrix needs two generated builds and cached Chromium/Puppeteer. Use a new output directory on each run:
+
+```sh
+node script/test-theme-redesign.mjs \
+  --site GENERATED_AFTER --before GENERATED_BEFORE \
+  --out agent_out/theme-redesign/browser-NEW
+```
+
+Its default 1,920 cases cover all 48 themes, four page types, five widths and both modes. It checks settled cold-navigation display fonts, warmed reading/code fonts, layout, visible header descriptions, article utility/contents clearance, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
+
+Run an additional sweep of the redesigned themes between the narrow and wide layouts. The intermediate utility strip keeps the buttons out of the article rail; RPN remains protected.
+
+```sh
+THEMES=$(node -p "Object.keys(require('./assets/fonts/theme-library/themes.json')).join(',')")
+node script/test-theme-redesign.mjs \
+  --site GENERATED_AFTER --before GENERATED_BEFORE --themes "$THEMES" \
+  --widths 1119,1280 --pages home,article --all-screenshots \
+  --out agent_out/theme-redesign/intermediate-NEW
+```
 
 ## API
 

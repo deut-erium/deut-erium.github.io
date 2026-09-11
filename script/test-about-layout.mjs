@@ -24,7 +24,7 @@ fs.mkdirSync(out, { recursive: true });
 assert.ok(!fs.existsSync(path.join(out, 'results.json')), 'Use a fresh output directory');
 
 const themes = [...fs.readFileSync('_data/themes.yml', 'utf8').matchAll(/^- id: (\S+)/gm)].map(match => match[1]);
-assert.equal(themes.length, 5);
+assert.equal(themes.length, 48);
 const widths = [390, 768, 1024, 1440, 1920];
 const modes = ['light', 'dark'];
 const minimumProse = new Map([[390, 320], [768, 660], [1024, 880], [1440, 1060], [1920, 1120]]);
@@ -128,7 +128,7 @@ try {
             issues.push('desktop builder columns overlap');
           }
           results.push({ skin, mode, width, ...value, issues });
-          if (mode === 'light' && width === 1440 && ['rpn-garden', 'the-exploit-grimoire', 'cryptographic-blockbuster'].includes(skin)) {
+          if (mode === 'light' && width === 1440 && ['rpn-garden', 'stack-underflow', 'margin-of-error'].includes(skin)) {
             await page.screenshot({ path: path.join(out, `${skin}.png`) });
           }
         } catch (error) {
@@ -154,4 +154,4 @@ const summary = {
 fs.writeFileSync(path.join(out, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
 assert.equal(results.length, summary.expected);
 assert.deepEqual(failed, []);
-console.log(`${results.length} About layout cases passed across 5 themes, two color modes and five viewport widths.`);
+console.log(`${results.length} About layout cases passed across 48 themes, two color modes and five viewport widths.`);

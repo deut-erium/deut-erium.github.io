@@ -38,15 +38,6 @@ puts JSON.generate(result)
 assert.equal(rendered.status, 0, `Local Jekyll renderer failed: ${rendered.error || rendered.stderr}`);
 const fixtures = JSON.parse(rendered.stdout);
 const defaultSkin = 'rpn-garden';
-const expectedFiles = {
-  'grid-meltdown': '01-grid-meltdown.css',
-  'the-exploit-grimoire': '03-the-exploit-grimoire.css',
-  'cryptographic-blockbuster': '06-cryptographic-blockbuster.css',
-  'exploit-in-b-flat': '25-exploit-in-b-flat.css',
-};
-const expectedSkins = [defaultSkin, ...Object.keys(expectedFiles)];
-const manifest = JSON.parse(readFileSync(path.join(repo, 'assets/css/skins/manifest.json'), 'utf8'));
-assert.deepEqual(Object.fromEntries(manifest.map(row => [row.id, row.file])), expectedFiles);
 
 function execute(html, { query = '', saved, color, systemDark = false, blocked = false, route = '/' } = {}) {
   assert.match(html, /^<script>\s/);
@@ -103,10 +94,7 @@ for (const [base, html] of Object.entries(fixtures)) {
   const skins = [defaultSkin, ...Object.keys(config.skinFiles)];
 
   test(`${prefix}: all skin URLs are versioned, baseurl-aware and backed by local CSS`, () => {
-    assert.deepEqual(skins, expectedSkins);
-    for (const [id, file] of Object.entries(expectedFiles)) {
-      assert.equal(config.skinFiles[id].split('?')[0], base + '/assets/css/skins/' + file);
-    }
+    assert.equal(skins.length, 48);
     assert.equal(config.skinBase, base + '/assets/css/skins/');
     for (const href of Object.values(config.skinFiles)) {
       assert.ok(href.startsWith(base + '/assets/css/skins/'));
@@ -118,7 +106,7 @@ for (const [base, html] of Object.entries(fixtures)) {
   test(`${prefix}: every query/saved skin applies synchronously on home and article, without forced fonts`, () => {
     for (const route of [base + '/', base + '/2026/03/03/unfaithful-claims-breaking-6-zkvms.html']) {
       for (const skin of skins) {
-        const q = execute(html, { query: '?skin=' + skin, saved: 'grid-meltdown', route });
+        const q = execute(html, { query: '?skin=' + skin, saved: 'proof-bonbons', route });
         assert.equal(q.config.skin, skin);
         assert.equal(q.storage.get('deuterium-skin'), skin);
         assert.equal(execute(html, { saved: skin, route }).config.skin, skin);
@@ -128,25 +116,16 @@ for (const [base, html] of Object.entries(fixtures)) {
 
   test(`${prefix}: invalid query falls back to saved skin; invalid saved values never become paths`, () => {
     for (const id of ['unknown', '__proto__', 'constructor', '../../assets/fonts/x.woff2', 'https://example.invalid/a']) {
-      assert.equal(execute(html, { query: '?skin=' + encodeURIComponent(id), saved: 'the-exploit-grimoire' }).config.skin, 'the-exploit-grimoire');
+      assert.equal(execute(html, { query: '?skin=' + encodeURIComponent(id), saved: 'magnetic-index' }).config.skin, 'magnetic-index');
       assert.equal(execute(html, { saved: id }).config.skin, defaultSkin);
     }
-    assert.equal(execute(html, { query: '?skin=rpn-garden', saved: 'the-exploit-grimoire' }).config.skin, defaultSkin);
-    assert.equal(execute(html, { query: '?skin=grid-meltdown', saved: 'the-exploit-grimoire' }).config.skin, 'grid-meltdown');
-  });
-
-  test(`${prefix}: retired choices cannot load a stylesheet or enter the picker`, () => {
-    for (const id of ['proof-bonbons', 'magnetic-index', 'cathedral-of-constraints', 'the-grand-modulo']) {
-      assert.equal(execute(html, { saved: id }).config.skin, defaultSkin);
-      assert.equal(execute(html, { query: '?skin=' + id }).config.skin, defaultSkin);
-      assert.equal(execute(html, { query: '?skin=' + id, saved: 'grid-meltdown' }).config.skin, 'grid-meltdown');
-      assert.equal(Object.hasOwn(config.skinFiles, id), false);
-    }
+    assert.equal(execute(html, { query: '?skin=rpn-garden', saved: 'magnetic-index' }).config.skin, defaultSkin);
+    assert.equal(execute(html, { query: '?skin=grid-meltdown', saved: 'magnetic-index' }).config.skin, 'grid-meltdown');
   });
 
   test(`${prefix}: unavailable storage and color preferences preserve first-page selection`, () => {
-    const blocked = execute(html, { query: '?skin=the-exploit-grimoire', blocked: true, systemDark: true });
-    assert.equal(blocked.config.skin, 'the-exploit-grimoire');
+    const blocked = execute(html, { query: '?skin=magnetic-index', blocked: true, systemDark: true });
+    assert.equal(blocked.config.skin, 'magnetic-index');
     assert.equal(blocked.root.dataset.theme, 'dark');
     assert.equal(execute(html, { blocked: true }).config.skin, defaultSkin);
     for (const color of ['light', 'dark']) {

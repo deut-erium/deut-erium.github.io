@@ -64,7 +64,7 @@ if (opt.help) {
 --max-font-bytes 0              Optional per-cold-load font body-byte cap (0 records only).
 --toy-wait-ms 15000             Real elapsed stability check without reduced motion.
 
-Default matrix: 5 generated picker themes x 2 schemes x 4 widths = 40.
+Default matrix: 48 generated picker themes x 2 schemes x 4 widths = 384.
 Each case checks nonempty prose, content/ink widths, footer siblings and visual
 order, overflow/scroll containers, selected keyboard focus styles and font bytes.
 Axe color-contrast only: article opening paragraph, contents, footer; incomplete
@@ -419,7 +419,7 @@ async function matrixCase(job) {
     const issues = observations(metrics, focus, contrast, c.network, job);
     const result = { ...job, completed: true, metrics, focus, contrast, network: c.network, observations: issues, pass: !issues.length };
     // Eight viewport sets, bounded to 24 screenshots; worst cases are added after the matrix.
-    if (screenshots && job.route === opt.article && ((job.skin === 'rpn-garden' && [320, 1440].includes(job.width)) || (job.skin === 'the-exploit-grimoire' && [390, 1440].includes(job.width)))) await screenshotSet(c.page, job);
+    if (screenshots && job.route === opt.article && ((job.skin === 'rpn-garden' && [320, 1440].includes(job.width)) || (job.skin === 'magnetic-index' && [390, 1440].includes(job.width)))) await screenshotSet(c.page, job);
     return result;
   } finally { await c.context.close(); }
 }
@@ -452,7 +452,7 @@ async function doExtras() {
       const expected = ['/', '/archive.html', '/WriteUps/', '/ctf-tutorials/', '/ramblings/', '/about.html'].map(p => base + p).sort();
       if (JSON.stringify(m.links.map(l => l.path).sort()) !== JSON.stringify(expected) || m.links.some(l => !l.visible || l.disclosure)) a.push('visible-navigation');
       if (!m.order || !m.separated || m.preview || !m.heroActions) a.push('home-order-or-controls');
-      if (m.themeCount !== 5) a.push('theme-count');
+      if (m.themeCount !== 48) a.push('theme-count');
       if (m.overflow > 1) a.push('home-overflow');
       const signature = { links: m.links.map(l => l.path.replace(base, '') || '/'), sectionCards: m.sectionCards.map(p => p.slice(base.length)), latestPosts: m.latestPosts.map(p => p.slice(base.length)) };
       if (!homeSignature) homeSignature = signature;
@@ -530,7 +530,7 @@ async function doExtras() {
       return { before, after, idleMutations, elapsedWaitMs: toyWait, earlyRequests: early, activated, restored, network: c.network, observations: a };
     } finally { await c.context.close(); }
   });
-  for (const js of [true, false]) for (const skin of ['rpn-garden', 'the-exploit-grimoire']) await extra(`print-cold-${skin}-${js ? 'js' : 'nojs'}`, async () => {
+  for (const js of [true, false]) for (const skin of ['rpn-garden', 'magnetic-index']) await extra(`print-cold-${skin}-${js ? 'js' : 'nojs'}`, async () => {
     const job = defaultJob(opt.article, 794, skin);
     const c = await open(job, { js, print: true });
     try {
@@ -578,7 +578,7 @@ try {
   // Read theme choices from stable supplied output, never from concurrently edited source.
   const c = await open(defaultJob('/'));
   try { allThemes = await c.page.$$eval('#skin-picker option', nodes => nodes.map(n => n.value)); } finally { await c.context.close(); }
-  if (allThemes.length !== 5 || new Set(allThemes).size !== 5) throw new Error(`Expected 5 unique generated themes, got ${allThemes.length}`);
+  if (allThemes.length !== 48 || new Set(allThemes).size !== 48) throw new Error(`Expected 48 unique generated themes, got ${allThemes.length}`);
   themes = opt.themes === 'all' ? allThemes : [...new Set(opt.themes.split(','))];
   if (!themes.length || themes.some(t => !allThemes.includes(t))) throw new Error('Unknown or empty theme subset');
   const jobs = themes.flatMap(skin => schemes.flatMap(scheme => widths.map(width => ({ skin, scheme, width, route: opt.article }))));
@@ -636,7 +636,7 @@ for (const r of completed) for (const o of r.observations) { const g = groups[o.
 const byWidth = Object.fromEntries(widths.map(w => { const rs = completed.filter(r => r.width === w && r.metrics.prose.median).sort((a, b) => a.metrics.prose.median - b.metrics.prose.median); return [w, { cases: rs.length, min: rs[0]?.metrics.prose.median ?? null, max: rs.at(-1)?.metrics.prose.median ?? null, narrowest: rs.slice(0, 4).map(r => ({ skin: r.skin, scheme: r.scheme, prose: r.metrics.prose.median, articleOuter: r.metrics.article.width, sidebar: r.metrics.sidebar?.width })) }]; }));
 const fonts = completed.map(r => ({ skin: r.skin, scheme: r.scheme, width: r.width, requests: r.network.fonts.length, bytes: r.network.fonts.reduce((n, f) => n + f.bodyBytes, 0), encodedBytes: r.network.cdpEncodedFontBytes })).sort((a, b) => b.bytes - a.bytes);
 const planned = themes.length * schemes.length * widths.length;
-const fullMatrix = completed.length === 40 && planned === 40 && allThemes.every(t => themes.includes(t)) && [320, 390, 768, 1440].every(w => widths.includes(w)) && schemes.length === 2;
+const fullMatrix = completed.length === 384 && planned === 384 && allThemes.every(t => themes.includes(t)) && [320, 390, 768, 1440].every(w => widths.includes(w)) && schemes.length === 2;
 const summary = { mode: opt.mode, started, ended: new Date().toISOString(), site, baseurl: base, planned, completed: completed.length, executionErrors: results.length - completed.length, fullMatrix,
   exploratory: opt.mode === 'baseline', observationCases: completed.filter(r => r.observations.length).length, groups, byWidth,
   extras: { enabled: runExtras, attempted: extras.length, completed: extras.filter(r => r.completed).length, failed: extras.filter(r => !r.pass).map(r => ({ name: r.name, error: r.error, observations: r.observations })) },
@@ -645,6 +645,6 @@ const summary = { mode: opt.mode, started, ended: new Date().toISOString(), site
   limitations: ['Initial observations, not a complete accessibility audit.', 'Contrast checks cover selected nodes only; incomplete/background-image cases require visual review.', 'Focus appearance is sampled; colors and clipping are diagnostics, not a complete focus-contrast proof.', 'NoJS does not apply query-selected themes; tested generated default only.', 'Print PDFs cover first page only; long-page pagination is not certified.', 'Toy real-time check covers one interval and one activation, not all random effects.', 'External requests are blocked; third-party behavior is outside coverage.'] };
 write('summary.json', summary);
 const counts = Object.entries(groups).map(([k, v]) => `${k}: ${v.cases}`).join('; ') || 'none observed';
-write('REPORT.md', `# Article/footer browser observations\n- Checked: ${completed.length}/${planned} planned matrix cases; full 40-case matrix: ${fullMatrix}; ${results.length - completed.length} execution errors.\n- Mode: ${opt.mode}; initial fail observations are not a complete audit.\n- Prose content widths (min..max px): ${Object.entries(byWidth).map(([w, m]) => `${w}: ${m.min}..${m.max}`).join('; ')}.\n- Observations by failure mode: ${counts}.\n- Fonts: highest cold load ${fonts[0]?.bytes ?? 'unmeasured'} body bytes in ${fonts[0]?.requests ?? 'unmeasured'} requests (${fonts[0]?.skin ?? 'no cases'}). CDP transfer totals are in raw results.\n- Selected axe contrast: ${summary.axe.casesRun} cases run; ${summary.axe.casesIncomplete} with incomplete checks. No whole-site contrast claim.\n- Extras: ${extras.length} attempted, ${extras.filter(r => r.completed).length} completed, ${extras.filter(r => !r.pass).length} with observations/errors.\n- Evidence: matrix.json, extras.json, summary.json, run.json and ${shots.length} screenshots; optional contact-sheet.jpg.\n- Needs confirmation: inspect screenshots for text/decoration overlap, focus clipping and image-backed contrast; budgets are documented heuristics.\n- Source links/root-cause review: see SOURCE-NOTES.md if present; this generated report contains no source-location claims.\n- Run: node script/test-article-layout.mjs --site ${path.relative(repo, site)} --out agent_out/article-layout-rework/browser/NEW-RUN --mode ${opt.mode}${opt.reference ? ' --reference ' + opt.reference : ''}${base ? ' --baseurl ' + base : ''}\n`);
+write('REPORT.md', `# Article/footer browser observations\n- Checked: ${completed.length}/${planned} planned matrix cases; full 384-case matrix: ${fullMatrix}; ${results.length - completed.length} execution errors.\n- Mode: ${opt.mode}; initial fail observations are not a complete audit.\n- Prose content widths (min..max px): ${Object.entries(byWidth).map(([w, m]) => `${w}: ${m.min}..${m.max}`).join('; ')}.\n- Observations by failure mode: ${counts}.\n- Fonts: highest cold load ${fonts[0]?.bytes ?? 'unmeasured'} body bytes in ${fonts[0]?.requests ?? 'unmeasured'} requests (${fonts[0]?.skin ?? 'no cases'}). CDP transfer totals are in raw results.\n- Selected axe contrast: ${summary.axe.casesRun} cases run; ${summary.axe.casesIncomplete} with incomplete checks. No whole-site contrast claim.\n- Extras: ${extras.length} attempted, ${extras.filter(r => r.completed).length} completed, ${extras.filter(r => !r.pass).length} with observations/errors.\n- Evidence: matrix.json, extras.json, summary.json, run.json and ${shots.length} screenshots; optional contact-sheet.jpg.\n- Needs confirmation: inspect screenshots for text/decoration overlap, focus clipping and image-backed contrast; budgets are documented heuristics.\n- Source links/root-cause review: see SOURCE-NOTES.md if present; this generated report contains no source-location claims.\n- Run: node script/test-article-layout.mjs --site ${path.relative(repo, site)} --out agent_out/article-layout-rework/browser/NEW-RUN --mode ${opt.mode}${opt.reference ? ' --reference ' + opt.reference : ''}${base ? ' --baseurl ' + base : ''}\n`);
 console.log(`${completed.length}/${planned} matrix completed; ${summary.observationCases} cases with initial observations; ${extras.length} extras; fullMatrix=${fullMatrix}. Results: ${path.relative(repo, out)}`);
 if (fatal || !planned || completed.length !== planned || extras.some(r => !r.completed) || (opt.mode === 'assert-after' && (summary.observationCases || extras.some(r => !r.pass)))) process.exitCode = 1;
