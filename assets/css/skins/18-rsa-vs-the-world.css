@@ -208,23 +208,23 @@
 /* Lucha bill: centered identity, broad billing strips and shallow arena edges. */
 html[data-skin="rsa-vs-the-world"] {
   color-scheme: light;
-  --bench: #c9ee43;
-  --paper: #fffaed;
-  --paper-low: #f5ebdf;
-  --ink: #301b32;
-  --muted: #654d5c;
-  --link: #be1832;
-  --rule: #c39284;
-  --accent: #c9ee43;
-  --accent-ink: #301b32;
-  --billing: #be1832;
-  --billing-ink: #fffaed;
-  --rope: #8e6455;
+  --bench: #cdff38;
+  --paper: #cef5ed;
+  --paper-low: #afeade;
+  --ink: #003c45;
+  --muted: #27635f;
+  --link: #ac0738;
+  --rule: #328d88;
+  --accent: #cdff38;
+  --accent-ink: #003c45;
+  --billing: #d80b3c;
+  --billing-ink: #f1ffec;
+  --rope: #0098a5;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--rule);
-  --navy: #301b32;
-  --navy-soft: #654d5c;
+  --navy: #003c45;
+  --navy-soft: #27635f;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--rule);
@@ -300,17 +300,17 @@ html[data-skin="rsa-vs-the-world"] {
 
 html[data-skin="rsa-vs-the-world"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #2b142d;
-  --paper: #3d2040;
-  --paper-low: #4a2949;
-  --ink: #fff1d8;
-  --muted: #ddbacf;
-  --link: #d8f76a;
-  --rule: #a77791;
-  --accent: #ff5a63;
-  --billing: #ff5a63;
-  --billing-ink: #301b32;
-  --rope: #a77791;
+  --bench: #ef2f55;
+  --paper: #006572;
+  --paper-low: #005260;
+  --ink: #e9ffed;
+  --muted: #bdeadd;
+  --link: #d2ff46;
+  --rule: #68d2ba;
+  --accent: #bfea32;
+  --billing: #d80b3c;
+  --billing-ink: #f1ffec;
+  --rope: #0098a5;
 }
 
 html[data-skin="rsa-vs-the-world"] body {
@@ -672,4 +672,90 @@ html[data-skin="rsa-vs-the-world"] .error-shell h1 { font-family: var(--body); f
   html[data-skin="rsa-vs-the-world"] *,
   html[data-skin="rsa-vs-the-world"] *::before,
   html[data-skin="rsa-vs-the-world"] *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="rsa-vs-the-world"] {
+  --pr-poster-ink: #003c45;
+  --pr-lime: #cdff38;
+  --pr-turquoise: #30dfcc;
+  --pr-nav-link: #ac0738;
+  --pr-nav-hover: #afeade;
+  --pr-code: #003c45;
+  --article-nav-paper: var(--paper-low);
+  --article-nav-ink: var(--ink);
+}
+html[data-skin="rsa-vs-the-world"][data-theme="dark"] {
+  --pr-lime: #bfea32;
+  --pr-turquoise: #20c4be;
+  --pr-nav-hover: #8fded3;
+}
+html[data-skin="rsa-vs-the-world"] .site-nav {
+  color: var(--pr-poster-ink);
+  background-color: var(--pr-lime);
+}
+html[data-skin="rsa-vs-the-world"] .site-nav a,
+html[data-skin="rsa-vs-the-world"] .skin-menu summary {
+  color: var(--pr-poster-ink);
+}
+html[data-skin="rsa-vs-the-world"] .site-nav a[aria-current="page"] {
+  color: var(--pr-nav-link);
+  border-bottom-color: var(--pr-nav-link);
+}
+html[data-skin="rsa-vs-the-world"] .site-nav a:hover,
+html[data-skin="rsa-vs-the-world"] .skin-menu summary:hover {
+  color: var(--pr-nav-link);
+  background-color: var(--pr-nav-hover);
+}
+html[data-skin="rsa-vs-the-world"] .site-nav a:focus-visible,
+html[data-skin="rsa-vs-the-world"] .skin-menu summary:focus-visible {
+  color: var(--pr-poster-ink);
+  background-color: var(--pr-nav-hover);
+  outline-color: var(--pr-poster-ink);
+}
+html[data-skin="rsa-vs-the-world"] .masthead__copy {
+  color: var(--pr-poster-ink);
+  background-color: var(--pr-turquoise);
+}
+html[data-skin="rsa-vs-the-world"] .masthead .eyebrow {
+  color: var(--pr-poster-ink);
+}
+html[data-skin="rsa-vs-the-world"] .masthead__actions .action:focus-visible {
+  outline-color: var(--pr-poster-ink);
+}
+html[data-skin="rsa-vs-the-world"] #records > .section-heading,
+html[data-skin="rsa-vs-the-world"] .pagination {
+  color: var(--pr-poster-ink);
+  background-color: var(--pr-lime);
+}
+html[data-skin="rsa-vs-the-world"] .pagination__position span {
+  color: var(--pr-poster-ink);
+  background-color: transparent;
+}
+html[data-skin="rsa-vs-the-world"] .section-links a:hover {
+  background-color: #bd0634;
+}
+html[data-skin="rsa-vs-the-world"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-poster-ink) !important;
+  background-color: var(--pr-lime) !important;
+  border-color: var(--pr-poster-ink) !important;
+}
+html[data-skin="rsa-vs-the-world"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-poster-ink) !important;
+  background-color: var(--pr-turquoise) !important;
+  border-color: var(--pr-poster-ink) !important;
+  outline-color: var(--pr-poster-ink);
+}
+html[data-skin="rsa-vs-the-world"] .site-share__copy {
+  color: var(--billing-ink);
+  background-color: var(--billing);
+}
+html[data-skin="rsa-vs-the-world"] .site-share__copy:hover,
+html[data-skin="rsa-vs-the-world"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background-color: var(--accent);
+}
+html[data-skin="rsa-vs-the-world"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: #f1ffec !important;
+  background-color: var(--pr-code) !important;
 }
