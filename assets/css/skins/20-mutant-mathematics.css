@@ -256,29 +256,29 @@ html[data-skin="mutant-mathematics"] {
   --display: "Black Ops One", Impact, sans-serif;
   --keys: "Source Sans 3", Arial, sans-serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
-  --bench: #dcee47;
-  --paper: #f8f3de;
-  --paper-low: #eae5cb;
-  --ink: #292a22;
-  --muted: #5e604b;
-  --link: #8a3918;
-  --rule: #969574;
-  --accent: #dcee47;
-  --cover-ink: #292a22;
-  --cover-rule: #73753d;
+  --bench: #c4ff3a;
+  --paper: #ff943d;
+  --paper-low: #daf3ae;
+  --ink: #2e1452;
+  --muted: #49305f;
+  --link: #54148f;
+  --rule: #6526b4;
+  --accent: #ff943d;
+  --cover-ink: #2e1452;
+  --cover-rule: #6526b4;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #292a22;
-  --navy-soft: #424435;
+  --navy: #2e1452;
+  --navy-soft: #492376;
   --lcd: var(--paper);
   --lcd-ink: var(--ink);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--paper-low);
-  --pink: #dcee47;
-  --orange: #ffab68;
-  --yellow: #dcee47;
-  --cyan: #dcee47;
+  --pink: #c4ff3a;
+  --orange: #ff943d;
+  --yellow: #c4ff3a;
+  --cyan: #c4ff3a;
   --inline-code: var(--paper-low);
   --inline-rule: var(--rule);
   --quote: var(--paper-low);
@@ -359,16 +359,16 @@ html[data-skin="mutant-mathematics"] {
 
 html[data-skin="mutant-mathematics"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #27281f;
-  --paper: #36382b;
-  --paper-low: #434633;
-  --ink: #f2efd8;
-  --muted: #c4c5a5;
-  --link: #e0f46a;
-  --rule: #818466;
-  --accent: #ffab68;
-  --cover-ink: #f2efd8;
-  --cover-rule: #818466;
+  --bench: #5b24b8;
+  --paper: #ff943d;
+  --paper-low: #b3db7c;
+  --ink: #2e1452;
+  --muted: #49305f;
+  --link: #54148f;
+  --rule: #6526b4;
+  --accent: #ff943d;
+  --cover-ink: #efffd5;
+  --cover-rule: #c4ff3a;
 }
 
 html[data-skin="mutant-mathematics"] body {
@@ -520,7 +520,7 @@ html[data-skin="mutant-mathematics"] .skin-menu select {
 
 html[data-skin="mutant-mathematics"] a { color: var(--link); text-underline-offset: .18em; }
 html[data-skin="mutant-mathematics"]:root :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
-html[data-skin="mutant-mathematics"] ::selection { color: #292a22; background: #dcee47; }
+html[data-skin="mutant-mathematics"] ::selection { color: #2e1452; background: #c4ff3a; }
 html[data-skin="mutant-mathematics"] .skip-link { color: var(--ink); background: var(--paper); border-color: var(--link); font-family: var(--keys); }
 
 /* Wide pages auto-place after the bay without changing their owned tracks. */
@@ -618,7 +618,7 @@ html[data-skin="mutant-mathematics"] :is(.action, .record-actions a, .tag-line a
   font-weight: 600;
 }
 html[data-skin="mutant-mathematics"] .masthead__actions .action--primary {
-  color: #292a22;
+  color: #2e1452;
   background: var(--accent);
   border-color: var(--rule);
 }
@@ -741,7 +741,7 @@ html[data-skin="mutant-mathematics"] :is(a, button, summary, input, select) { tr
 html[data-skin="mutant-mathematics"] :is(.site-nav > a, .skin-menu summary):hover { color: var(--cover-ink); background: transparent; border-color: var(--cover-ink); }
 html[data-skin="mutant-mathematics"] .site-nav > a[aria-current="page"]:hover { color: var(--ink); background: var(--paper); }
 html[data-skin="mutant-mathematics"] :is(.action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .all-tags__grid a, .code-frame__actions button, .record-end nav a):hover { color: var(--link); background: var(--paper); border-color: var(--link); box-shadow: none; }
-html[data-skin="mutant-mathematics"] .masthead__actions .action--primary:hover { color: #292a22; background: var(--accent); }
+html[data-skin="mutant-mathematics"] .masthead__actions .action--primary:hover { color: #2e1452; background: var(--accent); }
 html[data-skin="mutant-mathematics"] :is(.section-links a, .record-row__link):hover { color: var(--ink); background: transparent; border-color: var(--link); box-shadow: none; }
 
 @media (max-width: 68rem) {
@@ -804,4 +804,120 @@ html[data-skin="mutant-mathematics"] :is(.section-links a, .record-row__link):ho
 @media (forced-colors: active) {
   html[data-skin="mutant-mathematics"] body::before,
   html[data-skin="mutant-mathematics"] :is(.home-shell, .archive-shell, .page-shell, .record-page)::before { display: none; }
+}
+
+/* Palette rework paint roles. */
+@media (forced-colors: none) {
+  html[data-skin="mutant-mathematics"] {
+    --pr-paper: #efffd5;
+    --pr-violet: #6a24cb;
+    --pr-lime: #c4ff3a;
+    --pr-on-violet: #efffd5;
+    --pr-tab: var(--pr-violet);
+    --pr-tab-ink: var(--pr-on-violet);
+    --pr-panel: var(--pr-violet);
+    --pr-panel-ink: var(--pr-on-violet);
+    --pr-panel-rule: #c4a0fa;
+    --pr-code: #3c1767;
+    --article-nav-paper: var(--pr-panel);
+    --article-nav-ink: var(--pr-panel-ink);
+  }
+  html[data-skin="mutant-mathematics"][data-theme="dark"] {
+    --pr-paper: #c5e998;
+    --pr-tab: var(--pr-lime);
+    --pr-tab-ink: var(--ink);
+    --pr-panel: var(--orange);
+    --pr-panel-ink: var(--ink);
+    --pr-panel-rule: var(--ink);
+  }
+
+  html[data-skin="mutant-mathematics"]:root :is(.home-shell, .archive-shell, .page-shell, .error-shell),
+  html[data-skin="mutant-mathematics"]:root :is(.record-page, .article__content, .page-prose, .flag-check, .flag-check input) {
+    background-color: var(--pr-paper);
+  }
+
+  html[data-skin="mutant-mathematics"] .site-nav > a,
+  html[data-skin="mutant-mathematics"] .site-nav > a:hover {
+    color: var(--pr-tab-ink);
+    background-color: var(--pr-tab);
+  }
+  html[data-skin="mutant-mathematics"] .site-nav > a:nth-child(even) {
+    --pr-tab: var(--orange);
+    --pr-tab-ink: var(--ink);
+  }
+  html[data-skin="mutant-mathematics"] .site-nav > a[aria-current="page"],
+  html[data-skin="mutant-mathematics"] .site-nav > a[aria-current="page"]:hover {
+    color: var(--ink);
+    background-color: var(--pr-paper);
+    border-color: var(--ink);
+  }
+  html[data-skin="mutant-mathematics"] .site-header :is(.site-brand, .site-nav > a, .skin-menu > summary):focus-visible {
+    outline-color: var(--cover-ink);
+  }
+  html[data-skin="mutant-mathematics"] .skin-menu summary::after { color: var(--cover-ink); }
+
+  html[data-skin="mutant-mathematics"] .home-shell > .section-cards,
+  html[data-skin="mutant-mathematics"] .record-grid > .record-index {
+    color: var(--pr-panel-ink);
+    background-color: var(--pr-panel);
+    border-color: var(--pr-panel-rule);
+  }
+  html[data-skin="mutant-mathematics"] .section-cards :is(h2, .section-links a, .section-links strong),
+  html[data-skin="mutant-mathematics"] .section-cards .section-links a:hover,
+  html[data-skin="mutant-mathematics"] .record-grid > .record-index :is(summary, h2, a, .toc-fallback) {
+    color: var(--pr-panel-ink);
+  }
+  html[data-skin="mutant-mathematics"] .section-cards :is(.section-links, .section-links a),
+  html[data-skin="mutant-mathematics"] .record-grid > .record-index :is(.record-toc, .related-records, li) {
+    border-color: var(--pr-panel-rule);
+  }
+  html[data-skin="mutant-mathematics"] :is(.section-cards, .record-grid > .record-index) a:focus-visible {
+    outline-color: var(--pr-panel-ink);
+  }
+
+  html[data-skin="mutant-mathematics"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--ink) !important;
+    background-color: var(--pr-lime) !important;
+    border-color: var(--ink) !important;
+  }
+  html[data-skin="mutant-mathematics"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible),
+  html[data-skin="mutant-mathematics"] .site-share__btn {
+    color: var(--ink) !important;
+    background-color: var(--orange) !important;
+    border-color: var(--ink) !important;
+  }
+  html[data-skin="mutant-mathematics"] :is(.skin-dice, .theme-toggle, .site-share__btn):focus-visible {
+    outline-color: var(--cover-ink);
+  }
+
+  html[data-skin="mutant-mathematics"] .prose th,
+  html[data-skin="mutant-mathematics"] .code-frame__bar {
+    color: var(--ink);
+    background-color: var(--orange);
+  }
+  html[data-skin="mutant-mathematics"] .code-frame__actions button[aria-pressed="true"] {
+    color: var(--ink);
+    background-color: var(--pr-lime);
+  }
+  html[data-skin="mutant-mathematics"] .flag-check input::placeholder { color: var(--muted); }
+
+  html[data-skin="mutant-mathematics"]:root .prose :is(.code-frame, pre, pre code, .code-frame__gutter, .highlight) {
+    color: var(--pr-on-violet) !important;
+    background-color: var(--pr-code) !important;
+  }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.c, .c1, .cm, .cp, .cs) { color: #d9c4ed !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .gi) { color: var(--pr-lime) !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.o, .ow, .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx) { color: #ffbc83 !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .no, .nt, .nv) { color: var(--pr-on-violet) !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.nc, .nf, .gh, .gu) { color: #dbc5ff !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight :is(.m, .mb, .mf, .mh, .mi, .mo, .il, .gd) { color: var(--orange) !important; }
+  html[data-skin="mutant-mathematics"]:root .prose .highlight .err {
+    color: var(--ink) !important;
+    background-color: var(--orange) !important;
+  }
+  html[data-skin="mutant-mathematics"]:root .prose .code-frame pre:focus-visible { outline-color: var(--pr-lime); }
+  html[data-skin="mutant-mathematics"]:root .prose .code-frame ::selection {
+    color: var(--ink);
+    background-color: var(--pr-lime);
+  }
 }
