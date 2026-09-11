@@ -151,16 +151,16 @@ html[data-skin="the-clause-exchange"] {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 80rem;
   --reading: 76ch;
-  --bench: #d8b5ca;
-  --paper: #f8f4ee;
-  --paper-low: #e9dedc;
-  --ink: #30282e;
-  --muted: #665760;
-  --link: #962a5c;
-  --rule: #b9a5ae;
-  --cable: #d76522;
-  --focus: #9b4314;
-  --tape: #edd2bf;
+  --bench: #b890fb;
+  --paper: #f4f8be;
+  --paper-low: #e4eaa0;
+  --ink: #321454;
+  --muted: #583164;
+  --link: #5920a2;
+  --rule: #916aac;
+  --cable: #ff715e;
+  --focus: #5920a2;
+  --tape: #ff9387;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
@@ -236,16 +236,16 @@ html[data-skin="the-clause-exchange"] {
 
 html[data-skin="the-clause-exchange"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #2b2229;
-  --paper: #3b2d37;
-  --paper-low: #493641;
-  --ink: #f4e9df;
-  --muted: #c8b6c0;
-  --link: #ffa7cb;
-  --rule: #816573;
-  --cable: #ff985d;
-  --focus: #ffd28f;
-  --tape: #58404a;
+  --bench: #6630cb;
+  --paper: #dfe594;
+  --paper-low: #cdd575;
+  --ink: #321454;
+  --muted: #583164;
+  --link: #5920a2;
+  --rule: #80529b;
+  --cable: #edff42;
+  --focus: #5920a2;
+  --tape: #ff9387;
 }
 
 /* Undo shared overflow clipping rather than concealing escaped content. */
@@ -615,4 +615,104 @@ html[data-skin="the-clause-exchange"]:root :is(.skin-dice, .theme-toggle, .site-
   html[data-skin="the-clause-exchange"] .archive-shell { padding: 1.5rem 1rem; }
   html[data-skin="the-clause-exchange"] .archive-search { grid-template-columns: minmax(0, 1fr); }
   html[data-skin="the-clause-exchange"] .record-page { background-image: none; border-top: 3px solid var(--cable); }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="the-clause-exchange"] {
+  --pr-hero: #cfadff;
+  --pr-hero-ink: #321454;
+  --pr-hero-muted: #583164;
+  --pr-hero-title: #5920a2;
+  --pr-outside-ink: #321454;
+  --pr-outside-focus: #321454;
+  --pr-publications: #eafa52;
+  --pr-lavender: #cfadff;
+  --pr-acid: #edff42;
+}
+html[data-skin="the-clause-exchange"][data-theme="dark"] {
+  --pr-hero: #7438d2;
+  --pr-hero-ink: #fffbd5;
+  --pr-hero-muted: #fffbd5;
+  --pr-hero-title: #edff42;
+  --pr-outside-ink: #fffbd5;
+  --pr-outside-focus: #edff42;
+  --pr-publications: #ff9387;
+  --pr-lavender: #bc97ff;
+}
+html[data-skin="the-clause-exchange"]:root :is(.site-brand, .site-brand__scope) {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="the-clause-exchange"] .site-brand__mark {
+  border-color: var(--pr-outside-ink);
+}
+html[data-skin="the-clause-exchange"]:root :is(.site-header, .masthead) :focus-visible {
+  outline-color: var(--pr-outside-focus);
+}
+html[data-skin="the-clause-exchange"]:root :is(.masthead, .masthead__copy) {
+  color: var(--pr-hero-ink);
+  background-color: var(--pr-hero);
+}
+html[data-skin="the-clause-exchange"]:root .masthead :is(.masthead__lede, .masthead__sub) {
+  color: var(--pr-hero-ink);
+}
+html[data-skin="the-clause-exchange"]:root .masthead .eyebrow {
+  color: var(--pr-hero-muted);
+}
+html[data-skin="the-clause-exchange"]:root .masthead h1 {
+  color: var(--pr-hero-title);
+}
+html[data-skin="the-clause-exchange"]:root :is(.site-nav a, .skin-menu summary, .skin-randomizer, .masthead .action) {
+  color: var(--ink);
+  background-color: var(--pr-lavender);
+  border-color: var(--link);
+}
+html[data-skin="the-clause-exchange"]:root :is(.site-nav a[aria-current="page"], .masthead .action--primary) {
+  color: var(--ink);
+  background-color: var(--pr-acid);
+  border-color: var(--ink);
+}
+html[data-skin="the-clause-exchange"]:root :is(.site-nav a, .skin-menu summary, .skin-randomizer, .masthead .action):hover {
+  color: var(--ink);
+  background-color: var(--tape);
+  border-color: var(--ink);
+}
+html[data-skin="the-clause-exchange"]:root .home-shell > .section-cards {
+  color: var(--ink);
+  background-color: var(--pr-publications);
+}
+html[data-skin="the-clause-exchange"]:root .section-cards :is(.section-heading, .section-links a) {
+  border-color: var(--link);
+}
+html[data-skin="the-clause-exchange"]:root .section-cards :is(.section-heading h2, .section-links a, .section-links strong) {
+  color: var(--ink);
+}
+html[data-skin="the-clause-exchange"]:root .section-links a:hover {
+  color: var(--ink);
+  background-color: var(--pr-lavender);
+}
+html[data-skin="the-clause-exchange"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--ink) !important;
+  background-color: var(--pr-acid) !important;
+  border-color: var(--ink) !important;
+}
+html[data-skin="the-clause-exchange"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--ink) !important;
+  background-color: var(--tape) !important;
+  border-color: var(--ink) !important;
+  outline-color: var(--pr-outside-focus);
+}
+html[data-skin="the-clause-exchange"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: #fffbd5 !important;
+  background-color: #45207a !important;
+}
+html[data-skin="the-clause-exchange"]:root .code-frame__actions button[aria-pressed="true"] {
+  color: var(--ink);
+  background-color: var(--pr-acid);
+}
+html[data-skin="the-clause-exchange"]:root :is(.code-frame__actions button, .flag-check button):hover {
+  color: var(--ink);
+  background-color: var(--tape);
+}
+html[data-skin="the-clause-exchange"] .flag-check input::placeholder {
+  color: var(--muted);
 }
