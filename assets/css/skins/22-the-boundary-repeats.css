@@ -243,14 +243,14 @@
 /* Continuous botanical plate. The shared components retain article/page/footer geometry. */
 html[data-skin="the-boundary-repeats"] {
   color-scheme: light;
-  --bench: #c4d39c;
-  --paper: #faf5e5;
-  --paper-low: #e9edcf;
-  --ink: #243d2c;
-  --muted: #56664d;
-  --link: #803e64;
-  --rule: #a3ae82;
-  --fern: #789348;
+  --bench: #ffd43b;
+  --paper: #fff7ca;
+  --paper-low: #bee9ff;
+  --ink: #173d61;
+  --muted: #35577a;
+  --link: #a31553;
+  --rule: #477894;
+  --fern: #c52667;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
@@ -336,14 +336,14 @@ html[data-skin="the-boundary-repeats"] {
 
 html[data-skin="the-boundary-repeats"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #203429;
-  --paper: #2c4232;
-  --paper-low: #374e38;
-  --ink: #f1eed7;
-  --muted: #becba6;
-  --link: #edb4d3;
-  --rule: #7f956b;
-  --fern: #cdd998;
+  --bench: #086191;
+  --paper: #104f78;
+  --paper-low: #12608a;
+  --ink: #fff5c7;
+  --muted: #d1eaff;
+  --link: #ffe0eb;
+  --rule: #71c6ef;
+  --fern: #ff93bb;
 }
 
 /* Undo the inherited global clipping rather than hiding layout faults. */
@@ -978,4 +978,139 @@ html[data-skin="the-boundary-repeats"] .page-heading { border-radius: 2rem 0 3re
   html[data-skin="the-boundary-repeats"] .home-shell > .record-index::before,
   html[data-skin="the-boundary-repeats"] .archive-groups::before { background-image: none; }
   html[data-skin="the-boundary-repeats"]:root { --link: LinkText; --ink: CanvasText; --paper: Canvas; --paper-low: Canvas; --rule: CanvasText; --fern: CanvasText; }
+}
+
+/* Palette rework paint roles. */
+@media (forced-colors: none) {
+  html[data-skin="the-boundary-repeats"] {
+    --pr-sky: #8bd7f6;
+    --pr-sun: #ffe26b;
+    --pr-field-ink: #173d61;
+    --pr-field-muted: #35577a;
+    --pr-raspberry: #a31553;
+    --pr-cream: #fff7ca;
+    --pr-hover: #bee9ff;
+  }
+  html[data-skin="the-boundary-repeats"][data-theme="dark"] {
+    --pr-sky: #0b699c;
+    --pr-sun: #f4cb46;
+  }
+  html[data-skin="the-boundary-repeats"] :is(.site-header, .home-shell, .archive-shell, .page-shell, .error-shell, .record-page) {
+    background-color: var(--pr-sky);
+  }
+  html[data-skin="the-boundary-repeats"] .masthead {
+    background-color: var(--fern);
+    border-color: var(--pr-raspberry);
+  }
+  html[data-skin="the-boundary-repeats"] .masthead__copy {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-sun);
+    border-color: var(--pr-raspberry);
+  }
+  html[data-skin="the-boundary-repeats"] :is(.record-head, .page-heading, .index-heading) {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-sun);
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"]:root .record-head h1 {
+    color: var(--pr-field-ink);
+  }
+  html[data-skin="the-boundary-repeats"] :is(.masthead .eyebrow, .page-heading .eyebrow, .index-heading .eyebrow, .record-head__key, .record-facts dt) {
+    color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"] .record-head .record-facts {
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"] :is(.record-head, .page-heading, .index-heading) > p a,
+  html[data-skin="the-boundary-repeats"] .record-facts a {
+    color: var(--pr-raspberry);
+  }
+  html[data-skin="the-boundary-repeats"] :is(.record-head, .page-heading, .index-heading) > p a:hover,
+  html[data-skin="the-boundary-repeats"] .record-facts a:hover {
+    color: var(--pr-field-ink);
+  }
+  html[data-skin="the-boundary-repeats"] .home-shell > .section-cards {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="the-boundary-repeats"] .section-cards .section-heading {
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"] .section-cards .section-heading h2 {
+    color: var(--pr-field-ink);
+  }
+  html[data-skin="the-boundary-repeats"]:root .section-cards .section-links a {
+    color: var(--pr-raspberry);
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"] .section-cards .section-links strong {
+    color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"]:root .section-cards .section-links a:hover {
+    color: var(--pr-field-ink);
+  }
+  html[data-skin="the-boundary-repeats"]:root .site-nav a {
+    background-color: transparent;
+  }
+  html[data-skin="the-boundary-repeats"]:root .skin-menu summary {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-sun);
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"]:root .site-nav a[aria-current="page"] {
+    color: var(--pr-raspberry);
+    background-color: var(--pr-sun);
+    border-color: var(--pr-field-muted);
+  }
+  html[data-skin="the-boundary-repeats"]:root :is(.site-nav a, .skin-menu summary):hover {
+    color: var(--paper);
+    background-color: var(--link);
+    border-color: var(--link);
+  }
+  html[data-skin="the-boundary-repeats"]:root .masthead__actions .action {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-cream);
+    border-color: var(--pr-raspberry);
+  }
+  html[data-skin="the-boundary-repeats"]:root .masthead__actions .action.action--primary {
+    color: var(--pr-cream);
+    background-color: var(--pr-raspberry);
+  }
+  html[data-skin="the-boundary-repeats"]:root .masthead__actions .action:hover {
+    color: var(--pr-field-ink);
+    background-color: var(--pr-hover);
+    border-color: var(--pr-field-ink);
+  }
+  html[data-skin="the-boundary-repeats"]:root :is(.masthead, .section-cards, .record-head, .page-heading, .index-heading) :focus-visible,
+  html[data-skin="the-boundary-repeats"]:root .site-nav > a[aria-current="page"]:focus-visible,
+  html[data-skin="the-boundary-repeats"]:root .site-nav > details > summary:focus-visible {
+    outline-color: var(--pr-field-ink) !important;
+  }
+  html[data-skin="the-boundary-repeats"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--pr-field-ink) !important;
+    background-color: var(--pr-sun) !important;
+    border-color: var(--pr-field-ink) !important;
+  }
+  html[data-skin="the-boundary-repeats"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+    color: var(--pr-cream) !important;
+    background-color: var(--pr-raspberry) !important;
+    border-color: var(--pr-cream) !important;
+  }
+  html[data-skin="the-boundary-repeats"]:root .flag-check button {
+    color: var(--paper);
+    background-color: var(--link);
+  }
+  html[data-skin="the-boundary-repeats"]:root .flag-check button:is(:hover, :focus-visible) {
+    color: var(--ink);
+    background-color: var(--paper-low);
+  }
+  html[data-skin="the-boundary-repeats"]:root .flag-check input::placeholder {
+    color: var(--muted);
+  }
+  html[data-skin="the-boundary-repeats"]:root .flag-check output.is-correct {
+    color: var(--ink);
+  }
+  html[data-skin="the-boundary-repeats"]:root .flag-check output.is-wrong {
+    color: var(--link);
+  }
 }
