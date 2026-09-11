@@ -230,23 +230,23 @@ html[data-skin="unknown-at-rf-0-73"] {
   --keys: "Source Sans 3", "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 67.5rem;
-  --bench: #eadc52;
-  --paper: #ffffff;
-  --paper-low: #f0f5ee;
-  --ink: #173c3d;
-  --muted: #45625d;
-  --link: #006b73;
-  --rule: #96ada2;
-  --rf-hairline: #cedbd1;
-  --rf-cyan: #31c7d6;
-  --rf-lemon: #eadc52;
-  --rf-rose: #d97795;
-  --rf-hover: #edf6f1;
+  --bench: #fff04a;
+  --paper: #d3f7ff;
+  --paper-low: #a9e8f5;
+  --ink: #073b4c;
+  --muted: #285565;
+  --link: #9c1255;
+  --rule: #388293;
+  --rf-hairline: #76c6d6;
+  --rf-cyan: #29d9ee;
+  --rf-lemon: #fff04a;
+  --rf-rose: #ff67b0;
+  --rf-hover: #ffdbed;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #173c3d;
-  --navy-soft: #315c58;
+  --navy: #073b4c;
+  --navy-soft: #15556a;
   --lcd: var(--paper-low);
   --lcd-high: var(--rf-hover);
   --lcd-low: var(--rule);
@@ -315,18 +315,18 @@ html[data-skin="unknown-at-rf-0-73"] {
 
 html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #152c2b;
-  --paper: #203b39;
-  --paper-low: #294946;
-  --ink: #eef5e7;
-  --muted: #c2d4c8;
-  --link: #78e1e6;
-  --rule: #789b8e;
-  --rf-hairline: #44685c;
-  --rf-cyan: #78e1e6;
-  --rf-lemon: #eada71;
-  --rf-rose: #f0a0b6;
-  --rf-hover: #30544e;
+  --bench: #e761a4;
+  --paper: #085b78;
+  --paper-low: #096277;
+  --ink: #e6fbff;
+  --muted: #b5e8f3;
+  --link: #fff27c;
+  --rule: #62c9da;
+  --rf-hairline: #29869b;
+  --rf-cyan: #29d9ee;
+  --rf-lemon: #fff04a;
+  --rf-rose: #ff67b0;
+  --rf-hover: #126a80;
 }
 
 html[data-skin="unknown-at-rf-0-73"] body {
@@ -343,8 +343,8 @@ html[data-skin="unknown-at-rf-0-73"]:root body {
 }
 
 html[data-skin="unknown-at-rf-0-73"] ::selection {
-  color: #173c3d;
-  background: #eadc52;
+  color: #073b4c;
+  background: #fff04a;
 }
 
 html[data-skin="unknown-at-rf-0-73"]:root :focus-visible {
@@ -927,4 +927,231 @@ html[data-skin="unknown-at-rf-0-73"] :is(.skin-dice, .theme-toggle):is(:hover, :
   html[data-skin="unknown-at-rf-0-73"] *,
   html[data-skin="unknown-at-rf-0-73"] *::before,
   html[data-skin="unknown-at-rf-0-73"] *::after { transition: none !important; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="unknown-at-rf-0-73"] {
+  --pr-ink: #073b4c;
+  --pr-muted: #123f50;
+  --pr-link: #65103d;
+  --pr-head: #ff91c6;
+  --pr-cyan: #5be2f1;
+  --pr-pink: #ff98c9;
+  --pr-lemon: #fff27c;
+  --pr-hover: #fffbd5;
+  --article-nav-paper: var(--paper-low);
+  --article-nav-ink: var(--ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"][data-theme="dark"] {
+  --pr-head: #3dcee3;
+  --pr-cyan: #3dcee3;
+  --pr-pink: #f184bc;
+  --pr-lemon: #e6df69;
+  --pr-hover: #faf096;
+}
+
+html[data-skin="unknown-at-rf-0-73"]:root body[data-layout] .site-header {
+  color: var(--pr-ink);
+  background-color: var(--pr-head);
+  border-bottom-color: var(--pr-ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-brand {
+  color: var(--pr-ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-header .site-brand:focus-visible {
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-brand__scope {
+  color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-nav a,
+html[data-skin="unknown-at-rf-0-73"] .skin-menu summary {
+  color: var(--pr-ink);
+  background-color: var(--pr-head);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-nav a:is(:hover, :focus-visible, [aria-current="page"]),
+html[data-skin="unknown-at-rf-0-73"] .skin-menu summary:is(:hover, :focus-visible) {
+  color: var(--pr-link);
+  background-color: var(--pr-lemon);
+  border-bottom-color: var(--pr-link);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .index-heading,
+html[data-skin="unknown-at-rf-0-73"] .page-heading,
+html[data-skin="unknown-at-rf-0-73"] .record-head {
+  color: var(--pr-ink);
+  background-color: var(--pr-pink);
+  border-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"]:root .index-heading h1,
+html[data-skin="unknown-at-rf-0-73"]:root .page-heading h1,
+html[data-skin="unknown-at-rf-0-73"]:root .record-head h1 {
+  color: var(--pr-ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .index-heading .eyebrow,
+html[data-skin="unknown-at-rf-0-73"] .page-heading .eyebrow,
+html[data-skin="unknown-at-rf-0-73"] .record-head__key,
+html[data-skin="unknown-at-rf-0-73"] .record-facts dt {
+  color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .record-head .record-facts {
+  border-top-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-heading,
+html[data-skin="unknown-at-rf-0-73"] .archive-year > header {
+  color: var(--pr-ink);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-heading :is(h1, h2),
+html[data-skin="unknown-at-rf-0-73"] .archive-year h2 {
+  color: var(--pr-ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"]:root .section-heading a,
+html[data-skin="unknown-at-rf-0-73"]:root .archive-year > header a {
+  color: var(--pr-link);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-links a {
+  color: var(--pr-ink);
+  background-color: var(--pr-cyan);
+  border-bottom-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-links a:nth-child(3n + 2) {
+  background-color: var(--pr-pink);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-links a:nth-child(3n) {
+  background-color: var(--pr-lemon);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-links a strong {
+  color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .section-links a:is(:hover, :focus-visible) {
+  color: var(--pr-link);
+  background-color: var(--pr-hover);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .masthead__actions .action--primary {
+  color: var(--pr-ink);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .masthead__actions .action--primary:is(:hover, :focus-visible) {
+  color: var(--pr-link);
+  background-color: var(--pr-pink);
+  border-color: var(--pr-link);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .record-head :is(.tag-line, .record-actions) a {
+  color: var(--pr-link);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .record-head :is(.tag-line, .record-actions) a:is(:hover, :focus-visible) {
+  color: var(--pr-link);
+  background-color: var(--pr-hover);
+  border-color: var(--pr-link);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .record-grid > .record-index {
+  background-color: var(--paper-low);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .prose th {
+  color: var(--pr-ink);
+  background-color: var(--pr-lemon);
+}
+
+html[data-skin="unknown-at-rf-0-73"]:root .prose th a {
+  color: var(--pr-link);
+  outline-color: var(--pr-link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .code-frame__actions button:is(:hover, :focus-visible) {
+  color: var(--link);
+  background-color: var(--rf-hover);
+  border-color: var(--link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .argon-unlock :is(input, button) {
+  color: var(--ink);
+  background-color: var(--paper-low);
+  border-color: var(--rule);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .argon-unlock input::placeholder {
+  color: var(--muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .argon-unlock button:is(:hover, :focus-visible) {
+  color: var(--link);
+  background-color: var(--rf-hover);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .argon-note.is-wrong {
+  color: var(--link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .error-shell > p {
+  color: var(--ink);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .error-code {
+  color: var(--link);
+}
+
+html[data-skin="unknown-at-rf-0-73"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-ink) !important;
+  background-color: var(--pr-lemon) !important;
+  border-color: var(--pr-ink) !important;
+}
+
+html[data-skin="unknown-at-rf-0-73"] .skin-dice {
+  background-color: var(--pr-pink) !important;
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-share__btn {
+  background-color: var(--pr-cyan) !important;
+}
+
+html[data-skin="unknown-at-rf-0-73"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible, :active) {
+  color: var(--pr-link) !important;
+  background-color: var(--pr-hover) !important;
+  border-color: var(--pr-link) !important;
+  outline-color: var(--pr-link) !important;
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-share__copy {
+  color: var(--pr-link);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-muted);
+}
+
+html[data-skin="unknown-at-rf-0-73"] .site-share__copy:is(:hover, :focus-visible) {
+  color: var(--pr-link);
+  background-color: var(--pr-hover);
+  outline-color: var(--pr-link);
 }
