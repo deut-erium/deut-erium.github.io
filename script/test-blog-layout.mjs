@@ -8,7 +8,7 @@ const out = path.resolve('agent_out/blog-layout-revert');
 fs.mkdirSync(out, { recursive: true });
 const origin = process.env.BLOG_TEST_ORIGIN || 'http://127.0.0.1:4197';
 const themes = [...fs.readFileSync('_data/themes.yml', 'utf8').matchAll(/^- id: (\S+)/gm)].map(m => m[1]);
-assert.equal(themes.length, 48);
+assert.equal(themes.length, 5);
 const routes = ['/', '/archive.html', '/WriteUps/', '/ctf-tutorials/', '/ramblings/', '/about.html'].sort();
 const article = '/2026/03/03/unfaithful-claims-breaking-6-zkvms.html';
 const profiles = [['home-mobile', '/', 390, 844], ['article-desktop', article, 1440, 900]];
@@ -78,7 +78,7 @@ async function inspect(page, home) {
   assert.deepEqual(metrics.links.map(l => l.href).sort(), routes);
   assert.ok(metrics.links.every(l => l.visible && !l.inClosedDisclosure), 'navigation links must stay visible');
   assert.equal(metrics.questions, 3);
-  assert.equal(metrics.themes, 48);
+  assert.equal(metrics.themes, 5);
   if (home) {
     assert.equal(metrics.publicationsFirst, true);
     assert.equal(metrics.preview, false);

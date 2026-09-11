@@ -48,12 +48,15 @@ python3 script/test-print-fonts.py
 
 The optional `script/test-article-layout.mjs` browser check serves only a supplied generated site and blocks external requests. Its `--help` lists the theme matrix, prefix builds, no-JavaScript checks and comparison options. It requires a locally available Chromium and Puppeteer; the native CI checks do not download a browser.
 
-The optional wide-screen page-placement check covers Margin of Error on both sides of its desktop breakpoint. The About check opens the resume section at five widths, in both color modes, across all 48 themes. Both commands need local Chromium and Puppeteer.
+The picker offers RPN Garden, Grid Meltdown, The Exploit Grimoire, Cryptographic Blockbuster and Exploit in B-flat. Grimoire uses the existing Euler Fraktur display face; its reading font is unchanged. Each active entry records its stylesheet filename explicitly, so reordering the picker does not rename or misroute assets. Other skin files remain inactive; retired saved/query choices fall back to a valid saved choice or RPN.
+
+The About check opens the resume section at five widths, in both color modes, across the five active themes. It needs local Chromium and Puppeteer.
 
 ```sh
-node script/test-theme-page-placement.mjs --site GENERATED_BUILD --out agent_out/theme-redesign/placement
 node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-layout/browser
 ```
+
+The older `script/test-theme-page-placement.mjs` is a Margin of Error regression tool for archived builds containing that theme; it is not a current-picker check.
 
 ## API
 

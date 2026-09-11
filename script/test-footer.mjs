@@ -272,8 +272,9 @@ if (process.argv.includes('--browser')) {
         }
         return mismatches;
       });
-      const skins = [null, ...readdirSync('assets/css/skins').filter(n => n.endsWith('.css')).sort()];
-      assert.equal(skins.length, 48);
+      const activeSkins = JSON.parse(readFileSync('assets/css/skins/manifest.json', 'utf8'));
+      const skins = [null, ...activeSkins.map(row => row.file)];
+      assert.equal(skins.length, 5);
       for (const file of skins) {
         const skinCSS = file ? readFileSync(path.join('assets/css/skins', file), 'utf8') : '';
         const skin = file ? skinCSS.match(/html\[data-skin="([^"]+)"\]/)?.[1] : 'rpn-garden';
@@ -450,10 +451,10 @@ if (process.argv.includes('--browser')) {
       writeFileSync(path.join(out, 'browser-matrix.json'), JSON.stringify(results, null, 2) + '\n');
       await browser.close();
     }
-    assert.equal(results.length, 384);
+    assert.equal(results.length, 40);
     for (const mode of ['light', 'dark']) {
       const paints = results.filter(r => r.mode === mode && r.width === 1440).map(r => JSON.stringify(r.appearance.paint));
-      assert.equal(new Set(paints).size, 48, 'Theme paint must not collapse into a uniform footer');
+      assert.equal(new Set(paints).size, 5, 'Theme paint must not collapse into a uniform footer');
     }
     assert.deepEqual(results.filter(r => r.issues.length), []);
   });

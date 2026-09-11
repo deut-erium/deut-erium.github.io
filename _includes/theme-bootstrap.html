@@ -11,8 +11,7 @@
   const skinFiles = {
     {%- for theme in site.data.themes -%}
       {%- unless theme.default -%}
-        {%- assign skin_number = forloop.index0 | prepend: '0' | slice: -2, 2 -%}
-        {%- assign skin_file = skin_number | append: '-' | append: theme.id | append: '.css' -%}
+        {%- assign skin_file = theme.file -%}
         {%- assign skin_path = '/assets/css/skins/' | append: skin_file -%}
         {%- assign skin_hash = skin_path | asset_v -%}
         {%- assign skin_href_entry = skin_path | relative_url | append: '?v=' | append: skin_hash -%}
