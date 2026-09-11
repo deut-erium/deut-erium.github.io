@@ -217,21 +217,21 @@
 /* The Descent: one opening, a publication threshold, a level chronicle. */
 html[data-skin="the-descent"] {
   color-scheme: light;
-  --bench: #ddd8d0;
-  --paper: #fff8e9;
-  --paper-low: #eee3d1;
-  --ink: #2b2521;
-  --muted: #675b51;
-  --rule: #a18873;
-  --link: #9c3a18;
-  --descent-focus: #773f65;
-  --descent-edge: #d86831;
-  --descent-plane: #cbc1b4;
+  --bench: #7541dd;
+  --paper: #c9fff3;
+  --paper-low: #adf3e6;
+  --ink: #173b49;
+  --muted: #365867;
+  --rule: #347e89;
+  --link: #661dc6;
+  --descent-focus: #a4167c;
+  --descent-edge: #ff6bcc;
+  --descent-plane: #2de0d4;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #2b2521;
-  --navy-soft: #675b51;
+  --navy: #173b49;
+  --navy-soft: #365867;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--rule);
@@ -308,16 +308,16 @@ html[data-skin="the-descent"] {
 
 html[data-skin="the-descent"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #181411;
-  --paper: #27201b;
-  --paper-low: #372c24;
-  --ink: #f4e6cf;
-  --muted: #c5af99;
-  --rule: #8b6a50;
-  --link: #ffae78;
-  --descent-focus: #d9b1dc;
-  --descent-edge: #b75b2c;
-  --descent-plane: #30261e;
+  --bench: #6425c8;
+  --paper: #096273;
+  --paper-low: #075665;
+  --ink: #e4fff8;
+  --muted: #c0f7eb;
+  --rule: #41c6cd;
+  --link: #ffd0ef;
+  --descent-focus: #ffd0ef;
+  --descent-edge: #ff6bcc;
+  --descent-plane: #2de0d4;
 }
 
 /* Undo the shared legacy clipping, rather than conceal escaped paint. */
@@ -814,4 +814,125 @@ html[data-skin="the-descent"] :is(.code-frame__status, .code-frame__fallback) {
   html[data-skin="the-descent"] .section-links a { padding: 1rem .35rem; }
   html[data-skin="the-descent"]:root .masthead__lede { font-size: 1.25rem !important; }
   html[data-skin="the-descent"] .prose { font-size: 1.1875rem; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="the-descent"] {
+  --pr-out-ink: #f4fffb;
+  --pr-out-link: #67fff0;
+  --pr-aqua: #4ce7dc;
+  --pr-candy: #ff80ca;
+  --pr-crystal: #7940e8;
+  --pr-panel-ink: #32135b;
+}
+html[data-skin="the-descent"] :is(.site-header, .site-brand) {
+  color: var(--pr-out-ink);
+}
+html[data-skin="the-descent"]:root .site-brand__scope {
+  color: var(--pr-out-link);
+}
+html[data-skin="the-descent"]:root .site-nav a {
+  color: var(--pr-out-ink);
+}
+html[data-skin="the-descent"]:root .site-nav a[aria-current="page"] {
+  color: var(--pr-out-link);
+  border-bottom-color: var(--pr-out-link);
+}
+html[data-skin="the-descent"]:root .site-nav a:is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-aqua);
+  border-color: var(--pr-aqua);
+}
+html[data-skin="the-descent"]:root .site-header :focus-visible {
+  outline-color: var(--pr-out-link);
+}
+html[data-skin="the-descent"]:root .skin-menu__panel :focus-visible {
+  outline-color: var(--descent-focus);
+}
+html[data-skin="the-descent"] .skin-menu__panel label {
+  color: var(--ink);
+}
+html[data-skin="the-descent"]:root :is(.masthead h1, .index-heading h1) {
+  color: var(--link);
+}
+html[data-skin="the-descent"] .section-links a {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-aqua);
+}
+html[data-skin="the-descent"] .section-links a:nth-child(4n + 2) {
+  background-color: var(--pr-candy);
+}
+html[data-skin="the-descent"] .section-links a:nth-child(4n + 3) {
+  color: var(--pr-out-ink);
+  background-color: var(--pr-crystal);
+}
+html[data-skin="the-descent"] .section-links a strong {
+  color: inherit;
+}
+html[data-skin="the-descent"]:root .section-links a:is(:hover, :focus-visible) {
+  color: var(--pr-out-ink);
+  background-color: var(--pr-panel-ink);
+}
+html[data-skin="the-descent"]:root .section-links a:focus-visible {
+  outline-color: var(--ink);
+}
+html[data-skin="the-descent"] .record-row:nth-child(even) {
+  background-color: var(--paper-low);
+}
+html[data-skin="the-descent"] .quick-filters a[aria-current="true"],
+html[data-skin="the-descent"] .code-frame__actions button[aria-pressed="true"],
+html[data-skin="the-descent"] .code-frame__actions button:last-child:hover {
+  color: var(--paper);
+  background-color: var(--link);
+  border-color: var(--link);
+}
+html[data-skin="the-descent"] .prose blockquote code {
+  color: var(--ink);
+  background-color: var(--paper);
+}
+html[data-skin="the-descent"] .prose :is(ul, ol) > li::marker {
+  color: var(--link);
+}
+html[data-skin="the-descent"] .external-embed {
+  color: var(--ink);
+  background-color: var(--paper-low);
+}
+html[data-skin="the-descent"] .external-embed a {
+  color: var(--link);
+}
+html[data-skin="the-descent"] :is(.flag-check button, .site-share__copy) {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-aqua);
+}
+html[data-skin="the-descent"] :is(.flag-check button, .site-share__copy):is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-candy);
+}
+html[data-skin="the-descent"] .flag-check output.is-correct {
+  color: var(--ink);
+}
+html[data-skin="the-descent"] .flag-check output.is-wrong {
+  color: var(--link);
+}
+html[data-skin="the-descent"] :is(.flag-check input, .challenge-practice textarea)::placeholder {
+  color: var(--muted);
+}
+html[data-skin="the-descent"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: var(--pr-out-ink) !important;
+  background-color: var(--pr-panel-ink) !important;
+}
+html[data-skin="the-descent"]:root .prose .code-frame ::selection {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-aqua);
+}
+html[data-skin="the-descent"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-panel-ink) !important;
+  background-color: var(--pr-aqua) !important;
+  border-color: var(--pr-panel-ink) !important;
+}
+html[data-skin="the-descent"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink) !important;
+  background-color: var(--pr-candy) !important;
+  border-color: var(--pr-panel-ink) !important;
+  outline-color: var(--pr-out-link) !important;
 }
