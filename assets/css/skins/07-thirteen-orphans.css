@@ -162,18 +162,18 @@ html[data-skin="thirteen-orphans"] {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 74rem;
   --reading: 76ch;
-  --bench: #a3cca8;
-  --paper: #fff8e5;
-  --paper-low: #efe7d1;
-  --ink: #183a2c;
-  --muted: #304f3c;
-  --rule: #94a78c;
-  --link: #176b50;
-  --jade: #176b50;
-  --cinnabar: #9b3026;
-  --glaze: #fffdf3;
-  --edge: #30745a;
-  --hover-paper: #e1ecd5;
+  --bench: #77d6f5;
+  --paper: #e3f6ff;
+  --paper-low: #c7eaf8;
+  --ink: #103c56;
+  --muted: #28516b;
+  --rule: #4e7891;
+  --link: #a20c43;
+  --jade: #a20c43;
+  --cinnabar: #a20c43;
+  --glaze: #f1fcff;
+  --edge: #a20c43;
+  --hover-paper: #bfe5f6;
   --shell: var(--bench);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
@@ -250,18 +250,18 @@ html[data-skin="thirteen-orphans"] {
 
 html[data-skin="thirteen-orphans"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #10241c;
-  --paper: #20392d;
-  --paper-low: #2b4838;
-  --ink: #f6edd6;
-  --muted: #c1ccb8;
-  --rule: #607f69;
-  --link: #8fd8b1;
-  --jade: #8fd8b1;
-  --cinnabar: #ff9a83;
-  --glaze: #829b7e;
-  --edge: #6ca081;
-  --hover-paper: #314f3d;
+  --bench: #076b98;
+  --paper: #146a8c;
+  --paper-low: #0c5978;
+  --ink: #f1fbff;
+  --muted: #d5effa;
+  --rule: #92cae2;
+  --link: #ffe1ce;
+  --jade: #ffe1ce;
+  --cinnabar: #ffdbe5;
+  --glaze: #8cdcf6;
+  --edge: #79c7e9;
+  --hover-paper: #176486;
 }
 
 /* Do not use the shared root clipping rule to hide layout mistakes. */
@@ -869,4 +869,80 @@ html[data-skin="thirteen-orphans"] .record-end nav a {
 @media (forced-colors: active) {
   html[data-skin="thirteen-orphans"] .masthead__copy::after { background: none; }
   html[data-skin="thirteen-orphans"]:root :focus-visible { outline-color: Highlight; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="thirteen-orphans"] {
+  --pr-tile: #ffc19e;
+  --pr-tile-hover: #ffd7bb;
+  --pr-tile-ink: #103c56;
+  --pr-tile-cherry: #a20c43;
+  --pr-heading: #a20c43;
+}
+html[data-skin="thirteen-orphans"][data-theme="dark"] {
+  --pr-tile: #f3ac8d;
+  --pr-tile-hover: #ffc8a5;
+  --pr-tile-ink: #12364b;
+  --pr-tile-cherry: #960d3d;
+  --pr-heading: #ffe1ce;
+}
+@media (forced-colors: none) {
+  html[data-skin="thirteen-orphans"]:root .masthead h1 {
+    color: var(--pr-heading);
+  }
+  html[data-skin="thirteen-orphans"]:root .site-nav {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-tile);
+    border-color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"]:root .site-nav > a,
+  html[data-skin="thirteen-orphans"]:root .skin-menu summary {
+    color: var(--pr-tile-ink);
+  }
+  html[data-skin="thirteen-orphans"]:root .site-nav > a:is(:hover, [aria-current="page"]),
+  html[data-skin="thirteen-orphans"]:root .skin-menu summary:hover {
+    color: var(--pr-tile-cherry);
+    border-bottom-color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"]:root .site-nav > a:focus-visible,
+  html[data-skin="thirteen-orphans"]:root .skin-menu summary:focus-visible {
+    outline-color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"]:root .section-links a:nth-child(n),
+  html[data-skin="thirteen-orphans"]:root .masthead__actions .action--primary,
+  html[data-skin="thirteen-orphans"] :is(.cookie-banner__btn, .site-share__copy) {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-tile);
+    border-color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"]:root .section-links strong {
+    color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"]:root .section-links a:nth-child(n):hover,
+  html[data-skin="thirteen-orphans"]:root .masthead__actions .action--primary:hover,
+  html[data-skin="thirteen-orphans"] :is(.cookie-banner__btn, .site-share__copy):is(:hover, :focus-visible) {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-tile-hover);
+    border-color: var(--pr-tile-cherry);
+  }
+  html[data-skin="thirteen-orphans"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--pr-tile-ink) !important;
+    background-color: var(--pr-tile) !important;
+    border-color: var(--pr-tile-cherry) !important;
+  }
+  html[data-skin="thirteen-orphans"] :is(.skin-dice, .theme-toggle, .site-share__btn):hover {
+    background-color: var(--pr-tile-hover) !important;
+  }
+  html[data-skin="thirteen-orphans"] .argon-note.is-wrong {
+    color: var(--cinnabar);
+  }
+  html[data-skin="thirteen-orphans"] .error-shell > p {
+    color: var(--ink);
+  }
+  html[data-skin="thirteen-orphans"] .error-code {
+    color: var(--cinnabar);
+  }
+  html[data-skin="thirteen-orphans"] .error-code i {
+    background-color: var(--cinnabar);
+  }
 }
