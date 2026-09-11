@@ -236,14 +236,14 @@
 html[data-skin="high-lonesome-protocol"] {
   color-scheme: light;
   font-synthesis: none;
-  --oat: #eee0c3;
-  --leaf: #fff8e7;
-  --walnut: #35251e;
-  --denim: #28556a;
-  --apple: #b33d34;
-  --soft-ink: #6b5140;
-  --seam: #c4ac89;
-  --wash: #f2e7d1;
+  --oat: #7bd6ff;
+  --leaf: #d9f3ff;
+  --walnut: #082f69;
+  --denim: #0646a2;
+  --apple: #aa0b2f;
+  --soft-ink: #224f70;
+  --seam: #408bc0;
+  --wash: #b6e5ff;
   --bench: var(--oat);
   --paper: var(--leaf);
   --paper-low: var(--wash);
@@ -333,14 +333,14 @@ html[data-skin="high-lonesome-protocol"] {
 
 html[data-skin="high-lonesome-protocol"][data-theme="dark"] {
   color-scheme: dark;
-  --oat: #241d18;
-  --leaf: #332923;
-  --walnut: #f5e8cd;
-  --denim: #a8cdd6;
-  --apple: #ea8170;
-  --soft-ink: #cfbda5;
-  --seam: #816b56;
-  --wash: #40332a;
+  --oat: #105ba6;
+  --leaf: #104c8a;
+  --walnut: #f1faff;
+  --denim: #ffe375;
+  --apple: #ffc5d0;
+  --soft-ink: #c4e7ff;
+  --seam: #69bef1;
+  --wash: #115793;
 }
 
 html[data-skin="high-lonesome-protocol"]:root,
@@ -1151,5 +1151,130 @@ html[data-skin="high-lonesome-protocol"] body:not(.layout-home) .site-brand__nam
   html[data-skin="high-lonesome-protocol"] .site-header::before,
   html[data-skin="high-lonesome-protocol"] .masthead::after {
     background: CanvasText;
+  }
+}
+
+/* Palette rework paint roles. */
+@media (forced-colors: none) {
+  html[data-skin="high-lonesome-protocol"] {
+    --pr-sun: #ffe16a;
+    --pr-print: #082f69;
+    --pr-print-link: #0646a2;
+    --pr-print-muted: #224f70;
+    --pr-cherry: #ed2546;
+    --pr-cherry-ink: #aa0b2f;
+    --pr-hero: #92ddff;
+    --pr-sky: #92ddff;
+    --article-nav-paper: var(--pr-sun);
+    --article-nav-ink: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"][data-theme="dark"] {
+    --pr-sun: #ffd34a;
+    --pr-hero: #105ba6;
+  }
+  html[data-skin="high-lonesome-protocol"] .site-header {
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] .site-brand {
+    color: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"] .site-brand:hover {
+    color: var(--pr-cherry-ink);
+  }
+  html[data-skin="high-lonesome-protocol"]:root .site-brand__scope {
+    color: var(--pr-print-muted);
+  }
+  html[data-skin="high-lonesome-protocol"] :is(.masthead, .masthead__copy) {
+    background-color: var(--pr-hero);
+  }
+  html[data-skin="high-lonesome-protocol"] .home-shell > .section-cards,
+  html[data-skin="high-lonesome-protocol"] .section-cards .section-heading h2 {
+    color: var(--pr-print);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] .section-cards .section-links a {
+    color: var(--pr-print-link);
+    background-color: var(--pr-sun);
+    border-color: var(--pr-print-link);
+  }
+  html[data-skin="high-lonesome-protocol"] .section-cards .section-links strong {
+    color: var(--pr-print-muted);
+  }
+  html[data-skin="high-lonesome-protocol"] .section-cards .section-links a:hover {
+    color: var(--pr-cherry-ink);
+    border-color: var(--pr-cherry-ink);
+  }
+  html[data-skin="high-lonesome-protocol"]:root :is(.site-brand, .section-cards a):focus-visible {
+    outline-color: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"] .site-header::before,
+  html[data-skin="high-lonesome-protocol"] .masthead::after,
+  html[data-skin="high-lonesome-protocol"] .home-shell::after,
+  html[data-skin="high-lonesome-protocol"] .archive-shell::after {
+    background-color: var(--pr-cherry);
+  }
+  html[data-skin="high-lonesome-protocol"] .record-grid > .record-index {
+    color: var(--pr-print);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] .record-grid :is(.record-toc a, .record-toc summary, .related-records a) {
+    color: var(--pr-print-link);
+  }
+  html[data-skin="high-lonesome-protocol"] .record-grid .related-records h2 {
+    color: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"] .record-grid .toc-fallback {
+    color: var(--pr-print-muted);
+  }
+  html[data-skin="high-lonesome-protocol"]:root .record-index :is(.record-toc, .related-records) :focus-visible {
+    outline-color: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"] .prose th {
+    color: var(--pr-print);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] .prose th :is(a, code) {
+    color: var(--pr-print-link);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] .prose th a:hover {
+    color: var(--pr-cherry-ink);
+  }
+  html[data-skin="high-lonesome-protocol"] :is(.flag-check button, .site-share__copy, .external-embed) {
+    color: var(--pr-print);
+    background-color: var(--pr-sun);
+  }
+  html[data-skin="high-lonesome-protocol"] :is(.flag-check button, .site-share__copy):is(:hover, :focus-visible) {
+    color: var(--pr-print);
+    background-color: var(--pr-sky);
+  }
+  html[data-skin="high-lonesome-protocol"] .flag-check input::placeholder {
+    color: var(--soft-ink);
+  }
+  html[data-skin="high-lonesome-protocol"] .flag-check output.is-correct {
+    color: var(--ink);
+  }
+  html[data-skin="high-lonesome-protocol"] .flag-check output.is-wrong {
+    color: var(--apple);
+  }
+  html[data-skin="high-lonesome-protocol"] .external-embed a {
+    color: var(--pr-print-link);
+  }
+  html[data-skin="high-lonesome-protocol"] .external-embed a:hover {
+    color: var(--pr-cherry-ink);
+  }
+  html[data-skin="high-lonesome-protocol"]:root :is(.prose th, .external-embed) :focus-visible {
+    outline-color: var(--pr-print);
+  }
+  html[data-skin="high-lonesome-protocol"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--pr-print) !important;
+    background-color: var(--pr-sun) !important;
+    border-color: var(--pr-print) !important;
+  }
+  html[data-skin="high-lonesome-protocol"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+    color: var(--pr-print) !important;
+    background-color: var(--pr-sky) !important;
+    border-color: var(--pr-print) !important;
+    outline-color: var(--pr-print);
   }
 }
