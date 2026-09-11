@@ -61,7 +61,7 @@ node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-l
 
 ## Theme redesign checks
 
-All 47 alternatives to RPN Garden have separate page designs and selected local fonts. RPN Garden remains unchanged. Each skin is scoped to its theme ID and declares only its selected faces. The 87-family library, notices, provenance and 47-theme manifest are in `assets/fonts/theme-library/`. Display faces use swap loading so their lettering appears after a cold download; reading/code faces and pre-existing global fonts remain optional.
+The 43 deployed designs declare their selected local faces. The four retained styles use their original global fonts and system fallbacks; their CSS and native fonts have separate integrity pins. Every skin remains scoped to its theme ID. The 87-family library, notices, provenance and 47-theme manifest are in `assets/fonts/theme-library/`. Library display faces use swap loading; reading/code faces and the retained styles' global fonts remain optional.
 
 The static check validates skin scope, shared geometry ownership, local font hashes/licenses and decorative SVGs. It runs in CI without a browser. It does not score visual quality.
 
@@ -77,7 +77,7 @@ node script/test-theme-redesign.mjs \
   --out agent_out/theme-redesign/browser-NEW
 ```
 
-Its default 1,920 cases cover all 48 themes, four page types, five widths and both modes. It checks settled cold-navigation display fonts, warmed reading/code fonts, layout, visible header descriptions, article utility/contents clearance, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
+Its default 1,920 cases cover all 48 themes, four page types, five widths and both modes. It checks settled cold-navigation library display fonts, warmed fonts (including the retained styles), layout, visible header descriptions, article utility/contents clearance, focus, footer cells and selected contrast, with separate font-failure cases. Home captures include full-page images for side-by-side composition review. RPN comparisons distinguish decoded pixels, computed styles and rendered fonts; unstable regions are disclosed. Naturally offered cookie notices are dismissed through their real Reject button before comparing page states, without changing the random draw. Cold optional-font fallback and incomplete contrast checks are not accessibility passes. The older article runner supplies toy activation, no-JS and print checks. The scripts never download browsers or serve the checkout.
 
 Run an additional sweep of the redesigned themes between the narrow and wide layouts. The intermediate utility strip keeps the buttons out of the article rail; RPN remains protected.
 

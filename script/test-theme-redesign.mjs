@@ -641,7 +641,7 @@ async function runCase(job, fallback = false) {
     } else if (job.theme !== RPN) {
       const selected = result.fonts.filter(r => families[job.theme].includes(r.family));
       if (!selected.length) result.issues.push('no-selected-font-samples');
-      for (const row of selected) if ((!opt['cold-only'] || row.family === displayFaces[job.theme]) && !usedSelectedFace(row)) result.issues.push(`selected-font-not-rendered:${row.selector}:${row.family}`);
+      for (const row of selected) if ((!opt['cold-only'] || !retainedStyles[job.theme] && row.family === displayFaces[job.theme]) && !usedSelectedFace(row)) result.issues.push(`selected-font-not-rendered:${row.selector}:${row.family}`);
       if (!selected.some(r => /h1|brand/.test(r.selector)) || !selected.some(r => /lede|prose|article-body|note/.test(r.selector))) result.issues.push('missing-display-or-body-font-coverage');
       const unexpected = result.fonts.filter(r => !families[job.theme].includes(r.family));
       if (unexpected.length) result.issues.push('sample-inherits-unselected-font-stack');
