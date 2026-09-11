@@ -228,35 +228,35 @@ html[data-skin="cryptographic-blockbuster"] {
   --display: "Yatra One", Georgia, serif;
   --keys: "Eczar", Georgia, serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
-  --bill: #f4af19;
-  --bill-ink: #401a36;
-  --cream: #fff9e8;
-  --magenta: #a3165b;
-  --bench: #f4af19;
-  --shell: #fff9e8;
-  --shell-high: #fff9e8;
-  --shell-low: #f5e8c9;
-  --paper: #fff9e8;
-  --paper-low: #f5e8c9;
-  --ink: #401a36;
-  --muted: #6c455a;
-  --rule: #b88983;
-  --link: #a3165b;
-  --navy: #401a36;
-  --navy-soft: #6c455a;
-  --lcd: #f4af19;
-  --lcd-high: #ffda84;
-  --lcd-low: #f4af19;
-  --lcd-ink: #401a36;
-  --pink: #f8c7d8;
-  --orange: #f4af19;
-  --yellow: #f4af19;
-  --cyan: #a3165b;
-  --inline-code: #f5e8c9;
-  --inline-rule: #b88983;
-  --quote: #f5e8c9;
-  --quote-ink: #401a36;
-  --quote-link: #a3165b;
+  --bill: #ffcb24;
+  --bill-ink: #310d63;
+  --cream: #fff3b0;
+  --magenta: #6419c9;
+  --bench: #ff4aa9;
+  --shell: #fff3b0;
+  --shell-high: #fff3b0;
+  --shell-low: #ffe078;
+  --paper: #fff3b0;
+  --paper-low: #ffe078;
+  --ink: #310d63;
+  --muted: #61267d;
+  --rule: #9e419a;
+  --link: #5510a3;
+  --navy: #310d63;
+  --navy-soft: #61267d;
+  --lcd: #ffcb24;
+  --lcd-high: #ffe078;
+  --lcd-low: #ffcb24;
+  --lcd-ink: #310d63;
+  --pink: #ff71b5;
+  --orange: #ffcb24;
+  --yellow: #ffcb24;
+  --cyan: #6419c9;
+  --inline-code: #ffe078;
+  --inline-rule: #9e419a;
+  --quote: #ffe078;
+  --quote-ink: #310d63;
+  --quote-link: #5510a3;
   --page: 82rem;
   --reading: 76ch;
   --article-nav-paper: var(--paper);
@@ -318,22 +318,22 @@ html[data-skin="cryptographic-blockbuster"] {
 }
 
 html[data-skin="cryptographic-blockbuster"][data-theme="dark"] {
-  --bench: #291426;
-  --shell: #3a2034;
-  --shell-high: #3a2034;
-  --shell-low: #48283d;
-  --paper: #3a2034;
-  --paper-low: #48283d;
-  --ink: #fff0c7;
-  --muted: #e1bed0;
-  --rule: #a77b94;
-  --link: #ff98c9;
-  --inline-code: #48283d;
-  --inline-rule: #a77b94;
-  --quote: #48283d;
-  --quote-ink: #fff0c7;
-  --quote-link: #ff98c9;
-  --footer-border-top: 2px dashed #ff98c9;
+  --bench: #7124e3;
+  --shell: #efabcd;
+  --shell-high: #efabcd;
+  --shell-low: #e99bc5;
+  --paper: #efabcd;
+  --paper-low: #e99bc5;
+  --ink: #310d63;
+  --muted: #61267d;
+  --rule: #8d3094;
+  --link: #5510a3;
+  --inline-code: #e99bc5;
+  --inline-rule: #8d3094;
+  --quote: #e99bc5;
+  --quote-ink: #310d63;
+  --quote-link: #5510a3;
+  --footer-border-top: 2px dashed #5510a3;
   color-scheme: dark;
 }
 
@@ -1051,5 +1051,55 @@ html[data-skin="cryptographic-blockbuster"] .record-end nav a {
   }
   html[data-skin="cryptographic-blockbuster"]:root :focus-visible {
     outline-color: Highlight;
+  }
+}
+
+/* Palette rework paint roles. */
+@media screen and (forced-colors: none) {
+  html[data-skin="cryptographic-blockbuster"] .site-header,
+  html[data-skin="cryptographic-blockbuster"] .home-shell > .section-cards {
+    background-color: var(--pink);
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .site-nav a:is([aria-current="page"], :hover, :focus-visible),
+  html[data-skin="cryptographic-blockbuster"]:root .skin-menu summary:is(:hover, :focus-visible) {
+    color: #490c8f;
+    text-decoration-color: currentColor;
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .site-header :focus-visible {
+    outline-color: var(--bill-ink);
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .quick-filters a[aria-current="true"] {
+    color: var(--bill-ink);
+    background-color: var(--bill);
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .quick-filters a[aria-current="true"]:hover {
+    color: var(--cream);
+    background-color: var(--magenta);
+  }
+  html[data-skin="cryptographic-blockbuster"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--bill-ink) !important;
+    background-color: var(--cream) !important;
+    border-color: var(--bill-ink) !important;
+  }
+  html[data-skin="cryptographic-blockbuster"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+    color: var(--bill-ink) !important;
+    background-color: var(--pink) !important;
+    border-color: var(--bill-ink) !important;
+  }
+  html[data-skin="cryptographic-blockbuster"][data-theme="dark"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):focus-visible {
+    outline-color: var(--cream);
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+    color: var(--cream) !important;
+    background-color: #410a82 !important;
+  }
+  html[data-skin="cryptographic-blockbuster"]:root .prose .code-frame pre:focus-visible {
+    outline-color: var(--bill);
+  }
+  html[data-skin="cryptographic-blockbuster"] .argon-note.is-wrong {
+    color: var(--link);
+  }
+  html[data-skin="cryptographic-blockbuster"] :is(.argon-unlock, .flag-check) input::placeholder {
+    color: var(--ink);
   }
 }
