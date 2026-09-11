@@ -5,7 +5,6 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
-import { readRegistry } from './test-theme-redesign-static.mjs';
 import puppeteer from '../.toolchain/verify/lighthouse-node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';
 
 const { values: opt } = parseArgs({ options: { site: { type: 'string' }, out: { type: 'string' } } });
@@ -24,7 +23,8 @@ assert.ok(resolvedParent === path.resolve('agent_out') || resolvedParent.startsW
 fs.mkdirSync(out, { recursive: true });
 assert.ok(!fs.existsSync(path.join(out, 'results.json')), 'Use a fresh output directory');
 
-const themes = readRegistry();
+const themes = [...fs.readFileSync('_data/themes.yml', 'utf8').matchAll(/^- id: (\S+)/gm)].map(match => match[1]);
+assert.equal(themes.length, 48);
 const widths = [390, 768, 1024, 1440, 1920];
 const modes = ['light', 'dark'];
 const minimumProse = new Map([[390, 320], [768, 660], [1024, 880], [1440, 1060], [1920, 1120]]);
@@ -154,4 +154,4 @@ const summary = {
 fs.writeFileSync(path.join(out, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
 assert.equal(results.length, summary.expected);
 assert.deepEqual(failed, []);
-console.log(`${results.length} About layout cases passed across ${themes.length} themes, two color modes and five viewport widths.`);
+console.log(`${results.length} About layout cases passed across 48 themes, two color modes and five viewport widths.`);

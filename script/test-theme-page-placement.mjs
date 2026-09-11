@@ -42,9 +42,7 @@ try {
     const grid = getComputedStyle(document.body).display === 'grid', issues = [];
     if (grid && main.area !== 'folio') issues.push('main lost folio placement');
     if (grid && footer.area !== 'footer') issues.push('footer lost page-grid placement');
-    // The redesigned folio uses a one-column named grid on mobile too.
-    // Keep the desktop floor and check proportional width below it.
-    if (grid && main.width < (innerWidth >= 1200 ? 560 : innerWidth * .75)) issues.push('main squeezed into implicit column');
+    if (grid && main.width < 560) issues.push('main squeezed into implicit column');
     if (footer.y < main.bottom - 1) issues.push('footer before content end');
     if (header.x < main.right - 1 && header.right > main.x + 1 && header.y < main.bottom - 1 && header.bottom > main.y + 1) issues.push('header/content overlap');
     if (document.documentElement.scrollWidth > innerWidth + 1) issues.push('horizontal page overflow');

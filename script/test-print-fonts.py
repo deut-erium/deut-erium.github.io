@@ -5,7 +5,6 @@ No build, downloads, or request-byte claims. Browser fixtures contain no scripts
 all requests are blocked. Browser scratch files stay under agent_out/.
 """
 import gzip
-import json
 from html.parser import HTMLParser
 import re
 from pathlib import Path
@@ -69,7 +68,6 @@ class PrintFontTests(unittest.TestCase):
         found = faces(source("assets/css/main.css"))
         self.assertEqual(len(found), 16)
         weights = {}
-        native_files = set()
         for face in found:
             family = face["font-family"].strip('"')
             weights.setdefault(family, set()).add(face.get("font-weight", "400"))
@@ -78,43 +76,22 @@ class PrintFontTests(unittest.TestCase):
             url = re.search(r'url\("([^"\n]+)"\)', face["src"]).group(1)
             font = ROOT / "assets/css" / url
             self.assertTrue(font.is_file(), url)
-            native_files.add(font.resolve())
             self.assertEqual(font.read_bytes()[:4], b"wOF2", url)
         self.assertEqual(weights["Atkinson Hyperlegible"], {"400", "700"})
         self.assertEqual(weights["Silkscreen"], {"400", "700"})
         self.assertEqual(weights["Theme Doto"], {"700 900"})
         self.assertEqual(weights["Theme Unbounded"], {"600 900"})
-        self.assertEqual(len(native_files), 16)
-        # The original global faces stay unchanged. Selected skins may declare
-        # additional, explicitly inventoried fonts without preloading them.
-        adopted = json.loads(source("assets/fonts/theme-library/PROVENANCE.json"))
-        selected_files = {(ROOT / entry["path"]).resolve() for entry in adopted["files"]
-                          if entry["path"].endswith(".woff2")}
-        self.assertTrue(selected_files)
-        self.assertTrue(all(path.is_relative_to(ROOT / "assets/fonts/theme-library")
-                            for path in selected_files))
-        self.assertFalse(native_files & selected_files)
-        installed = {path.resolve() for path in (ROOT / "assets/fonts").rglob("*.woff2")}
-        self.assertEqual(installed, native_files | selected_files)
+        self.assertEqual(len(list((ROOT / "assets/fonts").rglob("*.woff2"))), 16)
 
     def test_selected_theme_font_evidence(self):
-        # Screen font evidence follows the committed manifest. Print still uses
-        # its original serif, tested independently below.
-        output = subprocess.run(
-            ["node", "--input-type=module", "-e",
-             "import {loadThemes} from './script/test-theme-redesign-static.mjs';"
-             "console.log(JSON.stringify(loadThemes()));"],
-            cwd=ROOT, text=True, capture_output=True, check=True, timeout=30)
-        themes = json.loads(output.stdout)
-        self.assertEqual(len(themes), 48)
-        for theme in themes.values():
-            found = faces(source(theme["file"]))
-            self.assertEqual({face["font-family"].strip('\"\'') for face in found},
-                             set(theme["families"]), theme["id"])
-            for face in found:
-                family = face["font-family"].strip('\"\'')
-                self.assertEqual(face["font-display"],
-                                 "swap" if family == theme["display"] else "optional")
+        # These skins have no Atkinson reference; others still use it, so the
+        # face must remain available through CSS, not be deleted globally.
+        for filename in ("29-unknown-at-rf-0-73.css", "30-collision-atlas.css",
+                         "36-margin-of-error.css", "45-magnetic-index.css"):
+            css = source("assets/css/skins/" + filename)
+            self.assertNotIn("Atkinson Hyperlegible", css)
+            self.assertIn('"Theme Computer Modern"', css)
+        self.assertIn('"Atkinson Hyperlegible"', source("assets/css/skins/01-grid-meltdown.css"))
 
     def test_one_small_print_sheet(self):
         css = source("assets/css/print.css")

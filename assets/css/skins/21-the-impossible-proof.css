@@ -1,992 +1,3589 @@
-@font-face {
-  font-family: "Bodoni Moda";
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url("../../fonts/theme-library/bodonimoda/face-00.woff2") format("woff2");
-  unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
+/* 21: The Impossible Proof. Generated as an isolated production skin. */
+/* Keep routes and controls semantic; style only beneath html[data-skin="the-impossible-proof"]. */
 
-@font-face {
-  font-family: "Bodoni Moda";
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url("../../fonts/theme-library/bodonimoda/face-01.woff2") format("woff2");
-  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
-}
-
-@font-face {
-  font-family: "Bodoni Moda";
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url("../../fonts/theme-library/bodonimoda/face-02.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "Bodoni Moda";
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url("../../fonts/theme-library/bodonimoda/face-03.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-00.woff2") format("woff2");
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-01.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-02.woff2") format("woff2");
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-03.woff2") format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-04.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/face-05.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-00.woff2") format("woff2");
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-01.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-02.woff2") format("woff2");
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-03.woff2") format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-04.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: optional;
-  src: url("../../fonts/theme-library/sourceserif4/italic-05.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-00.woff2") format("woff2");
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-01.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-02.woff2") format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-03.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-04.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-05.woff2") format("woff2");
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-06.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-07.woff2") format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-08.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("../../fonts/theme-library/ibmplexmono/face-09.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Engraved folio. Page cuts are paint behind level, uncut text. */
 html[data-skin="the-impossible-proof"] {
   color-scheme: light;
-  --body: "Source Serif 4", Georgia, serif;
-  --display: "Bodoni Moda", Georgia, serif;
-  --keys: "Source Serif 4", Georgia, serif;
-  --mono: "IBM Plex Mono", "Courier New", monospace;
-  --bench: #41d0ee;
-  --paper: #ccf4ff;
-  --paper-low: #b7ebf8;
-  --ink: #063c4b;
-  --muted: #155365;
-  --link: #00536e;
-  --rule: #2985a0;
-  --accent: #a52d27;
-  --page: 76rem;
-  --reading: 76ch;
-  --shell: var(--paper);
-  --shell-high: var(--paper);
-  --shell-low: var(--paper-low);
+  --chalk: #f1eadc;
+  --plaster: #d1c6ae;
+  --stone: #a9a799;
+  --graphite: #6f7068;
+  --ink: #161613;
+  --ink-soft: #30302c;
+  --vermilion: #a63d2f;
+  --vermilion-light: #d66f58;
+  --bench: #cbc1ad;
+  --shell: var(--plaster);
+  --shell-high: #e7decc;
+  --shell-low: #aaa18e;
   --navy: var(--ink);
-  --navy-soft: var(--muted);
-  --lcd: var(--paper);
-  --lcd-high: var(--paper-low);
-  --lcd-low: var(--paper-low);
+  --navy-soft: var(--ink-soft);
+  --lcd: var(--chalk);
+  --lcd-high: #fffaf0;
+  --lcd-low: #d4c9b4;
   --lcd-ink: var(--ink);
-  --pink: var(--accent);
-  --orange: var(--accent);
-  --yellow: var(--link);
-  --cyan: var(--link);
-  --inline-code: var(--paper-low);
-  --inline-rule: var(--rule);
-  --quote: var(--paper-low);
-  --quote-high: var(--paper-low);
-  --quote-low: var(--paper-low);
-  --quote-ink: var(--ink);
-  --quote-link: var(--link);
-  --article-nav-ink: var(--ink);
-  --article-nav-paper: var(--paper);
-  font-synthesis: none;
+  --paper: var(--chalk);
+  --paper-low: #e1d8c7;
+  --muted: #5b5c55;
+  --pink: var(--vermilion);
+  --orange: #bf6048;
+  --yellow: #e8bd64;
+  --cyan: #718984;
+  --rule: #969386;
+  --link: #7e291e;
+  --inline-code: #e4dac4;
+  --inline-rule: #9b907c;
+  --quote: #ddd0b9;
+  --quote-high: #f3e9d7;
+  --quote-low: #b9aa91;
+  --quote-ink: #25251f;
+  --quote-link: #75251c;
+  --body: "Theme Computer Modern", Georgia, serif;
+  --display: "Theme Unbounded", "Arial Black", sans-serif;
+  --keys: "Theme Doto", "Silkscreen", ui-monospace, monospace;
+  --mono: "Theme Pixelify", "Cascadia Code", "SFMono-Regular", Menlo, monospace;
+  --reading: 67rem;
+  --page: 94rem;
   background: var(--bench);
-
-  /* The component owns the colophon's flow and its three 44px cells. */
-  --footer-color: var(--ink);
-  --footer-background-color: var(--paper);
-  --footer-background-image: none;
-  --footer-border-top: 1px solid var(--rule);
-  --footer-border-right: 1px solid var(--rule);
-  --footer-border-bottom: 1px solid var(--rule);
-  --footer-border-left: 1px solid var(--rule);
-  --footer-border-radius: 0;
-  --footer-box-shadow: 0 6px 0 -2px var(--paper), 0 7px 0 -2px var(--rule), 0 12px 0 -4px var(--paper), 0 13px 0 -4px var(--rule);
-  --footer-note-color: var(--muted);
-  --footer-note-background-color: transparent;
-  --footer-note-background-image: none;
-  --footer-note-border-top: 0;
-  --footer-note-border-right: 0;
-  --footer-note-border-bottom: 0;
-  --footer-note-border-left: 0;
-  --footer-note-border-radius: 0;
-  --footer-note-box-shadow: none;
-  --footer-note-padding: 0;
-  --footer-note-font-family: var(--body);
-  --footer-note-font-weight: 400;
-  --footer-note-font-style: italic;
-  --footer-note-letter-spacing: normal;
-  --footer-note-text-transform: none;
-  --footer-note-text-shadow: none;
-  --footer-key-color: var(--link);
-  --footer-key-background-color: var(--paper);
-  --footer-key-background-image: none;
-  --footer-key-border-top: 1px solid var(--rule);
-  --footer-key-border-right: 1px solid var(--rule);
-  --footer-key-border-bottom: 1px solid var(--rule);
-  --footer-key-border-left: 1px solid var(--rule);
-  --footer-key-border-radius: 0;
-  --footer-key-box-shadow: none;
-  --footer-key-font-family: var(--keys);
-  --footer-key-font-weight: 400;
-  --footer-key-font-style: normal;
-  --footer-key-letter-spacing: normal;
-  --footer-key-text-transform: none;
-  --footer-key-text-shadow: none;
-  --footer-hover-color: var(--paper);
-  --footer-hover-background-color: var(--ink);
-  --footer-hover-background-image: none;
-  --footer-hover-border-top: 1px solid var(--ink);
-  --footer-hover-border-right: 1px solid var(--ink);
-  --footer-hover-border-bottom: 1px solid var(--ink);
-  --footer-hover-border-left: 1px solid var(--ink);
-  --footer-hover-border-radius: 0;
-  --footer-hover-box-shadow: none;
-  --footer-hover-text-shadow: none;
 }
+
 html[data-skin="the-impossible-proof"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #006f94;
-  --paper: #07566d;
-  --paper-low: #096279;
-  --ink: #ebfcff;
-  --muted: #c3f0f9;
-  --link: #ffed6b;
-  --rule: #5fc7df;
-  --accent: #ffb39a;
+  --chalk: #f5eddf;
+  --plaster: #38382f;
+  --stone: #55554b;
+  --graphite: #bcb8aa;
+  --ink: #fff8e9;
+  --ink-soft: #e7dec9;
+  --vermilion: #ff9378;
+  --vermilion-light: #ffb5a0;
+  --bench: #10110f;
+  --shell: #20211d;
+  --shell-high: #30312a;
+  --shell-low: #151611;
+  --navy: #0b0c0a;
+  --navy-soft: #2f3029;
+  --lcd: #f4ead6;
+  --lcd-high: #fffaf0;
+  --lcd-low: #cfc1a9;
+  --lcd-ink: #151611;
+  --paper: #25251f;
+  --paper-low: #34342c;
+  --muted: #d2cab8;
+  --pink: var(--vermilion);
+  --orange: #f09678;
+  --yellow: #f0cf81;
+  --cyan: #a6c7bf;
+  --rule: #77786d;
+  --link: #ffc0ad;
+  --inline-code: #39392f;
+  --inline-rule: #777465;
+  --quote: #473d34;
+  --quote-high: #5d4e42;
+  --quote-low: #302923;
+  --quote-ink: #fff6e4;
+  --quote-link: #ffd3c4;
 }
-html[data-skin="the-impossible-proof"]:root,
-html[data-skin="the-impossible-proof"]:root body {
-  overflow: visible;
-}
+
 html[data-skin="the-impossible-proof"] body {
   color: var(--ink);
-  background: var(--bench);
-  font: 400 19px/1.7 var(--body);
+  background-color: var(--bench);
+  background-image:
+    repeating-linear-gradient(26deg, #1616130d 0 1px, transparent 1px 11px),
+    linear-gradient(90deg, transparent 0 49.82%, #1616130d 49.9% 50.1%, transparent 50.18%),
+    radial-gradient(circle at 8% 12%, #a63d2f14 0 1px, transparent 1.2px),
+    radial-gradient(circle at 92% 85%, #16161312 0 1px, transparent 1.2px);
+  background-size: auto, 18rem 18rem, 9rem 9rem, 13rem 13rem;
+  font-family: var(--body);
+  font-size: 1.2rem;
+  line-height: 1.72;
 }
-html[data-skin="the-impossible-proof"] *,
-html[data-skin="the-impossible-proof"] *::before,
-html[data-skin="the-impossible-proof"] *::after {
-  transition: none !important;
-}
+
 html[data-skin="the-impossible-proof"] a {
   color: var(--link);
-  text-underline-offset: .2em;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--rule);
-  transition: text-decoration-color 150ms !important;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+  text-decoration-thickness: .085em;
+  text-underline-offset: .18em;
 }
+
 html[data-skin="the-impossible-proof"] a:hover {
-  text-decoration-color: var(--link);
-  text-decoration-thickness: 1px;
+  color: var(--vermilion);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: .14em;
 }
-html[data-skin="the-impossible-proof"]:root :focus-visible {
-  outline: 3px solid var(--link);
+
+html[data-skin="the-impossible-proof"] :focus-visible {
+  outline: 4px solid var(--vermilion);
   outline-offset: 4px;
 }
+
 html[data-skin="the-impossible-proof"] ::selection {
-  color: var(--paper);
-  background: var(--ink);
+  color: var(--chalk);
+  background: var(--vermilion);
 }
+
 html[data-skin="the-impossible-proof"] .skip-link {
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--link);
+  color: var(--chalk);
+  background: var(--ink);
+  border: 3px double var(--chalk);
+  border-radius: 0;
+  box-shadow: .34rem .38rem 0 var(--vermilion);
   font-family: var(--keys);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
 }
 
-/* A title leaf: navigation above the centered identity, engraving on its edge. */
-html[data-skin="the-impossible-proof"] .site-header {
-  margin-block: 0;
-  color: var(--ink);
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-html[data-skin="the-impossible-proof"] .site-header__inner {
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 0;
-  max-width: 76rem;
-  margin-inline: auto;
-  padding: 1.25rem 2rem 0;
-  background: var(--paper);
-  border-inline: 1px solid var(--rule);
-}
-html[data-skin="the-impossible-proof"]:root .site-nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center !important;
-  gap: .25rem .5rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 3px double var(--rule);
-  font-size: 16px;
-}
-html[data-skin="the-impossible-proof"]:root .site-nav > :is(a, details) {
-  min-width: 0 !important;
-}
-html[data-skin="the-impossible-proof"] .site-brand {
-  display: block;
-  width: 100%;
-  padding: 3.5rem 12rem 1.5rem;
-  color: var(--ink);
-  text-align: center;
-}
-html[data-skin="the-impossible-proof"] .site-brand__text { gap: 1.5rem; }
-html[data-skin="the-impossible-proof"]:root .site-brand__name {
-  font-family: var(--display);
-  font-size: clamp(3rem, 7.7vw, 6.5rem) !important;
-  line-height: 1.1;
-  letter-spacing: -.035em;
-  font-weight: 500;
-}
-html[data-skin="the-impossible-proof"]:root .site-brand__scope {
-  display: block;
-  color: var(--muted);
-  font: 400 16px/1.5 var(--keys);
-  font-size: 16px !important;
-  text-wrap: balance;
-}
-html[data-skin="the-impossible-proof"] .site-brand__mark {
-  position: absolute;
-  right: 1.2rem;
-  top: 9rem;
-  width: 10rem;
-  background: url("../../images/themes/the-impossible-proof.svg") center / contain no-repeat;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-html[data-skin="the-impossible-proof"] :is(.site-nav a, .skin-menu summary, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .pagination span) {
-  color: var(--link);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 0;
-  box-shadow: none;
-  font-family: var(--keys);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-html[data-skin="the-impossible-proof"] .site-nav a {
-  border-color: transparent;
-  padding-inline: .6rem;
-}
-html[data-skin="the-impossible-proof"] :is(.site-nav a[aria-current], .quick-filters a[aria-current="true"], .action--primary) {
-  color: var(--ink);
-  background: var(--paper);
-  border-color: transparent transparent var(--link);
-}
-html[data-skin="the-impossible-proof"] :is(.site-nav a, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a):is(:hover, :focus-visible) {
-  color: var(--link);
-  background: var(--paper-low);
-  border-color: var(--link);
-}
-html[data-skin="the-impossible-proof"] .skin-menu {
-  font-size: 16px;
-}
-html[data-skin="the-impossible-proof"] .skin-menu summary {
-  padding: .6rem .8rem;
-}
-html[data-skin="the-impossible-proof"] .skin-menu__panel {
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 0;
-  box-shadow: none;
-}
-html[data-skin="the-impossible-proof"] .skin-menu select {
-  width: 100%;
-  min-width: 0;
-  font-size: 16px;
-}
-
-/* The wide first shelf leads into a narrower, stair-cut sequence. */
-html[data-skin="the-impossible-proof"]:root .home-shell {
-  width: min(calc(100% - 2rem), 76rem) !important;
-  margin-block: 0 2.5rem;
-  padding: 0;
-  overflow: visible !important;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-html[data-skin="the-impossible-proof"]:root .home-shell > :is(.masthead, .record-index) {
-  overflow: visible !important;
-}
-html[data-skin="the-impossible-proof"] .masthead {
-  background: var(--paper);
-  border-inline: 1px solid var(--rule);
-}
-html[data-skin="the-impossible-proof"] .masthead__copy {
-  padding: 1.5rem 12rem 4rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  text-align: center;
-}
-html[data-skin="the-impossible-proof"] .eyebrow {
-  color: var(--muted);
-  font-family: var(--keys);
-  font-size: 16px;
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: .02em;
-}
-html[data-skin="the-impossible-proof"]:root .masthead h1 {
-  max-width: none;
-  font-size: clamp(2rem, 3.8vw, 3.25rem) !important;
-  line-height: 1.2 !important;
-  font-weight: 500;
-  letter-spacing: -.02em;
-}
-html[data-skin="the-impossible-proof"] .masthead__lede {
-  max-width: 40ch;
-  margin-inline: auto;
-  color: var(--muted);
-  font-family: var(--body);
-  font-size: 19px;
-  font-weight: 400;
-}
-html[data-skin="the-impossible-proof"] .masthead__actions {
-  justify-content: center;
-}
-html[data-skin="the-impossible-proof"] .home-shell > .section-cards {
-  margin-top: 0;
-  padding: 2.5rem 4rem 3rem;
-  border: 1px solid var(--rule);
-  border-top: 3px double var(--rule);
-  border-radius: 0;
-  background: var(--paper);
-}
-html[data-skin="the-impossible-proof"] .section-heading {
-  justify-content: center;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-html[data-skin="the-impossible-proof"] :is(.section-heading h2, .archive-year h2) {
-  color: var(--ink);
-  font-family: var(--display);
-  font-size: 2.25rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -.025em;
-}
-html[data-skin="the-impossible-proof"] .index-map__links {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-}
-html[data-skin="the-impossible-proof"] .index-map__links a {
-  display: flex;
-  flex-direction: column;
-  gap: .6rem;
-  justify-content: flex-start;
-  min-height: 0;
-  padding: .5rem 1rem;
-  color: var(--link);
-  background: transparent;
-  border: 0;
-  border-inline-start: 1px solid var(--rule);
-  border-radius: 0;
-  box-shadow: none;
-  text-align: center;
-}
-html[data-skin="the-impossible-proof"] .index-map__links a:first-child { border-inline-start: 0; }
-html[data-skin="the-impossible-proof"]:root .index-map__links a span { font-size: 19px !important; }
-html[data-skin="the-impossible-proof"] .index-map__links strong {
-  color: var(--muted);
-  font-family: var(--display);
-  font-size: 2.4rem;
-  line-height: 1.2;
-  font-weight: 400;
-}
-html[data-skin="the-impossible-proof"]:root .home-shell > #records {
-  max-width: 58rem !important;
-  margin: 0 auto !important;
-  padding: 3.5rem 3rem 0;
-  background: linear-gradient(90deg, transparent 3rem, var(--paper) 3rem, var(--paper) calc(100% - 3rem), transparent calc(100% - 3rem));
-  border: 0;
-  border-radius: 0;
-}
-html[data-skin="the-impossible-proof"] .record-row {
+html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
   position: relative;
   isolation: isolate;
-  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 7%, #16161317 7.1% 7.24%, transparent 7.35% 92.65%, #16161317 92.76% 92.9%, transparent 93%),
+    repeating-linear-gradient(26deg, #1616130a 0 1px, transparent 1px 12px),
+    linear-gradient(145deg, transparent 0 47%, #a63d2f0e 47.1% 53%, transparent 53.1%);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 0 3px var(--chalk), .54rem .62rem 0 var(--ink);
 }
-html[data-skin="the-impossible-proof"] .home-shell .record-row::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -1px -2rem 0;
-  background: var(--paper);
-  clip-path: polygon(0 0, calc(100% - 1rem) 0, calc(100% - 1rem) 35%, 100% 35%, 100% 100%, 1rem 100%, 1rem 65%, 0 65%);
-  pointer-events: none;
-}
-html[data-skin="the-impossible-proof"] .home-shell .record-row:nth-child(even)::before {
-  clip-path: polygon(1rem 0, 100% 0, 100% 65%, calc(100% - 1rem) 65%, calc(100% - 1rem) 100%, 0 100%, 0 35%, 1rem 35%);
-}
-html[data-skin="the-impossible-proof"]:root .record-row__link {
-  display: grid !important;
-  grid-template-columns: 6.5rem minmax(0, 1fr) auto !important;
-  grid-template-areas: "date title title" ". event primitive" !important;
-  align-items: baseline;
-  gap: .4rem 1.25rem;
-  padding: 1.7rem .5rem;
-  color: var(--ink);
-  background: transparent;
-}
-html[data-skin="the-impossible-proof"]:root .record-row__date { grid-area: date !important; }
-html[data-skin="the-impossible-proof"]:root .record-row__title {
-  grid-area: title !important;
-  font-family: var(--body);
-  font-size: 23px !important;
-  font-weight: 500;
-  line-height: 1.4;
-}
-html[data-skin="the-impossible-proof"]:root .record-row__event { grid-area: event !important; }
-html[data-skin="the-impossible-proof"]:root .record-row__primitive { grid-area: primitive !important; }
-html[data-skin="the-impossible-proof"]:root :is(.record-row__date, .record-row__event, .record-row__primitive) {
-  color: var(--muted);
-  font-family: var(--keys);
-  font-size: 16px !important;
-  font-weight: 400;
-  line-height: 1.5;
-}
-html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__title {
-  color: var(--link);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-}
-html[data-skin="the-impossible-proof"] .pagination {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -3rem;
-  padding: 2.25rem 2rem;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  font-size: 16px;
-}
-html[data-skin="the-impossible-proof"] .pagination__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-}
-html[data-skin="the-impossible-proof"] .pagination__links > * { padding-inline: .5rem; }
-html[data-skin="the-impossible-proof"] .pagination__position span {
-  min-height: 0;
-  padding: 0;
-  color: var(--muted);
-  background: transparent;
-  border: 0;
-}
-html[data-skin="the-impossible-proof"] .pagination__position strong {
-  font-family: var(--body);
-  font-size: 19px;
-  font-weight: 500;
+html[data-skin="the-impossible-proof"] .record-page {
+  isolation: isolate;
+  background-color: var(--shell);
+  background-image:
+    linear-gradient(90deg, transparent 0 7%, #16161317 7.1% 7.24%, transparent 7.35% 92.65%, #16161317 92.76% 92.9%, transparent 93%),
+    repeating-linear-gradient(26deg, #1616130a 0 1px, transparent 1px 12px),
+    linear-gradient(145deg, transparent 0 47%, #a63d2f0e 47.1% 53%, transparent 53.1%);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 0 3px var(--chalk), .54rem .62rem 0 var(--ink);
 }
 
-/* Archive rows remain level; their metadata hangs beneath each title. */
-html[data-skin="the-impossible-proof"]:root .archive-shell {
-  width: min(calc(100% - 2rem), 76rem) !important;
-  padding: 2rem clamp(1rem, 6vw, 6rem) 4rem;
-  margin-top: 0;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-top: 0;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: visible !important;
+html[data-skin="the-impossible-proof"] .site-header {
+  color: var(--chalk);
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(90deg, transparent 0 4%, #f1eadc2c 4.1% 4.22%, transparent 4.32% 95.68%, #f1eadc2c 95.78% 95.9%, transparent 96%),
+    repeating-linear-gradient(26deg, #f1eadc0b 0 1px, transparent 1px 12px);
 }
-html[data-skin="the-impossible-proof"] .index-heading {
-  padding: 1rem 0;
-  color: var(--ink);
-  background: var(--paper);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  text-align: center;
+
+html[data-skin="the-impossible-proof"] .site-header {
+  margin-top: 1.45rem;
+  border-bottom: 8px double var(--chalk);
 }
-html[data-skin="the-impossible-proof"] .index-heading h1 { max-width: none; font-weight: 500; }
-html[data-skin="the-impossible-proof"] :is(.archive-tools, .archive-groups) {
-  padding: 1.5rem 0;
+
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  padding: clamp(1.15rem, 3vw, 2.8rem);
+}
+
+html[data-skin="the-impossible-proof"] .site-header::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 18%;
+  width: 1.1rem;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(180deg, var(--vermilion) 0 .85rem, var(--chalk) .85rem 1.7rem, var(--graphite) 1.7rem 2.55rem, transparent 2.55rem 3.4rem);
+  border-inline: 1px solid #f1eadc6b;
+  opacity: .82;
+}
+
+html[data-skin="the-impossible-proof"] .site-header__inner {
+  position: relative;
+  z-index: 1;
+  gap: 1rem 2rem;
+  padding: 1.2rem 1.35rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand {
+  color: var(--chalk);
+}
+
+html[data-skin="the-impossible-proof"] .site-brand__name {
+  color: var(--chalk);
+  font-family: var(--display);
+  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .92;
+  text-shadow: 3px 3px 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .site-brand__scope {
+  margin-top: .42rem;
+  color: var(--plaster);
+  font-family: var(--keys);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .085em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav {
+  position: relative;
+  z-index: 3;
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a,
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .skin-menu select,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span {
+  min-height: 2.7rem;
+  color: var(--chalk);
+  background: var(--ink);
+  border: 2px solid var(--chalk);
+  border-radius: 0;
+  box-shadow: .2rem .22rem 0 var(--graphite);
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .045em;
+  line-height: 1.3;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"],
+html[data-skin="the-impossible-proof"] .quick-filters a[aria-current="true"],
+html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-impossible-proof"] .action--primary,
+html[data-skin="the-impossible-proof"] .record-actions a:last-child,
+html[data-skin="the-impossible-proof"] .tag-line a:nth-child(odd) {
+  color: var(--chalk);
+  background: var(--vermilion);
+  border-color: var(--ink);
+  box-shadow: .2rem .22rem 0 var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a:hover,
+html[data-skin="the-impossible-proof"] .site-nav a:focus-visible,
+html[data-skin="the-impossible-proof"] .theme-toggle:hover,
+html[data-skin="the-impossible-proof"] .theme-toggle:focus-visible,
+html[data-skin="the-impossible-proof"] .skin-menu summary:hover,
+html[data-skin="the-impossible-proof"] .skin-menu summary:focus-visible,
+html[data-skin="the-impossible-proof"] .skin-randomizer:hover,
+html[data-skin="the-impossible-proof"] .skin-randomizer:focus-visible,
+html[data-skin="the-impossible-proof"] .action:hover,
+html[data-skin="the-impossible-proof"] .action:focus-visible,
+html[data-skin="the-impossible-proof"] .record-actions a:hover,
+html[data-skin="the-impossible-proof"] .record-actions a:focus-visible,
+html[data-skin="the-impossible-proof"] .tag-line a:hover,
+html[data-skin="the-impossible-proof"] .tag-line a:focus-visible,
+html[data-skin="the-impossible-proof"] .quick-filters a:hover,
+html[data-skin="the-impossible-proof"] .quick-filters a:focus-visible,
+html[data-skin="the-impossible-proof"] .pagination a:hover,
+html[data-skin="the-impossible-proof"] .pagination a:focus-visible {
   color: var(--ink);
-  background: var(--paper);
-  border: 0;
+  background: var(--chalk);
+  border-color: var(--vermilion);
+  box-shadow: .2rem .22rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel {
+  z-index: 30;
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, transparent 0 48%, #a63d2f14 48.1% 52%, transparent 52.1%),
+    var(--chalk);
+  border: 4px double var(--ink);
+  border-radius: 0;
+  box-shadow: .42rem .48rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel label {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu select {
+  color: var(--ink);
+  background: var(--paper-low);
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--chalk);
+  text-transform: none;
+}
+
+html[data-skin="the-impossible-proof"] .skin-randomizer {
+  color: var(--chalk);
+  background: var(--vermilion);
+  border-color: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .masthead {
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .error-shell {
+  position: relative;
+  isolation: isolate;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, transparent 0 4%, #1616131c 4.1% 4.24%, transparent 4.35% 95.65%, #1616131c 95.76% 95.9%, transparent 96%),
+    repeating-linear-gradient(26deg, #16161309 0 1px, transparent 1px 10px),
+    var(--paper);
+  border: 5px double var(--ink);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--graphite);
+}
+html[data-skin="the-impossible-proof"] .record-head {
+  isolation: isolate;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, transparent 0 4%, #1616131c 4.1% 4.24%, transparent 4.35% 95.65%, #1616131c 95.76% 95.9%, transparent 96%),
+    repeating-linear-gradient(26deg, #16161309 0 1px, transparent 1px 10px),
+    var(--paper);
+  border: 5px double var(--ink);
+  border-radius: 0;
+  box-shadow: .48rem .55rem 0 var(--graphite);
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy::after,
+html[data-skin="the-impossible-proof"] .index-heading::after,
+html[data-skin="the-impossible-proof"] .page-heading::after,
+html[data-skin="the-impossible-proof"] .record-head::after {
+  position: absolute;
+  z-index: -1;
+  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  width: .75rem;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(180deg, var(--ink) 0 .8rem, var(--plaster) .8rem 1.6rem, var(--vermilion) 1.6rem 2.4rem, var(--chalk) 2.4rem 3.2rem);
+  border: 1px solid var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .eyebrow,
+html[data-skin="the-impossible-proof"] .record-head__key,
+html[data-skin="the-impossible-proof"] .archive-search label,
+html[data-skin="the-impossible-proof"] .all-tags summary,
+html[data-skin="the-impossible-proof"] .record-toc summary,
+html[data-skin="the-impossible-proof"] .record-facts dt,
+html[data-skin="the-impossible-proof"] .record-end nav span {
+  color: var(--vermilion);
+  font-family: var(--keys);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .masthead h1,
+html[data-skin="the-impossible-proof"] .index-heading h1,
+html[data-skin="the-impossible-proof"] .page-heading h1,
+html[data-skin="the-impossible-proof"] .record-head h1,
+html[data-skin="the-impossible-proof"] .error-shell h1,
+html[data-skin="the-impossible-proof"] .section-heading :is(h1, h2),
+html[data-skin="the-impossible-proof"] .archive-year h2,
+html[data-skin="the-impossible-proof"] .related-records h2 {
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .95;
+}
+
+html[data-skin="the-impossible-proof"] .masthead h1 i,
+html[data-skin="the-impossible-proof"] .index-heading h1 i,
+html[data-skin="the-impossible-proof"] .page-heading h1 i,
+html[data-skin="the-impossible-proof"] .record-head h1 i {
+  color: var(--vermilion);
+  font-family: "Theme Fascinate", Georgia, serif;
+  font-weight: 400;
+}
+
+html[data-skin="the-impossible-proof"] .masthead__lede,
+html[data-skin="the-impossible-proof"] .index-heading > p:last-child,
+html[data-skin="the-impossible-proof"] .page-heading > p:last-child {
+  max-width: 58ch;
+  font-family: var(--body);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+html[data-skin="the-impossible-proof"] .record-head__abstract {
+  font-family: var(--body);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .masthead__actions {
+  padding-top: 1rem;
   border-top: 3px double var(--rule);
-  border-radius: 0;
 }
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end {
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, transparent 0 2.5%, #16161320 2.6% 2.72%, transparent 2.82% 97.18%, #16161320 97.28% 97.4%, transparent 97.5%),
+    repeating-linear-gradient(26deg, #16161307 0 1px, transparent 1px 10px),
+    var(--paper);
+  border: 4px double var(--ink);
+  border-radius: 0;
+  box-shadow: .4rem .46rem 0 var(--graphite);
+}
+
+html[data-skin="the-impossible-proof"] .section-heading {
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 4px double var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .section-heading > p,
+html[data-skin="the-impossible-proof"] .archive-year > header span {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .record-row {
+  border-bottom-color: var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .record-row:nth-child(even) {
+  background: var(--paper-low);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link {
+  color: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link:hover,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible {
+  color: var(--chalk);
+  background: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__primitive,
+html[data-skin="the-impossible-proof"] .record-row__date {
+  color: var(--muted);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__primitive,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__date {
+  color: var(--plaster);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__event {
+  color: var(--vermilion);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__primitive {
+  font-family: var(--mono);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a {
+  color: var(--chalk);
+  background:
+    linear-gradient(135deg, #f1eadc20 0 49%, transparent 49%),
+    var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  box-shadow: .25rem .3rem 0 var(--graphite);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:nth-child(4n + 1) {
+  background:
+    linear-gradient(135deg, #fff2d92a 0 49%, transparent 49%),
+    var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:nth-child(4n + 2) {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff80 0 49%, transparent 49%),
+    var(--chalk);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:nth-child(4n) {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff6a 0 49%, transparent 49%),
+    var(--plaster);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:hover,
+html[data-skin="the-impossible-proof"] .all-tags__grid a:focus-visible {
+  color: var(--chalk);
+  background: var(--graphite);
+  border-color: var(--vermilion);
+  box-shadow: .25rem .3rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .pagination__position {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .pagination__position strong {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -.08em;
+}
+
 html[data-skin="the-impossible-proof"] .archive-search input {
   color: var(--ink);
   background: var(--paper-low);
-  border: 1px solid var(--rule);
+  border: 3px double var(--ink);
   border-radius: 0;
+  box-shadow: inset .18rem .18rem 0 #fff9ed80;
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .archive-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags {
+  border-top-color: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .archive-empty {
+  color: var(--chalk);
+  background: var(--vermilion);
+  border-color: var(--ink);
+  box-shadow: .32rem .38rem 0 var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .record-head__key {
+  padding-bottom: .8rem;
+  border-bottom: 3px double var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts {
+  gap: .75rem;
+  padding-top: 1.15rem;
+  border-top: 4px double var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div {
+  min-height: 6.5rem;
+  padding: .8rem;
+  color: var(--chalk);
+  background:
+    linear-gradient(135deg, #f1eadc20 0 49%, transparent 49%),
+    var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  text-align: center;
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(2) {
+  background:
+    linear-gradient(135deg, #fff0d62a 0 49%, transparent 49%),
+    var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(3) {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff72 0 49%, transparent 49%),
+    var(--plaster);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(4) {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff78 0 49%, transparent 49%),
+    var(--chalk);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts dt {
+  color: inherit;
+  font-size: .68rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-facts dd {
+  color: inherit;
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+html[data-skin="the-impossible-proof"] .record-grid > .record-index {
+  color: var(--chalk);
+  background:
+    linear-gradient(135deg, transparent 0 48%, #f1eadc12 48.1% 52%, transparent 52.1%),
+    repeating-linear-gradient(26deg, #f1eadc08 0 1px, transparent 1px 11px),
+    var(--ink);
+  border: 4px double var(--chalk);
+  border-radius: 0;
+  box-shadow: .42rem .48rem 0 var(--graphite);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc {
+  border-bottom-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc summary {
+  color: var(--plaster);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc li,
+html[data-skin="the-impossible-proof"] .related-records li {
+  border-top-color: #f1eadc48;
+}
+
+html[data-skin="the-impossible-proof"] .record-toc a,
+html[data-skin="the-impossible-proof"] .related-records a {
+  color: var(--chalk);
   font-family: var(--body);
 }
-html[data-skin="the-impossible-proof"] .archive-search input::placeholder { color: var(--muted); opacity: 1; }
-html[data-skin="the-impossible-proof"] .all-tags__grid a {
+
+html[data-skin="the-impossible-proof"] .record-toc a:hover,
+html[data-skin="the-impossible-proof"] .record-toc a:focus-visible,
+html[data-skin="the-impossible-proof"] .related-records a:hover,
+html[data-skin="the-impossible-proof"] .related-records a:focus-visible {
+  color: var(--vermilion-light);
+}
+
+html[data-skin="the-impossible-proof"] .toc-fallback {
+  color: var(--plaster);
+}
+
+html[data-skin="the-impossible-proof"] .related-records h2 {
+  color: var(--chalk);
+  font-size: 2rem;
+  text-shadow: 2px 2px 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .page-prose {
+  border-left: .85rem solid var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.23rem;
+  line-height: 1.76;
+}
+
+html[data-skin="the-impossible-proof"] .prose h1,
+html[data-skin="the-impossible-proof"] .prose h2,
+html[data-skin="the-impossible-proof"] .prose h3,
+html[data-skin="the-impossible-proof"] .prose h4,
+html[data-skin="the-impossible-proof"] .prose h5,
+html[data-skin="the-impossible-proof"] .prose h6 {
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.02;
+}
+
+html[data-skin="the-impossible-proof"] .prose h2 {
+  padding-top: .45rem;
+  border-top: 4px double var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .prose a,
+html[data-skin="the-impossible-proof"] .record-end > p a {
   color: var(--link);
+  font-weight: 700;
+  text-decoration-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose a:hover,
+html[data-skin="the-impossible-proof"] .prose a:focus-visible,
+html[data-skin="the-impossible-proof"] .record-end > p a:hover,
+html[data-skin="the-impossible-proof"] .record-end > p a:focus-visible {
+  color: var(--vermilion);
+  text-decoration-color: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .heading-anchor {
+  color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose hr {
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 1rem, var(--plaster) 1rem 2rem, var(--vermilion) 2rem 3rem, var(--chalk) 3rem 4rem);
+  border: 0;
+}
+
+html[data-skin="the-impossible-proof"] .prose .info {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff75 0 49%, transparent 49%),
+    var(--plaster);
+  border-color: var(--ink);
+  border-radius: 0;
+  box-shadow: .3rem .34rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose blockquote {
+  color: var(--quote-ink);
+  background:
+    linear-gradient(135deg, #ffffff5c 0 49%, transparent 49%),
+    var(--quote);
+  border-color: var(--vermilion);
+  border-radius: 0;
+  box-shadow: .34rem .38rem 0 var(--ink);
+  font-family: var(--body);
+}
+
+html[data-skin="the-impossible-proof"] .prose blockquote a {
+  color: var(--quote-link);
+}
+
+html[data-skin="the-impossible-proof"] .prose ul:not(.code-frame__gutter) > li::marker {
+  color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose ul:not(.code-frame__gutter) ul > li::marker {
+  color: var(--graphite);
+}
+
+html[data-skin="the-impossible-proof"] .prose code {
+  color: var(--ink);
+  background: var(--inline-code);
+  border-color: var(--inline-rule);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: .84em;
+  font-weight: 800;
+}
+
+html[data-skin="the-impossible-proof"] .prose th,
+html[data-skin="the-impossible-proof"] .prose td {
+  border-color: var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .prose th {
+  color: var(--chalk);
+  background: var(--ink);
+  font-family: var(--keys);
+  font-size: .73rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .prose tr:nth-child(even) td {
+  background: var(--paper-low);
+}
+
+html[data-skin="the-impossible-proof"] .prose img:not(.emoji) {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--chalk), .4rem .45rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .prose pre,
+html[data-skin="the-impossible-proof"] .prose .highlight,
+html[data-skin="the-impossible-proof"] .prose .code-frame {
+  color: #fff8e8;
+  background: #11120f;
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame {
+  border-color: var(--ink);
+  border-radius: 0;
+  box-shadow: 0 0 0 3px var(--chalk), .4rem .45rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__bar {
+  color: var(--chalk);
+  background: linear-gradient(90deg, var(--vermilion) 0 16%, var(--ink) 16% 48%, var(--graphite) 48% 76%, var(--ink) 76%);
+  border-bottom-color: var(--chalk);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__label strong {
+  font-family: var(--keys);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button {
+  color: var(--ink);
+  background: var(--chalk);
+  border-color: var(--ink);
+  border-radius: 0;
+  box-shadow: 0 .18rem 0 var(--ink);
+  font-family: var(--keys);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:last-child,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--chalk);
+  background: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:hover,
+html[data-skin="the-impossible-proof"] .code-frame__actions button:focus-visible {
+  color: var(--chalk);
+  background: var(--ink);
+  border-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:focus-visible,
+html[data-skin="the-impossible-proof"] .prose .code-frame :focus-visible {
+  outline-color: var(--vermilion-light);
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame__gutter {
+  color: #d4c9b3;
+  background: #050605;
+  border-right-color: var(--vermilion);
+  font-family: var(--mono);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__status {
+  color: var(--ink);
+  background: var(--plaster);
+  border-top-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__fallback {
+  color: var(--ink);
   background: var(--paper);
-  border: 1px solid var(--rule);
+  border-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .highlight .c,
+html[data-skin="the-impossible-proof"] .highlight .c1,
+html[data-skin="the-impossible-proof"] .highlight .cm,
+html[data-skin="the-impossible-proof"] .highlight .cp,
+html[data-skin="the-impossible-proof"] .highlight .cs {
+  color: #a8ab9b;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .err {
+  color: #fff8e8;
+  background: #8a2d21;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .k,
+html[data-skin="the-impossible-proof"] .highlight .kc,
+html[data-skin="the-impossible-proof"] .highlight .kd,
+html[data-skin="the-impossible-proof"] .highlight .kn,
+html[data-skin="the-impossible-proof"] .highlight .kp,
+html[data-skin="the-impossible-proof"] .highlight .kr,
+html[data-skin="the-impossible-proof"] .highlight .kt {
+  color: #9bd6cb;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .o,
+html[data-skin="the-impossible-proof"] .highlight .ow {
+  color: #f1cc78;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .n,
+html[data-skin="the-impossible-proof"] .highlight .na,
+html[data-skin="the-impossible-proof"] .highlight .nb,
+html[data-skin="the-impossible-proof"] .highlight .nc,
+html[data-skin="the-impossible-proof"] .highlight .nd,
+html[data-skin="the-impossible-proof"] .highlight .ne,
+html[data-skin="the-impossible-proof"] .highlight .nf,
+html[data-skin="the-impossible-proof"] .highlight .ni,
+html[data-skin="the-impossible-proof"] .highlight .nl,
+html[data-skin="the-impossible-proof"] .highlight .nn,
+html[data-skin="the-impossible-proof"] .highlight .no,
+html[data-skin="the-impossible-proof"] .highlight .nt,
+html[data-skin="the-impossible-proof"] .highlight .nv {
+  color: #fff8e8;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .nc,
+html[data-skin="the-impossible-proof"] .highlight .nf {
+  color: #ff9e84;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .s,
+html[data-skin="the-impossible-proof"] .highlight .s1,
+html[data-skin="the-impossible-proof"] .highlight .s2,
+html[data-skin="the-impossible-proof"] .highlight .sa,
+html[data-skin="the-impossible-proof"] .highlight .sb,
+html[data-skin="the-impossible-proof"] .highlight .sc,
+html[data-skin="the-impossible-proof"] .highlight .sd,
+html[data-skin="the-impossible-proof"] .highlight .se,
+html[data-skin="the-impossible-proof"] .highlight .sh,
+html[data-skin="the-impossible-proof"] .highlight .si,
+html[data-skin="the-impossible-proof"] .highlight .sr,
+html[data-skin="the-impossible-proof"] .highlight .ss,
+html[data-skin="the-impossible-proof"] .highlight .sx {
+  color: #efca83;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .m,
+html[data-skin="the-impossible-proof"] .highlight .mb,
+html[data-skin="the-impossible-proof"] .highlight .mf,
+html[data-skin="the-impossible-proof"] .highlight .mh,
+html[data-skin="the-impossible-proof"] .highlight .mi,
+html[data-skin="the-impossible-proof"] .highlight .mo,
+html[data-skin="the-impossible-proof"] .highlight .il {
+  color: #b6c7a4;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .gd {
+  color: #ff9e91;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .gi {
+  color: #a7d6b9;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .gh,
+html[data-skin="the-impossible-proof"] .highlight .gu {
+  color: #bbd6ed;
+}
+
+html[data-skin="the-impossible-proof"] .prose .katex-display {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff78 0 49%, transparent 49%),
+    var(--plaster);
+  border-color: var(--ink);
+  box-shadow: .25rem .3rem 0 var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .record-end nav a {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, #ffffff78 0 49%, transparent 49%),
+    var(--chalk);
+  border-color: var(--ink);
+  box-shadow: .25rem .3rem 0 var(--graphite);
+}
+
+html[data-skin="the-impossible-proof"] .record-end nav a:hover,
+html[data-skin="the-impossible-proof"] .record-end nav a:focus-visible {
+  color: var(--chalk);
+  background: var(--vermilion);
+  border-color: var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .error-shell {
+  min-height: 65vh;
+}
+
+html[data-skin="the-impossible-proof"] .error-code {
+  color: var(--vermilion);
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -.1em;
+  text-shadow: 3px 3px 0 var(--ink);
+}
+
+html[data-skin="the-impossible-proof"] .error-code i {
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > p {
+  color: var(--ink);
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+    border-width: 3px;
+    box-shadow: 0 0 0 2px var(--chalk);
+  }
+
+  html[data-skin="the-impossible-proof"] .site-header {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-header::before {
+    left: auto;
+    right: 4%;
+    width: .65rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-header__inner {
+    padding: .9rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-brand__name {
+    font-size: clamp(1.5rem, 9vw, 2.4rem);
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a,
+  html[data-skin="the-impossible-proof"] .theme-toggle,
+  html[data-skin="the-impossible-proof"] .skin-menu summary {
+    min-height: 2.7rem;
+    padding-inline: .42rem;
+    font-size: .62rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .masthead__copy,
+  html[data-skin="the-impossible-proof"] .index-heading,
+  html[data-skin="the-impossible-proof"] .page-heading,
+  html[data-skin="the-impossible-proof"] .record-head {
+    box-shadow: .25rem .3rem 0 var(--graphite);
+  }
+
+  html[data-skin="the-impossible-proof"] .masthead__copy::after,
+  html[data-skin="the-impossible-proof"] .index-heading::after,
+  html[data-skin="the-impossible-proof"] .page-heading::after,
+  html[data-skin="the-impossible-proof"] .record-head::after {
+    top: .65rem;
+    right: .6rem;
+    bottom: .65rem;
+    width: .5rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .record-facts > div {
+    min-height: 6.5rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+  html[data-skin="the-impossible-proof"] .archive-tools,
+  html[data-skin="the-impossible-proof"] .archive-groups,
+  html[data-skin="the-impossible-proof"] .page-prose,
+  html[data-skin="the-impossible-proof"] .article__content,
+  html[data-skin="the-impossible-proof"] .record-end,
+  html[data-skin="the-impossible-proof"] .record-grid > .record-index {
+    box-shadow: .22rem .26rem 0 var(--graphite);
+  }
+
+  html[data-skin="the-impossible-proof"] .article__content,
+  html[data-skin="the-impossible-proof"] .page-prose {
+    border-left-width: .58rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .prose {
+    font-size: 1.1875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="the-impossible-proof"] *,
+  html[data-skin="the-impossible-proof"] *::before,
+  html[data-skin="the-impossible-proof"] *::after {
+    scroll-behavior: auto;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell,
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .record-head,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end,
+html[data-skin="the-impossible-proof"] .record-grid > .record-index,
+html[data-skin="the-impossible-proof"] .code-frame,
+html[data-skin="the-impossible-proof"] .code-frame__bar,
+html[data-skin="the-impossible-proof"] .code-frame__status {
+    color: CanvasText;
+    background: Canvas;
+    border-color: CanvasText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a,
+  html[data-skin="the-impossible-proof"] .theme-toggle,
+  html[data-skin="the-impossible-proof"] .action,
+  html[data-skin="the-impossible-proof"] .record-actions a,
+  html[data-skin="the-impossible-proof"] .tag-line a,
+  html[data-skin="the-impossible-proof"] .quick-filters a,
+  html[data-skin="the-impossible-proof"] .pagination a,
+  html[data-skin="the-impossible-proof"] .skin-menu summary,
+  html[data-skin="the-impossible-proof"] .skin-randomizer,
+  html[data-skin="the-impossible-proof"] .code-frame__actions button {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"],
+  html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"] {
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  html[data-skin="the-impossible-proof"] .highlight span {
+    color: CanvasText !important;
+  }
+}
+
+/* Site topology */
+html[data-skin="the-impossible-proof"] .site-header {
+  overflow: visible;
+}
+
+html[data-skin="the-impossible-proof"] .site-header__inner {
+  display: grid;
+  grid-template-columns: minmax(13rem, .8fr) minmax(34rem, 2.2fr);
+  gap: 1.25rem clamp(1.25rem, 3vw, 3.5rem);
+  align-items: center;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand {
+  align-self: stretch;
+  display: grid;
+  align-content: center;
+  padding-right: clamp(.75rem, 2vw, 1.75rem);
+  border-right: 4px double var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(2.7rem, auto));
+  gap: .55rem;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route] {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  padding-inline: .4rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route]::before {
+  position: absolute;
+  top: -.35rem;
+  left: .45rem;
+  width: .5rem;
+  height: .5rem;
+  content: "";
+  background: var(--vermilion-light);
+  border: 1px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route="home"] {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route="archive"] {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route="about"] {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route="feed"] {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route="source"] {
+  grid-column: 5;
+  grid-row: 1;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu {
+  z-index: 20;
+  grid-column: 3 / -1;
+  grid-row: 2;
+  width: 100%;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+  padding-inline: .8rem;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel {
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: min(25rem, calc(100vw - 2rem));
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel label {
+  grid-column: 1 / -1;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel select {
+  grid-column: 1;
+}
+
+html[data-skin="the-impossible-proof"] .skin-randomizer {
+  grid-column: 2;
+  width: auto;
+  min-width: 9rem;
+  padding-inline: .75rem;
+}
+
+html[data-skin="the-impossible-proof"] .home-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .masthead {
+  grid-column: 1 / -1;
+  margin: 0;
+  grid-template-columns: minmax(0, 7fr) minmax(17rem, 5fr);
+  align-items: stretch;
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy {
+  display: grid;
+  align-content: start;
+  padding: clamp(1.4rem, 3.4vw, 3.4rem);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index {
+  grid-column: 1 / span 8;
+  margin: 0;
+  align-self: stretch;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading {
+  grid-column: 1 / span 7;
+  margin: 0;
+  min-height: 100%;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools {
+  display: grid;
+  grid-column: 8 / -1;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  align-self: stretch;
+}
+
+html[data-skin="the-impossible-proof"] .archive-tools .archive-search {
+  display: grid;
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-tools .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-tools .quick-filters a {
+  min-width: 0;
+  padding-inline: .35rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-tools .all-tags {
+  display: grid;
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-tools .all-tags__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem clamp(1rem, 3vw, 3.5rem);
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year {
+  grid-column: 1 / span 8;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 2.4vw, 2rem);
+  border-top: 7px double var(--ink);
+  border-bottom: 2px solid var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year:nth-child(even) {
+  grid-column: 5 / -1;
+  border-top-color: var(--vermilion);
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: end;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head__key,
+html[data-skin="the-impossible-proof"] .record-head h1 {
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head__abstract {
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head .record-facts {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head .tag-line {
+  margin-top: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head .record-actions {
+  margin-top: 0;
+}
+
+@media (max-width: 76rem) {
+  html[data-skin="the-impossible-proof"] .site-header__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .site-brand {
+    padding-right: 0;
+    padding-bottom: 1rem;
+    border-right: 0;
+    border-bottom: 4px double var(--vermilion);
+  }
+
+}
+
+@media (max-width: 56rem) {
+  html[data-skin="the-impossible-proof"] .home-shell > .masthead,
+  html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
+  html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="the-impossible-proof"] .home-shell > .record-index {
+    grid-column: 1 / span 7;
+  }
+
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-impossible-proof"] .site-header__inner,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .site-nav {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a[data-route],
+  html[data-skin="the-impossible-proof"] .skin-menu {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  html[data-skin="the-impossible-proof"] .skin-menu__panel {
+    position: static;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .skin-menu__panel select,
+  html[data-skin="the-impossible-proof"] .skin-randomizer {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  html[data-skin="the-impossible-proof"] .home-shell > .masthead,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
+  grid-column: 1;
+}
+
+  html[data-skin="the-impossible-proof"] .masthead {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .archive-tools .quick-filters,
+html[data-skin="the-impossible-proof"] .archive-tools .all-tags__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-groups .archive-year,
+  html[data-skin="the-impossible-proof"] .archive-groups .archive-year:nth-child(even) {
+    grid-column: 1;
+  }
+
+  html[data-skin="the-impossible-proof"] .record-head .record-facts {
+  margin-top: 0;
+}
+}
+
+/* Final remediation: The Impossible Proof */
+html[data-skin="the-impossible-proof"] {
+  color-scheme: light;
+  --bench: #d7d0c2;
+  --paper: #f7f3ea;
+  --paper-low: #ece6da;
+  --text: #171714;
+  --heading: #171714;
+  --muted: #4a4a42;
+  --link: #7a241c;
+  --inline-bg: #e2dacb;
+  --code-bg: #1b1b18;
+  --code-text: #f8f4eb;
+  --code-muted: #c6c8ba;
+  --code-key: #a8e2d8;
+  --code-operator: #ffd98a;
+  --code-string: #ffe0a3;
+  --code-number: #cfe5bd;
+  --code-change: #ffb4a5;
+  --code-addition: #b9e6c9;
+  --code-heading: #bddcff;
+  --control-bg: #f7f3ea;
+  --control-fg: #171714;
+  --control-hover-bg: #e2dacb;
+  --control-hover-fg: #171714;
+  --focus-control: #006b78;
+  --selected-bg: #a63d2f;
+  --selected-fg: #fffaf1;
+  --header-bg: #171714;
+  --header-fg: #f8f4eb;
+  --focus-paper: #006b78;
+  --focus-dark: #fffaf1;
+  --focus-selected: #fffaf1;
+  --rule: #817c72;
+  --break: #a63d2f;
+  --quote: #eee1d0;
+  --quote-high: #f7f3ea;
+  --quote-low: #d7c9b6;
+  --quote-ink: #171714;
+  --quote-link: #7a241c;
+  --ink: var(--text);
+  --chalk: var(--paper);
+  --shell: var(--paper);
+  --shell-high: var(--paper);
+  --shell-low: var(--paper-low);
+  --navy: var(--text);
+  --navy-soft: #4a4a42;
+  --lcd: var(--paper);
+  --lcd-high: var(--paper);
+  --lcd-low: var(--paper-low);
+  --lcd-ink: var(--text);
+  --pink: var(--break);
+  --orange: var(--break);
+  --yellow: var(--focus-paper);
+  --cyan: #376c73;
+  --inline-code: var(--inline-bg);
+  --inline-rule: #a99f90;
+  --body: "Theme Computer Modern", Georgia, serif;
+  --display: "Theme Unbounded", "Arial Black", sans-serif;
+  --keys: "Theme Doto", "Silkscreen", ui-monospace, monospace;
+  --mono: "Theme Pixelify", "Cascadia Code", "SFMono-Regular", Menlo, monospace;
+  --reading: 67rem;
+  --page: 94rem;
+  background: var(--bench);
+}
+
+html[data-skin="the-impossible-proof"][data-theme="dark"] {
+  color-scheme: dark;
+  --bench: #10110f;
+  --paper: #23241f;
+  --paper-low: #30312a;
+  --text: #f7f3ea;
+  --heading: #f7f3ea;
+  --muted: #dad4c6;
+  --link: #ffd0bd;
+  --inline-bg: #393a33;
+  --code-bg: #0b0c0a;
+  --code-text: #f8f4eb;
+  --code-muted: #c6c8ba;
+  --code-key: #a8e2d8;
+  --code-operator: #ffd98a;
+  --code-string: #ffe0a3;
+  --code-number: #cfe5bd;
+  --code-change: #ffb4a5;
+  --code-addition: #b9e6c9;
+  --code-heading: #bddcff;
+  --control-bg: #30312a;
+  --control-fg: #f7f3ea;
+  --control-hover-bg: #f7f3ea;
+  --control-hover-fg: #171714;
+  --focus-control: #171714;
+  --selected-bg: #ff9378;
+  --selected-fg: #171714;
+  --header-bg: #0b0c0a;
+  --header-fg: #f8f4eb;
+  --focus-paper: #ffd166;
+  --focus-dark: #ffd166;
+  --focus-selected: #171714;
+  --rule: #979487;
+  --break: #ff9378;
+  --quote: #3a332d;
+  --quote-high: #4b4239;
+  --quote-low: #29241f;
+  --quote-ink: #f7f3ea;
+  --quote-link: #ffd0bd;
+  --navy-soft: #dad4c6;
+  --cyan: #9bd4cf;
+  --inline-rule: #77786d;
+}
+
+html[data-skin="the-impossible-proof"] body {
+  min-width: 0;
+  color: var(--text);
+  background-color: var(--bench);
+  background-image:
+    linear-gradient(90deg, transparent 0 8%, color-mix(in srgb, var(--text) 7%, transparent) 8% 8.08%, transparent 8.16% 91.84%, color-mix(in srgb, var(--text) 7%, transparent) 91.92% 92%, transparent 92%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 4%, transparent) 0 1px, transparent 1px 1.9rem);
+  background-size: 18rem 18rem, auto;
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+html[data-skin="the-impossible-proof"] a {
+  color: var(--link);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: .09em;
+  text-underline-offset: .18em;
+}
+
+html[data-skin="the-impossible-proof"] a:hover {
+  color: var(--break);
+  text-decoration-thickness: .14em;
+}
+
+html[data-skin="the-impossible-proof"] :focus-visible {
+  outline: 4px solid var(--focus-paper);
+  outline-offset: 4px;
+}
+
+html[data-skin="the-impossible-proof"] ::selection {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+}
+
+html[data-skin="the-impossible-proof"] .skip-link {
+  color: var(--header-fg);
+  background: var(--header-bg);
+  border: 2px solid var(--header-fg);
+  border-radius: 0;
+  box-shadow: .3rem .3rem 0 var(--break);
+  font-family: var(--keys);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-impossible-proof"] .skip-link:focus-visible {
+  outline-color: var(--focus-dark);
+}
+
+/* Type floor for authored interface, metadata, and code text. */
+html[data-skin="the-impossible-proof"] .site-brand__scope,
+html[data-skin="the-impossible-proof"] .site-nav a,
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-menu__panel label,
+html[data-skin="the-impossible-proof"] .skin-menu select,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span,
+html[data-skin="the-impossible-proof"] .eyebrow,
+html[data-skin="the-impossible-proof"] .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__primitive,
+html[data-skin="the-impossible-proof"] .archive-search label,
+html[data-skin="the-impossible-proof"] .archive-search input,
+html[data-skin="the-impossible-proof"] .archive-search input::placeholder,
+html[data-skin="the-impossible-proof"] .archive-search p,
+html[data-skin="the-impossible-proof"] .all-tags summary,
+html[data-skin="the-impossible-proof"] .all-tags__grid a,
+html[data-skin="the-impossible-proof"] .all-tags__grid small,
+html[data-skin="the-impossible-proof"] .archive-year > header span,
+html[data-skin="the-impossible-proof"] .record-head__key,
+html[data-skin="the-impossible-proof"] .record-facts dt,
+html[data-skin="the-impossible-proof"] .record-facts dd,
+html[data-skin="the-impossible-proof"] .record-toc summary,
+html[data-skin="the-impossible-proof"] .record-toc a,
+html[data-skin="the-impossible-proof"] .related-records a,
+html[data-skin="the-impossible-proof"] .toc-fallback,
+html[data-skin="the-impossible-proof"] .record-end nav span,
+html[data-skin="the-impossible-proof"] .prose th,
+html[data-skin="the-impossible-proof"] .code-frame__label strong,
+html[data-skin="the-impossible-proof"] .code-frame__label small,
+html[data-skin="the-impossible-proof"] .code-frame__actions button,
+html[data-skin="the-impossible-proof"] .prose .code-frame__gutter,
+html[data-skin="the-impossible-proof"] .code-frame__status,
+html[data-skin="the-impossible-proof"] .code-frame__fallback {
+  font-size: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  color: var(--text);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 6%, color-mix(in srgb, var(--text) 8%, transparent) 6% calc(6% + 1px), transparent calc(6% + 1px) calc(94% - 1px), color-mix(in srgb, var(--text) 8%, transparent) calc(94% - 1px) 94%, transparent 94%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 3%, transparent) 0 1px, transparent 1px 2.1rem);
+  border: 2px solid var(--text);
   border-radius: 0;
   box-shadow: none;
 }
-html[data-skin="the-impossible-proof"] .archive-year > header { border-color: var(--rule); }
+html[data-skin="the-impossible-proof"] .record-page {
+  isolation: isolate;
+  color: var(--text);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 0 6%, color-mix(in srgb, var(--text) 8%, transparent) 6% calc(6% + 1px), transparent calc(6% + 1px) calc(94% - 1px), color-mix(in srgb, var(--text) 8%, transparent) calc(94% - 1px) 94%, transparent 94%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 3%, transparent) 0 1px, transparent 1px 2.1rem);
+  border: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+}
 
-/* Article and wide-page wrappers keep all shared dimensions and placement. */
-html[data-skin="the-impossible-proof"] :is(.record-page, .record-head, .record-end, .article__content, .page-shell, .page-heading, .page-prose, .record-grid > .record-index) {
-  color: var(--ink);
+html[data-skin="the-impossible-proof"] .site-header {
+  color: var(--header-fg);
+  background-color: var(--header-bg);
+  background-image:
+    linear-gradient(90deg, transparent 0 4%, color-mix(in srgb, var(--header-fg) 16%, transparent) 4% calc(4% + 1px), transparent calc(4% + 1px) calc(96% - 1px), color-mix(in srgb, var(--header-fg) 16%, transparent) calc(96% - 1px) 96%, transparent 96%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--header-fg) 5%, transparent) 0 1px, transparent 1px 2.1rem);
+  border-color: var(--header-bg);
+}
+
+html[data-skin="the-impossible-proof"] .site-header {
+  margin-top: 1.25rem;
+  border-bottom: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding: clamp(1rem, 2.4vw, 2.5rem);
+}
+
+html[data-skin="the-impossible-proof"] .site-header__inner {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: 1.25rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-header__inner {
+  display: grid;
+  grid-template-columns: minmax(12rem, .8fr) minmax(0, 2.4fr);
+  gap: 1.25rem clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  min-height: 100%;
+  padding-right: 1rem;
+  color: var(--header-fg);
+  border-right: 2px solid var(--break);
+  text-decoration: none;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand__text {
+  gap: .4rem;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand__name {
+  color: var(--header-fg);
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3.1vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1;
+  text-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand__scope {
+  color: var(--header-fg);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .045em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .65rem;
+  align-items: start;
+  justify-content: stretch;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route],
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span {
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: .55rem .7rem;
+  border: 2px solid currentColor;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route] {
+  width: 100%;
+  color: var(--header-fg);
+  background: var(--header-bg);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route]::before {
+  top: auto;
+  right: .45rem;
+  bottom: 0;
+  left: .45rem;
+  width: auto;
+  height: 2px;
+  background: transparent;
+  border: 0;
+  transform: none;
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route]:hover,
+html[data-skin="the-impossible-proof"] .site-nav a[data-route]:focus-visible {
+  color: var(--control-hover-fg);
+  background: var(--control-hover-bg);
+  border-color: var(--control-hover-fg);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route]:focus-visible,
+html[data-skin="the-impossible-proof"] .theme-toggle:focus-visible,
+html[data-skin="the-impossible-proof"] .skin-menu summary:focus-visible {
+  outline-color: var(--focus-control);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"],
+html[data-skin="the-impossible-proof"] .quick-filters a[aria-current="true"],
+html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"],
+html[data-skin="the-impossible-proof"] .action--primary,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"] {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"]::before {
+  background: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"]:hover,
+html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"]:focus-visible,
+html[data-skin="the-impossible-proof"] .quick-filters a[aria-current="true"]:hover,
+html[data-skin="the-impossible-proof"] .quick-filters a[aria-current="true"]:focus-visible,
+html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"]:hover,
+html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"]:focus-visible,
+html[data-skin="the-impossible-proof"] .action--primary:hover,
+html[data-skin="the-impossible-proof"] .action--primary:focus-visible,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"]:hover,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"]:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .theme-toggle {
+  color: var(--header-fg);
+  background: var(--header-bg);
+  cursor: pointer;
+}
+
+html[data-skin="the-impossible-proof"] .theme-toggle:hover,
+html[data-skin="the-impossible-proof"] .theme-toggle:focus-visible {
+  color: var(--control-hover-fg);
+  background: var(--control-hover-bg);
+  border-color: var(--control-hover-fg);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu {
+  position: static;
+  z-index: auto;
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu summary {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--header-fg);
+  background: var(--header-bg);
+  cursor: pointer;
+  list-style: none;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu:not([open]) summary {
+  color: var(--header-fg);
+  background: var(--header-bg);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu[open] summary {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu summary:hover,
+html[data-skin="the-impossible-proof"] .skin-menu summary:focus-visible {
+  color: var(--control-hover-fg);
+  background: var(--control-hover-bg);
+  border-color: var(--control-hover-fg);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu[open] summary:hover,
+html[data-skin="the-impossible-proof"] .skin-menu[open] summary:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel {
+  position: static;
+  z-index: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  gap: .7rem;
+  margin-top: .65rem;
+  padding: .9rem;
+  color: var(--text);
   background: var(--paper);
-  border: 1px solid var(--rule);
+  border: 2px solid var(--text);
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel label,
+html[data-skin="the-impossible-proof"] .skin-menu__panel select,
+html[data-skin="the-impossible-proof"] .skin-menu__panel .skin-randomizer {
+  grid-column: 1;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel label {
+  color: var(--text);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .035em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu select,
+html[data-skin="the-impossible-proof"] .archive-search input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: .55rem .7rem;
+  color: var(--control-fg);
+  background: var(--control-bg);
+  border: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+  font: inherit;
+  line-height: 1.35;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu select:focus-visible,
+html[data-skin="the-impossible-proof"] .archive-search input:focus-visible {
+  outline-color: var(--focus-paper);
+}
+
+html[data-skin="the-impossible-proof"] .skin-randomizer {
+  width: 100%;
+  color: var(--control-fg);
+  background: var(--control-bg);
+  border-color: var(--text);
+  cursor: pointer;
+}
+
+html[data-skin="the-impossible-proof"] .skin-randomizer:hover,
+html[data-skin="the-impossible-proof"] .skin-randomizer:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .masthead h1,
+html[data-skin="the-impossible-proof"] .index-heading h1,
+html[data-skin="the-impossible-proof"] .page-heading h1,
+html[data-skin="the-impossible-proof"] .error-shell h1 {
+  max-width: 23ch;
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.04;
+  text-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .record-head h1 {
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.04;
+  text-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .section-heading :is(h1, h2),
+html[data-skin="the-impossible-proof"] .archive-year h2,
+html[data-skin="the-impossible-proof"] .related-records h2 {
+  color: var(--heading);
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.4vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: 1.12;
+  text-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .masthead h1 i,
+html[data-skin="the-impossible-proof"] .index-heading h1 i,
+html[data-skin="the-impossible-proof"] .page-heading h1 i,
+html[data-skin="the-impossible-proof"] .record-head h1 i {
+  color: var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .eyebrow,
+html[data-skin="the-impossible-proof"] .record-head__key,
+html[data-skin="the-impossible-proof"] .archive-search label,
+html[data-skin="the-impossible-proof"] .all-tags summary,
+html[data-skin="the-impossible-proof"] .record-toc summary,
+html[data-skin="the-impossible-proof"] .record-facts dt,
+html[data-skin="the-impossible-proof"] .record-end nav span {
+  color: var(--muted);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .masthead__lede,
+html[data-skin="the-impossible-proof"] .index-heading > p:last-child,
+html[data-skin="the-impossible-proof"] .page-heading > p:last-child {
+  max-width: 60ch;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+html[data-skin="the-impossible-proof"] .record-head__abstract {
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Home: an opening spread, a proof register, and an annotation margin. */
+html[data-skin="the-impossible-proof"] .home-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .masthead {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  margin: 0;
+  padding: 0 0 1.5rem;
+  border-top: 4px double var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading {
+  min-width: 0;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-left: .4rem solid var(--break);
   border-radius: 0;
   box-shadow: none;
 }
 html[data-skin="the-impossible-proof"] .record-head {
-  border-top: 3px double var(--rule);
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
 }
+
+html[data-skin="the-impossible-proof"] .masthead__copy {
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy::after,
+html[data-skin="the-impossible-proof"] .index-heading::after,
+html[data-skin="the-impossible-proof"] .page-heading::after,
 html[data-skin="the-impossible-proof"] .record-head::after {
-  content: "";
-  position: absolute;
-  width: 3rem;
-  height: 3rem;
-  top: .8rem;
-  left: calc(50% - 1.5rem);
-  background: url("../../images/themes/the-impossible-proof.svg") center / contain no-repeat;
-  pointer-events: none;
+  display: none;
 }
-html[data-skin="the-impossible-proof"]:root .record-head h1 {
-  color: var(--ink);
-  font-family: var(--body);
-  font-size: clamp(2rem, 3.7vw, 3.4rem) !important;
-  line-height: 1.18 !important;
-  font-weight: 600;
-  letter-spacing: -.025em;
+
+html[data-skin="the-impossible-proof"] .masthead__actions,
+html[data-skin="the-impossible-proof"] .record-actions,
+html[data-skin="the-impossible-proof"] .tag-line {
+  gap: .65rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
 }
-html[data-skin="the-impossible-proof"] .page-heading h1 { font-weight: 500; }
-html[data-skin="the-impossible-proof"] :is(.record-head__key, .record-facts dt) {
+
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a {
+  color: var(--control-fg);
+  background: var(--control-bg);
+  border-color: var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .action:hover,
+html[data-skin="the-impossible-proof"] .action:focus-visible,
+html[data-skin="the-impossible-proof"] .record-actions a:hover,
+html[data-skin="the-impossible-proof"] .record-actions a:focus-visible,
+html[data-skin="the-impossible-proof"] .tag-line a:hover,
+html[data-skin="the-impossible-proof"] .tag-line a:focus-visible,
+html[data-skin="the-impossible-proof"] .quick-filters a:hover,
+html[data-skin="the-impossible-proof"] .quick-filters a:focus-visible,
+html[data-skin="the-impossible-proof"] .pagination a:hover,
+html[data-skin="the-impossible-proof"] .pagination a:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose {
+  min-width: 0;
+  padding: clamp(1rem, 2.2vw, 2rem);
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end {
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-skin="the-impossible-proof"] .record-end:not(:where(.record-page, .record-page *)) {
+  min-width: 0;
+  padding: clamp(1rem, 2.2vw, 2rem);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .page-prose {
+  border-left: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .section-heading {
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .section-heading > p,
+html[data-skin="the-impossible-proof"] .archive-year > header span,
+html[data-skin="the-impossible-proof"] .pagination__position {
   color: var(--muted);
   font-family: var(--keys);
-  font-size: 16px;
-  text-transform: none;
+  font-weight: 700;
+  letter-spacing: .035em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
-html[data-skin="the-impossible-proof"] .record-facts { border-color: var(--rule); }
-html[data-skin="the-impossible-proof"] .record-head__abstract { font-family: var(--body); font-weight: 400; }
-html[data-skin="the-impossible-proof"] .prose {
-  color: var(--ink);
-  font-family: var(--body);
-  font-size: 19px;
-  line-height: 1.75;
+
+html[data-skin="the-impossible-proof"] .record-row {
+  border-bottom: 1px solid var(--rule);
 }
-html[data-skin="the-impossible-proof"] .prose :is(h1, h2, h3, h4, h5, h6) {
-  color: var(--ink);
-  font-family: var(--body);
-  line-height: 1.25;
-  font-weight: 600;
-  letter-spacing: -.015em;
-}
-html[data-skin="the-impossible-proof"] .prose :is(blockquote, .info) {
-  color: var(--ink);
+
+html[data-skin="the-impossible-proof"] .record-row:nth-child(even) {
   background: var(--paper-low);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  border-radius: 0;
-  box-shadow: none;
-  font-family: var(--body);
-  font-weight: 400;
 }
-html[data-skin="the-impossible-proof"] :is(.record-toc a, .record-toc summary, .related-records a) { color: var(--link); }
-html[data-skin="the-impossible-proof"] :is(.toc-fallback, .record-end nav span) { color: var(--muted); }
-html[data-skin="the-impossible-proof"] .related-records h2 {
-  color: var(--ink);
-  font-family: var(--body);
-  font-size: 1.5rem;
-  line-height: 1.25;
+
+html[data-skin="the-impossible-proof"] .record-row__link {
+  color: var(--text);
+  background: transparent;
+  border-left: 3px solid transparent;
 }
-html[data-skin="the-impossible-proof"] :is(.record-toc, .record-toc li, .related-records li) { border-color: var(--rule); }
-html[data-skin="the-impossible-proof"] .record-end nav a {
-  color: var(--link);
-  background: var(--paper);
-  border: 1px solid var(--rule);
+
+html[data-skin="the-impossible-proof"] .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__primitive {
+  color: var(--muted);
+  font-weight: 700;
 }
-html[data-skin="the-impossible-proof"] :is(code, pre, kbd, samp, .code-frame__gutter) {
+
+html[data-skin="the-impossible-proof"] .record-row__title {
+  color: var(--text);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__event {
+  font-family: var(--keys);
+  letter-spacing: .025em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__primitive {
   font-family: var(--mono);
-  font-variant-ligatures: none;
-  font-feature-settings: "liga" 0, "calt" 0;
 }
-html[data-skin="the-impossible-proof"] .prose :is(pre, code) { font-weight: 400; }
-html[data-skin="the-impossible-proof"] .prose .code-frame {
-  border: 1px solid var(--rule);
+
+/* Register rows: catalogue entries with an annotation margin, not a ledger strip. */
+html[data-skin="the-impossible-proof"] .record-row__link {
+  display: grid;
+  grid-template-columns: minmax(6.75rem, 9rem) minmax(0, 1fr) minmax(8rem, 11rem);
+  grid-template-areas:
+    "date title topic"
+    "date event topic";
+  gap: .15rem clamp(1rem, 2.4vw, 2rem);
+  align-content: center;
+  align-items: start;
+  padding-block: .9rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__date {
+  grid-area: date;
+  align-self: start;
+  padding-top: .3rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__title {
+  grid-area: title;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__event {
+  grid-area: event;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__primitive {
+  grid-area: topic;
+  justify-self: end;
+  padding-left: 1rem;
+  border-left: 2px solid currentColor;
+  text-align: right;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link:hover,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-left-color: var(--text);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__title,
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__link:hover .record-row__primitive,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__date,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__title,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__event,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible .record-row__primitive {
+  color: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .action:focus-visible,
+html[data-skin="the-impossible-proof"] .record-actions a:focus-visible,
+html[data-skin="the-impossible-proof"] .tag-line a:focus-visible,
+html[data-skin="the-impossible-proof"] .quick-filters a:focus-visible,
+html[data-skin="the-impossible-proof"] .pagination a:focus-visible {
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a {
+  display: flex;
+  min-height: 2.75rem;
+  gap: .7rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: .7rem 0;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
   border-radius: 0;
   box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
 }
-html[data-skin="the-impossible-proof"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
-  background-color: #043c50 !important;
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:nth-child(n) {
+  color: var(--text);
+  background: transparent;
 }
-html[data-skin="the-impossible-proof"] :is(.code-frame__bar, .code-frame__status, .code-frame__fallback) {
-  color: var(--ink);
+
+html[data-skin="the-impossible-proof"] .all-tags__grid a:hover,
+html[data-skin="the-impossible-proof"] .all-tags__grid a:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags__grid small {
+  color: inherit;
+  font-family: var(--mono);
+}
+
+html[data-skin="the-impossible-proof"] .pagination__position strong {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+html[data-skin="the-impossible-proof"] .pagination span[aria-disabled="true"] {
+  color: var(--muted);
   background: var(--paper-low);
   border-color: var(--rule);
-  box-shadow: none;
-  font-family: var(--keys);
+  opacity: 1;
 }
-html[data-skin="the-impossible-proof"] .code-frame__actions button {
-  color: var(--link);
-  background: var(--paper);
-  border: 1px solid var(--rule);
+
+/* Archive: one running catalogue with an adjacent filter note. */
+html[data-skin="the-impossible-proof"] .archive-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading {
+  grid-column: 1 / span 4;
+  margin: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools {
+  display: grid;
+  grid-column: 6 / span 3;
+  gap: 1rem;
+  margin: 0;
+  border-left: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .archive-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-search input {
+  color: var(--control-fg);
+  background: var(--control-bg);
+}
+
+html[data-skin="the-impossible-proof"] .archive-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+html[data-skin="the-impossible-proof"] .quick-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html[data-skin="the-impossible-proof"] .quick-filters a {
+  width: 100%;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags {
+  border-top: 1px solid var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .all-tags summary,
+html[data-skin="the-impossible-proof"] .record-toc summary {
+  cursor: pointer;
+}
+
+html[data-skin="the-impossible-proof"] .all-tags summary:focus-visible,
+html[data-skin="the-impossible-proof"] .record-toc summary:focus-visible {
+  outline-color: var(--focus-paper);
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups {
+  display: block;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year,
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year:nth-child(even) {
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.75rem) 0;
+  background: transparent;
+  border-top: 3px double var(--text);
+  border-bottom: 0;
+  border-left: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year + .archive-year {
+  margin-top: 1.25rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year:nth-child(even) {
+  border-left-color: var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: end;
+  padding-inline: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 1rem;
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border: 2px solid var(--selected-fg);
+  box-shadow: none;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Article: a caption, reading frame, and later-DOM margin index. */
+
+html[data-skin="the-impossible-proof"] .record-page > .record-head {
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .record-head__key,
+html[data-skin="the-impossible-proof"] .record-head h1 {
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head__key {
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .record-head__abstract {
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head .record-facts {
+  gap: .75rem;
+  margin: 0;
+  padding: 0 0 0 1rem;
+  border-top: 0;
+  border-left: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div,
+html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(n) {
+  min-height: 0;
+  padding: .65rem 0 .65rem .75rem;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-left: 3px solid var(--break);
   border-radius: 0;
-  box-shadow: none;
-  font-family: var(--keys);
+  text-align: left;
 }
-html[data-skin="the-impossible-proof"] .prose :is(th, td) { border-color: var(--rule); }
-html[data-skin="the-impossible-proof"] .prose th {
-  color: var(--ink);
-  background: var(--paper-low);
+
+html[data-skin="the-impossible-proof"] .record-facts dt {
+  color: var(--muted);
+}
+
+html[data-skin="the-impossible-proof"] .record-facts dd {
+  color: var(--text);
   font-family: var(--body);
+  font-weight: 700;
+  line-height: 1.45;
 }
-html[data-skin="the-impossible-proof"] .prose .katex-display {
-  color: var(--ink);
-  background: var(--paper);
-  border-color: var(--rule);
+
+html[data-skin="the-impossible-proof"] .record-head .tag-line,
+html[data-skin="the-impossible-proof"] .record-head .record-actions {
+  margin-top: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-grid > .record-index {
+  color: var(--text);
+  background: var(--paper-low);
+  border: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
   box-shadow: none;
 }
 
-@media (max-width: 68rem) {
-  html[data-skin="the-impossible-proof"] .site-brand { padding-inline: 7rem; }
-  html[data-skin="the-impossible-proof"] .site-brand__mark { width: 6rem; right: .5rem; top: 11rem; }
-  html[data-skin="the-impossible-proof"] .masthead__copy { padding-inline: 5rem; }
-}
-@media (max-width: 44rem) {
-  html[data-skin="the-impossible-proof"] .site-header__inner {
-    margin-inline: 12px;
-    padding: 1rem 1rem 0;
-  }
-  html[data-skin="the-impossible-proof"]:root .site-nav { gap: .15rem; }
-  html[data-skin="the-impossible-proof"]:root .site-nav a { font-size: 16px !important; padding-inline: .5rem; }
-  html[data-skin="the-impossible-proof"] .skin-menu { width: 100%; margin-top: .6rem; }
-  html[data-skin="the-impossible-proof"] .skin-menu summary { width: 100%; }
-  html[data-skin="the-impossible-proof"] .site-brand {
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    padding: 1.5rem 0 1rem;
-  }
-  html[data-skin="the-impossible-proof"] .site-brand__mark { position: static; width: 8rem; }
-  html[data-skin="the-impossible-proof"] .site-brand__text { gap: .75rem; }
-  html[data-skin="the-impossible-proof"]:root .site-brand__name { font-size: clamp(2.75rem, 13vw, 4rem) !important; }
-  html[data-skin="the-impossible-proof"]:root :is(.home-shell, .archive-shell) { width: calc(100% - 24px) !important; }
-  html[data-skin="the-impossible-proof"] .masthead__copy { padding: 1rem 1rem 2.5rem; }
-  html[data-skin="the-impossible-proof"] .home-shell > .section-cards { padding: 2rem 1rem; }
-  html[data-skin="the-impossible-proof"] .index-map__links { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.5rem; }
-  html[data-skin="the-impossible-proof"] .index-map__links a { padding-inline: .5rem; }
-  html[data-skin="the-impossible-proof"] .index-map__links a:nth-child(3) { border-inline-start: 0; }
-  html[data-skin="the-impossible-proof"]:root .index-map__links a span { font-size: 18px !important; }
-  html[data-skin="the-impossible-proof"]:root .home-shell > #records {
-    padding: 2.5rem 1rem 0;
-    background: var(--paper);
-    border-inline: 1px solid var(--rule);
-  }
-  html[data-skin="the-impossible-proof"] .home-shell .record-row::before { content: none; }
-  html[data-skin="the-impossible-proof"]:root .record-row__link {
-    grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-areas: "date" "title" "event" "primitive" !important;
-    gap: .2rem;
-    padding: 1.5rem 0;
-  }
-  html[data-skin="the-impossible-proof"]:root .record-row__title { font-size: 22px !important; line-height: 1.4; }
-  html[data-skin="the-impossible-proof"] .pagination { margin-inline: -1rem; padding: 1.5rem 1rem; }
-  html[data-skin="the-impossible-proof"] .section-heading { margin-bottom: 1.5rem; }
-  html[data-skin="the-impossible-proof"] .record-head::after { content: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html[data-skin="the-impossible-proof"] a { transition: none !important; }
+html[data-skin="the-impossible-proof"] .record-toc {
+  border-bottom: 1px solid var(--rule);
 }
 
-/* Palette rework paint roles. */
+html[data-skin="the-impossible-proof"] .record-toc summary {
+  padding: .8rem;
+  color: var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc li,
+html[data-skin="the-impossible-proof"] .related-records li {
+  border-top: 1px solid var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc a,
+html[data-skin="the-impossible-proof"] .related-records a {
+  padding: .65rem .8rem;
+  color: var(--link);
+  font-family: var(--body);
+  line-height: 1.45;
+}
+
+html[data-skin="the-impossible-proof"] .record-toc a:hover,
+html[data-skin="the-impossible-proof"] .record-toc a:focus-visible,
+html[data-skin="the-impossible-proof"] .related-records a:hover,
+html[data-skin="the-impossible-proof"] .related-records a:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .toc-fallback {
+  padding: 0 .8rem;
+  color: var(--muted);
+}
+
+html[data-skin="the-impossible-proof"] .related-records {
+  margin-top: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .related-records h2 {
+  padding: 0 .8rem;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-end > p a,
+html[data-skin="the-impossible-proof"] .prose a {
+  color: var(--link);
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .record-end > p a:hover,
+html[data-skin="the-impossible-proof"] .record-end > p a:focus-visible,
+html[data-skin="the-impossible-proof"] .prose a:hover,
+html[data-skin="the-impossible-proof"] .prose a:focus-visible {
+  color: var(--break);
+  text-decoration-color: currentColor;
+}
+
+html[data-skin="the-impossible-proof"] .record-end nav a {
+  color: var(--control-fg);
+  background: var(--control-bg);
+  border: 2px solid var(--text);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-end nav a:hover,
+html[data-skin="the-impossible-proof"] .record-end nav a:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+/* Reading and evidence retain a calm paper field. */
+html[data-skin="the-impossible-proof"] .prose {
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.76;
+}
+
+html[data-skin="the-impossible-proof"] .prose h1,
+html[data-skin="the-impossible-proof"] .prose h2,
+html[data-skin="the-impossible-proof"] .prose h3,
+html[data-skin="the-impossible-proof"] .prose h4,
+html[data-skin="the-impossible-proof"] .prose h5,
+html[data-skin="the-impossible-proof"] .prose h6 {
+  color: var(--heading);
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.18;
+}
+
+html[data-skin="the-impossible-proof"] .prose h1 { font-size: 2.25rem; }
+html[data-skin="the-impossible-proof"] .prose h2 { font-size: 1.75rem; border-top: 2px solid var(--text); }
+html[data-skin="the-impossible-proof"] .prose h3 { font-size: 1.5rem; }
+html[data-skin="the-impossible-proof"] .prose h4 { font-size: 1.25rem; }
+html[data-skin="the-impossible-proof"] .prose h5 { font-size: 1.125rem; }
+html[data-skin="the-impossible-proof"] .prose h6 { font-size: 1rem; }
+
+html[data-skin="the-impossible-proof"] .heading-anchor {
+  color: var(--break);
+  font-size: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .prose hr {
+  height: 3px;
+  background: var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .prose .info {
+  color: var(--text);
+  background: var(--paper-low);
+  border: 2px solid var(--text);
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .prose blockquote {
+  color: var(--quote-ink);
+  background: var(--quote);
+  border: 0;
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--body);
+  font-size: 1em;
+}
+
+html[data-skin="the-impossible-proof"] .prose blockquote a {
+  color: var(--quote-link);
+}
+
+html[data-skin="the-impossible-proof"] .prose ul:not(.code-frame__gutter) > li::marker {
+  color: var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .prose ul:not(.code-frame__gutter) ul > li::marker {
+  color: var(--muted);
+}
+
+html[data-skin="the-impossible-proof"] .prose code {
+  color: var(--text);
+  background: var(--inline-bg);
+  border-color: var(--inline-rule);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: max(1rem, .875em);
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .prose th,
+html[data-skin="the-impossible-proof"] .prose td {
+  border-color: var(--rule);
+}
+
+html[data-skin="the-impossible-proof"] .prose th {
+  color: var(--header-fg);
+  background: var(--header-bg);
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .prose tr:nth-child(even) td {
+  background: var(--paper-low);
+}
+
+html[data-skin="the-impossible-proof"] .prose img:not(.emoji) {
+  border-color: var(--text);
+  box-shadow: .35rem .35rem 0 var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .prose pre,
+html[data-skin="the-impossible-proof"] .prose .highlight,
+html[data-skin="the-impossible-proof"] .prose .code-frame {
+  color: var(--code-text);
+  background: var(--code-bg);
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame {
+  overflow: visible;
+  border: 2px solid var(--text);
+  border-left: .4rem solid var(--break);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__bar {
+  color: var(--code-text);
+  background: var(--code-bg);
+  border-bottom: 2px solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__label strong,
+html[data-skin="the-impossible-proof"] .code-frame__label small {
+  color: var(--code-text);
+  line-height: 1.4;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__label strong {
+  font-family: var(--keys);
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button {
+  min-height: 2.75rem;
+  color: var(--control-fg);
+  background: var(--control-bg);
+  border: 2px solid var(--control-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--keys);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:last-child {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:hover,
+html[data-skin="the-impossible-proof"] .code-frame__actions button:focus-visible {
+  color: var(--code-text);
+  background: var(--code-bg);
+  border-color: var(--focus-dark);
+  outline-color: var(--focus-dark);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__actions button:last-child:hover,
+html[data-skin="the-impossible-proof"] .code-frame__actions button:last-child:focus-visible,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"]:hover,
+html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"]:focus-visible {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+  border-color: var(--selected-fg);
+  outline-color: var(--focus-selected);
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame__gutter {
+  color: var(--code-muted);
+  background: var(--code-bg);
+  border-right-color: var(--break);
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame > .highlight,
+html[data-skin="the-impossible-proof"] .prose .code-frame__viewport > .highlight {
+  overflow: visible;
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame pre {
+  color: var(--code-text);
+  background: var(--code-bg);
+  overflow: auto;
+  font-size: 1rem;
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame :focus-visible {
+  outline-color: var(--focus-dark);
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame ::selection {
+  color: var(--selected-fg);
+  background: var(--selected-bg);
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__status {
+  color: var(--text);
+  background: var(--paper-low);
+  border-top-color: var(--break);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+html[data-skin="the-impossible-proof"] .code-frame__fallback {
+  color: var(--text);
+  background: var(--paper);
+  border-color: var(--break);
+  border-radius: 0;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .c,
+html[data-skin="the-impossible-proof"] .highlight .c1,
+html[data-skin="the-impossible-proof"] .highlight .cm,
+html[data-skin="the-impossible-proof"] .highlight .cp,
+html[data-skin="the-impossible-proof"] .highlight .cs {
+  color: var(--code-muted);
+}
+
+html[data-skin="the-impossible-proof"] .highlight .err {
+  color: var(--code-text);
+  background: #8a2d21;
+}
+
+html[data-skin="the-impossible-proof"] .highlight .k,
+html[data-skin="the-impossible-proof"] .highlight .kc,
+html[data-skin="the-impossible-proof"] .highlight .kd,
+html[data-skin="the-impossible-proof"] .highlight .kn,
+html[data-skin="the-impossible-proof"] .highlight .kp,
+html[data-skin="the-impossible-proof"] .highlight .kr,
+html[data-skin="the-impossible-proof"] .highlight .kt { color: var(--code-key); }
+
+html[data-skin="the-impossible-proof"] .highlight .o,
+html[data-skin="the-impossible-proof"] .highlight .ow { color: var(--code-operator); }
+
+html[data-skin="the-impossible-proof"] .highlight .n,
+html[data-skin="the-impossible-proof"] .highlight .na,
+html[data-skin="the-impossible-proof"] .highlight .nb,
+html[data-skin="the-impossible-proof"] .highlight .nc,
+html[data-skin="the-impossible-proof"] .highlight .nd,
+html[data-skin="the-impossible-proof"] .highlight .ne,
+html[data-skin="the-impossible-proof"] .highlight .nf,
+html[data-skin="the-impossible-proof"] .highlight .ni,
+html[data-skin="the-impossible-proof"] .highlight .nl,
+html[data-skin="the-impossible-proof"] .highlight .nn,
+html[data-skin="the-impossible-proof"] .highlight .no,
+html[data-skin="the-impossible-proof"] .highlight .nt,
+html[data-skin="the-impossible-proof"] .highlight .nv { color: var(--code-text); }
+
+html[data-skin="the-impossible-proof"] .highlight .nc,
+html[data-skin="the-impossible-proof"] .highlight .nf { color: var(--code-change); }
+
+html[data-skin="the-impossible-proof"] .highlight .s,
+html[data-skin="the-impossible-proof"] .highlight .s1,
+html[data-skin="the-impossible-proof"] .highlight .s2,
+html[data-skin="the-impossible-proof"] .highlight .sa,
+html[data-skin="the-impossible-proof"] .highlight .sb,
+html[data-skin="the-impossible-proof"] .highlight .sc,
+html[data-skin="the-impossible-proof"] .highlight .sd,
+html[data-skin="the-impossible-proof"] .highlight .se,
+html[data-skin="the-impossible-proof"] .highlight .sh,
+html[data-skin="the-impossible-proof"] .highlight .si,
+html[data-skin="the-impossible-proof"] .highlight .sr,
+html[data-skin="the-impossible-proof"] .highlight .ss,
+html[data-skin="the-impossible-proof"] .highlight .sx { color: var(--code-string); }
+
+html[data-skin="the-impossible-proof"] .highlight .m,
+html[data-skin="the-impossible-proof"] .highlight .mb,
+html[data-skin="the-impossible-proof"] .highlight .mf,
+html[data-skin="the-impossible-proof"] .highlight .mh,
+html[data-skin="the-impossible-proof"] .highlight .mi,
+html[data-skin="the-impossible-proof"] .highlight .mo,
+html[data-skin="the-impossible-proof"] .highlight .il { color: var(--code-number); }
+
+html[data-skin="the-impossible-proof"] .highlight .gd { color: var(--code-change); }
+html[data-skin="the-impossible-proof"] .highlight .gi { color: var(--code-addition); }
+html[data-skin="the-impossible-proof"] .highlight .gh,
+html[data-skin="the-impossible-proof"] .highlight .gu { color: var(--code-heading); }
+
+html[data-skin="the-impossible-proof"] .prose .katex,
+html[data-skin="the-impossible-proof"] .prose .katex-display {
+  font-size: 1.125rem;
+}
+
+html[data-skin="the-impossible-proof"] .prose .katex-display {
+  color: var(--text);
+  background: var(--paper-low);
+  border: 2px solid var(--text);
+  border-left: .4rem solid var(--break);
+  box-shadow: none;
+}
+
+/* About and recovery routes keep distinct folio compositions. */
+html[data-skin="the-impossible-proof"] .page-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+html[data-skin="the-impossible-proof"] .page-shell > .page-heading {
+  grid-column: 2 / span 4;
+  margin: 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
+  grid-column: 7 / span 4;
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+html[data-skin="the-impossible-proof"] .error-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem clamp(1.25rem, 3vw, 3.5rem);
+  min-height: 0;
+  align-items: end;
+}
+
+html[data-skin="the-impossible-proof"] .error-code {
+  grid-column: 1 / span 4;
+  grid-row: 1 / span 4;
+  display: flex;
+  gap: .4rem;
+  align-self: stretch;
+  align-items: center;
+  color: var(--break);
+  background: transparent;
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -.08em;
+  line-height: .9;
+  text-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .error-code i {
+  height: 2px;
+  background: var(--text);
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > .eyebrow,
+html[data-skin="the-impossible-proof"] .error-shell > h1,
+html[data-skin="the-impossible-proof"] .error-shell > p,
+html[data-skin="the-impossible-proof"] .error-shell > nav,
+html[data-skin="the-impossible-proof"] .error-shell > :not(.error-code):not(.eyebrow):not(h1):not(p):not(nav) {
+  grid-column: 6 / span 5;
+  width: auto;
+  max-width: none;
+  margin-inline: 0;
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > h1,
+html[data-skin="the-impossible-proof"] .error-shell > p {
+  color: var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > h1 {
+  margin-top: 0;
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > p {
+  font-size: 1.125rem;
+}
+
+html[data-skin="the-impossible-proof"] .error-shell > nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: .5rem;
+}
+
+/* Footer: a final citation strip with normal link order. */
+
+@media (max-width: 70rem) {
+  html[data-skin="the-impossible-proof"] .site-header__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .site-brand {
+    min-height: 0;
+    padding-right: 0;
+    padding-bottom: 1rem;
+    border-right: 0;
+    border-bottom: 2px solid var(--break);
+  }
+
+  html[data-skin="the-impossible-proof"] .home-shell > .masthead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .home-shell > .record-index {
+    grid-column: 1 / -1;
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-shell > .index-heading {
+    grid-column: 1 / span 5;
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools {
+    grid-column: 7 / -1;
+  }
+
+  html[data-skin="the-impossible-proof"] .page-shell > .page-heading {
+    grid-column: 1 / span 5;
+  }
+
+  html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
+    grid-column: 7 / -1;
+  }
+}
+
+@media (max-width: 44rem) {
+  html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1rem;
+  border-width: 2px;
+}
+html[data-skin="the-impossible-proof"] .record-page {
+  border-width: 2px;
+}
+
+  html[data-skin="the-impossible-proof"] .site-header {
+    border-inline-width: 0;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-header__inner {
+    padding: 1rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .site-nav a[data-route],
+  html[data-skin="the-impossible-proof"] .skin-menu {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-brand__scope {
+    display: block;
+  }
+
+  html[data-skin="the-impossible-proof"] .skin-menu {
+    width: 100%;
+  }
+
+  html[data-skin="the-impossible-proof"] .skin-menu__panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a[data-route],
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span {
+    font-size: 1rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .masthead {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .home-shell > .masthead,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-shell > .index-heading,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-groups,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-empty,
+html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose,
+html[data-skin="the-impossible-proof"] .error-code,
+html[data-skin="the-impossible-proof"] .error-shell > .eyebrow,
+html[data-skin="the-impossible-proof"] .error-shell > h1,
+html[data-skin="the-impossible-proof"] .error-shell > p,
+html[data-skin="the-impossible-proof"] .error-shell > nav,
+html[data-skin="the-impossible-proof"] .error-shell > :not(.error-code):not(.eyebrow):not(h1):not(p):not(nav) {
+  grid-column: 1;
+  grid-row: auto;
+}
+
+  html[data-skin="the-impossible-proof"] .quick-filters {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .record-head .record-facts {
+  margin-top: 0;
+  border-left: 0;
+}
+
+  html[data-skin="the-impossible-proof"] .record-row__link {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "date"
+      "title"
+      "event"
+      "topic";
+    gap: .2rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .record-row__date,
+  html[data-skin="the-impossible-proof"] .record-row__title,
+  html[data-skin="the-impossible-proof"] .record-row__event,
+  html[data-skin="the-impossible-proof"] .record-row__primitive {
+    grid-column: 1;
+  }
+
+  html[data-skin="the-impossible-proof"] .record-row__primitive {
+    justify-self: start;
+    padding-left: .75rem;
+    text-align: left;
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-groups .archive-year > header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-skin="the-impossible-proof"] .archive-groups .archive-year > header span {
+    margin-top: .4rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .section-heading {
+    display: block;
+  }
+
+  html[data-skin="the-impossible-proof"] .section-heading > p {
+    margin-top: .5rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .prose {
+    font-size: 1.125rem;
+  }
+
+  html[data-skin="the-impossible-proof"] .prose h1 { font-size: 2rem; }
+  html[data-skin="the-impossible-proof"] .prose h2 { font-size: 1.625rem; }
+  html[data-skin="the-impossible-proof"] .prose h3 { font-size: 1.375rem; }
+
+  html[data-skin="the-impossible-proof"] .code-frame__bar,
+  html[data-skin="the-impossible-proof"] .code-frame__actions {
+    width: 100%;
+  }
+
+  html[data-skin="the-impossible-proof"] .error-code {
+    min-height: 5rem;
+    font-size: clamp(3rem, 20vw, 5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="the-impossible-proof"],
+  html[data-skin="the-impossible-proof"] * {
+    scroll-behavior: auto;
+  }
+
+  html[data-skin="the-impossible-proof"] *,
+  html[data-skin="the-impossible-proof"] *::before,
+  html[data-skin="the-impossible-proof"] *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-skin="the-impossible-proof"] body,
+html[data-skin="the-impossible-proof"] .site-header,
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .record-page,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell,
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .record-head,
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .record-end,
+html[data-skin="the-impossible-proof"] .record-grid > .record-index,
+html[data-skin="the-impossible-proof"] .prose .code-frame,
+html[data-skin="the-impossible-proof"] .code-frame__bar,
+html[data-skin="the-impossible-proof"] .code-frame__status,
+html[data-skin="the-impossible-proof"] .prose .katex-display {
+    color: CanvasText !important;
+    background: Canvas !important;
+    background-image: none !important;
+    border-color: CanvasText !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a,
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-menu select,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span,
+html[data-skin="the-impossible-proof"] .code-frame__actions button,
+html[data-skin="the-impossible-proof"] .record-end nav a {
+    color: ButtonText !important;
+    background: ButtonFace !important;
+    border-color: ButtonText !important;
+    box-shadow: none !important;
+  }
+
+  html[data-skin="the-impossible-proof"] .site-nav a[aria-current="page"],
+  html[data-skin="the-impossible-proof"] .quick-filters a[aria-current="true"],
+  html[data-skin="the-impossible-proof"] .theme-toggle[aria-pressed="true"],
+  html[data-skin="the-impossible-proof"] .action--primary,
+  html[data-skin="the-impossible-proof"] .skin-menu[open] summary,
+  html[data-skin="the-impossible-proof"] .code-frame__actions button[aria-pressed="true"] {
+    color: HighlightText !important;
+    background: Highlight !important;
+    border-color: HighlightText !important;
+  }
+
+  html[data-skin="the-impossible-proof"] :focus-visible {
+    outline-color: Highlight !important;
+  }
+
+  html[data-skin="the-impossible-proof"] .highlight span {
+    color: CanvasText !important;
+    background: transparent !important;
+  }
+}
+
+/* Cycle two corrective pass: The Impossible Proof */
 html[data-skin="the-impossible-proof"] {
-  --pr-pool: #58d7f3;
-  --pr-pool-ink: #063c4b;
-  --pr-pool-muted: #155365;
-  --pr-coral: #ff8c78;
-  --pr-lemon: #ffed6b;
-  --pr-on-bright: #063c4b;
+  --focus-selected: #007c88;
+}
+
+html[data-skin="the-impossible-proof"][data-theme="dark"] {
+  --focus-selected: #ffd166;
+}
+
+html[data-skin="the-impossible-proof"] body {
+  background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 4%, transparent) 0 1px, transparent 1px 1.9rem);
+}
+
+html[data-skin="the-impossible-proof"] .site-header::before {
+  display: none;
+  content: none;
+}
+
+html[data-skin="the-impossible-proof"] .site-header {
+  background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--header-fg) 5%, transparent) 0 1px, transparent 1px 2.1rem);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell,
+html[data-skin="the-impossible-proof"] .archive-shell,
+html[data-skin="the-impossible-proof"] .page-shell,
+html[data-skin="the-impossible-proof"] .error-shell {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .record-page {
+  background: var(--paper);
+  background-image: none;
+  border: 0;
+  box-shadow: none;
+}
+
+html[data-skin="the-impossible-proof"] .site-brand {
+  padding-right: 0;
+  border-right: 0;
+}
+
+html[data-skin="the-impossible-proof"] .skin-menu__panel {
+  border-left: 0;
+  border-top: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .masthead__copy,
+html[data-skin="the-impossible-proof"] .index-heading,
+html[data-skin="the-impossible-proof"] .page-heading,
+html[data-skin="the-impossible-proof"] .record-head {
+  border-left: 0;
+  border-top: 3px double var(--text);
+}
+
+html[data-skin="the-impossible-proof"] .home-shell > .record-index,
+html[data-skin="the-impossible-proof"] .article__content,
+html[data-skin="the-impossible-proof"] .page-prose,
+html[data-skin="the-impossible-proof"] .archive-shell > .archive-tools,
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year,
+html[data-skin="the-impossible-proof"] .archive-groups .archive-year:nth-child(even),
+html[data-skin="the-impossible-proof"] .record-grid > .record-index {
+  border-left: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-row__link,
+html[data-skin="the-impossible-proof"] .record-row__link:hover,
+html[data-skin="the-impossible-proof"] .record-row__link:focus-visible {
+  border-left: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-head .record-facts {
+  padding: .75rem 0 0;
+  border-top: 2px solid var(--text);
+  border-left: 0;
+}
+
+html[data-skin="the-impossible-proof"] .record-facts > div,
+html[data-skin="the-impossible-proof"] .record-facts > div:nth-child(n) {
+  min-width: 0;
+  padding: .65rem .75rem;
+  border-top: 1px solid var(--rule);
+  border-left: 0;
+}
+
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
+  grid-column: 6 / -1;
+  width: min(100%, 72ch);
+  max-width: 72ch;
+}
+
+html[data-skin="the-impossible-proof"] .prose .info,
+html[data-skin="the-impossible-proof"] .prose blockquote,
+html[data-skin="the-impossible-proof"] .prose .code-frame,
+html[data-skin="the-impossible-proof"] .prose .katex-display {
+  border-left: 0;
+  border-top: .4rem solid var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .prose .code-frame__gutter {
+  padding-inline: .75rem;
+  border-right: 0;
+  text-align: right;
+}
+
+html[data-skin="the-impossible-proof"] .masthead h1,
+html[data-skin="the-impossible-proof"] .index-heading h1,
+html[data-skin="the-impossible-proof"] .page-heading h1,
+html[data-skin="the-impossible-proof"] .record-head h1,
+html[data-skin="the-impossible-proof"] .error-shell h1 {
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  line-height: 1.05;
+}
+
+html[data-skin="the-impossible-proof"] .section-heading :is(h1, h2),
+html[data-skin="the-impossible-proof"] .archive-year h2,
+html[data-skin="the-impossible-proof"] .related-records h2 {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+}
+
+html[data-skin="the-impossible-proof"] .prose h1 { font-size: 2rem; }
+html[data-skin="the-impossible-proof"] .prose h2 { font-size: 1.6rem; }
+html[data-skin="the-impossible-proof"] .prose h3 { font-size: 1.35rem; }
+html[data-skin="the-impossible-proof"] .prose h4 { font-size: 1.2rem; }
+
+html[data-skin="the-impossible-proof"] .site-nav a[data-route],
+html[data-skin="the-impossible-proof"] .theme-toggle,
+html[data-skin="the-impossible-proof"] .skin-menu summary,
+html[data-skin="the-impossible-proof"] .skin-randomizer,
+html[data-skin="the-impossible-proof"] .action,
+html[data-skin="the-impossible-proof"] .record-actions a,
+html[data-skin="the-impossible-proof"] .tag-line a,
+html[data-skin="the-impossible-proof"] .quick-filters a,
+html[data-skin="the-impossible-proof"] .pagination a,
+html[data-skin="the-impossible-proof"] .pagination span,
+html[data-skin="the-impossible-proof"] .code-frame__actions button {
+  align-self: start;
+  min-height: 0;
+  height: auto;
+}
+
+html[data-skin="the-impossible-proof"] .record-toc summary {
+  position: relative;
+  padding-bottom: 1.1rem;
+}
+
+html[data-skin="the-impossible-proof"] .record-toc summary::before {
+  display: inline-block;
+  width: .55rem;
+  height: .55rem;
+  margin-right: .5rem;
+  content: "";
+  background: var(--break);
+  border-radius: 50%;
+}
+
+html[data-skin="the-impossible-proof"] .record-toc summary::after {
+  display: block;
+  margin-top: .55rem;
+  content: "";
+  border-top: 2px dashed var(--break);
+}
+
+html[data-skin="the-impossible-proof"] .record-toc a[aria-current="true"],
+html[data-skin="the-impossible-proof"] .record-toc a[aria-current="page"],
+html[data-skin="the-impossible-proof"] .record-toc a[aria-current="location"] {
+  color: var(--text);
+  background: var(--paper-low);
+}
+
+@media (max-width: 64rem) {
+  html[data-skin="the-impossible-proof"] .page-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+  html[data-skin="the-impossible-proof"] .page-shell > .page-heading,
+html[data-skin="the-impossible-proof"] .page-shell > .page-prose {
+  grid-column: 1;
+  width: 100%;
+  max-width: 72ch;
+}
+
+}
+
+@media (forced-colors: active) {
+  html[data-skin="the-impossible-proof"] .record-toc summary::before {
+    background: Highlight !important;
+  }
+
+  html[data-skin="the-impossible-proof"] .record-toc summary::after {
+    border-color: Highlight !important;
+  }
+}
+
+/* Footer paint: shared geometry stays in components/site-footer.css. */
+html[data-skin="the-impossible-proof"] {
+  --footer-color: rgb(248, 244, 235);
+  --footer-background-color: var(--navy);
+  --footer-background-image: repeating-linear-gradient(0deg, color(srgb 0.972549 0.956863 0.921569 / 0.05) 0px, color(srgb 0.972549 0.956863 0.921569 / 0.05) 1px, rgba(0, 0, 0, 0) 1px, rgba(0, 0, 0, 0) 33.6px);
+  --footer-border-top: 6px solid rgb(166, 61, 47);
+  --footer-border-right: 2px solid rgb(23, 23, 20);
+  --footer-border-bottom: 2px solid rgb(23, 23, 20);
+  --footer-border-left: 2px solid rgb(23, 23, 20);
+  --footer-border-radius: 0px;
+  --footer-box-shadow: none;
+  --footer-note-color: rgb(248, 244, 235);
+  --footer-note-background-color: rgba(0, 0, 0, 0);
+  --footer-note-background-image: none;
+  --footer-note-border-top: 0px none rgb(248, 244, 235);
+  --footer-note-border-right: 0px none rgb(248, 244, 235);
+  --footer-note-border-bottom: 0px none rgb(248, 244, 235);
+  --footer-note-border-left: 0px none rgb(248, 244, 235);
+  --footer-note-border-radius: 0px;
+  --footer-note-box-shadow: none;
+  --footer-note-font-family: "Theme Computer Modern", Georgia, serif;
+  --footer-note-font-weight: 400;
+  --footer-note-font-style: normal;
+  --footer-note-text-transform: none;
+  --footer-note-letter-spacing: normal;
+  --footer-note-text-shadow: none;
+  --footer-key-color: rgb(248, 244, 235);
+  --footer-key-background-color: var(--navy);
+  --footer-key-background-image: none;
+  --footer-key-border-top: 2px solid rgb(248, 244, 235);
+  --footer-key-border-right: 2px solid rgb(248, 244, 235);
+  --footer-key-border-bottom: 2px solid rgb(248, 244, 235);
+  --footer-key-border-left: 2px solid rgb(248, 244, 235);
+  --footer-key-border-radius: 0px;
+  --footer-key-box-shadow: none;
+  --footer-key-font-family: "Theme Doto", Silkscreen, ui-monospace, monospace;
+  --footer-key-font-weight: 700;
+  --footer-key-font-style: normal;
+  --footer-key-text-transform: uppercase;
+  --footer-key-letter-spacing: 0.45px;
+  --footer-key-text-shadow: none;
+  --footer-hover-color: rgb(23, 23, 20);
+  --footer-hover-background-color: rgb(226, 218, 203);
+  --footer-hover-background-image: none;
+  --footer-hover-border-top: 2px solid rgb(23, 23, 20);
+  --footer-hover-border-right: 2px solid rgb(23, 23, 20);
+  --footer-hover-border-bottom: 2px solid rgb(23, 23, 20);
+  --footer-hover-border-left: 2px solid rgb(23, 23, 20);
+  --footer-hover-border-radius: 0px;
+  --footer-hover-box-shadow: rgb(166, 61, 47) 3.2px 3.52px 0px 0px;
+  --footer-hover-text-shadow: none;
+  --footer-note-padding: 0;
 }
 html[data-skin="the-impossible-proof"][data-theme="dark"] {
-  --pr-pool: #007294;
-  --pr-pool-ink: #ebfcff;
-  --pr-pool-muted: #d7f6fc;
-  --pr-coral: #ff8875;
-}
-html[data-skin="the-impossible-proof"] :is(.site-header__inner, .masthead, .masthead__copy) {
-  color: var(--pr-pool-ink);
-  background-color: var(--pr-pool);
-}
-html[data-skin="the-impossible-proof"] .site-brand,
-html[data-skin="the-impossible-proof"] .masthead h1 {
-  color: var(--pr-pool-ink);
-}
-html[data-skin="the-impossible-proof"]:root .site-brand__scope,
-html[data-skin="the-impossible-proof"] .masthead :is(.eyebrow, .masthead__lede) {
-  color: var(--pr-pool-muted);
-}
-html[data-skin="the-impossible-proof"]:root .site-nav {
-  border-bottom-color: var(--pr-lemon);
-}
-html[data-skin="the-impossible-proof"] .home-shell > .section-cards,
-html[data-skin="the-impossible-proof"] .pagination {
-  color: var(--pr-on-bright);
-  background-color: var(--pr-coral);
-  border-color: var(--pr-on-bright);
-}
-html[data-skin="the-impossible-proof"] .home-shell > .section-cards .section-heading h2,
-html[data-skin="the-impossible-proof"]:root .index-map__links :is(a, span, strong),
-html[data-skin="the-impossible-proof"] .pagination__position :is(span, strong) {
-  color: var(--pr-on-bright);
-}
-html[data-skin="the-impossible-proof"]:root .index-map__links a {
-  border-color: var(--pr-on-bright);
-}
-html[data-skin="the-impossible-proof"]:root .index-map__links a:is(:hover, :focus-visible) {
-  background-color: var(--pr-lemon);
-}
-html[data-skin="the-impossible-proof"] .home-shell .record-row:nth-child(even),
-html[data-skin="the-impossible-proof"] .home-shell .record-row:nth-child(even)::before {
-  background-color: var(--paper-low);
-}
-html[data-skin="the-impossible-proof"]:root :is(.site-nav a, .skin-menu summary, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination__links a, .pagination__links span, .all-tags__grid a, .code-frame__actions button, .flag-check button, .site-share__copy) {
-  color: var(--pr-on-bright);
-  background-color: var(--pr-lemon);
-  border-color: var(--pr-on-bright);
-  outline-color: var(--link);
-}
-html[data-skin="the-impossible-proof"]:root :is(.site-nav a[aria-current], .quick-filters a[aria-current="true"], .action--primary, .code-frame__actions button[aria-pressed="true"]),
-html[data-skin="the-impossible-proof"]:root :is(.site-nav a, .skin-menu summary, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination__links a, .all-tags__grid a, .code-frame__actions button, .flag-check button, .site-share__copy):is(:hover, :focus-visible) {
-  color: var(--pr-on-bright);
-  background-color: var(--pr-coral);
-  border-color: var(--pr-on-bright);
-}
-html[data-skin="the-impossible-proof"]:root .index-map__links a:focus-visible,
-html[data-skin="the-impossible-proof"]:root .pagination a:focus-visible {
-  outline-color: var(--pr-on-bright);
-}
-html[data-skin="the-impossible-proof"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
-  color: var(--pr-on-bright) !important;
-  background-color: var(--pr-lemon) !important;
-  border-color: var(--pr-on-bright) !important;
-}
-html[data-skin="the-impossible-proof"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
-  background-color: var(--pr-coral) !important;
-}
-html[data-skin="the-impossible-proof"]:root .prose pre {
-  background-color: #043c50 !important;
-}
-html[data-skin="the-impossible-proof"]:root .prose .code-frame ::selection {
-  color: var(--pr-on-bright);
-  background-color: var(--pr-lemon);
-}
-html[data-skin="the-impossible-proof"]:root .prose .code-frame pre:focus-visible {
-  outline-color: var(--pr-lemon);
-}
-html[data-skin="the-impossible-proof"] .flag-check output.is-correct {
-  color: var(--link);
-}
-html[data-skin="the-impossible-proof"] .flag-check output.is-wrong {
-  color: var(--accent);
-}
-html[data-skin="the-impossible-proof"] .flag-check input::placeholder {
-  color: var(--muted);
-}
-html[data-skin="the-impossible-proof"] .external-embed {
-  color: var(--pr-on-bright);
-  background-color: var(--pr-coral);
-}
-html[data-skin="the-impossible-proof"] .external-embed a {
-  color: var(--pr-on-bright);
+  --footer-border-top: 6px solid rgb(255, 147, 120);
+  --footer-border-right: 2px solid rgb(11, 12, 10);
+  --footer-border-bottom: 2px solid rgb(11, 12, 10);
+  --footer-border-left: 2px solid rgb(11, 12, 10);
+  --footer-hover-background-color: rgb(247, 243, 234);
+  --footer-hover-box-shadow: rgb(255, 147, 120) 3.2px 3.52px 0px 0px;
 }
