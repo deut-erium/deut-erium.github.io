@@ -239,14 +239,14 @@ html[data-skin="the-impossible-proof"] {
   --display: "Bodoni Moda", Georgia, serif;
   --keys: "Source Serif 4", Georgia, serif;
   --mono: "IBM Plex Mono", "Courier New", monospace;
-  --bench: #eee8dc;
-  --paper: #fffcf3;
-  --paper-low: #eee8dc;
-  --ink: #282721;
-  --muted: #666158;
-  --link: #254cbd;
-  --rule: #aaa294;
-  --accent: #315ce0;
+  --bench: #41d0ee;
+  --paper: #ccf4ff;
+  --paper-low: #b7ebf8;
+  --ink: #063c4b;
+  --muted: #155365;
+  --link: #00536e;
+  --rule: #2985a0;
+  --accent: #a52d27;
   --page: 76rem;
   --reading: 76ch;
   --shell: var(--paper);
@@ -328,14 +328,14 @@ html[data-skin="the-impossible-proof"] {
 }
 html[data-skin="the-impossible-proof"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #292722;
-  --paper: #35322b;
-  --paper-low: #292722;
-  --ink: #f1ebdc;
-  --muted: #c9c0ae;
-  --link: #a7bdff;
-  --rule: #8c8474;
-  --accent: #86a3ff;
+  --bench: #006f94;
+  --paper: #07566d;
+  --paper-low: #096279;
+  --ink: #ebfcff;
+  --muted: #c3f0f9;
+  --link: #ffed6b;
+  --rule: #5fc7df;
+  --accent: #ffb39a;
 }
 html[data-skin="the-impossible-proof"]:root,
 html[data-skin="the-impossible-proof"]:root body {
@@ -808,7 +808,7 @@ html[data-skin="the-impossible-proof"] .prose .code-frame {
   box-shadow: none;
 }
 html[data-skin="the-impossible-proof"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
-  background-color: #24231f !important;
+  background-color: #043c50 !important;
 }
 html[data-skin="the-impossible-proof"] :is(.code-frame__bar, .code-frame__status, .code-frame__fallback) {
   color: var(--ink);
@@ -887,4 +887,106 @@ html[data-skin="the-impossible-proof"] .prose .katex-display {
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-skin="the-impossible-proof"] a { transition: none !important; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="the-impossible-proof"] {
+  --pr-pool: #58d7f3;
+  --pr-pool-ink: #063c4b;
+  --pr-pool-muted: #155365;
+  --pr-coral: #ff8c78;
+  --pr-lemon: #ffed6b;
+  --pr-on-bright: #063c4b;
+}
+html[data-skin="the-impossible-proof"][data-theme="dark"] {
+  --pr-pool: #007294;
+  --pr-pool-ink: #ebfcff;
+  --pr-pool-muted: #d7f6fc;
+  --pr-coral: #ff8875;
+}
+html[data-skin="the-impossible-proof"] :is(.site-header__inner, .masthead, .masthead__copy) {
+  color: var(--pr-pool-ink);
+  background-color: var(--pr-pool);
+}
+html[data-skin="the-impossible-proof"] .site-brand,
+html[data-skin="the-impossible-proof"] .masthead h1 {
+  color: var(--pr-pool-ink);
+}
+html[data-skin="the-impossible-proof"]:root .site-brand__scope,
+html[data-skin="the-impossible-proof"] .masthead :is(.eyebrow, .masthead__lede) {
+  color: var(--pr-pool-muted);
+}
+html[data-skin="the-impossible-proof"]:root .site-nav {
+  border-bottom-color: var(--pr-lemon);
+}
+html[data-skin="the-impossible-proof"] .home-shell > .section-cards,
+html[data-skin="the-impossible-proof"] .pagination {
+  color: var(--pr-on-bright);
+  background-color: var(--pr-coral);
+  border-color: var(--pr-on-bright);
+}
+html[data-skin="the-impossible-proof"] .home-shell > .section-cards .section-heading h2,
+html[data-skin="the-impossible-proof"]:root .index-map__links :is(a, span, strong),
+html[data-skin="the-impossible-proof"] .pagination__position :is(span, strong) {
+  color: var(--pr-on-bright);
+}
+html[data-skin="the-impossible-proof"]:root .index-map__links a {
+  border-color: var(--pr-on-bright);
+}
+html[data-skin="the-impossible-proof"]:root .index-map__links a:is(:hover, :focus-visible) {
+  background-color: var(--pr-lemon);
+}
+html[data-skin="the-impossible-proof"] .home-shell .record-row:nth-child(even),
+html[data-skin="the-impossible-proof"] .home-shell .record-row:nth-child(even)::before {
+  background-color: var(--paper-low);
+}
+html[data-skin="the-impossible-proof"]:root :is(.site-nav a, .skin-menu summary, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination__links a, .pagination__links span, .all-tags__grid a, .code-frame__actions button, .flag-check button, .site-share__copy) {
+  color: var(--pr-on-bright);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-on-bright);
+  outline-color: var(--link);
+}
+html[data-skin="the-impossible-proof"]:root :is(.site-nav a[aria-current], .quick-filters a[aria-current="true"], .action--primary, .code-frame__actions button[aria-pressed="true"]),
+html[data-skin="the-impossible-proof"]:root :is(.site-nav a, .skin-menu summary, .skin-menu select, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination__links a, .all-tags__grid a, .code-frame__actions button, .flag-check button, .site-share__copy):is(:hover, :focus-visible) {
+  color: var(--pr-on-bright);
+  background-color: var(--pr-coral);
+  border-color: var(--pr-on-bright);
+}
+html[data-skin="the-impossible-proof"]:root .index-map__links a:focus-visible,
+html[data-skin="the-impossible-proof"]:root .pagination a:focus-visible {
+  outline-color: var(--pr-on-bright);
+}
+html[data-skin="the-impossible-proof"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-on-bright) !important;
+  background-color: var(--pr-lemon) !important;
+  border-color: var(--pr-on-bright) !important;
+}
+html[data-skin="the-impossible-proof"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  background-color: var(--pr-coral) !important;
+}
+html[data-skin="the-impossible-proof"]:root .prose pre {
+  background-color: #043c50 !important;
+}
+html[data-skin="the-impossible-proof"]:root .prose .code-frame ::selection {
+  color: var(--pr-on-bright);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="the-impossible-proof"]:root .prose .code-frame pre:focus-visible {
+  outline-color: var(--pr-lemon);
+}
+html[data-skin="the-impossible-proof"] .flag-check output.is-correct {
+  color: var(--link);
+}
+html[data-skin="the-impossible-proof"] .flag-check output.is-wrong {
+  color: var(--accent);
+}
+html[data-skin="the-impossible-proof"] .flag-check input::placeholder {
+  color: var(--muted);
+}
+html[data-skin="the-impossible-proof"] .external-embed {
+  color: var(--pr-on-bright);
+  background-color: var(--pr-coral);
+}
+html[data-skin="the-impossible-proof"] .external-embed a {
+  color: var(--pr-on-bright);
 }
