@@ -231,29 +231,29 @@ html[data-skin="the-fat-tail-register"]:root {
   --display: "BioRhyme", Georgia, serif;
   --keys: "Commissioner", Arial, sans-serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
-  --bench: #a6dde0;
-  --paper: #fffcf5;
-  --paper-low: #eeeade;
-  --ink: #193c36;
-  --muted: #52645d;
-  --link: #7d2946;
-  --rule: #a7b4a9;
-  --tail-thread: #7d2946;
-  --tail-cyan: #13bfc9;
-  --tail-focus: #006c75;
-  --tail-hover: #e0f1e9;
+  --bench: #18d3c1;
+  --paper: #d4fff5;
+  --paper-low: #b5efe3;
+  --ink: #003b49;
+  --muted: #164b56;
+  --link: #870e39;
+  --rule: #40958f;
+  --tail-thread: #870e39;
+  --tail-cyan: #15d3c0;
+  --tail-focus: #003b49;
+  --tail-hover: #ffed65;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #193c36;
-  --navy-soft: #284b42;
+  --navy: #003b49;
+  --navy-soft: #005361;
   --lcd: var(--paper-low);
   --lcd-high: var(--tail-hover);
   --lcd-low: var(--paper-low);
   --lcd-ink: var(--ink);
-  --pink: #c87593;
-  --orange: #a6dde0;
-  --yellow: #ffdfb8;
+  --pink: #ff90ab;
+  --orange: #18d3c1;
+  --yellow: #ffed65;
   --cyan: var(--tail-cyan);
   --inline-code: var(--paper-low);
   --inline-rule: var(--rule);
@@ -321,17 +321,17 @@ html[data-skin="the-fat-tail-register"]:root {
 
 html[data-skin="the-fat-tail-register"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #102a27;
-  --paper: #193a35;
-  --paper-low: #254a41;
-  --ink: #f4ecdd;
-  --muted: #b5c8bd;
-  --link: #72e2e8;
-  --rule: #668a7e;
-  --tail-thread: #c87593;
-  --tail-cyan: #c87593;
-  --tail-focus: #ffc989;
-  --tail-hover: #30564c;
+  --bench: #ff7096;
+  --paper: #005d6a;
+  --paper-low: #087181;
+  --ink: #e3fff5;
+  --muted: #c6f8eb;
+  --link: #fff28c;
+  --rule: #59c9cb;
+  --tail-thread: #ffc2cc;
+  --tail-cyan: #ff90ab;
+  --tail-focus: #fff28c;
+  --tail-hover: #087181;
 }
 
 html[data-skin="the-fat-tail-register"] body {
@@ -352,8 +352,8 @@ html[data-skin="the-fat-tail-register"]:root :focus-visible {
 }
 
 html[data-skin="the-fat-tail-register"] ::selection {
-  background: #a6dde0;
-  color: #193c36;
+  background: #18d3c1;
+  color: #003b49;
 }
 
 html[data-skin="the-fat-tail-register"] a { color: var(--link); }
@@ -906,4 +906,85 @@ html[data-skin="the-fat-tail-register"] .record-end nav a {
   html[data-skin="the-fat-tail-register"]:root .index-map__links a span { font-size: 1.25rem !important; }
   html[data-skin="the-fat-tail-register"]:root .record-row__title { font-size: 1.25rem !important; }
   html[data-skin="the-fat-tail-register"] .section-heading :is(h1, h2) { font-size: 1.65rem; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="the-fat-tail-register"]:root {
+  --pr-sheet: #ff9fb2;
+  --pr-panel: #65e7d2;
+  --pr-panel-ink: #003b49;
+  --pr-panel-muted: #10444f;
+  --pr-panel-rule: #147780;
+  --pr-lemon: #ffed65;
+}
+html[data-skin="the-fat-tail-register"][data-theme="dark"] {
+  --pr-sheet: #007380;
+  --pr-panel: #ff90ab;
+  --pr-panel-rule: #99304f;
+}
+html[data-skin="the-fat-tail-register"] body {
+  color: var(--pr-panel-ink);
+}
+html[data-skin="the-fat-tail-register"] .site-header,
+html[data-skin="the-fat-tail-register"] .home-shell::before {
+  background-color: var(--pr-sheet);
+}
+html[data-skin="the-fat-tail-register"] .site-header {
+  border-top-color: var(--pr-lemon);
+}
+html[data-skin="the-fat-tail-register"]:root .site-nav {
+  border-top-color: var(--pr-lemon);
+  border-bottom-color: var(--pr-lemon);
+}
+html[data-skin="the-fat-tail-register"]:root .home-shell > .section-cards,
+html[data-skin="the-fat-tail-register"]:root .section-cards .index-map__links a {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-panel);
+}
+html[data-skin="the-fat-tail-register"]:root .section-cards .section-heading {
+  color: var(--pr-panel-ink);
+  border-bottom-color: var(--pr-lemon);
+}
+html[data-skin="the-fat-tail-register"]:root .section-cards .index-map__links a {
+  border-bottom-color: var(--pr-panel-rule);
+}
+html[data-skin="the-fat-tail-register"]:root .section-cards .index-map__links strong {
+  color: var(--pr-panel-muted);
+}
+html[data-skin="the-fat-tail-register"]:root .section-cards .index-map__links a:hover {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-lemon);
+}
+html[data-skin="the-fat-tail-register"]:root :is(.site-nav a[aria-current="page"], .masthead__actions .action--primary),
+html[data-skin="the-fat-tail-register"]:root :is(.site-nav a, .skin-menu summary, .skin-randomizer, .masthead__actions .action):hover {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-lemon);
+  border-bottom-color: var(--pr-panel-ink);
+}
+html[data-skin="the-fat-tail-register"]:root .section-cards :focus-visible {
+  outline-color: var(--pr-panel-ink);
+}
+html[data-skin="the-fat-tail-register"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-panel-ink) !important;
+  background-color: var(--pr-lemon) !important;
+  border-color: var(--pr-panel-ink) !important;
+  outline-color: var(--pr-panel-ink);
+}
+html[data-skin="the-fat-tail-register"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-panel-ink) !important;
+  background-color: var(--pr-panel) !important;
+  border-color: var(--pr-panel-ink) !important;
+}
+html[data-skin="the-fat-tail-register"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: #f8fafc !important;
+  background-color: #003b49 !important;
+}
+html[data-skin="the-fat-tail-register"]:root .prose .code-frame__gutter {
+  color: #c6f8eb !important;
+  background-color: #005361 !important;
+  border-right-color: #59c9cb;
+}
+html[data-skin="the-fat-tail-register"]:root .code-frame__actions button:is(:hover, [aria-pressed="true"]) {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-lemon);
 }
