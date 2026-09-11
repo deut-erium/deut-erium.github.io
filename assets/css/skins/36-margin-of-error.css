@@ -240,16 +240,16 @@ html[data-skin="margin-of-error"] {
   --display: "Instrument Serif", Georgia, serif;
   --keys: "Literata", Georgia, serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
-  --bench: #e8e9e5;
-  --paper: #fcfbf5;
-  --paper-low: #efefe8;
-  --ink: #303a3f;
-  --muted: #59656b;
-  --link: #ad382c;
-  --rule: #a3aaa7;
-  --mo-pencil: #7493cb;
-  --mo-focus: #365fad;
-  --mo-wash: #e2e9f5;
+  --bench: #9fbeff;
+  --paper: #fff1ad;
+  --paper-low: #ffe184;
+  --ink: #223878;
+  --muted: #2b3e74;
+  --link: #94143d;
+  --rule: #bc2b55;
+  --mo-pencil: #ed527b;
+  --mo-focus: #94143d;
+  --mo-wash: #cbd8ff;
   --navy: var(--ink);
   --navy-soft: var(--muted);
   --shell: var(--paper);
@@ -329,16 +329,16 @@ html[data-skin="margin-of-error"] {
 
 html[data-skin="margin-of-error"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #242626;
-  --paper: #303433;
-  --paper-low: #3b403e;
-  --ink: #eeede5;
-  --muted: #bdc7c3;
-  --link: #ffad9a;
-  --rule: #788580;
-  --mo-pencil: #94b2ef;
-  --mo-focus: #bdd0ff;
-  --mo-wash: #414d5b;
+  --bench: #b01c4c;
+  --paper: #284ba0;
+  --paper-low: #24438b;
+  --ink: #fff3bd;
+  --muted: #dbe4ff;
+  --link: #ffcad7;
+  --rule: #f57e9c;
+  --mo-pencil: #ed527b;
+  --mo-focus: #ffdf76;
+  --mo-wash: #3555a5;
 }
 
 /* Named rows retain the article and wide-page placement hooks. */
@@ -731,4 +731,91 @@ html[data-skin="margin-of-error"] :is(.code-frame__status, .code-frame__fallback
   html[data-skin="margin-of-error"]:root .record-row__title { font-size: 1.25rem !important; }
   html[data-skin="margin-of-error"] .prose { font-size: 1.125rem; }
   html[data-skin="margin-of-error"] .archive-search { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="margin-of-error"] {
+  --pr-margin: #ffb2c5;
+  --pr-panel: #bc2450;
+  --pr-panel-ink: #fff1ad;
+  --pr-panel-link: #fff1ad;
+  --pr-panel-hover: #ffdc86;
+  --pr-panel-hover-ink: #94143d;
+  --pr-tab: #bc2450;
+  --pr-tab-ink: #fff1ad;
+  --pr-code-paper: #24438b;
+  --pr-code-ink: #fff3bd;
+}
+html[data-skin="margin-of-error"][data-theme="dark"] {
+  --pr-margin: #6588e3;
+  --pr-panel: #f2d77c;
+  --pr-panel-ink: #223878;
+  --pr-panel-link: #94143d;
+  --pr-panel-hover: #ffe6a1;
+  --pr-panel-hover-ink: #94143d;
+  --pr-tab: #f2d77c;
+  --pr-tab-ink: #94143d;
+}
+html[data-skin="margin-of-error"]:root :is(.home-shell, .archive-shell, .record-page) {
+  background-color: var(--pr-margin);
+}
+html[data-skin="margin-of-error"]:root .home-shell > .record-index.section-cards {
+  color: var(--pr-panel-ink);
+  background-color: var(--pr-panel);
+}
+html[data-skin="margin-of-error"]:root .home-shell .section-cards .section-heading {
+  border-color: var(--pr-panel-ink);
+}
+html[data-skin="margin-of-error"]:root .home-shell .section-cards .section-heading h2 {
+  color: var(--pr-panel-ink);
+}
+html[data-skin="margin-of-error"] .home-shell .section-cards .index-map__links a {
+  color: var(--pr-panel-link);
+  text-decoration-color: var(--pr-panel-link);
+}
+html[data-skin="margin-of-error"] .home-shell .section-cards .index-map__links a :is(span, strong) {
+  color: inherit;
+}
+html[data-skin="margin-of-error"] .home-shell .section-cards .index-map__links a:is(:hover, :focus-visible) {
+  color: var(--pr-panel-hover-ink);
+  background-color: var(--pr-panel-hover);
+  text-decoration-color: var(--pr-panel-hover-ink);
+}
+html[data-skin="margin-of-error"]:root .home-shell .section-cards :focus-visible {
+  outline-color: var(--pr-panel-ink);
+}
+html[data-skin="margin-of-error"] :is(.site-nav a[aria-current="page"], .quick-filters a[aria-current="true"], .masthead__actions .action--primary) {
+  color: var(--pr-tab-ink);
+  background-color: var(--pr-tab);
+  border-bottom-color: var(--pr-tab);
+}
+html[data-skin="margin-of-error"] :is(.site-nav a[aria-current="page"], .quick-filters a[aria-current="true"], .masthead__actions .action--primary):is(:hover, :focus-visible) {
+  color: var(--ink);
+  background-color: var(--mo-wash);
+  border-bottom-color: var(--link);
+}
+html[data-skin="margin-of-error"]:root :is(.masthead h1, .site-brand__name) {
+  color: var(--link);
+}
+html[data-skin="margin-of-error"]:root .prose :is(pre, pre code, .code-frame, .code-frame__gutter, .highlight) {
+  color: var(--pr-code-ink) !important;
+  background-color: var(--pr-code-paper) !important;
+}
+html[data-skin="margin-of-error"] .prose .code-frame__gutter {
+  border-right-color: var(--mo-pencil);
+}
+html[data-skin="margin-of-error"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--ink) !important;
+  background-color: var(--paper-low) !important;
+  border-color: var(--rule) !important;
+}
+html[data-skin="margin-of-error"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  background-color: var(--mo-wash) !important;
+  border-color: var(--mo-focus) !important;
+}
+html[data-skin="margin-of-error"] .error-shell :is(h1, .error-code) {
+  color: var(--link);
+}
+html[data-skin="margin-of-error"] .error-shell .error-code i {
+  background-color: var(--link);
 }
