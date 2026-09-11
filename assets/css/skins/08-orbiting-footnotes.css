@@ -179,16 +179,16 @@ html[data-skin="orbiting-footnotes"]:root {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 88rem;
   --reading: 76ch;
-  --bench: #edc7c7;
-  --paper: #fff;
-  --paper-low: #fbf0ee;
-  --ink: #29232a;
-  --muted: #63545c;
-  --link: #303eb2;
-  --rule: #bca6ad;
-  --tomato: #d54a37;
-  --edge-ink: #edc7c7;
-  --ink-hover: #a12f22;
+  --bench: #ff987f;
+  --paper: #efe0ff;
+  --paper-low: #dfc8ff;
+  --ink: #202565;
+  --muted: #41366f;
+  --link: #2434ce;
+  --rule: #8062b1;
+  --tomato: #ff775e;
+  --edge-ink: #2434ce;
+  --ink-hover: #922d42;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
@@ -267,16 +267,16 @@ html[data-skin="orbiting-footnotes"]:root {
 
 html[data-skin="orbiting-footnotes"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #242026;
-  --paper: #312b31;
-  --paper-low: #40343d;
-  --ink: #f7f0e3;
-  --muted: #d3bdc5;
-  --link: #adb3ff;
-  --rule: #816976;
-  --tomato: #f58d78;
-  --edge-ink: #9e6c7a;
-  --ink-hover: #ffae9e;
+  --bench: #264cdb;
+  --paper: #493883;
+  --paper-low: #574191;
+  --ink: #fff0e9;
+  --muted: #e5d4ff;
+  --link: #c6d8ff;
+  --rule: #b29be8;
+  --tomato: #ffb69e;
+  --edge-ink: #162cad;
+  --ink-hover: #ffb69e;
 }
 
 html[data-skin="orbiting-footnotes"] body {
@@ -632,4 +632,78 @@ html[data-skin="orbiting-footnotes"] .record-end nav a { color: var(--link); bac
   html[data-skin="orbiting-footnotes"] .masthead::after,
   html[data-skin="orbiting-footnotes"] .masthead__copy::before,
   html[data-skin="orbiting-footnotes"] .section-cards::before { display: none; }
+}
+
+/* Palette rework paint roles. */
+@media screen and (forced-colors: none) {
+  html[data-skin="orbiting-footnotes"]:root {
+    --pr-outside-link: #162cad;
+    --pr-publication: #ffad97;
+    --pr-print: #162cad;
+    --pr-print-ink: #202565;
+    --pr-print-paper: #efe0ff;
+    --pr-print-hover: #ffd0bd;
+  }
+  html[data-skin="orbiting-footnotes"][data-theme="dark"] {
+    --pr-outside-link: #ffd0bd;
+    --pr-publication: #ff987f;
+  }
+  html[data-skin="orbiting-footnotes"]:root .site-nav > a:hover,
+  html[data-skin="orbiting-footnotes"] .site-brand:hover,
+  html[data-skin="orbiting-footnotes"] .skin-menu summary:hover {
+    color: var(--pr-outside-link);
+  }
+  html[data-skin="orbiting-footnotes"] .site-nav > a[aria-current="page"]::before {
+    background-color: var(--pr-outside-link);
+    border-color: var(--pr-outside-link);
+  }
+  html[data-skin="orbiting-footnotes"]:root .home-shell > .section-cards {
+    color: var(--pr-print-ink);
+    background-color: var(--pr-publication);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards .section-heading h2,
+  html[data-skin="orbiting-footnotes"] .section-cards .index-map__links strong {
+    color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards .index-map__links {
+    border-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards .index-map__links a {
+    color: var(--pr-print-ink);
+    background-color: var(--pr-publication);
+    border-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards .index-map__links a::before {
+    background-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards .index-map__links a:hover {
+    color: var(--pr-print);
+    background-color: var(--pr-print-hover);
+  }
+  html[data-skin="orbiting-footnotes"] .section-cards :focus-visible {
+    outline-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--pr-print) !important;
+    background-color: var(--pr-publication) !important;
+    border-color: var(--pr-print) !important;
+  }
+  html[data-skin="orbiting-footnotes"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+    color: var(--pr-print) !important;
+    background-color: var(--pr-print-hover) !important;
+    border-color: var(--pr-print) !important;
+    outline-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] :is(.flag-check__controls button, .site-share__copy) {
+    color: var(--pr-print-paper);
+    background-color: var(--pr-print);
+    border-color: var(--pr-print);
+  }
+  html[data-skin="orbiting-footnotes"] :is(.flag-check__controls button, .site-share__copy):is(:hover, :focus-visible) {
+    color: var(--pr-print);
+    background-color: var(--pr-print-hover);
+  }
+  html[data-skin="orbiting-footnotes"] .flag-check input::placeholder {
+    color: var(--muted);
+  }
 }
