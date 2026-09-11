@@ -204,26 +204,26 @@ html[data-skin="palace-of-excess"]:root {
   --display: "Cinzel Decorative", Georgia, serif;
   --keys: "IBM Plex Mono", ui-monospace, monospace;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --bench: #c8dece;
-  --paper: #fffcf7;
-  --paper-low: #f0eae2;
-  --ink: #352735;
-  --muted: #705867;
-  --link: #12686a;
-  --rule: #b8a28b;
-  --brass: #926d30;
+  --bench: #ff9f79;
+  --paper: #ffe1cc;
+  --paper-low: #ffd1b5;
+  --ink: #17394f;
+  --muted: #29465b;
+  --link: #851039;
+  --rule: #d6255b;
+  --brass: #851039;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #352735;
-  --navy-soft: #705867;
+  --navy: #17394f;
+  --navy-soft: #29465b;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--rule);
   --lcd-ink: var(--ink);
   --pink: var(--rule);
   --orange: var(--brass);
-  --yellow: #e1ba76;
+  --yellow: #ffed79;
   --cyan: var(--link);
   --inline-code: var(--paper-low);
   --inline-rule: var(--rule);
@@ -291,14 +291,14 @@ html[data-skin="palace-of-excess"]:root {
 
 html[data-skin="palace-of-excess"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #321f35;
-  --paper: #422b44;
-  --paper-low: #503652;
-  --ink: #f5ebe1;
-  --muted: #d2bccd;
-  --link: #8dded0;
-  --rule: #9e8056;
-  --brass: #e1ba76;
+  --bench: #c32953;
+  --paper: #205372;
+  --paper-low: #286386;
+  --ink: #fff1df;
+  --muted: #d7edfa;
+  --link: #ffe88c;
+  --rule: #ff96b4;
+  --brass: #ffed79;
 }
 
 html[data-skin="palace-of-excess"] body {
@@ -911,4 +911,84 @@ html[data-skin="palace-of-excess"] .error-shell h1 { font-family: var(--body); f
   html[data-skin="palace-of-excess"] *,
   html[data-skin="palace-of-excess"] *::before,
   html[data-skin="palace-of-excess"] *::after { transition: none !important; scroll-behavior: auto; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="palace-of-excess"]:root {
+  --pr-header: #ff96b4;
+  --pr-spread: #a8ddff;
+  --pr-portrait: #ffbd93;
+  --pr-on-portrait: #17394f;
+  --pr-portrait-muted: #29465b;
+  --pr-lemon: #ffed79;
+}
+html[data-skin="palace-of-excess"][data-theme="dark"] {
+  --pr-header: #b71f4a;
+  --pr-spread: #15659a;
+}
+html[data-skin="palace-of-excess"] .site-header {
+  background-color: var(--pr-header);
+}
+html[data-skin="palace-of-excess"]:root .home-shell,
+html[data-skin="palace-of-excess"]:root .archive-shell {
+  background-color: var(--pr-spread);
+}
+html[data-skin="palace-of-excess"] .site-brand {
+  color: var(--pr-on-portrait);
+  background-color: var(--pr-portrait);
+  border-color: var(--pr-lemon);
+}
+html[data-skin="palace-of-excess"] .site-brand__name {
+  color: var(--pr-on-portrait);
+}
+html[data-skin="palace-of-excess"]:root .site-brand__scope {
+  color: var(--pr-portrait-muted);
+}
+html[data-skin="palace-of-excess"]:root .masthead__actions .action--primary {
+  color: var(--pr-on-portrait);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-on-portrait);
+}
+html[data-skin="palace-of-excess"]:root .masthead__actions .action--primary:hover {
+  color: var(--pr-on-portrait);
+  background-color: var(--pr-portrait);
+}
+html[data-skin="palace-of-excess"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-on-portrait) !important;
+  background-color: var(--pr-lemon) !important;
+  border-color: var(--pr-on-portrait) !important;
+}
+html[data-skin="palace-of-excess"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  background-color: var(--pr-portrait) !important;
+  border-color: var(--pr-on-portrait) !important;
+}
+html[data-skin="palace-of-excess"] .site-share__copy,
+html[data-skin="palace-of-excess"] .flag-check button {
+  color: var(--pr-on-portrait);
+  background-color: var(--pr-lemon);
+  border-color: var(--pr-on-portrait);
+}
+html[data-skin="palace-of-excess"] .site-share__copy:hover,
+html[data-skin="palace-of-excess"] .flag-check button:is(:hover, :focus-visible) {
+  color: var(--pr-on-portrait);
+  background-color: var(--pr-portrait);
+}
+html[data-skin="palace-of-excess"] .flag-check input::placeholder {
+  color: var(--muted);
+}
+html[data-skin="palace-of-excess"] .flag-check output.is-correct {
+  color: var(--ink);
+}
+html[data-skin="palace-of-excess"] .flag-check output.is-wrong {
+  color: var(--link);
+}
+html[data-skin="palace-of-excess"] .external-embed {
+  color: var(--ink);
+  background-color: var(--paper-low);
+}
+html[data-skin="palace-of-excess"] .external-embed a {
+  color: var(--link);
+}
+html[data-skin="palace-of-excess"] .external-embed a:hover {
+  color: var(--ink);
 }
