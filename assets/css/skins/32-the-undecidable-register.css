@@ -218,13 +218,13 @@
 html[data-skin="the-undecidable-register"] {
   color-scheme: light;
   font-synthesis: none;
-  --register-desk: #e2cca2;
-  --register-leaf: #fff4db;
-  --register-tab: #ecd8b3;
-  --register-carbon: #312a23;
-  --register-muted: #66513d;
-  --register-red: #893e35;
-  --register-crease: #b29368;
+  --register-desk: #6BD4FA;
+  --register-leaf: #FFF5B8;
+  --register-tab: #FFE064;
+  --register-carbon: #12394F;
+  --register-muted: #28506B;
+  --register-red: #942C1C;
+  --register-crease: #28739A;
   --bench: var(--register-desk);
   --paper: var(--register-leaf);
   --paper-low: var(--register-tab);
@@ -324,13 +324,13 @@ html[data-skin="the-undecidable-register"] {
 
 html[data-skin="the-undecidable-register"][data-theme="dark"] {
   color-scheme: dark;
-  --register-desk: #28231d;
-  --register-leaf: #393026;
-  --register-tab: #493d2e;
-  --register-carbon: #f4e4c4;
-  --register-muted: #d0ba98;
-  --register-red: #f0ada0;
-  --register-crease: #b99a6d;
+  --register-desk: #0B6CA3;
+  --register-leaf: #125F86;
+  --register-tab: #1A6287;
+  --register-carbon: #FFF7D1;
+  --register-muted: #D4ECFA;
+  --register-red: #FFE1CF;
+  --register-crease: #7BCBEE;
 }
 
 html[data-skin="the-undecidable-register"]:root { overflow-x: visible; }
@@ -789,4 +789,102 @@ html[data-skin="the-undecidable-register"] .record-end nav span { color: var(--m
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-skin="the-undecidable-register"] .site-nav > a { transition: none; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="the-undecidable-register"] {
+  --pr-carbon: #12394F;
+  --pr-muted: #28506B;
+  --pr-link: #942C1C;
+  --pr-panel: #9DDEFA;
+  --pr-tab: #FFE064;
+  --pr-tomato: #FF7E64;
+  --pr-stamp: #C5321F;
+  --pr-stamp-ink: #FFF7D1;
+  --pr-rule: #28739A;
+  --pr-code: #124C6D;
+  --article-nav-paper: var(--pr-panel);
+  --article-nav-ink: var(--pr-carbon);
+}
+html[data-skin="the-undecidable-register"][data-theme="dark"] {
+  --pr-panel: #F1D564;
+  --pr-tab: #F1D564;
+}
+html[data-skin="the-undecidable-register"]:root .site-nav > a {
+  color: var(--pr-carbon);
+  background-color: var(--pr-tab);
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"]:root .site-nav > a:is([aria-current="page"], :hover, :focus-visible) {
+  color: var(--pr-carbon);
+  background-color: var(--pr-tomato);
+  border-color: var(--pr-stamp);
+}
+html[data-skin="the-undecidable-register"]:root .masthead__actions .action--primary {
+  color: var(--pr-stamp-ink);
+  background-color: var(--pr-stamp);
+  border-color: var(--pr-stamp);
+}
+html[data-skin="the-undecidable-register"]:root .masthead__actions .action--primary:is(:hover, :focus-visible) {
+  color: var(--pr-stamp-ink);
+  background-color: var(--pr-link);
+  border-color: var(--pr-link);
+}
+html[data-skin="the-undecidable-register"]:root .home-shell > .record-index.section-cards {
+  color: var(--pr-carbon);
+  background-color: var(--pr-panel);
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"] .section-cards .section-heading h2 {
+  color: var(--pr-carbon);
+}
+html[data-skin="the-undecidable-register"] .section-cards .index-map__links {
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"] .section-cards .index-map__links a {
+  color: var(--pr-link);
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"] .section-cards .index-map__links a strong {
+  color: var(--pr-muted);
+}
+html[data-skin="the-undecidable-register"] .section-cards .index-map__links a:is(:hover, :focus-visible) {
+  color: var(--pr-carbon);
+  background-color: var(--pr-tab);
+}
+html[data-skin="the-undecidable-register"]:root .section-cards :focus-visible {
+  outline-color: var(--pr-carbon);
+}
+html[data-skin="the-undecidable-register"] .record-grid > .record-index {
+  color: var(--pr-carbon);
+  background-color: var(--pr-panel);
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"] :is(.record-toc a, .record-toc summary, .related-records a) {
+  color: var(--pr-link);
+}
+html[data-skin="the-undecidable-register"] .related-records h2 {
+  color: var(--pr-carbon);
+}
+html[data-skin="the-undecidable-register"] .record-toc .toc-fallback {
+  color: var(--pr-muted);
+}
+html[data-skin="the-undecidable-register"] :is(.record-toc, .record-toc li, .related-records li) {
+  border-color: var(--pr-rule);
+}
+html[data-skin="the-undecidable-register"]:root :is(.record-toc, .related-records) :focus-visible {
+  outline-color: var(--pr-carbon);
+}
+html[data-skin="the-undecidable-register"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-carbon) !important;
+  background-color: var(--pr-tab) !important;
+  border-color: var(--pr-carbon) !important;
+}
+html[data-skin="the-undecidable-register"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-carbon) !important;
+  background-color: var(--pr-tomato) !important;
+}
+html[data-skin="the-undecidable-register"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+  color: var(--pr-stamp-ink) !important;
+  background-color: var(--pr-code) !important;
 }
