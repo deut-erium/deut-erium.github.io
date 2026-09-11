@@ -231,22 +231,22 @@ html[data-skin="sam-at-sunrise"] {
   --mono: "IBM Plex Mono", monospace;
   --page: 70rem;
   --reading: 76ch;
-  --bench: #f1ab83;
-  --paper: #fff2de;
-  --paper-low: #f5e3cc;
-  --ink: #422a3d;
-  --muted: #715065;
-  --link: #874052;
-  --rule: #bc927e;
-  --sun-gold: #9c712b;
-  --sun-hover: #f4d5bb;
-  --sun-selected: #874052;
-  --sun-on-selected: #fff2de;
+  --bench: #ff867f;
+  --paper: #ffe2cf;
+  --paper-low: #ffd1b2;
+  --ink: #3e153e;
+  --muted: #71314f;
+  --link: #8c203d;
+  --rule: #a34b71;
+  --sun-gold: #8c2eac;
+  --sun-hover: #fff08f;
+  --sun-selected: #ad2448;
+  --sun-on-selected: #fff7be;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #422a3d;
-  --navy-soft: #604052;
+  --navy: #3e153e;
+  --navy-soft: #622053;
   --lcd: var(--paper-low);
   --lcd-high: var(--sun-hover);
   --lcd-low: var(--paper-low);
@@ -318,17 +318,17 @@ html[data-skin="sam-at-sunrise"] {
 }
 
 html[data-skin="sam-at-sunrise"][data-theme="dark"] {
-  --bench: #2d202c;
-  --paper: #3b2937;
-  --paper-low: #493140;
-  --ink: #ffebd4;
-  --muted: #dfc1c4;
-  --link: #efabb9;
-  --rule: #936d72;
-  --sun-gold: #dab363;
-  --sun-hover: #533a48;
-  --sun-selected: #efabb9;
-  --sun-on-selected: #3b2937;
+  --bench: #7243ab;
+  --paper: #e99d8c;
+  --paper-low: #e88882;
+  --ink: #361239;
+  --muted: #552140;
+  --link: #68102e;
+  --rule: #84335b;
+  --sun-gold: #8c2eac;
+  --sun-hover: #e7c2ff;
+  --sun-selected: #f4e47a;
+  --sun-on-selected: #361239;
 }
 
 html[data-skin="sam-at-sunrise"] body {
@@ -596,4 +596,84 @@ html[data-skin="sam-at-sunrise"] :is(.code-frame__status, .code-frame__fallback)
 @media (forced-colors: active) {
   html[data-skin="sam-at-sunrise"] :is(.masthead, .section-cards, .record-head)::before { background: none; }
   html[data-skin="sam-at-sunrise"] :focus-visible { outline-color: Highlight; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="sam-at-sunrise"] {
+  --pr-outside-ink: var(--ink);
+  --pr-publications: #d5b7ff;
+  --pr-register: #ffb49d;
+  --pr-lemon: #ffea7d;
+  --pr-code: #4e286f;
+  --article-nav-paper: var(--pr-publications);
+}
+html[data-skin="sam-at-sunrise"][data-theme="dark"] {
+  --pr-outside-ink: #fff1a2;
+  --pr-publications: #b88ee8;
+  --pr-register: #ed9488;
+  --pr-lemon: #eeda75;
+}
+html[data-skin="sam-at-sunrise"] :is(.site-header, .site-brand, .site-brand__scope) {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="sam-at-sunrise"] .site-nav a {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="sam-at-sunrise"]:root .site-nav {
+  border-color: var(--pr-outside-ink);
+}
+html[data-skin="sam-at-sunrise"] .site-brand__mark {
+  border-color: var(--pr-outside-ink);
+}
+html[data-skin="sam-at-sunrise"] .site-nav a:is([aria-current="page"], :hover, :focus-visible) {
+  color: var(--ink);
+  background-color: var(--pr-lemon);
+  border-color: var(--ink);
+}
+html[data-skin="sam-at-sunrise"] .skin-menu summary {
+  background-color: var(--pr-lemon);
+}
+html[data-skin="sam-at-sunrise"] .skin-menu summary:is(:hover, :focus-visible) {
+  background-color: var(--sun-hover);
+}
+html[data-skin="sam-at-sunrise"] .site-nav > a:focus-visible,
+html[data-skin="sam-at-sunrise"] .skin-menu > summary:focus-visible {
+  outline-color: var(--pr-outside-ink);
+}
+html[data-skin="sam-at-sunrise"]:root .home-shell > .section-cards {
+  background-color: var(--pr-publications);
+}
+html[data-skin="sam-at-sunrise"]:root .home-shell > .record-index {
+  background-color: var(--pr-register);
+}
+html[data-skin="sam-at-sunrise"] .record-grid > .record-index {
+  background-color: var(--pr-publications);
+}
+html[data-skin="sam-at-sunrise"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--ink) !important;
+  background-color: var(--pr-lemon) !important;
+  border-color: var(--link) !important;
+}
+html[data-skin="sam-at-sunrise"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--ink) !important;
+  background-color: var(--sun-hover) !important;
+}
+html[data-skin="sam-at-sunrise"] .flag-check button {
+  color: var(--sun-on-selected);
+  background-color: var(--sun-selected);
+}
+html[data-skin="sam-at-sunrise"] .flag-check button:is(:hover, :focus-visible) {
+  color: var(--ink);
+  background-color: var(--sun-hover);
+}
+html[data-skin="sam-at-sunrise"] .flag-check input::placeholder {
+  color: var(--muted);
+}
+html[data-skin="sam-at-sunrise"]:root .prose :is(pre, pre code, .code-frame, .code-frame__gutter, .highlight) {
+  color: #f8fafc !important;
+  background-color: var(--pr-code) !important;
+}
+html[data-skin="sam-at-sunrise"] .prose .code-frame ::selection {
+  color: var(--sun-on-selected);
+  background-color: var(--sun-selected);
 }
