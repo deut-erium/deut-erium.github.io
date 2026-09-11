@@ -1,3 +1,5 @@
+Four themes now use the author-selected older styles: Grid Meltdown, The Exploit Grimoire, Cryptographic Blockbuster and Exploit in B-flat. Grimoire uses the existing Euler Fraktur face. Their optional retained records override the effective display/family profile and pin the CSS, shared CSS and original native fonts. The ordinary families/display fields retain the deployed library inventory; those archived selections are not requested by the retained skins. All other theme profiles and library assets remain as recorded on origin/master.
+
 # Selected theme fonts
 
 This library contains 87 families for 47 theme choices: the five accepted implementations and 42 additional selections. themes.json maps every theme ID to its skin filename, family array, display family and existing flag. The flag identifies the five accepted implementations; it does not certify completion of the remaining skins.
