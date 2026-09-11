@@ -215,15 +215,15 @@ html[data-skin="weak-joints"] {
   --keys: "IBM Plex Mono", Consolas, monospace;
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 92rem;
-  --wj-field: #f1e7d7;
-  --wj-cloth: #ede0ce;
-  --wj-paper: #fffbf3;
-  --wj-ink: #30202d;
-  --wj-secondary: #6d5364;
-  --wj-rule: #a27a65;
-  --wj-link: #704080;
-  --wj-focus: #944321;
-  --wj-thread: #be8b32;
+  --wj-field: #8db2ff;
+  --wj-cloth: #ff91b5;
+  --wj-paper: #e0ebff;
+  --wj-ink: #182653;
+  --wj-secondary: #34406a;
+  --wj-rule: #405bb0;
+  --wj-link: #22388a;
+  --wj-focus: #7f1239;
+  --wj-thread: #ffe34d;
   --bench: var(--wj-field);
   --paper: var(--wj-paper);
   --paper-low: var(--wj-cloth);
@@ -308,15 +308,15 @@ html[data-skin="weak-joints"] {
 
 html[data-skin="weak-joints"][data-theme="dark"] {
   color-scheme: dark;
-  --wj-field: #291c30;
-  --wj-cloth: #403047;
-  --wj-paper: #35253c;
-  --wj-ink: #f5eadf;
-  --wj-secondary: #cfb8cb;
-  --wj-rule: #99779b;
-  --wj-link: #e1aff1;
-  --wj-focus: #ffbe8f;
-  --wj-thread: #d7aa56;
+  --wj-field: #3153b4;
+  --wj-cloth: #ba2b57;
+  --wj-paper: #35549b;
+  --wj-ink: #f5f8ff;
+  --wj-secondary: #e1eaff;
+  --wj-rule: #bcd2ff;
+  --wj-link: #fff27a;
+  --wj-focus: #ffffff;
+  --wj-thread: #ffe34d;
 }
 
 html[data-skin="weak-joints"] body {
@@ -618,4 +618,26 @@ html[data-skin="weak-joints"] .code-frame__actions button:is(:hover, [aria-press
   html[data-skin="weak-joints"] .pagination { display: block; }
   html[data-skin="weak-joints"] .pagination__links { display: flex; flex-wrap: wrap; margin-top: 1rem; }
   html[data-skin="weak-joints"] .archive-shell { padding: 1rem 16px; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="weak-joints"] .masthead__actions .action--primary {
+  color: #182653;
+  background-color: #ffe34d;
+  border-color: var(--wj-rule);
+}
+html[data-skin="weak-joints"] .masthead__actions .action--primary:is(:hover, :focus-visible) {
+  color: #182653;
+  background-color: #fff9b0;
+  border-color: var(--wj-rule);
+}
+html[data-skin="weak-joints"] .prose .code-frame ::selection {
+  color: var(--wj-paper);
+  background-color: var(--wj-link);
+}
+html[data-skin="weak-joints"] .flag-check output.is-correct:not(.flag-check__verdict) {
+  color: var(--wj-link);
+}
+html[data-skin="weak-joints"] .flag-check output.is-wrong:not(.flag-check__verdict) {
+  color: var(--wj-focus);
 }
