@@ -257,17 +257,17 @@ html[data-skin="key-exchange-kiosk"] {
 
 html[data-skin="key-exchange-kiosk"][data-theme="dark"] {
   --bench: #056389;
-  --shell: #08749c;
+  --shell: #30bce8;
   --shell-high: #39c6ed;
   --shell-low: #056389;
-  --paper: #0e5b86;
-  --paper-low: #176a92;
-  --ink: #effbff;
-  --muted: #e0f4fb;
-  --link: #eeffb8;
-  --rule: #65a9c3;
-  --inline-code: #176a92;
-  --inline-rule: #65a9c3;
+  --paper: #ffe3d2;
+  --paper-low: #ffd9bd;
+  --ink: #09354d;
+  --muted: #27556b;
+  --link: #043f64;
+  --rule: #6293a3;
+  --inline-code: #ffd9bd;
+  --inline-rule: #6293a3;
   --kiosk-edge: #71d2ee;
   --kiosk-glow: #71d2ee;
   --kiosk-accent: #d0f76a;
@@ -786,6 +786,10 @@ html[data-skin="key-exchange-kiosk"] .prose .katex-display {
     --pr-peach: #ffc09c;
     --pr-peach-key: #ffd9bd;
     --pr-lime: #c5ec78;
+    --pr-shell-ink: #09354d;
+    --pr-shell-focus: #043f64;
+    --article-nav-paper: var(--pr-lime);
+    --article-nav-ink: var(--pr-ink);
   }
   html[data-skin="key-exchange-kiosk"] .masthead__copy {
     color: var(--pr-ink);
@@ -865,10 +869,10 @@ html[data-skin="key-exchange-kiosk"] .prose .katex-display {
     color: #9a2853;
   }
   html[data-skin="key-exchange-kiosk"][data-theme="dark"] .flag-check output.is-correct {
-    color: var(--kiosk-accent);
+    color: #176400;
   }
   html[data-skin="key-exchange-kiosk"][data-theme="dark"] .flag-check output.is-wrong {
-    color: var(--pr-peach);
+    color: #9a2853;
   }
   html[data-skin="key-exchange-kiosk"] .prose blockquote li::marker {
     color: var(--ink);
@@ -876,5 +880,37 @@ html[data-skin="key-exchange-kiosk"] .prose .katex-display {
   html[data-skin="key-exchange-kiosk"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
     color: var(--pr-code-ink) !important;
     background-color: var(--pr-code-paper) !important;
+  }
+}
+
+/* Night peach screens retain separate foregrounds on the blue shell. */
+@media (forced-colors: none) {
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"]:root :is(.site-header, .site-brand, .site-brand__name, .site-brand__scope) {
+    color: var(--pr-shell-ink);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"]:root .site-brand:focus-visible {
+    outline-color: var(--pr-shell-focus);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"] .record-grid > .record-index {
+    color: var(--article-nav-ink);
+    background-color: var(--article-nav-paper);
+    border-color: var(--pr-edge);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"] .record-index > :is(.record-toc, .related-records) {
+    color: var(--article-nav-ink);
+    background-color: var(--article-nav-paper);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"] .prose :is(ul, ol) > li::marker {
+    color: var(--pr-link);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"]:root .prose :is(pre, pre code) {
+    color: var(--pr-code-ink) !important;
+    background-color: var(--pr-code-paper) !important;
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"]:root .prose pre:focus-visible {
+    outline-color: var(--kiosk-accent);
+  }
+  html[data-skin="key-exchange-kiosk"][data-theme="dark"]:root .code-frame__actions button[aria-pressed="true"] {
+    background-color: var(--pr-lime);
   }
 }
