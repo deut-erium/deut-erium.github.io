@@ -151,27 +151,27 @@ html[data-skin="root-in-seven"]:root {
   --mono: "IBM Plex Mono", Consolas, monospace;
   --page: 70rem;
   --reading: 76ch;
-  --bench: #f2f46a;
-  --paper: #fff8db;
-  --paper-low: #f0e7c8;
-  --ink: #211b19;
-  --muted: #635043;
-  --link: #612987;
-  --root-orange: #be481f;
-  --rule: #be481f;
+  --bench: #ff933e;
+  --paper: #eedfff;
+  --paper-low: #dec7fa;
+  --ink: #321852;
+  --muted: #5c3670;
+  --link: #62228d;
+  --root-orange: #ff5b19;
+  --rule: #7d3fac;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #211b19;
-  --navy-soft: #443044;
+  --navy: #321852;
+  --navy-soft: #593995;
   --lcd: var(--paper);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--paper-low);
   --lcd-ink: var(--ink);
-  --pink: #e6bded;
-  --orange: #f2b078;
-  --yellow: #f2f46a;
-  --cyan: #e6bded;
+  --pink: #b99afb;
+  --orange: #ffad65;
+  --yellow: #ff933e;
+  --cyan: #36ddee;
   --inline-code: var(--paper-low);
   --inline-rule: var(--rule);
   --quote: var(--paper-low);
@@ -238,14 +238,14 @@ html[data-skin="root-in-seven"]:root {
 
 html[data-skin="root-in-seven"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #211820;
-  --paper: #302432;
-  --paper-low: #423144;
-  --ink: #fff5ce;
-  --muted: #d9c7ad;
-  --link: #f0ec66;
-  --root-orange: #f28a50;
-  --rule: #c87248;
+  --bench: #e97124;
+  --paper: #4c2c87;
+  --paper-low: #593995;
+  --ink: #f5eaff;
+  --muted: #dfcff8;
+  --link: #57e9f5;
+  --root-orange: #ff984f;
+  --rule: #c69aff;
 }
 
 html[data-skin="root-in-seven"]:root body {
@@ -684,4 +684,88 @@ html[data-skin="root-in-seven"] .record-end nav a {
   html[data-skin="root-in-seven"]:root .record-row__title { font-size: 1.25rem !important; }
   html[data-skin="root-in-seven"] :is(.archive-tools, .archive-groups) { padding: 1.5rem 1rem; }
   html[data-skin="root-in-seven"] .archive-search { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="root-in-seven"]:root {
+  --pr-outside-ink: #321852;
+  --pr-cyan: #36ddee;
+  --pr-cyan-ink: #511676;
+  --pr-code-paper: #30165c;
+  --pr-code-ink: #f5eaff;
+}
+html[data-skin="root-in-seven"][data-theme="dark"] {
+  --pr-cyan: #24c8dd;
+}
+html[data-skin="root-in-seven"]:root body,
+html[data-skin="root-in-seven"] :is(.site-header, .site-brand, .site-brand__name, .site-brand__scope, .masthead__copy, .index-heading),
+html[data-skin="root-in-seven"] :is(.masthead__copy, .index-heading) .eyebrow {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"]:root .site-nav {
+  border-top-color: var(--pr-outside-ink);
+  border-bottom-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"] .site-nav > a,
+html[data-skin="root-in-seven"] .skin-menu > summary {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"] .site-nav > a[aria-current="page"] {
+  color: var(--pr-outside-ink);
+  background-color: var(--pr-cyan);
+  border-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"] .site-nav > a:is(:hover, :focus-visible),
+html[data-skin="root-in-seven"] .skin-menu > summary:is(:hover, :focus-visible) {
+  color: var(--pr-cyan);
+  background-color: var(--pr-outside-ink);
+  border-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"]:root .site-brand:focus-visible,
+html[data-skin="root-in-seven"]:root .site-nav > a:focus-visible,
+html[data-skin="root-in-seven"]:root .skin-menu > summary:focus-visible,
+html[data-skin="root-in-seven"]:root .masthead__actions a:focus-visible {
+  outline-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"] .home-shell > .section-cards {
+  color: var(--pr-outside-ink);
+  background-color: var(--pr-cyan);
+}
+html[data-skin="root-in-seven"] .home-shell > .section-cards .section-heading h2 {
+  color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"]:root .home-shell.home-shell > .section-cards .index-map__links a,
+html[data-skin="root-in-seven"]:root .home-shell.home-shell > .section-cards .index-map__links a :is(span, strong) {
+  color: var(--pr-cyan-ink) !important;
+  border-bottom-color: var(--pr-cyan-ink);
+}
+html[data-skin="root-in-seven"]:root .home-shell > .section-cards :focus-visible {
+  outline-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"] :is(.code-frame__bar, .prose th) {
+  color: var(--pr-outside-ink);
+  background-color: var(--pr-cyan);
+}
+html[data-skin="root-in-seven"]:root .prose :is(.code-frame, pre, pre code, .code-frame__gutter, .highlight) {
+  color: var(--pr-code-ink) !important;
+  background-color: var(--pr-code-paper) !important;
+}
+html[data-skin="root-in-seven"]:root .prose .code-frame :focus-visible {
+  outline-color: var(--pr-cyan);
+}
+html[data-skin="root-in-seven"]:root .prose .code-frame .code-frame__actions button:focus-visible {
+  outline-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"]:root .prose :is(ul, ol) > li::marker {
+  color: var(--link);
+}
+html[data-skin="root-in-seven"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-outside-ink) !important;
+  background-color: var(--pr-cyan) !important;
+  border-color: var(--pr-outside-ink) !important;
+  outline-color: var(--pr-outside-ink);
+}
+html[data-skin="root-in-seven"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-cyan) !important;
+  background-color: var(--pr-outside-ink) !important;
 }
