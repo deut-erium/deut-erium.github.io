@@ -19,7 +19,7 @@ export function readRegistry(root = repo) {
   const text = fs.readFileSync(path.join(root, '_data/themes.yml'), 'utf8');
   const ids = [...text.matchAll(/^- id: ([a-z0-9]+(?:-[a-z0-9]+)*)\s*$/gm)].map(m => m[1]);
   assert.equal((text.match(/^- /gm) || []).length, ids.length, 'Unsupported theme registry entry');
-  assert.equal(ids.length, 48, 'Registry must contain 47 redesigns plus RPN');
+  assert.equal(ids.length, 49, 'Registry must contain 48 redesigns plus RPN');
   assert.equal(new Set(ids).size, ids.length, 'Duplicate registry ID');
   assert.equal(ids[0], RPN, 'RPN must remain the default registry entry');
   assert.match(text, /^- id: rpn-garden\n  name: RPN Garden\n  default: true(?:\n|$)/);
@@ -299,14 +299,14 @@ export function checkNoGlobalLibrary(root) {
 }
 async function main() {
   const { values: opt } = parseArgs({ options: { out: { type: 'string' }, themes: { type: 'string' }, help: { type: 'boolean' }, 'negative-control': { type: 'string' } } });
-  if (opt.help) { console.log('node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/FRESH\nOptional --themes id,id labels partial skin coverage. Defaults: all 47 skins; RPN rendering is checked by the browser matrix.\nOptional --negative-control unscoped|missing-font|corrupt-font must exit nonzero. No build, network or source writes.'); return; }
+  if (opt.help) { console.log('node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/FRESH\nOptional --themes id,id labels partial skin coverage. Defaults: all 48 skins (49 themes including RPN); RPN rendering is checked by the browser matrix.\nOptional --negative-control unscoped|missing-font|corrupt-font must exit nonzero. No build, network or source writes.'); return; }
   const out = freshOutput(opt.out || `agent_out/theme-redesign/static-${Date.now()}`);
   const summary = { status: 'failed', partial: true, controls: [], skins: [], failures: [], limitations: ['Static contracts do not prove rendering, contrast or aesthetic quality.'] };
   const check = (name, fn) => { try { return fn(); } catch (e) { summary.failures.push({ check: name, error: String(e.message).slice(0, 1600) }); return null; } };
   try {
     const config = loadThemes(), themes = selectThemes(opt.themes, Object.keys(config));
     summary.themes = themes; summary.partial = themes.length !== Object.keys(config).length;
-    summary.coverage = summary.partial ? 'partial' : 'all-47-skins';
+    summary.coverage = summary.partial ? 'partial' : `all-${Object.keys(config).length}-skins`;
     summary.manifest = { path: themeManifest, sha256: hash(fs.readFileSync(path.join(repo, themeManifest))) };
     summary.rpn = 'Source global-loading policy checked; unchanged rendering requires the browser comparison.';
     assert.ok(!opt['negative-control'] || ['unscoped', 'missing-font', 'corrupt-font'].includes(opt['negative-control']), 'Unknown negative control');

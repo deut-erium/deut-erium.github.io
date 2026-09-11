@@ -106,7 +106,7 @@ class PrintFontTests(unittest.TestCase):
              "console.log(JSON.stringify(loadThemes()));"],
             cwd=ROOT, text=True, capture_output=True, check=True, timeout=30)
         themes = json.loads(output.stdout)
-        self.assertEqual(len(themes), 47)
+        self.assertEqual(len(themes), 48)
         for theme in themes.values():
             found = faces(source(theme["file"]))
             self.assertEqual({face["font-family"].strip('\"\'') for face in found},

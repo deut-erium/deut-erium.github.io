@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, realpathSync } fro
 import path from 'node:path';
 import vm from 'node:vm';
 import test from 'node:test';
+import { readRegistry } from './test-theme-redesign-static.mjs';
 
 const source = readFileSync(new URL('../assets/js/footer.js', import.meta.url), 'utf8');
 const markup = readFileSync(new URL('../_includes/site-footer.html', import.meta.url), 'utf8');
@@ -207,6 +208,7 @@ if (process.argv.includes('--browser')) {
     const out = path.resolve(process.env.BLOG_FOOTER_OUT || 'agent_out/footer-theme-repair/browser');
     assert.ok(out.startsWith(path.resolve('agent_out') + path.sep));
     mkdirSync(out, { recursive: true });
+    const themes = readRegistry();
     const browser = await puppeteer.launch({
       executablePath: process.env.CHROME_BIN || path.resolve('.toolchain/verify/browser/chrome-linux64/chrome'),
       headless: true,
@@ -273,7 +275,7 @@ if (process.argv.includes('--browser')) {
         return mismatches;
       });
       const skins = [null, ...readdirSync('assets/css/skins').filter(n => n.endsWith('.css')).sort()];
-      assert.equal(skins.length, 48);
+      assert.equal(skins.length, themes.length);
       for (const file of skins) {
         const skinCSS = file ? readFileSync(path.join('assets/css/skins', file), 'utf8') : '';
         const skin = file ? skinCSS.match(/html\[data-skin="([^"]+)"\]/)?.[1] : 'rpn-garden';
@@ -450,10 +452,10 @@ if (process.argv.includes('--browser')) {
       writeFileSync(path.join(out, 'browser-matrix.json'), JSON.stringify(results, null, 2) + '\n');
       await browser.close();
     }
-    assert.equal(results.length, 384);
+    assert.equal(results.length, themes.length * 2 * 4);
     for (const mode of ['light', 'dark']) {
       const paints = results.filter(r => r.mode === mode && r.width === 1440).map(r => JSON.stringify(r.appearance.paint));
-      assert.equal(new Set(paints).size, 48, 'Theme paint must not collapse into a uniform footer');
+      assert.equal(new Set(paints).size, themes.length, 'Theme paint must not collapse into a uniform footer');
     }
     assert.deepEqual(results.filter(r => r.issues.length), []);
   });

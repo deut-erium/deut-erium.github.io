@@ -27,8 +27,8 @@ const { values: opt } = parseArgs({ options: {
 } });
 if (opt.help) {
   console.log(`node script/test-theme-redesign.mjs --site GENERATED --before GENERATED --out agent_out/theme-redesign/FRESH
-Default: all 47 redesigned themes plus unchanged RPN, 320/390/768/1440/1920, light/dark,
-home/archive/About/long article: 1920 cases. Each records cold fonts, warms used
+Default: all ${defaults.themes.length - 1} redesigned themes plus unchanged RPN (${defaults.themes.length} total), 320/390/768/1440/1920, light/dark,
+home/archive/About/long article: ${defaults.themes.length * defaults.widths.length * defaults.modes.length * defaults.pages.length} cases. Each records cold fonts, warms used
 optional faces, then reloads for layout, focus and CDP rendered-font checks.
 --themes id,id --widths 390,1440 --modes light,dark --pages home,article
 --article /route.html --baseurl /prefix --concurrency 1..6
@@ -647,7 +647,7 @@ async function runCase(job, fallback = false) {
       checkpoint('rpn-baseline-comparison'); result.rpn = await compareRpn(c, dir, job, result.fonts); comparisons.push(result.rpn); result.issues.push(...result.rpn.issues);
     }
     checkpoint('opened-picker'); result.picker = await pickerCheck(c.page);
-    if (!result.picker.open || !result.picker.panelBounds || !result.picker.pickerBounds || !result.picker.notCovered || !result.picker.focus || result.picker.selected !== job.theme) result.issues.push('opened-picker');
+    if (!result.picker.open || !result.picker.panelBounds || !result.picker.pickerBounds || !result.picker.notCovered || !result.picker.focus || result.picker.options !== defaults.themes.length || result.picker.selected !== job.theme) result.issues.push('opened-picker');
     checkpoint('keyboard-focus'); result.focus = await focusChecks(c.page);
     if (result.focus.some(f => !f.focused || !f.focusVisible || !f.visible || !f.stylePresent)) result.issues.push('focus');
     const stableBefore = (await measure(c.page)).cells;
@@ -725,7 +725,7 @@ finally {
   for (const r of failures) for (const code of r.issues) counts[code] = (counts[code] || 0) + 1;
   const status = fatal || failures.length || results.length !== jobs.length ? 'failed' : 'passed';
   const partial = !fullMatrix || !!opt['cold-only'] || !!opt['no-screenshots'] || !!opt['no-fallback'];
-  const summary = { status, partial, coverage: partial ? 'partial' : 'all-47-plus-rpn', provisional: !!opt.provisional, started, ended: new Date().toISOString(), planned: jobs.length, completed: results.filter(r => r.completed).length, passed: results.filter(r => r.pass).length, failed: results.filter(r => !r.pass).length, fullMatrix, integrationClaim: !opt.provisional && fullMatrix && !opt['no-screenshots'] && !opt['no-fallback'] && !opt['cold-only'] && status === 'passed', fatal,
+  const summary = { status, partial, coverage: partial ? 'partial' : `all-${defaults.themes.length - 1}-plus-rpn`, provisional: !!opt.provisional, started, ended: new Date().toISOString(), planned: jobs.length, completed: results.filter(r => r.completed).length, passed: results.filter(r => r.pass).length, failed: results.filter(r => !r.pass).length, fullMatrix, integrationClaim: !opt.provisional && fullMatrix && !opt['no-screenshots'] && !opt['no-fallback'] && !opt['cold-only'] && status === 'passed', fatal,
     geometryControls: { completed: geometryControlCount, evidence: 'geometry-controls.json', scope: 'Isolated synthetic documents, not generated-site cases.' },
     failureCounts: counts, failures: failures.slice(0, 30).map(r => ({ key: r.key, directory: r.directory, issues: r.issues, error: r.error })), omittedFailures: Math.max(0, failures.length - 30),
     fallback: { status: opt['no-fallback'] ? 'skipped' : fallbackResults.length ? fallbackResults.every(r => r.pass) ? 'passed' : 'failed' : 'not-applicable-or-incomplete', cases: fallbackResults.length, failed: fallbackResults.filter(r => !r.pass).length },
