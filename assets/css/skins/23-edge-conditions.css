@@ -289,14 +289,14 @@
 /* Edge Conditions: a continuous workshop sheet with matched enamel edges. */
 html[data-skin="edge-conditions"] {
   color-scheme: light;
-  --bench: #f2eedb;
-  --paper: #fffdf3;
-  --paper-low: #f2eedb;
-  --ink: #25372e;
-  --muted: #5c6455;
-  --link: #214cb5;
-  --rule: #11865f;
-  --edge-accent: #b54d15;
+  --bench: #ff9580;
+  --paper: #fff2ac;
+  --paper-low: #d1f6ee;
+  --ink: #173899;
+  --muted: #315074;
+  --link: #1643b8;
+  --rule: #00aeb8;
+  --edge-accent: #ad342c;
   --edge-line: color-mix(in srgb, var(--rule) 42%, var(--paper));
   --edge-segments: linear-gradient(90deg, var(--link) 0 25%, var(--edge-accent) 25% 50%, var(--rule) 50% 75%, var(--ink) 75%);
   --shell: var(--paper);
@@ -387,14 +387,14 @@ html[data-skin="edge-conditions"] {
 
 html[data-skin="edge-conditions"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #25372d;
-  --paper: #31483a;
-  --paper-low: #25372d;
-  --ink: #f6f0d9;
-  --muted: #c6ccad;
-  --link: #b6c9ff;
-  --rule: #58b88c;
-  --edge-accent: #ffb17b;
+  --bench: #2146bb;
+  --paper: #08556b;
+  --paper-low: #064b61;
+  --ink: #fff2ac;
+  --muted: #bcefe9;
+  --link: #8df7ee;
+  --rule: #43e7ce;
+  --edge-accent: #ffc3af;
 }
 
 /* Do not let the legacy clipping rule hide an escaped row. */
@@ -943,4 +943,106 @@ html[data-skin="edge-conditions"] .record-end nav a {
 @media (forced-colors: active) {
   html[data-skin="edge-conditions"]:root :focus-visible { outline-color: Highlight; }
   html[data-skin="edge-conditions"] .site-header::before { background: none; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="edge-conditions"] {
+  --pr-hero: #ffe47b;
+  --pr-rows: #a5ede3;
+  --pr-butter: #ffe47b;
+  --pr-aqua: #79e8d8;
+  --pr-coral: #ff9580;
+  --pr-cobalt: #2146bb;
+  --pr-tile-ink: #173080;
+  --pr-tile-light: #fff2ac;
+  --pr-code: #173899;
+}
+html[data-skin="edge-conditions"][data-theme="dark"] {
+  --pr-hero: #2146bb;
+  --pr-rows: #08556b;
+}
+@media (forced-colors: none) {
+  html[data-skin="edge-conditions"]:root :is(.site-header, .home-shell),
+  html[data-skin="edge-conditions"] :is(.masthead__copy, .index-heading) {
+    background-color: var(--pr-hero);
+  }
+  html[data-skin="edge-conditions"]:root .archive-shell,
+  html[data-skin="edge-conditions"] .home-shell > .record-index {
+    background-color: var(--pr-rows);
+  }
+  html[data-skin="edge-conditions"] .home-shell > .section-cards {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-coral);
+  }
+  html[data-skin="edge-conditions"] .section-cards .section-heading h2 {
+    color: var(--pr-tile-ink);
+  }
+  html[data-skin="edge-conditions"] .section-links a {
+    color: var(--pr-tile-ink);
+    border-color: var(--pr-tile-ink);
+  }
+  html[data-skin="edge-conditions"] .section-links a:nth-child(4n + 1) {
+    background-color: var(--pr-butter);
+  }
+  html[data-skin="edge-conditions"] .section-links a:nth-child(4n + 2) {
+    background-color: var(--pr-aqua);
+  }
+  html[data-skin="edge-conditions"] .section-links a:nth-child(4n + 3) {
+    background-color: var(--pr-coral);
+  }
+  html[data-skin="edge-conditions"] .section-links a:nth-child(4n) {
+    color: var(--pr-tile-light);
+    background-color: var(--pr-cobalt);
+  }
+  html[data-skin="edge-conditions"] .section-links :is(span, strong) {
+    color: inherit;
+  }
+  html[data-skin="edge-conditions"] .section-links a:focus-visible {
+    outline-color: var(--pr-tile-ink);
+  }
+  html[data-skin="edge-conditions"] .record-row__link:is(:hover, :focus-visible) {
+    background-color: var(--paper-low);
+  }
+  html[data-skin="edge-conditions"] .masthead__actions .action--primary,
+  html[data-skin="edge-conditions"] .quick-filters a[aria-current="true"],
+  html[data-skin="edge-conditions"] .code-frame__actions button[aria-pressed="true"],
+  html[data-skin="edge-conditions"] :is(.cookie-banner__btn, .site-share__copy) {
+    color: var(--pr-tile-light);
+    background-color: var(--pr-cobalt);
+    border-color: var(--pr-cobalt);
+  }
+  html[data-skin="edge-conditions"] .masthead__actions .action--primary:hover,
+  html[data-skin="edge-conditions"] .code-frame__actions button:hover,
+  html[data-skin="edge-conditions"] .quick-filters a[aria-current="true"]:hover,
+  html[data-skin="edge-conditions"] :is(.cookie-banner__btn, .cookie-banner__toggle, .site-share__copy):is(:hover, :focus-visible) {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-coral);
+    border-color: var(--pr-tile-ink);
+  }
+  html[data-skin="edge-conditions"] :is(.archive-search input, .skin-menu select, .skin-menu__panel, .argon-unlock input, .argon-unlock button) {
+    border-color: var(--link);
+  }
+  html[data-skin="edge-conditions"] .argon-unlock :is(input, button) {
+    color: var(--ink);
+    background-color: var(--paper-low);
+  }
+  html[data-skin="edge-conditions"] .argon-unlock input::placeholder {
+    color: var(--muted);
+  }
+  html[data-skin="edge-conditions"] :is(.archive-empty, .archive-static-note) {
+    color: var(--pr-tile-ink);
+    background-color: var(--pr-butter);
+  }
+  html[data-skin="edge-conditions"]:root .prose :is(pre, .code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) {
+    color: var(--pr-tile-light) !important;
+    background-color: var(--pr-code) !important;
+  }
+  html[data-skin="edge-conditions"]:root :is(.skin-dice, .theme-toggle, .site-share__btn) {
+    color: var(--pr-tile-ink) !important;
+    background-color: var(--pr-butter) !important;
+    border-color: var(--pr-tile-ink) !important;
+  }
+  html[data-skin="edge-conditions"]:root :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+    background-color: var(--pr-aqua) !important;
+  }
 }
