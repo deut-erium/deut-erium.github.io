@@ -93,6 +93,15 @@ class PrintFontTests(unittest.TestCase):
             self.assertIn('"Theme Computer Modern"', css)
         self.assertIn('"Atkinson Hyperlegible"', source("assets/css/skins/01-grid-meltdown.css"))
 
+    def test_grimoire_uses_existing_euler_fraktur(self):
+        css = source("assets/css/skins/03-the-exploit-grimoire.css")
+        displays = re.findall(r'--display:\s*([^;]+);', css)
+        self.assertEqual(len(displays), 2)
+        self.assertTrue(all(value.startswith('"Theme Euler Fraktur",') for value in displays))
+        self.assertNotIn('"Theme Fascinate"', css)
+        self.assertIn('--body: "Theme Computer Modern", Georgia, serif;', css)
+        self.assertIn('font-family: "Theme Euler Fraktur";', source("assets/css/main.css"))
+
     def test_one_small_print_sheet(self):
         css = source("assets/css/print.css")
         bare = uncomment(css).strip()
