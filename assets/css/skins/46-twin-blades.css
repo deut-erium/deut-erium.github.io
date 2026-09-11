@@ -184,22 +184,22 @@ html[data-skin="twin-blades"] {
   --display: "Italiana", Georgia, serif;
   --keys: "Sora", Arial, sans-serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
-  --bench: #eae8e0;
-  --paper: #fffcf2;
-  --paper-low: #eae8e0;
-  --ink: #252525;
-  --muted: #626263;
-  --rule: #8e969c;
-  --link: #a33629;
-  --foil-focus: #445d74;
-  --foil-silver: #c5cdd2;
+  --bench: #c397ff;
+  --paper: #d7faf1;
+  --paper-low: #bceedd;
+  --ink: #352046;
+  --muted: #54335f;
+  --rule: #71408c;
+  --link: #572170;
+  --foil-focus: #572170;
+  --foil-silver: #9b59dc;
   --page: 78rem;
   --reading: 76ch;
   --shell: var(--paper);
   --shell-high: var(--paper);
   --shell-low: var(--paper-low);
-  --navy: #252525;
-  --navy-soft: #393938;
+  --navy: #352046;
+  --navy-soft: #51315e;
   --lcd: var(--paper-low);
   --lcd-high: var(--paper-low);
   --lcd-low: var(--rule);
@@ -274,15 +274,15 @@ html[data-skin="twin-blades"] {
 
 html[data-skin="twin-blades"][data-theme="dark"] {
   color-scheme: dark;
-  --bench: #1c1c1b;
-  --paper: #292928;
-  --paper-low: #343433;
-  --ink: #f4f0e5;
-  --muted: #c4c2bc;
-  --rule: #858b8e;
-  --link: #ffab97;
-  --foil-focus: #bcd6e7;
-  --foil-silver: #abb4b9;
+  --bench: #7040a0;
+  --paper: #175767;
+  --paper-low: #1b6071;
+  --ink: #e1fff7;
+  --muted: #bdebe2;
+  --rule: #93c8cf;
+  --link: #ffd7b8;
+  --foil-focus: #aaf7e5;
+  --foil-silver: #79d6cc;
 }
 
 html[data-skin="twin-blades"] body {
@@ -441,7 +441,7 @@ html[data-skin="twin-blades"] .prose th { color: var(--ink); background: var(--p
 html[data-skin="twin-blades"] .prose :is(th, td, img:not(.emoji)) { border: 1px solid var(--rule); }
 html[data-skin="twin-blades"] .prose .katex-display { color: var(--ink); background: var(--paper); border-color: var(--rule); }
 html[data-skin="twin-blades"] .prose .code-frame { border: 1px solid var(--rule); border-radius: 0; }
-html[data-skin="twin-blades"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) { color: #f4f0e5 !important; background-color: #20201f !important; }
+html[data-skin="twin-blades"]:root .prose :is(.code-frame, .code-frame pre, .code-frame pre code, .code-frame__gutter, .highlight) { color: #e1fff7 !important; background-color: #153e55 !important; }
 html[data-skin="twin-blades"] .code-frame__bar { color: var(--ink); background: var(--paper-low); border-bottom: 1px solid var(--rule); }
 html[data-skin="twin-blades"] .code-frame__status { color: var(--ink); background: var(--paper-low); border-color: var(--rule); }
 html[data-skin="twin-blades"] .code-frame__fallback { color: var(--ink); background: var(--paper); border-color: var(--rule); border-radius: 0; }
@@ -476,4 +476,80 @@ html[data-skin="twin-blades"] .code-frame__fallback { color: var(--ink); backgro
 @media (prefers-reduced-motion: reduce) {
   html[data-skin="twin-blades"] { scroll-behavior: auto; }
   html[data-skin="twin-blades"] :is(a, button, summary, input, select) { transition: none; }
+}
+
+/* Palette rework paint roles. */
+html[data-skin="twin-blades"] {
+  --pr-hero: #ffbe9f;
+  --pr-lilac: #d6b8ff;
+  --pr-peach: #ffbe9f;
+  --pr-aqua: #8ae4d5;
+  --pr-plate-ink: #352046;
+  --pr-plate-link: #572170;
+  --pr-plate-rule: #71408c;
+  --pr-active: #7736ae;
+  --pr-on-active: #effff8;
+  --pr-hover: #572170;
+  --pr-on-hover: #effff8;
+}
+html[data-skin="twin-blades"][data-theme="dark"] {
+  --pr-hero: #663d9e;
+  --pr-lilac: #ca9af7;
+  --pr-peach: #ffb391;
+  --pr-aqua: #79d6cc;
+  --pr-active: #ffb391;
+  --pr-on-active: #352046;
+  --pr-hover: #79d6cc;
+  --pr-on-hover: #352046;
+}
+html[data-skin="twin-blades"] body { background-color: var(--bench); }
+html[data-skin="twin-blades"] :is(.site-header, .masthead__copy, .index-heading, .record-head, .page-heading) { background-color: var(--pr-hero); }
+html[data-skin="twin-blades"] .home-shell > .record-index.section-cards {
+  color: var(--pr-plate-ink);
+  background-color: var(--pr-lilac);
+}
+html[data-skin="twin-blades"] .index-map__links { border-color: var(--pr-plate-rule); }
+html[data-skin="twin-blades"] .index-map__links a {
+  color: var(--pr-plate-ink);
+  background-color: var(--pr-peach);
+  border-color: var(--pr-plate-rule);
+}
+html[data-skin="twin-blades"] .index-map__links a:nth-child(2) { background-color: var(--pr-aqua); }
+html[data-skin="twin-blades"] .index-map__links a:nth-child(3) { background-color: var(--pr-lilac); }
+html[data-skin="twin-blades"] .index-map__links strong { color: var(--pr-plate-link); }
+html[data-skin="twin-blades"] .index-map__links a:is(:hover, :focus-visible) {
+  color: var(--pr-plate-link);
+  background-color: var(--pr-aqua);
+  outline-color: var(--pr-plate-link);
+}
+html[data-skin="twin-blades"] :is(.site-nav a[aria-current="page"], .action--primary, .masthead__actions .action--primary, .quick-filters a[aria-current="true"], .flag-check button) {
+  color: var(--pr-on-active);
+  background-color: var(--pr-active);
+  border-color: var(--pr-active);
+}
+html[data-skin="twin-blades"] :is(.site-nav a, .skin-menu summary, .skin-randomizer, .action, .record-actions a, .tag-line a, .quick-filters a, .pagination a, .code-frame__actions button, .all-tags__grid a, .record-end nav a, .resume-disclosure > summary, .flag-check button):hover {
+  color: var(--pr-on-hover);
+  background-color: var(--pr-hover);
+  border-color: var(--pr-hover);
+}
+html[data-skin="twin-blades"] .flag-check button:focus-visible {
+  color: var(--pr-on-hover);
+  background-color: var(--pr-hover);
+  border-color: var(--pr-hover);
+}
+html[data-skin="twin-blades"] .flag-check input::placeholder { color: var(--muted); }
+html[data-skin="twin-blades"] .flag-check output.is-correct { color: var(--ink); }
+html[data-skin="twin-blades"] .flag-check output.is-wrong { color: var(--link); }
+html[data-skin="twin-blades"] :is(.skin-dice, .theme-toggle, .site-share__btn) {
+  color: var(--pr-plate-ink) !important;
+  background-color: var(--pr-peach) !important;
+  border-color: var(--pr-plate-rule) !important;
+  outline-color: var(--pr-plate-link);
+}
+html[data-skin="twin-blades"] .skin-dice { background-color: var(--pr-aqua) !important; }
+html[data-skin="twin-blades"] .theme-toggle { background-color: var(--pr-lilac) !important; }
+html[data-skin="twin-blades"] :is(.skin-dice, .theme-toggle, .site-share__btn):is(:hover, :focus-visible) {
+  color: var(--pr-plate-link) !important;
+  background-color: var(--pr-aqua) !important;
+  border-color: var(--pr-plate-link) !important;
 }
