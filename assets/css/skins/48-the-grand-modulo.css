@@ -392,7 +392,7 @@ html[data-skin="the-grand-modulo"] :is(code, pre, kbd, samp) { font-family: var(
 
 /* The axis runs through the brand, marquee and register. Navigation retains its order. */
 html[data-skin="the-grand-modulo"] .site-header {
-  max-width: 76rem;
+  max-width: 76rem !important;
   margin: 2.75rem auto 0;
   color: var(--ink);
   background: transparent;
@@ -463,7 +463,7 @@ html[data-skin="the-grand-modulo"] .skin-menu select { color: var(--ink); backgr
 html[data-skin="the-grand-modulo"]:root .home-shell,
 html[data-skin="the-grand-modulo"]:root .archive-shell {
   display: block !important;
-  max-width: 76rem;
+  max-width: 76rem !important;
   margin: 0 auto 2rem;
   padding: 0 1.5rem;
   color: var(--ink);
@@ -477,7 +477,7 @@ html[data-skin="the-grand-modulo"]:root .home-shell > .masthead {
   display: grid;
   place-items: center;
   position: relative;
-  min-height: 550px;
+  min-height: 550px !important;
   margin: 0;
   padding: 5.5rem 0 4.5rem;
   background: url("../../images/themes/the-grand-modulo.svg#day") center / 100% 100% no-repeat;
@@ -578,9 +578,9 @@ html[data-skin="the-grand-modulo"] .archive-controls { color: var(--ink); backgr
 html[data-skin="the-grand-modulo"] .archive-controls :is(input, select) { font-family: var(--keys); color: var(--ink); background: var(--paper); border-color: var(--brass); }
 
 /* Only paint and typography here: the article and wide-page components own geometry. */
-html[data-skin="the-grand-modulo"] .record-shell,
+html[data-skin="the-grand-modulo"] .record-page,
 html[data-skin="the-grand-modulo"] .page-shell { color: var(--ink); background: var(--paper); border: 1px solid var(--brass); border-radius: 3px; box-shadow: 0 9px 24px #24111915; }
-html[data-skin="the-grand-modulo"] .record-head { color: var(--ink); background: none; border-color: var(--rule); box-shadow: none; text-align: center; }
+html[data-skin="the-grand-modulo"] .record-head { color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--brass); border-radius: 0; box-shadow: none; text-align: center; }
 html[data-skin="the-grand-modulo"] .record-head h1,
 html[data-skin="the-grand-modulo"] .page-heading h1 { color: var(--ink); font-family: var(--body); font-weight: 400; letter-spacing: -.02em; line-height: 1.2; text-align: center; }
 html[data-skin="the-grand-modulo"] .record-meta { color: var(--muted); font-family: var(--keys); }
@@ -588,13 +588,26 @@ html[data-skin="the-grand-modulo"] .prose { color: var(--ink); font-family: var(
 html[data-skin="the-grand-modulo"] .prose :is(h2, h3, h4) { color: var(--ink); font-family: var(--body); }
 html[data-skin="the-grand-modulo"] .prose a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .18em; }
 html[data-skin="the-grand-modulo"] .prose blockquote { color: var(--ink); background: var(--paper-low); border-color: var(--brass); box-shadow: none; }
-html[data-skin="the-grand-modulo"] .article-nav { color: var(--mint-ink); background: var(--mint); border-color: var(--brass); border-radius: 2px; box-shadow: none; }
-html[data-skin="the-grand-modulo"] .article-nav :is(a, h2, h3) { color: var(--mint-ink); }
-html[data-skin="the-grand-modulo"] .article-nav a:hover { color: var(--on-wine); background: var(--wine); }
+html[data-skin="the-grand-modulo"] .article__content { background: var(--paper); border: 0; border-radius: 0; box-shadow: none; }
+html[data-skin="the-grand-modulo"] .record-grid > .record-index { color: var(--mint-ink); background: var(--mint); border: 1px solid var(--brass); border-radius: 2px; box-shadow: none; }
+html[data-skin="the-grand-modulo"] :is(.record-toc, .record-toc li, .related-records li) { border-color: var(--brass); }
+html[data-skin="the-grand-modulo"] :is(.record-toc a, .related-records a, .record-toc summary, .related-records h2, .toc-fallback) { color: var(--mint-ink); }
+html[data-skin="the-grand-modulo"] :is(.record-toc a, .related-records a):hover { color: var(--on-wine); background: var(--wine); }
+html[data-skin="the-grand-modulo"] :is(.index-heading, .page-heading) { color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--brass); border-radius: 0; box-shadow: none; text-align: center; }
+html[data-skin="the-grand-modulo"] .index-heading h1 { color: var(--ink); font-family: var(--display); font-weight: 400; }
+html[data-skin="the-grand-modulo"] .record-facts { border-color: var(--rule); }
+html[data-skin="the-grand-modulo"] .prose :is(blockquote, .info) { color: var(--ink); background: var(--paper-low); border: 1px solid var(--rule); border-radius: 2px; box-shadow: none; }
+html[data-skin="the-grand-modulo"] .prose :is(th, td) { border-color: var(--rule); }
+html[data-skin="the-grand-modulo"] .prose th { color: var(--mint-ink); background: var(--mint); font-family: var(--keys); }
+html[data-skin="the-grand-modulo"] .prose .code-frame { border: 1px solid var(--brass); border-radius: 2px; box-shadow: none; }
+html[data-skin="the-grand-modulo"] :is(.code-frame__bar, .code-frame__status) { color: var(--ink); background: var(--paper-low); border-color: var(--brass); }
+html[data-skin="the-grand-modulo"] .code-frame__actions button { color: var(--mint-ink); background: var(--mint); border: 1px solid var(--brass); border-radius: 2px; box-shadow: none; }
+html[data-skin="the-grand-modulo"] .code-frame__actions button:is(:hover, [aria-pressed="true"]) { color: var(--on-wine); background: var(--wine); }
+
 html[data-skin="the-grand-modulo"] :is(.theme-toggle, .skin-dice) { color: var(--mint-ink); background: var(--mint); border: 1px solid var(--brass); border-radius: 50%; box-shadow: none; }
 
 @media (max-width: 64rem) {
-  html[data-skin="the-grand-modulo"]:root .home-shell > .masthead { min-height: 530px; padding: 5rem 0 4rem; background-image: url("../../images/themes/the-grand-modulo.svg#narrow-day"); }
+  html[data-skin="the-grand-modulo"]:root .home-shell > .masthead { min-height: 530px !important; padding: 5rem 0 4rem; background-image: url("../../images/themes/the-grand-modulo.svg#narrow-day"); }
   html[data-skin="the-grand-modulo"][data-theme="dark"]:root .home-shell > .masthead { background-image: url("../../images/themes/the-grand-modulo.svg#narrow-night"); }
   html[data-skin="the-grand-modulo"] .masthead__copy { width: 77%; max-width: 32rem; }
   html[data-skin="the-grand-modulo"]:root .masthead h1 { font-size: clamp(2rem, 5.5vw, 3rem) !important; }
@@ -608,7 +621,7 @@ html[data-skin="the-grand-modulo"] :is(.theme-toggle, .skin-dice) { color: var(-
   html[data-skin="the-grand-modulo"] .site-nav a { padding-inline: .25rem; font-weight: 400; letter-spacing: 0; }
   html[data-skin="the-grand-modulo"] .skin-menu { grid-column: 1 / -1; justify-self: center; max-width: 100%; }
   html[data-skin="the-grand-modulo"] .skin-menu summary { padding-inline: .4rem; letter-spacing: 0; }
-  html[data-skin="the-grand-modulo"] .skin-menu__panel { right: 50%; transform: translateX(50%); width: min(19rem, calc(100vw - 2rem)); }
+  html[data-skin="the-grand-modulo"] .skin-menu__panel { transform: none; }
   html[data-skin="the-grand-modulo"]:root .home-shell { padding-inline: .6rem; }
   html[data-skin="the-grand-modulo"] .masthead__copy { padding-inline: .2rem; }
   html[data-skin="the-grand-modulo"]:root .masthead__lede { font-size: 1.125rem; }
@@ -617,8 +630,12 @@ html[data-skin="the-grand-modulo"] :is(.theme-toggle, .skin-dice) { color: var(-
   html[data-skin="the-grand-modulo"] .index-map__links { gap: .6rem; }
   html[data-skin="the-grand-modulo"] .index-map__links a { min-height: 125px; padding: 1.3rem .6rem; letter-spacing: 0; }
   html[data-skin="the-grand-modulo"]:root .home-shell > #records { padding: 1.75rem .8rem; }
-  html[data-skin="the-grand-modulo"] .record-row__link { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "date event" "title title" "primitive primitive"; gap: .6rem; padding: 1.3rem .25rem; }
+  html[data-skin="the-grand-modulo"]:root .record-row__link { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; grid-template-areas: "date event" "title title" "primitive primitive" !important; gap: .6rem; padding: 1.3rem .25rem; }
   html[data-skin="the-grand-modulo"]:root .record-row__title { font-size: 1.4rem !important; }
   html[data-skin="the-grand-modulo"] .record-row__primitive { text-align: center; }
+  html[data-skin="the-grand-modulo"]:root .record-row__link > .record-row__date { grid-row: 1 !important; grid-column: 1 !important; }
+  html[data-skin="the-grand-modulo"]:root .record-row__link > .record-row__event { grid-row: 1 !important; grid-column: 2 !important; }
+  html[data-skin="the-grand-modulo"]:root .record-row__link > .record-row__title { grid-row: 2 !important; grid-column: 1 / -1 !important; }
+  html[data-skin="the-grand-modulo"]:root .record-row__link > .record-row__primitive { grid-row: 3 !important; grid-column: 1 / -1 !important; }
   html[data-skin="the-grand-modulo"]:root .archive-shell { width: calc(100% - 1.2rem); padding: 1.5rem .8rem; }
 }
