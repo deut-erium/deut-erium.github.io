@@ -111,6 +111,7 @@ jobs:
           cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
 
           python3 script/verify-site.py "$out/a"
+          python3 script/test-search-redirects.py "$out/a"
           python3 script/verify-challenge-archive.py "$out/a"
           python3 script/test-tetrasquares-site.py "$out/a"
           python3 script/verify-code-parity.py "$out/a"

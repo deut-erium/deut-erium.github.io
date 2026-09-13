@@ -28,6 +28,7 @@ script/build-site.sh "$destination"
 : > "$destination/.nojekyll"
 
 python3 script/verify-site.py "$destination"
+python3 script/test-search-redirects.py "$destination"
 python3 script/verify-challenge-archive.py "$destination"
 python3 script/verify-reader-copy.py "$destination"
 python3 script/verify-code-parity.py "$destination"
