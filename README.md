@@ -59,6 +59,21 @@ node script/test-theme-page-placement.mjs --site GENERATED_BUILD --out agent_out
 node script/test-about-layout.mjs --site GENERATED_BUILD --out agent_out/about-layout/browser
 ```
 
+## Printing for reMarkable Paper Pro
+
+Open an article, let its fonts, math and images finish loading, then press Ctrl+P (Cmd+P on macOS). For a starting setup, choose A5 portrait at 100% scale and turn off the browser's headers and footers. The stylesheet requests 14 mm margins but leaves paper size and orientation to the print dialog. A4 and Letter remain available; larger pages may make text smaller when fitted to the tablet screen.
+
+Print uses black text on white, 12 pt serif body text with 1.55 line spacing, and 10 pt code, metadata and captions. Navigation, sharing controls and code toolbars are hidden. Long code and links wrap; long text, lists and tables can cross pages. Headings, small figures and formulas request keep-together behavior, and table headers can repeat. KaTeX retains its own fonts, fraction bars, SVG transforms and script-size ratios. Screen themes are unchanged.
+
+Check the preview before saving or printing. Wide matrices and other unbreakable formulas can still exceed the page; landscape or a larger paper size may be needed. Images retain their authored colors, and background graphics are not required for the reading layout. Browser pagination and physical Paper Pro readability have not been validated on the device. The site's print path uses ordinary browser printing; there is no generated PDF download, export button or PDF build step.
+
+```sh
+python3 script/test-print-fonts.py
+python3 script/test-print-fonts.py --browser
+```
+
+The native suite checks print-only scope, typography, pagination declarations and local font contracts. The optional browser suite requires installed or cached Puppeteer Core, KaTeX and Chromium; it never installs them. It also checks `.toolchain/node_modules` for packages and `.toolchain/verify/browser/chrome-linux64/chrome` for Chromium, or accepts `CHROME_BIN`. It embeds local fonts, blocks non-data requests and runs script-free fixtures across all 48 themes in both color modes. Print widths model A5 and A4 content areas. Results and a print-media screenshot go under `agent_out/print-paper-pro/browser/`. This is not a paginated PDF test or a full generated-site check.
+
 ## Theme redesign checks
 
 The 43 deployed designs declare their selected local faces. The four retained styles use their original global fonts and system fallbacks; their CSS and native fonts have separate integrity pins. Every skin remains scoped to its theme ID. The 87-family library, notices, provenance and 47-theme manifest are in `assets/fonts/theme-library/`. Library display faces use swap loading; reading/code faces and the retained styles' global fonts remain optional.
