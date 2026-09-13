@@ -38,6 +38,8 @@ def marker_scope(path: Path, line: int) -> str:
         return "upstream-vendor"
     if value.startswith("_posts/WriteUps/"):
         return "archived-or-pedagogical-content"
+    if value == "script/todo_inventory.py":
+        return "scanner-mechanics"
     if value == "script/verify-reader-copy.py" and line in (64, 65):
         return "scanner-sentinel"
     return "first-party"
