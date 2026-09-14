@@ -21,10 +21,10 @@ locked post (plus an optional key_answer note) for future tooling.
 Use --unlisted for later chain entries: they are standalone pages under
 locked/, not posts. Only the first entry needs to be in _posts/.
 
-Delivery: the default writes a dated post under _posts/. The site's content
-integrity gate (script/verify-imported-content.py) pins every file under
-_posts/ to a byte-exact manifest, so --page writes the same locked body as a
-section page at the same route instead; both render through layout: locked.
+Delivery: the default writes a dated post under _posts/. New dated posts and
+producer-format unlisted followups are supported by the authoring gates;
+existing imported files retain byte-exact integrity pins. --page writes a
+standalone dated section page; it is not an integrity-check bypass.
 """
 
 from __future__ import annotations
