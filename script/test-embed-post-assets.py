@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Synthetic, offline tests for the private asset bundler and encryption handoff."""
 import base64
+import hashlib
 import importlib.util
 import json
 import os
@@ -13,10 +14,26 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
+sys.dont_write_bytecode = True
 from embed_post_assets import BundleError, Bundler, bundle_file, private_path, write_private
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'agent_out' / 'asset-bundler'
+RUBY = shutil.which('ruby') or str(ROOT / '.toolchain/bin/ruby')
+HAS_RUBY = os.access(RUBY, os.X_OK)
+CHROME = ROOT / '.toolchain/verify/browser/chrome-linux64/chrome'
+PUPPETEER = next((ROOT / folder / 'puppeteer-core/lib/cjs/puppeteer/puppeteer-core.js'
+                  for folder in ('node_modules', '.toolchain/node_modules', '.toolchain/verify/lighthouse-node_modules')
+                  if (ROOT / folder / 'puppeteer-core/lib/cjs/puppeteer/puppeteer-core.js').is_file()), None)
+CHECKER = '''<form class="flag-check" data-flag-check data-sha256="DIGEST" data-salt="SALT">
+  <label for="flag-bundle-test">Enter the flag</label>
+  <div class="flag-check__controls">
+    <input id="flag-bundle-test" data-flag-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <button type="submit" disabled>Check flag</button>
+  </div>
+  <output for="flag-bundle-test" aria-live="polite">The check runs locally in your browser.</output>
+  <noscript>The local SHA-256 checker requires JavaScript.</noscript>
+</form>'''.replace('DIGEST', 'ab' * 32).replace('SALT', 'cd' * 16)
 PNG = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aCr8AAAAASUVORK5CYII=')
 
 
@@ -46,6 +63,221 @@ class AssetTests(unittest.TestCase):
     def rejects(self, text, pattern=None, **kwargs):
         with self.assertRaisesRegex((BundleError, ValueError), pattern or '.'):
             self.bundle(text, **kwargs)
+
+    def generated_checker(self):
+        answer = 'flag{synthetic-bundle-checker-answer}'
+        hints = 'Inspect <bytes> & "quotes"|Try {{ XOR }}|{% literal %}'
+        result = subprocess.run([RUBY, str(ROOT / 'script/new_challenge.rb'), '--html'],
+                                input=f'asset-bundle-checker-fixture\n{answer}\n{hints}\n',
+                                text=True, capture_output=True, cwd=ROOT)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn(answer, result.stdout + result.stderr)
+        fragment = result.stdout[result.stdout.index('<form '):result.stdout.index('\nsalted digest:')].strip()
+        salt = re.search(r'data-salt="([0-9a-f]{32})"', fragment)[1]
+        digest = re.search(r'data-sha256="([0-9a-f]{64})"', fragment)[1]
+        self.assertEqual(digest, hashlib.sha256((answer + salt).encode()).hexdigest())
+        self.assertEqual(fragment.count('data-hint-for="asset-bundle-checker-fixture"'), 3)
+        self.assertIn('&#123;&#123; XOR &#125;&#125;', fragment)
+        return fragment
+
+    def test_passive_checker_contract_and_sibling_assets(self):
+        hints = '<p class="challenge-hint" data-hint="1" data-hint-for="bundle-test" hidden>Try XOR</p>'
+        result = self.bundle('<article>' + CHECKER + hints + '<img src="pic.png"><a download href="file.txt">note</a></article>')
+        self.assertIn(CHECKER + hints, result.html)
+        self.assertEqual(unpack(re.search(r'<img src="([^"]+)', result.html)[1]), PNG)
+        self.assertEqual(unpack(re.search(r'href="(data:[^"]+)', result.html)[1]), (self.root / 'file.txt').read_bytes())
+        for salt in (None, 'AB' * 8, 'ef' * 16):
+            for kind in ('text', 'password'):
+                with self.subTest(salt=salt, kind=kind):
+                    text = CHECKER.replace(' data-salt="' + 'cd' * 16 + '"', '' if salt is None else f' data-salt="{salt}"')
+                    text = text.replace('type="text"', f'type="{kind}"').replace('ab' * 32, 'AB' * 32)
+                    self.assertEqual(self.bundle(text).html, text)
+        metadata = CHECKER.replace('data-flag-check', 'title="Local check" aria-label="Flag" data-flag-prefix="ctf" data-challenge-title="Bytes" data-flag-check')
+        self.assertEqual(self.bundle(metadata).html, metadata)
+        # No other widgets are needed: the label, controls wrapper and fallback
+        # may be omitted, but the three required controls cannot be omitted.
+        minimal = re.sub(r'  <label[^\n]+\n|  <div[^\n]+\n|  </div>\n|  <noscript[^\n]+\n', '', CHECKER)
+        self.assertEqual(self.bundle(minimal).html, minimal)
+        pair = CHECKER + CHECKER.replace('flag-bundle-test', 'flag-second-checker')
+        self.assertEqual(self.bundle(pair).html, pair)
+
+    def test_generic_forms_and_standalone_noscript_stay_rejected(self):
+        for text in ('<form></form>', '<form><input name="key"><button>Send</button></form>',
+                     '<form action="/submit"><input name="key"></form>', '<form data-flag-check></form>',
+                     '<form data-sha256="' + 'ab' * 32 + '"></form>', '<form/>', '</form>',
+                     '<noscript>Fallback</noscript>', '<div data-flag-check></div>', '<input data-flag-input>'):
+            with self.subTest(text=text): self.rejects(text)
+
+    def test_checker_hash_salt_and_metadata_are_allowlisted(self):
+        for field, original, values in (
+            ('data-sha256', 'ab' * 32, ['', 'ab' * 31, 'ab' * 33, 'g' * 64, 'ab' * 32 + ' ', '\n' + 'ab' * 32]),
+            ('data-salt', 'cd' * 16, ['', 'cd' * 7, 'cd' * 9, 'cd' * 15, 'cd' * 17, 'g' * 32, 'cd' * 16 + '\n']),
+        ):
+            for value in values:
+                with self.subTest(field=field, value=value):
+                    self.rejects(CHECKER.replace(f'{field}="{original}"', f'{field}="{value}"'))
+            self.rejects(CHECKER.replace(f'{field}="{original}"', field))
+        self.rejects(CHECKER.replace('data-flag-check', 'data-flag-check="true"'))
+        for attr in ('action="/leak"', 'action', 'method="post"', 'target="_blank"', 'name="key"',
+                     'id="elsewhere"', 'form="elsewhere"', 'enctype="text/plain"', 'onsubmit="f()"',
+                     'OnSubmit', 'data-answer="plaintext"', 'data-unknown="x"', 'style="color:red"',
+                     'data-challenge-id="other"', 'data-sha256="' + 'ab' * 32 + '"'):
+            with self.subTest(attr=attr): self.rejects(CHECKER.replace('<form ', '<form ' + attr + ' ', 1))
+
+    def test_checker_controls_cannot_submit_named_keys_or_override_form(self):
+        for tag in ('input', 'button', 'label', 'output', 'div', 'noscript'):
+            for attr in ('name="key"', 'NAME', 'form="outside"', 'form', 'formaction="/leak"',
+                         'formmethod="post"', 'formenctype="text/plain"', 'formtarget="_blank"',
+                         'formnovalidate', 'oninput="f()"', 'onclick', 'src="pic.png"', 'srcset="pic.png"',
+                         'data-src="pic.png"', 'style="background:url(pic.png)"', 'is="other-widget"',
+                         'dirname="key"', 'value="prefilled"', 'contenteditable', 'autofocus'):
+                with self.subTest(tag=tag, attr=attr):
+                    self.rejects(CHECKER.replace('<' + tag, '<' + tag + ' ' + attr, 1))
+        for kind in ('image', 'hidden', 'submit', 'file', 'checkbox', '', ' text', 'search'):
+            with self.subTest(kind=kind): self.rejects(CHECKER.replace('type="text"', f'type="{kind}"'))
+        for ident in ('other', 'flag-', 'flag-bad id', 'flag-__proto__', 'flag-constructor',
+                      'flag-prototype', 'flag-a/b', 'flag-' + 'a' * 129):
+            with self.subTest(ident=ident): self.rejects(CHECKER.replace('flag-bundle-test', ident))
+        for original, changed in ((' data-flag-input', ''), ('data-flag-input', 'data-flag-input="true"'),
+                                  (' type="text"', ''), (' disabled', ''), ('disabled', 'disabled="false"'),
+                                  ('type="submit"', 'type="button"'), ('type="submit"', ''),
+                                  ('autocomplete="off"', 'autocomplete="on"'),
+                                  ('for="flag-bundle-test"', 'for="flag-other"')):
+            with self.subTest(original=original, changed=changed): self.rejects(CHECKER.replace(original, changed))
+        for tag in ('input name="key"', 'button name="key"', 'output', 'fieldset', 'object'):
+            external = f'<{tag} form="outside">'
+            with self.subTest(external=external):
+                self.rejects(external + CHECKER)
+                self.rejects(CHECKER + external)
+        self.rejects('<input name="key" FORM>' + CHECKER)
+        self.rejects(CHECKER + '<img src="pic.png" form="outside">')
+
+    def test_checker_structure_and_parser_contexts_are_strict(self):
+        for tag in ('input', 'button', 'output', 'label', 'div', 'noscript'):
+            pattern = r'<input\b[^>]*>' if tag == 'input' else rf'<{tag}\b[^>]*>[\s\S]*?</{tag}>'
+            element = re.search(pattern, CHECKER)[0]
+            with self.subTest(tag=tag):
+                self.rejects(CHECKER.replace(element, element + element))
+                if tag in ('input', 'button', 'output'):
+                    self.rejects(CHECKER.replace(element, ''))
+        for extra in ('<form></form>', CHECKER, '<input name="key">', '<button>Extra</button>',
+                      '<textarea></textarea>', '<select></select>', '<script></script>',
+                      '<img src="pic.png">', '<link rel="stylesheet" href="css/main.css">',
+                      '<style>.x {color:red}</style>', '<svg></svg>', '<span>widget</span>',
+                      '<!-- comment -->', 'unexpected text'):
+            with self.subTest(extra=extra): self.rejects(CHECKER.replace('</form>', extra + '</form>'))
+        for tag in ('label', 'button', 'output', 'noscript'):
+            self.rejects(CHECKER.replace(f'</{tag}>', f'<img src="https://example.invalid/p.png"></{tag}>'))
+        for text in (CHECKER.replace('</form>', ''), CHECKER.replace('</div>', ''),
+                     CHECKER.replace('</div>', '</form></div>'), CHECKER.replace('</button>', '</output>'),
+                     CHECKER.replace('</form>', '</article></form>'), CHECKER.replace('<noscript>', '<noscript/>'),
+                     CHECKER.replace('</noscript>', '</noscript></noscript>'),
+                     CHECKER.replace('Check flag', '<broken'), CHECKER.replace('</form>', '</input></form>')):
+            with self.subTest(text=text): self.rejects(text)
+        for tag in ('svg', 'math', 'table', 'tbody', 'tr', 'p', 'button', 'label', 'a', 'custom-widget'):
+            with self.subTest(tag=tag):
+                self.rejects(f'<{tag}>' + CHECKER + f'</{tag}>')
+                # HTML non-void tags ignore a trailing slash, unlike SVG/MathML.
+                if tag not in ('svg', 'math'): self.rejects(f'<{tag}/>' + CHECKER)
+        self.rejects('<div><table></div>' + CHECKER + '</table>')
+        self.rejects('<b></i></b>' + CHECKER)
+        self.rejects(CHECKER + CHECKER)
+        for outside in ('<p id="flag-bundle-test">duplicate</p>', '<input id="flag-bundle-test">'):
+            self.rejects(outside + CHECKER)
+            self.rejects(CHECKER + outside)
+        self.assertIn(CHECKER, self.bundle('<svg/>' + CHECKER).html)
+
+    def test_checker_noscript_text_does_not_allow_active_fallback(self):
+        text = CHECKER.replace('The local SHA-256 checker requires JavaScript.',
+                               'Use &lt;script&gt; as text &amp; &#123;&#123; literal &#125;&#125;.')
+        self.assertEqual(self.bundle(text).html, text)
+        for fallback in ('<img src="pic.png">', '<!--<img src="pic.png">-->',
+                         '<noscript>nested</noscript>', '<input name="key">', '<style>body{}</style>'):
+            with self.subTest(fallback=fallback):
+                self.rejects(CHECKER.replace('The local SHA-256 checker requires JavaScript.', fallback))
+
+    @unittest.skipUnless(HAS_RUBY, 'local Ruby required for author helper output')
+    def test_actual_ruby_html_checker_bundles_without_markup_changes(self):
+        checker = self.generated_checker()
+        result = self.bundle(checker + '<img src="pic.png"><a download="file.txt" href="file.txt">note</a>')
+        self.assertTrue(result.html.startswith(checker))
+        self.assertEqual({asset['path'] for asset in result.assets}, {'pic.png', 'file.txt'})
+        self.assertEqual(unpack(re.search(r'<img src="([^"]+)', result.html)[1]), PNG)
+        self.assertEqual(unpack(re.search(r'href="(data:[^"]+)', result.html)[1]), (self.root / 'file.txt').read_bytes())
+
+    @unittest.skipUnless(HAS_RUBY and shutil.which('node') and CHROME.is_file() and PUPPETEER,
+                         'cached Ruby, Chromium and Puppeteer required; no downloads')
+    def test_native_checker_has_no_key_bearing_submission_without_javascript(self):
+        checker = self.generated_checker()
+        # Outside controls must not become members of the checker form.
+        fixtures = [self.bundle(checker.replace('type="text"', f'type="{kind}"') +
+                               '<input name="external" value="outside">').html
+                    for kind in ('text', 'password')]
+        program = r'''const fs = require('node:fs'), assert = require('node:assert/strict');
+const x = JSON.parse(fs.readFileSync(0, 'utf8'));
+const puppeteer = require(x.puppeteer);
+(async () => {
+ const browser = await puppeteer.launch({executablePath:x.chrome, userDataDir:x.profile, headless:true, protocolTimeout:10000,
+  args:['--no-sandbox','--disable-dev-shm-usage','--disable-background-networking',
+        '--disable-component-update','--disable-sync','--no-first-run',
+        '--proxy-server=http://127.0.0.1:9','--proxy-bypass-list=<-loopback>',
+        '--host-resolver-rules=MAP * ~NOTFOUND']});
+ try {
+  const page = await browser.newPage(), requests = [];
+  page.setDefaultTimeout(5000);
+  await page.setRequestInterception(true);
+  page.on('request', request => {
+   if (request.url().startsWith('data:')) return void request.continue();
+   requests.push(request.url()); void request.abort();
+  });
+  for (const enabled of [false, true]) {
+   await page.setJavaScriptEnabled(enabled); // No checker engine in either case.
+   for (const body of x.fixtures) {
+    await page.goto('data:text/html;charset=utf-8;base64,' + Buffer.from(body).toString('base64'));
+    await page.evaluate(() => document.querySelector('[data-flag-input]').focus());
+    await page.keyboard.type('flag{synthetic-native-submission-key}');
+    const state = await page.evaluate(() => {
+     const f = document.querySelector('form'), i = f.querySelector('input'), b = f.querySelector('button');
+     const originalDisabled = b.disabled;
+     b.disabled = false; // Even a partial engine failure cannot serialize the key.
+     const entries = [...new FormData(f, b)]; b.disabled = originalDisabled;
+     const rect = b.getBoundingClientRect();
+     return {forms:document.forms.length, members:[...f.elements].map(e => e.tagName),
+             value:i.value, buttonX:rect.x+rect.width/2, buttonY:rect.y+rect.height/2,
+             disabled:b.disabled, names:[i.name,b.name], owner:i.form===f,
+             external:document.querySelector('[name="external"]').form===null, entries,
+             hints:[...document.querySelectorAll('[data-hint-for]')].map(h => h.textContent),
+             fallback:f.querySelector('noscript').textContent};
+    });
+    assert.equal(state.forms, 1); assert.deepEqual(state.members, ['INPUT','BUTTON','OUTPUT']);
+    assert.equal(state.value, 'flag{synthetic-native-submission-key}');
+    assert.equal(state.disabled, true); assert.deepEqual(state.names, ['', '']);
+    assert.equal(state.owner, true); assert.equal(state.external, true); assert.deepEqual(state.entries, []);
+    assert.deepEqual(state.hints, ['Inspect <bytes> & "quotes"','Try {{ XOR }}','{% literal %}']);
+    assert.match(state.fallback, /requires JavaScript/);
+    let navigations = 0; const onNavigation = () => { navigations++; };
+    page.on('framenavigated', onNavigation);
+    await page.keyboard.press('Enter');
+    await page.mouse.click(state.buttonX, state.buttonY);
+    await new Promise(resolve => setTimeout(resolve, 100));
+    page.off('framenavigated', onNavigation);
+    assert.equal(navigations, 0); assert.deepEqual(requests, []);
+   }
+  }
+ } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode=1; });'''
+        # Keep Chromium sockets short and shared-memory files in a directory
+        # owned by this test's user, even in a checkout owned by someone else.
+        browser_tmp = tempfile.TemporaryDirectory(dir=ROOT / 'agent_out', prefix='cb-')
+        self.addCleanup(browser_tmp.cleanup)
+        env = {**os.environ, 'TMPDIR': browser_tmp.name, 'XDG_CONFIG_HOME': str(self.root / 'config'),
+               'XDG_CACHE_HOME': str(self.root / 'cache'),
+               'LD_LIBRARY_PATH': os.pathsep.join(filter(None, [os.environ.get('LD_LIBRARY_PATH'),
+                   str(ROOT / '.toolchain/verify/browser/sysroot/usr/lib/x86_64-linux-gnu')]))}
+        result = subprocess.run(['node', '-e', program], input=json.dumps({
+            'puppeteer': str(PUPPETEER), 'chrome': str(CHROME), 'profile': str(self.root / 'browser-profile'),
+            'fixtures': fixtures}), text=True, capture_output=True, env=env, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_img_bytes_labels_entities_and_svg_case(self):
         result = self.bundle('<p>A &amp; B: &lt;img src="example"&gt;</p><img src="pic.png" alt="A &amp; B"><svg viewBox="0 0 4 4"><title>Test</title><rect width="4" height="4"/></svg>')
@@ -291,20 +523,24 @@ class AssetTests(unittest.TestCase):
         self.assertEqual(result.html, '![Not HTML](pic.png)\n')
         self.assertEqual(result.assets, [])
 
-    @unittest.skipUnless(importlib.util.find_spec('cryptography') and shutil.which('node'), 'real AES backend and Node required for producer/WebCrypto test')
+    @unittest.skipUnless(importlib.util.find_spec('cryptography') and shutil.which('node') and HAS_RUBY, 'real AES backend, Node and local Ruby required for producer/WebCrypto test')
     def test_actual_encryptor_to_webcrypto_and_failure_side_effects(self):
         project = self.root / 'isolated-repo'; (project / 'script').mkdir(parents=True)
         (project / '_data').mkdir(); work = project / 'agent_out'; work.mkdir()
         for file in ['encrypt_post.py', 'embed_post_assets.py']:
             shutil.copyfile(ROOT / 'script' / file, project / 'script' / file)
         (work / 'pic.png').write_bytes(PNG)
-        original_html = '<img src="pic.png" alt="private"><a download href="note.txt">note</a>'
+        checker = self.generated_checker()
+        original_html = checker + '<img src="pic.png" alt="private"><a download href="note.txt">note</a>'
         source = work / 'body.html'; source.write_text(original_html)
-        (work / 'note.txt').write_text('synthetic private attachment')
+        attachment = b'synthetic private attachment\n' + bytes(range(256))
+        (work / 'note.txt').write_bytes(attachment)
         expected = bundle_file(source).html
+        self.assertTrue(expected.startswith(checker))
         post = project / '_posts' / '2099-01-01-synthetic.md'
         command = [sys.executable, str(project / 'script/encrypt_post.py'), '--plaintext', str(source), '--embed-assets',
-                   '--answer', 'synthetic-only', '--out', str(post), '--title', 'Synthetic', '--force']
+                   '--answer', 'synthetic-only', '--out', str(post), '--title', 'Synthetic', '--force',
+                   '--needs', 'synthetic-private-check']
         result = subprocess.run(command, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         text = post.read_text()
@@ -316,15 +552,37 @@ const c = require('node:crypto').webcrypto;
 (async () => {
  const x=JSON.parse(fs.readFileSync(0,'utf8'));
  const material=await c.subtle.importKey('raw',new TextEncoder().encode(x.answer),'PBKDF2',false,['deriveKey']);
- const key=await c.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:Buffer.from(x.salt,'hex'),iterations:120000},material,{name:'AES-GCM',length:256},false,['decrypt']);
+ const key=await c.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:Buffer.from(x.salt,'hex'),iterations:x.version===2 ? x.iterations : 120000},material,{name:'AES-GCM',length:256},false,['decrypt']);
  const wire=Buffer.from(x.payload,'base64');
- const plain=await c.subtle.decrypt({name:'AES-GCM',iv:wire.subarray(0,12)},key,wire.subarray(12));
+ const algorithm={name:'AES-GCM',iv:wire.subarray(0,12)};
+ if(x.version===2) algorithm.additionalData=new TextEncoder().encode(JSON.stringify(
+   x.aad || ['deuterium-argon',2,x.iterations,x.salt.toLowerCase(),x.needs]));
+ const plain=await c.subtle.decrypt(algorithm,key,wire.subarray(12));
  process.stdout.write(Buffer.from(plain));
 })().catch(e=>{process.stderr.write(e.name);process.exitCode=1});'''
-        fixture = {'answer': 'synthetic-only', 'payload': payload, 'salt': salt}
+        self.assertIn('data-version="2" data-iterations="200000"', text)
+        fixture = {'answer': 'synthetic-only', 'payload': payload, 'salt': salt,
+                   'version': 2, 'iterations': 200000, 'needs': 'synthetic-private-check'}
         decrypted = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
         self.assertEqual(decrypted.returncode, 0, decrypted.stderr)
-        self.assertEqual(decrypted.stdout, expected)
+        self.assertEqual(decrypted.stdout.encode('utf-8'), expected.encode('utf-8'))
+        self.assertTrue(decrypted.stdout.startswith(checker))
+        self.assertEqual(unpack(re.search(r'<img src="([^"]+)', decrypted.stdout)[1]), PNG)
+        self.assertEqual(unpack(re.search(r'href="(data:[^"]+)', decrypted.stdout)[1]), attachment)
+        header = ['deuterium-argon', 2, 200000, salt.lower(), 'synthetic-private-check']
+        for index, replacement in enumerate(['other-domain', 1, 120000, '0' * 32, 'other-private-check']):
+            altered = header.copy(); altered[index] = replacement
+            changed = {**fixture, 'aad': altered}
+            result = subprocess.run(['node', '-e', program], input=json.dumps(changed), capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, f'AAD field {index} was not bound')
+            self.assertEqual(result.stdout, '')
+        for mutation in ({'needs': 'other-private-check'}, {'salt': '0' * 32},
+                         {'version': 1}, {'iterations': 120000},
+                         {'payload': base64.b64encode(base64.b64decode(payload)[:-1] + bytes([base64.b64decode(payload)[-1] ^ 1])).decode()}):
+            result = subprocess.run(['node', '-e', program], input=json.dumps({**fixture, **mutation}),
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, '')
         fixture['answer'] = 'wrong-synthetic-answer'
         wrong = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
         self.assertNotEqual(wrong.returncode, 0)
@@ -335,6 +593,8 @@ const c = require('node:crypto').webcrypto;
         self.assertEqual(from_stdin.returncode, 0, from_stdin.stderr)
         self.assertNotIn('synthetic-only', from_stdin.stdout)
         new_text = post.read_text()
+        self.assertNotEqual(re.search(r'data-salt="([^"]+)', new_text)[1], salt)
+        self.assertNotEqual(re.search(r'aria-live="polite">([^<]+)', new_text)[1], payload)
         fixture.update(answer='synthetic-only', payload=re.search(r'aria-live="polite">([^<]+)', new_text)[1],
                        salt=re.search(r'data-salt="([^"]+)', new_text)[1])
         decrypted = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
@@ -351,15 +611,42 @@ const c = require('node:crypto').webcrypto;
             self.assertEqual(post.read_bytes(), before)
         chain = project / '_data' / 'arg_chain.yml'
         before_post = post.read_bytes(); before_chain = chain.read_bytes()
-        source.write_text('<img src="https://example.invalid/private.png">')
-        failed = subprocess.run(command, capture_output=True, text=True)
-        self.assertNotEqual(failed.returncode, 0)
-        self.assertEqual(post.read_bytes(), before_post)
-        self.assertEqual(chain.read_bytes(), before_chain)
+        for options in (['--needs', 'bad id'], ['--needs', 'a' * 129], ['--needs', 'x" data-needs="y'],
+                        ['--salt', '00 ' * 16], ['--salt', 'g' * 32], ['--salt', ''],
+                        ['--previous', '//example.invalid/2099/01/01/a.html'],
+                        ['--previous', '/2099/01/01/a.html?x=1'],
+                        ['--previous', '/2099/01/01/../a.html'],
+                        ['--previous', '/2099/01/01/%2e%2e.html'],
+                        ['--previous', '/2099/02/30/a.html'],
+                        ['--previous', '/2099/01/01/missing.html'],
+                        ['--previous', '/2099/01/01/synthetic.html']):
+            with self.subTest(options=options):
+                rejected = subprocess.run(command + options, capture_output=True, text=True)
+                self.assertNotEqual(rejected.returncode, 0)
+                self.assertEqual(post.read_bytes(), before_post)
+                self.assertEqual(chain.read_bytes(), before_chain)
+        for suffix in ('  needs: duplicate\n', '  unknown: field\n',
+                       '- post: /2099/01/01/synthetic.html\n  salt: bad\n'):
+            malformed = before_chain + suffix.encode()
+            chain.write_bytes(malformed)
+            rejected = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertEqual(post.read_bytes(), before_post)
+            self.assertEqual(chain.read_bytes(), malformed)
+        chain.write_bytes(before_chain)
+        for invalid in ('<img src="https://example.invalid/private.png">', '<form><input name="key"></form>',
+                        checker.replace('data-flag-input', 'data-flag-input name="key"'),
+                        checker.replace(' disabled', ''), checker.replace('</form>', '')):
+            with self.subTest(invalid=invalid):
+                source.write_text(invalid)
+                failed = subprocess.run(command, capture_output=True, text=True)
+                self.assertNotEqual(failed.returncode, 0)
+                self.assertEqual(post.read_bytes(), before_post)
+                self.assertEqual(chain.read_bytes(), before_chain)
 
         source.write_text(original_html)
         hidden = project / 'locked/2099/01/02/follow-up.md'
-        unlisted = stdin_command + ['--unlisted', '--section', 'tutorials']
+        unlisted = stdin_command + ['--unlisted', '--section', 'tutorials', '--previous', '/2099/01/01/synthetic.html']
         unlisted[unlisted.index('--out') + 1] = str(hidden)
         result = subprocess.run(unlisted, input='synthetic-only\n', capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -396,6 +683,18 @@ const c = require('node:crypto').webcrypto;
             self.assertIn('requires --unlisted', result.stderr)
             self.assertEqual(chain.read_bytes(), before_chain)
             self.assertEqual(hidden.read_bytes(), before_hidden)
+
+        # Legacy output remains versionless and interoperates without AAD.
+        legacy = subprocess.run(unlisted + ['--legacy'], input='synthetic-only\n', capture_output=True, text=True)
+        self.assertEqual(legacy.returncode, 0, legacy.stderr)
+        legacy_text = hidden.read_text()
+        self.assertNotIn('data-version=', legacy_text)
+        fixture.update(version=1, answer='synthetic-only',
+                       payload=re.search(r'<span hidden>([^<]+)', legacy_text)[1],
+                       salt=re.search(r'data-salt="([^"]+)', legacy_text)[1])
+        recovered = subprocess.run(['node', '-e', program], input=json.dumps(fixture), capture_output=True, text=True)
+        self.assertEqual(recovered.returncode, 0, recovered.stderr)
+        self.assertEqual(recovered.stdout, expected)
 
 
 if __name__ == '__main__': unittest.main(verbosity=2)

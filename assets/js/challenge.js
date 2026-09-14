@@ -261,7 +261,7 @@ const init = (root = D) => {
     const prefix = f.dataset.flagPrefix || 'flag', escaped = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const format = new RegExp('^' + escaped + '\\{[^{}]+\\}$');
     const v = ce('p'); v.className = P + 'verdict'; v.setAttribute('role', 'status'); v.setAttribute('aria-live', 'polite');
-    f.insertBefore(v, o);
+    (o.parentElement || f).insertBefore(v, o);
     const sound = ce('button'); sound.type = 'button'; sound.className = P + 'sound';
     sound.onclick = () => { mute = !mute; put(M, mute); syncControls(); }; f.appendChild(sound);
     const controls = ce('div'); controls.className = P + 'session';

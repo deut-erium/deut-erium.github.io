@@ -428,12 +428,14 @@ class BlogTests(unittest.TestCase):
         source = self.private_input(outside=True)
         extra = ["--description", "Public description", "--teaser", "$(not-a-command); public teaser",
                  "--tags", "crypto challenges", "--needs", "assignment000003-0", "--section", "tutorials",
-                 "--unlisted", "--embed-assets", "--embed-linked-files", "--asset-root", str(source.parent), "--force"]
+                 "--unlisted", "--embed-assets", "--embed-linked-files", "--asset-root", str(source.parent), "--force",
+                 "--previous", "/2031/01/01/start.html", "--legacy"]
         self.assertEqual(blog.main(self.encrypt_args(source, *extra, out="locked/2026/09/05/door.md")), 0)
         argv, _ = self.private_calls[-1]
         for option in ("--description=Public description", "--teaser=$(not-a-command); public teaser",
                        "--tags=crypto challenges", "--needs=assignment000003-0", "--section=tutorials",
-                       "--unlisted", "--embed-assets", "--embed-linked-files", "--force"):
+                       "--unlisted", "--embed-assets", "--embed-linked-files", "--force",
+                       "--previous=/2031/01/01/start.html", "--legacy"):
             self.assertIn(option, argv)
         self.assertNotIn("--page", argv)
         self.assertEqual(argv[argv.index("--asset-root") + 1], str(source.parent))

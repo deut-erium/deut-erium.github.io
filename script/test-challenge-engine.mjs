@@ -812,3 +812,16 @@ test('a detached decrypted root gets the current session setting on init', () =>
   assert.equal(controls.children[0].children[0].checked, true);
   assert.equal(f.form.listeners.get('submit').length, 1);
 });
+
+
+test('nested output registers without blocking the following checker', () => {
+  const p = page([]), first = makeForm({ id: 'nested' }), second = makeForm({ id: 'following' });
+  const output = first.form.querySelector('output');
+  first.form.children.splice(first.form.children.indexOf(output), 1);
+  const wrapper = new Element('div'); wrapper.appendChild(output); first.form.appendChild(wrapper);
+  const root = new Element('section'); root.appendChild(first.form); root.appendChild(second.form);
+  p.engine.init(root);
+  assert.equal(first.form.listeners.get('submit').length, 1);
+  assert.equal(second.form.listeners.get('submit').length, 1);
+  assert.ok(wrapper.children.some(child => child.classList.contains('flag-check__verdict')));
+});

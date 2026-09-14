@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Bundle local assets into a private HTML body; never fetch network resources."""
+"""Bundle local assets into a private HTML body; never fetch network resources.
+
+Forms are rejected except for passive local SHA-256 checkers in the author
+helper's shape. They need a 64-hex digest, optional 16/32-hex salt, one unnamed
+flag input, one disabled submit button and one output. Labels and outputs must
+reference that input. Only generated controls, a controls div and text-only
+noscript are allowed inside; scoped hint paragraphs can remain siblings.
+No form association, submission attributes, handlers or scripts are supported.
+"""
 from __future__ import annotations
 
 import argparse
@@ -38,7 +46,7 @@ VOID = {'area', 'br', 'col', 'hr', 'img', 'input', 'link', 'param', 'source', 't
 SVG_URL_ATTRS = {'fill', 'stroke', 'filter', 'clip-path', 'mask', 'cursor',
                 'marker', 'marker-start', 'marker-mid', 'marker-end'}
 UNSUPPORTED_ATTRS = {'srcdoc', 'ping', 'codebase', 'archive', 'classid', 'data', 'lowsrc', 'dynsrc',
-                     'data-src', 'data-srcset', 'data-lazy-src', 'data-original', 'xml:base', 'base', 'manifest', 'imagesrcset', 'imagesizes', 'profile', 'action', 'formaction'}
+                     'data-src', 'data-srcset', 'data-lazy-src', 'data-original', 'xml:base', 'base', 'manifest', 'imagesrcset', 'imagesizes', 'profile', 'action', 'formaction', 'form'}
 
 class BundleError(ValueError):
     pass
@@ -391,14 +399,115 @@ class Bundler:
         except AssertionError as error:
             raise BundleError('malformed HTML declaration') from error
         if parser.style is not None: raise BundleError('unclosed style element')
+        if parser.checker is not None: raise BundleError('unclosed local checker form')
         return ''.join(parser.output)
+
+
+class CheckerForm:
+    """Validate a small form grammar, not general-purpose interactive HTML.
+
+    The button is disabled until the site's checker attaches its submit handler.
+    Even a native submission forced without that handler has no named input or
+    submitter to carry the answer. External controls cannot opt in via `form`.
+    """
+    METADATA = {'class', 'title', 'aria-label', 'data-flag-check', 'data-sha256',
+                'data-salt', 'data-flag-prefix', 'data-challenge-title'}
+    ATTRS = {
+        'label': {'for'},
+        'div': {'class'},
+        'input': {'id', 'data-flag-input', 'type', 'autocomplete', 'autocapitalize',
+                  'spellcheck', 'placeholder'},
+        'button': {'type', 'disabled'},
+        'output': {'for', 'aria-live'},
+        'noscript': set(),
+    }
+    # Exclude table insertion modes, foreign content and formatting elements:
+    # HTMLParser does not implement the browser's tree-repair rules there.
+    CONTAINERS = {'article', 'section', 'div', 'main', 'aside', 'blockquote',
+                  'ul', 'ol', 'li', 'dl', 'dd', 'details', 'figure', 'figcaption',
+                  'header', 'footer', 'nav'}
+    TEXT = {'label', 'button', 'output', 'noscript'}
+
+    @staticmethod
+    def values(attrs, allowed):
+        values = {name.lower(): value for name, value in attrs}
+        if len(values) != len(attrs): raise BundleError('duplicate checker attributes')
+        if set(values) - allowed: raise BundleError('unsupported local checker attribute')
+        return values
+
+    @staticmethod
+    def marker(values, name):
+        if name not in values or values[name] not in (None, ''):
+            raise BundleError(f'local checker requires an empty {name} marker')
+
+    def __init__(self, attrs):
+        values = self.values(attrs, self.METADATA)
+        self.marker(values, 'data-flag-check')
+        if not re.fullmatch(r'[0-9a-fA-F]{64}', values.get('data-sha256') or ''):
+            raise BundleError('local checker requires a 64-hex SHA-256 digest')
+        if 'data-salt' in values and not re.fullmatch(r'(?:[0-9a-fA-F]{16}|[0-9a-fA-F]{32})', values['data-salt'] or ''):
+            raise BundleError('local checker salt must be 16 or 32 hex characters')
+        if 'class' in values and values['class'] != 'flag-check':
+            raise BundleError('unsupported local checker form class')
+        for name in self.METADATA - {'data-flag-check', 'data-salt', 'data-sha256', 'class'}:
+            if name in values and (values[name] is None or any(ord(c) < 32 for c in values[name])):
+                raise BundleError('local checker metadata must be plain text')
+        self.stack = ['form']; self.counts = {}; self.input_id = None; self.references = []
+
+    def start(self, tag, attrs, closed):
+        parent = self.stack[-1]
+        if tag not in self.ATTRS or parent not in {'form', 'div'} or (parent == 'div' and tag not in {'input', 'button'}):
+            raise BundleError('unsupported or nested local checker markup')
+        if closed and tag != 'input': raise BundleError('checker elements need explicit closing tags')
+        if tag in self.counts: raise BundleError(f'duplicate local checker {tag}')
+        self.counts[tag] = 1
+        values = self.values(attrs, self.ATTRS[tag])
+        if tag == 'input':
+            self.marker(values, 'data-flag-input')
+            ident = values.get('id') or ''
+            if not re.fullmatch(r'flag-[A-Za-z0-9][A-Za-z0-9_-]{0,127}', ident) or ident[5:] in {'prototype', 'constructor'}:
+                raise BundleError('local checker input needs a flag-safeID id')
+            if values.get('type') not in {'text', 'password'}:
+                raise BundleError('local checker input must be text or password')
+            for name, expected in [('autocomplete', 'off'), ('autocapitalize', 'none'), ('spellcheck', 'false')]:
+                if name in values and values[name] != expected:
+                    raise BundleError(f'unsupported local checker {name}')
+            self.input_id = ident
+        elif tag == 'button':
+            if values.get('type') != 'submit' or 'disabled' not in values:
+                raise BundleError('local checker submit button must start disabled')
+            if values['disabled'] not in (None, '', 'disabled'):
+                raise BundleError('unsupported checker disabled value')
+        elif tag in {'label', 'output'}:
+            if not values.get('for'): raise BundleError('checker label/output must reference its input')
+            self.references.append(values['for'])
+            if tag == 'output' and values.get('aria-live') != 'polite':
+                raise BundleError('checker output requires aria-live="polite"')
+        elif tag == 'div' and values.get('class') != 'flag-check__controls':
+            raise BundleError('only the generated checker controls div is supported')
+        if tag != 'input': self.stack.append(tag)
+
+    def end(self, tag):
+        if tag != self.stack[-1]: raise BundleError('misnested local checker markup')
+        self.stack.pop()
+        if self.stack: return False
+        if any(self.counts.get(t) != 1 for t in ('input', 'button', 'output')):
+            raise BundleError('local checker needs exactly one input, submit button and output')
+        if any(ref != self.input_id for ref in self.references):
+            raise BundleError('checker label/output must reference its own input')
+        return True
+
+    def text(self, text, *, reference=False):
+        if (self.stack[-1] not in self.TEXT and text.strip(SPACE)) or ('<' in text and not reference):
+            raise BundleError('checker content must be plain text in label/button/output/noscript')
 
 
 class BodyParser(HTMLParser):
     def __init__(self, bundler: Bundler, base: Path):
         super().__init__(convert_charrefs=False)
         self.bundler = bundler; self.base = base; self.output = []; self.size = 0
-        self.stack = []; self.style = None
+        self.stack = []; self.style = None; self.checker = None
+        self.ids = set(); self.checker_ids = set(); self.ambiguous_context = False
 
     def add(self, value: str):
         self.size += len(value.encode())
@@ -411,7 +520,9 @@ class BodyParser(HTMLParser):
     def start(self, tag, attrs, closed):
         if tag == 'style' and any(t in self.stack for t in ('svg', 'math')):
             raise BundleError('inline SVG style / MathML style elements are unsupported; use an outer HTML stylesheet')
-        if tag in BLOCKED and not (tag == 'title' and 'svg' in self.stack): raise BundleError(f'unsupported active/document element: {tag}; supply a passive HTML body')
+        checker_exception = tag == 'form' or (tag == 'noscript' and self.checker is not None)
+        if tag in BLOCKED and not (tag == 'title' and 'svg' in self.stack) and not checker_exception:
+            raise BundleError(f'unsupported active/document element: {tag}; supply a passive HTML body')
         raw = self.get_starttag_text()
         # Preserve SVG attribute capitalization while checking against HTMLParser's values.
         match = re.match(r'<([A-Za-z][A-Za-z0-9:-]*)', raw)
@@ -436,6 +547,21 @@ class BodyParser(HTMLParser):
             originals.append(name)
         if [n.lower() for n in originals] != [n for n, _ in attrs]: raise BundleError('ambiguous attribute syntax')
         attrs = list(zip(originals, (value for _, value in attrs)))
+        values = {name.lower(): value for name, value in attrs}
+        if self.checker is not None:
+            self.checker.start(tag, attrs, closed)
+        elif tag == 'form':
+            if closed or self.ambiguous_context or any(t not in CheckerForm.CONTAINERS for t in self.stack):
+                raise BundleError('local checker requires an HTML flow container and explicit closing tag')
+            self.checker = CheckerForm(attrs)
+        elif {'data-flag-check', 'data-flag-input'} & values.keys():
+            raise BundleError('checker markers are only supported in a validated local checker form')
+        ident = values.get('id')
+        if ident is not None:
+            if ident in self.checker_ids or (self.checker is not None and tag == 'input' and ident in self.ids):
+                raise BundleError('local checker input id must be unique')
+            self.ids.add(ident)
+            if self.checker is not None and tag == 'input': self.checker_ids.add(ident)
         if tag == 'link':
             values = {k.lower(): v for k, v in attrs}
             if len(values) != len(attrs) or (values.get('rel') or '').lower().split() != ['stylesheet'] or not values.get('href'):
@@ -454,20 +580,37 @@ class BodyParser(HTMLParser):
         if tag == 'style':
             if closed: raise BundleError('style elements need explicit closing tags')
             self.style = []
-        if tag not in VOID and not closed: self.stack.append(tag)
+        # In HTML, <table/> still opens a table. Do not let self-closing syntax
+        # disguise an unsafe checker ancestor; SVG/MathML do honor the slash.
+        foreign = svg or tag == 'math' or 'math' in self.stack
+        if tag not in VOID and (not closed or not foreign): self.stack.append(tag)
 
     def handle_endtag(self, tag):
+        if self.checker is not None:
+            if self.checker.end(tag): self.checker = None
+        elif tag == 'form':
+            raise BundleError('unexpected closing form tag')
+        elif not self.stack or self.stack[-1] != tag:
+            # A browser may ignore this close rather than pop our stack. A
+            # later checker cannot rely on that repaired insertion context.
+            self.ambiguous_context = True
         if tag == 'style' and self.style is not None:
             self.add(self.bundler.css(''.join(self.style), self.base)); self.style = None
         if tag in self.stack: self.stack = self.stack[:len(self.stack) - 1 - self.stack[::-1].index(tag)]
         self.add('</' + tag + '>')
 
     def handle_data(self, data):
+        if self.checker is not None: self.checker.text(data)
         if self.style is not None: self.style.append(data)
         else: self.add(data)
-    def handle_entityref(self, name): self.add('&' + name + ';')
-    def handle_charref(self, name): self.add('&#' + name + ';')
-    def handle_comment(self, data): self.add('<!--' + data + '-->')
+    def reference(self, value):
+        if self.checker is not None: self.checker.text(html.unescape(value), reference=True)
+        self.add(value)
+    def handle_entityref(self, name): self.reference('&' + name + ';')
+    def handle_charref(self, name): self.reference('&#' + name + ';')
+    def handle_comment(self, data):
+        if self.checker is not None: raise BundleError('comments inside local checker forms are unsupported')
+        self.add('<!--' + data + '-->')
     def handle_decl(self, decl): raise BundleError('supply an HTML body, not a document/doctype')
     def handle_pi(self, data): raise BundleError('processing instructions are unsupported in the HTML body')
     def unknown_decl(self, data): raise BundleError('unsupported HTML declaration')

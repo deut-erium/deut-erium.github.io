@@ -266,7 +266,7 @@ def encrypt(args):
     with private_html(source) as html:
         command = [sys.executable, ROOT / "script/encrypt_post.py", "--plaintext", html,
                    "--answer-stdin", "--out", output, "--title=" + args.title]
-        for name in ("description", "teaser", "tags", "needs", "section"):
+        for name in ("description", "teaser", "tags", "needs", "section", "previous"):
             value = getattr(args, name)
             if value is not None:
                 command.append(f"--{name}={value}")
@@ -274,7 +274,7 @@ def encrypt(args):
             command.append("--unlisted")
         elif page:
             command.append("--page")
-        for name in ("embed_assets", "embed_linked_files", "force"):
+        for name in ("embed_assets", "embed_linked_files", "force", "legacy"):
             if getattr(args, name):
                 command.append("--" + name.replace("_", "-"))
         if asset_root is not None:
@@ -453,6 +453,8 @@ def parser():
     lock.add_argument("--teaser", metavar="TEXT", help="Public teaser above the encrypted body.")
     lock.add_argument("--tags", metavar="TEXT", help="Space-separated tags as one quoted value (default: challenges crypto).")
     lock.add_argument("--needs", metavar="ID", help="Challenge whose flag unlocks this body (default: standalone lock).")
+    lock.add_argument("--previous", metavar="ROUTE", help="Public dated predecessor route; omitted preserves existing value; empty clears it.")
+    lock.add_argument("--legacy", action="store_true", help="Emit versionless v1 without AAD (default: authenticated v2 metadata).")
     lock.add_argument("--unlisted", action="store_true", help="Require locked/YYYY/MM/DD/slug.md; omit from post lists and sitemap.")
     lock.add_argument("--section", choices=("tutorials", "root", "ramblings"), help="Page section (default: encryptor's ramblings). Post sections follow --out, not this flag.")
     lock.add_argument("--embed-assets", action="store_true", help="Embed local assets before encryption; no network requests.")

@@ -23,10 +23,10 @@ PAYLOAD = base64.b64encode(bytes(range(64))).decode('ascii')
 SALT = '0123456789abcdef' * 2
 
 
-def unlisted(rel=UNLISTED, *, payload=PAYLOAD, salt=SALT, teaser='A public teaser with **Markdown**.'):
+def unlisted(rel=UNLISTED, *, payload=PAYLOAD, salt=SALT, teaser='A public teaser with **Markdown**.', version=1):
     # Use the real producer template, but deliberately arbitrary envelope bytes.
     # Acceptance here says nothing about successful encryption/authentication.
-    return encryptor.UNLISTED_TEMPLATE.format(
+    return (encryptor.UNLISTED_TEMPLATE if version == 1 else encryptor.UNLISTED_TEMPLATE_V2).format(
         title='Synthetic followup', date='-'.join(Path(rel).parts[1:4]),
         section='ramblings', tags='challenges crypto', description='Public description.',
         route='/' + str(Path(rel).with_suffix('.html')), teaser=teaser,
@@ -157,7 +157,7 @@ class ImportedTests(unittest.TestCase):
             self.check()
 
     def test_add_remove_producer_shaped_unlisted_page_without_changing_pins(self):
-        for body in (unlisted(), unlisted().replace(b'\n', b'\r\n'),
+        for body in (unlisted(), unlisted(version=2), unlisted().replace(b'\n', b'\r\n'),
                      unlisted(salt=SALT.upper(), teaser='<p>A public HTML teaser.</p>\n\nMore text.')):
             with self.subTest(body=body):
                 page = write(self.root, UNLISTED, body)
@@ -253,6 +253,29 @@ class ImportedTests(unittest.TestCase):
                 write(self.root, UNLISTED, unlisted(salt=salt))
                 with self.assertRaisesRegex(SystemExit, 'added='):
                     self.check()
+
+    def test_v2_metadata_and_wire_mutations_do_not_bypass_gate(self):
+        good = unlisted(version=2)
+        for old, new in [(b'data-version="2"', b'data-version="1"'),
+                         (b'data-version="2"', b'data-version="02"'),
+                         (b'data-version="2"', b'data-version="3"'),
+                         (b'data-version="2" ', b''),
+                         (b'data-iterations="200000" ', b''),
+                         (b'200000', b'120000'), (b'200000', b'200001'),
+                         (b'data-needs="synthetic-entry"', b'data-needs="bad id"'),
+                         (SALT.encode(), b'x' * 32),
+                         (PAYLOAD.encode(), b'AAAA'),
+                         (PAYLOAD.encode(), (PAYLOAD + '=').encode()),
+                         (b'<span hidden>', b'<span>')]:
+            with self.subTest(old=old, new=new):
+                write(self.root, UNLISTED, good.replace(old, new))
+                with self.assertRaisesRegex(SystemExit, 'added='):
+                    self.check()
+        rel = 'locked/2030/01/02/pinned.md'
+        write(self.root, rel, unlisted(rel, version=2))
+        self.assertTrue(gate.unlisted_page(self.root, rel))
+        with self.assertRaisesRegex(SystemExit, 'changed='):
+            self.check()
 
     def test_matching_unlisted_shape_cannot_bypass_a_historical_pin(self):
         rel = 'locked/2030/01/02/pinned.md'

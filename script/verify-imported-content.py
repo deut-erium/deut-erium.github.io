@@ -38,8 +38,10 @@ UNLISTED_PAGE = re.compile(
     r'noindex: true\n'
     r'---\n\n'
     r'(?P<teaser>.+?)\n\n<!--more-->\n\n'
-    r'<div class="argon" data-salt="(?P<salt>[0-9a-fA-F]{32})" '
-    r'data-needs="[^"<>\n]*" aria-live="polite">'
+    r'<div class="argon" '
+    r'(?P<v2>data-version="2" data-iterations="200000" )?'
+    r'data-salt="(?P<salt>[0-9a-fA-F]{32})" '
+    r'data-needs="(?P<needs>[^"><\n]*)" aria-live="polite">'
     r'<span hidden>(?P<payload>[A-Za-z0-9+/]+={0,2})</span></div>\n\n'
     r'<noscript><p>Enable JavaScript to unlock this article\.</p></noscript>\n',
     re.S,
@@ -75,6 +77,8 @@ def unlisted_page(root: Path, rel: str) -> bool:
         return False
     page = UNLISTED_PAGE.fullmatch(text)
     if not page or not page["teaser"].strip():
+        return False
+    if page["v2"] and page["needs"] and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", page["needs"]):
         return False
     if page["date"] != day.isoformat() or page["route"] != "/" + rel.removesuffix(".md") + ".html":
         return False
