@@ -9,11 +9,12 @@ type: writeup
 {%- assign _primitive = _primitive | strip -%}
 {%- assign _primitive_slug = _primitive | downcase -%}
 {%- assign _source_path = page.path | replace: ' ', '%20' -%}
+{%- assign _record_date = page.publication.publication_date | default: page.date -%}
 
 <main id="content" class="record-page primitive--{{ _primitive_slug }}" itemscope itemtype="https://schema.org/Article">
   <header class="record-head">
     <div class="record-head__key">
-      <span>{{ page.date | date: '%Y.%m.%d' }}</span>
+      <span>{{ _record_date | date: '%Y.%m.%d' }}</span>
       <span>{{ _event | replace: '_', ' ' }}</span>
     </div>
     <h1 itemprop="headline">{{ page.title }}</h1>
@@ -24,7 +25,7 @@ type: writeup
       <div><dt>Event</dt><dd>{{ _event | replace: '_', ' ' }}</dd></div>
       <div><dt>Category</dt><dd>{{ _category | replace: '_', ' ' }}</dd></div>
       <div><dt>Topic</dt><dd>{{ _primitive }}</dd></div>
-      <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+      <div><dt>{% if page.challenge_id and page.publication.publication_date == nil %}Event began{% else %}Published{% endif %}</dt><dd><time{% unless page.challenge_id and page.publication.publication_date == nil %} itemprop="datePublished"{% endunless %} datetime="{{ _record_date | date_to_xmlschema }}">{{ _record_date | date: '%Y-%m-%d' }}</time></dd></div>
     </dl>
     {%- if page.tags and page.tags.size > 0 -%}
     <nav class="tag-line" aria-label="Article tags">
@@ -37,6 +38,7 @@ type: writeup
       <a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a>
       <a href="https://github.com/{{ site.repository }}/tree/{{ site.repository_tree }}/{{ page.path | split: '/' | pop | join: '/' }}">Attached files</a>
       <a href="#article-body">Read article</a>
+      {% include publication-actions.html %}
     </div>
     <meta itemprop="author" content="{{ site.author.name }}">
   </header>

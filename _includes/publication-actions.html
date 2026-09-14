@@ -1,0 +1,11 @@
+{%- if page.publication -%}
+<details class="publication-cite" style="min-width: 0; max-width: 100%;">
+  <summary>Cite</summary>
+  <p><a href="{{ page.publication.bib_url | relative_url | escape }}" type="application/x-bibtex" download>Download BibTeX</a></p>
+  {%- if page.publication.date_note -%}<p>{{ page.publication.date_note | escape }}</p>{%- endif -%}
+  <label>BibTeX<br><textarea readonly rows="9" cols="72" spellcheck="false" style="box-sizing: border-box; max-width: 100%; font-family: monospace;">{{ page.publication.bibtex | escape }}</textarea></label>
+</details>
+{%- if site.academic_pdfs == true -%}
+<a class="publication-pdf" href="{{ page.publication.pdf_url | relative_url | escape }}" type="application/pdf">PDF</a>
+{%- endif -%}
+{%- endif -%}

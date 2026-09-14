@@ -7,20 +7,21 @@ layout: base
   {%- else -%}{%- assign _section_title = site.title -%}
 {%- endcase -%}
 {%- assign _source_path = page.source_path | default: page.path | replace: ' ', '%20' -%}
+{%- assign _record_date = page.publication.publication_date | default: page.date -%}
 {%- if page.challenge_browser == true -%}
 <link rel="stylesheet" href="{{ '/assets/css/features/challenge-practice.css' | relative_url }}?v={{ '/assets/css/features/challenge-practice.css' | asset_v }}">
 {%- endif -%}
 <main id="content" class="record-page section-record" itemscope itemtype="https://schema.org/Article">
   <header class="record-head">
-    <div class="record-head__key"><span>{{ page.date | date: '%Y.%m.%d' }}</span><span>{{ _section_title }}</span></div>
+    <div class="record-head__key"><span>{{ _record_date | date: '%Y.%m.%d' }}</span><span>{{ _section_title }}</span></div>
     <h1 itemprop="headline">{{ page.title }}</h1>
     {%- if page.description -%}<p class="record-head__abstract" itemprop="description">{{ page.description }}</p>{%- endif -%}
     <dl class="record-facts">
       <div><dt>Section</dt><dd>{{ _section_title }}</dd></div>
-      <div><dt>{% if page.challenge_id %}Event began{% else %}Published{% endif %}</dt><dd><time{% unless page.challenge_id %} itemprop="datePublished"{% endunless %} datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time></dd></div>
+      <div><dt>{% if page.challenge_id and page.publication.publication_date == nil %}Event began{% else %}Published{% endif %}</dt><dd><time{% unless page.challenge_id and page.publication.publication_date == nil %} itemprop="datePublished"{% endunless %} datetime="{{ _record_date | date_to_xmlschema }}">{{ _record_date | date: '%Y-%m-%d' }}</time></dd></div>
     </dl>
     {%- if page.tags and page.tags.size > 0 -%}<nav class="tag-line" aria-label="Article tags">{%- for _tag in page.tags -%}<a href="{{ '/archive.html' | relative_url }}?tag={{ _tag | url_encode }}">{{ _tag | replace: '_', ' ' }}</a>{%- endfor -%}</nav>{%- endif -%}
-    <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a></div>
+    <div class="record-actions"><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Markdown source</a><a href="#article-body">Read article</a>{% include publication-actions.html %}</div>
     <meta itemprop="author" content="{{ site.author.name }}">
   </header>
 

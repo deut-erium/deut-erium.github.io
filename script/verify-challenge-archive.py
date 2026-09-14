@@ -724,8 +724,13 @@ def verify_rendered(site, baseurl, catalog, metadata):
         expected = sorted((e for e in entries if e['year'] == year), key=lambda e: e['title'].lower())
         actual = [(n.attrs.get('data-archive-entry'), n.attrs.get('href'), n.text().strip()) for n in group.nodes('a', 'data-archive-entry')]
         require(actual == [(e['id'], baseurl + e['url'], e['post_title']) for e in expected], 'alphabetical catalog membership in ' + str(year))
+    # Citation siblings are generated from the same public archive entries.
+    # PDF bytes are optional; verify-publications.py checks advertised outputs.
+    citations = {e['url'].strip('/') + '.bib' for e in entries}
+    pdfs = {e['url'].strip('/') + '.pdf' for e in entries
+            if (site / (e['url'].strip('/') + '.pdf')).is_file()}
     require(file_inventory(site, 'challenges') == {'challenges/index.html'} |
-            {'challenges/index.json'} |
+            {'challenges/index.json'} | citations | pdfs |
             {e['url'].lstrip('/') + name for e in entries for name in ('index.html', 'challenge.txt', 'challenge.json')},
             'unexpected rendered archive files')
     for e in entries:
