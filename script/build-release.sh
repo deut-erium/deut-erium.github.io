@@ -23,6 +23,14 @@ cd "$root"
 python3 script/verify-imported-content.py
 python3 script/verify-static-app.py
 script/build-site.sh "$destination"
+# PDF links are opt-in and must be backed by a complete successful render.
+# Use only an already installed browser/module; this step never downloads tools.
+if [ "${ACADEMIC_PDFS:-0}" = 1 ]; then
+  node script/render-publication-pdfs.mjs --site "$destination"
+  python3 script/verify-publications.py "$destination" --require-pdfs
+else
+  python3 script/verify-publications.py "$destination"
+fi
 # This tree is already rendered. GitHub Pages must publish it verbatim rather
 # than running its restricted Jekyll build over it again.
 : > "$destination/.nojekyll"

@@ -83,6 +83,9 @@ jobs:
           node script/test-theme-redesign-static.mjs --out agent_out/theme-redesign/ci-static
           node --test script/test-footer.mjs script/test-decorations.mjs script/test-font-preloads.mjs
           ruby script/test-article-contents.rb
+          ruby script/test-publications.rb
+          node script/test-publication-pdfs.mjs
+          python3 script/test-verify-publications.py
           python3 script/test-print-fonts.py
           node --test script/test-cookie-banner.mjs
           node script/test-resume.mjs
@@ -111,6 +114,7 @@ jobs:
           cmp "$out/a.manifest.jsonl" "$out/b.manifest.jsonl"
 
           python3 script/verify-site.py "$out/a"
+          python3 script/verify-publications.py "$out/a"
           python3 script/test-search-redirects.py "$out/a"
           python3 script/verify-challenge-archive.py "$out/a"
           python3 script/test-tetrasquares-site.py "$out/a"

@@ -19,6 +19,11 @@ fi
 config=$(mktemp "${TMPDIR:-/tmp}/deuterium-build.XXXXXX.yml")
 trap 'rm -f "$config"' EXIT HUP INT TERM
 printf 'time: "%s"\n' "$build_time" > "$config"
+case "${ACADEMIC_PDFS:-0}" in
+  0) printf 'academic_pdfs: false\n' >> "$config" ;;
+  1) printf 'academic_pdfs: true\n' >> "$config" ;;
+  *) echo 'ACADEMIC_PDFS must be 0 or 1' >&2; exit 2 ;;
+esac
 
 JEKYLL_ENV=production \
 LANG=${LANG:-C.UTF-8} \

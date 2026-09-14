@@ -153,6 +153,8 @@ def rendered_fixture(source, site, baseurl=''):
         catalog += '</section>'
     write(site/'challenges/index.html', catalog)
     write(site/'challenges/index.json', '{}\n')
+    for e in data['entries']:
+        write(site / (e['url'].strip('/') + '.bib'), '@misc{fixture}\n')
     for route in ('/archive.html', '/ctf-tutorials/', '/ctf-tutorials/archive.html'):
         write(html_path(site, route), '<ol>' + ''.join(rows) + '</ol>' + anchor(baseurl + '/challenges/', 'Challenges'))
     for route in ('/WriteUps/', '/ramblings/'):

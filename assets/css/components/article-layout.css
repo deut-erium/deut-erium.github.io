@@ -64,6 +64,14 @@
     gap: .65rem;
   }
 
+  /* An open citation must not stretch its neighboring action links. */
+  html .record-head > .record-actions { align-items: flex-start; }
+  html[data-skin="rpn-garden"] .publication-cite :is(summary, textarea, a):focus-visible,
+  html[data-skin="rpn-garden"] .publication-pdf:focus-visible {
+    outline: 2px solid var(--lcd-ink);
+    outline-offset: 3px;
+  }
+
   html .record-page > .record-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--article-rail);
