@@ -2,6 +2,38 @@
 
 This repository builds the site served from `deut-erium.github.io`.
 
+## Write, preview, publish
+
+Start with [the author guide](AUTHORING.md). It covers ordinary Markdown posts,
+assignments, encrypted posts and chains, private attachments, PDFs, and publishing.
+
+```sh
+python3 script/blog.py doctor
+python3 script/blog.py new my-post --title "My post" --description "What this post covers."
+# Edit the new Markdown file, then:
+python3 script/blog.py preview --port 8000
+```
+
+After reviewing and committing your intended source changes, run
+`python3 script/blog.py prepare-publish`. It builds a fresh release, prepares a
+local deployment, and prints one atomic push command for you to review and run.
+The helper never fetches or pushes. Add `--pdf` to preview or prepare-publish to
+include academic PDFs; encrypted posts are excluded from PDFs and citations.
+
+Private Markdown can be encrypted directly with `python3 script/blog.py encrypt`;
+the key is read at a hidden prompt. See the guide before creating a chain or
+embedding private attachments. Run author commands as your normal user, not root.
+
+The sections below document build and implementation details; they are not steps
+you need to repeat each time you write a post.
+
+For changes to the authoring tools themselves, run `python3 script/test-blog.py`,
+`python3 script/test-new-challenge.py` and `python3 script/test-verify-imported-content.py`.
+The optional integration checks `python3 script/test-blog-encryption.py` and
+`python3 script/test-authoring-build.py` use installed dependencies and disposable
+fixtures under `agent_out/`; they exercise encryption and adding/removing posts
+without changing your articles or chain.
+
 Sections:
 
 - `/` - personal posts and browser-local challenges
@@ -65,7 +97,7 @@ Open an article, let its fonts, math and images finish loading, then press Ctrl+
 
 Print uses black text on white, 12 pt serif body text with 1.55 line spacing, and 10 pt code, metadata and captions. Navigation, sharing controls and code toolbars are hidden. Long code and links wrap; long text, lists and tables can cross pages. Headings, small figures and formulas request keep-together behavior, and table headers can repeat. KaTeX retains its own fonts, fraction bars, SVG transforms and script-size ratios. Screen themes are unchanged.
 
-Check the preview before saving or printing. Wide matrices and other unbreakable formulas can still exceed the page; landscape or a larger paper size may be needed. Images retain their authored colors, and background graphics are not required for the reading layout. Browser pagination and physical Paper Pro readability have not been validated on the device. The site's print path uses ordinary browser printing; there is no generated PDF download, export button or PDF build step.
+Check the preview before saving or printing. Wide matrices and other unbreakable formulas can still exceed the page; landscape or a larger paper size may be needed. Images retain their authored colors, and background graphics are not required for the reading layout. Browser pagination and physical Paper Pro readability have not been validated on the device. This Ctrl+P path uses ordinary browser printing. The optional academic PDF build and PDF/Cite actions described below are separate.
 
 ```sh
 python3 script/test-print-fonts.py
