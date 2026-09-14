@@ -126,7 +126,7 @@ class PublicationsTest < Minitest::Test
           route = row.fetch("url")
           html = output(route.end_with?("/") ? route + "index.html" : route)
           cite = panel(html)
-          assert_includes cite, "<summary>Cite</summary>"
+          assert_includes cite, '<summary class="action publication-cite__toggle">Cite</summary>'
           assert_includes cite, "download>Download .bib</a>"
           assert_includes cite, 'class="publication-cite__panel"'
           assert_includes cite, 'class="publication-cite__field"'
@@ -134,7 +134,7 @@ class PublicationsTest < Minitest::Test
           assert_includes cite, %(href="#{baseurl}#{stem}.bib")
           assert_includes cite, "<textarea readonly"
           refute_match(/\bid=|<script\b|\bon\w+=/, cite)
-          assert_equal 1, html.scan(/<summary>Cite<\/summary>/).size
+          assert_equal 1, html.scan(/<summary[^>]*>Cite<\/summary>/).size
           textarea = cite[/<textarea[^>]*>(.*?)<\/textarea>/m, 1]
           assert_equal output(stem + ".bib"), CGI.unescapeHTML(textarea)
           assert_includes html, 'name="citation_title" content="Same title"'

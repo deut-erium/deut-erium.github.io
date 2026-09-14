@@ -70,29 +70,35 @@
     min-width: 0;
     max-width: 100%;
     margin: 0;
-    border: 1px solid currentColor;
-    border-radius: .35rem;
+    border: 0;
   }
   html .record-head .publication-cite[open] { width: min(100%, 42rem); }
+  /* Use the shared .action skin, not a second button design. */
   html .record-head .publication-cite > summary {
-    box-sizing: border-box;
-    min-height: 44px;
-    padding: .6rem .85rem;
+    display: inline-flex;
     cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-    line-height: 1.4;
+    list-style: none;
   }
-  html .record-head .publication-cite > summary:hover { text-decoration: underline; }
+  html .record-head .publication-cite > summary::-webkit-details-marker { display: none; }
+  html .record-head .publication-cite > summary::after {
+    content: "";
+    width: 0;
+    height: 0;
+    margin-left: .5em;
+    border-inline: .25em solid transparent;
+    border-top: .3em solid currentColor;
+  }
+  html .record-head .publication-cite[open] > summary::after { transform: rotate(180deg); }
   html .record-head .publication-cite__panel {
     display: grid;
     gap: .85rem;
     min-width: 0;
     padding: 1rem;
-    border-top: 1px solid currentColor;
+    margin-top: .85rem;
+    border: 1px solid var(--ink);
     background: var(--paper);
     color: var(--ink);
-    border-radius: 0 0 .3rem .3rem;
+    border-radius: .3rem;
     font-size: .95rem;
     line-height: 1.5;
   }
