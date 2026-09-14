@@ -127,7 +127,10 @@ class PublicationsTest < Minitest::Test
           html = output(route.end_with?("/") ? route + "index.html" : route)
           cite = panel(html)
           assert_includes cite, "<summary>Cite</summary>"
-          assert_includes cite, "download>Download BibTeX</a>"
+          assert_includes cite, "download>Download .bib</a>"
+          assert_includes cite, 'class="publication-cite__panel"'
+          assert_includes cite, 'class="publication-cite__field"'
+          refute_includes cite, 'style='
           assert_includes cite, %(href="#{baseurl}#{stem}.bib")
           assert_includes cite, "<textarea readonly"
           refute_match(/\bid=|<script\b|\bon\w+=/, cite)

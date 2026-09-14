@@ -66,8 +66,77 @@
 
   /* An open citation must not stretch its neighboring action links. */
   html .record-head > .record-actions { align-items: flex-start; }
-  html[data-skin="rpn-garden"] .publication-cite :is(summary, textarea, a):focus-visible,
-  html[data-skin="rpn-garden"] .publication-pdf:focus-visible {
+  html .record-head .publication-cite {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    border: 1px solid currentColor;
+    border-radius: .35rem;
+  }
+  html .record-head .publication-cite[open] { width: min(100%, 42rem); }
+  html .record-head .publication-cite > summary {
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: .6rem .85rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  html .record-head .publication-cite > summary:hover { text-decoration: underline; }
+  html .record-head .publication-cite__panel {
+    display: grid;
+    gap: .85rem;
+    min-width: 0;
+    padding: 1rem;
+    border-top: 1px solid currentColor;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 0 0 .3rem .3rem;
+    font-size: .95rem;
+    line-height: 1.5;
+  }
+  html .record-head .publication-cite__panel p { margin: 0; }
+  html .record-head .publication-cite__note { font-size: .875rem; }
+  html .record-head .publication-cite__field {
+    display: grid;
+    gap: .4rem;
+    min-width: 0;
+    font-weight: 700;
+  }
+  html .record-head .publication-cite textarea {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 12rem;
+    padding: .75rem;
+    border: 1px solid var(--ink);
+    border-radius: .2rem;
+    background: var(--paper-low, var(--paper));
+    color: var(--ink);
+    font: 400 .875rem/1.6 ui-monospace, monospace;
+    text-transform: none;
+    letter-spacing: normal;
+    resize: vertical;
+  }
+  html .record-head .publication-cite__download {
+    justify-self: start;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid currentColor;
+    border-radius: .2rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    text-decoration: underline;
+  }
+  html .record-head .publication-cite__panel :is(textarea, a):focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  html:is(:not([data-skin]), [data-skin="rpn-garden"]) .publication-cite > summary:focus-visible,
+  html:is(:not([data-skin]), [data-skin="rpn-garden"]) .publication-pdf:focus-visible {
     outline: 2px solid var(--lcd-ink);
     outline-offset: 3px;
   }
