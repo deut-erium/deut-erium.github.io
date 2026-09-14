@@ -10,3 +10,8 @@ layout: base
   <article class="prose page-prose{% if page.page_width == 'wide' %} page-prose--wide{% endif %}">{{ content }}</article>
 </main>
 {%- if content contains 'highlighter-rouge' -%}<script defer src="{{ '/assets/js/article.js' | relative_url }}?v={{ '/assets/js/article.js' | asset_v }}"></script>{%- endif -%}
+
+{%- if page.section == 'scoreboard' -%}
+<script defer src="{{ '/assets/js/chain-session.js' | relative_url }}?v={{ '/assets/js/chain-session.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>
+{%- endif -%}

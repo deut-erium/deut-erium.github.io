@@ -1,5 +1,4 @@
-/* Argon locked-post chrome. Injected by assets/js/features/argon.js on
-   body[data-argon] pages only. */
+/* Locked article controls. Loaded relative to the argon script's URL. */
 
 .argon {
   position: relative;
@@ -14,6 +13,8 @@
   overflow: hidden;
   max-width: 100%;
 }
+
+.argon-locked-label { margin: 0 0 0.75rem; }
 
 .argon-rain {
   color: inherit;
@@ -30,17 +31,20 @@
   animation-delay: calc(var(--i, 0) * -0.35s);
 }
 
-.argon-unlock {
+.argon-unlock { margin: 1rem 0 1.5rem; }
+
+.argon-unlock__fields,
+.argon-session {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
-  margin: 1rem 0 1.5rem;
 }
 
+.argon-session { margin-top: 0.75rem; }
 .argon-unlock label { font-weight: 700; }
 
-.argon-unlock input {
+.argon-unlock input[type='password'] {
   flex: 1 1 12ch;
   min-width: 0;
   max-width: 34ch;
@@ -52,8 +56,23 @@
   font: inherit;
 }
 
+.argon-session__choice {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.argon-session__choice input[type='checkbox'] {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+}
+
 .argon-unlock button {
   padding: 0.4rem 1rem;
+  min-height: 2.75rem;
   border: 1px solid currentColor;
   border-radius: 0.4rem;
   background: transparent;
@@ -62,9 +81,12 @@
   cursor: pointer;
 }
 
-.argon-note {
-  flex-basis: 100%;
-  margin: 0.25rem 0 0;
+.argon-unlock button:disabled { cursor: wait; opacity: 0.6; }
+.argon-unlock :is(input, button):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.argon-note,
+.argon-privacy {
+  margin: 0.5rem 0 0;
   font-size: 0.85rem;
   opacity: 0.9;
 }
@@ -79,22 +101,14 @@
   overflow: visible;
 }
 
+.argon-rain[hidden], .argon-unlock [hidden] { display: none; }
+.argon-rain[hidden] .argon-rain__row { animation-play-state: paused; }
+
 @keyframes argon-flicker {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 0.95; }
 }
 
-@keyframes argon-shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-0.4rem); }
-  40% { transform: translateX(0.4rem); }
-  60% { transform: translateX(-0.25rem); }
-  80% { transform: translateX(0.25rem); }
-}
-
-.argon-unlock.is-shaking { animation: argon-shake 0.4s ease-in-out; }
-
 @media (prefers-reduced-motion: reduce) {
   .argon-rain__row { animation: none; }
-  .argon-unlock.is-shaking { animation: none; }
 }

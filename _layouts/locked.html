@@ -26,12 +26,10 @@ layout: base
   <footer class="record-end"><p><a href="https://github.com/{{ site.repository }}/blob/{{ site.repository_tree }}/{{ _source_path }}">Suggest a correction to this article.</a></p></footer>
 </main>
 <script>
-  (function () {
-    var body = document.body;
-    if (body && !body.hasAttribute('data-argon')) { body.setAttribute('data-argon', ''); }
-    var script = document.createElement('script');
-    script.defer = true;
-    script.src = "{{ '/assets/js/features/argon.js' | relative_url }}?v={{ '/assets/js/features/argon.js' | asset_v }}";
-    document.head.appendChild(script);
-  })();
+  document.body.setAttribute('data-argon', '');
+  document.body.dataset.chainPosition = {{ page.chain_position | default: 1 | jsonify }};
+  document.body.dataset.chainLength = {{ page.chain_length | default: 1 | jsonify }};
 </script>
+<script defer src="{{ '/assets/js/chain-session.js' | relative_url }}?v={{ '/assets/js/chain-session.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/features/argon.js' | relative_url }}?v={{ '/assets/js/features/argon.js' | asset_v }}"></script>

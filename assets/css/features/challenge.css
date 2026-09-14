@@ -45,6 +45,64 @@
   outline-offset: 2px;
 }
 
+/* Tab handoff controls stay visible when the solved input row collapses. */
+.flag-check__session {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1rem;
+}
+
+.flag-check__session > label {
+  display: flex;
+  align-items: flex-start;
+  flex-basis: 100%;
+  gap: .55rem;
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Override the full-site text input's minimum height and padding. */
+.flag-check__session input[type="checkbox"] {
+  flex: 0 0 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  min-width: 0;
+  min-height: 0;
+  margin: .15rem 0 0;
+  padding: 0;
+  accent-color: var(--lcd-ink);
+}
+
+.flag-check__session > p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--lcd-ink);
+  font-family: var(--body);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+.flag-check__session button {
+  min-height: 2.4rem;
+  padding: .3rem .65rem;
+  font-size: .8rem;
+}
+
+.flag-check__session input:focus-visible,
+.flag-check__session button:focus-visible {
+  outline: 3px solid var(--lcd-ink);
+  outline-offset: 3px;
+}
+
+.flag-check__session [hidden],
+.flag-check__session > p:empty,
+.flag-check:not(.is-solved) .flag-check__reenter {
+  display: none;
+}
+
 /* Emphatic verdict box directly under the input. Hidden until it has a verdict,
    and it never fades out: it stays until the visitor types again. */
 .flag-check__verdict {

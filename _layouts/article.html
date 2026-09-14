@@ -56,4 +56,6 @@ layout: base
 <script defer src="{{ '/assets/widgets/js/' | append: _widget | append: '.js' | relative_url }}?v={{ '/assets/widgets/js/' | append: _widget | append: '.js' | asset_v }}"></script>
   {%- endfor -%}
 {%- endif -%}
-{%- if page.sha256hash or page.challenge_checker -%}<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>{%- endif -%}
+{%- if page.sha256hash or page.challenge_checker -%}
+<script defer src="{{ '/assets/js/chain-session.js' | relative_url }}?v={{ '/assets/js/chain-session.js' | asset_v }}"></script>
+<script defer src="{{ '/assets/js/challenge.js' | relative_url }}?v={{ '/assets/js/challenge.js' | asset_v }}"></script>{%- endif -%}

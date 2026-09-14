@@ -313,7 +313,8 @@ def check_content_scope(audit: Audit, text: str, label: str, is_post: bool) -> N
         'layout-page' in audit.body_classes and 'highlighter-rouge' in text)
     if paths.count('/assets/js/article.js') != int(article):
         fail(f"article script scoping drift: {label}")
-    if paths.count('/assets/js/challenge.js') != int(audit.forms > 0):
+    checker = audit.forms > 0 or 'layout-locked' in audit.body_classes or 'section-scoreboard' in audit.body_classes
+    if paths.count('/assets/js/challenge.js') != int(checker):
         fail(f"checker script scoping drift: {label}")
     if paths.count('/assets/js/theme.js') != 1 or text.count('class="site-brand__mark"') != 1:
         fail(f"theme/brand scoping drift: {label}")
@@ -955,7 +956,9 @@ budgets = {
     "assets/css/main.css": 12 * 1024,
     "assets/js/article.js": 2 * 1024,
     "assets/js/archive.js": 2 * 1024,
-    "assets/js/challenge.js": 3 * 1024,
+    "assets/js/challenge.js": 8 * 1024,
+    "assets/js/chain-session.js": 2 * 1024,
+    "assets/js/features/argon.js": 6 * 1024,
     "assets/js/theme.js": 3 * 1024,
 }
 metrics = {}
