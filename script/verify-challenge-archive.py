@@ -685,6 +685,75 @@ def canonical_path(value, baseurl='', origin=ORIGIN, absolute=False):
     return path
 
 
+def public_checker_additions(progress, pages, post_routes, baseurl=''):
+    """Match each new progress record to one public salted rendered form.
+
+    Legacy unsalted checkers and their three historical aliases are exempt
+    from the new schema, not from the existing required-ID checks.
+    """
+    known = PRACTICE_IDS | {'authored-' + ident for ident in OFFLINE}
+    legacy_aliases = {'assignment00000001-' + str(i) for i in range(3)}
+    records = {p['id']: p for p in progress}
+    aliases = [alias for p in progress for alias in p.get('aliases', [])]
+    require(all(isinstance(alias, str) and alias in legacy_aliases for alias in aliases) and
+            len(set(aliases)) == len(aliases) and not set(aliases).intersection(records),
+            'unexpected progress aliases')
+    extras = {ident: p for ident, p in records.items() if ident not in known}
+    rendered = {}
+    seen_ids = set()
+    identities = []
+    for rel, page in pages.items():
+        route = '/' + (rel[:-10] if rel.endswith('/index.html') else rel)
+        robots = [(n.attrs.get('content') or '').lower().split(',') for n in page.nodes('meta')
+                  if (n.attrs.get('name') or '').lower() == 'robots']
+        for form in page.nodes(attr='data-flag-check'):
+            require(form.tag == 'form', 'checker marker is not a form')
+            identities.append((form.attrs.get('data-sha256'), form.attrs.get('data-salt')))
+            inputs = form.nodes('input', 'data-flag-input')
+            ident = (inputs[0].attrs.get('id') or '').removeprefix('flag-') if len(inputs) == 1 else ''
+            require(not ident or ident not in seen_ids, 'duplicate rendered checker ID')
+            seen_ids.add(ident)
+            if ident in known | legacy_aliases:
+                expected_page = (baseurl + '/ctf-tutorials/2021/07/04/what-are-assignments.html'
+                                 if ident in legacy_aliases else records[ident]['page'])
+                require(baseurl + route == expected_page, 'known checker page binding')
+                continue
+            require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]*', ident or '') is not None and
+                    len(inputs) == 1 and inputs[0].attrs.get('id') == 'flag-' + ident,
+                    'new checker input/ID')
+            require(route in post_routes and not route.startswith('/challenges/') and
+                    not any('noindex' == directive.strip() for group in robots for directive in group),
+                    'new checker is not on a public post')
+            require(form.inside('article') and form.attrs.get('action', '') in {'', '#'} and
+                    all(not any(k.startswith('on') or k in {'name', 'formaction', 'data-answer', 'data-service-url'}
+                                for k in n.attrs) for n in [form, *form.nodes()]),
+                    'unsafe new checker markup')
+            buttons = [n for n in form.nodes('button') if n.attrs.get('type') == 'submit']
+            require(len(buttons) == 1 and 'disabled' in buttons[0].attrs and
+                    not any(n.attrs.get('type') in {'submit', 'image'} for n in form.nodes('input')),
+                    'new checker submit guard')
+            digest, salt = form.attrs.get('data-sha256', ''), form.attrs.get('data-salt', '')
+            require(re.fullmatch(r'[0-9a-f]{64}', digest or '') is not None and
+                    re.fullmatch(r'[0-9a-f]{32}', salt or '') is not None, 'new checker hash/salt')
+            scripts = [urlsplit(n.attrs.get('src', '')).path for n in page.nodes('script')]
+            require(scripts.count(baseurl + '/assets/js/challenge.js') == 1, 'new checker script scope')
+            rendered[ident] = (baseurl + route, digest, salt, form.attrs.get('data-challenge-title'))
+    require(known | legacy_aliases <= seen_ids, 'missing original rendered checker IDs')
+    require(set(extras) == set(rendered), 'new checker progress/rendered membership')
+    for ident, record in extras.items():
+        require(set(record) == {'id', 'page', 'title', 'aliases', 'sha256', 'salt'} and
+                record['aliases'] == [] and isinstance(record['title'], str) and record['title'].strip(),
+                'new checker progress schema')
+        route, digest, salt, title = rendered[ident]
+        require((record['page'], record['sha256'], record['salt']) == (route, digest, salt) and
+                (title is None or record['title'] == title), 'new checker progress binding')
+        require(sum(p.get('sha256') == digest for p in progress) == 1 and
+                sum(p.get('salt') == salt for p in progress) == 1 and
+                sum(h == digest for h, _ in identities) == 1 and
+                sum(s == salt for _, s in identities) == 1, 'new checker duplicate hash/salt')
+    return len(extras)
+
+
 def verify_rendered(site, baseurl, catalog, metadata):
     require(not baseurl or re.fullmatch(r'(?:/[A-Za-z0-9_-]+)+', baseurl), 'invalid baseurl argument')
     entries = catalog['entries']
@@ -806,9 +875,11 @@ def verify_rendered(site, baseurl, catalog, metadata):
         if e['slug'] == 'law-and-order':
             law_warning(' '.join(n.text() for n in article.nodes('p')), 'rendered post')
     intended = {e['url'].lstrip('/') + 'index.html' for e in entries if e['id'] in BROWSER_RUNTIMES}
+    rendered_pages = {}
     for path in site.rglob('*.html'):
         rel = path.relative_to(site).as_posix()
         page = Page(safe_path(site, rel, 'browser scope').read_text())
+        rendered_pages[rel] = page
         browser_assets(page, rel in intended, baseurl, rel)
         if rel not in intended:
             require(not page.nodes(attr='data-challenge-practice'), 'browser widget outside intended page')
@@ -824,7 +895,11 @@ def verify_rendered(site, baseurl, catalog, metadata):
         require(baseurl + '/challenges/' in hrefs(page), 'archive discovery link on ' + route)
     progress = json.loads(safe_path(site, 'challenges.json', 'progress index').read_text())
     authored = {'authored-' + ident for ident in OFFLINE}
-    require(Counter(p['id'] for p in progress) == Counter(PRACTICE_IDS | authored), 'practice/authored progress IDs')
+    require(isinstance(progress, list) and all(isinstance(p, dict) and isinstance(p.get('id'), str) for p in progress),
+            'practice/authored progress IDs')
+    progress_ids = [p['id'] for p in progress]
+    require(len(set(progress_ids)) == len(progress_ids) and (PRACTICE_IDS | authored) <= set(progress_ids),
+            'practice/authored progress IDs')
     for e in entries:
         if e['id'] not in OFFLINE:
             continue
@@ -833,7 +908,6 @@ def verify_rendered(site, baseurl, catalog, metadata):
         require(record['page'] == baseurl + e['url'] and record['title'] == e['post_title'] and
                 record.get('sha256') == c['sha256'] and record.get('salt') == c['salt'] and not record['aliases'], 'authored progress entry for ' + e['id'])
     posts = json.loads(safe_path(site, 'index.json', 'post index').read_text())
-    require(len(posts) == 98, 'listed post index count')
     post_routes = [canonical_path(p['route'], baseurl, absolute=True) for p in posts]
     require(len(set(post_routes)) == len(post_routes), 'duplicate post index routes')
     require(Counter(r for r in post_routes if r.startswith('/challenges/')) == Counter(routes), 'post index archive membership')
@@ -843,12 +917,22 @@ def verify_rendered(site, baseurl, catalog, metadata):
                 p['tags'] == metadata[e['id']]['tags'] and
                 datetime.fromisoformat(p['date']) == datetime.fromisoformat(EVENT_STARTS[e['event_id']]) and
                 p['has_code'] is True and p['has_math'] is False, 'post index metadata for ' + e['id'])
+    # The global archive is independent rendered evidence for the complete
+    # listed inventory. Curated challenge membership above remains exact.
+    _, archive = load('/archive.html')
+    archive_routes = []
+    for row in archive.nodes(attr='data-record'):
+        anchors = row.nodes('a')
+        require(anchors, 'empty global archive record')
+        archive_routes.append(canonical_path(anchors[0].attrs['href'], baseurl))
+    require(Counter(post_routes) == Counter(archive_routes), 'listed post index/archive membership')
+    new_checkers = public_checker_additions(progress, rendered_pages, set(post_routes), baseurl)
     require([json.loads(line) for line in safe_path(site, 'index.jsonl', 'post JSONL').read_text().splitlines()] == posts, 'post JSONL parity')
     sitemap = ET.fromstring(safe_path(site, 'sitemap.xml', 'sitemap').read_text())
     locations = [n.text for n in sitemap.iter() if n.tag.rsplit('}', 1)[-1] == 'loc']
     require(all(locations.count(ORIGIN + baseurl + e['url']) == 1 for e in entries), 'archive sitemap coverage')
     return {'rendered_entries': 18, 'practice_checkers': 7, 'authored_checkers': 7,
-            'browser_practice_forms': 11, 'posts': len(posts), 'baseurl': baseurl}
+            'browser_practice_forms': 11, 'new_checkers': new_checkers, 'posts': len(posts), 'baseurl': baseurl}
 
 
 def verify(site=None, baseurl=''):

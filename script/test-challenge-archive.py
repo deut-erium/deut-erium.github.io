@@ -17,7 +17,7 @@ import tempfile
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'agent_out/challenge-runtime/integration/archive-gates'
+OUT = ROOT/'agent_out/authoring/challenge-archive'
 OUT.mkdir(parents=True, exist_ok=True)
 sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location('archive_check', ROOT/'script/verify-challenge-archive.py')
@@ -163,17 +163,77 @@ def rendered_fixture(source, site, baseurl=''):
     write(site/'ctf-tutorials/assignments.html', practice_links)
     for p in data['practice']:
         write(html_path(site, p['url']), anchor(baseurl + '/challenges/', 'Challenges'))
-    progress.extend({'id': ident, 'page': '/2021/04/08/challenges.html', 'title': 'Synthetic legacy fixture', 'aliases': []}
-                    for ident in sorted(gate.PRACTICE_IDS))
-    # Bodyless stand-ins: no original private/locked article content is read.
-    posts.extend({'route': ORIGIN + baseurl + f'/legacy-fixture-{i}.html', 'title': 'Synthetic legacy post',
-                  'section': 'tutorials'} for i in range(80))
+    # Synthetic forms exercise required legacy IDs without reading old bodies.
+    practice_routes = {
+        'assignment000001-0': '/2021/04/08/challenges.html',
+        'assignment000001-1': '/2021/04/08/challenges.html',
+        'assignment000001-2': '/2021/04/08/challenges.html',
+        'assignment000002-0': '/2021/07/25/wiki-mersenne.html',
+        'assignment000003-0': '/2021/07/25/injection.html',
+        'assignment000004-0': '/2021/07/25/untwist-me.html',
+        'assignment000005-0': '/2021/07/25/mersenne-seed-recovery.html',
+    }
+    alias_route = '/ctf-tutorials/2021/07/04/what-are-assignments.html'
+    write(html_path(site, alias_route), '')
+    for ident in sorted(gate.PRACTICE_IDS):
+        digest = hashlib.sha256(ident.encode()).hexdigest()
+        aliases = [ident.replace('assignment000001', 'assignment00000001')] if ident.startswith('assignment000001-') else []
+        progress.append({'id': ident, 'page': baseurl + practice_routes[ident], 'sha256': digest,
+                         'title': 'Synthetic legacy fixture', 'aliases': aliases})
+        for form_id, route in [(ident, practice_routes[ident]), *((alias, alias_route) for alias in aliases)]:
+            path = html_path(site, route)
+            write(path, path.read_text() + f'<form data-flag-check data-sha256="{digest}">'
+                  f'<input data-flag-input id="flag-{form_id}"><button type="submit" disabled>Check</button></form>')
+    # Bodyless stand-ins derive membership from the retained public index;
+    # additions never require changing that fixture or a fixed total.
+    legacy = json.loads((ROOT/'test/fixtures/challenge-posts/legacy-baseline.json').read_text())['posts']
+    hidden = {e['url'] for e in json.loads((ROOT/'_data/hidden_posts.json').read_text())['posts']}
+    legacy = [p for p in legacy if p['route'].removeprefix(ORIGIN) not in hidden]
+    posts.extend(dict(p, route=ORIGIN + baseurl + p['route'].removeprefix(ORIGIN)) for p in legacy)
+    archive = site/'archive.html'
+    write(archive, archive.read_text() + ''.join('<li data-record>' +
+          anchor(baseurl + p['route'].removeprefix(ORIGIN), 'Synthetic legacy post') + '</li>' for p in legacy))
     write(site/'index.json', json.dumps(posts))
     write(site/'index.jsonl', ''.join(json.dumps(p) + '\n' for p in posts))
     write(site/'challenges.json', json.dumps(progress))
     write(site/'sitemap.xml', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
           ''.join('<url><loc>' + ORIGIN + baseurl + e['url'] + '</loc></url>' for e in data['entries']) + '</urlset>')
     shutil.copytree(source/'assets/challenges', site/'assets/challenges')
+
+
+def ordinary_fixture(site, baseurl='', checker=True, ident='ordinary-fixture'):
+    """Add a public post, attachment and optional checker; no catalog edits."""
+    route = '/2031/01/02/' + ident + '.html'
+    digest = hashlib.sha256(('synthetic-' + ident).encode()).hexdigest()
+    salt = hashlib.sha256(('salt-' + ident).encode()).hexdigest()[:32]
+    title = 'Ordinary fixture'
+    body = '<article><p>' + anchor(baseurl + '/assets/posts/' + ident + '.txt', 'Attachment') + '</p>'
+    write(site/'assets/posts'/f'{ident}.txt', 'Public synthetic attachment.\n')
+    if checker:
+        body += (f'<form data-flag-check data-sha256="{digest}" data-salt="{salt}" data-challenge-title="{title}">'
+                 f'<input data-flag-input id="flag-{ident}"><button type="submit" disabled>Check</button></form>')
+        mutate_json(site/'challenges.json', lambda rows: rows.append(
+            {'id': ident, 'page': baseurl + route, 'title': title, 'sha256': digest, 'salt': salt, 'aliases': []}))
+    body += '</article>'
+    if checker:
+        body += f'<script src="{baseurl}/assets/js/challenge.js"></script>'
+    write(html_path(site, route), body)
+    mutate_json(site/'index.json', lambda rows: rows.append({'route': ORIGIN + baseurl + route, 'title': title, 'tags': ['new-tag']}))
+    rows = json.loads((site/'index.json').read_text())
+    write(site/'index.jsonl', ''.join(json.dumps(row) + '\n' for row in rows))
+    archive = site/'archive.html'
+    write(archive, archive.read_text() + '<li data-record>' + anchor(baseurl + route, title) + '</li>')
+    return html_path(site, route)
+
+
+def ordinary_round_trip(site):
+    paths = ('index.json', 'index.jsonl', 'archive.html', 'challenges.json')
+    before = {path: (site/path).read_bytes() for path in paths}
+    path = ordinary_fixture(site)
+    path.unlink()
+    (site/'assets/posts/ordinary-fixture.txt').unlink()
+    for name, data in before.items():
+        (site/name).write_bytes(data)
 
 
 def move_block_outside_spoiler(path, pattern):
@@ -511,6 +571,45 @@ def main():
         def rendered(label, mutate, reason, baseurl=''):
             check(label, rendered=mutate, reason=reason, baseurl=baseurl, render=True)
 
+        check('ordinary post and public attachment added', rendered=lambda s: ordinary_fixture(s, checker=False), render=True, valid=True)
+        check('salted checker outside curated IDs added', rendered=ordinary_fixture, render=True, valid=True)
+        check('salted checker with preview baseurl', rendered=lambda s: ordinary_fixture(s, '/preview'), baseurl='/preview', render=True, valid=True)
+        check('ordinary post attachment and checker removed', rendered=ordinary_round_trip, render=True, valid=True)
+        for old, new, reason in (
+            ('data-sha256="', 'data-wrong-sha256="', 'hash/salt'),
+            ('data-salt="', 'data-wrong-salt="', 'hash/salt'),
+            ('data-salt="', 'data-salt="G', 'hash/salt'),
+            ('data-sha256="', 'data-sha256="G', 'hash/salt'),
+            ('<form ', '<form data-answer="synthetic" ', 'unsafe new checker'),
+            ('<form ', '<form action="https://example.invalid" ', 'unsafe new checker'),
+            ('data-flag-input ', 'data-flag-input name="answer" ', 'unsafe new checker'),
+            ('type="submit" disabled', 'type="submit"', 'submit guard'),
+            ('type="submit" disabled', 'type="submit" disabled formaction="/"', 'unsafe new checker'),
+            ('<article>', '<meta name="robots" content="noindex"><article>', 'not on a public post'),
+            ('<article>', '<div>', 'unsafe new checker'),
+        ):
+            rendered('ordinary checker mutation ' + old + new,
+                     lambda s, old=old, new=new: replace(ordinary_fixture(s), old, new), reason)
+        rendered('known ID cannot be reused on ordinary post', lambda s: replace(ordinary_fixture(s), 'flag-ordinary-fixture', 'flag-assignment000001-0'), 'checker')
+        rendered('legacy alias cannot be reused on ordinary post', lambda s: replace(ordinary_fixture(s), 'flag-ordinary-fixture', 'flag-assignment00000001-0'), 'checker')
+        rendered('original form missing despite retained progress', lambda s: replace(s/'2021/04/08/challenges.html', 'data-flag-check', 'data-removed-check'), 'missing original rendered checker IDs')
+        rendered('new form omitted from progress', lambda s: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p.pop())), 'progress/rendered membership')
+        rendered('new record without form', lambda s: (ordinary_fixture(s), (s/'2031/01/02/ordinary-fixture.html').unlink()), 'progress/rendered membership')
+        rendered('duplicate new record ID', lambda s: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p.append(copy.deepcopy(p[-1])))), 'practice/authored progress IDs')
+        rendered('duplicate rendered new ID', lambda s: (ordinary_fixture(s), write(s/'2031/01/02/zz-duplicate.html', (s/'2031/01/02/ordinary-fixture.html').read_text())), 'duplicate rendered checker ID')
+        for field, value in (('sha256', '0'*64), ('salt', '0'*32), ('page', '/wrong.html'), ('aliases', ['new-alias']), ('answer', 'synthetic')):
+            rendered('new progress mismatch ' + field,
+                     lambda s, field=field, value=value: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p[-1].update({field: value}))),
+                     'progress aliases' if field == 'aliases' else 'progress schema' if field == 'answer' else 'progress binding')
+        for field in ('sha256', 'salt'):
+            def duplicate_identity(site, field=field):
+                ordinary_fixture(site)
+                path = ordinary_fixture(site, ident='ordinary-other')
+                rows = json.loads((site/'challenges.json').read_text())
+                old, new = rows[-1][field], rows[-2][field]
+                replace(path, old, new)
+                mutate_json(site/'challenges.json', lambda p: p[-1].update({field: new}))
+            rendered('duplicate new ' + field, duplicate_identity, 'duplicate hash/salt')
         check('valid synthetic rendered root', render=True, valid=True)
         for old, new, reason in (
             ('data-challenge-practice ', 'data-wrong-practice ', 'browser widget count'),
@@ -596,7 +695,7 @@ def main():
         rendered('missing legacy practice link', lambda s: write(s/'ctf-tutorials/assignments.html', ''), 'legacy practice listing')
         rendered('lost old progress ID', lambda s: mutate_json(s/'challenges.json', lambda p: p.pop()), 'practice/authored progress IDs')
         rendered('lost authored progress ID', lambda s: mutate_json(s/'challenges.json', lambda p: p.pop(0)), 'practice/authored progress IDs')
-        rendered('extra progress ID', lambda s: mutate_json(s/'challenges.json', lambda p: p.append({'id': 'fabricated'})), 'practice/authored progress IDs')
+        rendered('extra progress ID', lambda s: mutate_json(s/'challenges.json', lambda p: p.append({'id': 'fabricated'})), 'new checker progress/rendered membership')
         rendered('wrong progress digest', lambda s: mutate_json(s/'challenges.json', lambda p: p[0].update(sha256='0'*64)), 'authored progress entry')
         rendered('wrong progress canonical page', lambda s: mutate_json(s/'challenges.json', lambda p: p[0].update(page=p[0]['page'] + 'index.html')), 'authored progress entry')
         rendered('authored progress alias loss', lambda s: mutate_json(s/'challenges.json', lambda p: p[0].update(aliases=['other'])), 'authored progress entry')
@@ -609,7 +708,7 @@ def main():
         rendered('index tutorial section lost', lambda s: mutate_json(s/'index.json', lambda p: p[0].update(section='root')), 'post index metadata')
         rendered('index event date lost', lambda s: mutate_json(s/'index.json', lambda p: p[0].update(date='2020-01-01T00:00:00+00:00')), 'post index metadata')
         rendered('index tags lost', lambda s: mutate_json(s/'index.json', lambda p: p[0].update(tags=[])), 'post index metadata')
-        rendered('index count reduced', lambda s: mutate_json(s/'index.json', lambda p: p.pop()), 'post index count')
+        rendered('index count reduced', lambda s: mutate_json(s/'index.json', lambda p: p.pop()), 'post index/archive membership')
         rendered('JSONL differs', lambda s: write(s/'index.jsonl', '{}\n'), 'post JSONL parity')
         rendered('sitemap entry missing', lambda s: replace(s/'sitemap.xml', ORIGIN + entry(BASE)['url'], ORIGIN + '/wrong/'), 'archive sitemap coverage')
         rendered('catalog short identity instead of post title', lambda s: replace(s/'challenges/index.html', entry(BASE)['post_title'], entry(BASE)['title']), 'alphabetical catalog membership')

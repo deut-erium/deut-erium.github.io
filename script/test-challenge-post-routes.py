@@ -17,7 +17,7 @@ import unittest
 from urllib.parse import quote, unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "agent_out/challenge-runtime/integration/post-route-gates"
+OUT = ROOT / "agent_out/authoring/post-route-gates"
 RETAINED = ROOT / "test/fixtures/challenge-posts/legacy-baseline.json"
 
 
@@ -30,7 +30,7 @@ def load_gate(name: str) -> dict:
     """
     path = ROOT / "script" / name
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP", "BASELINE_TAGS", "HIDDEN_ONLY_TAGS"}
+    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP"}
     nodes = []
     for node in tree.body:
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -44,7 +44,7 @@ def load_gate(name: str) -> dict:
     env = {
         "__name__": "route_fixture", "SOURCE": ROOT, "SITE": OUT, "ROOT": OUT,
         "SITE_URL": "https://deut-erium.github.io", "SITE_HOST": "deut-erium.github.io",
-        "EXTERNAL_PROJECT_PATHS": ("/pyfractal",), "GOATCOUNTER": "",
+        "EXTERNAL_PROJECT_PATHS": ("/pyfractal",), "GOATCOUNTER": "", "CONTENT": {"files": []},
     }
     exec(compile(ast.Module(body=nodes, type_ignores=[]), str(path), "exec"), env)
     return env
@@ -91,6 +91,14 @@ class RouteTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.work = Path(self.temp.name)
         self.site = load_gate("verify-site.py")
+        self.site["ROOT"] = self.work
+        hidden = {entry["url"] for entry in json.loads((ROOT / "_data/hidden_posts.json").read_text())["posts"]}
+        index = [row for row in self.retained_rows() if unquote(urlsplit(row["route"]).path) not in hidden]
+        for entry in json.loads((ROOT / "_data/authored_challenges.json").read_text())["entries"]:
+            header = (ROOT / entry["post_path"]).read_text().split("---", 2)[1]
+            tags = json.loads(next(line[6:] for line in header.splitlines() if line.startswith("tags: ")))
+            index.append({"route": entry["url"], "tags": tags})
+        write(self.work, "index.json", json.dumps(index))
         self.heading = load_gate("verify-heading-parity.py")
 
     def retained_rows(self):
@@ -102,7 +110,7 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(self.site["registered_challenge_routes"](), expected)
         self.assertEqual(self.heading["registered_challenge_routes"](), expected)
         routes = self.site["expected_post_routes"]()
-        self.assertEqual(len(routes), 101)
+        self.assertEqual(len(routes), sum(bool(self.site["DATE_POST"].fullmatch(p.name)) for p in (ROOT / "_posts").rglob("*") if p.is_file()))
         for path, route in expected.items():
             with self.subTest(path=path):
                 self.assertEqual(routes[route], "tutorials")
@@ -122,7 +130,7 @@ class RouteTests(unittest.TestCase):
         actual = self.site["expected_post_routes"]()
         old = {route: section for route, section in actual.items() if route not in registered.values()}
         self.assertEqual(len(baseline), 83)
-        self.assertEqual(old, baseline)
+        self.assertEqual({route: old.get(route) for route in baseline}, baseline)
         for source in (ROOT / "_posts").rglob("*.md"):
             match = self.heading["DATE_POST"].fullmatch(source.name)
             if not match or source.relative_to(ROOT).as_posix() in registered:
@@ -130,7 +138,9 @@ class RouteTests(unittest.TestCase):
             first = source.relative_to(ROOT / "_posts").parts[0]
             section = {"WriteUps": "writeups", "ctf-tutorials": "tutorials", "ramblings": "ramblings"}.get(first, "root")
             destination = self.heading["output_path"](source, match, section, registered)
-            self.assertEqual(baseline["/" + destination.relative_to(OUT).as_posix()], section)
+            route = "/" + destination.relative_to(OUT).as_posix()
+            if route in baseline:
+                self.assertEqual(baseline[route], section)
 
     def test_retained_section_archives_match_original_membership(self):
         rows = self.retained_rows()
@@ -144,9 +154,8 @@ class RouteTests(unittest.TestCase):
     def test_original_tags_and_single_new_tag_match_retained_index(self):
         tags = {tag for row in self.retained_rows() for tag in row["tags"]}
         self.assertEqual(len(tags), 149)
-        self.assertEqual(self.site["BASELINE_TAGS"], tags)
         current = self.site["expected_archive_tags"]()
-        visible = tags - self.site["HIDDEN_ONLY_TAGS"]
+        visible = {tag for row in json.loads((self.work / "index.json").read_text()) for tag in row["tags"]} - {"misc"}
         self.assertEqual(len(current), 135)
         self.assertEqual(current, visible | {"misc"})
         aliases = dict(line.split(": ") for line in (ROOT / "_data/tag_aliases.yml").read_text().splitlines() if line)
@@ -184,6 +193,26 @@ class RouteTests(unittest.TestCase):
             gate["SOURCE"] = self.work
             with self.assertRaisesRegex(SystemExit, message):
                 gate["registered_challenge_routes"]()
+
+    def test_missing_pinned_source_is_not_removed_from_expectations(self):
+        catalog_fixture(self.work)
+        path = "_posts/2020-02-03-baseline.md"
+        write(self.work, path, "---\ntitle: Pinned\n---\n")
+        self.site.update(SOURCE=self.work, CONTENT={"files": [{"path": path}]})
+        self.site["expected_post_routes"]()
+        (self.work / path).unlink()
+        with self.assertRaisesRegex(SystemExit, "baseline post source missing"):
+            self.site["expected_post_routes"]()
+
+    def test_markdown_extension_and_duplicate_routes(self):
+        catalog_fixture(self.work)
+        self.site["SOURCE"] = self.work
+        path = "_posts/2031-02-03-ordinary.markdown"
+        write(self.work, path, "---\ntitle: Ordinary\n---\n")
+        self.assertEqual(self.site["expected_post_routes"]()["/2031/02/03/ordinary.html"], "root")
+        write(self.work, path.replace(".markdown", ".md"), "---\ntitle: Duplicate\n---\n")
+        with self.assertRaisesRegex(SystemExit, "duplicate expected post route"):
+            self.site["expected_post_routes"]()
 
     def test_duplicate_registered_path_rejected(self):
         self.rejected_catalog(lambda data: data["entries"].append(copy.deepcopy(data["entries"][0])), "duplicate")
@@ -266,20 +295,20 @@ class RouteTests(unittest.TestCase):
             with self.subTest(size=len(bad)), self.assertRaisesRegex(SystemExit, "tag membership"):
                 self.site["check_archive_tags"](self.tags_html(bad))
 
-    def test_new_tag_is_derived_from_registered_source(self):
-        entry = catalog_fixture(self.work)
-        self.site["SOURCE"] = self.work
-        path = self.work / entry["post_path"]
-        path.write_text(path.read_text().replace('["challenges", "crypto"]', '["ctfs", "rsa", "fixture-new"]'))
-        visible = set(self.site["BASELINE_TAGS"]) - self.site["HIDDEN_ONLY_TAGS"]
-        self.assertEqual(self.site["expected_archive_tags"](), visible | {"fixture-new"})
+    def test_new_tag_is_derived_from_independent_post_index(self):
+        index = json.loads((self.work / "index.json").read_text())
+        before = self.site["expected_archive_tags"]()
+        index.append({"route": "/2031/01/02/ordinary.html", "tags": ["ordinary-new"]})
+        write(self.work, "index.json", json.dumps(index))
+        self.assertEqual(self.site["expected_archive_tags"](), before | {"ordinary-new"})
+        index.pop()
+        write(self.work, "index.json", json.dumps(index))
+        self.assertEqual(self.site["expected_archive_tags"](), before)
 
-    def test_malformed_new_tag_array_rejected(self):
-        entry = catalog_fixture(self.work)
-        self.site["SOURCE"] = self.work
-        for value in ('"misc"', '[null]', '[]', '["misc",]'):
-            write(self.work, entry["post_path"], f"---\ntags: {value}\n---\n")
-            with self.subTest(value=value), self.assertRaisesRegex(SystemExit, "invalid challenge post tags"):
+    def test_malformed_index_tag_array_rejected(self):
+        for value in ('"misc"', '[null]', '[" "]'):
+            write(self.work, "index.json", '[{"tags": ' + value + '}]')
+            with self.subTest(value=value), self.assertRaisesRegex(SystemExit, "invalid post index tags"):
                 self.site["expected_archive_tags"]()
 
     def archive_fixture(self):
@@ -316,20 +345,26 @@ class RouteTests(unittest.TestCase):
             write(self.work, env["post_output_path"](route), "<!doctype html><title>Fixture</title>")
         return env
 
-    def test_archive_feed_sitemap_block_with_98_listed_routes(self):
+    def test_archive_feed_sitemap_block_with_source_derived_routes(self):
         env = self.archive_fixture()
         exec(archive_gate_code(), env)
-        self.assertEqual(len(env["archive_order"]), 98)
+        self.assertEqual(set(env["archive_order"]), env["listed_routes"])
         self.assertEqual(env["tag_count"], 135)
 
-    def test_deliberate_payload_baseline(self):
-        tree = ast.parse((ROOT / "script/verify-site.py").read_text())
-        comparisons = [node for node in ast.walk(tree) if isinstance(node, ast.Compare)]
-        payload = next(node for node in comparisons if isinstance(node.left, ast.Tuple) and [item.id for item in node.left.elts] == ["forms", "challenge_scripts", "article_scripts", "code_frames", "math_expressions", "images"])
-        self.assertEqual(ast.literal_eval(payload.comparators[0]), (28, 13, 101, 355, 275, 103))
-        for name, expected in (("post_routes", 101), ("challenge_pages", 13), ("math_pages", 7)):
-            count = next(node for node in comparisons if isinstance(node.left, ast.Call) and isinstance(node.left.func, ast.Name) and node.left.func.id == "len" and len(node.left.args) == 1 and isinstance(node.left.args[0], ast.Name) and node.left.args[0].id == name)
-            self.assertEqual(ast.literal_eval(count.comparators[0]), expected)
+    def test_per_page_script_scope_accepts_posts_and_rejects_cancellation(self):
+        text = ('<body class="layout-article"><span class="site-brand__mark"></span>'
+                '<script src="/assets/js/theme.js"></script><script src="/assets/js/article.js"></script>')
+        audit = self.site["Audit"]()
+        audit.feed(text)
+        self.site["check_content_scope"](audit, text, "ordinary post", True)
+        for script in ("theme", "article"):
+            missing = text.replace(f'<script src="/assets/js/{script}.js"></script>', '')
+            duplicate = text + f'<script src="/assets/js/{script}.js"></script>'
+            for bad in (missing, duplicate):
+                with self.assertRaisesRegex(SystemExit, "scoping drift"):
+                    self.site["check_content_scope"](audit, bad, "ordinary post", True)
+        with self.assertRaisesRegex(SystemExit, "checker script"):
+            self.site["check_content_scope"](audit, text + '<script src="/assets/js/challenge.js"></script>', "ordinary post", True)
 
     def browser_scope_fixture(self):
         return ('<article id="article-body"><section data-challenge-practice data-id="fixture-2031-example" data-runtime="example">'

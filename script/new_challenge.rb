@@ -12,6 +12,7 @@
 
 require 'digest'
 require 'securerandom'
+require 'io/console'
 
 SOURCE = File.expand_path('..', __dir__)
 
@@ -23,18 +24,23 @@ end
 
 id = prompt('Challenge id (required, e.g. assignment000009-0)')
 abort('new_challenge: id is required') if id.empty?
-abort('new_challenge: id must not contain quotes') if id.match?(/["']/)
+abort('new_challenge: use letters, digits, hyphens and underscores in the id') unless id.match?(/\A[A-Za-z0-9][A-Za-z0-9_-]*\z/)
 
-flag = prompt('Flag (e.g. flag{lower_case_secret})')
+if $stdin.tty?
+  print 'Flag (hidden): '
+  $stdout.flush
+  flag = $stdin.noecho { $stdin.gets.to_s.strip }
+  puts
+else
+  flag = prompt('Flag (stdin)')
+end
 abort('new_challenge: flag is required') if flag.empty?
 
 hints = prompt('Hints, pipe separated, blank for none (max 3)')
 
 hint_list = hints.split('|').map(&:strip).reject(&:empty?)
-if hint_list.length > 3
-  hint_list = hint_list.first(3)
-  warn 'new_challenge: only the first 3 hints are kept'
-end
+abort('new_challenge: provide at most 3 hints') if hint_list.length > 3
+abort('new_challenge: hints cannot contain quotes, backslashes or Liquid delimiters') if hints.match?(/["\\\\]/) || hints.include?('{%') || hints.include?('{{')
 
 # Refuse ids that already ship on the site.
 existing = Dir.glob(File.join(SOURCE, '_posts', '**', '*.md')).sort +
@@ -50,7 +56,7 @@ existing.each do |path|
   abort("new_challenge: id #{id} already appears in #{path.sub("#{SOURCE}/", '')}")
 end
 
-salt = SecureRandom.hex(8)
+salt = SecureRandom.hex(16)
 digest = Digest::SHA256.hexdigest(flag + salt)
 
 parts = ["id=\"#{id}\"", "hash=\"#{digest}\"", "salt=\"#{salt}\""]
