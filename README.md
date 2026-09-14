@@ -298,9 +298,32 @@ git -C ../deuterium-deploy push origin gh-pages
 
 Do not edit generated HTML on `gh-pages`. The release contains `.nojekyll`, so GitHub Pages serves it without another Jekyll build.
 
-The current integrity gate retains migration-era source and aggregate-count baselines. A newly authored post may require deliberate updates to `script/imported-content-manifest.json` and the expected aggregate counts in `script/verify-site.py`. Review every reported difference rather than bypassing the checks.
+The integrity gate retains byte-exact pins for imported content. Ordinary new posts and valid producer-format encrypted followups are additive; they do not require changing historical pins or aggregate counts. Review every reported difference rather than bypassing the checks.
 
 The lowercase `/writeups/` deployment workaround is intentionally retired; `/WriteUps/` is the canonical integrated section. CI builds twice and compares JSON Lines manifests that cover every file and directory, file bytes, sizes, and permission modes. Symbolic links and special files fail the artifact gate.
+
+## Encrypted-chain runtime and checks
+
+See [the chain authoring steps](AUTHORING.md#chain-followup) for HTML checkers inside private Markdown, predecessor metadata, optional tab handoff and cleanup. Newly encrypted bodies use a version-2 AES-GCM envelope with authenticated metadata and a 200,000-iteration PBKDF2-SHA256 key. Existing versionless ciphertext keeps its 120,000-iteration reader. No existing article is reencrypted by an ordinary build.
+
+Challenge progress no longer stores answers. Automatic unlocking requires explicit tab-storage opt-in and successful decryption; progress receipts alone cannot unlock content. Same-origin scripts can read opted-in answers. Clear tab answers opts out and relocks the current article. Private checkers work after decryption, including with supported embedded images and downloads; other active forms and scripts remain outside the asset bundler's supported format.
+
+Run the native runtime checks without a browser:
+
+```sh
+node --test script/test-challenge-engine.mjs script/test-chain-session.mjs script/test-argon.mjs
+python3 script/test-blog-encryption.py
+python3 script/test-embed-post-assets.py
+```
+
+With cached Chromium and Puppeteer, the optional browser checks are:
+
+```sh
+node script/test-chain-browser.mjs
+node script/test-encrypted-chain-browser.mjs agent_out/release/site
+```
+
+The latter needs a fresh release and replaces its locked article body with synthetic producer output. It checks cross-page handoff, a private checker, legacy compatibility, wrong-key rejection and exact embedded download bytes. All requests are fulfilled locally or blocked; artifacts stay under `agent_out/encryption-chain/`. Neither test decrypts historical articles.
 
 ## Listing only the first encrypted article in a chain
 
@@ -315,13 +338,13 @@ printf '%s\n' "$KEY" | python3 script/encrypt_post.py \
 unset KEY
 ```
 
-Replace the example date, title and file paths. Use `--needs` to identify the preceding challenge when appropriate, as for a normal locked post. Link to the new route, `/locked/2099/01/02/next-article.html`, from the preceding article's encrypted HTML before encrypting that article.
+Replace the example date, title and file paths. Use `--needs` to identify the preceding checker and `--previous` to identify the preceding encrypted page. Link to the new route, `/locked/2099/01/02/next-article.html`, from the preceding article's encrypted HTML before encrypting that article.
 
 These pages keep the article layout and unlock screen but do not enter the posts collection. They stay out of the homepage, archive, tag counts, pagination, related-post lists, feeds, JSON post indexes, section locked-page lists, challenge index and sitemaps. The build also sets `noindex`. A contradictory indexing flag cannot override this; marking a regular post unlisted fails rather than hiding it inconsistently. Only the first entry should be authored as a post.
 
 The route, title, teaser and ciphertext are public. Anyone with the URL can open the page, and the repository and analytics may reveal it. `noindex` is advisory. Unlisted is not access control; encryption protects only the body passed to the encryptor. Keep plaintext and original assets outside the published source tree. Raw files under `locked/` fail the build; assets belong inside the encrypted HTML.
 
-New files under `locked/` require source-commit, byte-count and hash registration in the content manifest, just like posts. They do not increase post-count baselines. The existing `--page` mode still makes ordinary section pages; use `--unlisted` for followups that must stay out of listings.
+Valid producer-format additions under `locked/` pass without a content-manifest edit. Existing pinned pages still require their original bytes. The existing `--page` mode still makes ordinary section pages; use `--unlisted` for followups that must stay out of listings.
 
 Run `bundle exec ruby script/test-unlisted-pages.rb` for the offline Jekyll publication checks. The asset-bundler suite also tests an unlisted producer/WebCrypto image roundtrip. No example article is published by either test.
 

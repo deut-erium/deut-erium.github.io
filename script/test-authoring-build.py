@@ -235,7 +235,8 @@ This form contains only a digest and salt.
     run([sys.executable, 'script/verify-imported-content.py'], 'collision-source-shape')
     shutil.rmtree(SITE)
     rejection = run(['sh', 'script/build-site.sh', str(SITE)], 'collision-build', accept=False)
-    assert 'unlisted page output collides' in rejection
+    assert any(message in rejection for message in (
+        'unlisted page output collides', 'encryption chain: record must name exactly one rendered locked output'))
     assert not (SITE / followup_route.lstrip('/')).exists()
     collision.unlink()
 

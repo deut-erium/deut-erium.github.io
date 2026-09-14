@@ -118,6 +118,11 @@ try {
   for (let n = 0; n < 50; n++) { try { if (await fs.readFile(path.join(downloads, 'notes.txt'), 'utf8') === notes) break; } catch (_) {} await new Promise(resolve => setTimeout(resolve, 50)); }
   assert.equal(await fs.readFile(path.join(downloads, 'notes.txt'), 'utf8'), notes);
   await clean();
+  assert.equal(await page.$eval('#flag-synthetic-next', input => {
+    const form = input.closest('form'), label = form.querySelector('label').getBoundingClientRect();
+    const sound = form.querySelector('.flag-check__sound').getBoundingClientRect();
+    return sound.top >= label.bottom || sound.bottom <= label.top;
+  }), true, 'Sound control must not overlap the checker label');
   await page.screenshot({ path: path.join(out, 'manual-open-mobile.png'), fullPage: true });
   await page.reload({ waitUntil: 'networkidle0' }); assert.equal(await page.$('#private-first'), null);
   result.cases.push('Default solve stores no answer; wrong/manual unlock, embedded image/download bytes, reload locked');

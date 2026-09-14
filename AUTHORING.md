@@ -98,7 +98,7 @@ mkdir -p "$HOME/blog-private"
 chmod 700 "$HOME/blog-private"
 ```
 
-Private Markdown is a body only: no YAML front matter or Liquid, even inside code examples. The helper automatically converts it with local Kramdown/KaTeX before encryption, using the heading and math conventions above. Its temporary HTML sibling is mode 0600 and removed afterwards. An `.html` input must already be a rendered body fragment. Encrypt only trusted content; decrypted HTML is inserted without sanitization, and widgets or raw TeX are not initialized afterwards.
+Private Markdown is a body only: no YAML front matter or Liquid, even inside code examples. The helper automatically converts it with local Kramdown/KaTeX before encryption, using the heading and math conventions above. Its temporary HTML sibling is mode 0600 and removed afterwards. An `.html` input must already be a rendered body fragment. Encrypt only trusted content; decrypted HTML is inserted without sanitization, and only local challenge checkers are initialized afterwards. Other widgets and raw TeX are not initialized in the browser.
 
 Choose a nonempty, single-line key without surrounding whitespace (at most 4096 characters). Run the command, then enter the key only at its hidden `Unlock key:` prompt; it refuses to fall back to visible input.
 
@@ -119,12 +119,23 @@ Write a separate private body for the next door, then encrypt it with that door'
 ```sh
 python3 script/blog.py encrypt "$HOME/blog-private/next-door.md" \
   --out locked/2026/09/07/next-door.md --unlisted --section tutorials \
-  --title "Next door" --teaser "Use the answer from the previous door."
+  --title "Next door" --teaser "Use the answer from the previous door." \
+  --needs next-door-0 --previous /2026/09/06/private-notes.html
 ```
 
 This creates `/locked/2026/09/07/next-door.html` with `unlisted: true`, `sitemap: false`, and `noindex: true`. Valid new producer-format pages pass the additive source gate without a manifest edit; existing pinned locked files remain protected. Keep the generated envelope intact, and never put plaintext or raw attachments under `locked/`.
 
-Place the next-door link and a discoverable answer inside the preceding private body, then encrypt that body too. Each door requires manual key entry and Unlock. `needs` can show a solved-state hint; it does not enforce prerequisites, redirect, supply a key, or auto-unlock. Challenge includes inside ciphertext are not evaluated or initialized, so use a puzzle with a manually discoverable answer there.
+Place the next-door link and its puzzle inside the preceding private body, then encrypt that body too. To add a checker inside that body, run:
+
+```sh
+ruby script/new_challenge.rb --html
+```
+
+Use `next-door-0` as its ID, enter the exact same answer used to encrypt the next door, and paste only the generated form and hint paragraphs into the private Markdown. This HTML needs no Liquid evaluation and also works with embedded attachments. Keep its unnamed input, disabled submit button, digest, salt and output intact; the asset bundler rejects general forms, scripts and submission attributes. Challenge includes inside ciphertext still do not work.
+
+By default, every door requires manual entry. Readers can enable **Keep correct answers in this tab for chained pages** before solving a checker. The checked answer is then available to pages whose `--needs` matches that checker ID; decryption, not a saved solve timestamp, decides whether they open. If a checker was already solved, **Enter answer again** allows a fresh submission. Answer matching is case-sensitive. Do not put keys in links or query strings.
+
+`--previous` names the preceding encrypted page, not the challenge page. Omit it on the first door. The example assumes the first door is the root-section post above; use its actual route for another section. The build rejects missing predecessors, cycles and envelope/chain mismatches. Pages show their chain position and longest branch length, but no automatic next-page links are published. `--needs` alone does not enforce a prerequisite or prevent direct manual unlocking.
 
 Unlisted pages stay out of normal lists, search/feed listings, and the sitemap. Their routes, ciphertext, and chain metadata remain public; anyone can copy the ciphertext and guess keys offline.
 
@@ -158,7 +169,9 @@ python3 script/blog.py encrypt "$HOME/blog-private/article.md" \
   --tags "crypto" --teaser "An encrypted article. Enter its key to read it." --force
 ```
 
-Enter the intended key at the hidden prompt again. The command replaces the shell and ciphertext rather than merging metadata: repeat any description, tags, teaser, `--needs`, unlisted/section, and embedding options. Review the refreshed chain entry and any public key-source notes. `--force` does not authorize changing baseline-pinned files; do not hand-edit ciphertext or overwrite an imported article.
+New encryption uses a version-2 envelope: AES-256-GCM, PBKDF2-SHA256 at 200,000 iterations, and authenticated version, work factor, salt and challenge ID. Existing versionless envelopes remain readable at 120,000 iterations; nothing is automatically reencrypted. Use `--legacy` only for compatibility testing. These work factors do not make a weak puzzle answer resistant to offline guessing. Direct HTML must be UTF-8 and fit within 24 MiB minus 28 bytes; embedding has the lower default limit above.
+
+Enter the intended key at the hidden prompt again. The command replaces the shell and ciphertext rather than merging metadata: repeat any description, tags, teaser, `--needs`, unlisted/section, and embedding options. Omitting `--previous` preserves an existing predecessor; `--previous=''` removes it. Review the refreshed chain entry and any public key-source notes. `--force` does not authorize changing baseline-pinned files; do not hand-edit ciphertext or overwrite an imported article.
 
 ## Preview and check
 
@@ -168,7 +181,11 @@ python3 script/blog.py preview --port 8000
 
 Each run builds and verifies a fresh release before serving it on loopback. This is not watch mode: stop with Ctrl-C and rerun after edits. Open the printed address and check the route, title, excerpt, listings, math, code, and downloads. For your new locks, test correct/incorrect keys and embedded downloads, and inspect public output for unintended plaintext. Do not unlock existing historical articles for an authoring test. Use `build` instead when no server is needed.
 
-Use a dedicated browser profile and clear site data afterwards. Locks store only an opened marker in `sessionStorage` and do not restore decrypted content on reload. Challenge checkers persist successful flags in same-origin `localStorage` (`deuterium-solves`); those flags, decrypted DOM, and saved downloads need separate cleanup. Encryption is not account authentication or protection from scripts already running on the page. For strictly offline browser review, block external requests: production analytics remains in the HTML.
+Use a dedicated browser profile and clear site data afterwards. Progress, attempts and hint usage persist locally without answers. Old stored answer records are stripped when the new checker engine loads; legacy receipts remain visible as unverified progress. The scoreboard exports answer-free JSON, validates imports, and marks imported receipts unverified unless a supplied legacy answer can be checked. Private or retired checker records remain device-only history and are excluded from public scoreboard transfers. These are editable local records, not competition scores.
+
+Optional answer handoff uses `sessionStorage`, limited to 32 answers. **Clear tab answers** removes them, opts out and relocks the current encrypted article; **Lock again** relocks without forgetting remembered answers. Reload can reopen an article while its answer remains remembered. Browser restore or tab duplication may retain tab storage, so close-tab behavior is not a cleanup guarantee. Clearing cannot erase downloaded files, copies, other tabs or browser memory. Storage failures can prevent persistent cleanup; clear site data manually if a control reports failure.
+
+Encryption does not protect against scripts already running on the page, including trusted analytics. For strictly offline browser review, block external requests: production analytics remains in the HTML.
 
 ## Optional PDFs
 
