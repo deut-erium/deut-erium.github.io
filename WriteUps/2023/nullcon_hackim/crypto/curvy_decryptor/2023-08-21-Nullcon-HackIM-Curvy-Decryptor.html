@@ -7,8 +7,8 @@
 <meta property="og:title" content="Nullcon HackIM 2023 Crypto - Curvy Decryptor" />
 <meta name="author" content="deuterium" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="Nullcon HackIM 2023 Crypto - Curvy Decryptor writeup: cryptography, ECC, invalid_curve, CRT, ECDLP" />
-<meta name="twitter:description" property="og:description" content="Nullcon HackIM 2023 Crypto - Curvy Decryptor writeup: cryptography, ECC, invalid_curve, CRT, ECDLP" />
+<meta name="description" content="CTF writeup: Nullcon HackIM 2023’s Curvy Decryptor admits off-curve guests. Shift EC points past the decryption filter, then recover the private key with invalid curves and CRT." />
+<meta name="twitter:description" property="og:description" content="CTF writeup: Nullcon HackIM 2023’s Curvy Decryptor admits off-curve guests. Shift EC points past the decryption filter, then recover the private key with invalid curves and CRT." />
 <link rel="canonical" href="https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html" />
 <meta property="og:url" content="https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html" />
 <meta property="og:site_name" content="deuterium’s blog" />
@@ -18,9 +18,11 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Nullcon HackIM 2023 Crypto - Curvy Decryptor" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2023-08-21T00:00:00+05:30","datePublished":"2023-08-21T00:00:00+05:30","description":"Nullcon HackIM 2023 Crypto - Curvy Decryptor writeup: cryptography, ECC, invalid_curve, CRT, ECDLP","headline":"Nullcon HackIM 2023 Crypto - Curvy Decryptor","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html"},"url":"https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2023-08-21T00:00:00+05:30","datePublished":"2023-08-21T00:00:00+05:30","description":"CTF writeup: Nullcon HackIM 2023’s Curvy Decryptor admits off-curve guests. Shift EC points past the decryption filter, then recover the private key with invalid curves and CRT.","headline":"Nullcon HackIM 2023 Crypto - Curvy Decryptor","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html"},"url":"https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+<meta name="citation_title" content="Nullcon HackIM 2023 Crypto - Curvy Decryptor"><meta name="citation_author" content="deuterium"><meta name="citation_publication_date" content="2023-08-21"><meta name="citation_abstract_html_url" content="https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html">
+<link rel="alternate" type="application/x-bibtex" title="BibTeX citation" href="/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.bib"><meta name="citation_pdf_url" content="https://deut-erium.github.io/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.pdf">
+<link rel="alternate" type="application/pdf" title="PDF" href="/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.pdf"><link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -114,11 +116,11 @@
 </script>
 <link rel="stylesheet" href="/assets/css/theme-remediation.css?v=e7e632ea">
 <link rel="stylesheet" href="/assets/css/components/page-layout.css?v=e2ac4a43">
-<link rel="stylesheet" href="/assets/css/components/article-layout.css?v=1f42bb4f"><link rel="stylesheet" href="/assets/katex/katex.min.css?v=8e412e34">
+<link rel="stylesheet" href="/assets/css/components/article-layout.css?v=de853136"><link rel="stylesheet" href="/assets/katex/katex.min.css?v=8e412e34">
 <link rel="stylesheet" href="/assets/css/math.css?v=1d8860e1">
 <script defer src="/assets/js/math.js?v=df95df28"></script><link rel="stylesheet" href="/assets/css/components/decorations.css?v=0c523e7d">
-<link id="print-stylesheet" rel="stylesheet" media="print" href="/assets/css/print.css?v=6d8294a4">
-<script>window.__deuteriumAssetVersion = "ce6243f5";</script>
+<link id="print-stylesheet" rel="stylesheet" media="print" href="/assets/css/print.css?v=1d5f2d39">
+<script>window.__deuteriumAssetVersion = "41e7b560";</script>
 <script defer src="/assets/js/decorations.js?v=5c425992"></script>
 <script defer src="/assets/js/theme.js?v=c77e34f4"></script>
 <script defer src="/assets/js/share.js?v=6fbc2119"></script>
@@ -311,7 +313,7 @@
       <span>2023.08.21</span>
       <span>nullcon hackim</span>
     </div>
-    <h1 itemprop="headline">Nullcon HackIM 2023 Crypto - Curvy Decryptor</h1><p class="record-head__abstract" itemprop="description">Nullcon HackIM 2023 Crypto - Curvy Decryptor writeup: cryptography, ECC, invalid_curve, CRT, ECDLP</p><dl class="record-facts">
+    <h1 itemprop="headline">Nullcon HackIM 2023 Crypto - Curvy Decryptor</h1><p class="record-head__abstract" itemprop="description">CTF writeup: Nullcon HackIM 2023's Curvy Decryptor admits off-curve guests. Shift EC points past the decryption filter, then recover the private key with invalid curves and CRT.</p><dl class="record-facts">
       <div><dt>Event</dt><dd>nullcon hackim</dd></div>
       <div><dt>Category</dt><dd>crypto</dd></div>
       <div><dt>Topic</dt><dd>ECC</dd></div>
@@ -320,6 +322,21 @@
       <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.md">Markdown source</a>
       <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor">Attached files</a>
       <a href="#article-body">Read article</a>
+      <details class="publication-cite">
+  <summary class="action publication-cite__toggle">Cite</summary>
+  <div class="publication-cite__panel">
+    <p class="publication-cite__hint">Copy this citation into your bibliography, or download the BibTeX file.</p><label class="publication-cite__field">BibTeX<textarea readonly rows="9" cols="72" spellcheck="false">@misc{post-3dae336e7ab049dd13152d843815da82b5ac68f0f92246717fe99530b850efd0,
+  title = {{Nullcon HackIM 2023 Crypto - Curvy Decryptor}},
+  author = {deuterium},
+  howpublished = {Online: https://deut-erium.github.io/WriteUps/2023/nullcon\_hackim/crypto/curvy\_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html},
+  url = {https://deut-erium.github.io/WriteUps/2023/nullcon\_hackim/crypto/curvy\_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.html},
+  year = {2023},
+  date = {2023-08-21}
+}
+</textarea></label>
+    <a class="publication-cite__download" href="/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.bib" type="application/x-bibtex" download>Download .bib</a>
+  </div>
+</details><a class="publication-pdf" href="/WriteUps/2023/nullcon_hackim/crypto/curvy_decryptor/2023-08-21-Nullcon-HackIM-Curvy-Decryptor.pdf" type="application/pdf">PDF</a>
     </div>
     <meta itemprop="author" content="deuterium">
   </header>

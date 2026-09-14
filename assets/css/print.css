@@ -10,7 +10,8 @@
   }
 
   @layer print {
-    @page { margin: 16mm; }
+    /* Leave paper size and orientation to the reader's print dialog. */
+    @page { margin: 14mm; }
 
     :where(html, body, body *) {
       color: #000 !important;
@@ -46,8 +47,8 @@
       overflow: visible !important;
       background: #fff !important;
       color-scheme: light !important;
-      font-size: 11pt !important;
-      line-height: 1.5 !important;
+      font-size: 12pt !important;
+      line-height: 1.55 !important;
     }
 
     /* Shells become ordinary blocks so long articles can cross pages. */
@@ -69,6 +70,7 @@
       overflow: visible !important;
       contain: none !important;
       columns: auto !important;
+      break-inside: auto !important;
     }
     .skip-link, .site-header, .site-footer, .site-nav, .skin-menu,
     .skin-dice, .theme-toggle, .site-share, .site-share__popover,
@@ -82,12 +84,14 @@
     }
 
     .record-head { margin-bottom: 16pt !important; }
-    .record-head__key, .record-facts { font-size: 9pt !important; }
+    .record-head__key, .record-facts { font-size: 10pt !important; }
     .record-facts { display: block !important; margin: 6pt 0 !important; padding: 0 !important; }
     .record-facts > div { display: inline-block !important; margin-right: 12pt !important; }
     .record-facts dd { margin: 0 !important; }
     .prose, .record-head { text-align: left !important; font-weight: 400 !important; }
-    .prose :is(p, li, dt, dd) { orphans: 3; widows: 3; }
+    .prose :is(p, li, dt, dd) { orphans: 3 !important; widows: 3 !important; }
+    /* Long lists, quotes and tables must be able to continue on the next page. */
+    .prose :is(p, ul, ol, dl, li, blockquote, table, tbody) { break-inside: auto !important; }
     .prose :is(p, ul, ol, dl, figure, table) { margin-block: 8pt !important; }
     h1, h2, h3, h4, h5, h6 {
       position: static !important;
@@ -98,13 +102,14 @@
       line-height: 1.25 !important;
       text-align: left !important;
       font-weight: 700 !important;
-      break-after: avoid-page;
+      break-inside: avoid-page !important;
+      break-after: avoid-page !important;
       overflow-wrap: anywhere !important;
     }
     h1 { font-size: 18pt !important; }
     h2 { font-size: 14pt !important; }
     h3 { font-size: 12pt !important; }
-    h4, h5, h6 { font-size: 11pt !important; }
+    h4, h5, h6 { font-size: 12pt !important; }
     .prose :is(strong, b) { font-weight: 700 !important; }
     .prose :is(em, i) { font-style: italic !important; }
     .prose :is(ul, ol) { padding-left: 18pt !important; list-style-position: outside !important; }
@@ -115,11 +120,13 @@
     .prose blockquote { margin: 8pt 0 !important; padding: 0 0 0 10pt !important; border-left: 1pt solid !important; }
     .prose hr { height: 0 !important; border-top: .5pt solid !important; }
     .prose a { text-decoration: underline !important; }
+    /* Long URLs can wrap without imposing text metrics on math descendants. */
+    .prose a:not(:where(.katex, .katex *)) { overflow-wrap: anywhere !important; }
 
     /* Wrap both raw and enhanced code; remove scroll/containment clipping. */
     .prose :is(pre, code, kbd, samp, pre *, code *) {
       font-family: ui-monospace, "SFMono-Regular", Consolas, monospace !important;
-      font-size: 9pt !important;
+      font-size: 10pt !important;
       line-height: 1.4 !important;
     }
     .prose :is(.code-frame, .code-frame__viewport, .highlight, pre, pre code) {
@@ -152,17 +159,25 @@
       padding: 0 !important;
       overflow: visible !important;
       contain: none !important;
-      break-inside: avoid;
+      break-inside: avoid-page !important;
     }
     .prose .katex-display > .katex { display: block !important; text-align: center !important; }
     .prose .katex-display > .katex > .katex-html { white-space: normal !important; }
     .prose img:not(.emoji), .prose svg:not(.katex *) {
       max-width: 100% !important;
       height: auto !important;
-      break-inside: avoid;
+      break-inside: avoid-page !important;
     }
     .prose table { display: table !important; width: 100% !important; overflow: visible !important; border-collapse: collapse !important; }
     .prose :is(th, td) { min-width: 0 !important; padding: 4pt !important; border-bottom: .5pt solid !important; overflow-wrap: anywhere !important; }
-    .prose tr { break-inside: avoid; }
+    /* Repeat table labels, not sticky screen headers. Avoid splitting a small
+       figure from its caption; oversized content can still exceed a page. */
+    .prose thead { display: table-header-group !important; }
+    .prose tfoot { display: table-footer-group !important; }
+    .prose :is(thead, tfoot, th) { position: static !important; }
+    .prose :is(tr, figure) { break-inside: avoid-page !important; }
+    .prose :is(caption, figcaption) { font-size: 10pt !important; }
+    .prose caption { caption-side: top !important; break-after: avoid-page !important; }
+    .prose figcaption { break-before: avoid-page !important; }
   }
 }

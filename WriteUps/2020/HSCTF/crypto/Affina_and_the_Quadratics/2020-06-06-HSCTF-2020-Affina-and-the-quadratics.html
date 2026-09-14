@@ -7,8 +7,8 @@
 <meta property="og:title" content="HSCTF 2020 Crypto - Affina and the quadratics" />
 <meta name="author" content="deuterium" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="HSCTF 2020 Crypto - Affina and the quadratics writeup: cryptography, affine, classical, substitution" />
-<meta name="twitter:description" property="og:description" content="HSCTF 2020 Crypto - Affina and the quadratics writeup: cryptography, affine, classical, substitution" />
+<meta name="description" content="CTF writeup: Quadratic homework moonlights as an affine cipher in HSCTF 2020’s Affina and the Quadratics. Its coefficients give the game away." />
+<meta name="twitter:description" property="og:description" content="CTF writeup: Quadratic homework moonlights as an affine cipher in HSCTF 2020’s Affina and the Quadratics. Its coefficients give the game away." />
 <link rel="canonical" href="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html" />
 <meta property="og:url" content="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html" />
 <meta property="og:site_name" content="deuterium’s blog" />
@@ -18,9 +18,11 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="HSCTF 2020 Crypto - Affina and the quadratics" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-06T00:00:00+05:30","datePublished":"2020-06-06T00:00:00+05:30","description":"HSCTF 2020 Crypto - Affina and the quadratics writeup: cryptography, affine, classical, substitution","headline":"HSCTF 2020 Crypto - Affina and the quadratics","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html"},"url":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"deuterium"},"dateModified":"2020-06-06T00:00:00+05:30","datePublished":"2020-06-06T00:00:00+05:30","description":"CTF writeup: Quadratic homework moonlights as an affine cipher in HSCTF 2020’s Affina and the Quadratics. Its coefficients give the game away.","headline":"HSCTF 2020 Crypto - Affina and the quadratics","mainEntityOfPage":{"@type":"WebPage","@id":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html"},"url":"https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+<meta name="citation_title" content="HSCTF 2020 Crypto - Affina and the quadratics"><meta name="citation_author" content="deuterium"><meta name="citation_publication_date" content="2020-06-06"><meta name="citation_abstract_html_url" content="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html">
+<link rel="alternate" type="application/x-bibtex" title="BibTeX citation" href="/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.bib"><meta name="citation_pdf_url" content="https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.pdf">
+<link rel="alternate" type="application/pdf" title="PDF" href="/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.pdf"><link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/WriteUps/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -114,9 +116,9 @@
 </script>
 <link rel="stylesheet" href="/assets/css/theme-remediation.css?v=e7e632ea">
 <link rel="stylesheet" href="/assets/css/components/page-layout.css?v=e2ac4a43">
-<link rel="stylesheet" href="/assets/css/components/article-layout.css?v=1f42bb4f"><link rel="stylesheet" href="/assets/css/components/decorations.css?v=0c523e7d">
-<link id="print-stylesheet" rel="stylesheet" media="print" href="/assets/css/print.css?v=6d8294a4">
-<script>window.__deuteriumAssetVersion = "ce6243f5";</script>
+<link rel="stylesheet" href="/assets/css/components/article-layout.css?v=de853136"><link rel="stylesheet" href="/assets/css/components/decorations.css?v=0c523e7d">
+<link id="print-stylesheet" rel="stylesheet" media="print" href="/assets/css/print.css?v=1d5f2d39">
+<script>window.__deuteriumAssetVersion = "41e7b560";</script>
 <script defer src="/assets/js/decorations.js?v=5c425992"></script>
 <script defer src="/assets/js/theme.js?v=c77e34f4"></script>
 <script defer src="/assets/js/share.js?v=6fbc2119"></script>
@@ -309,7 +311,7 @@
       <span>2020.06.06</span>
       <span>HSCTF</span>
     </div>
-    <h1 itemprop="headline">HSCTF 2020 Crypto - Affina and the quadratics</h1><p class="record-head__abstract" itemprop="description">HSCTF 2020 Crypto - Affina and the quadratics writeup: cryptography, affine, classical, substitution</p><dl class="record-facts">
+    <h1 itemprop="headline">HSCTF 2020 Crypto - Affina and the quadratics</h1><p class="record-head__abstract" itemprop="description">CTF writeup: Quadratic homework moonlights as an affine cipher in HSCTF 2020's Affina and the Quadratics. Its coefficients give the game away.</p><dl class="record-facts">
       <div><dt>Event</dt><dd>HSCTF</dd></div>
       <div><dt>Category</dt><dd>crypto</dd></div>
       <div><dt>Topic</dt><dd>Classical</dd></div>
@@ -318,6 +320,21 @@
       <a href="https://github.com/deut-erium/deut-erium.github.io/blob/master/_posts/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.md">Markdown source</a>
       <a href="https://github.com/deut-erium/deut-erium.github.io/tree/master/_posts/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics">Attached files</a>
       <a href="#article-body">Read article</a>
+      <details class="publication-cite">
+  <summary class="action publication-cite__toggle">Cite</summary>
+  <div class="publication-cite__panel">
+    <p class="publication-cite__hint">Copy this citation into your bibliography, or download the BibTeX file.</p><label class="publication-cite__field">BibTeX<textarea readonly rows="9" cols="72" spellcheck="false">@misc{post-b849e56ca92ff477ba8f8044817346bed04ebe3912d30d59c39d4f5b87166b6a,
+  title = {{HSCTF 2020 Crypto - Affina and the quadratics}},
+  author = {deuterium},
+  howpublished = {Online: https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina\_and\_the\_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html},
+  url = {https://deut-erium.github.io/WriteUps/2020/HSCTF/crypto/Affina\_and\_the\_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.html},
+  year = {2020},
+  date = {2020-06-06}
+}
+</textarea></label>
+    <a class="publication-cite__download" href="/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.bib" type="application/x-bibtex" download>Download .bib</a>
+  </div>
+</details><a class="publication-pdf" href="/WriteUps/2020/HSCTF/crypto/Affina_and_the_Quadratics/2020-06-06-HSCTF-2020-Affina-and-the-quadratics.pdf" type="application/pdf">PDF</a>
     </div>
     <meta itemprop="author" content="deuterium">
   </header>
