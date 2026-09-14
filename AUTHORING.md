@@ -197,3 +197,12 @@ python3 script/blog.py prepare-publish
 ```
 
 Add `--pdf` when publishing PDFs. Preparation rebuilds and verifies committed source, commits a detached local deployment candidate, and prints the exact HUMAN ONLY atomic, non-force push command. Review the reported revisions and candidate, then have the human run that printed command unchanged. If refs changed or a prerequisite fails, stop rather than force an overwrite. The source commit is the rollback point; nothing is published until the human push.
+
+## Common problems
+
+- Port 8000 is occupied: stop the old server or use `preview --port 8001`.
+- Permission denied under a generated directory: run `doctor`. From your normal host account, fix only the reported output directory, for example `sudo chown -R "$(id -u):$(id -g)" agent_out/blog`. For an old PDF cache, use `agent_out/publications` instead. Do not run builds with sudo.
+- Missing dependencies: follow the Build section in [README.md](README.md), then rerun `doctor`. Encryption additionally needs `cryptography` or `Cryptodome` in the Python environment running the helper.
+- Private Markdown conversion fails: remove YAML front matter and Liquid, check TeX syntax, and confirm KaTeX is installed. Private conversion diagnostics are deliberately suppressed because they can quote plaintext.
+- Source is dirty during preparation: review and commit your intended edits first. The helper never makes source commits for you.
+- Remote update rejected: refresh refs and review what changed. Never force-push over an unexpected remote revision.
