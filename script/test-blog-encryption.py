@@ -409,6 +409,16 @@ try {
         self.check_chain((ENTRY_ROUTE, "synthetic-entry-check", lock["data-salt"]))
         self.assertFalse((self.root / "locked").exists())
 
+    def test_writeup_chain_route_preserves_dated_source_path(self):
+        source, replacements = self.markdown("entry")
+        output = "_posts/WriteUps/2031/example/crypto/notes/2031-01-02-notes.md"
+        events = self.invoke(source, output, "entry", "--embed-assets", "--embed-linked-files",
+                             "--needs", "synthetic-entry-check")
+        _metadata, lock, blob = self.payload(output)
+        self.roundtrip(lock, blob, "entry", events[0]["html"], replacements)
+        self.check_chain(("/WriteUps/2031/example/crypto/notes/2031-01-02-notes.html",
+                          "synthetic-entry-check", lock["data-salt"]))
+
     def test_unlisted_followup_and_force_rewrite_deduplicate_chain(self):
         entry_lock = self.listed()
         entry_bytes = (self.root / ENTRY).read_bytes()

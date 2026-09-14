@@ -172,7 +172,8 @@ def route_for(out_path: Path, page_mode: bool) -> str:
     if section in {"ramblings", "ctf-tutorials"}:
         return f"/{section}/{year}/{match[2]}/{match[3]}/{slug}.html"
     if section == "WriteUps":
-        return "/" + "/".join(parts[2:-1] + [f"{slug}.html"])
+        # SectionMetadata preserves the full dated source path for writeups.
+        return "/" + rel.relative_to("_posts").with_suffix(".html").as_posix()
     return f"/{year}/{match[2]}/{match[3]}/{slug}.html"
 
 def update_chain(route: str, needs: str, salt_hex: str, key_answer: str) -> None:
