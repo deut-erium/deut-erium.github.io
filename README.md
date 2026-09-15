@@ -302,6 +302,22 @@ The integrity gate retains byte-exact pins for imported content. Ordinary new po
 
 The lowercase `/writeups/` deployment workaround is intentionally retired; `/WriteUps/` is the canonical integrated section. CI builds twice and compares JSON Lines manifests that cover every file and directory, file bytes, sizes, and permission modes. Symbolic links and special files fail the artifact gate.
 
+## Missing pages and the reader manual
+
+The root and section 404 pages show invented titles assembled from eligible public article titles. Generation is deterministic and bounded to 32 candidates; locked, hidden, unlisted and noindex posts are excluded. Exact originals and normalized duplicates are rejected. JavaScript selects another candidate without fetching anything; without JavaScript, a static title and recovery links remain. Small corpora can produce no candidates.
+
+The reader manual at `/man/deuterium/` covers themes, challenges, scoreboard transfers, encrypted-page controls, browser practice, the playground, Tetrasquares, citations, printing and sharing. Keep its controls and links in sync when changing those features.
+
+Offline checks:
+
+```sh
+ruby script/test-markov-titles.rb
+node script/test-markov-404.mjs
+python3 script/test-man-page.py
+# Also check the generated root and section 404 pages:
+BLOG_SITE=agent_out/release/site node script/test-markov-404.mjs
+```
+
 ## Encrypted-chain runtime and checks
 
 See [the chain authoring steps](AUTHORING.md#chain-followup) for HTML checkers inside private Markdown, predecessor metadata, optional tab handoff and cleanup. Newly encrypted bodies use a version-2 AES-GCM envelope with authenticated metadata and a 200,000-iteration PBKDF2-SHA256 key. Existing versionless ciphertext keeps its 120,000-iteration reader. No existing article is reencrypted by an ordinary build.
