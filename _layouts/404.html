@@ -1,6 +1,9 @@
 ---
 layout: base
 ---
+{%- assign _markov_titles = site.data.markov_404.titles -%}
+{%- assign _markov_count = _markov_titles | size -%}
+<link rel="stylesheet" href="{{ '/assets/css/features/markov-404.css' | relative_url }}?v={{ '/assets/css/features/markov-404.css' | asset_v }}">
 <main id="content" class="error-shell">
   <div class="error-code" aria-hidden="true"><span>4</span><i></i><span>0</span><i></i><span>4</span></div>
   <p class="eyebrow">404</p>
@@ -10,5 +13,20 @@ layout: base
     <a class="action action--primary" href="{{ '/' | relative_url }}">Return home</a>
     <a class="action" href="{{ '/archive.html' | relative_url }}">Search the archive</a>
   </nav>
+  <section class="markov-404" aria-labelledby="markov-404-heading">
+    <h2 id="markov-404-heading">An article that doesn't exist</h2>
+    {%- if _markov_count > 0 -%}
+    <p>A made-up title, recombined from public article titles. There is no article behind it.</p>
+    <p id="markov-404-title" class="markov-404__title" role="status" aria-live="polite" aria-atomic="true">{{ _markov_titles.first | escape }}</p>
+    <button id="markov-404-another" class="action" type="button" aria-controls="markov-404-title" hidden disabled>Another nonexistent article</button>
+    {%- if _markov_count > 1 -%}
+    <noscript><p>Enable JavaScript to try another title.</p></noscript>
+    {%- endif -%}
+    <script id="markov-404-data" type="application/json">{{ site.data.markov_404.json }}</script>
+    <script defer src="{{ '/assets/js/features/markov-404.js' | relative_url }}?v={{ '/assets/js/features/markov-404.js' | asset_v }}"></script>
+    {%- else -%}
+    <p>No recombined title is available from the current public article titles. The links above lead to real pages.</p>
+    {%- endif -%}
+  </section>
   {%- if content != empty -%}<div class="prose error-shell__content">{{ content }}</div>{%- endif -%}
 </main>
