@@ -58,6 +58,20 @@ $$
 
 Use language-tagged code fences, descriptive image alt text, and established tags. `--mathjax` sets `mathjax: true` for build-time KaTeX styles, not a browser math renderer; omit it when unnecessary. Replace the TODO description if you did not supply one.
 
+## Cryptography explorer
+
+The evolving explorer has the permanent route `/cryptography/`. Its replaceable source is `_explorations/cryptography.html`, kept as a complete standalone HTML document. Jekyll extracts its body at build time and places it inside the blog layout; the export's inline title, styles, and script are discarded. The site-owned stylesheet and runtime therefore survive content replacements.
+
+To update it, replace one file and run its contract check:
+
+```sh
+cp /path/to/updated/cryptography.html _explorations/cryptography.html
+python3 script/test-cryptography-explorer.py
+python3 script/blog.py preview --port 8000
+```
+
+The replacement must retain `main#outline`, the `search`, `clear`, `collapse`, and `empty` IDs, unique entry IDs, and a `data-search` value on each `details` element. Keep it as one complete page with one inline style and one inline script so the same export remains usable outside the blog. Edit `assets/css/features/cryptography-explorer.css` only when changing presentation, and edit `assets/js/cryptography-explorer.js` only when changing interaction behavior.
+
 | Section | Source for this example | Public route |
 | --- | --- | --- |
 | root | `_posts/2026-09-06-nonce-notes.md` | `/2026/09/06/nonce-notes.html` |

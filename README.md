@@ -40,6 +40,7 @@ Sections:
 - `/WriteUps/` - CTF writeups and challenge attachments
 - `/ctf-tutorials/` - CTF tutorials and assignments
 - `/ramblings/` - informal posts
+- `/cryptography/` - searchable cryptography explorer
 - `/tetrasquares/` - Tetrasquares
 - `/tetrasquares/catalog/` and `/tetrasquares/scoring/` - its catalog and scoring guide
 
@@ -80,6 +81,7 @@ node script/test-article-css.mjs
 node script/test-page-layout.mjs
 ruby script/test-article-contents.rb
 python3 script/test-print-fonts.py
+python3 script/test-cryptography-explorer.py
 ```
 
 The optional `script/test-article-layout.mjs` browser check serves only a supplied generated site and blocks external requests. Its `--help` lists the theme matrix, prefix builds, no-JavaScript checks and comparison options. It requires a locally available Chromium and Puppeteer; the native CI checks do not download a browser.
