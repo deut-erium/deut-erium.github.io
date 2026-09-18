@@ -7,8 +7,8 @@
 <meta property="og:title" content="DEUTERIUM(1)" />
 <meta name="author" content="deuterium" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="The user manual for deuterium’s blog itself. Browsing, skins, the theme dice, dark mode, and known bugs." />
-<meta name="twitter:description" property="og:description" content="The user manual for deuterium’s blog itself. Browsing, skins, the theme dice, dark mode, and known bugs." />
+<meta name="description" content="The reader manual for deuterium’s blog. Themes, local challenge progress, encrypted pages, browser practice, games, citations, and sharing." />
+<meta name="twitter:description" property="og:description" content="The reader manual for deuterium’s blog. Themes, local challenge progress, encrypted pages, browser practice, games, citations, and sharing." />
 <link rel="canonical" href="https://deut-erium.github.io/man/deuterium/" />
 <meta property="og:url" content="https://deut-erium.github.io/man/deuterium/" />
 <meta property="og:site_name" content="deuterium’s blog" />
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="DEUTERIUM(1)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"The user manual for deuterium’s blog itself. Browsing, skins, the theme dice, dark mode, and known bugs.","headline":"DEUTERIUM(1)","url":"https://deut-erium.github.io/man/deuterium/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"The reader manual for deuterium’s blog. Themes, local challenge progress, encrypted pages, browser practice, games, citations, and sharing.","headline":"DEUTERIUM(1)","url":"https://deut-erium.github.io/man/deuterium/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="alternate" type="application/atom+xml" title="deuterium's blog" href="/feed.xml"><link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
@@ -110,11 +110,11 @@
     document.write('<link id="skin-stylesheet" rel="stylesheet" disabled>');
   }
 </script>
-<link rel="stylesheet" href="/assets/css/theme-remediation.css?v=e7e632ea">
+<link rel="stylesheet" href="/assets/css/theme-remediation.css?v=12c75bec">
 <link rel="stylesheet" href="/assets/css/components/page-layout.css?v=e2ac4a43">
 <link rel="stylesheet" href="/assets/css/components/article-layout.css?v=de853136"><link rel="stylesheet" href="/assets/css/components/decorations.css?v=0c523e7d">
 <link id="print-stylesheet" rel="stylesheet" media="print" href="/assets/css/print.css?v=1d5f2d39">
-<script>window.__deuteriumAssetVersion = "41e7b560";</script>
+<script>window.__deuteriumAssetVersion = "2dae51f7";</script>
 <script defer src="/assets/js/decorations.js?v=5c425992"></script>
 <script defer src="/assets/js/theme.js?v=c77e34f4"></script>
 <script defer src="/assets/js/share.js?v=6fbc2119"></script>
@@ -305,7 +305,7 @@
   <style>
     .man-shell { padding: 1.2rem 1.4rem 1.6rem; background: var(--paper); border: 3px solid var(--ink); }
     .man-page { max-width: 52rem; margin-inline: auto; }
-    .man-page { font-family: var(--mono); font-size: .95rem; line-height: 1.55; color: var(--ink); }
+    .man-page { font-family: var(--mono); font-size: .95rem; line-height: 1.55; color: var(--ink); overflow-wrap: anywhere; }
     .man-head, .man-foot {
       display: flex; justify-content: space-between; gap: 1rem;
       font-family: var(--mono); font-size: .8rem; color: var(--muted);
@@ -326,40 +326,176 @@
     .man-synopsis { margin: .2rem 0 .3rem 1.2rem; }
     .man-opt { display: grid; grid-template-columns: minmax(9rem, auto) 1fr; gap: .2rem 1rem; margin: .25rem 0; }
     .man-opt dt { font-weight: 700; white-space: nowrap; }
-    .man-opt dd { margin: 0; }
+    .man-opt dd { margin: 0; min-width: 0; }
     .man-page a { color: var(--ink); text-underline-offset: .18em; }
     .man-page dl { margin: .3rem 0; }
     .man-page ol { margin: .3rem 0 .3rem 1.4rem; padding: 0; }
     .man-page li { margin: .18rem 0; }
+    .man-example { font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
     .man-bug { margin-left: 1.2rem; }
-    @media (max-width: 40rem) { .man-opt { grid-template-columns: 1fr; } }
+    @media (max-width: 40rem) {
+      .man-opt { grid-template-columns: 1fr; }
+      .man-opt dt { white-space: normal; }
+      .man-head, .man-foot { flex-wrap: wrap; }
+      .man-name { margin-left: 1.2rem; }
+    }
   </style>
   <article class="man-page">
     <div class="man-head" aria-hidden="true"><span>DEUTERIUM(1)</span><span>User Commands</span><span>DEUTERIUM(1)</span></div>
     <h1 id="man-title">deuterium(1)</h1>
 
-    <h2>NAME</h2>
+    <h2 id="NAME">NAME</h2>
     <p class="man-name"><b>deuterium</b> &mdash; security blog, occasionally self-aware</p>
 
-    <h2>SYNOPSIS</h2>
+    <h2 id="SYNOPSIS">SYNOPSIS</h2>
     <p class="man-synopsis"><b>deuterium</b> [<b>--skin</b>=<i>SKIN</i>] [<b>--no-buttons</b>] [<i>POST</i>&hellip;]</p>
+    <p>The command line is a joke. The links and browser controls below work.</p>
 
-    <h2>DESCRIPTION</h2>
-    <p>CTF writeups, cryptography tutorials, and ramblings.</p>
+    <h2 id="DESCRIPTION">DESCRIPTION</h2>
+    <p>CTF writeups, cryptography tutorials, and ramblings. Start at
+      <a href="/">Home</a>, browse the
+      <a href="/archive.html">Archive</a>, or pick
+      <a href="/WriteUps/">Writeups</a>,
+      <a href="/ctf-tutorials/">Tutorials</a>, or
+      <a href="/ramblings/">Ramblings</a>.
+      Archive filtering needs JavaScript; the full list remains readable without it.
+      The <a href="/feed.xml">feed</a> works in a feed reader.</p>
+    <p>For controls, see <a href="#OPTIONS">OPTIONS</a>, <a href="#GAME-CENTER">GAME CENTER</a>,
+      <a href="#SCOREBOARD">SCOREBOARD</a>, <a href="#ENCRYPTED-PAGES">ENCRYPTED PAGES</a>,
+      <a href="#BROWSER-PRACTICE">BROWSER PRACTICE</a>, <a href="#PLAYGROUND">PLAYGROUND</a>,
+      <a href="#TETRASQUARES">TETRASQUARES</a>, <a href="#CITATIONS-AND-PRINT">CITATIONS AND PRINT</a>,
+      and <a href="#SHARING">SHARING</a>.</p>
 
-    <h2>OPTIONS</h2>
+    <h2 id="OPTIONS">OPTIONS</h2>
     <dl class="man-opt">
-      <dt><b>--skin</b>=<i>SKIN</i></dt><dd>Choose a theme with <code>?skin=</code>, or roll the dice. The choice is remembered, like most mistakes.</dd>
+      <dt><b>--skin</b>=<i>SKIN</i></dt><dd>Open the Theme menu and choose a Visual theme, or use
+        <code>?skin=</code> with a theme ID. Try
+        <a href="/man/deuterium/?skin=grid-meltdown">Grid Meltdown</a> or return to
+        <a href="/man/deuterium/?skin=rpn-garden">RPN Garden</a>.
+        A valid query overrides the saved skin and saves the new choice. An unknown ID falls back
+        to the saved skin, or RPN Garden. The choice is remembered, like most mistakes.</dd>
+      <dt>dice</dt><dd>The dice button chooses a different visual theme from the picker.
+        It does not change the separate light/dark preference.</dd>
+      <dt>dark mode</dt><dd>The moon/sun button switches light and dark mode and remembers your choice.
+        Until you choose, it follows the system preference. Theme controls need JavaScript;
+        blocked storage can make preferences last only for the current page.</dd>
       <dt><b>--no-buttons</b></dt><dd>Unsupported. See <a href="#BUGS">BUGS</a>.</dd>
       <dt><b>-v</b>, <b>--verbose</b></dt><dd>No-op. Everything is already verbose.</dd>
       <dt><b>-h</b>, <b>--help</b></dt><dd>You are reading it.</dd>
     </dl>
 
-    <h2>GAME CENTER</h2>
-    <p>Some posts carry challenge boxes. Flags are checked in your browser.
-    The scoreboard saves your progress here.</p>
+    <h2 id="GAME-CENTER">GAME CENTER</h2>
+    <p>Some posts carry challenge boxes. Enter your answer and press Check flag. The checker
+      runs SHA-256 locally in your browser; it needs JavaScript and Web Crypto, normally over HTTPS.
+      Answers are case-sensitive, with surrounding whitespace removed. Follow the challenge's
+      stated format. A format warning is not a hint about the answer.</p>
+    <p>When a post supplies hints, use its hint buttons to reveal them. Attempts and used hints
+      are saved alongside local solve progress. Sound toggles the success chime; the system's
+      reduced-motion setting also disables that chime and replaces confetti with a static ribbon.
+      Neither the hints nor the scoreboard are a competition referee.</p>
 
-    <h2>EXIT STATUS</h2>
+    <h2 id="SCOREBOARD">SCOREBOARD</h2>
+    <p>The <a href="/scoreboard/">scoreboard</a> reads this browser's progress:
+      solve timestamps, local verification labels, attempts, and hints used. These records are
+      editable, answer-free history, not an account score or proof of a solve. Clearing browser
+      site data can lose them; there is no automatic cross-device sync.</p>
+    <p>Choose Copy public progress as JSON, then paste the result in another browser's scoreboard
+      and press Import pasted progress. If clipboard access is blocked, copy the text from the box.
+      Exports use version 3 and include only public challenge IDs and their known aliases.
+      Private or retired challenges remain old local progress on this device, outside the transfer.</p>
+    <p>This empty version-3 example contains no answers or challenge IDs. Importing it does not reset progress:</p>
+    <pre class="man-example" id="progress-example">{"version":3,"solves":{},"attempts":{},"hints":{}}</pre>
+    <p>Imports validate the schema, public IDs, dates, counts, and hint numbers before merging.
+      An imported receipt alone stays unverified, even if its JSON claims verification;
+      an already checked local solve keeps its status. Version-2 legacy imports are also accepted.
+      Only a supplied legacy answer that matches the public checker can make that imported solve
+      checked locally. A bad answer or invalid record rejects the import. Legacy answers are not
+      saved in progress or handed to encrypted pages. Old answers already in local storage are
+      stripped when the checker engine loads, leaving unverified history. Storage failures can
+      prevent that cleanup or make new progress temporary.</p>
+
+    <h2 id="ENCRYPTED-PAGES">ENCRYPTED PAGES</h2>
+    <p>An encrypted article needs its actual key. Enter it in the unlock field and press Unlock;
+      manual unlocking does not require saved progress or answer storage. Decryption runs locally
+      with JavaScript and Web Crypto over HTTPS (or localhost). A checked scoreboard row cannot
+      unlock ciphertext. Public titles, teasers, routes, and ciphertext are not private, even for
+      pages omitted from listings.</p>
+    <p>Answer handoff is optional and off by default. Before solving, enable Keep correct answers
+      in this tab for chained pages on a checker, or Remember answers in this tab on an encrypted
+      page. Matching pages can then try the remembered answer; successful decryption still decides
+      whether they open. If you solved before opting in, use Enter answer again and submit it afresh.
+      Tab storage holds at most 32 answers, dropping the oldest entries when full.</p>
+    <dl class="man-opt">
+      <dt>Relock</dt><dd>Hides the opened article without forgetting remembered answers. During decryption
+        the control says Cancel unlock. A reload may open the article again while its answer is saved.</dd>
+      <dt>Clear tab answers</dt><dd>On a checker, removes saved tab answers, opts out, and relocks an
+        encrypted article on the current page. On the encrypted-page form, the equivalent control
+        is Clear saved answers and lock. Neither control erases scoreboard progress.</dd>
+    </dl>
+    <p>Tab answers are plaintext in sessionStorage, readable by scripts on this site, including
+      analytics. Browser restore or tab duplication may retain them; closing a tab is not a cleanup
+      guarantee. Clearing or relocking cannot erase other tabs, browser memory, copied text, or
+      downloaded attachments. Downloads made after unlocking are plaintext. If clearing reports a
+      storage failure, saved answers may remain; use the browser's site-data controls for cleanup.</p>
+
+    <h2 id="BROWSER-PRACTICE">BROWSER PRACTICE</h2>
+    <p>Some archived challenges have a practice terminal. Choose a listed Version, then Start;
+      nothing runs before that. Enter sends input, Shift+Enter adds a line, and Send submits the
+      input box. Stop interrupts computation. Reset clears the running session without starting
+      another, but keeps saved completion. JavaScript and module Worker support are required.</p>
+    <p>Practice rewards are public dummy values, not original event flags. They do not satisfy the
+      original answer checker or unlock its encrypted writeup. Completion is stored separately
+      for each challenge version on this device, outside the scoreboard and its JSON export.
+      The terminal's Browser limits and console API panel documents input limits and scripted use.</p>
+
+    <h2 id="PLAYGROUND">PLAYGROUND</h2>
+    <p>The <a href="/playground/">playground</a> runs Z3 in your browser.
+      In Sudoku, choose Easy, Medium, or Hard, edit the grid, and press Solve; Clear empties it.
+      In SMT-LIB, pick Trivial assert, n-Queens (6), or Sudoku, as SMT-LIB, or write your own
+      SMT-LIB 2 script, then press Run. These are the available presets.</p>
+    <p>The engine loads on first Solve or Run, not on page open. It is about 35 MB uncompressed
+      and may register a service worker and reload to enable worker execution. This needs
+      JavaScript and WebAssembly. The worker path has a 30-second run budget; the synchronous
+      fallback cannot guarantee an interrupt and can stall on heavier scripts.</p>
+
+    <h2 id="TETRASQUARES">TETRASQUARES</h2>
+    <p><a href="/tetrasquares/">Tetrasquares</a> is the falling-tetromino game.
+      Build gold and silver 4x4, 6x6, and 8x8 squares. Choose Start 1,008-piece daily for a dated
+      game or Start endless play. The game lists keyboard bindings, lets you rebind them, and
+      supplies on-screen buttons. Its layout is separate from the blog's theme picker.</p>
+    <p>The <a href="/tetrasquares/catalog/">square catalog</a> has examples
+      and construction practice. Practice has no gravity or timer, disables Hold, and does not
+      count toward daily results. The <a href="/tetrasquares/scoring/">scoring guide</a>
+      explains how squares earn points when their rows clear. The game and interactive catalog
+      need JavaScript; the scoring guide is readable without it.</p>
+
+    <h2 id="CITATIONS-AND-PRINT">CITATIONS AND PRINT</h2>
+    <p>Eligible public articles and writeups have a Cite panel with selectable BibTeX and
+      Download .bib. These work without JavaScript. A PDF link appears only in releases built
+      with optional PDFs; an ordinary HTML release does not advertise missing files. Locked,
+      hidden, unlisted, and noindex material is excluded, as are standalone pages such as this manual.</p>
+    <p>Use the browser's Print command, Ctrl+P (Cmd+P on macOS), for a print view or your browser's
+      Save as PDF option. That is separate from a published PDF download. Inspect the preview
+      before saving, especially if you have unlocked private content; a local printout or PDF
+      remains a copy after you relock the page.</p>
+
+    <h2 id="SHARING">SHARING</h2>
+    <p>The floating Share this page button needs JavaScript. It opens a QR code and the page's
+      canonical URL, with Copy link. Escape, an outside click, or the same button closes it.
+      If QR loading or clipboard access fails, the URL text is still available to copy manually.</p>
+    <p>Article footers also have Share this article. That expandable panel contains a build-time
+      QR image, URL text, and Open QR SVG link, all usable without JavaScript. With JavaScript,
+      its button uses the browser's share sheet when available, then falls back to clipboard
+      copying or displaying the URL if sharing fails. Both QR controls share the canonical page
+      address, not the current theme query, fragment, or saved progress. A link to an encrypted
+      page does not carry its key or unlocked content.</p>
+
+    <h2 id="MISSING-PAGES">MISSING PAGES</h2>
+    <p>The <a href="/404.html">404 page</a> handles missing addresses.
+      Its invented article titles are wordplay, not recovered posts or promises of future
+      articles. Use the <a href="/archive.html">archive</a> to find actual posts.</p>
+
+    <h2 id="EXIT-STATUS">EXIT STATUS</h2>
     <dl class="man-opt">
       <dt><b>0</b></dt><dd>You learned something.</dd>
       <dt><b>1</b></dt><dd>You pressed the buttons anyway.</dd>
@@ -367,17 +503,23 @@
       <dt><b>418</b></dt><dd>See <a href="/teapot/">teapot(1)</a>.</dd>
     </dl>
 
-    <h2>ENVIRONMENT</h2>
+    <h2 id="ENVIRONMENT">ENVIRONMENT</h2>
     <dl class="man-opt">
       <dt><b>HOME</b></dt><dd>You are here.</dd>
+      <dt>JavaScript</dt><dd>Optional for ordinary reading, required for the interactive controls described above.</dd>
+      <dt>browser storage</dt><dd>Preferences and progress belong to this browser profile and site origin.
+        Private browsing, blocked storage, quotas, and clearing site data can affect persistence.</dd>
     </dl>
 
-    <h2>FILES</h2>
+    <h2 id="FILES">FILES</h2>
     <dl class="man-opt">
-      <dt><i>~/.deuterium/progress</i></dt><dd>Saved in your browser.</dd>
+      <dt><i>~/.deuterium/progress</i></dt><dd>Imaginary pathname. Real progress lives in browser localStorage,
+        under deuterium-solves, deuterium-attempts, and deuterium-hints.</dd>
+      <dt>tab answers</dt><dd>Optional sessionStorage entry deuterium-chain-session; excluded from progress exports.</dd>
+      <dt>practice progress</dt><dd>Separate localStorage entry deuterium-browser-practice-v1.</dd>
     </dl>
 
-    <h2>BUGS</h2>
+    <h2 id="BUGS">BUGS</h2>
     <ol class="man-bug">
       <li>Buttons may be pressed. Consequences unknown.</li>
       <li>The dice is not cryptographically secure. Do not derive keys from it.</li>
@@ -386,18 +528,32 @@
       <li>If you find a real one, the <a href="/.well-known/security.txt">security policy</a> accepts mail.</li>
     </ol>
 
-    <h2>STANDARDS</h2>
+    <h2 id="STANDARDS">STANDARDS</h2>
     <p>Implements no known standard. Aspires to RFC&nbsp;2324.</p>
 
-    <h2>AUTHOR</h2>
+    <h2 id="AUTHOR">AUTHOR</h2>
     <p>Written by Himanshu Sheoran. Complaints may be directed to the teapot.</p>
+    <p>This is the reader manual. Authors working in a source checkout can use
+      <code>python3 script/blog.py --help</code>, <code>python3 script/blog.py preview --port 8000</code>,
+      or <code>python3 script/blog.py build</code>. Preview builds and verifies before serving locally;
+      it is not watch mode. Full author instructions live in the checkout's AUTHORING.md, which
+      is not deployed as a site page.</p>
 
-    <h2>SEE ALSO</h2>
-    <p><a href="/about.html">about(1)</a>, <a href="/archive.html">archive(1)</a>,
-    <a href="/teapot/">teapot(1)</a>, <a href="/WriteUps/">writeups(7)</a>,
-    sudo(8), crypto(7), crypt(3) (unrelated)</p>
+    <h2 id="SEE-ALSO">SEE ALSO</h2>
+    <p><a href="/about.html">about(1)</a>,
+      <a href="/archive.html">archive(1)</a>,
+      <a href="/scoreboard/">scoreboard(1)</a>,
+      <a href="/playground/">playground(1)</a>,
+      <a href="/tetrasquares/">tetrasquares(1)</a>,
+      <a href="/tetrasquares/catalog/">square-catalog(5)</a>,
+      <a href="/tetrasquares/scoring/">square-scoring(7)</a>,
+      <a href="/404.html">404(1)</a>,
+      <a href="/teapot/">teapot(1)</a>,
+      <a href="/WriteUps/">writeups(7)</a>,
+      sudo(8), crypto(7), crypt(3) (unrelated)</p>
 
-    <div class="man-foot" aria-hidden="true"><span>deuterium 4.18</span><span>2026-09</span><span>DEUTERIUM(1)</span></div>
+    <!-- build-site.sh sets site.time from BUILD_TIME or the source commit timestamp. -->
+    <div class="man-foot" aria-hidden="true"><span>deuterium 4.18</span><span>Build 2026-09-18</span><span>DEUTERIUM(1)</span></div>
   </article>
 </main>
 <link rel="stylesheet" href="/assets/css/components/site-footer.css?v=813c21e1">

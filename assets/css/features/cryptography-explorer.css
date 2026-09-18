@@ -1,0 +1,203 @@
+.crypto-shell {
+  --wide-page-measure: 82rem;
+}
+
+.crypto-panel {
+  padding: clamp(1rem, 2.5vw, 2rem);
+  color: var(--ink);
+  background: var(--paper);
+  border: 6px solid var(--navy);
+  border-radius: .7rem;
+}
+
+.crypto-explorer {
+  font-family: var(--body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.crypto-explorer .tools {
+  position: sticky;
+  z-index: 5;
+  top: .5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  align-items: center;
+  margin: 0 0 1.4rem;
+  padding: .8rem;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  border: 3px solid var(--navy);
+  border-radius: .6rem;
+  box-shadow: 0 .3rem 0 color-mix(in srgb, var(--navy) 40%, transparent);
+  backdrop-filter: blur(.4rem);
+}
+
+.crypto-explorer input,
+.crypto-explorer button {
+  min-height: 2.8rem;
+  border: 3px solid var(--navy);
+  border-radius: .45rem;
+}
+
+.crypto-explorer input {
+  flex: 1 1 22rem;
+  min-width: min(100%, 14rem);
+  padding: .55rem .75rem;
+  color: var(--ink);
+  background: var(--paper-low);
+}
+
+.crypto-explorer button {
+  padding: .5rem .8rem;
+  color: #fff;
+  background: var(--navy);
+  box-shadow: 0 .18rem 0 color-mix(in srgb, var(--navy) 55%, transparent);
+  font-family: var(--keys);
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.crypto-explorer button:hover {
+  color: var(--navy);
+  background: var(--orange);
+}
+
+.crypto-explorer #empty {
+  padding: 1rem;
+  background: var(--paper-low);
+  border-left: .45rem solid var(--orange);
+}
+
+.crypto-explorer details {
+  min-width: 0;
+  scroll-margin-top: 6rem;
+}
+
+.crypto-explorer details.topic {
+  margin: .75rem 0;
+  background: var(--paper-low);
+  border: 2px solid var(--rule);
+  border-left: .4rem solid var(--shell);
+  border-radius: .45rem;
+}
+
+.crypto-explorer details.topic details.topic {
+  margin: .65rem 0 .65rem .6rem;
+  background: var(--paper);
+  border-width: 0 0 0 3px;
+  border-radius: 0;
+}
+
+.crypto-explorer details.concept {
+  margin: .65rem 0 .65rem .6rem;
+  background: color-mix(in srgb, var(--paper-low) 68%, var(--paper));
+  border: 1px solid var(--rule);
+  border-left: .35rem solid var(--orange);
+  border-radius: .4rem;
+}
+
+.crypto-explorer summary {
+  padding: .7rem .85rem;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.crypto-explorer #outline > details.topic > summary {
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+}
+
+.crypto-explorer details.topic details.topic > summary {
+  font-size: 1.16rem;
+}
+
+.crypto-explorer details.concept > summary {
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.crypto-explorer summary::marker {
+  color: var(--orange);
+}
+
+.crypto-explorer details[open] > summary {
+  color: var(--navy);
+  background: var(--lcd);
+  border-bottom: 2px solid var(--navy);
+}
+
+html[data-theme="dark"] .crypto-explorer details[open] > summary {
+  color: var(--lcd-ink);
+}
+
+.crypto-explorer .body {
+  padding: .15rem clamp(.75rem, 2vw, 1.15rem) 1rem;
+}
+
+.crypto-explorer .body p,
+.crypto-explorer .body ul,
+.crypto-explorer .body ol {
+  margin-block: .75rem;
+}
+
+.crypto-explorer .body ul,
+.crypto-explorer .body ol {
+  padding-left: 1.5rem;
+}
+
+.crypto-explorer .body li + li {
+  margin-top: .35rem;
+}
+
+.crypto-explorer .body h3 {
+  margin: 1.15rem 0 .35rem;
+  font-family: var(--keys);
+  font-size: .95rem;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.crypto-explorer .body h3:has(+ .papers) {
+  font-size: .78rem;
+}
+
+.crypto-explorer .topic-description {
+  color: var(--muted);
+}
+
+.crypto-explorer .papers {
+  font-size: .95rem;
+}
+
+.crypto-explorer .permalink {
+  display: inline-block;
+  margin-top: .35rem;
+  font-family: var(--keys);
+  font-size: .8rem;
+}
+
+.crypto-explorer a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 42rem) {
+  .crypto-panel {
+    padding: .7rem;
+  }
+
+  .crypto-explorer .tools {
+    position: static;
+  }
+
+  .crypto-explorer input,
+  .crypto-explorer button {
+    flex: 1 1 100%;
+  }
+
+  .crypto-explorer details.topic details.topic,
+  .crypto-explorer details.concept {
+    margin-left: .25rem;
+  }
+}
