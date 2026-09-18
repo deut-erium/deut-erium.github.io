@@ -18,6 +18,8 @@ class CryptographyExplorerBuilder
     # override site scripts.
     body = body.gsub(%r{<script\b[^>]*>.*?</script\s*>}mi, '')
     body = body.sub(%r{\A\s*<h1\b[^>]*>.*?</h1\s*>}mi, '')
+    body = body.sub(%r{<main\b([^>]*\bid=["']outline["'][^>]*)>}i, '<div\1>')
+    body = body.sub(%r{</main\s*>}i, '</div>')
 
     <<~HTML
       <div class="crypto-explorer" data-cryptography-explorer>
