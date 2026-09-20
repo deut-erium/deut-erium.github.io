@@ -9,7 +9,9 @@ class ZkblocksEmbedBuilder
   def self.build(site)
     html = File.read(File.join(site.source, SOURCE), encoding: 'UTF-8')
     head = html[%r{<head\b[^>]*>(.*?)</head>}mi, 1]
-    body = html[%r{<body\b[^>]*>(.*?)</body>}mi, 1]
+    body_open = html.match(%r{<body\b[^>]*>}i)
+    body_close = html.rindex(%r{</body\s*>}i)
+    body = html[body_open.end(0)...body_close] if body_open && body_close && body_close > body_open.end(0)
     raise "#{SOURCE} must contain one head and one body" unless head && body
 
     styles = head.scan(%r{<style\b[^>]*>(.*?)</style>}mi).flatten
@@ -22,10 +24,11 @@ class ZkblocksEmbedBuilder
     body = body.sub(%r{</main\s*>}i, '</div>')
     # Runtime panels include a hidden verdict title. Preserve heading semantics
     # with ARIA without introducing a hidden document-level h2 in the host.
-    body = body.gsub(%r{<h2\b([^>]*)>}i, '<p role="heading" aria-level="2"\1>')
-               .gsub(%r{</h2\s*>}i, '</p>')
-               .gsub(%r{<h3\b([^>]*)>}i, '<p role="heading" aria-level="3"\1>')
-               .gsub(%r{</h3\s*>}i, '</p>')
+    body = body.sub('<h2 class="verdict-title"', '<p role="heading" aria-level="2" class="verdict-title"')
+               .sub('</h2>', '</p>')
+               .sub('<h2 id="proofHeading"', '<p role="heading" aria-level="2" id="proofHeading"')
+               .sub('</h2>', '</p>')
+               .sub('<h3>Verified score</h3>', '<p role="heading" aria-level="3">Verified score</p>')
     css = styles.map { |style| scope_css(style) }.join("\n")
 
     <<~HTML
