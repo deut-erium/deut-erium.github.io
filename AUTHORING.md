@@ -72,6 +72,20 @@ python3 script/blog.py preview --port 8000
 
 The replacement must retain `main#outline`, the `search`, `clear`, `collapse`, and `empty` IDs, unique entry IDs, and a `data-search` value on each `details` element. Keep it as one complete page with one inline style and one inline script so the same export remains usable outside the blog. Edit `assets/css/features/cryptography-explorer.css` only when changing presentation, and edit `assets/js/cryptography-explorer.js` only when changing interaction behavior.
 
+## zkblocks app
+
+The zkblocks app is published at `/zkblocks/index.html`. Its replaceable standalone export lives at `_apps/zkblocks.html`. The build scopes the app's inline CSS, preserves its embedded scripts and runtime payload, and places it between the normal blog header and footer. GoatCounter runs once in the host page and records the explicit `/zkblocks/index.html` analytics path.
+
+To replace the app:
+
+```sh
+cp /path/to/updated/zkblocks.html _apps/zkblocks.html
+python3 script/test-zkblocks.py
+python3 script/blog.py preview --port 8000
+```
+
+Keep the export as a complete HTML document with its embedded styles, scripts, unique IDs, and `main` element. The standalone CSP remains part of the source contract but is not copied into the host document because it would block the blog's local assets and GoatCounter. The app CSS is isolated under `.zkblocks-app`; host geometry belongs in `assets/css/features/zkblocks-host.css`.
+
 | Section | Source for this example | Public route |
 | --- | --- | --- |
 | root | `_posts/2026-09-06-nonce-notes.md` | `/2026/09/06/nonce-notes.html` |
