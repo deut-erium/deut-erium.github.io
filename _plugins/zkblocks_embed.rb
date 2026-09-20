@@ -24,6 +24,8 @@ class ZkblocksEmbedBuilder
     # with ARIA without introducing a hidden document-level h2 in the host.
     body = body.gsub(%r{<h2\b([^>]*)>}i, '<p role="heading" aria-level="2"\1>')
                .gsub(%r{</h2\s*>}i, '</p>')
+               .gsub(%r{<h3\b([^>]*)>}i, '<p role="heading" aria-level="3"\1>')
+               .gsub(%r{</h3\s*>}i, '</p>')
     css = styles.map { |style| scope_css(style) }.join("\n")
 
     <<~HTML
