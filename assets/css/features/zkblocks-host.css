@@ -1,0 +1,43 @@
+.zkblocks-host {
+  width: min(calc(100% - 2rem), 96rem);
+  min-width: 0;
+  margin: 1rem auto;
+  overflow: clip;
+  background: #0d1117;
+  border: 6px solid var(--navy);
+  border-radius: .8rem;
+  box-shadow: .6rem .7rem 0 color-mix(in srgb, var(--navy) 65%, transparent);
+}
+
+.zkblocks-app {
+  width: 100%;
+  min-width: 0;
+}
+
+.zkblocks-app > style,
+.zkblocks-app > script {
+  display: none !important;
+}
+
+@media (min-width: 68.0625rem) {
+  html[data-skin="mutant-mathematics"] body:has(> .zkblocks-host) {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    column-gap: 24px;
+  }
+
+  html[data-skin="mutant-mathematics"] body > .zkblocks-host {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 54rem) {
+  .zkblocks-host {
+    width: 100%;
+    margin-inline: 0;
+    border-inline-width: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
