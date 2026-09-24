@@ -184,6 +184,7 @@ Dir.mktmpdir("fixtures-", OUT) do |source|
   FileUtils.cp(File.join(ROOT, "_layouts/article.html"), File.join(source, "_layouts"))
   File.write(File.join(source, "_layouts/base.html"), '<!doctype html><html><head><meta charset="utf-8"></head><body><select id="skin-picker"><option>Theme</option></select>{{ content }}<footer id="future-layout-id"></footer></body></html>')
   File.write(File.join(source, "_includes/qr-share.html"), "")
+  File.write(File.join(source, "_includes/publication-actions.html"), "")
   metadata = "---\nlayout: article\ntitle: Contents fixture\nsection: tutorials\ndate: 2026-01-01\n---\n"
   File.write(File.join(source, "article.md"), metadata + markdown)
   File.write(File.join(source, "empty.md"), metadata + "No headings.\n")
