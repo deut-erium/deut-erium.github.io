@@ -42,8 +42,8 @@ if len(parser.ids) != len(set(parser.ids)):
 for required in ("board", "newGame", "proofOptions", "embedded-runtime"):
     if required not in parser.ids:
         fail(f"standalone export is missing #{required}")
-if "default-src 'none'" not in source or "connect-src 'none'" not in source:
-    fail("standalone export CSP changed")
+if "default-src 'none'" not in source or "base-uri 'none'" not in source or "form-action 'none'" not in source:
+    fail("standalone export CSP safety floor changed")
 
 page = PAGE.read_text(encoding="utf-8")
 for required in (
