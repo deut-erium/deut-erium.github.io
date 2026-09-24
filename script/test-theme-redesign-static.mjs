@@ -310,7 +310,7 @@ export function checkSkin(root, skin, index, cssOverride) {
 export function checkNoGlobalLibrary(root) {
   // Existing RPN/shared faces are intentionally preserved. The release does not
   // install a global font catalog, even under renamed URLs or new family names.
-  const nativeGlobal = new Set(['Atkinson Hyperlegible', 'Silkscreen', 'Theme Bungee', 'Theme Chango', 'Theme Climate', 'Theme Doto', 'Theme Fascinate', 'Theme Monoton', 'Theme Pixelify', 'Theme Glitch', 'Theme Unbounded', 'Theme Computer Modern', 'Theme Euler Fraktur', 'Theme Formal Script']);
+  const nativeGlobal = new Set(['Atkinson Hyperlegible', 'Silkscreen', 'Publication Serif', 'Theme Bungee', 'Theme Chango', 'Theme Climate', 'Theme Doto', 'Theme Fascinate', 'Theme Monoton', 'Theme Pixelify', 'Theme Glitch', 'Theme Unbounded', 'Theme Computer Modern', 'Theme Euler Fraktur', 'Theme Formal Script']);
   const files = [];
   function visit(dir) { for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     assert.ok(!e.isSymbolicLink(), 'No CSS/include symlinks');
