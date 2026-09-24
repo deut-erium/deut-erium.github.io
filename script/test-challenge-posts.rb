@@ -4,13 +4,13 @@
 # Offline fixtures only. Never load the release config, original practice
 # bodies, private answers, or upstream challenge files.
 require "fileutils"
-require "json"
 require "tmpdir"
 require "digest"
 require "yaml"
 # Minitest is bundled with the pinned Ruby runtime, not a site dependency.
 require "minitest/autorun"
 require "bundler/setup"
+require "json"
 require "jekyll"
 require "open3"
 require_relative "../_plugins/section_metadata"

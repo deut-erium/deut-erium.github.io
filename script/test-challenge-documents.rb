@@ -4,12 +4,12 @@
 # Offline tests: public catalog metadata and synthetic files/posts only.
 # Fixtures and build outputs stay under agent_out; no event answers are read.
 require "fileutils"
-require "json"
 require "tmpdir"
 require "digest"
 require "yaml"
 require "minitest/autorun" # Bundled with the pinned Ruby, outside the Gemfile.
 require "bundler/setup"
+require "json"
 require "jekyll"
 require_relative "../_plugins/challenge_documents"
 require_relative "../_plugins/challenges_index"

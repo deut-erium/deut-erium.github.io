@@ -3,12 +3,12 @@
 
 # Offline fixtures only. Run with the pinned Ruby and BUNDLE_PATH (see notes).
 require "fileutils"
-require "json"
 require "tmpdir"
 require "yaml"
 require "cgi"
 require "minitest/autorun"
 require "bundler/setup"
+require "json"
 require "jekyll"
 require "jekyll-seo-tag"
 require_relative "../_plugins/publications"
