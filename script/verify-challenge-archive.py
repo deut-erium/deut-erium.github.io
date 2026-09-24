@@ -876,7 +876,7 @@ def verify_rendered(site, baseurl, catalog, metadata):
             law_warning(' '.join(n.text() for n in article.nodes('p')), 'rendered post')
     intended = {e['url'].lstrip('/') + 'index.html' for e in entries if e['id'] in BROWSER_RUNTIMES}
     rendered_pages = {}
-    for path in site.rglob('*.html'):
+    for path in sorted(site.rglob('*.html')):
         rel = path.relative_to(site).as_posix()
         page = Page(safe_path(site, rel, 'browser scope').read_text())
         rendered_pages[rel] = page

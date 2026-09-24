@@ -596,7 +596,13 @@ def main():
         rendered('new form omitted from progress', lambda s: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p.pop())), 'progress/rendered membership')
         rendered('new record without form', lambda s: (ordinary_fixture(s), (s/'2031/01/02/ordinary-fixture.html').unlink()), 'progress/rendered membership')
         rendered('duplicate new record ID', lambda s: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p.append(copy.deepcopy(p[-1])))), 'practice/authored progress IDs')
-        rendered('duplicate rendered new ID', lambda s: (ordinary_fixture(s), write(s/'2031/01/02/zz-duplicate.html', (s/'2031/01/02/ordinary-fixture.html').read_text())), 'duplicate rendered checker ID')
+        # Both copies remain indexed public posts so directory iteration order
+        # cannot make the non-public-page guard fire before duplicate detection.
+        rendered('duplicate rendered new ID',
+                 lambda s: (ordinary_fixture(s),
+                            replace(ordinary_fixture(s, ident='ordinary-other'),
+                                    'flag-ordinary-other', 'flag-ordinary-fixture')),
+                 'duplicate rendered checker ID')
         for field, value in (('sha256', '0'*64), ('salt', '0'*32), ('page', '/wrong.html'), ('aliases', ['new-alias']), ('answer', 'synthetic')):
             rendered('new progress mismatch ' + field,
                      lambda s, field=field, value=value: (ordinary_fixture(s), mutate_json(s/'challenges.json', lambda p: p[-1].update({field: value}))),
