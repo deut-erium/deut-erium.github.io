@@ -363,6 +363,7 @@ class ChallengeDocumentsTest < Minitest::Test
     write("_layouts/article.html", File.read(File.join(ROOT, "_layouts/article.html")))
     write("_layouts/base.html", "---\n---\n<!doctype html><html><body>{{ content }}</body></html>")
     write("_includes/qr-share.html", "")
+    write("_includes/publication-actions.html", "")
     [true, false, "true", 1, nil].each_with_index do |flag, i|
       header = { "layout" => "article", "title" => "Synthetic article #{i}", "challenge_browser" => flag }
       write("fixture-#{i}.html", "#{header.to_yaml}---\n<p>Synthetic body.</p>")
