@@ -7,6 +7,8 @@ key: tetrasquares000001
 stylesheets:
   - /assets/css/tetrasquares-article.css
 excerpt_separator: <!--more-->
+widgets:
+  - tetrasquares-o4
 ---
 
 
@@ -38,14 +40,44 @@ But the N64 version doesn't care, you get one point for each line clear (okay br
 
 So instead of incentivizing breaking multiple lines, it incentivizes you to form 4x4 squares. One very simple way to do that is to stack 4 "O" pieces i.e 2x2 blocks one over another to form a 4x4 piece really. 
 
-<figure class="tetrasquares-figure">
+<figure class="tetrasquares-figure tetrasquares-o4" data-o4-animation>
   <div class="tetrasquares-gallery">
-    <div class="tetrasquares-card square-4">
+    <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">O4</span>
-      <img src="{{ '/assets/images/tetrasquares/o4.svg' | relative_url }}" width="128" height="128" alt="Four numbered O pieces fill a 4x4 square." loading="lazy" decoding="async">
-
+      <svg class="tetrasquares-o4-board" xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-labelledby="o4-title o4-desc">
+        <title id="o4-title">Four O pieces form a gold square</title>
+        <desc id="o4-desc">Four 2x2 O pieces fall one at a time, filling a 4x4 square that turns into one solid golden block.</desc>
+        <defs>
+          <clipPath id="o4-well"><rect width="192" height="192" /></clipPath>
+          <symbol id="o4-piece" viewBox="0 0 64 64">
+            <rect x="2" y="2" width="60" height="60" fill="#b9c0ca" stroke="#111" stroke-width="4" />
+            <path d="M32 4V60M4 32H60" fill="none" stroke="#757d8b" stroke-width="2" />
+            <path d="M5 59V5H59" fill="none" stroke="#e7ecf3" stroke-width="2" />
+          </symbol>
+          <linearGradient id="o4-gold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff0a1" />
+            <stop offset="0.5" stop-color="#ffd447" />
+            <stop offset="1" stop-color="#d59416" />
+          </linearGradient>
+        </defs>
+        <g clip-path="url(#o4-well)">
+          <rect width="192" height="192" fill="#123d73" />
+          <path d="M32 0V192M64 0V192M96 0V192M128 0V192M160 0V192M0 32H192M0 64H192M0 96H192M0 128H192M0 160H192" fill="none" stroke="#5d8ec2" stroke-width="1" />
+          <rect x="34" y="66" width="124" height="124" fill="none" stroke="#9dc5ec" stroke-dasharray="4 4" />
+          <g transform="translate(32 128)"><g data-o4-piece data-drop="192"><use href="#o4-piece" width="64" height="64" /></g></g>
+          <g transform="translate(96 128)"><g data-o4-piece data-drop="192"><use href="#o4-piece" width="64" height="64" /></g></g>
+          <g transform="translate(32 64)"><g data-o4-piece data-drop="128"><use href="#o4-piece" width="64" height="64" /></g></g>
+          <g transform="translate(96 64)"><g data-o4-piece data-drop="128"><use href="#o4-piece" width="64" height="64" /></g></g>
+          <g data-o4-gold>
+            <rect x="34" y="66" width="124" height="124" fill="url(#o4-gold)" stroke="#111" stroke-width="4" />
+            <path d="M39 184V71H152" fill="none" stroke="#fff3b5" stroke-width="4" />
+            <path d="M153 72V185H40" fill="none" stroke="#b67d13" stroke-width="4" />
+          </g>
+        </g>
+      </svg>
     </div>
   </div>
+  <button type="button" class="tetrasquares-o4-replay" data-o4-replay hidden>Replay</button>
 </figure>
 
 And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogenous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines!
