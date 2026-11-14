@@ -1,6 +1,6 @@
 ---
-title: "Tetrasquares: extending The New Tetris on N64"
-description: "I like building squares more than clearing lines. A browser experiment with the N64 game's square mechanic, interlock bonuses, and 6x6 and 8x8 targets."
+title: "Tetrasquares: Extending N64's tetris"
+description: "A hopefully snappy in browser extension of N64 The new Tetris' square mechanic to 6x6 and 8x8 blocks with extended scoring rules."
 author: deuterium
 tags: games tetris combinatorics programming
 key: tetrasquares000001
