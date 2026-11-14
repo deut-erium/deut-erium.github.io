@@ -40,7 +40,7 @@ But the N64 version doesn't care, you get one point for each line clear (okay br
 
 So instead of incentivizing breaking multiple lines, it incentivizes you to form 4x4 squares. One very simple way to do that is to stack 4 "O" pieces i.e 2x2 blocks one over another to form a 4x4 piece really. 
 
-<figure class="tetrasquares-figure tetrasquares-o4" data-o4-animation>
+<figure id="o4-animation" class="tetrasquares-figure tetrasquares-o4" data-o4-animation>
   <div class="tetrasquares-gallery">
     <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">O4</span>
@@ -77,7 +77,7 @@ So instead of incentivizing breaking multiple lines, it incentivizes you to form
       </svg>
     </div>
   </div>
-  <button type="button" class="tetrasquares-o4-replay" data-o4-replay hidden>Replay</button>
+  <button type="button" class="tetrasquares-o4-replay" data-o4-replay hidden>Play animation</button>
 </figure>
 
 And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogenous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines!
