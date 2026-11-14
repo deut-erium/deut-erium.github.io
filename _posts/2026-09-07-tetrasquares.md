@@ -7,53 +7,23 @@ key: tetrasquares000001
 stylesheets:
   - /assets/css/tetrasquares-article.css
 excerpt_separator: <!--more-->
+widgets:
+  - tetrasquares-video
 ---
 
-I keep passing up perfectly good line clears in *The New Tetris* because I want to finish a square. The [N64 game](#ref-game) rewards you for packing four whole tetrominoes into a 4x4 region. With three pieces already lined up, I'm much more interested in finding the fourth than clearing the board.
 
-<!--more-->
 
-Four pieces of the same shape turn gold; a mixture turns silver. Four T pieces can make this:
 
-<figure class="tetrasquares-figure">
-  <div class="tetrasquares-gallery tetrasquares-steps">
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">1 of 4</span>
-      <img src="{{ '/assets/images/tetrasquares/t4-step-1.svg' | relative_url }}" width="128" height="128" alt="T4 after placement 1: 1 whole T pieces in the target square." loading="eager" decoding="async">
+PS: If you dont care, you can directly [jump to the game](https://deut-erium.github.io/tetrasquares/) and figure out the differences yourself, but it will take some time
 
-    </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">2 of 4</span>
-      <img src="{{ '/assets/images/tetrasquares/t4-step-2.svg' | relative_url }}" width="128" height="128" alt="T4 after placement 2: 2 whole T pieces in the target square." loading="eager" decoding="async">
+Do you love tetris? Or are you one of those who never got the hype about the [#1 best selling game EVER](https://en.wikipedia.org/wiki/List_of_best-selling_video_games). Yes, more than Minecraft, and more than twice of GTA 5, and I am pretty sure it will beat gta 6 as well or any other game. How could anyone enjoy this boring sequence of blocks? Its just meh. Thats what I used to think but believe me, you just need to play it enough to experience what exactly the fuss is. It [alters your brain](https://en.wikipedia.org/wiki/List_of_best-selling_video_games) and I guess this is the ONLY game where I felt that ever, and I have done my fair share of wasting time playing games. 
+You dream about playing the game, and yes I have dreamt about many other games where I keep on thinking about some strategy or just living that game again as an extend part of my dreams but with Tetris Effect, you get the superpower to experience playing the game as soon as you close your eyes. There is no better way to describe this than to actually experience it. Just bear with it and play it enough and you will understand I swear.
 
-    </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">3 of 4</span>
-      <img src="{{ '/assets/images/tetrasquares/t4-step-3.svg' | relative_url }}" width="128" height="128" alt="T4 after placement 3: 3 whole T pieces in the target square." loading="eager" decoding="async">
+I think the part of the dislike is due to the fact that there are soooo many versions and each of them which is shitty in its own way. For example the official [tetris.com](https://play.tetris.com) takes an awful lot of time just to load for such a simple game to implement (honestly any dumb clanker can do it one shot, even the small 4B param ones on your laptop), and if you dont have an adblocker for some reason you will be bombarded with ads like there's no tomorrow. And even if someone tries to create their own tetris, these guys are daddy of disney in this regard and sue them to oblivion. Come on guys, grow up you have had enough of your share of pie please let everyone breathe and enjoy now. Nevertheless I love [The New Tetris](https://en.wikipedia.org/wiki/The_New_Tetris) from the n64 the most as it forces you to think in new ways to satisfy your urge to fit the blocks together and gets you to actually feel the frustration of the pace because [you know the pieces fit](https://genius.com/Tool-schism-lyrics) but cant move there just in time. PS you will understand more as you read this blog 
 
-    </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">4 of 4</span>
-      <img src="{{ '/assets/images/tetrasquares/t4.svg' | relative_url }}" width="128" height="128" alt="T4 after placement 4: 4 whole T pieces in the target square." loading="eager" decoding="async">
+But the very first frustration you hit is that there are no good emulators for n64 games somehow to play your legally owned ROMs of the game *sigh*. Try any of them, and you will know right away that they dont feel performant at all and lag. No matter what hardware you throw at them they will refuse to show you a constant framerate, I think it was something to do with weirdness of its architecture and graphics not mapping neatly into modern GPUs, but again I never really looked into it. 
 
-    </div>
-  </div>
-  <figcaption>T4 in the browser game's colors. Each number identifies one piece and its placement order. <a href="{{ '/tetrasquares/?practice=4&family=T4' | relative_url }}">Build this one.</a></figcaption>
-</figure>
-
-I wanted more of that, so I made [Tetrasquares]({{ '/tetrasquares/' | relative_url }}), a browser game with 6x6 and 8x8 squares as well. I also changed the scoring to give interlocking arrangements some extra points. Four O pieces and four interlocking Ts both make gold, but I like the T square enough to pay it more.
-
-## The bit I borrowed from the N64 game
-
-*The New Tetris* came out in 1999. Its [manual](#ref-manual) calls the gold and silver constructions Mono-Squares and Multi-Squares. Silver can contain repeated shapes: two Ls and two Os work, for example. All four pieces must be intact, with no holes or bits sticking outside the square. You can't build one out of leftovers from earlier line clears.
-
-You collect the reward by clearing rows through the finished square. The manual gives five collected lines per silver-square row and ten per gold-square row, compared with one for an ordinary row. The wiki's arithmetic differs; I've left a note with the [references](#references) rather than mixing those numbers into my scoring rules.
-
-That delay is part of what I enjoy. Before the square forms, a line clear can ruin it. After it forms, I want to clear through it. Hold helps with keeping a useful piece around, but I still have to leave somewhere for the rest of the queue to go. The [square-building guides](#ref-squares) have a lot to say about platforms for exactly this reason.
-
-## Four pieces fit together in quite a few ways
-
-O4 and I4 are the easy gold squares: four little squares, or four strips.
+Anyways let me just describe what I really love about this game. So for the usual versions of tetris, you get points by breaking more and more lines at once, 3 lines at once better than 2 lines which is in turn better than breaking a single line and if you manage to break 4 lines at once, which you can only do by inserting an "I" or straight 4x1 block into an appropriately shaped crevice. But the n64 version doesnt care, you get one point regardless of each line clear (okay breaking 4 lines together gives you 5 instead of 1, but whatever I dont think its really worth all that extra effort for a 25% gain). So instead of incentivizing breaking multiple lines, it incentivizes you to form 4x4 squares. One very simple way to do that is to stack 4 "O" pieces i.e 2x2 blocks one over another to form a 4x4 piece really. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -62,16 +32,10 @@ O4 and I4 are the easy gold squares: four little squares, or four strips.
       <img src="{{ '/assets/images/tetrasquares/o4.svg' | relative_url }}" width="128" height="128" alt="Four numbered O pieces fill a 4x4 square." loading="lazy" decoding="async">
 
     </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">I4</span>
-      <img src="{{ '/assets/images/tetrasquares/i4.svg' | relative_url }}" width="128" height="128" alt="Four numbered horizontal I pieces fill a 4x4 square." loading="lazy" decoding="async">
-
-    </div>
   </div>
-  <figcaption>Practice <a href="{{ '/tetrasquares/?practice=4&family=O4' | relative_url }}">four Os</a> or <a href="{{ '/tetrasquares/?practice=4&family=I4' | relative_url }}">four Is</a>.</figcaption>
 </figure>
 
-For silver, I can join two 2x4 rectangles made from two pieces each. Another option is a three-piece 3x4 assembly with an I across the top. These are handy recipes because I can work on a smaller rectangle while waiting for the piece that finishes it.
+And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogenous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines! And if it were an heterogenous 4x4 block i.e using more than 1 types of blocks, it transforms into a silver block which rewards 5 lines per line. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -80,54 +44,36 @@ For silver, I can join two 2x4 rectangles made from two pieces each. Another opt
       <img src="{{ '/assets/images/tetrasquares/l2-o2-cut.svg' | relative_url }}" width="128" height="128" alt="A cyan horizontal seam divides two 2x4 rectangles, one made from two Ls and the other from two Os." loading="lazy" decoding="async">
 
     </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">I1-L1-T2</span>
-      <img src="{{ '/assets/images/tetrasquares/i1-l1-t2-cut.svg' | relative_url }}" width="128" height="128" alt="Two Ts and one L form a 3x4 assembly below an I strip. A cyan seam runs under the I." loading="lazy" decoding="async">
-
-    </div>
   </div>
-  <figcaption><a href="{{ '/tetrasquares/?practice=4&family=L2-O2' | relative_url }}">Two pairs</a>, or <a href="{{ '/tetrasquares/?practice=4&family=I1-L1-T2' | relative_url }}">three pieces with an I cap</a>. Cyan marks the seams.</figcaption>
-</figure>
+</figure> 
 
-The T square has no such seam. Any straight cut across the whole square goes through at least one piece. J pieces can make a spiral too; the L arrangement below uses two separable pairs instead. Ls can also spiral, but this particular catalog example doesn't.
+Trust me [The instruction booklet](https://dn710401.ca.archive.org/0/items/new-tetris-the-usa/New%20Tetris%2C%20The%20%28USA%29_text.pdf) describes it better than I can.
+
+There are a number of interesting ways these 4x4 squares can be built btw. I hand-drew all of them concisely here. Hehe this looks like a cool robot
 
 <figure class="tetrasquares-figure">
-  <div class="tetrasquares-gallery">
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">J4 spiral</span>
-      <img src="{{ '/assets/images/tetrasquares/j4.svg' | relative_url }}" width="128" height="128" alt="Four J pieces interlock into a 4x4 square." loading="lazy" decoding="async">
-
-    </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">L4 pairs</span>
-      <img src="{{ '/assets/images/tetrasquares/l4-cut.svg' | relative_url }}" width="128" height="128" alt="Four L pieces form two rectangles separated by a cyan horizontal seam." loading="lazy" decoding="async">
-
-    </div>
-  </div>
-  <figcaption><a href="{{ '/tetrasquares/?practice=4&family=J4' | relative_url }}">Spiral Js</a> and <a href="{{ '/tetrasquares/?practice=4&family=L4' | relative_url }}">paired Ls</a>. These are different arrangements, not mirror images.</figcaption>
+  <img src="{{ '/assets/images/tetrasquares/hand-drawn-arrangements.png' | relative_url }}" width="622" height="1214" alt="Hand-drawn tetrominoes and 4x4 square arrangements, laid out like a robot." loading="lazy" decoding="async">
 </figure>
 
-I also like the two-L, two-Z square. Reflecting its piece mix gives two Js and two Ss. The slanted pieces fit between the hooks, and both of these arrangements have half-turn symmetry.
+But you can otherwise explore all of the ways this can be done in [the 4x4 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=4&family=T4)
 
-<figure class="tetrasquares-figure">
-  <div class="tetrasquares-gallery">
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">L2-Z2</span>
-      <img src="{{ '/assets/images/tetrasquares/l2-z2.svg' | relative_url }}" width="128" height="128" alt="Two L pieces and two Z pieces interlock in a half-turn-symmetric square." loading="lazy" decoding="async">
+Oh no I think I bored the kids with all these text, they might be feeling an urge to watch a youtube video. So I think they can watch this 
 
-    </div>
-    <div class="tetrasquares-card square-4">
-      <span class="tetrasquares-label">J2-S2</span>
-      <img src="{{ '/assets/images/tetrasquares/j2-s2.svg' | relative_url }}" width="128" height="128" alt="Two J pieces and two S pieces interlock in a half-turn-symmetric square." loading="lazy" decoding="async">
+<div class="tetrasquares-video" data-youtube-id="VkrBrwnEEPA" data-video-title="Tetris video 1">
+  <button type="button" data-load-youtube hidden>Load YouTube player</button>
+  <p><a href="https://www.youtube.com/watch?v=VkrBrwnEEPA">Watch on YouTube</a></p>
+</div>
 
-    </div>
-  </div>
-  <figcaption>Practice the <a href="{{ '/tetrasquares/?practice=4&family=L2-Z2' | relative_url }}">L/Z</a> or <a href="{{ '/tetrasquares/?practice=4&family=J2-S2' | relative_url }}">J/S</a> interlock.</figcaption>
-</figure>
+And now you would be wondering, will we call it "tetris" anymore if the incentive structure itself forces and pushes towards kinds of tactics and gameplays which dont feel like tetris anymore? Its amazing that the rules are essentially the same but the reward function is totally altered. Look at this and you will see it right away and it will break your brain in good ways.
 
-## Paying extra for an interlock
+<div class="tetrasquares-video" data-youtube-id="lKYD9H0IwB0" data-video-title="Tetris video 2">
+  <button type="button" data-load-youtube hidden>Load YouTube player</button>
+  <p><a href="https://www.youtube.com/watch?v=lKYD9H0IwB0">Watch on YouTube</a></p>
+</div>
 
-I kept the gold bonus and added a test for a *clean cut*: a horizontal or vertical line that crosses the whole region without cutting a piece. O4 has clean cuts in both directions. T4 has none.
+And now if we can hold two blocks of 4x4 per row, whats actually stopping us to form 6x6 squares or even 8x8 squares. 10x10 is not possible for obvious reasons (Would you like a formally verified TM lean proof for this?). I believe nerds like me would have wanted to create that extend version back when they were making the original game but the hardware limitations more than 25 years ago were strikingly different to allow those and they might have just settled with the 4x4 versions. 
+
+Even in the 4x4, I feel there is an asymmetry even if we account for the rarity of getting 4 of the same pieces. For example fitting 4 Os is much easier to fit 4Ts, so here is what I propose that if we can find a clean cut in our arrangement separating it into rectangles, it should be relatively easier to visualize hence fit. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -145,27 +91,8 @@ I kept the gold bonus and added a test for a *clean cut*: a horizontal or vertic
   <figcaption>Both use one shape and form gold. T4 gets another 1,000 points for the interlock.</figcaption>
 </figure>
 
-For a 4x4 square, I add up:
 
-| Award | Points |
-| --- | ---: |
-| Base | 1,000 |
-| Gold | +1,500 |
-| Each distinct shape after the first | +250 |
-| No clean cut | +1,000 |
-{: tabindex="0" aria-label="4x4 square awards"}
-
-That makes O4 worth 2,500 and T4 worth 3,500. The silver comparison works the same way: L2-O2 gets 1,250, while L2-Z2 gets 2,250. The extra thousand buys the interlock in each case. O4 still beats L2-Z2 overall; I wanted gold to remain worth chasing.
-
-This bonus only looks at geometry. It doesn't know whether the queue is being helpful or whether I've built the whole thing on top of a mess.
-
-These are pending points. Making O4 attaches 2,500 points to it, split into four shares of 625. Clear one of its rows and collect that row's share, plus the ordinary line-clear points. The [scoring page]({{ '/tetrasquares/scoring/' | relative_url }}) has the full rules, including what happens when a larger square contains smaller ones.
-
-## Six by six takes nine pieces
-
-There is room for a T4 interlock inside a 6x6 square, with five Os filling the rest. Giving that the same structural bonus as a nine-piece interlock would be a bit generous. So I try the clean cuts recursively and choose the decomposition whose largest unsplittable group is smallest.
-
-The first construction below comes apart into five individual Os and the four-T group. The second won't come apart at all. Even its least damaging full cut goes through two pieces.
+We can easily extend this idea to 6x6 and 8x8 classes. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -180,62 +107,8 @@ The first construction below comes apart into five individual Os and the four-T 
       <span class="tetrasquares-value">Shape bonus: 2,500</span>
     </div>
   </div>
-  <figcaption><a href="{{ '/tetrasquares/?practice=6&family=O5-T4' | relative_url }}">A T4 core with five Os</a>, and <a href="{{ '/tetrasquares/?practice=6&family=L5-T4' | relative_url }}">a nine-piece interlock</a>.</figcaption>
+  <figcaption><a href="{{ '/tetrasquares/?practice=6&family=O5-T4' | relative_url }}">T4 core</a>, and <a href="{{ '/tetrasquares/?practice=6&family=L5-T4' | relative_url }}">a nine-piece interlock</a>.</figcaption>
 </figure>
-
-The 6x6 base is 2,500 points, gold adds 3,500, and each distinct shape after the first adds 500. Then I add the shape bonus:
-
-| What remains after the best decomposition | Bonus |
-| --- | ---: |
-| Largest group has 1 or 2 pieces | 0 |
-| Largest group has 3 or 4 pieces | 500 |
-| Largest group has 5 or 6 pieces | 1,000 |
-| All 9 stay together; some full cut crosses just 1 piece | 1,500 |
-| All 9 stay together; every full cut crosses at least 2 pieces | 2,500 |
-{: tabindex="0" aria-label="6x6 structure bonuses"}
-
-There are no seven- or eight-piece groups in that table. They would need rectangular regions of area 28 or 32, neither of which fits inside a 6x6 square.
-
-Using all seven shapes is worth a decent bonus, though it doesn't guarantee the highest score. The seven-type construction below gets 7,000. The six-type one gets 7,500 because its interlock earns another thousand, more than making up for the missing shape. Nine Os get 6,000.
-
-<figure class="tetrasquares-figure">
-  <div class="tetrasquares-gallery">
-    <div class="tetrasquares-card square-6">
-      <span class="tetrasquares-label">Seven types</span>
-      <img src="{{ '/assets/images/tetrasquares/seven-types.svg' | relative_url }}" width="192" height="192" alt="A 6x6 square using all seven types has a 1,500-point shape bonus." loading="lazy" decoding="async">
-      <span class="tetrasquares-value">7,000 pending</span>
-    </div>
-    <div class="tetrasquares-card square-6">
-      <span class="tetrasquares-label">Six types</span>
-      <img src="{{ '/assets/images/tetrasquares/six-types.svg' | relative_url }}" width="192" height="192" alt="A 6x6 square using six types has a 2,500-point shape bonus." loading="lazy" decoding="async">
-      <span class="tetrasquares-value">7,500 pending</span>
-    </div>
-  </div>
-  <figcaption>Try <a href="{{ '/tetrasquares/?practice=6&family=I1-J1-L1-O1-S1-T2-Z2' | relative_url }}">all seven shapes</a> or <a href="{{ '/tetrasquares/?practice=6&family=J1-L1-O1-S1-T2-Z3' | relative_url }}">the stronger six-type interlock</a>.</figcaption>
-</figure>
-
-Nine Ts won't work at all. Checkerboard-color a 6x6 board and there are 18 cells of each color. A T always covers three of one color and one of the other, giving an imbalance of +2 or -2. Nine such imbalances can't sum to zero. The little T4 spiral has no T9 equivalent.
-
-## The catalog
-
-Butler, Ekstrand and Osborne [count these tilings](#ref-tiling):
-
-| Square | Pieces | Geometric tilings | Piece mixes |
-| --- | ---: | ---: | ---: |
-| 4x4 | 4 | 117 | 24 |
-| 6x6 | 9 | 178,939 | 1,467 |
-| 8x8 | 16 | 19,077,209,438 | 30,434 |
-{: tabindex="0" aria-label="Geometric tilings and catalog piece mixes"}
-
-A mix such as L2-Z2 says which pieces are used, not where they go. It can have several arrangements with different scores. These counts keep rotations and reflections when they give different tilings on the fixed board. They also include geometric tilings without promising that a falling-piece sequence can reach each one.
-
-The [catalog]({{ '/tetrasquares/catalog/' | relative_url }}) has one illustrated, checked construction for every 4x4 and 6x6 mix: 1,491 examples altogether. Its step slider shows how they go together. The [platforming guide](#ref-platforms) is useful background here; a finished tiling hides all the trouble you can have getting a piece into place.
-
-Each example links to practice mode, which supplies its pieces in order without gravity. A wrong drop leaves the board alone, and there's an optional placement outline. You can learn the construction without waiting for a friendly queue or trying to keep the rest of the board alive. Practice stops when the square is built; collecting its points is left to normal play.
-
-## Eight by eight takes most of the well
-
-An 8x8 square needs sixteen pieces. In a ten-column well, centering it leaves one column on either side. Four copies of the T4 pattern fit together like this:
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -248,17 +121,14 @@ An 8x8 square needs sixteen pieces. In a ten-column well, centering it leaves on
   <figcaption>T16, assembled from four T4 quadrants.</figcaption>
 </figure>
 
-I checked this order with a supplied T-only sequence under the browser game's movement rules. For 8x8 I went with a flat 10,000 for silver and 20,000 for gold, collected across eight rows. There is no additional interlock or diversity bonus. Those smaller T4 squares can still have their own uncollected points attached when the big square forms.
+I tried so hard to draw the 6x6 and 8x8 arrangements concisely but I think I wont be able to manage it here in a way which wont bore you so if you have some fraction of curiousity left, you can explore the [6x6 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=6&family=O9) or the really insane [8x8 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=8&family=T8-Z8)
 
-The [8x8 catalog]({{ '/tetrasquares/catalog/?size=8&family=T16' | relative_url }}) has counts by piece mix, but no construction orders or practice mode yet. You can build 8x8 squares in the [full game]({{ '/tetrasquares/' | relative_url }}). The [four-T practice]({{ '/tetrasquares/?practice=4&family=T4' | relative_url }}) supplies the right queue if you want to try the spiral.
+I hope this [scoring guide](https://deut-erium.github.io/tetrasquares/scoring/) describes everything well and hope someone grinding new ways or algorithms to fit the falling blocks and urges you to.
 
-## References
 
-1. <span id="ref-manual"></span>[The New Tetris instruction booklet](https://archive.org/download/new-tetris-the-usa/New%20Tetris%2C%20The%20%28USA%29_text.pdf), Nintendo, 1999. Printed page 9 describes Mono-Squares and Multi-Squares; page 11 describes collected-line rewards. These are PDF pages 11 and 13.
-2. <span id="ref-game"></span>[The New Tetris](https://tetris.wiki/The_New_Tetris), TetrisWiki. Release information, square rules, Hold, Spin Moves and scoring.
-3. <span id="ref-squares"></span>[Square Tetris](https://tetris.wiki/Square_Tetris), TetrisWiki. Square constructions and building methods.
-4. <span id="ref-platforms"></span>[Square Platforming](https://harddrop.com/wiki/Square_Platforming), Hard Drop. Supporting surfaces and placement order.
-5. <span id="ref-harddrop"></span>[The New Tetris](https://harddrop.com/wiki/The_New_Tetris), Hard Drop. Another account of the original rules and scoring; some material overlaps with TetrisWiki.
-6. <span id="ref-tiling"></span>[TETRIS Tiling](https://oeis.org/A230031/a230031.pdf), Steve Butler, Jason Ekstrand and Steven Osborne. Geometric counts for tetromino tilings of squares.
+## [Play the game](https://deut-erium.github.io/tetrasquares/)
 
-A scoring wrinkle: the manual says five or ten collected lines per square row. TetrisWiki and Hard Drop describe additive bonuses and give 25 or 45 for a four-row clear through a silver or gold square. I haven't resolved that disagreement by testing the N64 game. The point values in this post belong to Tetrasquares.
+Here are some [strats for 4x4](https://harddrop.com/wiki/Square_Platforming) which you should be able to extend beyond or just write another [beautiful paper](https://oeis.org/A230031/a230031.pdf) for what it is worth.
+
+
+
