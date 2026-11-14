@@ -12,7 +12,7 @@ excerpt_separator: <!--more-->
 
 
 
-PS: If you dont care, you can directly [jump to the game](https://deut-erium.github.io/tetrasquares/) and figure out the differences yourself, but it will take some time
+> PS: If you dont care, you can directly [jump to the game](https://deut-erium.github.io/tetrasquares/) and figure out the differences yourself, but it will take some time
 
 Do you love tetris? Or are you one of those who never got the hype about the [#1 best selling game EVER](https://en.wikipedia.org/wiki/List_of_best-selling_video_games). Yes, more than Minecraft, and more than twice of GTA 5, and I am pretty sure it will beat gta 6 as well or any other game.
 
