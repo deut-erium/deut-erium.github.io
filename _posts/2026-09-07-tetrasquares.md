@@ -1,6 +1,6 @@
 ---
-title: "Tetrasquares: Extending N64's tetris"
-description: "A hopefully snappy in browser extension of N64 The new Tetris' square mechanic to 6x6 and 8x8 blocks with extended scoring rules."
+title: "Tetrasquares: Extending N64's Tetris"
+description: "A hopefully snappy, in-browser extension of the square mechanic in N64's The New Tetris to 6x6 and 8x8 blocks, with extended scoring rules."
 author: deuterium
 tags: games tetris combinatorics programming
 key: tetrasquares000001
@@ -12,29 +12,29 @@ excerpt_separator: <!--more-->
 
 
 
-> PS: If you dont care, you can directly [jump to the game](https://deut-erium.github.io/tetrasquares/) and figure out the differences yourself, but it will take some time
+> PS: If you don't care, you can directly [jump to the game](https://deut-erium.github.io/tetrasquares/) and figure out the differences yourself, but it will take some time
 
-Do you love tetris? Or are you one of those who never got the hype about the [#1 best selling game EVER](https://en.wikipedia.org/wiki/List_of_best-selling_video_games). Yes, more than Minecraft, and more than twice of GTA 5, and I am pretty sure it will beat gta 6 as well or any other game.
+Do you love Tetris? Or are you one of those who never got the hype about the [#1 best selling game EVER](https://en.wikipedia.org/wiki/List_of_best-selling_video_games). Yes, more than Minecraft, and more than twice as many copies as GTA 5, and I am pretty sure it will beat GTA 6 as well or any other game.
 
-How could anyone enjoy this boring sequence of blocks? Its just meh. Thats what I used to think but believe me, you just need to play it enough to experience what exactly the fuss is. It [alters your brain](https://en.wikipedia.org/wiki/List_of_best-selling_video_games) and I guess this is the ONLY game where I felt that ever, and I have done my fair share of wasting time playing games.
+How could anyone enjoy this boring sequence of blocks? It's just meh. That's what I used to think but believe me, you just need to play it enough to experience what exactly the fuss is. It [alters your brain](https://en.wikipedia.org/wiki/List_of_best-selling_video_games) and I guess this is the ONLY game where I felt that ever, and I have done my fair share of wasting time playing games.
 
-You dream about playing the game, and yes I have dreamt about many other games where I keep on thinking about some strategy or just living that game again as an extend part of my dreams but with Tetris Effect, you get the superpower to experience playing the game as soon as you close your eyes. There is no better way to describe this than to actually experience it. Just bear with it and play it enough and you will understand I swear.
+You dream about playing the game, and yes I have dreamt about many other games where I keep on thinking about some strategy or just living that game again as an extended part of my dreams but with Tetris Effect, you get the superpower to experience playing the game as soon as you close your eyes. There is no better way to describe this than to actually experience it. Just bear with it and play it enough and you will understand I swear.
 
 # The New Tetris
 
-I think the part of the dislike is due to the fact that there are soooo many versions and each of them which is shitty in its own way. For example the official [tetris.com](https://play.tetris.com) takes an awful lot of time just to load for such a simple game to implement (honestly any dumb clanker can do it one shot, even the small 4B param ones on your laptop), and if you dont have an adblocker for some reason you will be bombarded with ads like there's no tomorrow.
+I think the part of the dislike is due to the fact that there are soooo many versions, each shitty in its own way. For example the official [tetris.com](https://play.tetris.com) takes an awful lot of time just to load for such a simple game to implement (honestly any dumb clanker can do it in one shot, even the small 4B param ones on your laptop), and if you don't have an adblocker for some reason you will be bombarded with ads like there's no tomorrow.
 
-And even if someone tries to create their own tetris, these guys are daddy of disney in this regard and sue them to oblivion. Come on guys, grow up you have had enough of your share of pie please let everyone breathe and enjoy now.
+And even if someone tries to create their own Tetris, these guys are daddy of Disney in this regard and sue them to oblivion. Come on guys, grow up you have had enough of your share of the pie please let everyone breathe and enjoy now.
 
-Nevertheless I love [The New Tetris](https://en.wikipedia.org/wiki/The_New_Tetris) from the n64 the most as it forces you to think in new ways to satisfy your urge to fit the blocks together and gets you to actually feel the frustration of the pace because [you know the pieces fit](https://genius.com/Tool-schism-lyrics) but cant move there just in time. PS you will understand more as you read this blog 
+Nevertheless I love [The New Tetris](https://en.wikipedia.org/wiki/The_New_Tetris) from the N64 the most as it forces you to think in new ways to satisfy your urge to fit the blocks together and gets you to actually feel the frustration of the pace because [you know the pieces fit](https://genius.com/Tool-schism-lyrics) but can't move there just in time. PS you will understand more as you read this blog 
 
-But the very first frustration you hit is that there are no good emulators for n64 games somehow to play your legally owned ROMs of the game *sigh*. Try any of them, and you will know right away that they dont feel performant at all and lag. No matter what hardware you throw at them they will refuse to show you a constant framerate, I think it was something to do with weirdness of its architecture and graphics not mapping neatly into modern GPUs, but again I never really looked into it. 
+But the very first frustration you hit is that there are no good emulators for N64 games somehow to play your legally owned ROMs of the game *sigh*. Try any of them, and you will know right away that they don't feel performant at all and lag. No matter what hardware you throw at them they will refuse to show you a constant framerate, I think it was something to do with weirdness of its architecture and graphics not mapping neatly into modern GPUs, but again I never really looked into it. 
 
 # Gold and silver squares
 
-Anyways let me just describe what I really love about this game. So for the usual versions of tetris, you get points by breaking more and more lines at once, 3 lines at once better than 2 lines which is in turn better than breaking a single line and if you manage to break 4 lines at once, which you can only do by inserting an "I" or straight 4x1 block into an appropriately shaped crevice.
+Anyways let me just describe what I really love about this game. So for the usual versions of Tetris, you get points by breaking more and more lines at once, breaking 3 lines at once is better than breaking 2 lines which is in turn better than breaking a single line and if you manage to break 4 lines at once, which you can only do by inserting an "I" or straight 4x1 block into an appropriately shaped crevice.
 
-But the n64 version doesnt care, you get one point regardless of each line clear (okay breaking 4 lines together gives you 5 instead of 1, but whatever I dont think its really worth all that extra effort for a 25% gain).
+But the N64 version doesn't care, you get one point for each line clear (okay breaking 4 lines together gives you 5 instead of 1, but whatever I don't think it's really worth all that extra effort for a 25% gain).
 
 So instead of incentivizing breaking multiple lines, it incentivizes you to form 4x4 squares. One very simple way to do that is to stack 4 "O" pieces i.e 2x2 blocks one over another to form a 4x4 piece really. 
 
@@ -50,7 +50,7 @@ So instead of incentivizing breaking multiple lines, it incentivizes you to form
 
 And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogenous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines!
 
-And if it were an heterogenous 4x4 block i.e using more than 1 types of blocks, it transforms into a silver block which rewards 5 lines per line. 
+And if it were a heterogeneous 4x4 block i.e using more than one type of block, it transforms into a silver block which rewards 5 lines per line. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -74,13 +74,13 @@ There are a number of interesting ways these 4x4 squares can be built btw. I han
 
 But you can otherwise explore all of the ways this can be done in [the 4x4 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=4&family=T4)
 
-Oh no I think I bored the kids with all these text, they might be feeling an urge to watch a youtube video. So I think they can watch this 
+Oh no I think I bored the kids with all this text, they might be feeling an urge to watch a YouTube video. So I think they can watch this 
 
 <div class="tetrasquares-video">
   <iframe src="https://www.youtube-nocookie.com/embed/VkrBrwnEEPA" title="Tetris video 1" width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-And now you would be wondering, will we call it "tetris" anymore if the incentive structure itself forces and pushes towards kinds of tactics and gameplays which dont feel like tetris anymore? Its amazing that the rules are essentially the same but the reward function is totally altered. Look at this and you will see it right away and it will break your brain in good ways.
+And now you would be wondering, will we call it "Tetris" anymore if the incentive structure itself forces and pushes towards kinds of tactics and gameplay which don't feel like Tetris anymore? It's amazing that the rules are essentially the same but the reward function is totally altered. Look at this and you will see it right away and it will break your brain in good ways.
 
 <div class="tetrasquares-video">
   <iframe src="https://www.youtube-nocookie.com/embed/lKYD9H0IwB0" title="Tetris video 2" width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -88,13 +88,13 @@ And now you would be wondering, will we call it "tetris" anymore if the incentiv
 
 # Beyond 4x4
 
-And now if we can hold two blocks of 4x4 per row, whats actually stopping us to form 6x6 squares or even 8x8 squares. 10x10 is not possible for obvious reasons (Would you like a formally verified TM lean proof for this?).
+And now if we can hold two blocks of 4x4 per row, what's actually stopping us from forming 6x6 squares or even 8x8 squares. 10x10 is not possible for obvious reasons (Would you like a formally verified TM lean proof for this?).
 
-I believe nerds like me would have wanted to create that extend version back when they were making the original game but the hardware limitations more than 25 years ago were strikingly different to allow those and they might have just settled with the 4x4 versions. 
+I believe nerds like me would have wanted to create that extended version back when they were making the original game but the hardware limitations more than 25 years ago were strikingly different to allow those and they might have just settled with the 4x4 versions. 
 
 # Interlocking pieces
 
-Even in the 4x4, I feel there is an asymmetry even if we account for the rarity of getting 4 of the same pieces. For example fitting 4 Os is much easier to fit 4Ts, so here is what I propose that if we can find a clean cut in our arrangement separating it into rectangles, it should be relatively easier to visualize hence fit. 
+Even in the 4x4, I feel there is an asymmetry even if we account for the rarity of getting 4 of the same pieces. For example fitting 4 Os is much easier than fitting 4 Ts, so here is what I propose: if we can find a clean cut in our arrangement separating it into rectangles, it should be relatively easier to visualize hence fit. 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
@@ -141,7 +141,7 @@ We can easily extend this idea to 6x6 and 8x8 classes.
   </div>
 </figure>
 
-I tried so hard to draw the 6x6 and 8x8 arrangements concisely but I think I wont be able to manage it here in a way which wont bore you so if you have some fraction of curiousity left, you can explore the [6x6 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=6&family=O9) or the really insane [8x8 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=8&family=T8-Z8)
+I tried so hard to draw the 6x6 and 8x8 arrangements concisely but I think I won't be able to manage it here in a way which won't bore you so if you have some fraction of curiosity left, you can explore the [6x6 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=6&family=O9) or the really insane [8x8 catalog](https://deut-erium.github.io/tetrasquares/catalog/?size=8&family=T8-Z8)
 
 I hope this [scoring guide](https://deut-erium.github.io/tetrasquares/scoring/) describes everything well and hope someone grinding new ways or algorithms to fit the falling blocks and urges you to.
 
