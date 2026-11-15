@@ -16,7 +16,7 @@ excerpt_separator: <!--more-->
 
 Do you love Tetris? Or are you one of those who never got the hype about the [#1 best selling game EVER](https://en.wikipedia.org/wiki/List_of_best-selling_video_games). Yes, more than Minecraft, and more than twice as many copies as GTA 5, and I am pretty sure it will beat GTA 6 as well or any other game.
 
-How could anyone enjoy this boring sequence of blocks? It's just meh. That's what I used to think but believe me, you just need to play it enough to experience what exactly the fuss is. It [alters your brain](https://en.wikipedia.org/wiki/List_of_best-selling_video_games) and I guess this is the ONLY game where I felt that ever, and I have done my fair share of wasting time playing games.
+How could anyone enjoy this boring sequence of blocks? It's just meh. That's what I used to think but believe me, you just need to play it enough to experience what exactly the fuss is. It [alters your brain](https://en.wikipedia.org/wiki/Tetris_effect) and I guess this is the ONLY game where I felt that ever, and I have done my fair share of wasting time playing games.
 
 You dream about playing the game, and yes I have dreamt about many other games where I keep on thinking about some strategy or just living that game again as an extended part of my dreams but with Tetris Effect, you get the superpower to experience playing the game as soon as you close your eyes. There is no better way to describe this than to actually experience it. Just bear with it and play it enough and you will understand I swear.
 
@@ -32,7 +32,7 @@ But the very first frustration you hit is that there are no good emulators for N
 
 # Gold and silver squares
 
-Anyways let me just describe what I really love about this game. So for the usual versions of Tetris, you get points by breaking more and more lines at once, breaking 3 lines at once is better than breaking 2 lines which is in turn better than breaking a single line and if you manage to break 4 lines at once, which you can only do by inserting an "I" or straight 4x1 block into an appropriately shaped crevice.
+Anyways let me just describe what I really love about this game. So for the usual versions of Tetris, you get points by breaking more and more lines at once, breaking 3 lines at once is better than breaking 2 lines which is in turn better than breaking a single line and if you can manage to break 4 lines at once at all, which you can only do by inserting an "I" or straight 4x1 block into an appropriately shaped crevice.
 
 But the N64 version doesn't care, you get one point for each line clear (okay breaking 4 lines together gives you 5 instead of 1, but whatever I don't think it's really worth all that extra effort for a 25% gain).
 
@@ -53,7 +53,7 @@ So instead of incentivizing breaking multiple lines, it incentivizes you to form
   </div>
 </figure>
 
-And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogenous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines!
+And as soon as you do that a short animation plays transforming this block into a solid block. And since this particular arrangement was homogeneous, i.e all the individual blocks were of the same type, the game rewards you and calls it a "golden" block. So as soon as you have a golden block and you break a line containing a part of the golden cube, it is now worth 10 lines!
 
 And if it were a heterogeneous 4x4 block i.e using more than one type of block, it transforms into a silver block which rewards 5 lines per line. 
 
