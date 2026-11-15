@@ -40,9 +40,15 @@ So instead of incentivizing breaking multiple lines, it incentivizes you to form
 
 <figure id="o4-animation" class="tetrasquares-figure tetrasquares-o4">
   <div class="tetrasquares-gallery">
+    <div class="tetrasquares-comparison">
     <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">O4</span>
       <img src="{{ '/assets/images/tetrasquares/o4-forming.gif' | relative_url }}" width="192" height="192" alt="Four O pieces form a 4x4 square that turns gold." loading="lazy" decoding="async">
+    </div>
+    <div class="tetrasquares-card square-4">
+      <span class="tetrasquares-label">O4</span>
+      <img src="{{ '/assets/images/tetrasquares/o4.svg' | relative_url }}" width="128" height="128" alt="Four numbered O pieces fill a 4x4 square." loading="lazy" decoding="async">
+    </div>
     </div>
   </div>
 </figure>
@@ -51,12 +57,18 @@ And as soon as you do that a short animation plays transforming this block into 
 
 And if it were a heterogeneous 4x4 block i.e using more than one type of block, it transforms into a silver block which rewards 5 lines per line. 
 
-<figure class="tetrasquares-figure">
+<figure id="l2-o2-animation" class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-6">
+      <span class="tetrasquares-label">L2-O2</span>
+      <img src="{{ '/assets/images/tetrasquares/l2-o2-forming.gif' | relative_url }}" width="192" height="192" alt="Two L pieces and two O pieces form a 4x4 square that turns silver." loading="lazy" decoding="async">
+    </div>
     <div class="tetrasquares-card square-4">
       <span class="tetrasquares-label">L2-O2</span>
       <img src="{{ '/assets/images/tetrasquares/l2-o2-cut.svg' | relative_url }}" width="128" height="128" alt="A cyan horizontal seam divides two 2x4 rectangles, one made from two Ls and the other from two Os." loading="lazy" decoding="async">
 
+    </div>
     </div>
   </div>
 </figure> 
@@ -97,15 +109,27 @@ Even in the 4x4, I feel there is an asymmetry even if we account for the rarity 
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-6">
+      <span class="tetrasquares-label">O4</span>
+      <img src="{{ '/assets/images/tetrasquares/o4-forming.gif' | relative_url }}" width="192" height="192" alt="Four O pieces form a 4x4 square that turns gold." loading="lazy" decoding="async">
+    </div>
     <div class="tetrasquares-card square-4">
       <span class="tetrasquares-label">Clean cuts</span>
       <img src="{{ '/assets/images/tetrasquares/o4-cuts.svg' | relative_url }}" width="128" height="128" alt="Cyan vertical and horizontal cuts run between the four O pieces." loading="lazy" decoding="async">
       <span class="tetrasquares-value">2,500 pending</span>
     </div>
+    </div>
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-6">
+      <span class="tetrasquares-label">T4</span>
+      <img src="{{ '/assets/images/tetrasquares/t4-forming.gif' | relative_url }}" width="192" height="192" alt="Four T pieces interlock into a 4x4 square that turns gold." loading="lazy" decoding="async">
+    </div>
     <div class="tetrasquares-card square-4">
       <span class="tetrasquares-label">No clean cut</span>
       <img src="{{ '/assets/images/tetrasquares/t4-cut.svg' | relative_url }}" width="128" height="128" alt="A red vertical cut crosses the T pieces; every full straight cut crosses at least one piece." loading="lazy" decoding="async">
       <span class="tetrasquares-value">3,500 pending</span>
+    </div>
     </div>
   </div>
 </figure>
@@ -117,25 +141,43 @@ We can easily extend this idea to 6x6 and 8x8 classes.
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-8">
+      <span class="tetrasquares-label">O5-T4</span>
+      <img src="{{ '/assets/images/tetrasquares/o5-t4-forming.gif' | relative_url }}" width="256" height="256" alt="Five O pieces and four T pieces form a 6x6 square that turns silver." loading="lazy" decoding="async">
+    </div>
     <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">O5-T4</span>
       <img src="{{ '/assets/images/tetrasquares/o5-t4-cuts.svg' | relative_url }}" width="192" height="192" alt="Recursive cyan cuts separate five O pieces from a four-T interlock." loading="lazy" decoding="async">
       <span class="tetrasquares-value">Shape bonus: 500</span>
+    </div>
+    </div>
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-8">
+      <span class="tetrasquares-label">L5-T4</span>
+      <img src="{{ '/assets/images/tetrasquares/l5-t4-forming.gif' | relative_url }}" width="256" height="256" alt="Five L pieces and four T pieces interlock into a 6x6 square that turns silver." loading="lazy" decoding="async">
     </div>
     <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">L5-T4</span>
       <img src="{{ '/assets/images/tetrasquares/l5-t4-cut.svg' | relative_url }}" width="192" height="192" alt="Nine interlocked L and T pieces. The red cut crosses two pieces, the minimum for any full cut." loading="lazy" decoding="async">
       <span class="tetrasquares-value">Shape bonus: 2,500</span>
     </div>
+    </div>
   </div>
 </figure>
 
 <figure class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
+    <div class="tetrasquares-comparison">
+    <div class="tetrasquares-card square-10">
+      <span class="tetrasquares-label">T16 / 8x8</span>
+      <img src="{{ '/assets/images/tetrasquares/t16-forming.gif' | relative_url }}" width="320" height="320" alt="Sixteen T pieces form an 8x8 square that turns gold." loading="lazy" decoding="async">
+    </div>
     <div class="tetrasquares-card square-8">
       <span class="tetrasquares-label">T16 / 8x8</span>
       <img src="{{ '/assets/images/tetrasquares/t16.svg' | relative_url }}" width="256" height="256" alt="Sixteen numbered T pieces form an 8x8 gold square from four T4 quadrants." loading="lazy" decoding="async">
       <span class="tetrasquares-value">20,000 pending</span>
+    </div>
     </div>
   </div>
 </figure>
