@@ -73,12 +73,45 @@ const ui = Object.freeze({
   stats: document.querySelector("#family-stats"),
   order: document.querySelector("#order"),
   orderSection: document.querySelector("#order-section"),
-  modeNote: document.querySelector("#catalog-mode-note"),
   play: document.querySelector("#play"),
   practice: document.querySelector("#practice-construction"),
-  practiceUnavailable: document.querySelector("#practice-unavailable"),
 });
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let animationChoice = null;
+
+function stopPlayback() {
+  clearTimeout(playback);
+  playback = null;
+  ui.play.textContent = "Play";
+  ui.play.setAttribute("aria-label", "Play animation");
+  ui.play.setAttribute("aria-pressed", "false");
+}
+
+function startPlayback() {
+  stopPlayback();
+  if (!currentFamily?.pieces) return;
+  ui.step.value = "1";
+  ui.play.textContent = "Pause";
+  ui.play.setAttribute("aria-label", "Pause animation");
+  ui.play.setAttribute("aria-pressed", "true");
+  draw();
+  const advance = () => {
+    if (!currentFamily) { stopPlayback(); return; }
+    const total = Number(ui.step.max);
+    const step = Number(ui.step.value);
+    ui.step.value = String(step === total ? 0 : step + 1);
+    draw();
+    playback = setTimeout(advance, Number(ui.step.value) === total ? 1200 : 350);
+  };
+  playback = setTimeout(advance, 350);
+}
+
+function scrubTo(step) {
+  animationChoice = false;
+  stopPlayback();
+  ui.step.value = String(step);
+  draw();
+}
 
 function buildingType(family) {
   return `D${family.diversity}-${family.signature.join("+")}`;
@@ -103,7 +136,11 @@ function mixColor(hex, amount) {
 }
 
 function exampleOrder(family) {
-  return family.order ?? family.pieces.map(({ id }) => id);
+  // Geometric 8x8 examples have no verified drop order. Reveal lower pieces first.
+  return family.order ?? [...family.pieces]
+    .sort((a, b) => Math.max(...b.cells.map(([, y]) => y)) - Math.max(...a.cells.map(([, y]) => y))
+      || Math.min(...a.cells.map(([x]) => x)) - Math.min(...b.cells.map(([x]) => x)))
+    .map(({ id }) => id);
 }
 
 function pieceStyles(family) {
@@ -187,6 +224,7 @@ function renderFamilyList(preferredId = null) {
   if (visibleFamilies.length === 0) {
     ui.familyList.innerHTML = "";
     currentFamily = null;
+    stopPlayback();
     return;
   }
 
@@ -271,18 +309,16 @@ function draw() {
     }).join("");
     return `<tr><th scope="row">${row + 1}</th>${cells}</tr>`;
   }).join("");
-  const stepText = `Step ${limit} of ${currentFamily.pieces.length}`;
-  ui.stepLabel.textContent = stepText;
-  ui.gridCaption.textContent = size === 8
-    ? `${currentFamily.id} 8 by 8 arrangement. Cells with the same number belong to one piece.`
-    : `${currentFamily.id} ${size} by ${size} arrangement at ${stepText.toLowerCase()}. Cells with the same step belong to one piece.`;
+  const stepText = `${limit} of ${currentFamily.pieces.length} pieces`;
+  ui.stepLabel.textContent = `${limit} / ${currentFamily.pieces.length}`;
+  ui.gridCaption.textContent = `${currentFamily.id}, ${size} by ${size}, ${stepText}.`;
   ui.board.setAttribute("aria-label", size === 8
     ? `${currentFamily.id} 8 by 8 example square`
     : `${currentFamily.id} ${size} by ${size} example square at ${stepText.toLowerCase()}`);
 }
 
 function showFamily(id, { scroll = true, refreshList = true } = {}) {
-  clearInterval(playback);
+  stopPlayback();
   currentFamily = families.find((family) => family.id === id) ?? null;
   if (!currentFamily) return;
   if (size === 8 && !currentFamily.pieces) currentFamily.pieces = eightExamplePieces(currentFamily);
@@ -290,7 +326,6 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   const hasDropOrder = hasExample && Array.isArray(currentFamily.order);
   const canPractice = hasDropOrder && [4, 6].includes(size);
   ui.practice.hidden = !canPractice;
-  ui.practiceUnavailable.hidden = canPractice;
   if (canPractice) {
     const practiceUrl = new URL("/tetrasquares/", location.href);
     practiceUrl.searchParams.set("practice", String(size));
@@ -304,8 +339,8 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   ui.detail.classList.toggle("aggregate", !hasExample);
   ui.drawing.hidden = !hasExample;
   ui.orderSection.hidden = !hasDropOrder;
-  ui.stepControls.hidden = !hasDropOrder;
-  ui.stepLabel.hidden = !hasDropOrder;
+  ui.stepControls.hidden = !hasExample;
+  ui.stepLabel.hidden = !hasExample;
   ui.title.textContent = currentFamily.id;
   ui.material.textContent = familyMaterial(currentFamily);
   ui.scoreLabel.textContent = "SQUARE VALUE";
@@ -344,7 +379,7 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
     }).join("") : "";
     ui.pieceKey.innerHTML = exampleOrder(currentFamily).map((pieceId) => {
       const style = styles[pieceId];
-      return `<span>${pieceShape(style.type, style.color)}<b>${size === 8 ? "Piece" : "Step"} ${style.step + 1}</b>${style.type} piece</span>`;
+      return `<span aria-label="Piece ${style.step + 1}: ${style.type}">${pieceShape(style.type, style.color)}<b>${style.step + 1}</b></span>`;
     }).join("");
     ui.step.max = String(currentFamily.pieces.length);
     ui.step.value = String(currentFamily.pieces.length);
@@ -359,6 +394,7 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   if (scroll) ui.familyList.querySelector(`[data-family="${id}"]`)?.scrollIntoView({ block: "nearest" });
   draw();
   updateUrl();
+  if (animationChoice ?? !reducedMotion.matches) startPlayback();
 }
 
 function moveFamily(delta) {
@@ -397,9 +433,6 @@ async function loadSize(nextSize, preferredId = null) {
     ui.familyTotal.textContent = families.length.toLocaleString("en-US");
     ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
     ui.layoutLabel.textContent = "BOARD ARRANGEMENTS";
-    ui.modeNote.textContent = size === 8
-      ? "Numbers identify pieces, not a drop order."
-      : "Numbers show the drop order for this example.";
     for (const button of ui.sizeButtons) {
       const selected = Number(button.dataset.size) === size;
       button.classList.toggle("active", selected);
@@ -446,38 +479,25 @@ ui.listNext.addEventListener("click", () => {
   renderFamilyButtons(visibleFamilies[target]?.id);
   showFamily(visibleFamilies[target]?.id, { scroll: false, refreshList: false });
 });
-ui.step.addEventListener("input", draw);
+ui.step.addEventListener("input", () => scrubTo(Number(ui.step.value)));
 document.querySelector("#step-back").addEventListener("click", () => {
-  ui.step.value = String(Math.max(0, Number(ui.step.value) - 1));
-  draw();
+  scrubTo(Math.max(0, Number(ui.step.value) - 1));
 });
 document.querySelector("#step-forward").addEventListener("click", () => {
-  ui.step.value = String(Math.min(Number(ui.step.max), Number(ui.step.value) + 1));
-  draw();
+  scrubTo(Math.min(Number(ui.step.max), Number(ui.step.value) + 1));
 });
 ui.play.addEventListener("click", () => {
-  clearInterval(playback);
-  if (reducedMotion.matches) {
-    ui.step.value = ui.step.max;
-    draw();
-    ui.status.textContent = "Full arrangement shown. Animation is off for reduced motion.";
-    return;
-  }
-  ui.step.value = "0";
-  draw();
-  playback = setInterval(() => {
-    ui.step.value = String(Number(ui.step.value) + 1);
-    draw();
-    if (Number(ui.step.value) >= Number(ui.step.max)) clearInterval(playback);
-  }, 350);
+  animationChoice = playback === null;
+  if (animationChoice) startPlayback();
+  else stopPlayback();
 });
 reducedMotion.addEventListener("change", (event) => {
-  if (!event.matches || !playback) return;
-  clearInterval(playback);
-  playback = null;
-  ui.step.value = ui.step.max;
-  draw();
-  ui.status.textContent = "Full arrangement shown. Animation is off for reduced motion.";
+  if (animationChoice !== null) return;
+  if (event.matches) {
+    stopPlayback();
+    ui.step.value = ui.step.max;
+    draw();
+  } else startPlayback();
 });
 document.querySelector("#previous-family").addEventListener("click", () => moveFamily(-1));
 document.querySelector("#next-family").addEventListener("click", () => moveFamily(1));

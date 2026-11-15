@@ -25,6 +25,48 @@ const server = http.createServer((req, res) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
+async function checkAnimation(page, { loop }) {
+  assert.equal(await page.$eval('#play', el => el.getAttribute('aria-pressed')), 'true');
+  const snapshot = async () => page.$eval('#family-board', el => el.toDataURL());
+  const step = await page.$eval('#step', el => el.value);
+  const before = await snapshot();
+  await page.waitForFunction(value => document.querySelector('#step').value !== value, { timeout: 2000 }, step);
+  assert.notEqual(await snapshot(), before, 'Animation must change the drawn blocks, not just a table or counter');
+  if (loop) {
+    await page.waitForFunction(() => {
+      const step = document.querySelector('#step');
+      return step.value === step.max;
+    }, { timeout: 8000 });
+    await page.waitForFunction(() => document.querySelector('#step').value === '0', { timeout: 2000 });
+  }
+  await page.click('#play');
+  const paused = await page.$eval('#step', el => el.value);
+  const still = await snapshot();
+  await new Promise(resolve => setTimeout(resolve, 450));
+  assert.equal(await page.$eval('#step', el => el.value), paused);
+  assert.equal(await snapshot(), still, 'Pause must stop the visible animation');
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  await page.click('#play');
+  const started = await page.$eval('#step', el => el.value);
+  const reducedBefore = await snapshot();
+  await page.waitForFunction(value => document.querySelector('#step').value !== value, { timeout: 2000 }, started);
+  assert.notEqual(await snapshot(), reducedBefore, 'Explicit Play must work with reduced motion enabled');
+  await page.$eval('#step', el => { el.value = el.max; el.dispatchEvent(new Event('input')); });
+  assert.equal(await page.$eval('#play', el => el.textContent), 'Play');
+  const layout = await page.evaluate(() => {
+    const controls = document.querySelector('#step-controls').getBoundingClientRect();
+    const board = document.querySelector('#family-board').getBoundingClientRect();
+    const text = document.querySelector('#family-grid').closest('.sr-only');
+    return { controlsBeforeBoard: controls.bottom <= board.top,
+      textWidth: text?.getBoundingClientRect().width, textOverflow: text && getComputedStyle(text).overflow,
+      oldInstructions: /Choose a piece mix|Numbers show the drop order/.test(document.body.textContent) };
+  });
+  assert.equal(layout.controlsBeforeBoard, true);
+  assert.equal(layout.textWidth, 1);
+  assert.equal(layout.textOverflow, 'hidden');
+  assert.equal(layout.oldInstructions, false);
+}
+
 let browser;
 try {
   browser = await puppeteer.launch({
@@ -37,6 +79,7 @@ try {
     ['/tetrasquares/', '#game-machine:not([hidden])', '/tetrasquares/', true, false],
     ['/tetrasquares/?layout=warm-cartridge', '#game-machine:not([hidden])', '/tetrasquares/', true, true],
     ['/tetrasquares/?practice=4&family=T4', '#practice-panel:not([hidden])', '/tetrasquares/', true, false],
+    ['/tetrasquares/catalog/?size=4&family=T4', '#catalog-machine:not([hidden])', '/tetrasquares/catalog/', true, true],
     ['/tetrasquares/catalog/?size=6&family=O9', '#catalog-machine:not([hidden])', '/tetrasquares/catalog/', true, false],
     ['/tetrasquares/catalog/?size=8&family=T16', '#catalog-machine:not([hidden])', '/tetrasquares/catalog/', true, true],
     ['/tetrasquares/scoring/', 'main', '/tetrasquares/scoring/', false, true]
@@ -69,8 +112,14 @@ try {
         assert.equal(events.length, 1); assert.equal(events[0].path, canonical);
       }
       if (route.includes('practice=')) assert.match(await page.$eval('#practice-catalog', e => e.href), /\/tetrasquares\/catalog\/\?size=4&family=T4$/);
+      if (route.includes('/catalog/')) {
+        await checkAnimation(page, { loop: !route.includes('size=6') });
+        result.checks.push({ route, autoplay: true, looping: !route.includes('size=6'),
+          canvasFrames: true, pause: true, explicitReducedMotionPlayback: true, textGridScreenReaderOnly: true });
+      }
       if (route.includes('size=8')) {
         const checkExample = async () => {
+          await page.$eval('#step', el => { el.value = el.max; el.dispatchEvent(new Event('input')); });
           const state = await page.evaluate(() => {
             const board = document.querySelector('#family-board');
             const ctx = board.getContext('2d');
@@ -96,7 +145,7 @@ try {
           assert.equal(new Set(state.cells).size, 16);
           for (const cell of new Set(state.cells)) assert.equal(state.cells.filter(value => value === cell).length, 4);
           assert.ok(state.cells.every(cell => /^[IJLOSTZ] piece \d+$/.test(cell)));
-          assert.equal(state.controls, 'none');
+          assert.notEqual(state.controls, 'none');
           assert.equal(state.order, 'none');
           assert.equal(state.practice, 'none');
           assert.match(state.points, /^(10,000|20,000)$/);
@@ -147,7 +196,11 @@ try {
           viewportWidths: [1280, 390, 320], reducedMotion: true, sizeSwitching: true });
       }
       if (route.includes('/catalog/') && !route.includes('size=8')) {
-        assert.match(await page.$eval('#practice-construction', e => e.href), /\/tetrasquares\/\?practice=6&family=O9$/);
+        const selected = new URL(origin + route).searchParams;
+        const practice = new URL(await page.$eval('#practice-construction', e => e.href));
+        assert.equal(practice.pathname, '/tetrasquares/');
+        assert.equal(practice.searchParams.get('practice'), selected.get('size'));
+        assert.equal(practice.searchParams.get('family'), selected.get('family'));
         await page.click('#practice-construction');
         await page.waitForSelector('#practice-panel:not([hidden])');
         assert.equal(new URL(page.url()).pathname, '/tetrasquares/');

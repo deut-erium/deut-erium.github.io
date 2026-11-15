@@ -46,15 +46,10 @@ sitemap: true
       <div><span>MIXES SHOWN</span><strong id="visible-total">-</strong></div>
     </section>
 
-    <div class="catalog-explain">
-      <p>Choose a piece mix to see one arrangement. <b>O4</b> means four O pieces; <b>I2-J2</b> means two I pieces and two J pieces.</p>
-      <p id="catalog-mode-note">Numbers show the drop order for this example.</p>
-    </div>
-
     <section class="filters" aria-label="Catalog filters">
-      <label>Find a piece mix<input id="search" type="search" placeholder="O4 or I2 J2"></label>
-      <label>Gold or silver<select id="kind"><option value="">All squares</option><option value="gold">Gold: one piece type</option><option value="silver">Silver: mixed piece types</option><option value="spectrum">Silver: all 7 piece types</option></select></label>
-      <label>Number of piece types<select id="type-count"><option value="">All</option></select></label>
+      <label>Search<input id="search" type="search" placeholder="O4"></label>
+      <label>Square<select id="kind"><option value="">All squares</option><option value="gold">Gold: one piece type</option><option value="silver">Silver: mixed piece types</option><option value="spectrum">Silver: all 7 piece types</option></select></label>
+      <label>Piece types<select id="type-count"><option value="">All</option></select></label>
       <label>Pieces per type<select id="piece-counts"><option value="">All</option></select></label>
     </section>
 
@@ -71,32 +66,28 @@ sitemap: true
 
       <article class="family-detail" id="family-detail">
         <div class="drawing" id="drawing">
-          <canvas id="family-board" width="360" height="360" aria-label="Example square"></canvas>
-          <details class="arrangement-data">
-            <summary>Text arrangement for this step</summary>
-            <div class="arrangement-scroll">
-              <table id="family-grid">
-                <caption id="family-grid-caption">The example arrangement is loading.</caption>
-                <thead><tr id="family-grid-columns"><th scope="col">Row</th></tr></thead>
-                <tbody id="family-grid-body"></tbody>
-              </table>
-            </div>
-          </details>
-          <div id="piece-key" class="piece-key"></div>
           <div id="step-controls" class="step-controls">
-            <button id="step-back" type="button" aria-label="Previous construction step">-</button>
-            <input id="step" type="range" min="0" max="4" value="4" aria-label="Build step">
-            <button id="step-forward" type="button" aria-label="Next construction step">+</button>
-            <button id="play" type="button">Play</button>
+            <button id="step-back" type="button" aria-label="Previous piece">-</button>
+            <input id="step" type="range" min="0" max="4" value="4" aria-label="Pieces shown">
+            <button id="step-forward" type="button" aria-label="Next piece">+</button>
+            <button id="play" type="button" aria-label="Play animation" aria-pressed="false">Play</button>
           </div>
           <p id="step-label"></p>
+          <canvas id="family-board" width="360" height="360" aria-label="Example square"></canvas>
+          <div id="piece-key" class="piece-key"></div>
+          <div class="sr-only">
+            <table id="family-grid">
+              <caption id="family-grid-caption">Square arrangement</caption>
+              <thead><tr id="family-grid-columns"><th scope="col">Row</th></tr></thead>
+              <tbody id="family-grid-body"></tbody>
+            </table>
+          </div>
         </div>
 
         <div class="family-data">
           <p id="material" class="material">-</p>
           <h2 id="family-title" class="family-title">-</h2>
           <a id="practice-construction" class="practice-link" href="/tetrasquares/" hidden>Practice this construction</a>
-          <p id="practice-unavailable" hidden>8x8 practice is not available.</p>
           <p id="catalog-status" class="sr-only" role="status" aria-live="polite"></p>
           <section class="construction-score" aria-labelledby="score-label">
             <span id="score-label">SQUARE VALUE</span>
@@ -109,7 +100,7 @@ sitemap: true
           <h3>Pieces used</h3>
           <ul id="recipe" class="recipe"></ul>
           <dl id="family-stats"></dl>
-          <div id="order-section">
+          <div id="order-section" class="sr-only">
             <h3>Drop order for this example</h3>
             <ol id="order" class="order"></ol>
           </div>
@@ -123,7 +114,7 @@ sitemap: true
     </div>
   </main>
 
-  <script id="catalog-module" type="module" src="/tetrasquares/src/catalog/catalog.js?v=20261115-examples1"></script>
+  <script id="catalog-module" type="module" src="/tetrasquares/src/catalog/catalog.js?v=20261115-animation2"></script>
   <script>
     (() => {
       const module = document.querySelector("#catalog-module");
