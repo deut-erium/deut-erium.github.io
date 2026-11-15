@@ -59,6 +59,9 @@ def source_headings(path: Path, section: str) -> list[tuple[int, str]]:
         level = len(match.group(1))
         if section in {"writeups", "ramblings"}:
             level = min(6, level + 1)
+        else:
+            # Root/tutorials restore offset headings, but authored H1s stay H2s.
+            level = max(2, level)
         headings.append((level, normalize(match.group(2))))
 
     # The build keeps every heading's text and order, then clamps only levels

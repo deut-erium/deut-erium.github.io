@@ -479,6 +479,19 @@ class RouteTests(unittest.TestCase):
         write(output, route, body)
         return subprocess.run([sys.executable, str(self.work / "script/verify-heading-parity.py"), str(output)], text=True, capture_output=True, env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}, timeout=10)
 
+    def test_authored_h1_sections_match_rendered_h2s(self):
+        source = write(self.work, "headings.md", "# Overview\n## Examples\n### Details\n# Next\n")
+        for section in ("root", "tutorials"):
+            with self.subTest(section=section):
+                self.assertEqual(self.heading["source_headings"](source, section), [
+                    (2, "overview"), (2, "examples"), (3, "details"), (2, "next"),
+                ])
+        for section in ("writeups", "ramblings"):
+            with self.subTest(section=section):
+                self.assertEqual(self.heading["source_headings"](source, section), [
+                    (2, "overview"), (3, "examples"), (4, "details"), (2, "next"),
+                ])
+
     def test_heading_cli_reads_preserved_route(self):
         result = self.heading_cli()
         self.assertEqual(result.returncode, 0, result.stderr)
