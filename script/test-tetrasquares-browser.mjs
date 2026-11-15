@@ -7,7 +7,8 @@ import { pathToFileURL } from 'node:url';
 const { default: puppeteer } = await import(pathToFileURL(path.resolve('.toolchain/verify/lighthouse-node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js')));
 const root = path.resolve(process.argv[2] || 'agent_out/tetrasquares-migration/site');
 const out = path.resolve('agent_out/tetrasquares-migration');
-fs.mkdirSync(out, { recursive: true });
+const saveResults = !process.argv.includes('--stdout-only');
+if (saveResults) fs.mkdirSync(out, { recursive: true });
 const result = { pass: false, checks: [], external: [], errors: [] };
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
@@ -37,6 +38,7 @@ try {
     ['/tetrasquares/?layout=warm-cartridge', '#game-machine:not([hidden])', '/tetrasquares/', true, true],
     ['/tetrasquares/?practice=4&family=T4', '#practice-panel:not([hidden])', '/tetrasquares/', true, false],
     ['/tetrasquares/catalog/?size=6&family=O9', '#catalog-machine:not([hidden])', '/tetrasquares/catalog/', true, false],
+    ['/tetrasquares/catalog/?size=8&family=T16', '#catalog-machine:not([hidden])', '/tetrasquares/catalog/', true, true],
     ['/tetrasquares/scoring/', 'main', '/tetrasquares/scoring/', false, true]
   ];
   for (const [route, ready, canonical, js, blocked] of cases) {
@@ -67,7 +69,84 @@ try {
         assert.equal(events.length, 1); assert.equal(events[0].path, canonical);
       }
       if (route.includes('practice=')) assert.match(await page.$eval('#practice-catalog', e => e.href), /\/tetrasquares\/catalog\/\?size=4&family=T4$/);
-      if (route.includes('/catalog/')) {
+      if (route.includes('size=8')) {
+        const checkExample = async () => {
+          const state = await page.evaluate(() => {
+            const board = document.querySelector('#family-board');
+            const ctx = board.getContext('2d');
+            let colored = 0;
+            for (let y = 0; y < 8; y += 1) for (let x = 0; x < 8; x += 1) {
+              const [r, g, b] = ctx.getImageData(x * 45 + 8, y * 45 + 8, 1, 1).data;
+              if (r !== 18 || g !== 61 || b !== 115) colored += 1;
+            }
+            const cells = [...document.querySelectorAll('#family-grid-body td')].map(e => e.textContent);
+            return {
+              title: document.querySelector('#family-title').textContent, colored, cells,
+              drawingWidth: board.getBoundingClientRect().width,
+              controls: getComputedStyle(document.querySelector('#step-controls')).display,
+              order: getComputedStyle(document.querySelector('#order-section')).display,
+              practice: getComputedStyle(document.querySelector('#practice-construction')).display,
+              points: document.querySelector('#construction-score').textContent,
+              overflow: document.documentElement.scrollWidth - innerWidth,
+            };
+          });
+          assert.ok(state.drawingWidth > 0);
+          assert.equal(state.colored, 64, state.title);
+          assert.equal(state.cells.length, 64);
+          assert.equal(new Set(state.cells).size, 16);
+          for (const cell of new Set(state.cells)) assert.equal(state.cells.filter(value => value === cell).length, 4);
+          assert.ok(state.cells.every(cell => /^[IJLOSTZ] piece \d+$/.test(cell)));
+          assert.equal(state.controls, 'none');
+          assert.equal(state.order, 'none');
+          assert.equal(state.practice, 'none');
+          assert.match(state.points, /^(10,000|20,000)$/);
+          assert.ok(state.overflow <= 2, `Horizontal overflow: ${state.overflow}`);
+        };
+        const searchFor = async id => {
+          await page.$eval('#search', (el, value) => {
+            el.value = value;
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+          }, id);
+        };
+        await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+        for (const width of [1280, 390, 320]) {
+          await page.setViewport({ width, height: 844 });
+          await checkExample();
+        }
+        for (const id of ['O16', 'T8-Z8', 'S2-T6-Z8']) {
+          await searchFor(id);
+          assert.equal(await page.$eval('#family-title', el => el.textContent), id);
+          await checkExample();
+        }
+        await searchFor('');
+        await page.select('#kind', 'spectrum');
+        assert.equal((await page.$eval('#family-title', el => el.textContent)).split('-').length, 7);
+        await checkExample();
+        await page.select('#kind', 'gold');
+        await checkExample();
+        await page.select('#kind', '');
+        await searchFor('T8-Z8');
+        await searchFor('');
+        await page.click('#list-next');
+        assert.match(await page.$eval('#list-range', el => el.textContent), /^251-500 of 30,434$/);
+        await checkExample();
+        await page.click('#list-previous');
+        await checkExample();
+        await searchFor('no-such-piece-mix');
+        assert.equal(await page.$eval('#family-detail', el => getComputedStyle(el).display), 'none');
+        await page.click('[data-size="4"]');
+        await page.waitForFunction(() => document.querySelector('#step').max === '4');
+        assert.notEqual(await page.$eval('#step-controls', el => getComputedStyle(el).display), 'none');
+        assert.notEqual(await page.$eval('#practice-construction', el => getComputedStyle(el).display), 'none');
+        await page.$eval('#step', el => { el.value = '1'; el.dispatchEvent(new Event('input')); });
+        assert.equal(await page.$$eval('#family-grid-body td', cells => cells.filter(el => el.textContent === 'Empty').length), 12);
+        await page.click('[data-size="6"]');
+        await page.waitForFunction(() => document.querySelector('#step').max === '9');
+        assert.notEqual(await page.$eval('#order-section', el => getComputedStyle(el).display), 'none');
+        result.checks.push({ route, representativeDiagrams: true, paging: true, filters: true,
+          viewportWidths: [1280, 390, 320], reducedMotion: true, sizeSwitching: true });
+      }
+      if (route.includes('/catalog/') && !route.includes('size=8')) {
         assert.match(await page.$eval('#practice-construction', e => e.href), /\/tetrasquares\/\?practice=6&family=O9$/);
         await page.click('#practice-construction');
         await page.waitForSelector('#practice-panel:not([hidden])');
@@ -88,6 +167,6 @@ try {
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
-  fs.writeFileSync(path.join(out, 'browser-results.json'), JSON.stringify(result, null, 2) + '\n');
+  if (saveResults) fs.writeFileSync(path.join(out, 'browser-results.json'), JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result, null, 2));
 }
