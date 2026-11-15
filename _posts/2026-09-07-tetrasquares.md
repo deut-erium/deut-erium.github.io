@@ -166,12 +166,12 @@ We can easily extend this idea to 6x6 and 8x8 classes.
   </div>
 </figure>
 
-<figure class="tetrasquares-figure">
+<figure id="t16-animation" class="tetrasquares-figure">
   <div class="tetrasquares-gallery">
     <div class="tetrasquares-comparison">
     <div class="tetrasquares-card square-10">
       <span class="tetrasquares-label">T16 / 8x8</span>
-      <img src="{{ '/assets/images/tetrasquares/t16-forming.gif' | relative_url }}" width="320" height="320" alt="Sixteen T pieces form an 8x8 square that turns gold." loading="lazy" decoding="async">
+      <img src="{{ '/assets/images/tetrasquares/t16-forming.gif' | relative_url }}?v={{ '/assets/images/tetrasquares/t16-forming.gif' | asset_v }}" width="320" height="320" alt="Sixteen T pieces form an 8x8 square that turns gold." loading="lazy" decoding="async">
     </div>
     <div class="tetrasquares-card square-8">
       <span class="tetrasquares-label">T16 / 8x8</span>

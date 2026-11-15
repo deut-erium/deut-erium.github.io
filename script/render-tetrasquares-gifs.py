@@ -6,6 +6,7 @@ colors, and placement numbers; the game's collision and rotation rules validate
 paths before rendering. Run from any directory; output goes beside those SVGs.
 """
 
+import argparse
 import io
 import json
 from pathlib import Path
@@ -85,6 +86,7 @@ for (const entry of cases) {
     piece.path = route.map(state => cellsFor(state).map(({x,y}) => [x,y]));
     assert.equal(geometry(cellsFor(found)), geometry(targetCells));
     board.lock(found, piece.order);
+    piece.squares = board.findSquares(piece.order);
     assert.deepEqual(board.completedRows(), []);
   }
 }
@@ -157,11 +159,17 @@ def draw_piece(image, cells, piece, viewport):
         draw.text((px + CELL / 2, py + CELL / 2), str(piece['order']), fill='#111111', anchor='mm')
 
 
-def material(entry, size):
+def material(entry, size, square=None):
     overlay = Image.new('RGBA', size)
-    x0, y0 = CELL + 2, 2 * CELL + 2
-    x1, y1 = (entry['size'] + 1) * CELL - 2, size[1] - 2
-    colors = [(255, 240, 161), (255, 212, 71), (213, 148, 22)] if entry['kind'] == 'gold' else [
+    if square is None:
+        x0, y0 = CELL + 2, 2 * CELL + 2
+        side, kind = entry['size'], entry['kind']
+    else:
+        x0 = (square['left'] - entry['viewport']['left']) * CELL + 2
+        y0 = (square['top'] - entry['viewport']['top']) * CELL + 2
+        side, kind = square['size'], square['kind']
+    x1, y1 = x0 + side * CELL - 4, y0 + side * CELL - 4
+    colors = [(255, 240, 161), (255, 212, 71), (213, 148, 22)] if kind == 'gold' else [
         (241, 246, 252), (184, 192, 200), (112, 128, 145)]
     pixels = overlay.load()
     for y in range(y0, y1 + 1):
@@ -175,6 +183,18 @@ def material(entry, size):
     draw.line((x0 + 5, y1 - 6, x0 + 5, y0 + 5, x1 - 7, y0 + 5), fill=tuple(colors[0]), width=4)
     draw.line((x1 - 5, y0 + 6, x1 - 5, y1 - 5, x0 + 6, y1 - 5), fill=tuple(colors[2]), width=4)
     return overlay
+
+
+def dissolve_material(entry, settled, square, frames, durations):
+    overlay = material(entry, settled.size, square)
+    for step in range(1, 7):
+        translucent = overlay.copy()
+        translucent.putalpha(overlay.getchannel('A').point(lambda alpha: round(alpha * step / 6)))
+        frame = settled.convert('RGBA')
+        frame.alpha_composite(translucent)
+        frames.append(frame.convert('RGB'))
+        durations.append(80)
+    return frames[-1].copy()
 
 
 def render(entry):
@@ -192,14 +212,13 @@ def render(entry):
         draw_piece(settled, route[-1], piece, entry['viewport'])
         frames.append(settled.copy())
         durations.append(180)
-    overlay = material(entry, settled.size)
-    for step in range(1, 7):
-        translucent = overlay.copy()
-        translucent.putalpha(overlay.getchannel('A').point(lambda alpha: round(alpha * step / 6)))
-        frame = settled.convert('RGBA')
-        frame.alpha_composite(translucent)
-        frames.append(frame.convert('RGB'))
-        durations.append(80)
+        if entry['name'] == 't16':
+            for square in piece['squares']:
+                settled = dissolve_material(entry, settled, square, frames, durations)
+                if square['size'] == 4:
+                    durations[-1] += 240
+    if entry['name'] != 't16':
+        dissolve_material(entry, settled, None, frames, durations)
     durations[-1] += 1300
     samples = Image.new('RGB', (64 * 16, 64 * ((len(frames) + 15) // 16)))
     for index, frame in enumerate(frames):
@@ -223,7 +242,11 @@ def render(entry):
 
 
 def main():
-    cases = [read_case(name, filename) for name, filename in CASES.items()]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--only', choices=CASES, help='Regenerate just this construction.')
+    args = parser.parse_args()
+    cases = [read_case(name, filename) for name, filename in CASES.items()
+             if args.only is None or name == args.only]
     result = subprocess.run(['node', '--input-type=module', '-e', PATHS],
                             cwd=ROOT, input=json.dumps(cases), text=True, capture_output=True)
     if result.returncode:
