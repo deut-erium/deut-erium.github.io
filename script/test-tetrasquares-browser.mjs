@@ -113,8 +113,8 @@ try {
       }
       if (route.includes('practice=')) assert.match(await page.$eval('#practice-catalog', e => e.href), /\/tetrasquares\/catalog\/\?size=4&family=T4$/);
       if (route.includes('/catalog/')) {
-        await checkAnimation(page, { loop: !route.includes('size=6') });
-        result.checks.push({ route, autoplay: true, looping: !route.includes('size=6'),
+        await checkAnimation(page, { loop: true });
+        result.checks.push({ route, autoplay: true, looping: true,
           canvasFrames: true, pause: true, explicitReducedMotionPlayback: true, textGridScreenReaderOnly: true });
       }
       if (route.includes('size=8')) {
