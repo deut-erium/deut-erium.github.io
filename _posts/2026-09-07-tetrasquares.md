@@ -42,10 +42,7 @@ So instead of incentivizing breaking multiple lines, it incentivizes you to form
   <div class="tetrasquares-gallery">
     <div class="tetrasquares-card square-6">
       <span class="tetrasquares-label">O4</span>
-      <picture>
-        <source media="(prefers-reduced-motion: reduce)" srcset="{{ '/assets/images/tetrasquares/o4.svg' | relative_url }}">
-        <img src="{{ '/assets/images/tetrasquares/o4-forming.gif' | relative_url }}" width="192" height="192" alt="Four O pieces form a 4x4 square that turns gold." loading="lazy" decoding="async">
-      </picture>
+      <img src="{{ '/assets/images/tetrasquares/o4-forming.gif' | relative_url }}" width="192" height="192" alt="Four O pieces form a 4x4 square that turns gold." loading="lazy" decoding="async">
     </div>
   </div>
 </figure>
