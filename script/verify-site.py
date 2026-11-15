@@ -41,6 +41,13 @@ SITEMAP = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
 _gc = re.search(r'(?m)^goatcounter_site:\s*"?([\w-]+)"?\s*(?:#.*)?$', (SOURCE / "_config.yml").read_text(encoding="utf-8"))
 GOATCOUNTER = _gc.group(1) if _gc else ""
 ANALYTICS_SCRIPT = "https://gc.zgo.at/count.js"
+# Explicit author-approved players; other pages, URLs and resource types stay local.
+APPROVED_EXTERNAL_EMBEDS = {
+    "2026/09/07/tetrasquares.html": frozenset({
+        "https://www.youtube-nocookie.com/embed/VkrBrwnEEPA",
+        "https://www.youtube-nocookie.com/embed/lKYD9H0IwB0",
+    }),
+}
 
 
 def fail(message: str) -> None:
@@ -82,8 +89,10 @@ class Audit(HTMLParser):
         "link", "meta", "param", "source", "track", "wbr",
     }
 
-    def __init__(self) -> None:
+    def __init__(self, page_path: str | None = None) -> None:
         super().__init__(convert_charrefs=True)
+        self.page_path = page_path
+        self.approved_embeds: list[str] = []
         self.title = self.h1 = self.main = self.description = 0
         self.canonicals: list[str] = []
         self.robots: list[str] = []
@@ -232,6 +241,10 @@ class Audit(HTMLParser):
                     self.local.append(ref)
                 elif self._is_analytics_ref(ref):
                     self.analytics.append(ref)
+                elif (tag == "iframe" and ref == data.get("src") and "srcdoc" not in data
+                      and ref in APPROVED_EXTERNAL_EMBEDS.get(self.page_path, ())
+                      and ref not in self.approved_embeds):
+                    self.approved_embeds.append(ref)
                 elif automatic:
                     self.external_resources.append(ref)
             elif scheme not in {"mailto", "tel"} and not ref.startswith("#"):
@@ -600,7 +613,7 @@ archive_order: list[str] = []
 for page in pages:
     rel = page.relative_to(ROOT).as_posix()
     text = page.read_text(encoding="utf-8")
-    audit = Audit(); audit.feed(text); audit.close(); page_audits[rel] = audit
+    audit = Audit(rel); audit.feed(text); audit.close(); page_audits[rel] = audit
     check_browser_scope(audit, browser_entries.get(rel), rel)
     if rel in VERIFICATION_HTML:
         continue
@@ -987,7 +1000,7 @@ print(json.dumps({
     "challenge_forms": forms,
     "browser_practice_forms": browser_forms,
     "challenge_pages": len(challenge_pages),
-    "external_runtime_resources": 0,
+    "external_runtime_resources": sum(len(audit.approved_embeds) for audit in page_audits.values()),
     "analytics": f"goatcounter:{GOATCOUNTER}" if GOATCOUNTER else "none",
     "brand_mark_references": brand_marks,
     "artifact_files": artifact_files,

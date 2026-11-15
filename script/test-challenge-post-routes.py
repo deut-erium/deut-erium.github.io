@@ -30,7 +30,7 @@ def load_gate(name: str) -> dict:
     """
     path = ROOT / "script" / name
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP"}
+    constants = {"DATE_POST", "EMOJI", "ATOM", "SITEMAP", "APPROVED_EXTERNAL_EMBEDS"}
     nodes = []
     for node in tree.body:
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -274,6 +274,66 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(len(audit.robots), 2)
         self.assertEqual(audit.local, ["https://DEUT-ERIUM.GITHUB.IO/2026/09/06/masatermind.html"])
 
+    def test_approved_youtube_players_are_scoped_to_the_article(self):
+        route = "2026/09/07/tetrasquares.html"
+        urls = ["https://www.youtube-nocookie.com/embed/VkrBrwnEEPA",
+                "https://www.youtube-nocookie.com/embed/lKYD9H0IwB0"]
+        self.assertEqual(self.site["APPROVED_EXTERNAL_EMBEDS"], {route: frozenset(urls)})
+        markup = "".join(f'<iframe src="{url}" title="Game video"></iframe>' for url in urls)
+        audit = self.site["Audit"](route)
+        audit.feed(markup)
+        audit.close()
+        self.assertEqual(audit.external_resources, [])
+        self.assertEqual(audit.approved_embeds, urls)
+        for other in (None, "index.html", "2026/09/07/other.html", route + "/"):
+            with self.subTest(page=other):
+                audit = self.site["Audit"](other)
+                audit.feed(markup)
+                audit.close()
+                self.assertEqual(audit.approved_embeds, [])
+                self.assertEqual(audit.external_resources, urls)
+
+    def test_youtube_exception_rejects_other_urls_and_resource_types(self):
+        route = "2026/09/07/tetrasquares.html"
+        url = "https://www.youtube-nocookie.com/embed/VkrBrwnEEPA"
+        variants = [
+            url + "?autoplay=1", url.replace("https:", "http:"),
+            url.replace(".com/", ".com:443/"), url.replace("www.", "other."),
+            url.replace("youtube-nocookie", "youtube"),
+            url.replace("VkrBrwnEEPA", "abcdefghijk"),
+        ]
+        for variant in variants:
+            with self.subTest(url=variant):
+                audit = self.site["Audit"](route)
+                audit.feed(f'<iframe src="{variant}"></iframe>')
+                audit.close()
+                self.assertEqual(audit.approved_embeds, [])
+                self.assertEqual(audit.external_resources, [variant])
+        for markup in (
+            f'<script src="{url}"></script>', f'<img src="{url}">',
+            f'<source src="{url}">', f'<object data="{url}"></object>',
+            f'<video src="{url}"></video>', f'<link rel="stylesheet" href="{url}">',
+            f'<iframe src="{url}" srcdoc="Local content"></iframe>',
+        ):
+            with self.subTest(markup=markup):
+                audit = self.site["Audit"](route)
+                audit.feed(markup)
+                audit.close()
+                self.assertEqual(audit.approved_embeds, [])
+                self.assertEqual(audit.external_resources, [url])
+
+    def test_youtube_exception_rejects_duplicates_and_unrelated_external_content(self):
+        route = "2026/09/07/tetrasquares.html"
+        url = "https://www.youtube-nocookie.com/embed/VkrBrwnEEPA"
+        audit = self.site["Audit"](route)
+        audit.feed(f'<iframe src="{url}"></iframe><iframe src="{url}"></iframe>'
+                   '<script src="https://example.org/player.js"></script>'
+                   '<img src="/assets/images/local.png" alt="Local" width="1" height="1">')
+        audit.close()
+        self.assertEqual(audit.approved_embeds, [url])
+        self.assertEqual(audit.external_resources, [url, "https://example.org/player.js"])
+        self.assertEqual(audit.local, ["/assets/images/local.png"])
+
     def test_home_pagination_enforces_page_boundaries(self):
         routes = [f"/2026/01/{day:02d}/fixture-{day}.html" for day in range(1, 11)]
 
@@ -335,7 +395,7 @@ class RouteTests(unittest.TestCase):
         write(self.work, "archive.html", tags + records(order))
         write(self.work, "feed.xml", feed(order[:10]))
         write(self.work, "sitemap.xml", sitemap(order))
-        for directory, section, limit in (("WriteUps", "writeups", 20), ("ramblings", "ramblings", 5), ("ctf-tutorials", "tutorials", 20)):
+        for directory, section, limit in (("WriteUps", "writeups", 20), ("ramblings", "ramblings", 20), ("ctf-tutorials", "tutorials", 20)):
             expected = [route for route in order if routes[route] == section]
             write(self.work, f"{directory}/archive.html", records(expected))
             write(self.work, f"{directory}/index.html", records(expected))
