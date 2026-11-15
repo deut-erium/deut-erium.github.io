@@ -103,7 +103,7 @@ function renderKeyBindings(bindings) {
     button.textContent = waiting ? "PRESS KEY" : label;
     button.classList.toggle("listening", waiting);
     button.setAttribute("aria-label", waiting
-      ? `Waiting for a new key for ${INPUT_ACTION_LABELS[action]}`
+      ? `Press a key for ${INPUT_ACTION_LABELS[action]}`
       : `Change the key for ${INPUT_ACTION_LABELS[action]}. Current: ${label}`);
   }
 }
@@ -147,7 +147,7 @@ let initialError = "";
 let selectedGame = new Game();
 if (initialParams.has("practice")) {
   try {
-    const { loadConstruction, PracticeGame } = await import("./practice.js?v=20260911-practice1");
+    const { loadConstruction, PracticeGame } = await import("./practice.js?v=20261115-copy1");
     selectedGame = new PracticeGame(await loadConstruction(window.location.search));
   } catch (error) {
     initialError = `Practice unavailable: ${error instanceof Error ? error.message : String(error)}`;
@@ -262,8 +262,8 @@ function updatePracticeProgress() {
   const { construction, placed } = game.practice;
   const next = construction.steps[placed];
   practiceProgress.textContent = next
-    ? `Untimed. ${placed} / ${construction.steps.length} placed. Next: step ${placed + 1}, ${next.type} piece.`
-    : `${construction.steps.length} / ${construction.steps.length} placed. Construction complete.`;
+    ? `${placed} / ${construction.steps.length} pieces placed. Next: step ${placed + 1}, ${next.type} piece.`
+    : `${construction.steps.length} / ${construction.steps.length} pieces placed. Construction complete.`;
   for (const td of practiceTarget.querySelectorAll("td")) {
     const step = Number(td.dataset.step);
     td.classList.toggle("is-placed", step <= placed);
@@ -290,7 +290,7 @@ for (let row = 0; row < game.board.visibleRows; row += 1) {
 
 function resetSquareResult() {
   fields.lastSquare.textContent = "NONE";
-  fields.lastSquareMeta.textContent = "Build a complete 4x4, 6x6, or 8x8 area.";
+  fields.lastSquareMeta.textContent = "Every piece must have all four blocks inside the square.";
   fields.squareAward.textContent = "-";
   squareFlash.textContent = "";
   squareFlash.classList.remove("fire");
@@ -305,23 +305,23 @@ function saveTerminalReplay() {
   const replay = game.getChallengeReplay();
   const date = dateFromSeed(game.challenge.seed);
   if (!date) {
-    challengeMessage.textContent = "This custom seed is not an official daily replay.";
+    challengeMessage.textContent = "This game has no daily date. Its result was not saved.";
     return;
   }
   const generation = replayVerificationGeneration;
-  challengeMessage.textContent = "Checking the final score...";
+  challengeMessage.textContent = "Checking score...";
   setTimeout(() => {
     const result = verifyDailyChallengeReplay(replay, { date });
     const isCurrentRun = generation === replayVerificationGeneration;
     if (!result.valid) {
-      if (isCurrentRun) challengeMessage.textContent = `Replay check failed: ${result.error}`;
+      if (isCurrentRun) challengeMessage.textContent = `Score check failed: ${result.error}`;
       return;
     }
     try {
       localStorage.setItem(SAVED_REPLAY_KEY, JSON.stringify(replay));
-      if (isCurrentRun) challengeMessage.textContent = "Final score checked and saved in this browser.";
+      if (isCurrentRun) challengeMessage.textContent = "Score checked and saved in this browser.";
     } catch {
-      if (isCurrentRun) challengeMessage.textContent = "Final score checked. Browser storage is unavailable.";
+      if (isCurrentRun) challengeMessage.textContent = "Score checked but could not be saved in this browser.";
     }
   }, 0);
 }
@@ -355,13 +355,13 @@ export function handleEvents(events) {
       }
       announcements.push(game.practice ? "Practice started. No gravity or timer." : "Game started.");
     } else if (event.type === "practicemiss") {
-      challengeMessage.textContent = `Drop rejected: match step ${event.detail.step}'s cells. The board is unchanged. Try the placement outline if you need a hint.`;
+      challengeMessage.textContent = `Match step ${event.detail.step}. The board is unchanged. Select "Outline the next placement" for a hint.`;
       announcements.push(`Drop rejected. Match step ${event.detail.step}.`);
     } else if (event.type === "practicecomplete") {
-      challengeMessage.textContent = "Construction complete. Retry this example or choose another from the catalog.";
+      challengeMessage.textContent = "Construction complete. Retry or choose another catalog example.";
       announcements.push("Construction complete.");
     } else if (event.type === "practicestep") {
-      if (game.status !== "complete") challengeMessage.textContent = `Step ${event.detail.placed} placed. Continue with the next numbered piece.`;
+      if (game.status !== "complete") challengeMessage.textContent = `Step ${event.detail.placed} placed.`;
     } else if (event.type === "spawn") {
       announcements.push(`New ${event.detail.type} piece.`);
     } else if (event.type === "hold") {
@@ -494,9 +494,9 @@ export function updateHud() {
   if (game.status === "paused") {
     setOverlay("Paused");
   } else if (game.status === "gameover") {
-    setOverlay("Game over - press R to restart");
+    setOverlay("Game over - reset to play again");
   } else if (game.status === "complete") {
-    setOverlay(isPractice ? "Construction complete - retry or choose another example" : `Daily game complete - ${game.challengeScore.toLocaleString("en-US")} points`);
+    setOverlay(isPractice ? "Construction complete" : `Daily game complete - ${game.challengeScore.toLocaleString("en-US")} points`);
   } else {
     setOverlay("");
   }
@@ -598,7 +598,7 @@ startCasualButton.addEventListener("click", () => {
     game.start();
     clearChallengeUrl();
     refreshImmediately();
-    challengeMessage.textContent = "Endless game started. There is no piece limit.";
+    challengeMessage.textContent = "Endless game started.";
   } catch (error) {
     showControlError(error);
   }
@@ -621,7 +621,7 @@ copyResultButton.addEventListener("click", async () => {
   const result = `${game.challenge.ruleset} ${date}: ${game.challengeScore.toLocaleString("en-US")} points, ${game.challengePieces.toLocaleString("en-US")} / ${game.challenge.pieceLimit.toLocaleString("en-US")} pieces`;
   try {
     await copyText(result);
-    challengeMessage.textContent = "Finished result copied.";
+    challengeMessage.textContent = "Result copied.";
   } catch (error) {
     showControlError(error);
   } finally {

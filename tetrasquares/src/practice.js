@@ -18,11 +18,11 @@ export async function loadConstruction(search) {
   if (params.has("challenge")) throw new Error("Practice and daily play cannot be combined.");
   if (params.getAll("practice").length !== 1 || params.getAll("family").length !== 1
       || !["4", "6"].includes(size) || !id || id.length > 64) {
-    throw new Error("Choose an illustrated 4x4 or 6x6 construction from the catalog. The 8x8 catalog has counts only.");
+    throw new Error("Choose a 4x4 or 6x6 catalog example for practice.");
   }
   const { default: families } = await DATA[size]();
   const family = families.find((entry) => entry.id === id);
-  if (!family) throw new Error("That construction is not in the catalog.");
+  if (!family) throw new Error("This example is not in the catalog.");
   return createConstruction(family, Number(size));
 }
 
@@ -31,7 +31,7 @@ export function createConstruction(family, size) {
   if (![4, 6].includes(size) || !family || typeof family.id !== "string"
       || !Array.isArray(family.pieces) || !Array.isArray(family.order)
       || family.pieces.length !== size * size / 4 || family.order.length !== family.pieces.length) {
-    throw new Error("This catalog entry has no supported construction.");
+    throw new Error("This catalog example is not available for practice.");
   }
   const board = new Board();
   const left = Math.floor((board.width - size) / 2);
@@ -41,16 +41,16 @@ export function createConstruction(family, size) {
   for (const piece of family.pieces) {
     if (!piece || typeof piece.id !== "string" || pieces.has(piece.id)
         || !Object.hasOwn(PIECES, piece.type) || !Array.isArray(piece.cells) || piece.cells.length !== 4) {
-      throw new Error("Invalid construction piece.");
+      throw new Error("This example contains an invalid piece.");
     }
     const target = piece.cells.map((cell) => {
       if (!Array.isArray(cell) || cell.length !== 2 || !cell.every(Number.isInteger)) {
-        throw new Error("Invalid construction cell.");
+        throw new Error("This example contains an invalid block position.");
       }
       const [x, y] = cell;
       const key = `${x},${y}`;
       if (x < 0 || x >= size || y < 0 || y >= size || owners.has(key)) {
-        throw new Error("Construction cells overlap or leave the target square.");
+        throw new Error("The example has overlapping blocks or blocks outside the target square.");
       }
       owners.add(key);
       return Object.freeze({ x: x + left, y: y + top });
@@ -70,14 +70,14 @@ export function createConstruction(family, size) {
         break;
       }
     }
-    if (!placement) throw new Error("A catalog piece does not match the game's rotations.");
+    if (!placement) throw new Error("A piece in this example has an unsupported shape.");
     pieces.set(piece.id, Object.freeze({ ...placement, id: piece.id, cells: Object.freeze(target) }));
   }
-  if (new Set(family.order).size !== family.pieces.length) throw new Error("Invalid construction order.");
+  if (new Set(family.order).size !== family.pieces.length) throw new Error("This example has an invalid drop order.");
   const steps = family.order.map((id, index) => {
     const step = pieces.get(id);
     if (!step || !isReachableLockPlacement(board, spawnPiece(step.type), step)) {
-      throw new Error("The illustrated construction order is not reachable in this game.");
+      throw new Error("The example's drop order cannot be played in this game.");
     }
     board.lock(step, index + 1);
     return step;

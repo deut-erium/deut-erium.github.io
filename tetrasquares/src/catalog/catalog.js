@@ -1,9 +1,9 @@
-import { EIGHT_LIST_PAGE, expandEightFamily, familyPage } from "./catalog-model.js?v=20260911";
+import { EIGHT_LIST_PAGE, expandEightFamily, eightExamplePieces, familyPage } from "./catalog-model.js?v=20261115-examples1";
 
 const DATA_URLS = Object.freeze({
   4: "./data-4.js?v=20260911",
   6: "./data-6.js?v=20260911",
-  8: "./data-8.js?v=20260911",
+  8: "./data-8.js?v=20261115-examples1",
 });
 
 const COLORS = Object.freeze({
@@ -58,6 +58,7 @@ const ui = Object.freeze({
   gridBody: document.querySelector("#family-grid-body"),
   pieceKey: document.querySelector("#piece-key"),
   step: document.querySelector("#step"),
+  stepControls: document.querySelector("#step-controls"),
   stepLabel: document.querySelector("#step-label"),
   title: document.querySelector("#family-title"),
   status: document.querySelector("#catalog-status"),
@@ -72,20 +73,52 @@ const ui = Object.freeze({
   stats: document.querySelector("#family-stats"),
   order: document.querySelector("#order"),
   orderSection: document.querySelector("#order-section"),
-  modeNote: document.querySelector("#catalog-mode-note"),
   play: document.querySelector("#play"),
   practice: document.querySelector("#practice-construction"),
-  practiceUnavailable: document.querySelector("#practice-unavailable"),
 });
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let animationChoice = null;
+
+function stopPlayback() {
+  clearTimeout(playback);
+  playback = null;
+  ui.play.textContent = "Play";
+  ui.play.setAttribute("aria-label", "Play animation");
+  ui.play.setAttribute("aria-pressed", "false");
+}
+
+function startPlayback() {
+  stopPlayback();
+  if (!currentFamily?.pieces) return;
+  ui.step.value = "1";
+  ui.play.textContent = "Pause";
+  ui.play.setAttribute("aria-label", "Pause animation");
+  ui.play.setAttribute("aria-pressed", "true");
+  draw();
+  const advance = () => {
+    if (!currentFamily) { stopPlayback(); return; }
+    const total = Number(ui.step.max);
+    const step = Number(ui.step.value);
+    ui.step.value = String(step === total ? 0 : step + 1);
+    draw();
+    playback = setTimeout(advance, Number(ui.step.value) === total ? 1200 : 350);
+  };
+  playback = setTimeout(advance, 350);
+}
+
+function scrubTo(step) {
+  animationChoice = false;
+  stopPlayback();
+  ui.step.value = String(step);
+  draw();
+}
 
 function buildingType(family) {
   return `D${family.diversity}-${family.signature.join("+")}`;
 }
 
 function buildingTypeLabel(family) {
-  if (family.diversity === 1) return `1 piece type, used ${family.signature[0]} times`;
-  return `${family.diversity} piece types, used ${family.signature.join(" / ")} times`;
+  return `${family.diversity} ${family.diversity === 1 ? "type" : "types"} (${family.signature.join(" + ")})`;
 }
 
 function clean(value) {
@@ -102,10 +135,18 @@ function mixColor(hex, amount) {
   )).join("")}`;
 }
 
+function exampleOrder(family) {
+  // Geometric 8x8 examples have no verified drop order. Reveal lower pieces first.
+  return family.order ?? [...family.pieces]
+    .sort((a, b) => Math.max(...b.cells.map(([, y]) => y)) - Math.max(...a.cells.map(([, y]) => y))
+      || Math.min(...a.cells.map(([x]) => x)) - Math.min(...b.cells.map(([x]) => x)))
+    .map(({ id }) => id);
+}
+
 function pieceStyles(family) {
   const totals = {};
   const seen = {};
-  const steps = Object.fromEntries(family.order.map((id, index) => [id, index]));
+  const steps = Object.fromEntries(exampleOrder(family).map((id, index) => [id, index]));
   for (const piece of family.pieces) totals[piece.type] = (totals[piece.type] ?? 0) + 1;
   return Object.fromEntries(family.pieces.map((piece) => {
     const index = seen[piece.type] ?? 0;
@@ -125,9 +166,7 @@ function pieceShape(type, color = COLORS[type]) {
 }
 
 function familyMaterial(family) {
-  if (family.spectrum) return "Silver square / all 7 types";
-  if (family.kind === "gold") return "Gold square / one type";
-  return "Silver square / mixed types";
+  return family.kind === "gold" ? "Gold square" : "Silver square";
 }
 
 function updateUrl() {
@@ -165,7 +204,7 @@ function renderFamilyButtons(selectedId = currentFamily?.id) {
   const listEnd = page.end;
   const listed = page.families;
   ui.familyList.innerHTML = listed.map((family) => (
-    `<button type="button" data-family="${family.id}" aria-pressed="${family.id === selectedId}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} total</em><span>${family.fixed.toLocaleString("en-US")} ${size === 8 ? "board arrangements" : "ways to build"} / ${buildingTypeLabel(family)}</span></button>`
+    `<button type="button" data-family="${family.id}" aria-pressed="${family.id === selectedId}"><b>${family.id}</b><em>${family.scoring.points.toLocaleString("en-US")} points</em><span>${family.fixed.toLocaleString("en-US")} arrangements / ${buildingTypeLabel(family)}</span></button>`
   )).join("");
   const paged = size === 8 && visibleFamilies.length > EIGHT_LIST_PAGE;
   ui.listPages.hidden = !paged;
@@ -185,6 +224,7 @@ function renderFamilyList(preferredId = null) {
   if (visibleFamilies.length === 0) {
     ui.familyList.innerHTML = "";
     currentFamily = null;
+    stopPlayback();
     return;
   }
 
@@ -262,25 +302,30 @@ function draw() {
     const cells = Array.from({ length: size }, (_, column) => {
       const pieceId = owner[row * size + column];
       const style = pieceId ? styles[pieceId] : null;
-      const label = style && style.step < limit ? `${style.type} piece, step ${style.step + 1}` : "Empty";
+      const label = style && style.step < limit
+        ? (size === 8 ? `${style.type} piece ${style.step + 1}` : `${style.type} piece, step ${style.step + 1}`)
+        : "Empty";
       return `<td>${label}</td>`;
     }).join("");
     return `<tr><th scope="row">${row + 1}</th>${cells}</tr>`;
   }).join("");
-  const stepText = `Step ${limit} of ${currentFamily.pieces.length}`;
-  ui.stepLabel.textContent = stepText;
-  ui.gridCaption.textContent = `${currentFamily.id} ${size} by ${size} arrangement at ${stepText.toLowerCase()}. Cells with the same step belong to one piece.`;
-  ui.board.setAttribute("aria-label", `${currentFamily.id} ${size} by ${size} example square at ${stepText.toLowerCase()}`);
+  const stepText = `${limit} of ${currentFamily.pieces.length} pieces`;
+  ui.stepLabel.textContent = `${limit} / ${currentFamily.pieces.length}`;
+  ui.gridCaption.textContent = `${currentFamily.id}, ${size} by ${size}, ${stepText}.`;
+  ui.board.setAttribute("aria-label", size === 8
+    ? `${currentFamily.id} 8 by 8 example square`
+    : `${currentFamily.id} ${size} by ${size} example square at ${stepText.toLowerCase()}`);
 }
 
 function showFamily(id, { scroll = true, refreshList = true } = {}) {
-  clearInterval(playback);
+  stopPlayback();
   currentFamily = families.find((family) => family.id === id) ?? null;
   if (!currentFamily) return;
+  if (size === 8 && !currentFamily.pieces) currentFamily.pieces = eightExamplePieces(currentFamily);
   const hasExample = Array.isArray(currentFamily.pieces);
-  const canPractice = hasExample && [4, 6].includes(size) && Array.isArray(currentFamily.order);
+  const hasDropOrder = hasExample && Array.isArray(currentFamily.order);
+  const canPractice = hasDropOrder && [4, 6].includes(size);
   ui.practice.hidden = !canPractice;
-  ui.practiceUnavailable.hidden = canPractice;
   if (canPractice) {
     const practiceUrl = new URL("/tetrasquares/", location.href);
     practiceUrl.searchParams.set("practice", String(size));
@@ -293,28 +338,31 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   const styles = hasExample ? pieceStyles(currentFamily) : {};
   ui.detail.classList.toggle("aggregate", !hasExample);
   ui.drawing.hidden = !hasExample;
-  ui.orderSection.hidden = !hasExample;
+  ui.orderSection.hidden = !hasDropOrder;
+  ui.stepControls.hidden = !hasExample;
+  ui.stepLabel.hidden = !hasExample;
   ui.title.textContent = currentFamily.id;
   ui.material.textContent = familyMaterial(currentFamily);
-  ui.scoreLabel.textContent = hasExample ? "TOTAL VALUE FOR THIS EXAMPLE" : "TOTAL 8x8 VALUE";
+  ui.scoreLabel.textContent = "SQUARE VALUE";
   ui.constructionScore.textContent = currentFamily.scoring.points.toLocaleString("en-US");
   const baseShare = Math.floor(currentFamily.scoring.points / size);
   const extraRows = currentFamily.scoring.points % size;
   const shareLabel = extraRows === 0
     ? baseShare.toLocaleString("en-US")
     : `${baseShare.toLocaleString("en-US")}-${(baseShare + 1).toLocaleString("en-US")}`;
-  ui.valueNote.textContent = `Building this square adds 0 points. Clear a row to collect its ${shareLabel}-point share. All ${size} shares add up to exactly ${currentFamily.scoring.points.toLocaleString("en-US")}.`;
-  if (hasExample) {
+  ui.valueNote.textContent = `Clear a row through this square to collect ${shareLabel} points.`;
+  ui.exampleScoreNote.hidden = size === 8;
+  if (hasExample && size !== 8) {
     ui.scoreBreakdown.innerHTML = [
       ["Base value", currentFamily.scoring.base, false],
       ["Gold bonus", currentFamily.scoring.material, true],
       ["Extra piece types", currentFamily.scoring.diversity, true],
       ["Shape bonus", currentFamily.scoring.structure, true],
     ].map(([label, points, isBonus]) => `<div><dt>${label}</dt><dd>${isBonus ? "+" : ""}${points.toLocaleString("en-US")}</dd></div>`).join("");
-    ui.exampleScoreNote.textContent = "The same pieces can fit together in other ways. This total is only for the example shown here. The shape bonus grows when fewer straight gaps can separate the pieces.";
+    ui.exampleScoreNote.textContent = "Other arrangements of this mix can have a different shape bonus.";
   } else {
-    ui.scoreBreakdown.innerHTML = `<div><dt>${currentFamily.kind === "gold" ? "Gold 8x8" : "Silver 8x8"}</dt><dd>${currentFamily.scoring.points.toLocaleString("en-US")}</dd></div>`;
-    ui.exampleScoreNote.textContent = "Every recognized 8x8 square has the same total for its material. Shape and piece mix do not change the 8x8 value.";
+    ui.scoreBreakdown.innerHTML = "";
+    ui.exampleScoreNote.textContent = "";
   }
   ui.badges.innerHTML = [
     `${currentFamily.diversity} piece ${currentFamily.diversity === 1 ? "type" : "types"}`,
@@ -325,13 +373,13 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   )).join("");
   ui.stats.innerHTML = `<div><dt>Board arrangements with this piece mix</dt><dd>${currentFamily.fixed.toLocaleString("en-US")}</dd></div>`;
   if (hasExample) {
-    ui.order.innerHTML = currentFamily.order.map((pieceId) => {
+    ui.order.innerHTML = hasDropOrder ? currentFamily.order.map((pieceId) => {
       const style = styles[pieceId];
       return `<li>${pieceShape(style.type, style.color)}<b>${style.type} piece</b></li>`;
-    }).join("");
-    ui.pieceKey.innerHTML = currentFamily.order.map((pieceId) => {
+    }).join("") : "";
+    ui.pieceKey.innerHTML = exampleOrder(currentFamily).map((pieceId) => {
       const style = styles[pieceId];
-      return `<span>${pieceShape(style.type, style.color)}<b>Step ${style.step + 1}</b>${style.type} piece</span>`;
+      return `<span aria-label="Piece ${style.step + 1}: ${style.type}">${pieceShape(style.type, style.color)}<b>${style.step + 1}</b></span>`;
     }).join("");
     ui.step.max = String(currentFamily.pieces.length);
     ui.step.value = String(currentFamily.pieces.length);
@@ -346,6 +394,7 @@ function showFamily(id, { scroll = true, refreshList = true } = {}) {
   if (scroll) ui.familyList.querySelector(`[data-family="${id}"]`)?.scrollIntoView({ block: "nearest" });
   draw();
   updateUrl();
+  if (animationChoice ?? !reducedMotion.matches) startPlayback();
 }
 
 function moveFamily(delta) {
@@ -383,10 +432,7 @@ async function loadSize(nextSize, preferredId = null) {
     listStart = 0;
     ui.familyTotal.textContent = families.length.toLocaleString("en-US");
     ui.layoutTotal.textContent = TOTAL_LAYOUTS[size].toLocaleString("en-US");
-    ui.layoutLabel.textContent = size === 8 ? "BOARD ARRANGEMENTS" : "WAYS TO BUILD";
-    ui.modeNote.textContent = size === 8
-      ? "The 8x8 list contains exact piece-mix and board-arrangement counts. There are 4,769,369,641 classes after whole-board rotations, or 2,384,735,766 after rotations and reflections. A gallery of all 19,077,209,438 arrangements is not loaded, so this size has no example diagrams or drop orders."
-      : "A piece mix may fit together in several ways. The large diagram shows one of them.";
+    ui.layoutLabel.textContent = "BOARD ARRANGEMENTS";
     for (const button of ui.sizeButtons) {
       const selected = Number(button.dataset.size) === size;
       button.classList.toggle("active", selected);
@@ -397,7 +443,7 @@ async function loadSize(nextSize, preferredId = null) {
     return true;
   } catch (error) {
     if (generation === loadGeneration) {
-      const message = `The ${nextSize} by ${nextSize} piece mixes could not load. The current catalog remains available; try this size again.`;
+      const message = `${nextSize}x${nextSize} catalog failed to load. Try again.`;
       ui.status.textContent = message;
       if (!ui.machine.hidden) {
         ui.error.textContent = message;
@@ -433,38 +479,25 @@ ui.listNext.addEventListener("click", () => {
   renderFamilyButtons(visibleFamilies[target]?.id);
   showFamily(visibleFamilies[target]?.id, { scroll: false, refreshList: false });
 });
-ui.step.addEventListener("input", draw);
+ui.step.addEventListener("input", () => scrubTo(Number(ui.step.value)));
 document.querySelector("#step-back").addEventListener("click", () => {
-  ui.step.value = String(Math.max(0, Number(ui.step.value) - 1));
-  draw();
+  scrubTo(Math.max(0, Number(ui.step.value) - 1));
 });
 document.querySelector("#step-forward").addEventListener("click", () => {
-  ui.step.value = String(Math.min(Number(ui.step.max), Number(ui.step.value) + 1));
-  draw();
+  scrubTo(Math.min(Number(ui.step.max), Number(ui.step.value) + 1));
 });
 ui.play.addEventListener("click", () => {
-  clearInterval(playback);
-  if (reducedMotion.matches) {
-    ui.step.value = ui.step.max;
-    draw();
-    ui.status.textContent = "Animation skipped because reduced motion is requested. The complete arrangement is shown.";
-    return;
-  }
-  ui.step.value = "0";
-  draw();
-  playback = setInterval(() => {
-    ui.step.value = String(Number(ui.step.value) + 1);
-    draw();
-    if (Number(ui.step.value) >= Number(ui.step.max)) clearInterval(playback);
-  }, 350);
+  animationChoice = playback === null;
+  if (animationChoice) startPlayback();
+  else stopPlayback();
 });
 reducedMotion.addEventListener("change", (event) => {
-  if (!event.matches || !playback) return;
-  clearInterval(playback);
-  playback = null;
-  ui.step.value = ui.step.max;
-  draw();
-  ui.status.textContent = "Animation stopped because reduced motion is requested. The complete arrangement is shown.";
+  if (animationChoice !== null) return;
+  if (event.matches) {
+    stopPlayback();
+    ui.step.value = ui.step.max;
+    draw();
+  } else startPlayback();
 });
 document.querySelector("#previous-family").addEventListener("click", () => moveFamily(-1));
 document.querySelector("#next-family").addEventListener("click", () => moveFamily(1));
@@ -474,5 +507,5 @@ if (initialized) {
   ui.machine.hidden = false;
   ui.loading.hidden = true;
 } else {
-  ui.loading.textContent = "The local square catalog could not start. The scoring guide and game links remain available above.";
+  ui.loading.textContent = "Catalog failed to load. Reload the page or open the scoring guide.";
 }
